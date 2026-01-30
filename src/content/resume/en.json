@@ -12,7 +12,7 @@
     "summary": "Backend engineer with 3 years and 7 months of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), achieving quantifiable results including 82% BigQuery cost reduction, complete resolution of clinical trial system Deadlocks, and contributing to major hospital contract acquisitions.\n\nSpecialized in system design from monolithic to Event-Driven cloud-native architectures, creating long-term business value through root cause analysis and systematic solutions.",
     "coreCompetencies": [
       {
-        "category": "⚡ Performance Optimization & Cost Efficiency",
+        "category": "Performance Optimization & Cost Efficiency",
         "items": [
           "Cloud Cost Optimization: 82% BigQuery cost reduction ($6.25→$1.1 per TB)",
           "Serverless Performance Tuning: Lambda response time improvement and resource efficiency",
@@ -20,7 +20,7 @@
         ]
       },
       {
-        "category": "🏗️ Scalable System Design",
+        "category": "Scalable System Design",
         "items": [
           "Event-Driven Architecture: System stability and scalability through async messaging",
           "Data Consistency: Transaction safety implementation in distributed environments",
@@ -28,7 +28,7 @@
         ]
       },
       {
-        "category": "🔧 System Reliability & Problem Solving",
+        "category": "System Reliability & Problem Solving",
         "items": [
           "Incident Analysis & Resolution: Root cause identification and complete resolution of complex concurrency issues",
           "Scalable Design: Architecture improvements overcoming existing system limitations",
@@ -166,10 +166,10 @@
         "current": true,
         "description": "Mobile game development and publishing company",
         "highlights": [
-          "💰 82% BigQuery Cost Reduction: Storage Read API adoption ($6.25→$1.1 per TB)",
-          "☁️ Serverless Architecture: Event-Driven Architecture based AWS Lambda migration",
-          "📊 Marketing Integration Platform: Google Ads/Meta/TikTok unified dashboard",
-          "🎯 Game Data Audit System: Repository abstraction-based balance change tracking"
+          "82% BigQuery Cost Reduction: Storage Read API adoption ($6.25→$1.1 per TB)",
+          "Serverless Architecture: Event-Driven Architecture based AWS Lambda migration",
+          "Marketing Integration Platform: Google Ads/Meta/TikTok unified dashboard",
+          "Game Data Audit System: Repository abstraction-based balance change tracking"
         ],
         "projects": [
           {
@@ -251,10 +251,10 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with 16B KRW cumulative investment",
         "highlights": [
-          "🔒 Complete Deadlock Resolution: Foreign key lock timing analysis preventing clinical trial notification failures",
-          "📈 New Contract Contribution: User-organization 1:N structure enabling major hospital and pharma company contracts",
-          "⚡ Rapid MVP Launch: VDR 3 weeks, TMF 3 months emergency deployment meeting deadlines",
-          "🔄 Event-Driven Architecture: AWS SNS/SQS based system reliability improvement"
+          "Complete Deadlock Resolution: Foreign key lock timing analysis preventing clinical trial notification failures",
+          "New Contract Contribution: User-organization 1:N structure enabling major hospital and pharma company contracts",
+          "Rapid MVP Launch: VDR 3 weeks, TMF 3 months emergency deployment meeting deadlines",
+          "Event-Driven Architecture: AWS SNS/SQS based system reliability improvement"
         ],
         "projects": [
           {
@@ -331,10 +331,10 @@
         "endDate": "2023-06",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
-          "🏗️ Architecture Modernization: Express.js → NestJS transition for code consistency and type safety",
-          "🔐 Unified Authentication System: JWT-based subdomain session conflict resolution",
-          "🏥 Medical Service Automation: OCR + public API for automated prescription medication guidance",
-          "⚡ Real-time Optimization: Socket.IO Room targeting for network traffic optimization"
+          "Architecture Modernization: Express.js → NestJS transition for code consistency and type safety",
+          "Unified Authentication System: JWT-based subdomain session conflict resolution",
+          "Medical Service Automation: OCR + public API for automated prescription medication guidance",
+          "Real-time Optimization: Socket.IO Room targeting for network traffic optimization"
         ],
         "projects": [
           {
@@ -385,10 +385,10 @@
         "endDate": "2022-04",
         "description": "Custom software solutions SI company",
         "highlights": [
-          "📊 Bulk Data Processing: Apache POI-based batch processing for hundreds of member records",
-          "🔐 Multi-country Unified Auth: JWT-based cross-domain login system",
-          "🚀 Deployment Automation: Travis CI-based CI/CD eliminating hosting costs",
-          "🔧 Legacy Integration: iframe-based PHP system non-disruptive feature extension"
+          "Bulk Data Processing: Apache POI-based batch processing for hundreds of member records",
+          "Multi-country Unified Auth: JWT-based cross-domain login system",
+          "Deployment Automation: Travis CI-based CI/CD eliminating hosting costs",
+          "Legacy Integration: iframe-based PHP system non-disruptive feature extension"
         ],
         "projects": [
           {

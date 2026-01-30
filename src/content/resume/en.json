@@ -39,7 +39,7 @@
     "skills": [
       {
         "category": "Languages",
-        "items": [{ "name": "Node.js" }, { "name": "TypeScript" }, { "name": "Java" }]
+        "items": [{ "name": "JavaScript" }, { "name": "TypeScript" }, { "name": "Java" }]
       },
       {
         "category": "Frameworks",
@@ -47,7 +47,7 @@
       },
       {
         "category": "Databases",
-        "items": [{ "name": "MySQL" }, { "name": "BigQuery" }, { "name": "Redis" }]
+        "items": [{ "name": "MySQL" }, { "name": "Redis" }]
       },
       {
         "category": "AWS",

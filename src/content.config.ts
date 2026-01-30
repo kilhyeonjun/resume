@@ -20,6 +20,7 @@ const projectSchema = z.object({
   period: z.string(),
   description: z.string(),
   details: z.array(z.string()),
+  techStack: z.array(z.string()).optional(),
 });
 
 const experienceSchema = z.object({

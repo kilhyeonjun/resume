@@ -39,7 +39,7 @@
     "skills": [
       {
         "category": "언어",
-        "items": [{ "name": "Node.js" }, { "name": "TypeScript" }, { "name": "Java" }]
+        "items": [{ "name": "JavaScript" }, { "name": "TypeScript" }, { "name": "Java" }]
       },
       {
         "category": "프레임워크",
@@ -47,7 +47,7 @@
       },
       {
         "category": "데이터베이스",
-        "items": [{ "name": "MySQL" }, { "name": "BigQuery" }, { "name": "Redis" }]
+        "items": [{ "name": "MySQL" }, { "name": "Redis" }]
       },
       {
         "category": "AWS",
@@ -90,7 +90,8 @@
               "멀티 DB 통합 버전 관리: UUID 기반 크로스 환경/프로젝트 엔티티 추적 시스템",
               "이벤트 소싱 기반 머지 시스템: Git과 유사한 다중 환경/게임 간 충돌 해결 시스템",
               "버전 간 비교(Diff) 엔진: 객체 단위 변경사항을 필드 레벨에서 정확히 추적하는 Diff 알고리즘 구현"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL"]
           },
           {
             "name": "마케팅 캠페인 통합 관리 플랫폼",
@@ -99,7 +100,8 @@
             "details": [
               "통합 관리 대시보드: 게임 프로젝트별로 모든 플랫폼 캠페인을 한 곳에서 관리",
               "플랫폼별 API 모듈 분리: Google Ads/Meta/TikTok 각각의 고유 기능에 특화된 독립적 API 모듈"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "Google Ads API", "Meta API", "TikTok API"]
           },
           {
             "name": "마케팅 지표 시스템",
@@ -108,7 +110,8 @@
             "details": [
               "BigQuery 스냅샷 기반 버전 관리: 머신러닝 예측 데이터의 주기적 변경에 대응한 시점별 데이터 관리",
               "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 비용 82% 절감"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "BigQuery", "Storage Read API", "Apache Arrow", "gRPC"]
           },
           {
             "name": "AWS Lambda 마이그레이션 & EDA 구축",
@@ -120,7 +123,8 @@
               "NestJS DI 기반 Lambda 팩토리: 기존 코드 재사용과 DI 시스템을 위한 Lambda 어댑터",
               "트랜잭션 아웃박스 패턴: 데이터 정합성 보장을 위한 이벤트 발행 시스템",
               "RDS Proxy를 통한 커넥션 관리: Lambda 대량 실행 시 DB 커넥션 고갈 문제 해결"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "AWS Lambda", "SQS", "SNS", "EventBridge", "RDS Proxy", "AWS CDK"]
           },
           {
             "name": "Glider Nest Util 라이브러리",
@@ -130,7 +134,8 @@
               "사내 GitHub Private 패키지: NPM 기반 라이브러리 배포 및 버전 관리",
               "Repository 모듈: Bulk 연산, Audit Log, TypeORM 타입 좁히기 지원",
               "TypeScript 제네릭: TypeORM 타입 한계 극복을 위한 함수 오버로딩 기반 타입 좁히기"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "GitHub NPM"]
           }
         ],
         "techStack": [
@@ -173,7 +178,8 @@
             "details": [
               "배치 발송 시스템: 임상시험별 참여자 그룹 관리 및 효율적 동의서 발송",
               "워크플로우 기본 구조: 동의서 요청자 → 연구자 → 참여자 순서의 기본 진행 관리"
-            ]
+            ],
+            "techStack": ["TypeScript", "Express.js", "cyan", "Aurora Serverless v2", "knex"]
           },
           {
             "name": "Maven Docs 시스템 안정성 개선",
@@ -184,7 +190,8 @@
               "Event-Driven Architecture 설계: AWS SNS → SQS → Lambda 파이프라인 구축",
               "실시간 상호참조 시스템: 문서 간 참조 관계 추적 및 자동 업데이트",
               "Word 문서 변환 시스템: Slate.js JSON 구조를 Word 문서로 변환하는 서버사이드 엔진"
-            ]
+            ],
+            "techStack": ["TypeScript", "Express.js", "cyan", "Slate.js", "AWS SNS", "SQS", "Lambda", "React"]
           },
           {
             "name": "Maven Mailing 시스템 고도화",
@@ -194,7 +201,8 @@
               "AWS SES 모니터링: 발송/전달/바운스 상태 실시간 추적",
               "이벤트 기반 발송 시스템: 트랜잭션과 분리된 안정적 이메일 발송",
               "이미지 인라인 첨부: CID 기반 이미지 임베딩으로 표시율 개선"
-            ]
+            ],
+            "techStack": ["TypeScript", "Express.js", "AWS SES", "Nodemailer"]
           },
           {
             "name": "Maven Auth 시스템 고도화",
@@ -203,7 +211,8 @@
             "details": [
               "사용자-조직 관계 구조 확장: 1:1에서 1:N 구조로 변경하여 다중 조직 관리 지원",
               "하위호환성 보장: 기존 기능 유지하면서 새로운 기능 확장"
-            ]
+            ],
+            "techStack": ["TypeScript", "Express.js", "cyan", "Aurora Serverless v2"]
           },
           {
             "name": "Maven VDR MVP 개발",
@@ -212,7 +221,8 @@
             "details": [
               "Event-Driven PDF 변환: S3 업로드 트리거 → Lambda 경량화 변환 → SNS/SQS 알림 체계",
               "권한 기반 워크플로우: 의료진별 역할에 따른 문서 접근 및 승인 권한 관리"
-            ]
+            ],
+            "techStack": ["TypeScript", "AWS Lambda", "S3", "SNS", "SQS"]
           }
         ],
         "techStack": [
@@ -257,7 +267,8 @@
               "처방전 기반 복약지도 자동화: 네이버 클로바 OCR + 식약처 API 연동으로 완전 자동화",
               "실시간 상태 반영 시스템: Socket.IO Room 기반 효율적 타겟팅 알림",
               "내부 API 게이트웨이: 결제 + 배달 API 통합 인터페이스로 추상화"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "Express.js", "TypeORM", "MySQL", "Socket.IO", "네이버 클로바 OCR", "Web Push"]
           },
           {
             "name": "회원 인증 시스템 구축",
@@ -267,7 +278,8 @@
               "JWT 기반 인증 서버: 독립적인 인증 서비스로 마이크로서비스 아키텍처 구축",
               "MySQL 기반 JWT 키 관리: 기존 DB 인프라를 활용한 비용 효율적 JWT 키 관리",
               "이중 토큰 전략: Access Token + Refresh Token으로 보안성과 사용성 균형"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "MySQL", "JWT"]
           }
         ],
         "techStack": [
@@ -308,7 +320,8 @@
               "QR 출석체크: 실시간 출석 처리 API 및 중복 체크 로직",
               "Excel 기반 대량 등록: Apache POI 활용한 회원 정보 일괄 처리 시스템",
               "동적 수료증: JasperReports 기반 PDF 자동 생성 API"
-            ]
+            ],
+            "techStack": ["Java", "Spring Boot", "MyBatis", "MySQL", "Apache POI", "JasperReports"]
           },
           {
             "name": "인천 스마트 그린 산단 통합관제센터",
@@ -318,7 +331,8 @@
               "예약 시스템 API: 실시간 예약 현황 조회 및 충돌 방지 로직",
               "대시보드 API: 통합 모니터링 데이터 제공 및 현황 집계",
               "SMS 비동기 처리: 예약 확정 시 SMS 발송을 백그라운드에서 처리"
-            ]
+            ],
+            "techStack": ["Java", "Spring Boot", "MySQL", "비즈뿌리오 SMS API"]
           },
           {
             "name": "미래 서비스 JOB Agent 개발",
@@ -328,7 +342,8 @@
               "평가 시스템 개발: Spring Boot 기반 독립적인 평가 애플리케이션 구축",
               "iframe 기반 시스템 통합: 기존 PHP 시스템에 평가 기능 임베드",
               "복합 점수 계산 로직: 다중 설문 결과를 종합한 평가 점수 산정 알고리즘"
-            ]
+            ],
+            "techStack": ["Java", "Spring Boot", "MySQL", "iframe", "postMessage API"]
           },
           {
             "name": "kfriends 회원 관리 시스템",

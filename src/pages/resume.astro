@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import resumeData from '../data/resume.json';
+import { getEntry } from 'astro:content';
+
+const entry = await getEntry('resume-ko', 'main');
+const resumeData = entry!.data;
 
 const data = {
   ...resumeData.personalInfo,
@@ -8,7 +11,6 @@ const data = {
   skills: resumeData.skills,
   experience: resumeData.experience,
   education: resumeData.education,
-  projects: resumeData.projects,
   certifications: resumeData.certifications,
   languages: resumeData.languages,
 };

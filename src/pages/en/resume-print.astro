@@ -228,10 +228,32 @@ const labels = resumeData.labels;
       color: #374151;
     }
 
-    .skill-dots {
-      color: #2563eb;
-      letter-spacing: 1px;
-      font-size: 9px;
+    .skill-proficiency {
+      font-size: 8px;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+
+    .skill-proficiency.expert {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .skill-proficiency.proficient {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .skill-proficiency.familiar {
+      background: #f9fafb;
+      color: #6b7280;
+    }
+
+    .skill-context {
+      font-size: 8px;
+      color: #6b7280;
+      margin-top: 2px;
+      padding-left: 4px;
     }
 
     /* Education */
@@ -439,8 +461,11 @@ const labels = resumeData.labels;
                   {skillGroup.items.map((skill) => (
                     <div class="skill-row">
                       <span class="skill-name">{skill.name}</span>
-                      <span class="skill-dots">{'●'.repeat(skill.level)}{'○'.repeat(5 - skill.level)}</span>
+                      <span class={`skill-proficiency ${skill.proficiency === 'Expert' ? 'expert' : skill.proficiency === 'Proficient' ? 'proficient' : 'familiar'}`}>{skill.proficiency}</span>
                     </div>
+                  ))}
+                  {skillGroup.items.filter(s => s.context).map((skill) => (
+                    <div class="skill-context">{skill.name}: {skill.context}</div>
                   ))}
                 </div>
               </div>

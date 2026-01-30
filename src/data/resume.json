@@ -39,53 +39,53 @@
     {
       "category": "언어",
       "items": [
-        { "name": "Node.js", "level": 5 },
-        { "name": "TypeScript", "level": 5 },
-        { "name": "Java", "level": 3 }
+        { "name": "Node.js", "proficiency": "Expert", "context": "EDA 아키텍처 설계, Lambda 마이그레이션" },
+        { "name": "TypeScript", "proficiency": "Expert", "context": "타입 시스템 활용, 제네릭 라이브러리 개발" },
+        { "name": "Java", "proficiency": "Familiar" }
       ]
     },
     {
       "category": "프레임워크",
       "items": [
-        { "name": "NestJS", "level": 5 },
-        { "name": "Express.js", "level": 4 },
-        { "name": "Spring Boot", "level": 3 }
+        { "name": "NestJS", "proficiency": "Expert", "context": "DI 기반 Lambda 팩토리, 사내 라이브러리 개발" },
+        { "name": "Express.js", "proficiency": "Proficient" },
+        { "name": "Spring Boot", "proficiency": "Familiar" }
       ]
     },
     {
       "category": "데이터베이스",
       "items": [
-        { "name": "MySQL", "level": 5 },
-        { "name": "BigQuery", "level": 4 },
-        { "name": "Redis", "level": 4 }
+        { "name": "MySQL", "proficiency": "Expert", "context": "Deadlock 분석 및 해결, 트랜잭션 설계" },
+        { "name": "BigQuery", "proficiency": "Proficient", "context": "Storage Read API로 비용 82% 절감" },
+        { "name": "Redis", "proficiency": "Proficient" }
       ]
     },
     {
       "category": "AWS",
       "items": [
-        { "name": "Lambda", "level": 5 },
-        { "name": "SQS", "level": 5 },
-        { "name": "SNS", "level": 5 },
-        { "name": "EventBridge", "level": 4 },
-        { "name": "RDS", "level": 4 },
-        { "name": "S3", "level": 4 },
-        { "name": "RDS Proxy", "level": 4 },
-        { "name": "ElastiCache", "level": 3 }
+        { "name": "Lambda", "proficiency": "Expert", "context": "Event-Driven Architecture 구축" },
+        { "name": "SQS", "proficiency": "Expert", "context": "아웃박스 패턴, 비동기 메시징" },
+        { "name": "SNS", "proficiency": "Expert" },
+        { "name": "EventBridge", "proficiency": "Proficient" },
+        { "name": "RDS", "proficiency": "Proficient" },
+        { "name": "S3", "proficiency": "Proficient" },
+        { "name": "RDS Proxy", "proficiency": "Proficient" },
+        { "name": "ElastiCache", "proficiency": "Familiar" }
       ]
     },
     {
       "category": "Infrastructure",
       "items": [
-        { "name": "AWS CDK", "level": 4 },
-        { "name": "Serverless Framework", "level": 4 }
+        { "name": "AWS CDK", "proficiency": "Proficient" },
+        { "name": "Serverless Framework", "proficiency": "Proficient" }
       ]
     },
     {
       "category": "모니터링",
       "items": [
-        { "name": "CloudWatch", "level": 4 },
-        { "name": "DataDog", "level": 4 },
-        { "name": "Grafana", "level": 4 }
+        { "name": "CloudWatch", "proficiency": "Proficient" },
+        { "name": "DataDog", "proficiency": "Proficient" },
+        { "name": "Grafana", "proficiency": "Proficient" }
       ]
     }
   ],

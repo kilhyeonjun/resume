@@ -171,11 +171,20 @@ const labels = resumeData.labels;
                 </h3>
                 <div class="space-y-2">
                   {skillGroup.items.map((skill) => (
-                    <div class="skill-item flex items-center justify-between">
-                      <span class="font-medium text-gray-800 dark:text-gray-200">{skill.name}</span>
-                      <span class="skill-dots text-primary-500 dark:text-primary-400" aria-label={`${skill.level}/5`}>
-                        {'●'.repeat(skill.level)}{'○'.repeat(5 - skill.level)}
-                      </span>
+                    <div class="skill-item">
+                      <div class="flex items-center justify-between">
+                        <span class="font-medium text-gray-800 dark:text-gray-200">{skill.name}</span>
+                        <span class={`text-xs font-medium px-2 py-0.5 rounded ${
+                          skill.proficiency === 'Expert' ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400' :
+                          skill.proficiency === 'Proficient' ? 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300' :
+                          'bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
+                        }`}>
+                          {skill.proficiency}
+                        </span>
+                      </div>
+                      {skill.context && (
+                        <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{skill.context}</p>
+                      )}
                     </div>
                   ))}
                 </div>

@@ -504,18 +504,6 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
           </section>
         )}
 
-        <!-- Languages -->
-        {data.languages && data.languages.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.languages}</h2>
-            {data.languages.map((lang) => (
-              <div class="language-item">
-                <span class="language-name">{lang.language}</span>
-                <span class="proficiency">{lang.proficiency}</span>
-              </div>
-            ))}
-          </section>
-        )}
       </div>
     </div>
 

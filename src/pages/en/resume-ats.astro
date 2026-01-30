@@ -301,18 +301,5 @@ const labels = resumeData.labels;
     </section>
   )}
 
-  <!-- Languages -->
-  {data.languages && data.languages.length > 0 && (
-    <section>
-      <h2>LANGUAGES</h2>
-      <p>
-        {data.languages.map((lang, index) => (
-          <span>
-            {lang.language} ({lang.proficiency}){index < data.languages.length - 1 ? ', ' : ''}
-          </span>
-        ))}
-      </p>
-    </section>
-  )}
 </body>
 </html>

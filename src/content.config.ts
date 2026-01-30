@@ -79,11 +79,6 @@ const certificationSchema = z.object({
   url: z.string().url().optional(),
 });
 
-const languageSchema = z.object({
-  language: z.string(),
-  proficiency: z.string(),
-});
-
 const personalInfoSchema = z.object({
   name: z.string(),
   title: z.string(),
@@ -110,7 +105,6 @@ const labelsSchema = z.object({
   openSource: z.string(),
   awards: z.string(),
   certifications: z.string(),
-  languages: z.string(),
   projects: z.string(),
   current: z.string(),
   print: z.string(),
@@ -134,7 +128,6 @@ const resumeSchema = z.object({
   openSource: z.array(openSourceSchema).optional(),
   awards: z.array(awardSchema).optional(),
   certifications: z.array(certificationSchema).optional(),
-  languages: z.array(languageSchema).optional(),
   links: linksSchema.optional(),
   labels: labelsSchema,
 });

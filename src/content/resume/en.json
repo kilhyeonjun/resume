@@ -524,12 +524,6 @@
         "date": "2023-06"
       }
     ],
-    "languages": [
-      {
-        "language": "Korean",
-        "proficiency": "Native"
-      }
-    ],
     "links": {
       "portfolio": "https://www.notion.so/portfolio-cdf7a52d6fe147a4bac6bdd4c410ec37",
       "careerDetails": "https://www.notion.so/2485159e911e80f08fe1f2d7e40d4e6f"
@@ -545,7 +539,6 @@
       "openSource": "Open Source",
       "awards": "Awards",
       "certifications": "Certifications",
-      "languages": "Languages",
       "projects": "Projects",
       "current": "Present",
       "print": "Print",

@@ -524,12 +524,6 @@
         "date": "2023-06"
       }
     ],
-    "languages": [
-      {
-        "language": "한국어",
-        "proficiency": "원어민"
-      }
-    ],
     "links": {
       "portfolio": "https://www.notion.so/portfolio-cdf7a52d6fe147a4bac6bdd4c410ec37",
       "careerDetails": "https://www.notion.so/2485159e911e80f08fe1f2d7e40d4e6f"
@@ -545,7 +539,6 @@
       "openSource": "오픈소스",
       "awards": "수상",
       "certifications": "자격증",
-      "languages": "언어",
       "projects": "프로젝트",
       "current": "현재",
       "print": "인쇄하기",

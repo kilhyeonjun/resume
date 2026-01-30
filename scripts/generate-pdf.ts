@@ -2,9 +2,12 @@
  * PDF Generation Script for Resume
  * 
  * Usage:
- *   npm run pdf              # Generate both HR and ATS versions
- *   npm run pdf -- --hr      # Generate HR version only
- *   npm run pdf -- --ats     # Generate ATS version only
+ *   npm run pdf                    # All versions (KO+EN, HR+ATS)
+ *   npm run pdf -- --hr            # HR versions only
+ *   npm run pdf -- --ats           # ATS versions only
+ *   npm run pdf -- --ko            # Korean only
+ *   npm run pdf -- --en            # English only
+ *   npm run pdf -- --ko --hr       # Korean HR only
  * 
  * Prerequisites:
  *   - Astro dev server running (npm run dev)
@@ -32,34 +35,49 @@ interface PDFConfig {
   };
 }
 
-const PDF_CONFIGS: PDFConfig[] = [
-  {
-    name: 'HR Version (Designed)',
-    path: '/resume-print',
-    filename: 'resume-hr.pdf',
-    format: 'A4',
-    printBackground: true,
-    margin: {
-      top: '0mm',
-      right: '0mm',
-      bottom: '0mm',
-      left: '0mm',
+interface PDFConfigSet {
+  ko: PDFConfig[];
+  en: PDFConfig[];
+}
+
+const PDF_CONFIGS: PDFConfigSet = {
+  ko: [
+    {
+      name: 'HR Version (Korean)',
+      path: '/resume-print',
+      filename: 'resume-hr-ko.pdf',
+      format: 'A4',
+      printBackground: true,
+      margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
     },
-  },
-  {
-    name: 'ATS Version (Plain)',
-    path: '/resume-ats',
-    filename: 'resume-ats.pdf',
-    format: 'Letter',
-    printBackground: false,
-    margin: {
-      top: '20mm',
-      right: '20mm',
-      bottom: '20mm',
-      left: '20mm',
+    {
+      name: 'ATS Version (Korean)',
+      path: '/resume-ats',
+      filename: 'resume-ats-ko.pdf',
+      format: 'A4',
+      printBackground: false,
+      margin: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' },
     },
-  },
-];
+  ],
+  en: [
+    {
+      name: 'HR Version (English)',
+      path: '/en/resume-print',
+      filename: 'resume-hr-en.pdf',
+      format: 'A4',
+      printBackground: true,
+      margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
+    },
+    {
+      name: 'ATS Version (English)',
+      path: '/en/resume-ats',
+      filename: 'resume-ats-en.pdf',
+      format: 'A4',
+      printBackground: false,
+      margin: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' },
+    },
+  ],
+};
 
 async function waitForPageLoad(page: Page): Promise<void> {
   await page.waitForFunction(() => document.readyState === 'complete');
@@ -124,9 +142,10 @@ async function generatePDF(
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   
-  // Parse arguments
   const generateHR = args.includes('--hr') || (!args.includes('--ats'));
   const generateATS = args.includes('--ats') || (!args.includes('--hr'));
+  const generateKo = args.includes('--ko') || (!args.includes('--en'));
+  const generateEn = args.includes('--en') || (!args.includes('--ko'));
   
   const baseUrlIndex = args.indexOf('--base-url');
   const baseUrl = baseUrlIndex !== -1 ? args[baseUrlIndex + 1] : 'http://localhost:4321/resume-site';
@@ -138,12 +157,13 @@ async function main(): Promise<void> {
 
   console.log('\n🚀 Resume PDF Generator\n');
   console.log(`   Base URL: ${baseUrl}`);
-  console.log(`   Output: ${outputDir}\n`);
+  console.log(`   Output: ${outputDir}`);
+  console.log(`   Languages: ${generateKo ? 'KO' : ''} ${generateEn ? 'EN' : ''}`);
+  console.log(`   Types: ${generateHR ? 'HR' : ''} ${generateATS ? 'ATS' : ''}\n`);
 
   let browser: Browser | null = null;
 
   try {
-    // Launch browser
     console.log('📦 Launching browser...\n');
     browser = await puppeteer.launch({
       headless: true,
@@ -155,11 +175,23 @@ async function main(): Promise<void> {
       ],
     });
 
-    const configs = PDF_CONFIGS.filter((config) => {
-      if (config.path.includes('print') && !generateHR) return false;
-      if (config.path.includes('ats') && !generateATS) return false;
-      return true;
-    });
+    const configs: PDFConfig[] = [];
+    
+    if (generateKo) {
+      configs.push(...PDF_CONFIGS.ko.filter((c) => {
+        if (c.path.includes('print') && !generateHR) return false;
+        if (c.path.includes('ats') && !generateATS) return false;
+        return true;
+      }));
+    }
+    
+    if (generateEn) {
+      configs.push(...PDF_CONFIGS.en.filter((c) => {
+        if (c.path.includes('print') && !generateHR) return false;
+        if (c.path.includes('ats') && !generateATS) return false;
+        return true;
+      }));
+    }
 
     for (const config of configs) {
       await generatePDF(browser, baseUrl, config, outputDir);

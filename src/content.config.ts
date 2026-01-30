@@ -3,7 +3,6 @@ import { file } from 'astro/loaders';
 
 const skillItemSchema = z.object({
   name: z.string(),
-  description: z.string(),
 });
 
 const skillCategorySchema = z.object({

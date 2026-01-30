@@ -39,121 +39,30 @@
     "skills": [
       {
         "category": "Languages",
-        "items": [
-          {
-            "name": "Node.js",
-            "description": "EDA architecture design & Lambda migration lead, 3+ years production"
-          },
-          {
-            "name": "TypeScript",
-            "description": "Type system expertise, generic-based internal library development"
-          },
-          {
-            "name": "Java",
-            "description": "Spring Boot development in SI environment"
-          }
-        ]
+        "items": [{ "name": "Node.js" }, { "name": "TypeScript" }, { "name": "Java" }]
       },
       {
         "category": "Frameworks",
-        "items": [
-          {
-            "name": "NestJS",
-            "description": "DI-based Lambda factory design, internal shared library development"
-          },
-          {
-            "name": "Express.js",
-            "description": "Clinical trial/healthcare domain API development"
-          },
-          {
-            "name": "Spring Boot",
-            "description": "LMS, member authentication system development"
-          }
-        ]
+        "items": [{ "name": "NestJS" }, { "name": "Express.js" }, { "name": "Spring Boot" }]
       },
       {
         "category": "Databases",
-        "items": [
-          {
-            "name": "MySQL",
-            "description": "Deadlock root cause analysis & resolution, transaction design"
-          },
-          {
-            "name": "BigQuery",
-            "description": "82% cost reduction via Storage Read API"
-          },
-          {
-            "name": "Redis",
-            "description": "Caching strategy design, ElastiCache operations"
-          }
-        ]
+        "items": [{ "name": "MySQL" }, { "name": "BigQuery" }, { "name": "Redis" }]
       },
       {
         "category": "AWS",
         "items": [
-          {
-            "name": "Lambda",
-            "description": "EDA-based serverless migration design & implementation"
-          },
-          {
-            "name": "SQS",
-            "description": "Outbox pattern, async messaging system development"
-          },
-          {
-            "name": "SNS",
-            "description": "Event-driven notification pipeline design"
-          },
-          {
-            "name": "EventBridge",
-            "description": "Scheduling and event routing"
-          },
-          {
-            "name": "RDS",
-            "description": "Aurora Serverless v2, RDS Proxy connection management"
-          },
-          {
-            "name": "S3",
-            "description": "File storage, event trigger integration"
-          },
-          {
-            "name": "RDS Proxy",
-            "description": "Connection pooling for massive Lambda execution"
-          },
-          {
-            "name": "ElastiCache",
-            "description": "Redis cluster operations"
-          }
+          { "name": "Lambda" }, { "name": "SQS" }, { "name": "SNS" }, { "name": "EventBridge" },
+          { "name": "RDS" }, { "name": "S3" }, { "name": "RDS Proxy" }, { "name": "ElastiCache" }
         ]
       },
       {
         "category": "Infrastructure",
-        "items": [
-          {
-            "name": "AWS CDK",
-            "description": "IaC-based infrastructure provisioning"
-          },
-          {
-            "name": "Serverless Framework",
-            "description": "Lambda deployment automation"
-          }
-        ]
+        "items": [{ "name": "AWS CDK" }, { "name": "Serverless Framework" }]
       },
       {
         "category": "Monitoring",
-        "items": [
-          {
-            "name": "CloudWatch",
-            "description": "Logging, metrics, alarm configuration"
-          },
-          {
-            "name": "DataDog",
-            "description": "APM, distributed tracing"
-          },
-          {
-            "name": "Grafana",
-            "description": "Dashboard creation, visualization"
-          }
-        ]
+        "items": [{ "name": "CloudWatch" }, { "name": "DataDog" }, { "name": "Grafana" }]
       }
     ],
     "experience": [

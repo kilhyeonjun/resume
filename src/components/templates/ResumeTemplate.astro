@@ -189,20 +189,13 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
       {data.skills && data.skills.length > 0 && (
         <section>
           <h2 class="section-title">{labels.skills}</h2>
-          <div class="mt-6 space-y-6">
+          <div class="mt-6 space-y-2">
             {data.skills.map((skillGroup) => (
-              <div>
-                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                  {skillGroup.category}
-                </h3>
-                <div class="space-y-3">
-                  {skillGroup.items.map((skill) => (
-                    <div class="skill-item">
-                      <span class="font-medium text-gray-800 dark:text-gray-200">{skill.name}</span>
-                      <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{skill.description}</p>
-                    </div>
-                  ))}
-                </div>
+              <div class="skill-row">
+                <span class="skill-category">{skillGroup.category}:</span>
+                {skillGroup.items.map((skill, i) => (
+                  <><span class="skill-name">{skill.name}</span>{i < skillGroup.items.length - 1 && <span class="skill-sep">·</span>}</>
+                ))}
               </div>
             ))}
           </div>

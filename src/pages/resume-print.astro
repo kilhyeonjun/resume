@@ -87,19 +87,33 @@ const labels = resumeData.labels;
       gap: 4px;
     }
 
-    /* Two Column Layout */
+    /* Two Column Layout - 60% / 40% */
     .content {
       display: grid;
-      grid-template-columns: 1fr 280px;
-      gap: 24px;
+      grid-template-columns: 60% 40%;
+      gap: 20px;
     }
 
     .main-column {
-      /* Left column for experience, projects */
+      padding-right: 8px;
     }
 
     .side-column {
-      /* Right column for skills, education, etc */
+      padding-left: 8px;
+      border-left: 1px solid #e5e7eb;
+    }
+
+    /* Projects Full Width Section */
+    .projects-section {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
 
     /* Section styles */
@@ -410,26 +424,6 @@ const labels = resumeData.labels;
             ))}
           </section>
         )}
-
-        <!-- Projects -->
-        {data.projects && data.projects.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.projects}</h2>
-            {data.projects.map((project) => (
-              <div class="project-item">
-                <h3 class="project-name">{project.name}</h3>
-                <p class="project-desc">{project.description}</p>
-                {project.technologies && project.technologies.length > 0 && (
-                  <div class="project-tech">
-                    {project.technologies.map((tech) => (
-                      <span class="tech-tag">{tech}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </section>
-        )}
       </div>
 
       <!-- Side Column -->
@@ -498,6 +492,28 @@ const labels = resumeData.labels;
         )}
       </div>
     </div>
+
+    <!-- Projects - Full Width Section -->
+    {data.projects && data.projects.length > 0 && (
+      <section class="projects-section">
+        <h2 class="section-title">{labels.projects}</h2>
+        <div class="projects-grid">
+          {data.projects.map((project) => (
+            <div class="project-item">
+              <h3 class="project-name">{project.name}</h3>
+              <p class="project-desc">{project.description}</p>
+              {project.technologies && project.technologies.length > 0 && (
+                <div class="project-tech">
+                  {project.technologies.map((tech) => (
+                    <span class="tech-tag">{tech}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
   </div>
 </body>
 </html>

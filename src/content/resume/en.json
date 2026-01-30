@@ -158,6 +158,7 @@
     ],
     "experience": [
       {
+        "slug": "gameduo",
         "company": "GameDuo",
         "companyUrl": "https://www.gameduo.net/ko",
         "position": "DEV Team Server Developer",
@@ -242,6 +243,7 @@
         ]
       },
       {
+        "slug": "jnpmedi",
         "company": "JNPMedi",
         "companyUrl": "https://www.jnpmedi.com/",
         "position": "Dev2 Team Docs Squad Backend Engineer",
@@ -321,6 +323,7 @@
         ]
       },
       {
+        "slug": "medgo",
         "company": "Medgo",
         "companyUrl": "https://www.rocketpunch.com/companies/baropill",
         "position": "Dev Team Backend Engineer",
@@ -375,6 +378,7 @@
         ]
       },
       {
+        "slug": "simplehan",
         "company": "SimpleHAN",
         "position": "Dev Team Backend Engineer",
         "startDate": "2021-07",
@@ -547,7 +551,10 @@
       "print": "Print",
       "pdfVersion": "PDF Version",
       "atsOptimized": "ATS Optimized",
-      "backToResume": "Back to Resume"
+      "backToResume": "Back to Resume",
+      "previousCompany": "Previous Company",
+      "nextCompany": "Next Company",
+      "viewDetails": "View Details"
     }
   }
 }

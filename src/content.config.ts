@@ -24,6 +24,7 @@ const projectSchema = z.object({
 });
 
 const experienceSchema = z.object({
+  slug: z.string(),
   company: z.string(),
   companyUrl: z.string().url().optional(),
   position: z.string(),
@@ -116,6 +117,9 @@ const labelsSchema = z.object({
   pdfVersion: z.string(),
   atsOptimized: z.string(),
   backToResume: z.string(),
+  previousCompany: z.string(),
+  nextCompany: z.string(),
+  viewDetails: z.string(),
 });
 
 const resumeSchema = z.object({

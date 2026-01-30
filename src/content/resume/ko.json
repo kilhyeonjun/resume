@@ -158,6 +158,7 @@
     ],
     "experience": [
       {
+        "slug": "gameduo",
         "company": "게임듀오",
         "companyUrl": "https://www.gameduo.net/ko",
         "position": "DEV팀 Server Developer",
@@ -242,6 +243,7 @@
         ]
       },
       {
+        "slug": "jnpmedi",
         "company": "제이앤피메디",
         "companyUrl": "https://www.jnpmedi.com/",
         "position": "개발2팀 Docs Squad Backend Engineer",
@@ -321,6 +323,7 @@
         ]
       },
       {
+        "slug": "medgo",
         "company": "메드고",
         "companyUrl": "https://www.rocketpunch.com/companies/baropill",
         "position": "개발팀 Backend Engineer",
@@ -375,6 +378,7 @@
         ]
       },
       {
+        "slug": "simplehan",
         "company": "심플한",
         "position": "개발팀 Backend Engineer",
         "startDate": "2021-07",
@@ -547,7 +551,10 @@
       "print": "인쇄하기",
       "pdfVersion": "PDF 버전",
       "atsOptimized": "ATS 최적화",
-      "backToResume": "이력서 페이지로 돌아가기"
+      "backToResume": "이력서 페이지로 돌아가기",
+      "previousCompany": "이전 회사",
+      "nextCompany": "다음 회사",
+      "viewDetails": "상세 보기"
     }
   }
 }

@@ -90,7 +90,8 @@
               "Multi-DB Integrated Version Control: UUID-based cross-environment/project entity tracking system",
               "Event Sourcing-based Merge System: Git-like multi-environment/game conflict resolution",
               "Version Diff Engine: Field-level change tracking algorithm for object-level changes"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL"]
           },
           {
             "name": "Marketing Campaign Integration Platform",
@@ -99,7 +100,8 @@
             "details": [
               "Integrated Dashboard: Manage all platform campaigns per game project in one place",
               "Platform-specific API Module Separation: Independent API modules specialized for Google Ads/Meta/TikTok"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "Google Ads API", "Meta API", "TikTok API"]
           },
           {
             "name": "Marketing Metrics System",
@@ -108,7 +110,8 @@
             "details": [
               "BigQuery Snapshot-based Version Control: Point-in-time data management for periodic ML prediction data changes",
               "BigQuery Storage Read API: gRPC streaming-based high-performance data reading with 82% cost reduction"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "BigQuery", "Storage Read API", "Apache Arrow", "gRPC"]
           },
           {
             "name": "AWS Lambda Migration & EDA Implementation",
@@ -120,7 +123,8 @@
               "NestJS DI-based Lambda Factory: Lambda adapter for existing code reuse and DI system",
               "Transactional Outbox Pattern: Event publishing system for data consistency",
               "RDS Proxy Connection Management: Resolved DB connection exhaustion during massive Lambda execution"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "AWS Lambda", "SQS", "SNS", "EventBridge", "RDS Proxy", "AWS CDK"]
           },
           {
             "name": "Glider Nest Util Library",
@@ -130,7 +134,8 @@
               "Internal GitHub Private Package: NPM-based library distribution and version management",
               "Repository Module: Bulk operations, Audit Log, TypeORM type narrowing support",
               "TypeScript Generics: Function overloading-based type narrowing to overcome TypeORM type limitations"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "GitHub NPM"]
           }
         ],
         "techStack": [
@@ -173,7 +178,8 @@
             "details": [
               "Batch Delivery System: Participant group management per clinical trial and efficient consent delivery",
               "Workflow Structure: Request → Researcher → Participant sequential flow management"
-            ]
+            ],
+            "techStack": ["TypeScript", "Express.js", "cyan", "Aurora Serverless v2", "knex"]
           },
           {
             "name": "Maven Docs System Reliability Improvement",
@@ -184,7 +190,8 @@
               "Event-Driven Architecture Design: AWS SNS → SQS → Lambda pipeline implementation",
               "Real-time Cross-reference System: Document relationship tracking and auto-update",
               "Word Document Conversion: Server-side engine converting Slate.js JSON to Word documents"
-            ]
+            ],
+            "techStack": ["TypeScript", "Express.js", "cyan", "Slate.js", "AWS SNS", "SQS", "Lambda", "React"]
           },
           {
             "name": "Maven Mailing System Enhancement",
@@ -194,7 +201,8 @@
               "AWS SES Monitoring: Real-time tracking of delivery/bounce/complaint status",
               "Event-based Delivery System: Stable email delivery separated from transactions",
               "Inline Image Attachment: CID-based image embedding improving display rate"
-            ]
+            ],
+            "techStack": ["TypeScript", "Express.js", "AWS SES", "Nodemailer"]
           },
           {
             "name": "Maven Auth System Enhancement",
@@ -203,7 +211,8 @@
             "details": [
               "User-Organization Relationship Expansion: 1:1 to 1:N structure for multi-organization management",
               "Backward Compatibility: New features while maintaining existing functionality"
-            ]
+            ],
+            "techStack": ["TypeScript", "Express.js", "cyan", "Aurora Serverless v2"]
           },
           {
             "name": "Maven VDR MVP Development",
@@ -212,7 +221,8 @@
             "details": [
               "Event-Driven PDF Conversion: S3 upload trigger → Lambda lightweight conversion → SNS/SQS notification",
               "Permission-based Workflow: Document access and approval permission management by medical role"
-            ]
+            ],
+            "techStack": ["TypeScript", "AWS Lambda", "S3", "SNS", "SQS"]
           }
         ],
         "techStack": [
@@ -257,7 +267,8 @@
               "Prescription-based Medication Guidance Automation: Naver Clova OCR + MFDS API for full automation",
               "Real-time Status Reflection: Socket.IO Room-based efficient targeted notifications",
               "Internal API Gateway: Payment + Delivery API unified interface abstraction"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "Express.js", "TypeORM", "MySQL", "Socket.IO", "Naver Clova OCR", "Web Push"]
           },
           {
             "name": "Member Authentication System",
@@ -267,7 +278,8 @@
               "JWT-based Auth Server: Independent authentication service for microservices architecture",
               "MySQL-based JWT Key Management: Cost-efficient JWT key management using existing DB infrastructure",
               "Dual Token Strategy: Access Token + Refresh Token balancing security and usability"
-            ]
+            ],
+            "techStack": ["TypeScript", "NestJS", "MySQL", "JWT"]
           }
         ],
         "techStack": [
@@ -308,7 +320,8 @@
               "QR Attendance Check: Real-time attendance processing API with duplicate check logic",
               "Excel-based Bulk Registration: Apache POI-based batch member information processing",
               "Dynamic Certificate: JasperReports-based PDF auto-generation API"
-            ]
+            ],
+            "techStack": ["Java", "Spring Boot", "MyBatis", "MySQL", "Apache POI", "JasperReports"]
           },
           {
             "name": "Incheon Smart Green Industrial Complex Control Center",
@@ -318,7 +331,8 @@
               "Reservation System API: Real-time availability check and conflict prevention logic",
               "Dashboard API: Integrated monitoring data and status aggregation",
               "Async SMS Processing: Background SMS delivery on reservation confirmation"
-            ]
+            ],
+            "techStack": ["Java", "Spring Boot", "MySQL", "SMS API"]
           },
           {
             "name": "Future Service JOB Agent Development",
@@ -328,7 +342,8 @@
               "Assessment System: Spring Boot-based independent assessment application",
               "iframe-based System Integration: Assessment feature embedded in existing PHP system",
               "Composite Score Calculation: Multi-survey result aggregation algorithm"
-            ]
+            ],
+            "techStack": ["Java", "Spring Boot", "MySQL", "iframe", "postMessage API"]
           },
           {
             "name": "kfriends Member Management System",
@@ -337,7 +352,8 @@
             "details": [
               "Unified Auth Server: Spring Security + JWT-based centralized authentication",
               "Multi-domain CORS Handling: Secure token exchange across country-specific domains"
-            ]
+            ],
+            "techStack": ["Java", "Spring Boot", "Spring Security", "JWT", "MySQL"]
           },
           {
             "name": "Internal Tech Blog Renewal",
@@ -347,7 +363,8 @@
               "WordPress → Jekyll Migration: Static site conversion",
               "GitHub Pages Hosting: Free hosting without server management",
               "Travis CI Automation: Git push-based auto build and deploy pipeline"
-            ]
+            ],
+            "techStack": ["Jekyll", "Liquid", "Travis CI", "GitHub Pages"]
           }
         ],
         "techStack": [

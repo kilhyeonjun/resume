@@ -113,6 +113,15 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
                   ))}
                 </ul>
               )}
+              {project.techStack && project.techStack.length > 0 && (
+                <div class="mt-4 flex flex-wrap gap-1.5">
+                  {project.techStack.map((tech) => (
+                    <span class="rounded-md bg-primary-50 px-2 py-0.5 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>

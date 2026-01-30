@@ -352,7 +352,8 @@
             "details": [
               "통합 인증 서버 구축: Spring Security + JWT 기반 중앙화된 인증 시스템",
               "다중 도메인 CORS 처리: 국가별 도메인에서의 안전한 토큰 교환"
-            ]
+            ],
+            "techStack": ["Java", "Spring Boot", "Spring Security", "JWT", "MySQL"]
           },
           {
             "name": "사내 기술 블로그 리뉴얼",
@@ -362,7 +363,8 @@
               "WordPress → Jekyll 마이그레이션: 정적 사이트 전환",
               "GitHub Pages 호스팅: 서버 관리 없는 무료 호스팅으로 비용 절감",
               "Travis CI 자동화: Git push 기반 자동 빌드 및 배포 파이프라인"
-            ]
+            ],
+            "techStack": ["Jekyll", "Liquid", "Travis CI", "GitHub Pages"]
           }
         ],
         "techStack": [

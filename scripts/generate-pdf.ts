@@ -148,7 +148,7 @@ async function main(): Promise<void> {
   const generateEn = args.includes('--en') || (!args.includes('--ko'));
   
   const baseUrlIndex = args.indexOf('--base-url');
-  const baseUrl = baseUrlIndex !== -1 ? args[baseUrlIndex + 1] : 'http://localhost:4321/resume-site';
+  const baseUrl = baseUrlIndex !== -1 ? args[baseUrlIndex + 1] : 'http://localhost:4321/resume';
   
   const outputDirIndex = args.indexOf('--output');
   const outputDir = outputDirIndex !== -1 

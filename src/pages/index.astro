@@ -1,32 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import { getEntry } from 'astro:content';
 
-const resumeData = await getCollection('resume');
-const data = resumeData[0]?.data;
+const entry = await getEntry('resume-ko', 'main');
+if (!entry) {
+  throw new Error('Resume data not found');
+}
+const data = entry.data;
 ---
 
 <Layout title="Home | Portfolio">
   <div class="space-y-8">
     <section class="text-center">
       <h1 class="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl">
-        {data?.name ?? '환영합니다'}
+        {data.personalInfo.name}
       </h1>
       <p class="mt-4 text-xl text-gray-600 dark:text-gray-300">
-        {data?.title ?? '소프트웨어 엔지니어'}
+        {data.personalInfo.title}
       </p>
     </section>
 
     <section class="prose prose-lg mx-auto dark:prose-invert">
-      {data?.summary && (
+      {data.summary && (
         <p class="text-gray-700 dark:text-gray-300">{data.summary}</p>
       )}
     </section>
 
     <section class="flex flex-wrap justify-center gap-4">
-      {data?.github && (
+      {data.personalInfo.github && (
         <a
-          href={data.github}
+          href={data.personalInfo.github}
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-6 py-3 text-white transition-colors hover:bg-gray-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300"
@@ -37,9 +40,9 @@ const data = resumeData[0]?.data;
           GitHub
         </a>
       )}
-      {data?.linkedin && (
+      {data.personalInfo.linkedin && (
         <a
-          href={data.linkedin}
+          href={data.personalInfo.linkedin}
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700"

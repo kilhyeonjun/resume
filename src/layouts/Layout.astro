@@ -5,14 +5,15 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 interface Props {
   title: string;
   description?: string;
+  lang?: 'ko' | 'en';
 }
 
-const { title, description = 'Personal Resume and Portfolio' } = Astro.props;
+const { title, description = 'Personal Resume and Portfolio', lang = 'ko' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang="ko">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

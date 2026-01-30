@@ -258,3 +258,27 @@ body {
   background-color: var(--color-primary-800);
   color: var(--color-primary-100);
 }
+
+/* Section Title (shared across resume pages) */
+.section-title {
+  position: relative;
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.dark .section-title {
+  color: #fff;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  height: 4px;
+  width: 48px;
+  border-radius: 9999px;
+  background-color: #3b82f6;
+}

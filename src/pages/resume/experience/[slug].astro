@@ -1,10 +1,17 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
+import ExternalLinkIcon from '../../../components/icons/ExternalLinkIcon.astro';
+import CheckIcon from '../../../components/icons/CheckIcon.astro';
+import ArrowLeftIcon from '../../../components/icons/ArrowLeftIcon.astro';
+import ArrowRightIcon from '../../../components/icons/ArrowRightIcon.astro';
 
 export async function getStaticPaths() {
   const entry = await getEntry('resume-ko', 'main');
-  const resumeData = entry!.data;
+  if (!entry) {
+    throw new Error('Resume data not found');
+  }
+  const resumeData = entry.data;
   
   return resumeData.experience.map((exp, index) => ({
     params: { slug: exp.slug },
@@ -29,40 +36,36 @@ const period = experience.current
 
 <Layout title={`${experience.company} | ${experience.position}`} description={experience.description}>
   <article class="mx-auto max-w-4xl">
-    <!-- Back to Resume -->
-    <nav class="mb-8">
-      <a 
-        href={`${import.meta.env.BASE_URL}/resume`}
-        class="inline-flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
-      >
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-        {labels.backToResume}
-      </a>
-    </nav>
+     <!-- Back to Resume -->
+     <nav class="mb-8">
+       <a 
+         href={`${import.meta.env.BASE_URL}/resume`}
+         class="inline-flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+       >
+         <ArrowLeftIcon class="h-4 w-4" />
+         {labels.backToResume}
+       </a>
+     </nav>
 
     <!-- Company Header -->
     <header class="mb-10">
       <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-            {experience.companyUrl ? (
-              <a 
-                href={experience.companyUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                class="hover:text-primary-600 dark:hover:text-primary-400"
-              >
-                {experience.company}
-                <svg class="ml-1 inline-block h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-            ) : (
-              experience.company
-            )}
-          </h1>
+           <h1 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
+             {experience.companyUrl ? (
+               <a 
+                 href={experience.companyUrl} 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 class="hover:text-primary-600 dark:hover:text-primary-400"
+               >
+                 {experience.company}
+                 <ExternalLinkIcon class="ml-1 inline-block h-5 w-5" />
+               </a>
+             ) : (
+               experience.company
+             )}
+           </h1>
           <p class="mt-2 text-xl font-medium text-primary-600 dark:text-primary-400">
             {experience.position}
           </p>
@@ -81,14 +84,12 @@ const period = experience.current
       <section class="mb-10">
         <h2 class="section-title mb-6">Highlights</h2>
         <ul class="space-y-3">
-          {experience.highlights.map((highlight) => (
-            <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
-              <svg class="mt-1 h-5 w-5 flex-shrink-0 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-              </svg>
-              <span class="text-lg">{highlight}</span>
-            </li>
-          ))}
+           {experience.highlights.map((highlight) => (
+             <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+               <CheckIcon class="mt-1 h-5 w-5 flex-shrink-0 text-primary-500" />
+               <span class="text-lg">{highlight}</span>
+             </li>
+           ))}
         </ul>
       </section>
     )}
@@ -144,22 +145,20 @@ const period = experience.current
     <!-- Navigation -->
     <nav class="mt-12 border-t border-gray-200 pt-8 dark:border-gray-700">
       <div class="flex items-center justify-between">
-        {prevExp ? (
-          <a 
-            href={`${import.meta.env.BASE_URL}/resume/experience/${prevExp.slug}`}
-            class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
-          >
-            <svg class="h-5 w-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-            <div class="text-left">
-              <p class="text-xs text-gray-400 dark:text-gray-500">{labels.previousCompany}</p>
-              <p class="font-medium">{prevExp.company}</p>
-            </div>
-          </a>
-        ) : (
-          <div></div>
-        )}
+         {prevExp ? (
+           <a 
+             href={`${import.meta.env.BASE_URL}/resume/experience/${prevExp.slug}`}
+             class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+           >
+             <ArrowLeftIcon class="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+             <div class="text-left">
+               <p class="text-xs text-gray-400 dark:text-gray-500">{labels.previousCompany}</p>
+               <p class="font-medium">{prevExp.company}</p>
+             </div>
+           </a>
+         ) : (
+           <div></div>
+         )}
         
         <a 
           href={`${import.meta.env.BASE_URL}/resume`}
@@ -168,48 +167,23 @@ const period = experience.current
           {labels.backToResume}
         </a>
         
-        {nextExp ? (
-          <a 
-            href={`${import.meta.env.BASE_URL}/resume/experience/${nextExp.slug}`}
-            class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
-          >
-            <div class="text-right">
-              <p class="text-xs text-gray-400 dark:text-gray-500">{labels.nextCompany}</p>
-              <p class="font-medium">{nextExp.company}</p>
-            </div>
-            <svg class="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        ) : (
-          <div></div>
-        )}
+         {nextExp ? (
+           <a 
+             href={`${import.meta.env.BASE_URL}/resume/experience/${nextExp.slug}`}
+             class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+           >
+             <div class="text-right">
+               <p class="text-xs text-gray-400 dark:text-gray-500">{labels.nextCompany}</p>
+               <p class="font-medium">{nextExp.company}</p>
+             </div>
+             <ArrowRightIcon class="h-5 w-5 transition-transform group-hover:translate-x-1" />
+           </a>
+         ) : (
+           <div></div>
+         )}
       </div>
     </nav>
   </article>
 </Layout>
 
-<style>
-  .section-title {
-    position: relative;
-    display: inline-block;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #111827;
-  }
 
-  .dark .section-title {
-    color: #fff;
-  }
-
-  .section-title::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    height: 4px;
-    width: 48px;
-    border-radius: 9999px;
-    background-color: #3b82f6;
-  }
-</style>

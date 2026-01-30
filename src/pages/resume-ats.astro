@@ -2,7 +2,10 @@
 import { getEntry } from 'astro:content';
 
 const entry = await getEntry('resume-ko', 'main');
-const resumeData = entry!.data;
+if (!entry) {
+  throw new Error('Resume data not found');
+}
+const resumeData = entry.data;
 
 const data = {
   ...resumeData.personalInfo,

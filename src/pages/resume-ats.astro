@@ -215,7 +215,7 @@ const labels = resumeData.labels;
       {data.skills.map((skillGroup) => (
         <p class="skills-list">
           <span class="skill-category">{skillGroup.category}:</span>{' '}
-          {skillGroup.items.join(', ')}
+          {skillGroup.items.map(s => s.name).join(', ')}
         </p>
       ))}
     </section>

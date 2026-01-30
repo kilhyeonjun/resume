@@ -197,19 +197,27 @@ const labels = resumeData.labels;
       margin-bottom: 6px;
     }
 
-    .skill-tags {
+    .skill-list {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 4px;
     }
 
-    .skill-tag {
+    .skill-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+    }
+
+    .skill-name {
+      color: #374151;
+    }
+
+    .skill-dots {
+      color: #2563eb;
+      letter-spacing: 1px;
       font-size: 9px;
-      background: #eff6ff;
-      color: #1d4ed8;
-      padding: 3px 8px;
-      border-radius: 4px;
-      border: 1px solid #bfdbfe;
     }
 
     /* Education */
@@ -433,9 +441,12 @@ const labels = resumeData.labels;
             {data.skills.map((skillGroup) => (
               <div class="skill-group">
                 <h3 class="skill-category">{skillGroup.category}</h3>
-                <div class="skill-tags">
+                <div class="skill-list">
                   {skillGroup.items.map((skill) => (
-                    <span class="skill-tag">{skill}</span>
+                    <div class="skill-row">
+                      <span class="skill-name">{skill.name}</span>
+                      <span class="skill-dots">{'●'.repeat(skill.level)}{'○'.repeat(5 - skill.level)}</span>
+                    </div>
                   ))}
                 </div>
               </div>

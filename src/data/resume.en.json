@@ -13,19 +13,38 @@
   "skills": [
     {
       "category": "Programming Languages",
-      "items": ["TypeScript", "JavaScript", "Python", "Java"]
+      "items": [
+        { "name": "TypeScript", "level": 5 },
+        { "name": "JavaScript", "level": 5 },
+        { "name": "Python", "level": 4 },
+        { "name": "Java", "level": 3 }
+      ]
     },
     {
       "category": "Frameworks & Libraries",
-      "items": ["React", "Next.js", "Node.js", "Express"]
+      "items": [
+        { "name": "React", "level": 5 },
+        { "name": "Next.js", "level": 4 },
+        { "name": "Node.js", "level": 5 },
+        { "name": "Express", "level": 4 }
+      ]
     },
     {
       "category": "Databases",
-      "items": ["PostgreSQL", "MongoDB", "Redis"]
+      "items": [
+        { "name": "PostgreSQL", "level": 4 },
+        { "name": "MongoDB", "level": 4 },
+        { "name": "Redis", "level": 3 }
+      ]
     },
     {
       "category": "DevOps & Tools",
-      "items": ["Docker", "Kubernetes", "AWS", "Git"]
+      "items": [
+        { "name": "Docker", "level": 4 },
+        { "name": "Kubernetes", "level": 3 },
+        { "name": "AWS", "level": 4 },
+        { "name": "Git", "level": 5 }
+      ]
     }
   ],
   "experience": [

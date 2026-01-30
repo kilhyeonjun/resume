@@ -1,122 +1,395 @@
 {
   "personalInfo": {
-    "name": "Gildong Hong",
-    "title": "Software Engineer",
-    "email": "example@email.com",
-    "phone": "+82-10-1234-5678",
+    "name": "Hyeonjun Kil",
+    "title": "Backend Engineer",
+    "email": "kboxstar@gmail.com",
     "location": "Seoul, South Korea",
-    "website": "https://example.com",
-    "github": "https://github.com/username",
-    "linkedin": "https://linkedin.com/in/username"
+    "linkedin": "https://linkedin.com/in/kilhyeonjun",
+    "github": "https://github.com/kilhyeonjun",
+    "blog": "https://penguin-dev.tistory.com/"
   },
-  "summary": "A software engineer with over 5 years of experience.\nSpecialized in web application development and system design,\ndelivering efficient solutions through team collaboration.",
-  "skills": [
+  "summary": "Backend engineer with 3 years and 7 months of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), achieving quantifiable results including 82% BigQuery cost reduction, complete resolution of clinical trial system Deadlocks, and contributing to major hospital contract acquisitions.\n\nSpecialized in system design from monolithic to Event-Driven cloud-native architectures, creating long-term business value through root cause analysis and systematic solutions.",
+  "coreCompetencies": [
     {
-      "category": "Programming Languages",
+      "category": "⚡ Performance Optimization & Cost Efficiency",
       "items": [
-        { "name": "TypeScript", "level": 5 },
-        { "name": "JavaScript", "level": 5 },
-        { "name": "Python", "level": 4 },
-        { "name": "Java", "level": 3 }
+        "Cloud Cost Optimization: 82% BigQuery cost reduction ($6.25→$1.1 per TB)",
+        "Serverless Performance Tuning: Lambda response time improvement and resource efficiency",
+        "Real-time Communication Optimization: Network traffic optimization reducing server load"
       ]
     },
     {
-      "category": "Frameworks & Libraries",
+      "category": "🏗️ Scalable System Design",
       "items": [
-        { "name": "React", "level": 5 },
-        { "name": "Next.js", "level": 4 },
-        { "name": "Node.js", "level": 5 },
-        { "name": "Express", "level": 4 }
+        "Event-Driven Architecture: System stability and scalability through async messaging",
+        "Data Consistency: Transaction safety implementation in distributed environments",
+        "Microservices Transition: Service separation and independent deployment from monolithic"
       ]
+    },
+    {
+      "category": "🔧 System Reliability & Problem Solving",
+      "items": [
+        "Incident Analysis & Resolution: Root cause identification and complete resolution of complex concurrency issues",
+        "Scalable Design: Architecture improvements overcoming existing system limitations",
+        "Fault Tolerance: Service continuity even during external dependency failures"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "items": ["Node.js", "TypeScript", "Java"]
+    },
+    {
+      "category": "Frameworks",
+      "items": ["NestJS", "Express.js", "Spring Boot"]
     },
     {
       "category": "Databases",
-      "items": [
-        { "name": "PostgreSQL", "level": 4 },
-        { "name": "MongoDB", "level": 4 },
-        { "name": "Redis", "level": 3 }
-      ]
+      "items": ["MySQL", "BigQuery", "Redis"]
     },
     {
-      "category": "DevOps & Tools",
-      "items": [
-        { "name": "Docker", "level": 4 },
-        { "name": "Kubernetes", "level": 3 },
-        { "name": "AWS", "level": 4 },
-        { "name": "Git", "level": 5 }
-      ]
+      "category": "AWS",
+      "items": ["Lambda", "SQS", "SNS", "EventBridge", "RDS", "S3", "RDS Proxy", "ElastiCache"]
+    },
+    {
+      "category": "Infrastructure",
+      "items": ["AWS CDK", "Serverless Framework"]
+    },
+    {
+      "category": "Monitoring",
+      "items": ["CloudWatch", "DataDog", "Grafana"]
     }
   ],
   "experience": [
     {
-      "company": "Tech Company",
-      "position": "Senior Software Engineer",
-      "startDate": "2022-01",
+      "company": "GameDuo",
+      "companyUrl": "https://www.gameduo.net/ko",
+      "position": "DEV Team Server Developer",
+      "startDate": "2025-01",
       "current": true,
-      "description": "Backend system design and development",
+      "description": "Mobile game development and publishing company",
       "highlights": [
-        "Designed and implemented microservices architecture",
-        "Optimized CI/CD pipeline, reducing deployment time by 50%",
-        "Led new feature development and code reviews"
-      ]
+        "💰 82% BigQuery Cost Reduction: Storage Read API adoption ($6.25→$1.1 per TB)",
+        "☁️ Serverless Architecture: Event-Driven Architecture based AWS Lambda migration",
+        "📊 Marketing Integration Platform: Google Ads/Meta/TikTok unified dashboard",
+        "🎯 Game Data Audit System: Repository abstraction-based balance change tracking"
+      ],
+      "projects": [
+        {
+          "name": "Glider Sheet Audit Log System",
+          "period": "2025.01 ~ 2025.03",
+          "description": "Resolved game balance response delays and operational efficiency issues due to inability to track data change history",
+          "details": [
+            "Repository Abstraction Layer: Dedicated Repository design for entities requiring Audit Log management",
+            "Multi-DB Integrated Version Control: UUID-based cross-environment/project entity tracking system",
+            "Event Sourcing-based Merge System: Git-like multi-environment/game conflict resolution",
+            "Version Diff Engine: Field-level change tracking algorithm for object-level changes"
+          ]
+        },
+        {
+          "name": "Marketing Campaign Integration Platform",
+          "period": "2025.03 ~ 2025.05",
+          "description": "Resolved marketing operational inefficiency and lack of integration from multi-platform distributed management",
+          "details": [
+            "Integrated Dashboard: Manage all platform campaigns per game project in one place",
+            "Platform-specific API Module Separation: Independent API modules specialized for Google Ads/Meta/TikTok"
+          ]
+        },
+        {
+          "name": "Marketing Metrics System",
+          "period": "2025.03 ~ 2025.05",
+          "description": "Transitioned BigQuery data from Excel-based to internal admin-based integrated management",
+          "details": [
+            "BigQuery Snapshot-based Version Control: Point-in-time data management for periodic ML prediction data changes",
+            "BigQuery Storage Read API: gRPC streaming-based high-performance data reading with 82% cost reduction"
+          ]
+        },
+        {
+          "name": "AWS Lambda Migration & EDA Implementation",
+          "period": "2025.05 ~ 2025.07",
+          "description": "Resolved batch job processing limitations for marketing metrics system 60-day → 360-day expansion",
+          "details": [
+            "Hybrid Architecture: API Server (EC2) + Batch/Job Processing (Lambda) separation",
+            "Event-Driven Architecture: SQS + Lambda + EventBridge based async processing",
+            "NestJS DI-based Lambda Factory: Lambda adapter for existing code reuse and DI system",
+            "Transactional Outbox Pattern: Event publishing system for data consistency",
+            "RDS Proxy Connection Management: Resolved DB connection exhaustion during massive Lambda execution"
+          ]
+        },
+        {
+          "name": "Glider Nest Util Library",
+          "period": "2025.07 ~ 2025.08",
+          "description": "Resolved duplicate common logic development and implementation pattern differences across projects",
+          "details": [
+            "Internal GitHub Private Package: NPM-based library distribution and version management",
+            "Repository Module: Bulk operations, Audit Log, TypeORM type narrowing support",
+            "TypeScript Generics: Function overloading-based type narrowing to overcome TypeORM type limitations"
+          ]
+        }
+      ],
+      "techStack": ["Node.js", "TypeScript", "NestJS", "MySQL", "Redis", "BigQuery", "AWS Lambda", "SQS", "SNS", "EventBridge", "RDS Proxy", "AWS CDK", "CloudWatch", "DataDog", "Grafana"]
     },
     {
-      "company": "Startup A",
-      "position": "Software Engineer",
-      "startDate": "2019-03",
-      "endDate": "2021-12",
-      "description": "Full-stack development",
+      "company": "JNPMedi",
+      "companyUrl": "https://www.jnpmedi.com/",
+      "position": "Dev2 Team Docs Squad Backend Engineer",
+      "startDate": "2023-06",
+      "endDate": "2024-08",
+      "description": "Clinical trial data management solution startup with 16B KRW cumulative investment",
       "highlights": [
-        "Developed React-based frontend applications",
-        "Designed and implemented Node.js backend APIs",
-        "Optimized PostgreSQL database performance"
-      ]
+        "🔒 Complete Deadlock Resolution: Foreign key lock timing analysis preventing clinical trial notification failures",
+        "📈 New Contract Contribution: User-organization 1:N structure enabling major hospital and pharma company contracts",
+        "⚡ Rapid MVP Launch: VDR 3 weeks, TMF 3 months emergency deployment meeting deadlines",
+        "🔄 Event-Driven Architecture: AWS SNS/SQS based system reliability improvement"
+      ],
+      "projects": [
+        {
+          "name": "Maven Docs Electronic Consent System",
+          "period": "2023.07 ~ 2023.09",
+          "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance requirements",
+          "details": [
+            "Batch Delivery System: Participant group management per clinical trial and efficient consent delivery",
+            "Workflow Structure: Request → Researcher → Participant sequential flow management"
+          ]
+        },
+        {
+          "name": "Maven Docs System Reliability Improvement",
+          "period": "2023.08 ~ 2023.12",
+          "description": "Resolved critical notification failures due to database Deadlocks in clinical trial e-signature notifications",
+          "details": [
+            "Deadlock Root Cause Analysis: Identified shared-to-exclusive lock timing issue during foreign key creation",
+            "Event-Driven Architecture Design: AWS SNS → SQS → Lambda pipeline implementation",
+            "Real-time Cross-reference System: Document relationship tracking and auto-update",
+            "Word Document Conversion: Server-side engine converting Slate.js JSON to Word documents"
+          ]
+        },
+        {
+          "name": "Maven Mailing System Enhancement",
+          "period": "2023.12 ~ 2024.02",
+          "description": "Resolved lack of delivery status tracking and data consistency issues in email system",
+          "details": [
+            "AWS SES Monitoring: Real-time tracking of delivery/bounce/complaint status",
+            "Event-based Delivery System: Stable email delivery separated from transactions",
+            "Inline Image Attachment: CID-based image embedding improving display rate"
+          ]
+        },
+        {
+          "name": "Maven Auth System Enhancement",
+          "period": "2024.01 ~ 2024.02",
+          "description": "Resolved user inconvenience and system scalability limitations from 1:1 user-organization structure",
+          "details": [
+            "User-Organization Relationship Expansion: 1:1 to 1:N structure for multi-organization management",
+            "Backward Compatibility: New features while maintaining existing functionality"
+          ]
+        },
+        {
+          "name": "Maven VDR MVP Development",
+          "period": "2024.06 ~ 2024.07 (3 weeks)",
+          "description": "Emergency deployment for delayed VDR project under MVP launch pressure",
+          "details": [
+            "Event-Driven PDF Conversion: S3 upload trigger → Lambda lightweight conversion → SNS/SQS notification",
+            "Permission-based Workflow: Document access and approval permission management by medical role"
+          ]
+        }
+      ],
+      "techStack": ["Node.js", "TypeScript", "Express.js", "cyan", "Aurora Serverless v2", "knex", "AWS Lambda", "S3", "SNS", "SQS", "SES", "React", "Jotai"]
+    },
+    {
+      "company": "Medgo",
+      "companyUrl": "https://www.rocketpunch.com/companies/baropill",
+      "position": "Dev Team Backend Engineer",
+      "startDate": "2022-04",
+      "endDate": "2023-06",
+      "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
+      "highlights": [
+        "🏗️ Architecture Modernization: Express.js → NestJS transition for code consistency and type safety",
+        "🔐 Unified Authentication System: JWT-based subdomain session conflict resolution",
+        "🏥 Medical Service Automation: OCR + public API for automated prescription medication guidance",
+        "⚡ Real-time Optimization: Socket.IO Room targeting for network traffic optimization"
+      ],
+      "projects": [
+        {
+          "name": "Baropill Doctor/Pharmacist Service Architecture Improvement",
+          "period": "2022.04 ~ 2023.06",
+          "description": "Resolved scalability limitations of early startup's single file (app.js) Express + EJS structure",
+          "details": [
+            "Gradual Architecture Improvement: Single file → Layered architecture → NestJS modular structure",
+            "JavaScript → TypeScript + NestJS: Standardized structure for code consistency",
+            "Appointment Reservation System: Doctor availability management and patient reservation interface",
+            "Prescription-based Medication Guidance Automation: Naver Clova OCR + MFDS API for full automation",
+            "Real-time Status Reflection: Socket.IO Room-based efficient targeted notifications",
+            "Internal API Gateway: Payment + Delivery API unified interface abstraction"
+          ]
+        },
+        {
+          "name": "Member Authentication System",
+          "period": "2022.04 (3 weeks)",
+          "description": "Resolved subdomain-based session conflicts and multi-platform unified authentication requirements",
+          "details": [
+            "JWT-based Auth Server: Independent authentication service for microservices architecture",
+            "MySQL-based JWT Key Management: Cost-efficient JWT key management using existing DB infrastructure",
+            "Dual Token Strategy: Access Token + Refresh Token balancing security and usability"
+          ]
+        }
+      ],
+      "techStack": ["Node.js", "TypeScript", "JavaScript", "Express.js", "NestJS", "MySQL", "TypeORM", "Socket.IO", "Web Push Notification", "Naver Clova OCR", "AWS EC2", "RDS", "S3"]
+    },
+    {
+      "company": "SimpleHAN",
+      "companyUrl": "http://www.ohcomon.com/simpleHAN/",
+      "position": "Dev Team Backend Engineer",
+      "startDate": "2021-07",
+      "endDate": "2022-04",
+      "description": "Custom software solutions SI company",
+      "highlights": [
+        "📊 Bulk Data Processing: Apache POI-based batch processing for hundreds of member records",
+        "🔐 Multi-country Unified Auth: JWT-based cross-domain login system",
+        "🚀 Deployment Automation: Travis CI-based CI/CD eliminating hosting costs",
+        "🔧 Legacy Integration: iframe-based PHP system non-disruptive feature extension"
+      ],
+      "projects": [
+        {
+          "name": "Learning Management System (LMS) Development",
+          "period": "2021.07 ~ 2022.04",
+          "description": "Resolved manual administrative tasks and lack of learner convenience in educational institutions",
+          "details": [
+            "QR Attendance Check: Real-time attendance processing API with duplicate check logic",
+            "Excel-based Bulk Registration: Apache POI-based batch member information processing",
+            "Dynamic Certificate: JasperReports-based PDF auto-generation API"
+          ]
+        },
+        {
+          "name": "Incheon Smart Green Industrial Complex Control Center",
+          "period": "2022.01 ~ 2022.04",
+          "description": "Resolved inefficiency in meeting room reservation management and manual notification system",
+          "details": [
+            "Reservation System API: Real-time availability check and conflict prevention logic",
+            "Dashboard API: Integrated monitoring data and status aggregation",
+            "Async SMS Processing: Background SMS delivery on reservation confirmation"
+          ]
+        },
+        {
+          "name": "Future Service JOB Agent Development",
+          "period": "2021.07 ~ 2022.04",
+          "description": "Resolved offline constraints in career counseling and startup assessment",
+          "details": [
+            "Assessment System: Spring Boot-based independent assessment application",
+            "iframe-based System Integration: Assessment feature embedded in existing PHP system",
+            "Composite Score Calculation: Multi-survey result aggregation algorithm"
+          ]
+        },
+        {
+          "name": "kfriends Member Management System",
+          "period": "2021.09 (3 weeks)",
+          "description": "Resolved need for unified member management across country-specific distributed websites",
+          "details": [
+            "Unified Auth Server: Spring Security + JWT-based centralized authentication",
+            "Multi-domain CORS Handling: Secure token exchange across country-specific domains"
+          ]
+        },
+        {
+          "name": "Internal Tech Blog Renewal",
+          "period": "2021.09 (3 weeks)",
+          "description": "Resolved hosting cost burden and maintenance complexity of WordPress-based blog",
+          "details": [
+            "WordPress → Jekyll Migration: Static site conversion",
+            "GitHub Pages Hosting: Free hosting without server management",
+            "Travis CI Automation: Git push-based auto build and deploy pipeline"
+          ]
+        }
+      ],
+      "techStack": ["Java 8/11", "Spring Boot", "Spring Security", "MariaDB", "MySQL", "MyBatis", "JPA", "Apache POI", "JasperReports", "AWS EC2", "RDS", "S3", "Travis CI", "Jekyll"]
     }
   ],
   "education": [
     {
-      "institution": "Korea University",
+      "institution": "Inha Technical College",
       "degree": "Bachelor's",
-      "field": "Computer Science",
-      "startDate": "2015-03",
-      "endDate": "2019-02",
-      "gpa": "3.8/4.5"
+      "field": "Computer Information Engineering",
+      "startDate": "2022-02",
+      "endDate": "2023-02",
+      "gpa": "4.10/4.5"
+    },
+    {
+      "institution": "Inha Technical College",
+      "degree": "Associate",
+      "field": "Computer Information",
+      "startDate": "2017-02",
+      "endDate": "2022-02",
+      "gpa": "4.16/4.5"
     }
   ],
-  "projects": [
+  "continuousLearning": [
     {
-      "name": "Open Source Project",
-      "description": "Community-contributed open source CLI tool",
-      "url": "https://github.com/username/project",
-      "technologies": ["TypeScript", "Node.js"]
+      "name": "Hanghae Plus Backend 6th Cohort",
+      "period": "2024.09 ~ 2024.11",
+      "description": "TDD, Clean Architecture, Concurrency Control, Redis",
+      "url": "https://github.com/hhpb-code"
+    },
+    {
+      "name": "AWS SAA Study Group",
+      "period": "2023.09 ~ 2023.12",
+      "description": "JNPMedi internal study group, Cloud Architecture deep dive"
+    }
+  ],
+  "technicalWriting": [
+    {
+      "title": "Email Delivery Monitoring through AWS SES Event Logs",
+      "date": "2024-03",
+      "type": "Tech Blog",
+      "url": "https://jnp.tech/posts/2024-03-aws-ses-event-log"
+    },
+    {
+      "title": "Mailing System Email Delivery Result Tracking Feature",
+      "date": "2024-02",
+      "type": "Internal Seminar"
+    }
+  ],
+  "openSource": [
+    {
+      "name": "cyan framework \"NOT IN\" query condition addition",
+      "date": "2024-05",
+      "url": "https://github.com/coralblack/cyan/pull/110"
+    }
+  ],
+  "awards": [
+    {
+      "name": "2014 Youth Future Imagination Technology Competition Gold Award (KIPO Director Award)",
+      "date": "2014",
+      "description": "AppKeeper mobile app launch"
     }
   ],
   "certifications": [
     {
-      "name": "AWS Solutions Architect",
-      "issuer": "Amazon Web Services",
-      "date": "2023-06",
-      "url": "https://aws.amazon.com/certification/"
+      "name": "Engineer Information Processing",
+      "issuer": "Human Resources Development Service of Korea",
+      "date": "2023-06"
     }
   ],
   "languages": [
     {
       "language": "Korean",
       "proficiency": "Native"
-    },
-    {
-      "language": "English",
-      "proficiency": "Business Level"
     }
   ],
+  "links": {
+    "portfolio": "https://www.notion.so/portfolio-cdf7a52d6fe147a4bac6bdd4c410ec37",
+    "careerDetails": "https://www.notion.so/2485159e911e80f08fe1f2d7e40d4e6f"
+  },
   "labels": {
-    "summary": "Summary",
+    "summary": "About",
+    "coreCompetencies": "Core Competencies",
     "experience": "Experience",
-    "skills": "Skills",
+    "skills": "Technical Skills",
     "education": "Education",
-    "projects": "Projects",
+    "continuousLearning": "Continuous Learning",
+    "technicalWriting": "Technical Writing",
+    "openSource": "Open Source",
+    "awards": "Awards",
     "certifications": "Certifications",
     "languages": "Languages",
+    "projects": "Projects",
     "current": "Present",
     "print": "Print",
     "pdfVersion": "PDF Version",

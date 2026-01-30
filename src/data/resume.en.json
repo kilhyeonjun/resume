@@ -38,27 +38,55 @@
   "skills": [
     {
       "category": "Languages",
-      "items": ["Node.js", "TypeScript", "Java"]
+      "items": [
+        { "name": "Node.js", "level": 5 },
+        { "name": "TypeScript", "level": 5 },
+        { "name": "Java", "level": 3 }
+      ]
     },
     {
       "category": "Frameworks",
-      "items": ["NestJS", "Express.js", "Spring Boot"]
+      "items": [
+        { "name": "NestJS", "level": 5 },
+        { "name": "Express.js", "level": 4 },
+        { "name": "Spring Boot", "level": 3 }
+      ]
     },
     {
       "category": "Databases",
-      "items": ["MySQL", "BigQuery", "Redis"]
+      "items": [
+        { "name": "MySQL", "level": 5 },
+        { "name": "BigQuery", "level": 4 },
+        { "name": "Redis", "level": 4 }
+      ]
     },
     {
       "category": "AWS",
-      "items": ["Lambda", "SQS", "SNS", "EventBridge", "RDS", "S3", "RDS Proxy", "ElastiCache"]
+      "items": [
+        { "name": "Lambda", "level": 5 },
+        { "name": "SQS", "level": 5 },
+        { "name": "SNS", "level": 5 },
+        { "name": "EventBridge", "level": 4 },
+        { "name": "RDS", "level": 4 },
+        { "name": "S3", "level": 4 },
+        { "name": "RDS Proxy", "level": 4 },
+        { "name": "ElastiCache", "level": 3 }
+      ]
     },
     {
       "category": "Infrastructure",
-      "items": ["AWS CDK", "Serverless Framework"]
+      "items": [
+        { "name": "AWS CDK", "level": 4 },
+        { "name": "Serverless Framework", "level": 4 }
+      ]
     },
     {
       "category": "Monitoring",
-      "items": ["CloudWatch", "DataDog", "Grafana"]
+      "items": [
+        { "name": "CloudWatch", "level": 4 },
+        { "name": "DataDog", "level": 4 },
+        { "name": "Grafana", "level": 4 }
+      ]
     }
   ],
   "experience": [

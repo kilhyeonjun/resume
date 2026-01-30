@@ -1,0 +1,220 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+
+  --font-family-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+  @apply antialiased;
+  @apply transition-colors duration-200;
+}
+
+/* Typography enhancements for dark mode */
+.prose {
+  @apply dark:prose-invert;
+}
+
+/* ================================
+   Print Styles (Optimized for PDF)
+   ================================ */
+@media print {
+  /* Hide non-printable elements */
+  .no-print,
+  header:has(nav),
+  footer,
+  nav,
+  button,
+  .dark-mode-toggle {
+    display: none !important;
+  }
+
+  /* Reset colors for print */
+  * {
+    color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  html {
+    font-size: 11pt;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Remove dark mode in print */
+  .dark body,
+  body.dark {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Links in print */
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  a[href^="mailto:"]::after,
+  a[href^="tel:"]::after {
+    content: "";
+  }
+
+  /* Page settings */
+  @page {
+    margin: 15mm;
+    size: A4;
+  }
+
+  @page :first {
+    margin-top: 10mm;
+  }
+
+  /* Prevent orphans and widows */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  p, li, blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Prevent breaks inside elements */
+  .experience-item,
+  .education-item,
+  .project-card,
+  .cert-item,
+  article > section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Resume specific print styles */
+  .resume-container {
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .resume-header {
+    margin-bottom: 16px !important;
+  }
+
+  /* Section titles in print */
+  .section-title {
+    color: #2563eb !important;
+  }
+
+  .section-title::after {
+    display: none;
+  }
+
+  /* Skills badges in print */
+  .skill-badge {
+    background: #f3f4f6 !important;
+    border: 1px solid #d1d5db !important;
+    color: #374151 !important;
+    padding: 2px 8px !important;
+    font-size: 9pt;
+  }
+
+  /* Project cards in print */
+  .project-card {
+    border: 1px solid #e5e7eb !important;
+    background: white !important;
+    box-shadow: none !important;
+    margin-bottom: 8px;
+  }
+
+  /* Experience items in print */
+  .experience-item::before,
+  .education-item::before {
+    background: #2563eb !important;
+  }
+
+  /* Grid layouts for print */
+  .grid {
+    display: block !important;
+  }
+
+  .lg\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Spacing adjustments */
+  section {
+    margin-bottom: 12px !important;
+  }
+
+  /* Hide external link indicators */
+  a svg {
+    display: none !important;
+  }
+}
+
+/* Screen-only styles (not printed) */
+@media screen {
+  /* Smooth transitions */
+  .transition-colors {
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  /* Focus styles for accessibility */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+
+  /* Hover effects */
+  .skill-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .project-card:hover {
+    border-color: var(--color-primary-400);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+/* Selection styling */
+::selection {
+  background-color: var(--color-primary-200);
+  color: var(--color-primary-900);
+}
+
+.dark ::selection {
+  background-color: var(--color-primary-800);
+  color: var(--color-primary-100);
+}

@@ -1,0 +1,107 @@
+{
+  "personalInfo": {
+    "name": "Gildong Hong",
+    "title": "Software Engineer",
+    "email": "example@email.com",
+    "phone": "+82-10-1234-5678",
+    "location": "Seoul, South Korea",
+    "website": "https://example.com",
+    "github": "https://github.com/username",
+    "linkedin": "https://linkedin.com/in/username"
+  },
+  "summary": "A software engineer with over 5 years of experience.\nSpecialized in web application development and system design,\ndelivering efficient solutions through team collaboration.",
+  "skills": [
+    {
+      "category": "Programming Languages",
+      "items": ["TypeScript", "JavaScript", "Python", "Java"]
+    },
+    {
+      "category": "Frameworks & Libraries",
+      "items": ["React", "Next.js", "Node.js", "Express"]
+    },
+    {
+      "category": "Databases",
+      "items": ["PostgreSQL", "MongoDB", "Redis"]
+    },
+    {
+      "category": "DevOps & Tools",
+      "items": ["Docker", "Kubernetes", "AWS", "Git"]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Tech Company",
+      "position": "Senior Software Engineer",
+      "startDate": "2022-01",
+      "current": true,
+      "description": "Backend system design and development",
+      "highlights": [
+        "Designed and implemented microservices architecture",
+        "Optimized CI/CD pipeline, reducing deployment time by 50%",
+        "Led new feature development and code reviews"
+      ]
+    },
+    {
+      "company": "Startup A",
+      "position": "Software Engineer",
+      "startDate": "2019-03",
+      "endDate": "2021-12",
+      "description": "Full-stack development",
+      "highlights": [
+        "Developed React-based frontend applications",
+        "Designed and implemented Node.js backend APIs",
+        "Optimized PostgreSQL database performance"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Korea University",
+      "degree": "Bachelor's",
+      "field": "Computer Science",
+      "startDate": "2015-03",
+      "endDate": "2019-02",
+      "gpa": "3.8/4.5"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Open Source Project",
+      "description": "Community-contributed open source CLI tool",
+      "url": "https://github.com/username/project",
+      "technologies": ["TypeScript", "Node.js"]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "AWS Solutions Architect",
+      "issuer": "Amazon Web Services",
+      "date": "2023-06",
+      "url": "https://aws.amazon.com/certification/"
+    }
+  ],
+  "languages": [
+    {
+      "language": "Korean",
+      "proficiency": "Native"
+    },
+    {
+      "language": "English",
+      "proficiency": "Business Level"
+    }
+  ],
+  "labels": {
+    "summary": "Summary",
+    "experience": "Experience",
+    "skills": "Skills",
+    "education": "Education",
+    "projects": "Projects",
+    "certifications": "Certifications",
+    "languages": "Languages",
+    "current": "Present",
+    "print": "Print",
+    "pdfVersion": "PDF Version",
+    "atsOptimized": "ATS Optimized",
+    "backToResume": "Back to Resume"
+  }
+}

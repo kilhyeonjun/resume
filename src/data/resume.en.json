@@ -39,53 +39,53 @@
     {
       "category": "Languages",
       "items": [
-        { "name": "Node.js", "proficiency": "Expert", "context": "EDA architecture design, Lambda migration" },
-        { "name": "TypeScript", "proficiency": "Expert", "context": "Type system mastery, generic library development" },
-        { "name": "Java", "proficiency": "Familiar" }
+        { "name": "Node.js", "description": "EDA architecture design & Lambda migration lead, 3+ years production" },
+        { "name": "TypeScript", "description": "Type system expertise, generic-based internal library development" },
+        { "name": "Java", "description": "Spring Boot development in SI environment" }
       ]
     },
     {
       "category": "Frameworks",
       "items": [
-        { "name": "NestJS", "proficiency": "Expert", "context": "DI-based Lambda factory, internal library development" },
-        { "name": "Express.js", "proficiency": "Proficient" },
-        { "name": "Spring Boot", "proficiency": "Familiar" }
+        { "name": "NestJS", "description": "DI-based Lambda factory design, internal shared library development" },
+        { "name": "Express.js", "description": "Clinical trial/healthcare domain API development" },
+        { "name": "Spring Boot", "description": "LMS, member authentication system development" }
       ]
     },
     {
       "category": "Databases",
       "items": [
-        { "name": "MySQL", "proficiency": "Expert", "context": "Deadlock analysis & resolution, transaction design" },
-        { "name": "BigQuery", "proficiency": "Proficient", "context": "82% cost reduction via Storage Read API" },
-        { "name": "Redis", "proficiency": "Proficient" }
+        { "name": "MySQL", "description": "Deadlock root cause analysis & resolution, transaction design" },
+        { "name": "BigQuery", "description": "82% cost reduction via Storage Read API" },
+        { "name": "Redis", "description": "Caching strategy design, ElastiCache operations" }
       ]
     },
     {
       "category": "AWS",
       "items": [
-        { "name": "Lambda", "proficiency": "Expert", "context": "Event-Driven Architecture implementation" },
-        { "name": "SQS", "proficiency": "Expert", "context": "Outbox pattern, async messaging" },
-        { "name": "SNS", "proficiency": "Expert" },
-        { "name": "EventBridge", "proficiency": "Proficient" },
-        { "name": "RDS", "proficiency": "Proficient" },
-        { "name": "S3", "proficiency": "Proficient" },
-        { "name": "RDS Proxy", "proficiency": "Proficient" },
-        { "name": "ElastiCache", "proficiency": "Familiar" }
+        { "name": "Lambda", "description": "EDA-based serverless migration design & implementation" },
+        { "name": "SQS", "description": "Outbox pattern, async messaging system development" },
+        { "name": "SNS", "description": "Event-driven notification pipeline design" },
+        { "name": "EventBridge", "description": "Scheduling and event routing" },
+        { "name": "RDS", "description": "Aurora Serverless v2, RDS Proxy connection management" },
+        { "name": "S3", "description": "File storage, event trigger integration" },
+        { "name": "RDS Proxy", "description": "Connection pooling for massive Lambda execution" },
+        { "name": "ElastiCache", "description": "Redis cluster operations" }
       ]
     },
     {
       "category": "Infrastructure",
       "items": [
-        { "name": "AWS CDK", "proficiency": "Proficient" },
-        { "name": "Serverless Framework", "proficiency": "Proficient" }
+        { "name": "AWS CDK", "description": "IaC-based infrastructure provisioning" },
+        { "name": "Serverless Framework", "description": "Lambda deployment automation" }
       ]
     },
     {
       "category": "Monitoring",
       "items": [
-        { "name": "CloudWatch", "proficiency": "Proficient" },
-        { "name": "DataDog", "proficiency": "Proficient" },
-        { "name": "Grafana", "proficiency": "Proficient" }
+        { "name": "CloudWatch", "description": "Logging, metrics, alarm configuration" },
+        { "name": "DataDog", "description": "APM, distributed tracing" },
+        { "name": "Grafana", "description": "Dashboard creation, visualization" }
       ]
     }
   ],

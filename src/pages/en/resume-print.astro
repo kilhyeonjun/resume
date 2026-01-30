@@ -228,32 +228,22 @@ const labels = resumeData.labels;
       color: #374151;
     }
 
-    .skill-proficiency {
-      font-size: 8px;
-      padding: 1px 6px;
-      border-radius: 3px;
+    .skill-item-print {
+      margin-bottom: 6px;
     }
 
-    .skill-proficiency.expert {
-      background: #dbeafe;
-      color: #1d4ed8;
+    .skill-name {
+      font-size: 10px;
+      font-weight: 600;
+      color: #111827;
+      display: block;
     }
 
-    .skill-proficiency.proficient {
-      background: #f3f4f6;
-      color: #374151;
-    }
-
-    .skill-proficiency.familiar {
-      background: #f9fafb;
-      color: #6b7280;
-    }
-
-    .skill-context {
+    .skill-desc {
       font-size: 8px;
       color: #6b7280;
-      margin-top: 2px;
-      padding-left: 4px;
+      display: block;
+      margin-top: 1px;
     }
 
     /* Education */
@@ -459,13 +449,10 @@ const labels = resumeData.labels;
                 <h3 class="skill-category">{skillGroup.category}</h3>
                 <div class="skill-list">
                   {skillGroup.items.map((skill) => (
-                    <div class="skill-row">
+                    <div class="skill-item-print">
                       <span class="skill-name">{skill.name}</span>
-                      <span class={`skill-proficiency ${skill.proficiency === 'Expert' ? 'expert' : skill.proficiency === 'Proficient' ? 'proficient' : 'familiar'}`}>{skill.proficiency}</span>
+                      <span class="skill-desc">{skill.description}</span>
                     </div>
-                  ))}
-                  {skillGroup.items.filter(s => s.context).map((skill) => (
-                    <div class="skill-context">{skill.name}: {skill.context}</div>
                   ))}
                 </div>
               </div>

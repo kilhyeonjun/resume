@@ -39,53 +39,53 @@
     {
       "category": "언어",
       "items": [
-        { "name": "Node.js", "proficiency": "Expert", "context": "EDA 아키텍처 설계, Lambda 마이그레이션" },
-        { "name": "TypeScript", "proficiency": "Expert", "context": "타입 시스템 활용, 제네릭 라이브러리 개발" },
-        { "name": "Java", "proficiency": "Familiar" }
+        { "name": "Node.js", "description": "EDA 아키텍처 설계 및 Lambda 마이그레이션 리드, 3년+ 프로덕션 경험" },
+        { "name": "TypeScript", "description": "타입 시스템 활용, 제네릭 기반 사내 라이브러리 개발" },
+        { "name": "Java", "description": "SI 환경 Spring Boot 개발 경험" }
       ]
     },
     {
       "category": "프레임워크",
       "items": [
-        { "name": "NestJS", "proficiency": "Expert", "context": "DI 기반 Lambda 팩토리, 사내 라이브러리 개발" },
-        { "name": "Express.js", "proficiency": "Proficient" },
-        { "name": "Spring Boot", "proficiency": "Familiar" }
+        { "name": "NestJS", "description": "DI 기반 Lambda 팩토리 설계, 사내 공통 라이브러리 개발" },
+        { "name": "Express.js", "description": "임상시험/헬스케어 도메인 API 개발" },
+        { "name": "Spring Boot", "description": "LMS, 회원 인증 시스템 개발" }
       ]
     },
     {
       "category": "데이터베이스",
       "items": [
-        { "name": "MySQL", "proficiency": "Expert", "context": "Deadlock 분석 및 해결, 트랜잭션 설계" },
-        { "name": "BigQuery", "proficiency": "Proficient", "context": "Storage Read API로 비용 82% 절감" },
-        { "name": "Redis", "proficiency": "Proficient" }
+        { "name": "MySQL", "description": "Deadlock 근본 원인 분석 및 해결, 트랜잭션 설계" },
+        { "name": "BigQuery", "description": "Storage Read API 도입으로 비용 82% 절감" },
+        { "name": "Redis", "description": "캐싱 전략 설계, ElastiCache 운영" }
       ]
     },
     {
       "category": "AWS",
       "items": [
-        { "name": "Lambda", "proficiency": "Expert", "context": "Event-Driven Architecture 구축" },
-        { "name": "SQS", "proficiency": "Expert", "context": "아웃박스 패턴, 비동기 메시징" },
-        { "name": "SNS", "proficiency": "Expert" },
-        { "name": "EventBridge", "proficiency": "Proficient" },
-        { "name": "RDS", "proficiency": "Proficient" },
-        { "name": "S3", "proficiency": "Proficient" },
-        { "name": "RDS Proxy", "proficiency": "Proficient" },
-        { "name": "ElastiCache", "proficiency": "Familiar" }
+        { "name": "Lambda", "description": "EDA 기반 서버리스 마이그레이션 설계 및 구현" },
+        { "name": "SQS", "description": "아웃박스 패턴 적용, 비동기 메시징 시스템 구축" },
+        { "name": "SNS", "description": "이벤트 기반 알림 파이프라인 설계" },
+        { "name": "EventBridge", "description": "스케줄링 및 이벤트 라우팅" },
+        { "name": "RDS", "description": "Aurora Serverless v2, RDS Proxy 기반 커넥션 관리" },
+        { "name": "S3", "description": "파일 저장소, 이벤트 트리거 활용" },
+        { "name": "RDS Proxy", "description": "Lambda 대량 실행 시 커넥션 풀링" },
+        { "name": "ElastiCache", "description": "Redis 클러스터 운영" }
       ]
     },
     {
       "category": "Infrastructure",
       "items": [
-        { "name": "AWS CDK", "proficiency": "Proficient" },
-        { "name": "Serverless Framework", "proficiency": "Proficient" }
+        { "name": "AWS CDK", "description": "IaC 기반 인프라 구성" },
+        { "name": "Serverless Framework", "description": "Lambda 배포 자동화" }
       ]
     },
     {
       "category": "모니터링",
       "items": [
-        { "name": "CloudWatch", "proficiency": "Proficient" },
-        { "name": "DataDog", "proficiency": "Proficient" },
-        { "name": "Grafana", "proficiency": "Proficient" }
+        { "name": "CloudWatch", "description": "로깅, 메트릭, 알람 설정" },
+        { "name": "DataDog", "description": "APM, 분산 트레이싱" },
+        { "name": "Grafana", "description": "대시보드 구성, 시각화" }
       ]
     }
   ],

@@ -1,0 +1,302 @@
+{
+  "projects": [
+    {
+      "slug": "concert-reservation",
+      "name": {
+        "ko": "콘서트 예약 서비스",
+        "en": "Concert Reservation Service"
+      },
+      "type": "personal",
+      "summary": {
+        "ko": "동시성 및 대규모 트래픽을 고려한 콘서트 좌석을 예약 학습 프로젝트",
+        "en": "A learning project for concert seat reservation considering concurrency and large-scale traffic"
+      },
+      "period": {
+        "start": "2024-10-05",
+        "end": "2024-11-30"
+      },
+      "skills": ["Java", "Spring Boot", "JPA", "Redis", "MySQL"],
+      "github": "https://github.com/hhpb-code/hhplus-concert",
+      "links": {
+        "sequenceDiagram": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/SEQUENCE_DIAGRAM.md",
+        "requirements": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/REQUIREMENT.md",
+        "projectStructure": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/PROJECT_STRUCTURE.md"
+      },
+      "blogPosts": [
+        {
+          "title": {
+            "ko": "JPA 비관적 락과 낙관적 락 및 재시도",
+            "en": "JPA Pessimistic Lock, Optimistic Lock and Retry"
+          },
+          "url": "https://penguin-dev.tistory.com/19"
+        },
+        {
+          "title": {
+            "ko": "Spring Boot 콘서트 예약 시나리오 동시성 문제 분석",
+            "en": "Spring Boot Concert Reservation Concurrency Analysis"
+          },
+          "url": "https://penguin-dev.tistory.com/22"
+        },
+        {
+          "title": {
+            "ko": "Spring Boot Redis를 활용한 분산 락 구현",
+            "en": "Distributed Lock Implementation with Spring Boot Redis"
+          },
+          "url": "https://penguin-dev.tistory.com/21"
+        },
+        {
+          "title": {
+            "ko": "캐시(Cache)와 캐싱 전략(Caching Strategy)",
+            "en": "Cache and Caching Strategy"
+          },
+          "url": "https://penguin-dev.tistory.com/24"
+        }
+      ],
+      "highlights": {
+        "ko": [
+          "비관적 락/낙관적 락 구현 및 성능 비교",
+          "Redis 분산 락을 통한 동시성 제어",
+          "캐싱 전략 적용으로 성능 최적화",
+          "인덱싱을 통한 쿼리 성능 개선",
+          "K6를 이용한 부하 테스트 및 장애 대응"
+        ],
+        "en": [
+          "Implemented pessimistic/optimistic locks with performance comparison",
+          "Concurrency control through Redis distributed lock",
+          "Performance optimization with caching strategies",
+          "Query performance improvement through indexing",
+          "Load testing and incident response with K6"
+        ]
+      }
+    },
+    {
+      "slug": "medical-recruit",
+      "name": {
+        "ko": "병원 채용공고 알림 프로젝트",
+        "en": "Hospital Job Alert Service"
+      },
+      "type": "personal",
+      "summary": {
+        "ko": "실시간 대학병원 채용공고 맞춤형 알림 서비스",
+        "en": "Real-time customized job alert service for university hospitals"
+      },
+      "period": {
+        "start": "2024-08-02",
+        "end": "2024-08-14"
+      },
+      "skills": ["Node.js", "TypeORM", "NestJS", "PostgreSQL", "TypeScript", "AWS EC2", "AWS RDS", "Puppeteer"],
+      "github": "https://github.com/kilhyeonjun/medical-recruit-be",
+      "highlights": {
+        "ko": [
+          "Puppeteer를 이용한 채용공고 웹 스크래핑",
+          "AWS EC2/RDS 기반 서버리스 배포",
+          "맞춤형 알림 시스템 구현"
+        ],
+        "en": [
+          "Job posting web scraping with Puppeteer",
+          "Serverless deployment based on AWS EC2/RDS",
+          "Customized notification system implementation"
+        ]
+      }
+    },
+    {
+      "slug": "startuppool",
+      "name": {
+        "ko": "스타트업풀",
+        "en": "StartupPool"
+      },
+      "type": "team",
+      "teamComposition": {
+        "ko": "FE(2명) BE(2명) 기획(1명) 디자인(1명) 마케팅(2명) / 본인 BE 담당",
+        "en": "FE(2) BE(2) PM(1) Design(1) Marketing(2) / Responsible for BE"
+      },
+      "summary": {
+        "ko": "창업 버티컬 네트워크 플랫폼",
+        "en": "Startup vertical network platform"
+      },
+      "period": {
+        "start": "2023-04-28",
+        "end": "2023-06-28"
+      },
+      "skills": ["NestJS", "PostgreSQL"],
+      "links": {
+        "letspl": "https://letspl.me/project/707"
+      },
+      "collaborationTools": ["Figma", "Jira", "Confluence", "Discord"],
+      "highlights": {
+        "ko": [
+          "창업 팀 빌딩 및 아이템 개발 기능",
+          "창업 정보 종합 제공 플랫폼",
+          "팀 프로젝트로 협업 경험"
+        ],
+        "en": [
+          "Startup team building and item development features",
+          "Comprehensive startup information platform",
+          "Team collaboration experience"
+        ]
+      }
+    },
+    {
+      "slug": "slack-clone",
+      "name": {
+        "ko": "슬랙 API 클론 코딩",
+        "en": "Slack API Clone"
+      },
+      "type": "personal",
+      "summary": {
+        "ko": "슬랙 API 클론 코딩",
+        "en": "Slack API Clone Coding"
+      },
+      "period": {
+        "start": "2022-03-25",
+        "end": "2022-07-28"
+      },
+      "skills": ["JavaScript", "Node.js", "NestJS", "MySQL", "TypeORM", "Jest"],
+      "github": "https://github.com/kilhyeonjun/node-study/tree/master/slack-nest-typeorm",
+      "links": {
+        "course": "https://www.inflearn.com/course/슬랙클론코딩-백엔드"
+      },
+      "highlights": {
+        "ko": [
+          "NestJS 기반 백엔드 API 구현",
+          "TypeORM을 이용한 데이터베이스 설계",
+          "Jest를 이용한 테스트 코드 작성"
+        ],
+        "en": [
+          "Backend API implementation based on NestJS",
+          "Database design using TypeORM",
+          "Test code writing with Jest"
+        ]
+      }
+    },
+    {
+      "slug": "react-nodebird",
+      "name": {
+        "ko": "react nodebird",
+        "en": "React Nodebird"
+      },
+      "type": "personal",
+      "summary": {
+        "ko": "react nodebird 트위터 클론 코딩",
+        "en": "Twitter clone coding with React Nodebird"
+      },
+      "period": {
+        "start": "2022-03-25",
+        "end": "2022-07-28"
+      },
+      "skills": ["JavaScript", "React", "Next.js", "Node.js", "Express.js", "MySQL", "Redux", "Sequelize", "Ant Design", "Lambda", "S3", "EC2", "Route53"],
+      "github": "https://github.com/kilhyeonjun/node-study/tree/master/react-nodebird",
+      "links": {
+        "course": "https://www.inflearn.com/course/노드버드-리액트-리뉴얼"
+      },
+      "highlights": {
+        "ko": [
+          "React/Next.js 기반 프론트엔드",
+          "Redux를 이용한 상태 관리",
+          "AWS Lambda/S3/EC2/Route53 배포"
+        ],
+        "en": [
+          "Frontend based on React/Next.js",
+          "State management using Redux",
+          "AWS Lambda/S3/EC2/Route53 deployment"
+        ]
+      }
+    },
+    {
+      "slug": "multichat",
+      "name": {
+        "ko": "MultiChat",
+        "en": "MultiChat"
+      },
+      "type": "personal",
+      "summary": {
+        "ko": "Python 멀티채팅 애플리케이션",
+        "en": "Python multi-chat application"
+      },
+      "period": {
+        "start": "2021-06-07",
+        "end": "2021-06-17"
+      },
+      "skills": ["Python", "tkinter", "thread"],
+      "github": "https://github.com/kilhyeonjun/MultiChat",
+      "highlights": {
+        "ko": [
+          "Python tkinter GUI 구현",
+          "멀티스레딩을 이용한 동시 채팅"
+        ],
+        "en": [
+          "Python tkinter GUI implementation",
+          "Concurrent chat using multi-threading"
+        ]
+      }
+    },
+    {
+      "slug": "trollgg",
+      "name": {
+        "ko": "TrollGG",
+        "en": "TrollGG"
+      },
+      "type": "personal",
+      "summary": {
+        "ko": "롤전적 검색 OP.GG 클론코딩",
+        "en": "League of Legends stats search - OP.GG clone"
+      },
+      "period": {
+        "start": "2021-04-28",
+        "end": "2021-05-30"
+      },
+      "skills": ["Java", "Spring Boot", "MariaDB", "Bootstrap"],
+      "github": "https://github.com/kilhyeonjun/TrollGG",
+      "highlights": {
+        "ko": [
+          "Riot API 연동",
+          "Spring Boot 기반 웹 애플리케이션",
+          "Bootstrap을 이용한 반응형 UI"
+        ],
+        "en": [
+          "Riot API integration",
+          "Web application based on Spring Boot",
+          "Responsive UI with Bootstrap"
+        ]
+      }
+    }
+  ],
+  "labels": {
+    "ko": {
+      "portfolio": "포트폴리오",
+      "projects": "프로젝트",
+      "highlights": "주요 내용",
+      "skills": "기술 스택",
+      "period": "기간",
+      "github": "GitHub",
+      "relatedPosts": "관련 글",
+      "relatedLinks": "관련 링크",
+      "teamComposition": "팀 구성",
+      "collaborationTools": "협업 도구",
+      "backToPortfolio": "포트폴리오로 돌아가기",
+      "previousProject": "이전 프로젝트",
+      "nextProject": "다음 프로젝트",
+      "viewDetails": "자세히 보기",
+      "personal": "개인",
+      "team": "팀"
+    },
+    "en": {
+      "portfolio": "Portfolio",
+      "projects": "Projects",
+      "highlights": "Highlights",
+      "skills": "Tech Stack",
+      "period": "Period",
+      "github": "GitHub",
+      "relatedPosts": "Related Posts",
+      "relatedLinks": "Related Links",
+      "teamComposition": "Team Composition",
+      "collaborationTools": "Collaboration Tools",
+      "backToPortfolio": "Back to Portfolio",
+      "previousProject": "Previous Project",
+      "nextProject": "Next Project",
+      "viewDetails": "View Details",
+      "personal": "Personal",
+      "team": "Team"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+---
+import PortfolioTemplate from '../../components/templates/PortfolioTemplate.astro';
+import portfolioData from '../../data/portfolio.json';
+
+const { projects, labels } = portfolioData;
+---
+<PortfolioTemplate lang="ko" projects={projects} labels={labels.ko} />

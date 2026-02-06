@@ -67,6 +67,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           >
             Resume
           </a>
+          <a
+            href={`${import.meta.env.BASE_URL}/portfolio`}
+            class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+          >
+            Portfolio
+          </a>
           <ThemeToggle />
         </div>
       </nav>

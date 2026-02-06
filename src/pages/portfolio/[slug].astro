@@ -1,0 +1,22 @@
+---
+import PortfolioDetailTemplate from '../../components/templates/PortfolioDetailTemplate.astro';
+import portfolioData from '../../data/portfolio.json';
+
+export function getStaticPaths() {
+  const { projects, labels } = portfolioData;
+  
+  return projects.map((project, index) => ({
+    params: { slug: project.slug },
+    props: { 
+      project, 
+      index,
+      total: projects.length,
+      allProjects: projects,
+      labels: labels.ko
+    }
+  }));
+}
+
+const props = Astro.props;
+---
+<PortfolioDetailTemplate lang="ko" {...props} />

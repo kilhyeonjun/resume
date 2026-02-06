@@ -11,6 +11,12 @@
         "ko": "동시성 및 대규모 트래픽을 고려한 콘서트 좌석을 예약 학습 프로젝트",
         "en": "A learning project for concert seat reservation considering concurrency and large-scale traffic"
       },
+      "description": {
+        "ko": "비관적 락/낙관적 락 구현 및 성능 비교, Redis 분산 락을 통한 동시성 제어, 캐싱 전략 적용으로 성능 최적화, 인덱싱을 통한 쿼리 성능 개선, K6를 이용한 부하 테스트 및 장애 대응",
+        "en": "Implemented pessimistic/optimistic locks with performance comparison, concurrency control through Redis distributed lock, performance optimization with caching strategies"
+      },
+      "coverImage": "https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fcd278848-7493-427b-a63d-9acd6c50daf6%2Ff33699d9-971f-4dcd-b41d-2964972b8bb9%2FDALLE_2024-11-12_19.40.27_-_A_professional_visually_engaging_banner_for_a_concert_reservation_service_project._The_design_should_include_elements_like_a_concert_stage_audience_.webp?table=block&id=13c5159e-911e-80e1-bfbc-dcd56df58fd6&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=2000&userId=&cache=v2",
+      "contentImages": [],
       "period": {
         "start": "2024-10-05",
         "end": "2024-11-30"
@@ -80,6 +86,24 @@
         "ko": "실시간 대학병원 채용공고 맞춤형 알림 서비스",
         "en": "Real-time customized job alert service for university hospitals"
       },
+      "description": {
+        "ko": "대학병원의 채용공고를 자동으로 스크래핑하고 새로운 공고에 대한 알림을 제공하는 백엔드 서비스입니다. 의료계 취업 준비생들에게 실시간으로 채용 정보를 제공하여 취업 준비에 도움을 주고자 기획했습니다.",
+        "en": "A backend service that automatically scrapes hospital job postings and provides notifications for new listings. Designed to help medical job seekers with real-time recruitment information."
+      },
+      "coverImage": "https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fcd278848-7493-427b-a63d-9acd6c50daf6%2F64bf7530-306a-4267-a0b6-076ad1b4d588%2Fsvgviewer-png-output_(1).png?table=block&id=f5b480eb-ed71-4d8b-80b3-7835df10f61e&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=2000&userId=&cache=v2",
+      "contentImages": [
+        "https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fcd278848-7493-427b-a63d-9acd6c50daf6%2Ff5e240b2-6729-41b8-b4ca-83591a43963f%2Fimage.png?table=block&id=a238cd23-275e-452b-8133-30859ed4af79&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=480&userId=&cache=v2",
+        "https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fcd278848-7493-427b-a63d-9acd6c50daf6%2Ff7629494-ab7e-4397-9a83-2f63c2422d62%2Fimage.png?table=block&id=3e40496f-8e73-4c17-b9f9-14366e13f0bb&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=290&userId=&cache=v2",
+        "https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fcd278848-7493-427b-a63d-9acd6c50daf6%2Fbe63dd14-b1f5-4b9e-9609-fa915c9eb6b0%2Fec2-rds-tutorial-architecture.png?table=block&id=4d29b646-5efe-4429-bd8d-d2cc50392fe3&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=1540&userId=&cache=v2"
+      ],
+      "features": {
+        "ko": ["대학병원 채용공고 스크래핑", "새로운 채용공고 알림 기능", "키워드 기반 알림 필터링"],
+        "en": ["Hospital job posting scraping", "New job notification", "Keyword-based filtering"]
+      },
+      "futurePlans": {
+        "ko": ["추가 대학병원 지원 확대", "카카오톡 알림 기능 구현", "프론트엔드 웹 애플리케이션 개발 (Next.js)", "AWS Lambda로 서버리스 전환"],
+        "en": ["Expand hospital support", "KakaoTalk notifications", "Frontend web app (Next.js)", "AWS Lambda serverless migration"]
+      },
       "period": {
         "start": "2024-08-02",
         "end": "2024-08-14"
@@ -114,11 +138,19 @@
         "ko": "창업 버티컬 네트워크 플랫폼",
         "en": "Startup vertical network platform"
       },
+      "description": {
+        "ko": "'스타트업풀'은 창업을 꿈꾸는 분들에게 창업 진입 장벽을 낮춰주고 리스크 부담 없이 창업에 도전할 수 있도록, 창업 생태계 전반적으로 필요한 기능(팀 빌딩 및 창업 아이템 개발 등)과 창업 정보를 종합적으로 제공하는 창업 버티컬 네트워크 플랫폼이다.",
+        "en": "'StartupPool' is a vertical network platform that helps aspiring entrepreneurs by lowering barriers to entry, providing team building, startup item development, and comprehensive startup information."
+      },
+      "features": {
+        "ko": ["커뮤니티 BE", "소셜 로그인 (구글, 네이버, 카카오, 페이스북)", "회원 CRUD, 팔로우 기능", "게시물 CRUD, 좋아요 기능, 북마크 기능", "댓글 CRUD, 좋아요 기능", "opengraph 스크래핑", "파일 업로드", "어드민 BE"],
+        "en": ["Community BE", "Social login (Google, Naver, Kakao, Facebook)", "Member CRUD, Follow", "Post CRUD, Like, Bookmark", "Comment CRUD, Like", "OpenGraph scraping", "File upload", "Admin BE"]
+      },
       "period": {
         "start": "2023-04-28",
         "end": "2023-06-28"
       },
-      "skills": ["NestJS", "PostgreSQL"],
+      "skills": ["NestJS", "PostgreSQL", "JavaScript", "Node.js", "TypeORM", "Jest"],
       "links": {
         "letspl": "https://letspl.me/project/707"
       },
@@ -146,6 +178,22 @@
       "summary": {
         "ko": "슬랙 API 클론 코딩",
         "en": "Slack API Clone Coding"
+      },
+      "description": {
+        "ko": "Express.js로 백엔드 개발을 하다가 Java의 Spring과 비슷한 NestJS 프레임워크를 알게되어 실무에 도입하고 싶어 공부하게 되었습니다. Slack이라는 협업프로그램의 BE 클론 버전입니다.",
+        "en": "After developing with Express.js, I discovered NestJS framework similar to Java's Spring and wanted to adopt it in practice. This is a BE clone of the Slack collaboration program."
+      },
+      "coverImage": "https://www.notion.so/image/https%3A%2F%2Fcdn.inflearn.com%2Fpublic%2Ffiles%2Fcourses%2F326931%2F5f962ae4-a4e8-49b0-9865-8610c366bf12%2F327193-4.png?table=block&id=349a5c72-366f-46b1-a831-c6d02fe6a4c8&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=2000&userId=&cache=v2",
+      "contentImages": [
+        "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fbc20297e-e4a2-4855-a495-9dfc9420c885%2F%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2023-01-26_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_4.44.37.png?table=block&id=4fe9b155-44db-4201-817f-7c543399e8f4&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=660&userId=&cache=v2"
+      ],
+      "features": {
+        "ko": ["사용자 기능", "WorkSpace 기능", "Channel 기능", "DM 기능", "WebSocket"],
+        "en": ["User features", "Workspace features", "Channel features", "DM features", "WebSocket"]
+      },
+      "lessons": {
+        "ko": ["NestJS를 사용하면 Spring에서 사용하던 OOP, IoC, DI, Singleton 패턴을 사용할 수 있다", "Layered Architecture를 활용하여 시스템의 결합도를 낮추고 테스트에 용이하다", "Jest를 통해 서비스 로직을 유닛 테스팅 할 수 있다"],
+        "en": ["NestJS enables OOP, IoC, DI, Singleton patterns from Spring", "Layered Architecture reduces coupling and improves testability", "Jest enables unit testing of service logic"]
       },
       "period": {
         "start": "2022-03-25",
@@ -180,6 +228,23 @@
         "ko": "react nodebird 트위터 클론 코딩",
         "en": "Twitter clone coding with React Nodebird"
       },
+      "description": {
+        "ko": "이직하는 회사 메드고의 기술 스택이 Node.js 기반으로 되어있어서 공부용 프로젝트로 인터넷 강의를 들었습니다. 트위터와 비슷한 SNS 프로젝트 입니다.",
+        "en": "Since my new company Medgo uses Node.js-based tech stack, I took an online course as a study project. This is a Twitter-like SNS project."
+      },
+      "coverImage": "https://www.notion.so/image/https%3A%2F%2Fcdn.inflearn.com%2Fpublic%2Ffiles%2Fcourses%2F325637%2Fb3dcddbc-f6c2-4c35-a1ae-350af347616e%2F325637-0.png?table=block&id=2ee57637-9362-487f-9027-a47a20681d83&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=2000&userId=&cache=v2",
+      "contentImages": [
+        "https://www.notion.so/image/https%3A%2F%2Fcdn.inflearn.com%2Fpublic%2Ffiles%2Fcourses%2F325637%2Fba6ea98e-69b2-4f9b-8876-8f6061b46523%2F325637-1.png?table=block&id=2172659b-406e-4842-826f-5bc7bdbeb74b&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=660&userId=&cache=v2",
+        "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fda079138-5acf-4209-935a-b9e0c40d28ab%2F%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2023-01-26_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_4.24.02.png?table=block&id=97e9cded-fab4-4e72-b87e-0ee3ec515f07&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=660&userId=&cache=v2"
+      ],
+      "features": {
+        "ko": ["회원가입 로그인 기능", "게시글, 댓글 CRUD", "인피니트 스크롤링 적용", "이미지 캐루셀 구현", "해시태그 기능 구현", "이미지 리사이징 구현"],
+        "en": ["Sign up/login", "Post/comment CRUD", "Infinite scrolling", "Image carousel", "Hashtag feature", "Image resizing"]
+      },
+      "lessons": {
+        "ko": ["React의 리렌더링을 이용하면 코드를 효율적으로 짤 수 있다", "Next.js를 활용하면 React에서도 SSR을 사용 할 수 있다"],
+        "en": ["React re-rendering enables efficient code", "Next.js enables SSR in React"]
+      },
       "period": {
         "start": "2022-03-25",
         "end": "2022-07-28"
@@ -213,6 +278,23 @@
         "ko": "Python 멀티채팅 애플리케이션",
         "en": "Python multi-chat application"
       },
+      "description": {
+        "ko": "멀티 스레드를 이용하여 서버에 여러 클라이언트가 다중으로 접속이 가능하게 구현을 하였고 이를 통해 여러 클라이언트가 하나의 서버에서 서로 소통을 할 수 있게 되었습니다.",
+        "en": "Implemented multi-threading to allow multiple clients to connect to a server simultaneously, enabling communication between multiple clients on a single server."
+      },
+      "coverImage": "https://www.notion.so/image/https%3A%2F%2Fgithub.com%2Fkilhyeonjun%2FMultiChat%2Fblob%2Fmain%2Fimage%2F%25EC%2584%259C%25EB%25B2%2584%2520%25ED%2581%25B4%25EB%259D%25BC%25EC%259D%25B4%25EC%2596%25B8%25ED%258A%25B8%2520%25EC%25A2%2585%25EB%25A3%258C.png%3Fraw%3Dtrue?table=block&id=70a94d60-fa0c-48dc-9ce9-ce085b5cc896&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=2000&userId=&cache=v2",
+      "contentImages": [
+        "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F6e10b0b5-bf9b-4aaf-b3ad-2767b35dac9b%2FUntitled.png?table=block&id=f7d4d54e-7aa0-423d-913e-87d16d36e2dd&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=660&userId=&cache=v2",
+        "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Faa2a509a-d9cc-4df7-9c62-9e1d0124a947%2FUntitled.png?table=block&id=5768eb4e-1090-457a-91de-df09aaa71bad&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=660&userId=&cache=v2"
+      ],
+      "features": {
+        "ko": ["채팅 서버 on/off 기능", "강퇴 기능", "접속 목록 기능", "채팅 기능"],
+        "en": ["Chat server on/off", "Kick feature", "Connection list", "Chat feature"]
+      },
+      "lessons": {
+        "ko": ["tcp ip 소켓 통신을 이용하여 realtime 서비스를 만들 수 있다", "thread를 사용하여 다중 사용자 처리를 할 수 있다"],
+        "en": ["TCP/IP socket communication enables realtime services", "Threading enables multi-user handling"]
+      },
       "period": {
         "start": "2021-06-07",
         "end": "2021-06-17"
@@ -240,6 +322,24 @@
       "summary": {
         "ko": "롤전적 검색 OP.GG 클론코딩",
         "en": "League of Legends stats search - OP.GG clone"
+      },
+      "description": {
+        "ko": "Spring Boot를 공부하고 싶어서 좋아하는 게임인 League of Legends의 전적 검색 사이트 OP.GG를 클론 코딩하였습니다. Riot API를 사용하여 연동하였습니다.",
+        "en": "To study Spring Boot, I cloned OP.GG, a League of Legends match history site. Integrated with Riot API."
+      },
+      "coverImage": "https://www.notion.so/image/https%3A%2F%2Fgithub.com%2Fkilhyeonjun%2FTrollGG%2Fblob%2Fmaster%2FTrollGG%2Fsrc%2Fmain%2Fresources%2Fstatic%2Fimg%2Fbg.jpg%3Fraw%3Dtrue?table=block&id=3b70de9c-30ae-4204-886f-ba704521d155&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=2000&userId=&cache=v2",
+      "contentImages": [
+        "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F290d111a-cc01-45bb-bd9b-fc2116e9603f%2FUntitled.png?table=block&id=155f22cd-ad7a-4b25-9ed6-7be858842665&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=410&userId=&cache=v2",
+        "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd09140c7-acb4-4ac5-a84b-522bed98dcb6%2FUntitled.png?table=block&id=1c2570f7-d566-407d-a27c-954fdf4489e3&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=410&userId=&cache=v2",
+        "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F9cbca5b3-abb0-432b-85ab-bc2a5398baae%2FUntitled.png?table=block&id=bcf1291b-3c46-46f8-84ce-97c20d9b297e&spaceId=cd278848-7493-427b-a63d-9acd6c50daf6&width=410&userId=&cache=v2"
+      ],
+      "features": {
+        "ko": ["전적 검색 기능", "랭킹 페이지"],
+        "en": ["Match history search", "Ranking page"]
+      },
+      "lessons": {
+        "ko": ["외부 API를 사용하면 토큰을 사용하여 데이터를 수집할 수 있다", "MVC 패턴을 사용하여 비즈니스 로직과 view, controller를 분리할 수 있다"],
+        "en": ["External APIs enable data collection with tokens", "MVC pattern separates business logic from view and controller"]
       },
       "period": {
         "start": "2021-04-28",
@@ -278,7 +378,11 @@
       "nextProject": "다음 프로젝트",
       "viewDetails": "자세히 보기",
       "personal": "개인",
-      "team": "팀"
+      "team": "팀",
+      "description": "프로젝트 설명",
+      "features": "담당 기능",
+      "lessons": "깨달은 점",
+      "projectImages": "프로젝트 이미지"
     },
     "en": {
       "portfolio": "Portfolio",
@@ -296,7 +400,11 @@
       "nextProject": "Next Project",
       "viewDetails": "View Details",
       "personal": "Personal",
-      "team": "Team"
+      "team": "Team",
+      "description": "Project Description",
+      "features": "Features",
+      "lessons": "Lessons Learned",
+      "projectImages": "Project Images"
     }
   }
 }

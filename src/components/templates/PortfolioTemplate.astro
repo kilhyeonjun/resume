@@ -31,7 +31,20 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
         const period = `${project.period.start} — ${project.period.end}`;
         
         return (
-          <article class="group rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+          <article class="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+            {/* Cover Image */}
+            {project.coverImage && (
+              <a href={`${basePath}/portfolio/${project.slug}`} class="block aspect-video overflow-hidden">
+                <img 
+                  src={project.coverImage} 
+                  alt={projectName}
+                  class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </a>
+            )}
+            
+            <div class="p-6">
             <div class="mb-3 flex items-center justify-between">
               <span class={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${project.type === 'team' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'}`}>
                 {project.type === 'team' ? labels.team : labels.personal}
@@ -90,6 +103,7 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
                 {labels.viewDetails}
                 <ExternalLinkIcon class="h-3.5 w-3.5" />
               </a>
+            </div>
             </div>
           </article>
         );

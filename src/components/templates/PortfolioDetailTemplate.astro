@@ -26,6 +26,9 @@ const projectName = project.name[lang] || project.name.ko;
 const projectSummary = project.summary[lang] || project.summary.ko;
 const projectHighlights = project.highlights[lang] || project.highlights.ko;
 const teamComposition = project.teamComposition ? (project.teamComposition[lang] || project.teamComposition.ko || project.teamComposition) : null;
+const projectDescription = project.description ? (project.description[lang] || project.description.ko) : null;
+const projectFeatures = project.features ? (project.features[lang] || project.features.ko) : null;
+const projectLessons = project.lessons ? (project.lessons[lang] || project.lessons.ko) : null;
 ---
 
 <Layout title={`${projectName} | Portfolio`} description={projectSummary} lang={lang}>
@@ -76,6 +79,28 @@ const teamComposition = project.teamComposition ? (project.teamComposition[lang]
       </div>
     </header>
 
+    {/* Cover Image */}
+    {project.coverImage && (
+      <section class="mb-10">
+        <div class="overflow-hidden rounded-xl">
+          <img 
+            src={project.coverImage} 
+            alt={projectName}
+            class="w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </section>
+    )}
+
+    {/* Description */}
+    {projectDescription && (
+      <section class="mb-10">
+        <h2 class="section-title mb-4">{labels.description}</h2>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{projectDescription}</p>
+      </section>
+    )}
+
     {/* Team Composition */}
     {teamComposition && (
       <section class="mb-10">
@@ -107,6 +132,36 @@ const teamComposition = project.teamComposition ? (project.teamComposition[lang]
             <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
               <CheckIcon class="mt-1 h-5 w-5 flex-shrink-0 text-primary-500" />
               <span class="text-lg">{highlight}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- Features -->
+    {projectFeatures && projectFeatures.length > 0 && (
+      <section class="mb-10">
+        <h2 class="section-title mb-6">{labels.features}</h2>
+        <ul class="space-y-3">
+          {projectFeatures.map((feature: string) => (
+            <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+              <CheckIcon class="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
+              <span class="text-lg">{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- Lessons Learned -->
+    {projectLessons && projectLessons.length > 0 && (
+      <section class="mb-10">
+        <h2 class="section-title mb-6">{labels.lessons}</h2>
+        <ul class="space-y-3">
+          {projectLessons.map((lesson: string) => (
+            <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+              <span class="mt-1 flex-shrink-0 text-amber-500">💡</span>
+              <span class="text-lg">{lesson}</span>
             </li>
           ))}
         </ul>
@@ -171,6 +226,25 @@ const teamComposition = project.teamComposition ? (project.teamComposition[lang]
             </li>
           ))}
         </ul>
+      </section>
+    )}
+
+    <!-- Content Images -->
+    {project.contentImages && project.contentImages.length > 0 && (
+      <section class="mb-10">
+        <h2 class="section-title mb-6">{labels.projectImages}</h2>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {project.contentImages.map((imageUrl: string, idx: number) => (
+            <a href={imageUrl} target="_blank" rel="noopener noreferrer" class="group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+              <img 
+                src={imageUrl} 
+                alt={`${projectName} screenshot ${idx + 1}`}
+                class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+              />
+            </a>
+          ))}
+        </div>
       </section>
     )}
 

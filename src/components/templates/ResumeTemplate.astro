@@ -47,11 +47,11 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
       {lang === 'ko' ? (
         <>
           <span class="rounded-lg bg-primary-600 px-3 py-1.5 text-sm font-medium text-white">한</span>
-          <a href={`${import.meta.env.BASE_URL}/en/resume`} class="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800">EN</a>
+          <a href={`${import.meta.env.BASE_URL}/en`} class="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800">EN</a>
         </>
       ) : (
         <>
-          <a href={`${import.meta.env.BASE_URL}/resume`} class="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800">한</a>
+          <a href={import.meta.env.BASE_URL} class="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800">한</a>
           <span class="rounded-lg bg-primary-600 px-3 py-1.5 text-sm font-medium text-white">EN</span>
         </>
       )}
@@ -171,7 +171,7 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
                 </ul>
               )}
                <a 
-                 href={`${basePath}/resume/experience/${exp.slug}`}
+                 href={`${basePath}/experience/${exp.slug}`}
                  class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
                >
                  {labels.viewDetails}

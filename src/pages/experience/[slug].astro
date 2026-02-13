@@ -1,6 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
-import ExperienceDetailTemplate from '../../../components/templates/ExperienceDetailTemplate.astro';
+import ExperienceDetailTemplate from '../../components/templates/ExperienceDetailTemplate.astro';
 
 export async function getStaticPaths() {
   const entry = await getEntry('resume-ko', 'main');

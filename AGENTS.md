@@ -185,7 +185,7 @@ Resume content (`ko.json`/`en.json`) is curated from raw work data collected per
 ### File Structure
 - `_meta.json` — Company metadata (name, position, period, domains)
 - `{domain}.json` — Domain-level work journal
-- `_source-map.json` — Ticket key mapping (local only, disposable)
+- `_source-map.json` — Ticket key mapping (private repo only)
 
 ### Schema (v1.1)
 Each domain file has top-level fields: `schemaVersion`, `domain`, `description`, `collectedAt`, `workItems[]`.

@@ -174,3 +174,46 @@ Custom variant defined in `global.css`: `@custom-variant dark (&:where(.dark, .d
 - **Print templates are standalone HTML**: `ResumePrintTemplate.astro` does NOT use `Layout.astro` — it has its own `<html>` with inline styles for PDF fidelity
 - **Tailwind v4**: Uses new `@theme` and `@custom-variant` syntax, NOT `tailwind.config.js`
 - **No linter/formatter**: Maintain consistency manually. Follow existing 2-space indent, single quotes, trailing commas in TS
+
+## Work Data Archive
+
+Resume content (`ko.json`/`en.json`) is curated from raw work data collected per company.
+
+### Location
+`~/.work-data/{company-slug}/` — NEVER inside this repo.
+
+### File Structure
+- `_meta.json` — Company metadata (name, position, period, domains)
+- `{domain}.json` — Domain-level work journal
+- `_source-map.json` — Ticket key mapping (local only, disposable)
+
+### Schema (v1.1)
+Each domain file has top-level fields: `schemaVersion`, `domain`, `description`, `collectedAt`, `workItems[]`.
+
+`workItems[]` fields:
+
+| Field | Required | Size | Description |
+|-------|----------|------|-------------|
+| `id` | ✅ all | all | `{domain}-{seq:4}` |
+| `status` | ✅ all | all | `done\|in_progress\|hold` |
+| `topic` | ✅ all | all | 작업 제목 (Korean) |
+| `period` | ✅ all | all | `YYYY-MM` |
+| `tags` | ✅ all | all | 기술/도메인 태그 |
+| `size` | ✅ all | all | `major\|medium\|minor` |
+| `resumeProject` | ✅ all | all | 이력서 프로젝트 매핑 or null |
+| `problem` | major/medium | | 해결한 문제 |
+| `rootCause` | optional | major | 근본 원인 |
+| `approach` | major | | 접근 방식 |
+| `implementation` | major | | 구현 상세 (string array) |
+| `outcome` | ✅ all | all | 결과/성과 |
+
+### Sensitive Info Rules
+Work data MUST NOT contain: internal URLs, ticket keys, account IDs,
+colleague real names, internal code paths. Domain-level technical
+descriptions are OK.
+
+### Resume Curation Flow
+1. Read work data from `~/.work-data/{company}/`
+2. Filter by `resumeProject` or relevant items
+3. Synthesize into resume project narratives
+4. Update `src/content/resume/{ko,en}.json`

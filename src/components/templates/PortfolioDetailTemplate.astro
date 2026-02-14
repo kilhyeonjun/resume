@@ -7,6 +7,7 @@ import ArrowLeftIcon from '../icons/ArrowLeftIcon.astro';
 import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
 import type { PortfolioProject, PortfolioLabels } from '../../types/portfolio';
+import { getBasePath } from '../../utils/paths';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -22,7 +23,7 @@ const prevProject = index > 0 ? allProjects[index - 1] : null;
 const nextProject = index < total - 1 ? allProjects[index + 1] : null;
 
 const period = `${project.period.start} — ${project.period.end}`;
-const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.env.BASE_URL;
+const basePath = getBasePath(lang);
 
 const projectName = project.name[lang] || project.name.ko;
 const projectSummary = project.summary[lang] || project.summary.ko;

@@ -4,6 +4,11 @@ import { file } from 'astro/loaders';
 const dateString = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Date must be YYYY-MM format');
 const dateStringLoose = z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, 'Date must be YYYY or YYYY-MM format');
 
+const safeUrl = z.string().url().refine(
+  (url) => url.startsWith('http://') || url.startsWith('https://'),
+  'URL must use http or https protocol',
+);
+
 const skillItemSchema = z.object({
   name: z.string(),
 });
@@ -23,21 +28,21 @@ const projectSchema = z.object({
   period: z.string(),
   description: z.string(),
   details: z.array(z.string()),
-  techStack: z.array(z.string()).optional(),
+  techStack: z.array(z.string()).default([]),
 });
 
 const experienceSchema = z.object({
   slug: z.string(),
   company: z.string(),
-  companyUrl: z.string().url().optional(),
+  companyUrl: safeUrl.optional(),
   position: z.string(),
   startDate: dateString,
   endDate: dateString.optional(),
   current: z.boolean().optional(),
   description: z.string().optional(),
-  highlights: z.array(z.string()).optional(),
-  projects: z.array(projectSchema).optional(),
-  techStack: z.array(z.string()).optional(),
+  highlights: z.array(z.string()).default([]),
+  projects: z.array(projectSchema).default([]),
+  techStack: z.array(z.string()).default([]),
 });
 
 const educationSchema = z.object({
@@ -53,20 +58,20 @@ const continuousLearningSchema = z.object({
   name: z.string(),
   period: z.string(),
   description: z.string(),
-  url: z.string().url().optional(),
+  url: safeUrl.optional(),
 });
 
 const technicalWritingSchema = z.object({
   title: z.string(),
   date: dateString,
   type: z.string(),
-  url: z.string().url().optional(),
+  url: safeUrl.optional(),
 });
 
 const openSourceSchema = z.object({
   name: z.string(),
   date: dateString,
-  url: z.string().url().optional(),
+  url: safeUrl.optional(),
 });
 
 const awardSchema = z.object({
@@ -79,7 +84,7 @@ const certificationSchema = z.object({
   name: z.string(),
   issuer: z.string(),
   date: dateString,
-  url: z.string().url().optional(),
+  url: safeUrl.optional(),
 });
 
 const personalInfoSchema = z.object({
@@ -87,14 +92,14 @@ const personalInfoSchema = z.object({
   title: z.string(),
   email: z.string().email(),
   location: z.string().optional(),
-  linkedin: z.string().url().optional(),
-  github: z.string().url().optional(),
-  blog: z.string().url().optional(),
+  linkedin: safeUrl.optional(),
+  github: safeUrl.optional(),
+  blog: safeUrl.optional(),
 });
 
 const linksSchema = z.object({
-  portfolio: z.string().url().optional(),
-  careerDetails: z.string().url().optional(),
+  portfolio: safeUrl.optional(),
+  careerDetails: safeUrl.optional(),
 });
 
 const labelsSchema = z.object({
@@ -127,11 +132,11 @@ const resumeSchema = z.object({
   skills: z.array(skillCategorySchema),
   experience: z.array(experienceSchema),
   education: z.array(educationSchema),
-  continuousLearning: z.array(continuousLearningSchema).optional(),
-  technicalWriting: z.array(technicalWritingSchema).optional(),
-  openSource: z.array(openSourceSchema).optional(),
-  awards: z.array(awardSchema).optional(),
-  certifications: z.array(certificationSchema).optional(),
+  continuousLearning: z.array(continuousLearningSchema).default([]),
+  technicalWriting: z.array(technicalWritingSchema).default([]),
+  openSource: z.array(openSourceSchema).default([]),
+  awards: z.array(awardSchema).default([]),
+  certifications: z.array(certificationSchema).default([]),
   links: linksSchema.optional(),
   labels: labelsSchema,
 });

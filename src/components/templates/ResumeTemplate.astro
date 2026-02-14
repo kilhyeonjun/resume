@@ -10,6 +10,7 @@ import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
 import CertificateIcon from '../icons/CertificateIcon.astro';
 import PrintIcon from '../icons/PrintIcon.astro';
 import DocumentIcon from '../icons/DocumentIcon.astro';
+import { getBasePath } from '../../utils/paths';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -33,10 +34,26 @@ const data = {
 };
 const labels = resumeData.labels;
 
-const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.env.BASE_URL;
+const basePath = getBasePath(lang);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: data.name,
+    jobTitle: data.title,
+    email: data.email,
+    url: canonicalURL.toString(),
+    ...(data.location && { address: { '@type': 'PostalAddress', addressLocality: data.location } }),
+    ...(data.github && { sameAs: [data.github, data.linkedin].filter(Boolean) }),
+  },
+};
 ---
 
 <Layout title={`${data.name} — ${data.title}`} description="Professional resume and work experience" lang={lang}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <article class="resume-container mx-auto max-w-4xl px-4 py-8">
     <!-- Language Switcher -->
     <div class="no-print mb-4 flex justify-end gap-2">
@@ -273,56 +290,3 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
   </article>
 </Layout>
 
-<style>
-  .skill-badge {
-    display: inline-flex;
-    align-items: center;
-    border-radius: 0.5rem;
-    background: linear-gradient(to right, #eff6ff, #dbeafe);
-    padding: 6px 12px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #1d4ed8;
-    border: 1px solid #bfdbfe;
-    transition: all 0.15s ease;
-  }
-
-  .dark .skill-badge {
-    background: linear-gradient(to right, rgba(30, 58, 138, 0.4), rgba(30, 64, 175, 0.4));
-    color: #93c5fd;
-    border-color: rgba(30, 64, 175, 0.5);
-  }
-
-  .skill-badge:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Print optimization */
-  @media print {
-    .resume-container {
-      max-width: none;
-      padding: 0;
-    }
-
-    .section-title::after {
-      display: none;
-    }
-
-    .skill-badge {
-      background: none;
-      border: 1px solid #e5e7eb;
-      padding: 2px 8px;
-    }
-
-    .project-card {
-      border: 1px solid #e5e7eb;
-      box-shadow: none;
-      break-inside: avoid;
-    }
-
-    .experience-item,
-    .education-item {
-      break-inside: avoid;
-    }
-  }
-</style>

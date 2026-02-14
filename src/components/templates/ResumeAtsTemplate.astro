@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import { getBasePath } from '../../utils/paths';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -23,7 +24,7 @@ const data = {
 };
 const labels = resumeData.labels;
 
-const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.env.BASE_URL;
+const basePath = getBasePath(lang);
 const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `${data.name} - Resume (ATS Optimized)`;
 ---
 

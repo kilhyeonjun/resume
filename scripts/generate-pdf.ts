@@ -104,7 +104,7 @@ async function generatePDF(
     // Set viewport for consistent rendering
     await page.setViewport({
       width: 1200,
-      height: 1600,
+      height: 1697,
       deviceScaleFactor: 2,
     });
 
@@ -163,6 +163,8 @@ async function main(): Promise<void> {
   
   const baseUrlIndex = args.indexOf('--base-url');
   const baseUrl = baseUrlIndex !== -1 ? args[baseUrlIndex + 1] : 'http://localhost:4321/resume';
+
+  try { new URL(baseUrl); } catch { throw new Error(`Invalid base URL: ${baseUrl}`); }
   
   const outputDirIndex = args.indexOf('--output');
   const outputDir = outputDirIndex !== -1 

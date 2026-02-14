@@ -1,0 +1,272 @@
+---
+import { getEntry } from 'astro:content';
+
+interface Props {
+  lang: 'ko' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const entry = await getEntry(`resume-${lang}`, 'main');
+if (!entry) {
+  throw new Error('Resume data not found');
+}
+const resumeData = entry.data;
+
+const data = {
+  ...resumeData.personalInfo,
+  summary: resumeData.summary,
+  skills: resumeData.skills,
+  experience: resumeData.experience,
+  education: resumeData.education,
+  certifications: resumeData.certifications,
+};
+const labels = resumeData.labels;
+
+const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.env.BASE_URL;
+const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `${data.name} - Resume (ATS Optimized)`;
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{pageTitle}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 11pt;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #000;
+      background: #fff;
+      line-height: 1.6;
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 15mm;
+    }
+
+    header {
+      margin-bottom: 24px;
+      border-bottom: 2px solid #000;
+      padding-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 24pt;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .title {
+      font-size: 14pt;
+      font-weight: normal;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .contact {
+      font-size: 11pt;
+    }
+
+    .contact-item {
+      margin-right: 16px;
+    }
+
+    section {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 14pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-bottom: 1px solid #000;
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 12pt;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+
+    p {
+      font-size: 11pt;
+      margin-bottom: 8px;
+    }
+
+    .item {
+      margin-bottom: 16px;
+    }
+
+    .item-header {
+      margin-bottom: 4px;
+    }
+
+    .company,
+    .institution {
+      font-weight: bold;
+    }
+
+    .date {
+      font-style: italic;
+    }
+
+    .position,
+    .degree {
+      font-weight: normal;
+    }
+
+    ul {
+      margin-left: 20px;
+      margin-bottom: 8px;
+    }
+
+    li {
+      font-size: 11pt;
+      margin-bottom: 4px;
+    }
+
+    .skills-list {
+      font-size: 11pt;
+    }
+
+    .skill-category {
+      font-weight: bold;
+    }
+
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    @page {
+      margin: 10mm;
+      size: A4;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      background: #f0f0f0;
+      margin-bottom: 20px;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <a href={basePath} class="back-link no-print">&larr; {labels.backToResume}</a>
+
+  <header>
+    <h1>{data.name}</h1>
+    <p class="title">{data.title}</p>
+    <p class="contact">
+      {data.email && <span class="contact-item">{data.email}</span>}
+      {data.location && <span class="contact-item">{data.location}</span>}
+    </p>
+    {(data.github || data.linkedin) && (
+      <p class="contact">
+        {data.github && <span class="contact-item">{data.github}</span>}
+        {data.linkedin && <span class="contact-item">{data.linkedin}</span>}
+      </p>
+    )}
+  </header>
+
+  {data.summary && (
+    <section>
+      <h2>PROFESSIONAL SUMMARY</h2>
+      <p>{data.summary}</p>
+    </section>
+  )}
+
+  {data.skills && data.skills.length > 0 && (
+    <section>
+      <h2>SKILLS</h2>
+      {data.skills.map((skillGroup) => (
+        <p class="skills-list">
+          <span class="skill-category">{skillGroup.category}:</span>{' '}
+          {skillGroup.items.map(s => s.name).join(', ')}
+        </p>
+      ))}
+    </section>
+  )}
+
+  {data.experience && data.experience.length > 0 && (
+    <section>
+      <h2>WORK EXPERIENCE</h2>
+      {data.experience.map((exp) => (
+        <div class="item">
+          <div class="item-header">
+            <h3>
+              <span class="company">{exp.company}</span> — <span class="position">{exp.position}</span>
+            </h3>
+            <p class="date">{exp.startDate} - {exp.current ? labels.current : exp.endDate}</p>
+          </div>
+          {exp.description && <p>{exp.description}</p>}
+          {exp.highlights && exp.highlights.length > 0 && (
+            <ul>
+              {exp.highlights.map((highlight) => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </section>
+  )}
+
+  {data.education && data.education.length > 0 && (
+    <section>
+      <h2>EDUCATION</h2>
+      {data.education.map((edu) => (
+        <div class="item">
+          <h3>
+            <span class="institution">{edu.institution}</span>
+          </h3>
+          <p>
+            <span class="degree">{edu.degree}</span>
+            {edu.field && <span>, {edu.field}</span>}
+          </p>
+          <p class="date">
+            {edu.startDate} - {edu.endDate}
+            {edu.gpa && <span> | GPA: {edu.gpa}</span>}
+          </p>
+        </div>
+      ))}
+    </section>
+  )}
+
+  {data.certifications && data.certifications.length > 0 && (
+    <section>
+      <h2>CERTIFICATIONS</h2>
+      {data.certifications.map((cert) => (
+        <p>
+          <strong>{cert.name}</strong> — {cert.issuer}, {cert.date}
+        </p>
+      ))}
+    </section>
+  )}
+
+</body>
+</html>

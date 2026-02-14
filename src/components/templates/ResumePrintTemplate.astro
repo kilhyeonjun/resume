@@ -1,5 +1,9 @@
 ---
 import { getEntry } from 'astro:content';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -20,7 +24,6 @@ const data = {
   experience: resumeData.experience,
   education: resumeData.education,
   certifications: resumeData.certifications,
-  languages: resumeData.languages,
 };
 const labels = resumeData.labels;
 
@@ -34,9 +37,7 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{data.name} - {pageTitle}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     * {
       margin: 0;
@@ -401,9 +402,7 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
         {data.email && (
           <span class="contact-item">{data.email}</span>
         )}
-        {data.phone && (
-          <span class="contact-item">{data.phone}</span>
-        )}
+
         {data.location && (
           <span class="contact-item">{data.location}</span>
         )}
@@ -465,7 +464,6 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
                   {skillGroup.items.map((skill) => (
                     <div class="skill-item-print">
                       <span class="skill-name">{skill.name}</span>
-                      <span class="skill-desc">{skill.description}</span>
                     </div>
                   ))}
                 </div>
@@ -507,27 +505,7 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
       </div>
     </div>
 
-    <!-- Projects - Full Width Section -->
-    {data.projects && data.projects.length > 0 && (
-      <section class="projects-section">
-        <h2 class="section-title">{labels.projects}</h2>
-        <div class="projects-grid">
-          {data.projects.map((project) => (
-            <div class="project-item">
-              <h3 class="project-name">{project.name}</h3>
-              <p class="project-desc">{project.description}</p>
-              {project.technologies && project.technologies.length > 0 && (
-                <div class="project-tech">
-                  {project.technologies.map((tech) => (
-                    <span class="tech-tag">{tech}</span>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
+
   </div>
 </body>
 </html>

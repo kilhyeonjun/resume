@@ -148,6 +148,17 @@ export const collections = {
 };
 
 export type ResumeData = z.infer<typeof resumeSchema>;
+export type PersonalInfo = z.infer<typeof personalInfoSchema>;
 export type SkillCategory = z.infer<typeof skillCategorySchema>;
+export type SkillItem = z.infer<typeof skillItemSchema>;
+export type CoreCompetency = z.infer<typeof coreCompetencySchema>;
 export type Experience = z.infer<typeof experienceSchema>;
 export type Project = z.infer<typeof projectSchema>;
+export type Education = z.infer<typeof educationSchema>;
+export type ContinuousLearning = z.infer<typeof continuousLearningSchema>;
+export type TechnicalWriting = z.infer<typeof technicalWritingSchema>;
+export type OpenSource = z.infer<typeof openSourceSchema>;
+export type Award = z.infer<typeof awardSchema>;
+export type Certification = z.infer<typeof certificationSchema>;
+export type Labels = z.infer<typeof labelsSchema>;
+export type Links = z.infer<typeof linksSchema>;

@@ -4,14 +4,15 @@ import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
 import CheckIcon from '../icons/CheckIcon.astro';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon.astro';
 import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
+import type { Experience, Labels } from '../../content.config';
 
 interface Props {
   lang: 'ko' | 'en';
-  experience: any;
+  experience: Experience;
   index: number;
   total: number;
-  allExperience: any[];
-  labels: any;
+  allExperience: Experience[];
+  labels: Labels;
 }
 
 const { lang, experience, index, total, allExperience, labels } = Astro.props;

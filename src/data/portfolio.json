@@ -90,11 +90,11 @@
         "ko": "대학병원의 채용공고를 자동으로 스크래핑하고 새로운 공고에 대한 알림을 제공하는 백엔드 서비스입니다. 의료계 취업 준비생들에게 실시간으로 채용 정보를 제공하여 취업 준비에 도움을 주고자 기획했습니다.",
         "en": "A backend service that automatically scrapes hospital job postings and provides notifications for new listings. Designed to help medical job seekers with real-time recruitment information."
       },
-      "coverImage": "/images/portfolio/medical-recruit-cover.png",
+      "coverImage": "/images/portfolio/medical-recruit-cover.webp",
       "contentImages": [
-        "/images/portfolio/medical-recruit-1.png",
-        "/images/portfolio/medical-recruit-2.png",
-        "/images/portfolio/medical-recruit-3.png"
+        "/images/portfolio/medical-recruit-1.webp",
+        "/images/portfolio/medical-recruit-2.webp",
+        "/images/portfolio/medical-recruit-3.webp"
       ],
       "features": {
         "ko": ["대학병원 채용공고 스크래핑", "새로운 채용공고 알림 기능", "키워드 기반 알림 필터링"],
@@ -183,9 +183,9 @@
         "ko": "Express.js로 백엔드 개발을 하다가 Java의 Spring과 비슷한 NestJS 프레임워크를 알게되어 실무에 도입하고 싶어 공부하게 되었습니다. Slack이라는 협업프로그램의 BE 클론 버전입니다.",
         "en": "After developing with Express.js, I discovered NestJS framework similar to Java's Spring and wanted to adopt it in practice. This is a BE clone of the Slack collaboration program."
       },
-      "coverImage": "/images/portfolio/slack-clone-cover.png",
+      "coverImage": "/images/portfolio/slack-clone-cover.webp",
       "contentImages": [
-        "/images/portfolio/slack-clone-1.png"
+        "/images/portfolio/slack-clone-1.webp"
       ],
       "features": {
         "ko": ["사용자 기능", "WorkSpace 기능", "Channel 기능", "DM 기능", "WebSocket"],
@@ -232,10 +232,10 @@
         "ko": "이직하는 회사 메드고의 기술 스택이 Node.js 기반으로 되어있어서 공부용 프로젝트로 인터넷 강의를 들었습니다. 트위터와 비슷한 SNS 프로젝트 입니다.",
         "en": "Since my new company Medgo uses Node.js-based tech stack, I took an online course as a study project. This is a Twitter-like SNS project."
       },
-      "coverImage": "/images/portfolio/react-nodebird-cover.png",
+      "coverImage": "/images/portfolio/react-nodebird-cover.webp",
       "contentImages": [
-        "/images/portfolio/react-nodebird-1.png",
-        "/images/portfolio/react-nodebird-2.png"
+        "/images/portfolio/react-nodebird-1.webp",
+        "/images/portfolio/react-nodebird-2.webp"
       ],
       "features": {
         "ko": ["회원가입 로그인 기능", "게시글, 댓글 CRUD", "인피니트 스크롤링 적용", "이미지 캐루셀 구현", "해시태그 기능 구현", "이미지 리사이징 구현"],
@@ -282,10 +282,10 @@
         "ko": "멀티 스레드를 이용하여 서버에 여러 클라이언트가 다중으로 접속이 가능하게 구현을 하였고 이를 통해 여러 클라이언트가 하나의 서버에서 서로 소통을 할 수 있게 되었습니다.",
         "en": "Implemented multi-threading to allow multiple clients to connect to a server simultaneously, enabling communication between multiple clients on a single server."
       },
-      "coverImage": "/images/portfolio/multichat-cover.png",
+      "coverImage": "/images/portfolio/multichat-cover.webp",
       "contentImages": [
-        "/images/portfolio/multichat-1.png",
-        "/images/portfolio/multichat-2.png"
+        "/images/portfolio/multichat-1.webp",
+        "/images/portfolio/multichat-2.webp"
       ],
       "features": {
         "ko": ["채팅 서버 on/off 기능", "강퇴 기능", "접속 목록 기능", "채팅 기능"],
@@ -327,11 +327,11 @@
         "ko": "Spring Boot를 공부하고 싶어서 좋아하는 게임인 League of Legends의 전적 검색 사이트 OP.GG를 클론 코딩하였습니다. Riot API를 사용하여 연동하였습니다.",
         "en": "To study Spring Boot, I cloned OP.GG, a League of Legends match history site. Integrated with Riot API."
       },
-      "coverImage": "/images/portfolio/trollgg-cover.jpg",
+      "coverImage": "/images/portfolio/trollgg-cover.webp",
       "contentImages": [
-        "/images/portfolio/trollgg-1.png",
-        "/images/portfolio/trollgg-2.png",
-        "/images/portfolio/trollgg-3.png"
+        "/images/portfolio/trollgg-1.webp",
+        "/images/portfolio/trollgg-2.webp",
+        "/images/portfolio/trollgg-3.webp"
       ],
       "features": {
         "ko": ["전적 검색 기능", "랭킹 페이지"],

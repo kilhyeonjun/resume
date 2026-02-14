@@ -1,18 +1,20 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
 import CheckIcon from '../icons/CheckIcon.astro';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon.astro';
 import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
+import type { PortfolioProject, PortfolioLabels } from '../../types/portfolio';
 
 interface Props {
   lang: 'ko' | 'en';
-  project: any;
+  project: PortfolioProject;
   index: number;
   total: number;
-  allProjects: any[];
-  labels: any;
+  allProjects: PortfolioProject[];
+  labels: PortfolioLabels;
 }
 
 const { lang, project, index, total, allProjects, labels } = Astro.props;
@@ -25,7 +27,7 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
 const projectName = project.name[lang] || project.name.ko;
 const projectSummary = project.summary[lang] || project.summary.ko;
 const projectHighlights = project.highlights[lang] || project.highlights.ko;
-const teamComposition = project.teamComposition ? (project.teamComposition[lang] || project.teamComposition.ko || project.teamComposition) : null;
+const teamComposition = project.teamComposition ? (project.teamComposition[lang] || project.teamComposition.ko) : null;
 const projectDescription = project.description ? (project.description[lang] || project.description.ko) : null;
 const projectFeatures = project.features ? (project.features[lang] || project.features.ko) : null;
 const projectLessons = project.lessons ? (project.lessons[lang] || project.lessons.ko) : null;
@@ -83,9 +85,11 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
     {project.coverImage && (
       <section class="mb-10">
         <div class="overflow-hidden rounded-xl">
-          <img 
-            src={project.coverImage} 
+          <Image 
+            src={project.coverImage}
             alt={projectName}
+            width={1200}
+            height={630}
             class="w-full object-cover"
             loading="lazy"
           />
@@ -213,17 +217,19 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
         <h2 class="section-title mb-6">{labels.relatedLinks}</h2>
         <ul class="space-y-3">
           {Object.entries(project.links).map(([key, url]) => (
-            <li>
-              <a 
-                href={url as string} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
-              >
-                <span class="capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
-                <ExternalLinkIcon class="h-4 w-4" />
-              </a>
-            </li>
+            typeof url === 'string' && (
+              <li>
+                <a 
+                  href={url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                >
+                  <span class="capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                  <ExternalLinkIcon class="h-4 w-4" />
+                </a>
+              </li>
+            )
           ))}
         </ul>
       </section>
@@ -236,9 +242,11 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {project.contentImages.map((imageUrl: string, idx: number) => (
             <a href={imageUrl} target="_blank" rel="noopener noreferrer" class="group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
-              <img 
-                src={imageUrl} 
+              <Image 
+                src={imageUrl}
                 alt={`${projectName} screenshot ${idx + 1}`}
+                width={600}
+                height={400}
                 class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
               />

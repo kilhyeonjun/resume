@@ -80,9 +80,12 @@ const PDF_CONFIGS: PDFConfigSet = {
 };
 
 async function waitForPageLoad(page: Page): Promise<void> {
-  await page.waitForFunction(() => document.readyState === 'complete');
-  // Additional wait for fonts and styles
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await page.waitForFunction(
+    () => document.readyState === 'complete' && document.fonts.ready.then(() => true),
+    { timeout: 15000 },
+  );
+  // Additional wait for rendering stabilization
+  await new Promise((resolve) => setTimeout(resolve, 500));
 }
 
 async function generatePDF(
@@ -105,11 +108,22 @@ async function generatePDF(
       deviceScaleFactor: 2,
     });
 
-    // Navigate to page
-    await page.goto(url, {
-      waitUntil: 'networkidle0',
-      timeout: 30000,
-    });
+    // Navigate to page with retry
+    const maxRetries = 3;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        await page.goto(url, {
+          waitUntil: 'networkidle0',
+          timeout: 30000,
+        });
+        break;
+      } catch (navError) {
+        if (attempt === maxRetries) throw navError;
+        const delay = 1000 * Math.pow(2, attempt - 1);
+        console.log(`     ⚠️ Attempt ${attempt}/${maxRetries} failed, retrying in ${delay}ms...`);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
+    }
 
     // Wait for full page load
     await waitForPageLoad(page);

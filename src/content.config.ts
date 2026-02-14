@@ -1,6 +1,9 @@
 import { defineCollection, z } from 'astro:content';
 import { file } from 'astro/loaders';
 
+const dateString = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Date must be YYYY-MM format');
+const dateStringLoose = z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, 'Date must be YYYY or YYYY-MM format');
+
 const skillItemSchema = z.object({
   name: z.string(),
 });
@@ -28,8 +31,8 @@ const experienceSchema = z.object({
   company: z.string(),
   companyUrl: z.string().url().optional(),
   position: z.string(),
-  startDate: z.string(),
-  endDate: z.string().optional(),
+  startDate: dateString,
+  endDate: dateString.optional(),
   current: z.boolean().optional(),
   description: z.string().optional(),
   highlights: z.array(z.string()).optional(),
@@ -41,8 +44,8 @@ const educationSchema = z.object({
   institution: z.string(),
   degree: z.string(),
   field: z.string().optional(),
-  startDate: z.string(),
-  endDate: z.string(),
+  startDate: dateString,
+  endDate: dateString,
   gpa: z.string().optional(),
 });
 
@@ -55,27 +58,27 @@ const continuousLearningSchema = z.object({
 
 const technicalWritingSchema = z.object({
   title: z.string(),
-  date: z.string(),
+  date: dateString,
   type: z.string(),
   url: z.string().url().optional(),
 });
 
 const openSourceSchema = z.object({
   name: z.string(),
-  date: z.string(),
+  date: dateString,
   url: z.string().url().optional(),
 });
 
 const awardSchema = z.object({
   name: z.string(),
-  date: z.string(),
+  date: dateStringLoose,
   description: z.string().optional(),
 });
 
 const certificationSchema = z.object({
   name: z.string(),
   issuer: z.string(),
-  date: z.string(),
+  date: dateString,
   url: z.string().url().optional(),
 });
 
@@ -106,6 +109,7 @@ const labelsSchema = z.object({
   awards: z.string(),
   certifications: z.string(),
   projects: z.string(),
+  highlights: z.string(),
   current: z.string(),
   print: z.string(),
   pdfVersion: z.string(),

@@ -74,7 +74,7 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
     <!-- Highlights -->
     {experience.highlights && experience.highlights.length > 0 && (
       <section class="mb-10">
-        <h2 class="section-title mb-6">Highlights</h2>
+        <h2 class="section-title mb-6">{labels.highlights}</h2>
         <ul class="space-y-3">
            {experience.highlights.map((highlight) => (
              <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">

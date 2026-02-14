@@ -36,33 +36,34 @@
   const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
   const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-  // Get the current theme from localStorage or system preference
-  function getTheme(): 'light' | 'dark' {
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-      return localStorage.getItem('theme') as 'light' | 'dark';
-    }
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    return 'light';
+  // Read current theme from DOM (already initialized by Layout's inline script)
+  function getCurrentTheme(): 'light' | 'dark' {
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
   }
 
-  // Apply theme to document
-  function applyTheme(theme: 'light' | 'dark') {
+  // Update icon visibility to match current theme
+  function updateIcons(theme: 'light' | 'dark') {
     if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
       themeToggleLightIcon?.classList.remove('hidden');
       themeToggleDarkIcon?.classList.add('hidden');
     } else {
-      document.documentElement.classList.remove('dark');
       themeToggleLightIcon?.classList.add('hidden');
       themeToggleDarkIcon?.classList.remove('hidden');
     }
   }
 
-  // Initialize theme
-  const currentTheme = getTheme();
-  applyTheme(currentTheme);
+  // Apply theme to document and update icons
+  function applyTheme(theme: 'light' | 'dark') {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    updateIcons(theme);
+  }
+
+  // Initialize icons based on Layout's already-applied theme
+  updateIcons(getCurrentTheme());
 
   // Toggle theme on button click
   themeToggleBtn?.addEventListener('click', () => {

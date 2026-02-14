@@ -16,6 +16,10 @@ interface Props {
 const { title, description = 'Personal Resume and Portfolio', lang = 'ko' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.env.BASE_URL;
+
+const currentPath = Astro.url.pathname;
+const isResume = currentPath === basePath || currentPath === `${basePath}/`;
+const isPortfolio = currentPath.startsWith(`${basePath}/portfolio`);
 ---
 
 <!doctype html>
@@ -27,6 +31,10 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:;" />
 
     <!-- OG / Twitter Card -->
     <meta property="og:title" content={title} />
@@ -62,6 +70,9 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
     <title>{title}</title>
   </head>
   <body class="min-h-screen">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded focus:bg-primary-600 focus:px-4 focus:py-2 focus:text-white">
+      {lang === 'ko' ? '본문으로 건너뛰기' : 'Skip to content'}
+    </a>
     <header class="no-print sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/80">
       <nav class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
         <a href={import.meta.env.BASE_URL} class="text-xl font-bold text-primary-600 dark:text-primary-400">
@@ -70,13 +81,25 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
         <div class="flex items-center gap-4">
           <a
             href={basePath}
-            class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+            class:list={[
+              'transition-colors',
+              isResume
+                ? 'font-semibold text-primary-600 dark:text-primary-400'
+                : 'text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400',
+            ]}
+            {...(isResume ? { 'aria-current': 'page' } : {})}
           >
             {lang === 'ko' ? '이력서' : 'Resume'}
           </a>
           <a
             href={`${basePath}/portfolio`}
-            class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+            class:list={[
+              'transition-colors',
+              isPortfolio
+                ? 'font-semibold text-primary-600 dark:text-primary-400'
+                : 'text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400',
+            ]}
+            {...(isPortfolio ? { 'aria-current': 'page' } : {})}
           >
             Portfolio
           </a>
@@ -85,7 +108,7 @@ const basePath = lang === 'en' ? `${import.meta.env.BASE_URL}/en` : import.meta.
       </nav>
     </header>
     
-    <main class="mx-auto max-w-4xl px-4 py-8">
+    <main id="main-content" class="mx-auto max-w-4xl px-4 py-8">
       <slot />
     </main>
     

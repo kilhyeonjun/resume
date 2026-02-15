@@ -185,7 +185,8 @@
           "Serverless Architecture Transition: SQS + Lambda + EventBridge-based EDA expanding data collection range 6x (60 days → 360 days)",
           "Internal Common Library Ecosystem: Developed and maintained 10 NestJS utility modules + 2 Game Server Kit packages",
           "Game Data Version Control: Git-like Audit Log + 3-Way Merge engine ensuring multi-game balance data consistency",
-          "Marketing Integration Platform: Unified management of Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system with GCP-AWS hybrid pipeline"
+          "Marketing Integration Platform: Unified management of Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system with GCP-AWS hybrid pipeline",
+          "CDK-based Probability Audit Log Analytics Pipeline: Kinesis → Firehose → S3 → Athena end-to-end infrastructure as code, integrated across 12 game projects with 94%+ test coverage"
         ],
         "projects": [
           {
@@ -255,7 +256,9 @@
               "Metrics Query Performance Optimization: Index structure optimization (eliminating Full Table Scan), cursor-based pagination, and generic filtering resolving 18-second query bottleneck",
               "GCP Pub/Sub-based Real-time Updates: Cloud Function → AWS API Gateway → Lambda hybrid pipeline minimizing metrics reflection delay",
               "Entity Normalization: Split 100+ column single table into main/time-series/prediction 3 tables, significantly improving query cost and I/O efficiency",
-              "Budget/Cost Integrated Dashboard: Project and game-level total budget/cost aggregation with manual cost input for real-time expenditure tracking"
+              "Budget/Cost Integrated Dashboard: Project and game-level total budget/cost aggregation with manual cost input for real-time expenditure tracking",
+              "Payment Metrics Expansion: Added paying user count, purchase count, and ARPU metrics at country/OS level for multi-dimensional payment performance analysis",
+              "Retention Metrics Integration: Consistently applied retention metrics across the full pipeline from BigQuery ingestion to entity, API, and field metadata for user retention analysis"
             ],
             "techStack": [
               "TypeScript",
@@ -272,7 +275,7 @@
           },
           {
             "name": "AWS Lambda Migration & Event-Driven Architecture",
-            "period": "2025.05 ~ 2025.08",
+            "period": "2025.06 ~ 2025.08",
             "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless architecture transition",
             "details": [
               "Hybrid Architecture: Maintained API server (EC2) + separated batch/job processing (Lambda) for optimal resource utilization per workload",

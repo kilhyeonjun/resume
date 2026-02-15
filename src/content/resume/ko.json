@@ -39,30 +39,96 @@
     "skills": [
       {
         "category": "언어",
-        "items": [{ "name": "JavaScript" }, { "name": "TypeScript" }, { "name": "Java" }]
+        "items": [
+          {
+            "name": "JavaScript"
+          },
+          {
+            "name": "TypeScript"
+          },
+          {
+            "name": "Java"
+          }
+        ]
       },
       {
         "category": "프레임워크",
-        "items": [{ "name": "NestJS" }, { "name": "Express.js" }, { "name": "Spring Boot" }]
+        "items": [
+          {
+            "name": "NestJS"
+          },
+          {
+            "name": "Express.js"
+          },
+          {
+            "name": "Spring Boot"
+          }
+        ]
       },
       {
         "category": "데이터베이스",
-        "items": [{ "name": "MySQL" }, { "name": "Redis" }]
+        "items": [
+          {
+            "name": "MySQL"
+          },
+          {
+            "name": "Redis"
+          }
+        ]
       },
       {
         "category": "AWS",
         "items": [
-          { "name": "Lambda" }, { "name": "SQS" }, { "name": "SNS" }, { "name": "EventBridge" },
-          { "name": "RDS" }, { "name": "S3" }, { "name": "RDS Proxy" }, { "name": "ElastiCache" }
+          {
+            "name": "Lambda"
+          },
+          {
+            "name": "SQS"
+          },
+          {
+            "name": "SNS"
+          },
+          {
+            "name": "EventBridge"
+          },
+          {
+            "name": "RDS"
+          },
+          {
+            "name": "S3"
+          },
+          {
+            "name": "RDS Proxy"
+          },
+          {
+            "name": "ElastiCache"
+          }
         ]
       },
       {
         "category": "Infrastructure",
-        "items": [{ "name": "AWS CDK" }, { "name": "Serverless Framework" }]
+        "items": [
+          {
+            "name": "AWS CDK"
+          },
+          {
+            "name": "Serverless Framework"
+          }
+        ]
       },
       {
         "category": "모니터링",
-        "items": [{ "name": "CloudWatch" }, { "name": "DataDog" }, { "name": "Grafana" }]
+        "items": [
+          {
+            "name": "CloudWatch"
+          },
+          {
+            "name": "DataDog"
+          },
+          {
+            "name": "Grafana"
+          }
+        ]
       }
     ],
     "experience": [
@@ -93,7 +159,12 @@
               "버전 간 Diff 엔진: Base Audit 유무에 따른 증분 비교와 스냅샷 비교의 이중 전략으로 비용 효율적 버전 비교",
               "sharedUuid 기반 식별 체계: PK 의존 탈피, 마이그레이션/비교/병합 시 정확한 엔티티 추적 보장"
             ],
-            "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "MySQL"
+            ]
           },
           {
             "name": "마케팅 캠페인 자동화 플랫폼",
@@ -104,7 +175,14 @@
               "통합 캠페인 자동화: Google Ads/Meta/TikTok 캠페인 생성·배포·수정을 단일 플랫폼에서 관리하는 API 구축",
               "캠페인 상태 변경 알림: 예산 변경/On-Off 상태를 실시간 감지하여 Slack 자동 알림"
             ],
-            "techStack": ["TypeScript", "NestJS", "Google Ads API", "Meta API", "TikTok API", "MySQL"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "Google Ads API",
+              "Meta API",
+              "TikTok API",
+              "MySQL"
+            ]
           },
           {
             "name": "마케팅 소재 관리 시스템",
@@ -117,7 +195,15 @@
               "Meta 에셋 동기화 성능 최적화: Bulk INSERT·조건 삭제 적용으로 Image 동기화 72% 단축, DB 트랜잭션 95% 개선",
               "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감"
             ],
-            "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL", "S3", "AWS Lambda", "SQS"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "MySQL",
+              "S3",
+              "AWS Lambda",
+              "SQS"
+            ]
           },
           {
             "name": "마케팅 지표 분석 플랫폼",
@@ -131,7 +217,18 @@
               "엔티티 정규화: 100+ 컬럼 단일 테이블을 메인/시계열/예측 3개 테이블로 분리하여 쿼리 비용과 I/O 효율 대폭 개선",
               "예산/비용 통합 대시보드: 프로젝트·게임별 총 예산/비용 집계와 수동 비용 입력으로 집행 현황 실시간 파악"
             ],
-            "techStack": ["TypeScript", "NestJS", "BigQuery", "Storage Read API", "Apache Arrow", "gRPC", "GCP Pub/Sub", "AWS Lambda", "SQS", "MySQL"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "BigQuery",
+              "Storage Read API",
+              "Apache Arrow",
+              "gRPC",
+              "GCP Pub/Sub",
+              "AWS Lambda",
+              "SQS",
+              "MySQL"
+            ]
           },
           {
             "name": "AWS Lambda 마이그레이션 & Event-Driven Architecture",
@@ -144,7 +241,16 @@
               "Lambda 운영 안정화: Batch Size 벌크 처리로 스로틀링 해결, CloudWatch 로그 경량화로 비용 절감, 빌드 OOM 조치",
               "RDS Proxy 커넥션 관리: Lambda 대량 실행 시 DB 커넥션 고갈 문제를 RDS Proxy 풀링으로 해결"
             ],
-            "techStack": ["TypeScript", "NestJS", "AWS Lambda", "SQS", "SNS", "EventBridge", "RDS Proxy", "AWS CDK"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "AWS Lambda",
+              "SQS",
+              "SNS",
+              "EventBridge",
+              "RDS Proxy",
+              "AWS CDK"
+            ]
           },
           {
             "name": "Cloud Data 동기화 시스템",
@@ -156,7 +262,13 @@
               "저장/업로드 성능 개선: Cloud Data 적재 및 S3 업로드 병목 구간 분석·최적화로 대용량 처리 지연 대폭 감소",
               "동기화 안정화: job 분리, 스케줄링 방식 전환, timeout 조정, non-blocking 처리로 운영 안정성 확보"
             ],
-            "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL", "S3"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "MySQL",
+              "S3"
+            ]
           },
           {
             "name": "NestJS 공통 유틸 라이브러리 (Glider Nest Util)",
@@ -169,7 +281,13 @@
               "TypeScript 제네릭 기반 타입 안전성: TypeORM 타입 한계를 함수 오버로딩과 제네릭으로 극복",
               "사내 NPM 패키지 관리: GitHub Packages 기반 배포, 변경 패키지만 테스트하는 CI 최적화"
             ],
-            "techStack": ["TypeScript", "NestJS", "TypeORM", "Redis", "GitHub NPM"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "Redis",
+              "GitHub NPM"
+            ]
           },
           {
             "name": "LMK 다국어 알림 시스템",
@@ -181,7 +299,13 @@
               "단건 Upsert API v2: 전체 row 저장에서 단건 update/delete/insert 구조로 전환하여 동시 작업 덮어쓰기 방지",
               "번역 담당자-언어 매핑 관리: 언어별 번역 담당자 지정으로 변경 알림 정확도 향상"
             ],
-            "techStack": ["TypeScript", "NestJS", "TypeORM", "Redis", "Slack API"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "Redis",
+              "Slack API"
+            ]
           },
           {
             "name": "게임서버 공통 로직 패키지화 (Game Server Kit)",
@@ -189,10 +313,14 @@
             "description": "게임서버 공통 로직을 재사용 가능한 NPM 패키지로 분리하여 다중 게임 프로젝트 간 코드 일관성 확보",
             "details": [
               "Sheet 모듈 NPM 패키지 분리: 게임서버 모놀리식의 Sheet 모듈을 독립 패키지로 추출하여 다중 게임 프로젝트에서 재사용",
-              "대규모 모듈 분리: sheet-version, sheet-hash-update-request, sheet-acquirable-asset, static-data-lock 등 4개 모듈 분리, 5개 게임 브랜치에 적용",
               "Probability 패키지: 게임 확률 로직을 독립 패키지로 분리하여 서버 간 일관성 확보"
             ],
-            "techStack": ["TypeScript", "NestJS", "TypeORM", "GitHub NPM"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "GitHub NPM"
+            ]
           }
         ],
         "techStack": [
@@ -246,7 +374,13 @@
               "배치 발송 시스템: 임상시험별 참여자 그룹 관리 및 효율적 동의서 발송",
               "워크플로우 기본 구조: 동의서 요청자 → 연구자 → 참여자 순서의 기본 진행 관리"
             ],
-            "techStack": ["TypeScript", "Express.js", "cyan", "Aurora Serverless v2", "knex"]
+            "techStack": [
+              "TypeScript",
+              "Express.js",
+              "cyan",
+              "Aurora Serverless v2",
+              "knex"
+            ]
           },
           {
             "name": "Maven Docs 시스템 안정성 개선",
@@ -258,7 +392,16 @@
               "실시간 상호참조 시스템: 문서 간 참조 관계 추적 및 자동 업데이트",
               "Word 문서 변환 시스템: Slate.js JSON 구조를 Word 문서로 변환하는 서버사이드 엔진"
             ],
-            "techStack": ["TypeScript", "Express.js", "cyan", "Slate.js", "AWS SNS", "SQS", "Lambda", "React"]
+            "techStack": [
+              "TypeScript",
+              "Express.js",
+              "cyan",
+              "Slate.js",
+              "AWS SNS",
+              "SQS",
+              "Lambda",
+              "React"
+            ]
           },
           {
             "name": "Maven Mailing 시스템 고도화",
@@ -269,7 +412,12 @@
               "이벤트 기반 발송 시스템: 트랜잭션과 분리된 안정적 이메일 발송",
               "이미지 인라인 첨부: CID 기반 이미지 임베딩으로 표시율 개선"
             ],
-            "techStack": ["TypeScript", "Express.js", "AWS SES", "Nodemailer"]
+            "techStack": [
+              "TypeScript",
+              "Express.js",
+              "AWS SES",
+              "Nodemailer"
+            ]
           },
           {
             "name": "Maven Auth 시스템 고도화",
@@ -279,7 +427,12 @@
               "사용자-조직 관계 구조 확장: 1:1에서 1:N 구조로 변경하여 다중 조직 관리 지원",
               "하위호환성 보장: 기존 기능 유지하면서 새로운 기능 확장"
             ],
-            "techStack": ["TypeScript", "Express.js", "cyan", "Aurora Serverless v2"]
+            "techStack": [
+              "TypeScript",
+              "Express.js",
+              "cyan",
+              "Aurora Serverless v2"
+            ]
           },
           {
             "name": "Maven VDR MVP 개발",
@@ -289,7 +442,13 @@
               "Event-Driven PDF 변환: S3 업로드 트리거 → Lambda 경량화 변환 → SNS/SQS 알림 체계",
               "권한 기반 워크플로우: 의료진별 역할에 따른 문서 접근 및 승인 권한 관리"
             ],
-            "techStack": ["TypeScript", "AWS Lambda", "S3", "SNS", "SQS"]
+            "techStack": [
+              "TypeScript",
+              "AWS Lambda",
+              "S3",
+              "SNS",
+              "SQS"
+            ]
           }
         ],
         "techStack": [
@@ -335,7 +494,16 @@
               "실시간 상태 반영 시스템: Socket.IO Room 기반 효율적 타겟팅 알림",
               "내부 API 게이트웨이: 결제 + 배달 API 통합 인터페이스로 추상화"
             ],
-            "techStack": ["TypeScript", "NestJS", "Express.js", "TypeORM", "MySQL", "Socket.IO", "네이버 클로바 OCR", "Web Push"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "Express.js",
+              "TypeORM",
+              "MySQL",
+              "Socket.IO",
+              "네이버 클로바 OCR",
+              "Web Push"
+            ]
           },
           {
             "name": "회원 인증 시스템 구축",
@@ -346,7 +514,12 @@
               "MySQL 기반 JWT 키 관리: 기존 DB 인프라를 활용한 비용 효율적 JWT 키 관리",
               "이중 토큰 전략: Access Token + Refresh Token으로 보안성과 사용성 균형"
             ],
-            "techStack": ["TypeScript", "NestJS", "MySQL", "JWT"]
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "MySQL",
+              "JWT"
+            ]
           }
         ],
         "techStack": [
@@ -388,7 +561,14 @@
               "Excel 기반 대량 등록: Apache POI 활용한 회원 정보 일괄 처리 시스템",
               "동적 수료증: JasperReports 기반 PDF 자동 생성 API"
             ],
-            "techStack": ["Java", "Spring Boot", "MyBatis", "MySQL", "Apache POI", "JasperReports"]
+            "techStack": [
+              "Java",
+              "Spring Boot",
+              "MyBatis",
+              "MySQL",
+              "Apache POI",
+              "JasperReports"
+            ]
           },
           {
             "name": "인천 스마트 그린 산단 통합관제센터",
@@ -399,7 +579,12 @@
               "대시보드 API: 통합 모니터링 데이터 제공 및 현황 집계",
               "SMS 비동기 처리: 예약 확정 시 SMS 발송을 백그라운드에서 처리"
             ],
-            "techStack": ["Java", "Spring Boot", "MySQL", "비즈뿌리오 SMS API"]
+            "techStack": [
+              "Java",
+              "Spring Boot",
+              "MySQL",
+              "비즈뿌리오 SMS API"
+            ]
           },
           {
             "name": "미래 서비스 JOB Agent 개발",
@@ -410,7 +595,13 @@
               "iframe 기반 시스템 통합: 기존 PHP 시스템에 평가 기능 임베드",
               "복합 점수 계산 로직: 다중 설문 결과를 종합한 평가 점수 산정 알고리즘"
             ],
-            "techStack": ["Java", "Spring Boot", "MySQL", "iframe", "postMessage API"]
+            "techStack": [
+              "Java",
+              "Spring Boot",
+              "MySQL",
+              "iframe",
+              "postMessage API"
+            ]
           },
           {
             "name": "kfriends 회원 관리 시스템",
@@ -420,7 +611,13 @@
               "통합 인증 서버 구축: Spring Security + JWT 기반 중앙화된 인증 시스템",
               "다중 도메인 CORS 처리: 국가별 도메인에서의 안전한 토큰 교환"
             ],
-            "techStack": ["Java", "Spring Boot", "Spring Security", "JWT", "MySQL"]
+            "techStack": [
+              "Java",
+              "Spring Boot",
+              "Spring Security",
+              "JWT",
+              "MySQL"
+            ]
           },
           {
             "name": "사내 기술 블로그 리뉴얼",
@@ -431,7 +628,12 @@
               "GitHub Pages 호스팅: 서버 관리 없는 무료 호스팅으로 비용 절감",
               "Travis CI 자동화: Git push 기반 자동 빌드 및 배포 파이프라인"
             ],
-            "techStack": ["Jekyll", "Liquid", "Travis CI", "GitHub Pages"]
+            "techStack": [
+              "Jekyll",
+              "Liquid",
+              "Travis CI",
+              "GitHub Pages"
+            ]
           }
         ],
         "techStack": [

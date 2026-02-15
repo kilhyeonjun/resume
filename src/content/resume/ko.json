@@ -745,6 +745,23 @@
     ],
     "continuousLearning": [
       {
+        "name": "시스템 디자인 스터디 2권",
+        "period": "2026.01 ~ 현재",
+        "description": "가상 면접 사례로 배우는 대규모 시스템 설계 기초 2권"
+      },
+      {
+        "name": "Node.js 디자인 패턴 바이블 스터디",
+        "period": "2025.10 ~ 2025.12",
+        "description": "Node 코어 개념, 동시성, 이벤트 루프, 모듈 시스템",
+        "url": "https://github.com/TSBM-Studio/nodejs-design-pattern-study"
+      },
+      {
+        "name": "시스템 디자인 스터디 1권",
+        "period": "2025.08 ~ 2025.10",
+        "description": "가상 면접 사례로 배우는 대규모 시스템 설계 기초",
+        "url": "https://github.com/jyjae/system-design-study"
+      },
+      {
         "name": "항해 플러스 백엔드 6기",
         "period": "2024.09 ~ 2024.11",
         "description": "TDD 및 클린 아키텍처, 동시성 제어, Redis 활용",
@@ -760,7 +777,11 @@
       {
         "title": "Games on AWS 2025 기술 발표",
         "date": "2025-10",
-        "type": "외부 발표"
+        "type": "외부 발표",
+        "description": "Amazon Q Developer를 활용한 개발 생산성 향상",
+        "achievement": "주니어 개발자 혼자 10일 만에 데이터 파이프라인 처리 용량 270배 확장 사례 공유",
+        "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
+        "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"
       },
       {
         "title": "AWS SES 이벤트 로그를 통한 이메일 발송 모니터링",
@@ -776,9 +797,40 @@
     ],
     "openSource": [
       {
+        "name": "atlassian-skills: Jira Cloud API v3 코멘트 ADF 포맷 적용",
+        "date": "2026-01",
+        "url": "https://github.com/langpingxue/atlassian-skills/pull/7",
+        "status": "Merged"
+      },
+      {
+        "name": "atlassian-skills: Jira Cloud 검색 API 엔드포인트 마이그레이션",
+        "date": "2026-01",
+        "url": "https://github.com/langpingxue/atlassian-skills/pull/6",
+        "status": "Merged"
+      },
+      {
+        "name": "kiro-gateway: toolResults 존재 시 thinking 태그 주입 스킵",
+        "date": "2026-01",
+        "url": "https://github.com/jwadow/kiro-gateway/pull/23",
+        "status": "Merged"
+      },
+      {
+        "name": "kiro-gateway: AWS SSO OIDC 토큰 갱신 전 SQLite 자격증명 리로드",
+        "date": "2026-01",
+        "url": "https://github.com/jwadow/kiro-gateway/pull/22",
+        "status": "Merged"
+      },
+      {
+        "name": "SuperClaude_Plugin: 마켓플레이스 이름 문서 수정",
+        "date": "2025-12",
+        "url": "https://github.com/SuperClaude-Org/SuperClaude_Plugin/pull/18",
+        "status": "Open"
+      },
+      {
         "name": "cyan 프레임워크 \"NOT IN\" 쿼리 조건 추가",
         "date": "2024-05",
-        "url": "https://github.com/coralblack/cyan/pull/110"
+        "url": "https://github.com/coralblack/cyan/pull/110",
+        "status": "Merged"
       }
     ],
     "awards": [
@@ -789,6 +841,11 @@
       }
     ],
     "certifications": [
+      {
+        "name": "SQLD (Structured Query Language Developer)",
+        "issuer": "한국데이터산업진흥원",
+        "date": "2025-12"
+      },
       {
         "name": "정보처리기사",
         "issuer": "한국산업인력공단",

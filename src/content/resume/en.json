@@ -745,6 +745,23 @@
     ],
     "continuousLearning": [
       {
+        "name": "System Design Study Vol. 2",
+        "period": "2026.01 ~ Present",
+        "description": "System Design Interview: An Insider's Guide Volume 2"
+      },
+      {
+        "name": "Node.js Design Patterns Bible Study",
+        "period": "2025.10 ~ 2025.12",
+        "description": "Node core concepts, concurrency, event loop, module system",
+        "url": "https://github.com/TSBM-Studio/nodejs-design-pattern-study"
+      },
+      {
+        "name": "System Design Study Vol. 1",
+        "period": "2025.08 ~ 2025.10",
+        "description": "System Design Interview: An Insider's Guide",
+        "url": "https://github.com/jyjae/system-design-study"
+      },
+      {
         "name": "Hanghae Plus Backend 6th Cohort",
         "period": "2024.09 ~ 2024.11",
         "description": "TDD, Clean Architecture, Concurrency Control, Redis",
@@ -760,7 +777,11 @@
       {
         "title": "Games on AWS 2025 Technical Presentation",
         "date": "2025-10",
-        "type": "Conference Talk"
+        "type": "Conference Talk",
+        "description": "Boosting Developer Productivity with Amazon Q Developer",
+        "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days",
+        "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
+        "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"
       },
       {
         "title": "Email Delivery Monitoring through AWS SES Event Logs",
@@ -776,9 +797,40 @@
     ],
     "openSource": [
       {
+        "name": "atlassian-skills: Use ADF format for comments in Jira Cloud API v3",
+        "date": "2026-01",
+        "url": "https://github.com/langpingxue/atlassian-skills/pull/7",
+        "status": "Merged"
+      },
+      {
+        "name": "atlassian-skills: Migrate to new Jira Cloud search API endpoint",
+        "date": "2026-01",
+        "url": "https://github.com/langpingxue/atlassian-skills/pull/6",
+        "status": "Merged"
+      },
+      {
+        "name": "kiro-gateway: Skip thinking tag injection when toolResults present",
+        "date": "2026-01",
+        "url": "https://github.com/jwadow/kiro-gateway/pull/23",
+        "status": "Merged"
+      },
+      {
+        "name": "kiro-gateway: Reload SQLite credentials before AWS SSO OIDC token refresh",
+        "date": "2026-01",
+        "url": "https://github.com/jwadow/kiro-gateway/pull/22",
+        "status": "Merged"
+      },
+      {
+        "name": "SuperClaude_Plugin: Correct marketplace name in documentation",
+        "date": "2025-12",
+        "url": "https://github.com/SuperClaude-Org/SuperClaude_Plugin/pull/18",
+        "status": "Open"
+      },
+      {
         "name": "cyan framework \"NOT IN\" query condition addition",
         "date": "2024-05",
-        "url": "https://github.com/coralblack/cyan/pull/110"
+        "url": "https://github.com/coralblack/cyan/pull/110",
+        "status": "Merged"
       }
     ],
     "awards": [
@@ -789,6 +841,11 @@
       }
     ],
     "certifications": [
+      {
+        "name": "SQLD (Structured Query Language Developer)",
+        "issuer": "Korea Data Agency",
+        "date": "2025-12"
+      },
       {
         "name": "Engineer Information Processing",
         "issuer": "Human Resources Development Service of Korea",

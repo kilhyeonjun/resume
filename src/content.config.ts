@@ -66,12 +66,17 @@ const technicalWritingSchema = z.object({
   date: dateString,
   type: z.string(),
   url: safeUrl.optional(),
+  description: z.string().optional(),
+  achievement: z.string().optional(),
+  videoUrl: safeUrl.optional(),
+  reviewUrl: safeUrl.optional(),
 });
 
 const openSourceSchema = z.object({
   name: z.string(),
   date: dateString,
   url: safeUrl.optional(),
+  status: z.enum(['Merged', 'Open', 'Closed']).optional(),
 });
 
 const awardSchema = z.object({

@@ -233,7 +233,7 @@
               "소재 자동 배포 파이프라인: 소재 업로드부터 Google/Meta/TikTok 플랫폼 자동 등록까지 통합 파이프라인 구축",
               "소재 도메인 정규화: AssetDraft 전환 및 JSON 컬럼 → 개별 컬럼 분리로 쿼리 성능 향상",
               "NAS-S3 이중화 동기화: SQS 이벤트 기반 서버-워커 분리 아키텍처로 사내 NAS와 S3 간 양방향 동기화/복원 구현",
-              "Meta 에셋 동기화 성능 최적화: Bulk INSERT·조건 삭제 적용으로 Image 동기화 72% 단축, DB 트랜잭션 95% 개선",
+              "Meta 에셋 동기화 성능 최적화: TypeORM save() → insertBulk() 전환, deleteByCondition 적용으로 Image 동기화 시간 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)",
               "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감"
             ],
             "techStack": [
@@ -297,7 +297,7 @@
           },
           {
             "name": "Cloud Data 동기화 시스템",
-            "period": "2025.05 ~ 현재",
+            "period": "2025.08 ~ 현재",
             "description": "동적 게임 데이터(유저 경험치, 재화 등)의 환경 간 S3 동기화 및 DDL 자동 관리 시스템",
             "details": [
               "환경 간 데이터 동기화: S3 기반 동적 게임 데이터의 개발/스테이징/프로덕션 환경 간 동기화 시스템",
@@ -320,7 +320,7 @@
             "details": [
               "10개 모듈 라이브러리 생태계: core, repository, cache, lock, slack, crypto, smb, hash, type, iac 모듈로 확장",
               "Repository 모듈: Bulk 연산, Audit Log, TypeORM 타입 좁히기 지원. 2000줄+ 코드를 SRP 기준 파일 분리 리팩토링",
-              "분산 락(Lock) 모듈: Redis 기반 분산 락 데코레이터로 멀티 인스턴스 환경의 동시성 제어",
+              "분산 락(Lock) 모듈: ElastiCache (Redis) 기반 분산 락 데코레이터로 멀티 인스턴스 환경의 동시성 제어",
               "TypeScript 제네릭 기반 타입 안전성: TypeORM 타입 한계를 함수 오버로딩과 제네릭으로 극복",
               "사내 NPM 패키지 관리: GitHub Packages 기반 배포, 변경 패키지만 테스트하는 CI 최적화"
             ],
@@ -328,7 +328,7 @@
               "TypeScript",
               "NestJS",
               "TypeORM",
-              "Redis",
+              "ElastiCache (Redis)",
               "GitHub NPM"
             ]
           },
@@ -346,7 +346,7 @@
               "TypeScript",
               "NestJS",
               "TypeORM",
-              "Redis",
+              "ElastiCache (Redis)",
               "Slack API"
             ]
           },
@@ -396,7 +396,7 @@
           "NestJS",
           "TypeORM",
           "MySQL",
-          "Redis",
+          "ElastiCache (Redis)",
           "BigQuery",
           "Apache Arrow",
           "gRPC",

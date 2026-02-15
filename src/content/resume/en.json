@@ -233,7 +233,7 @@
               "Creative Auto-deployment Pipeline: Integrated pipeline from creative upload to automatic registration on Google/Meta/TikTok platforms",
               "Creative Domain Normalization: AssetDraft conversion and JSON column → individual column separation for query performance improvement",
               "NAS-S3 Dual Sync: SQS event-based server-worker separation architecture for bidirectional sync/restore between internal NAS and S3",
-              "Meta Asset Sync Performance Optimization: Bulk INSERT and conditional deletion reducing Image sync by 72% and DB transactions by 95%",
+              "Meta Asset Sync Performance Optimization: TypeORM save() → insertBulk() conversion and deleteByCondition adoption — Image sync time reduced by 72% (25.7s→7.1s), DB transaction time reduced by 95% (10-16s→0.3-0.5s)",
               "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%"
             ],
             "techStack": [
@@ -297,7 +297,7 @@
           },
           {
             "name": "Cloud Data Sync System",
-            "period": "2025.05 ~ Present",
+            "period": "2025.08 ~ Present",
             "description": "S3-based sync and automated DDL management system for dynamic game data (user experience, currency, etc.) across environments",
             "details": [
               "Cross-environment Data Sync: S3-based dynamic game data synchronization across development/staging/production environments",
@@ -320,7 +320,7 @@
             "details": [
               "10-module Library Ecosystem: Expanded to core, repository, cache, lock, slack, crypto, smb, hash, type, and iac modules",
               "Repository Module: Bulk operations, Audit Log, TypeORM type narrowing support; refactored 2000+ line codebase into SRP-based file separation",
-              "Distributed Lock Module: Redis-based distributed lock decorator for concurrency control in multi-instance environments",
+              "Distributed Lock Module: ElastiCache (Redis)-based distributed lock decorator for concurrency control in multi-instance environments",
               "TypeScript Generic-based Type Safety: Overcame TypeORM type limitations through function overloading and generics",
               "Internal NPM Package Management: GitHub Packages-based distribution with CI optimization testing only changed packages"
             ],
@@ -328,7 +328,7 @@
               "TypeScript",
               "NestJS",
               "TypeORM",
-              "Redis",
+              "ElastiCache (Redis)",
               "GitHub NPM"
             ]
           },
@@ -346,7 +346,7 @@
               "TypeScript",
               "NestJS",
               "TypeORM",
-              "Redis",
+              "ElastiCache (Redis)",
               "Slack API"
             ]
           },
@@ -396,7 +396,7 @@
           "NestJS",
           "TypeORM",
           "MySQL",
-          "Redis",
+          "ElastiCache (Redis)",
           "BigQuery",
           "Apache Arrow",
           "gRPC",

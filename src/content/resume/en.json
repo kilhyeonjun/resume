@@ -186,7 +186,7 @@
           "Internal Common Library Ecosystem: Developed and maintained 10 NestJS utility modules + 2 Game Server Kit packages",
           "Game Data Version Control: Git-like Audit Log + 3-Way Merge engine ensuring multi-game balance data consistency",
           "Marketing Integration Platform: Unified management of Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system with GCP-AWS hybrid pipeline",
-          "CDK-based Probability Audit Log Analytics Pipeline: Kinesis → Firehose → S3 → Athena end-to-end infrastructure as code, integrated across 12 game projects with 94%+ test coverage"
+          "CDK-based Probability Audit Log Analytics Pipeline: Kinesis → Firehose → S3 → Glue → Athena end-to-end infrastructure as code, integrated across 12 game projects with 94%+ test coverage"
         ],
         "projects": [
           {
@@ -378,7 +378,7 @@
             "techStack": [
               "TypeScript",
               "NestJS",
-              "CDK",
+              "AWS CDK",
               "Kinesis",
               "Firehose",
               "S3",
@@ -654,7 +654,7 @@
               "Java",
               "Spring Boot",
               "MySQL",
-              "SMS API"
+              "Bizppurio SMS API"
             ]
           },
           {

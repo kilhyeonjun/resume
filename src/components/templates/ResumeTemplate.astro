@@ -67,11 +67,11 @@ const jsonLd = {
       {lang === 'ko' ? (
         <>
           <span class="rounded-lg bg-primary-600 px-3 py-1.5 text-sm font-medium text-white">한</span>
-          <a href={`${import.meta.env.BASE_URL}/en`} class="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800">EN</a>
+          <a href={`${import.meta.env.BASE_URL}/en`} class="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800">EN</a>
         </>
       ) : (
         <>
-          <a href={import.meta.env.BASE_URL} class="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800">한</a>
+          <a href={import.meta.env.BASE_URL} class="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800">한</a>
           <span class="rounded-lg bg-primary-600 px-3 py-1.5 text-sm font-medium text-white">EN</span>
         </>
       )}
@@ -87,7 +87,7 @@ const jsonLd = {
       </p>
       
       <!-- Contact Info -->
-      <div class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-600 dark:text-gray-400">
+      <div class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-600 dark:text-gray-300">
         {data.email && (
           <a href={`mailto:${data.email}`} class="flex items-center gap-1.5 transition-colors hover:text-primary-600 dark:hover:text-primary-400">
             <EmailIcon class="h-4 w-4" />
@@ -110,7 +110,7 @@ const jsonLd = {
              href={data.github}
              target="_blank"
              rel="noopener noreferrer"
-             class="rounded-full bg-gray-100 p-2.5 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+             class="rounded-full bg-gray-100 p-2.5 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
              aria-label="GitHub"
            >
              <GitHubIcon class="h-5 w-5" />
@@ -121,7 +121,7 @@ const jsonLd = {
              href={data.linkedin}
              target="_blank"
              rel="noopener noreferrer"
-             class="rounded-full bg-gray-100 p-2.5 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+             class="rounded-full bg-gray-100 p-2.5 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
              aria-label="LinkedIn"
            >
              <LinkedInIcon class="h-5 w-5" />
@@ -132,7 +132,7 @@ const jsonLd = {
              href={data.blog}
              target="_blank"
              rel="noopener noreferrer"
-             class="rounded-full bg-gray-100 p-2.5 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+             class="rounded-full bg-gray-100 p-2.5 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
              aria-label="Blog"
            >
              <WebsiteIcon class="h-5 w-5" />
@@ -192,12 +192,12 @@ const jsonLd = {
                   </h3>
                   <p class="text-lg font-medium text-primary-600 dark:text-primary-400">{exp.company}</p>
                 </div>
-                <p class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+                <p class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-300 sm:mt-0">
                   {exp.startDate} — {exp.current ? labels.current : exp.endDate}
                 </p>
               </div>
               {exp.description && (
-                <p class="mt-2 text-gray-600 dark:text-gray-400">{exp.description}</p>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">{exp.description}</p>
               )}
               {exp.highlights && exp.highlights.length > 0 && (
                 <ul class="mt-3 space-y-1.5">
@@ -254,7 +254,7 @@ const jsonLd = {
                 <p class="text-primary-600 dark:text-primary-400">
                   {edu.degree} {edu.field && `• ${edu.field}`}
                 </p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
+                <p class="text-sm text-gray-500 dark:text-gray-300">
                   {edu.startDate} — {edu.endDate}
                   {edu.gpa && <span class="ml-2">GPA: {edu.gpa}</span>}
                 </p>
@@ -292,7 +292,7 @@ const jsonLd = {
                       cert.name
                     )}
                   </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-400">
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
                     {cert.issuer} • {cert.date}
                   </p>
                 </div>
@@ -313,7 +313,7 @@ const jsonLd = {
             <div class="flex items-start gap-3">
               <div class="flex-1">
                 <h3 class="font-semibold text-gray-900 dark:text-white">{award.name}</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <p class="text-sm text-gray-600 dark:text-gray-300">
                   {award.date}
                   {award.description && ` — ${award.description}`}
                 </p>
@@ -346,7 +346,7 @@ const jsonLd = {
                     item.name
                   )}
                 </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <p class="text-sm text-gray-600 dark:text-gray-300">
                   {item.period} — {item.description}
                 </p>
               </div>
@@ -378,7 +378,7 @@ const jsonLd = {
                     item.name
                   )}
                 </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">{item.date}</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">{item.date}</p>
               </div>
             </div>
           ))}
@@ -408,7 +408,7 @@ const jsonLd = {
                     item.title
                   )}
                 </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <p class="text-sm text-gray-600 dark:text-gray-300">
                   {item.type} — {item.date}
                 </p>
               </div>

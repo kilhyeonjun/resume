@@ -42,7 +42,7 @@ export function calculateTotalCareerMonths(experiences: Experience[]): number {
     }
   }
 
-  return merged.reduce((sum, [start, end]) => sum + (end - start), 0);
+  return merged.reduce((sum, [start, end]) => sum + (end - start + 1), 0);
 }
 
 export function formatCareerDuration(totalMonths: number, lang: 'ko' | 'en'): string {

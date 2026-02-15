@@ -202,7 +202,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
 
   {data.summary && (
     <section>
-      <h2>PROFESSIONAL SUMMARY</h2>
+      <h2>{labels.summary.toUpperCase()}</h2>
       <p>{data.summary}</p>
     </section>
   )}
@@ -225,7 +225,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
 
   {data.skills && data.skills.length > 0 && (
     <section>
-      <h2>SKILLS</h2>
+      <h2>{labels.skills.toUpperCase()}</h2>
       {data.skills.map((skillGroup) => (
         <p class="skills-list">
           <span class="skill-category">{skillGroup.category}:</span>{' '}
@@ -237,7 +237,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
 
   {data.experience && data.experience.length > 0 && (
     <section>
-      <h2>WORK EXPERIENCE</h2>
+      <h2>{labels.experience.toUpperCase()}</h2>
       {data.experience.map((exp) => (
         <div class="item">
           <div class="item-header">
@@ -261,7 +261,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
 
   {data.education && data.education.length > 0 && (
     <section>
-      <h2>EDUCATION</h2>
+      <h2>{labels.education.toUpperCase()}</h2>
       {data.education.map((edu) => (
         <div class="item">
           <h3>
@@ -282,7 +282,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
 
   {data.certifications && data.certifications.length > 0 && (
     <section>
-      <h2>CERTIFICATIONS</h2>
+      <h2>{labels.certifications.toUpperCase()}</h2>
       {data.certifications.map((cert) => (
         <p>
           <strong>{cert.name}</strong> — {cert.issuer}, {cert.date}

@@ -448,6 +448,9 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
         {data.github && (
           <span class="contact-item">{data.github.replace('https://', '')}</span>
         )}
+        {data.linkedin && (
+          <span class="contact-item">{data.linkedin.replace('https://', '')}</span>
+        )}
       </div>
     </header>
 

@@ -39,7 +39,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
     <nav class="mb-8">
       <a 
         href={`${basePath}/portfolio`}
-        class="inline-flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+        class="inline-flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
       >
         <ArrowLeftIcon class="h-4 w-4" />
         {labels.backToPortfolio}
@@ -59,11 +59,11 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
             {projectName}
           </h1>
         </div>
-        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base">
+        <p class="text-sm font-medium text-gray-500 dark:text-gray-300 sm:text-base">
           {period}
         </p>
       </div>
-      <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">{projectSummary}</p>
+      <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">{projectSummary}</p>
       
       {/* GitHub & Links */}
       <div class="mt-6 flex flex-wrap gap-3">
@@ -262,7 +262,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
         {prevProject ? (
           <a 
             href={`${basePath}/portfolio/${prevProject.slug}`}
-            class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+            class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
             <ArrowLeftIcon class="h-5 w-5 transition-transform group-hover:-translate-x-1" />
             <div class="text-left">
@@ -284,7 +284,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
         {nextProject ? (
           <a 
             href={`${basePath}/portfolio/${nextProject.slug}`}
-            class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+            class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
             <div class="text-right">
               <p class="text-xs text-gray-400 dark:text-gray-500">{labels.nextProject}</p>

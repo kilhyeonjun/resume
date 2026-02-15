@@ -75,65 +75,122 @@
         "current": true,
         "description": "모바일 게임 개발 및 퍼블리싱 회사",
         "highlights": [
-          "BigQuery 비용 82% 절감: Storage Read API 도입으로 TB당 $6.25→$1.1",
-          "서버리스 아키텍처 완성: Event-Driven Architecture 기반 AWS Lambda 마이그레이션",
-          "마케팅 통합 플랫폼: Google Ads/Meta/TikTok 통합 대시보드로 운영 효율성 향상",
-          "게임 데이터 Audit 시스템: Repository 추상화 기반 밸런스 변경 이력 추적"
+          "BigQuery 비용 82% 절감: Storage Read API + 엔티티 정규화로 TB당 $6.25→$1.1, 18초 쿼리 병목 해결",
+          "서버리스 아키텍처 전환: SQS + Lambda + EventBridge 기반 EDA로 데이터 수집 범위 6배 확장 (60일 → 360일)",
+          "사내 공통 라이브러리 생태계: NestJS 유틸 10개 모듈 + 게임서버 Kit 2개 패키지 개발·운영",
+          "게임 데이터 버전 관리: Git-like Audit Log + 3-Way Merge 엔진으로 다중 게임 밸런스 데이터 일관성 확보",
+          "마케팅 통합 플랫폼: Google Ads/Meta/TikTok 캠페인·소재·지표를 단일 시스템에서 관리, GCP-AWS 하이브리드 파이프라인 구축"
         ],
         "projects": [
           {
             "name": "Glider Sheet Audit Log 시스템",
-            "period": "2025.01 ~ 2025.03",
-            "description": "게임 운영 중 데이터 변경 이력 추적 불가로 인한 게임 밸런스 문제 대응 지연과 운영 효율성 저하 해결",
+            "period": "2025.01 ~ 2025.04",
+            "description": "게임 운영 중 데이터 변경 이력 추적 불가로 인한 밸런스 문제 대응 지연 해결",
             "details": [
-              "Repository 추상화 계층: Audit Log 관리가 필요한 엔티티별 전용 Repository 설계",
-              "멀티 DB 통합 버전 관리: UUID 기반 크로스 환경/프로젝트 엔티티 추적 시스템",
-              "이벤트 소싱 기반 머지 시스템: Git과 유사한 다중 환경/게임 간 충돌 해결 시스템",
-              "버전 간 비교(Diff) 엔진: 객체 단위 변경사항을 필드 레벨에서 정확히 추적하는 Diff 알고리즘 구현"
+              "Git-like 버전 관리 시스템: UUID 기반 크로스 환경/프로젝트 엔티티 추적으로 다중 게임 간 데이터 일관성 확보",
+              "이벤트 소싱 기반 변경 추적: Auditable 데코레이터 + TypeORM Subscriber 패턴으로 엔티티 변경 자동 기록 파이프라인 구축",
+              "3-Way Merge 엔진: 상위/하위 엔티티 충돌 감지와 유니크 제약조건을 고려한 다중 환경 간 버전 병합 시스템",
+              "버전 간 Diff 엔진: Base Audit 유무에 따른 증분 비교와 스냅샷 비교의 이중 전략으로 비용 효율적 버전 비교",
+              "sharedUuid 기반 식별 체계: PK 의존 탈피, 마이그레이션/비교/병합 시 정확한 엔티티 추적 보장"
             ],
             "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL"]
           },
           {
-            "name": "마케팅 캠페인 통합 관리 플랫폼",
-            "period": "2025.03 ~ 2025.05",
-            "description": "다중 플랫폼 분산 관리로 인한 마케팅 운영 비효율성과 통합 관리 부재 해결",
+            "name": "마케팅 캠페인 자동화 플랫폼",
+            "period": "2025.02 ~ 현재",
+            "description": "다중 광고 플랫폼(Google Ads/Meta/TikTok) 분산 관리로 인한 마케팅 캠페인 운영 비효율성 해결",
             "details": [
-              "통합 관리 대시보드: 게임 프로젝트별로 모든 플랫폼 캠페인을 한 곳에서 관리",
-              "플랫폼별 API 모듈 분리: Google Ads/Meta/TikTok 각각의 고유 기능에 특화된 독립적 API 모듈"
+              "마케팅 도메인 DB 분리: Sheet DB에 혼재된 마케팅 데이터를 전용 DB로 마이그레이션하여 서비스 독립 기반 확보",
+              "통합 캠페인 자동화: Google Ads/Meta/TikTok 캠페인 생성·배포·수정을 단일 플랫폼에서 관리하는 API 구축",
+              "캠페인 상태 변경 알림: 예산 변경/On-Off 상태를 실시간 감지하여 Slack 자동 알림"
             ],
-            "techStack": ["TypeScript", "NestJS", "Google Ads API", "Meta API", "TikTok API"]
+            "techStack": ["TypeScript", "NestJS", "Google Ads API", "Meta API", "TikTok API", "MySQL"]
           },
           {
-            "name": "마케팅 지표 시스템",
-            "period": "2025.03 ~ 2025.05",
-            "description": "데이터팀의 BigQuery 데이터를 엑셀 기반 관리에서 사내 어드민 기반 통합 관리로 전환",
+            "name": "마케팅 소재 관리 시스템",
+            "period": "2025.02 ~ 현재",
+            "description": "마케팅 소재의 수동 업로드·플랫폼 배포·백업 부재로 인한 운영 비효율성과 자산 안정성 문제 해결",
             "details": [
-              "BigQuery 스냅샷 기반 버전 관리: 머신러닝 예측 데이터의 주기적 변경에 대응한 시점별 데이터 관리",
-              "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 비용 82% 절감"
+              "소재 자동 배포 파이프라인: 소재 업로드부터 Google/Meta/TikTok 플랫폼 자동 등록까지 통합 파이프라인 구축",
+              "소재 도메인 정규화: AssetDraft 전환 및 JSON 컬럼 → 개별 컬럼 분리로 쿼리 성능 향상",
+              "NAS-S3 이중화 동기화: SQS 이벤트 기반 서버-워커 분리 아키텍처로 사내 NAS와 S3 간 양방향 동기화/복원 구현",
+              "Meta 에셋 동기화 성능 최적화: Bulk INSERT·조건 삭제 적용으로 Image 동기화 72% 단축, DB 트랜잭션 95% 개선",
+              "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감"
             ],
-            "techStack": ["TypeScript", "NestJS", "BigQuery", "Storage Read API", "Apache Arrow", "gRPC"]
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL", "S3", "AWS Lambda", "SQS"]
           },
           {
-            "name": "AWS Lambda 마이그레이션 & EDA 구축",
-            "period": "2025.05 ~ 2025.07",
-            "description": "마케팅 지표 시스템 60일 → 360일 확장에 따른 배치 작업 및 Job 처리 한계 해결",
+            "name": "마케팅 지표 분석 플랫폼",
+            "period": "2025.04 ~ 현재",
+            "description": "엑셀 기반 마케팅 데이터 관리를 사내 어드민 통합 플랫폼으로 전환하여 실시간 캠페인 성과 모니터링 구현",
             "details": [
-              "하이브리드 아키텍처: API 서버(EC2) 유지 + 배치/Job 처리(Lambda) 분리",
-              "Event-Driven Architecture: SQS + Lambda + EventBridge 기반 비동기 처리",
-              "NestJS DI 기반 Lambda 팩토리: 기존 코드 재사용과 DI 시스템을 위한 Lambda 어댑터",
-              "트랜잭션 아웃박스 패턴: 데이터 정합성 보장을 위한 이벤트 발행 시스템",
-              "RDS Proxy를 통한 커넥션 관리: Lambda 대량 실행 시 DB 커넥션 고갈 문제 해결"
+              "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 BigQuery 비용 82% 절감 (TB당 $6.25 → $1.1)",
+              "다차원 지표 분석 시스템: 캠페인/국가·OS/광고 매체별 3개 축의 지표 연동 및 CRUD API 구축",
+              "지표 조회 성능 최적화: 인덱스 구조 최적화(Full Table Scan 제거), 커서 기반 페이지네이션, 범용 필터링으로 18초 쿼리 병목 해결",
+              "GCP Pub/Sub 기반 실시간 업데이트: Cloud Function → AWS API Gateway → Lambda 하이브리드 파이프라인으로 지표 반영 지연 최소화",
+              "엔티티 정규화: 100+ 컬럼 단일 테이블을 메인/시계열/예측 3개 테이블로 분리하여 쿼리 비용과 I/O 효율 대폭 개선",
+              "예산/비용 통합 대시보드: 프로젝트·게임별 총 예산/비용 집계와 수동 비용 입력으로 집행 현황 실시간 파악"
+            ],
+            "techStack": ["TypeScript", "NestJS", "BigQuery", "Storage Read API", "Apache Arrow", "gRPC", "GCP Pub/Sub", "AWS Lambda", "SQS", "MySQL"]
+          },
+          {
+            "name": "AWS Lambda 마이그레이션 & Event-Driven Architecture",
+            "period": "2025.05 ~ 2025.08",
+            "description": "마케팅 지표 60일 → 360일 확장에 따른 배치 작업 한계 해결 및 서버리스 아키텍처 전환",
+            "details": [
+              "하이브리드 아키텍처: API 서버(EC2) 유지 + 배치/Job 처리(Lambda) 분리로 워크로드별 최적 리소스 활용",
+              "Event-Driven Architecture: SQS + Lambda + EventBridge 기반 비동기 처리로 데이터 수집 범위 6배 확장 (60일 → 360일)",
+              "트랜잭션 아웃박스 패턴: scheduledAt/delaySeconds 기반 예약·지연 발행으로 데이터 정합성 보장",
+              "Lambda 운영 안정화: Batch Size 벌크 처리로 스로틀링 해결, CloudWatch 로그 경량화로 비용 절감, 빌드 OOM 조치",
+              "RDS Proxy 커넥션 관리: Lambda 대량 실행 시 DB 커넥션 고갈 문제를 RDS Proxy 풀링으로 해결"
             ],
             "techStack": ["TypeScript", "NestJS", "AWS Lambda", "SQS", "SNS", "EventBridge", "RDS Proxy", "AWS CDK"]
           },
           {
-            "name": "Glider Nest Util 라이브러리",
-            "period": "2025.07 ~ 2025.08",
-            "description": "신규 프로젝트 진행 시 공통 로직 중복 개발과 개발자별 구현 방식 차이 해결",
+            "name": "Cloud Data 동기화 시스템",
+            "period": "2025.05 ~ 현재",
+            "description": "동적 게임 데이터(유저 경험치, 재화 등)의 환경 간 S3 동기화 및 DDL 자동 관리 시스템",
             "details": [
-              "사내 GitHub Private 패키지: NPM 기반 라이브러리 배포 및 버전 관리",
-              "Repository 모듈: Bulk 연산, Audit Log, TypeORM 타입 좁히기 지원",
-              "TypeScript 제네릭: TypeORM 타입 한계 극복을 위한 함수 오버로딩 기반 타입 좁히기"
+              "환경 간 데이터 동기화: S3 기반 동적 게임 데이터의 개발/스테이징/프로덕션 환경 간 동기화 시스템",
+              "DDL 자동 관리 엔진: PK 컬럼 타입 동적 결정, 컬럼 타입 불일치 감지·MODIFY, 인덱스 자동 생성·RENAME으로 스키마 동기화 자동화",
+              "저장/업로드 성능 개선: Cloud Data 적재 및 S3 업로드 병목 구간 분석·최적화로 대용량 처리 지연 대폭 감소",
+              "동기화 안정화: job 분리, 스케줄링 방식 전환, timeout 조정, non-blocking 처리로 운영 안정성 확보"
+            ],
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL", "S3"]
+          },
+          {
+            "name": "NestJS 공통 유틸 라이브러리 (Glider Nest Util)",
+            "period": "2025.07 ~ 현재",
+            "description": "신규 프로젝트 공통 로직 중복 개발과 개발자별 구현 방식 차이를 해결하는 사내 NPM 패키지 라이브러리",
+            "details": [
+              "10개 모듈 라이브러리 생태계: core, repository, cache, lock, slack, crypto, smb, hash, type, iac 모듈로 확장",
+              "Repository 모듈: Bulk 연산, Audit Log, TypeORM 타입 좁히기 지원. 2000줄+ 코드를 SRP 기준 파일 분리 리팩토링",
+              "분산 락(Lock) 모듈: Redis 기반 분산 락 데코레이터로 멀티 인스턴스 환경의 동시성 제어",
+              "TypeScript 제네릭 기반 타입 안전성: TypeORM 타입 한계를 함수 오버로딩과 제네릭으로 극복",
+              "사내 NPM 패키지 관리: GitHub Packages 기반 배포, 변경 패키지만 테스트하는 CI 최적화"
+            ],
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "Redis", "GitHub NPM"]
+          },
+          {
+            "name": "LMK 다국어 알림 시스템",
+            "period": "2025.10 ~ 현재",
+            "description": "게임 LMK(Localized Message Key) 한국어 원문 변경 시 번역팀 인지 지연으로 인한 번역 작업 병목 해결",
+            "details": [
+              "한국어 변경 감지 Slack 알림: 프로젝트+환경+버전별 스레드 분리로 번역팀에 변경사항 즉시 전달",
+              "번역 완료 상태 자동 관리: 한국어 원문 수정 시 타 언어 번역 완료 상태 자동 해제, 한국어는 항상 완료 처리",
+              "단건 Upsert API v2: 전체 row 저장에서 단건 update/delete/insert 구조로 전환하여 동시 작업 덮어쓰기 방지",
+              "번역 담당자-언어 매핑 관리: 언어별 번역 담당자 지정으로 변경 알림 정확도 향상"
+            ],
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "Redis", "Slack API"]
+          },
+          {
+            "name": "게임서버 공통 로직 패키지화 (Game Server Kit)",
+            "period": "2025.11 ~ 현재",
+            "description": "게임서버 공통 로직을 재사용 가능한 NPM 패키지로 분리하여 다중 게임 프로젝트 간 코드 일관성 확보",
+            "details": [
+              "Sheet 모듈 NPM 패키지 분리: 게임서버 모놀리식의 Sheet 모듈을 독립 패키지로 추출하여 다중 게임 프로젝트에서 재사용",
+              "대규모 모듈 분리: sheet-version, sheet-hash-update-request, sheet-acquirable-asset, static-data-lock 등 4개 모듈 분리, 5개 게임 브랜치에 적용",
+              "Probability 패키지: 게임 확률 로직을 독립 패키지로 분리하여 서버 간 일관성 확보"
             ],
             "techStack": ["TypeScript", "NestJS", "TypeORM", "GitHub NPM"]
           }
@@ -142,15 +199,25 @@
           "Node.js",
           "TypeScript",
           "NestJS",
+          "TypeORM",
           "MySQL",
           "Redis",
           "BigQuery",
+          "Apache Arrow",
+          "gRPC",
           "AWS Lambda",
           "SQS",
           "SNS",
           "EventBridge",
+          "S3",
           "RDS Proxy",
           "AWS CDK",
+          "GCP Pub/Sub",
+          "Google Ads API",
+          "Meta API",
+          "TikTok API",
+          "Slack API",
+          "GitHub NPM",
           "CloudWatch",
           "DataDog",
           "Grafana"

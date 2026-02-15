@@ -29,3 +29,9 @@ pnpm-debug.log*
 
 # PDF output
 *.pdf
+
+# review/plan files
+*.REVIEW.md
+*REVIEW*.md
+REVIEW.md
+.sisyphus/

@@ -312,14 +312,34 @@
             "period": "2025.11 ~ 현재",
             "description": "게임서버 공통 로직을 재사용 가능한 NPM 패키지로 분리하여 다중 게임 프로젝트 간 코드 일관성 확보",
             "details": [
-              "Sheet 모듈 NPM 패키지 분리: 게임서버 모놀리식의 Sheet 모듈을 독립 패키지로 추출하여 다중 게임 프로젝트에서 재사용",
-              "Probability 패키지: 게임 확률 로직을 독립 패키지로 분리하여 서버 간 일관성 확보"
+              "Sheet 모듈 NPM 패키지 분리: 게임서버 모놀리식의 Sheet 모듈을 독립 패키지로 추출하여 다중 게임 프로젝트에서 재사용"
             ],
             "techStack": [
               "TypeScript",
               "NestJS",
               "TypeORM",
               "GitHub NPM"
+            ]
+          },
+          {
+            "name": "확률 계산 및 감사 로그 분석 파이프라인 (Glider Probability)",
+            "period": "2026.02 ~ 현재",
+            "description": "게임 확률 계산 패키지와 CDK 기반 분석 인프라 구축",
+            "details": [
+              "NestJS DynamicModule 기반 확률 패키지: 5가지 확률 함수 + 자동 Kinesis 로깅을 @gameduo/glider-probability로 패키지화, 12개 게임 프로젝트에 통합",
+              "CDK 기반 분석 파이프라인: Kinesis → Firehose(Dynamic Partitioning + Parquet 변환) → S3 → Glue → Athena End-to-End 확률 감사 로그 분석 인프라를 코드화",
+              "LocalStack 통합 테스트: 모킹 테스트 삭제 후 Testcontainers 기반 통합 테스트 전환, 12 suites 115 tests 커버리지 94%+"
+            ],
+            "techStack": [
+              "NestJS",
+              "CDK",
+              "Kinesis",
+              "Firehose",
+              "S3",
+              "Athena",
+              "Glue",
+              "Parquet",
+              "LocalStack"
             ]
           }
         ],
@@ -346,6 +366,10 @@
           "TikTok API",
           "Slack API",
           "GitHub NPM",
+          "Kinesis",
+          "Firehose",
+          "Athena",
+          "Glue",
           "CloudWatch",
           "DataDog",
           "Grafana"

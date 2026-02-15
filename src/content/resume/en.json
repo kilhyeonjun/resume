@@ -312,14 +312,34 @@
             "period": "2025.11 ~ Present",
             "description": "Separated game server common logic into reusable NPM packages ensuring code consistency across multiple game projects",
             "details": [
-              "Sheet Module NPM Package Extraction: Extracted Sheet module from game server monolith into independent package for multi-game project reuse",
-              "Probability Package: Separated game probability logic into independent package ensuring cross-server consistency"
+              "Sheet Module NPM Package Extraction: Extracted Sheet module from game server monolith into independent package for multi-game project reuse"
             ],
             "techStack": [
               "TypeScript",
               "NestJS",
               "TypeORM",
               "GitHub NPM"
+            ]
+          },
+          {
+            "name": "Probability Calculation & Audit Log Analytics Pipeline (Glider Probability)",
+            "period": "2026.02 ~ Present",
+            "description": "Built game probability calculation package and CDK-based analytics infrastructure",
+            "details": [
+              "NestJS DynamicModule-based Probability Package: Packaged 5 probability functions + automatic Kinesis logging as @gameduo/glider-probability, integrated across 12 game projects",
+              "CDK-based Analytics Pipeline: Codified Kinesis → Firehose (Dynamic Partitioning + Parquet conversion) → S3 → Glue → Athena end-to-end probability audit log analytics infrastructure",
+              "LocalStack Integration Testing: Replaced mock tests with Testcontainers-based integration tests, achieving 12 suites 115 tests with 94%+ coverage"
+            ],
+            "techStack": [
+              "NestJS",
+              "CDK",
+              "Kinesis",
+              "Firehose",
+              "S3",
+              "Athena",
+              "Glue",
+              "Parquet",
+              "LocalStack"
             ]
           }
         ],
@@ -346,6 +366,10 @@
           "TikTok API",
           "Slack API",
           "GitHub NPM",
+          "Kinesis",
+          "Firehose",
+          "Athena",
+          "Glue",
           "CloudWatch",
           "DataDog",
           "Grafana"

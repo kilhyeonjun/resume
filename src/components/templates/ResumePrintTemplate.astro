@@ -26,6 +26,10 @@ const data = {
   experience: resumeData.experience,
   education: resumeData.education,
   certifications: resumeData.certifications,
+  continuousLearning: resumeData.continuousLearning,
+  technicalWriting: resumeData.technicalWriting,
+  openSource: resumeData.openSource,
+  awards: resumeData.awards,
 };
 const labels = resumeData.labels;
 
@@ -516,6 +520,58 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
               <div class="cert-item">
                 <h3 class="cert-name">{cert.name}</h3>
                 <p class="cert-issuer">{cert.issuer} • {cert.date}</p>
+              </div>
+            ))}
+          </section>
+        )}
+
+        <!-- Awards -->
+        {data.awards && data.awards.length > 0 && (
+          <section>
+            <h2 class="section-title">{labels.awards}</h2>
+            {data.awards.map((award) => (
+              <div class="cert-item">
+                <h3 class="cert-name">{award.name}</h3>
+                <p class="cert-issuer">{award.date}{award.description && ` — ${award.description}`}</p>
+              </div>
+            ))}
+          </section>
+        )}
+
+        <!-- Continuous Learning -->
+        {data.continuousLearning && data.continuousLearning.length > 0 && (
+          <section>
+            <h2 class="section-title">{labels.continuousLearning}</h2>
+            {data.continuousLearning.map((item) => (
+              <div class="cert-item">
+                <h3 class="cert-name">{item.name}</h3>
+                <p class="cert-issuer">{item.period} — {item.description}</p>
+              </div>
+            ))}
+          </section>
+        )}
+
+        <!-- Open Source -->
+        {data.openSource && data.openSource.length > 0 && (
+          <section>
+            <h2 class="section-title">{labels.openSource}</h2>
+            {data.openSource.map((item) => (
+              <div class="cert-item">
+                <h3 class="cert-name">{item.name}</h3>
+                <p class="cert-issuer">{item.date}</p>
+              </div>
+            ))}
+          </section>
+        )}
+
+        <!-- Technical Writing -->
+        {data.technicalWriting && data.technicalWriting.length > 0 && (
+          <section>
+            <h2 class="section-title">{labels.technicalWriting}</h2>
+            {data.technicalWriting.map((item) => (
+              <div class="cert-item">
+                <h3 class="cert-name">{item.title}</h3>
+                <p class="cert-issuer">{item.type} — {item.date}</p>
               </div>
             ))}
           </section>

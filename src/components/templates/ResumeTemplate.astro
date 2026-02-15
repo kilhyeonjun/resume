@@ -5,6 +5,7 @@ import EmailIcon from '../icons/EmailIcon.astro';
 import LocationIcon from '../icons/LocationIcon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
 import LinkedInIcon from '../icons/LinkedInIcon.astro';
+import WebsiteIcon from '../icons/WebsiteIcon.astro';
 import CheckIcon from '../icons/CheckIcon.astro';
 import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
 import CertificateIcon from '../icons/CertificateIcon.astro';
@@ -32,6 +33,10 @@ const data = {
   experience: resumeData.experience,
   education: resumeData.education,
   certifications: resumeData.certifications,
+  continuousLearning: resumeData.continuousLearning,
+  technicalWriting: resumeData.technicalWriting,
+  openSource: resumeData.openSource,
+  awards: resumeData.awards,
 };
 const labels = resumeData.labels;
 
@@ -121,7 +126,17 @@ const jsonLd = {
              <LinkedInIcon class="h-5 w-5" />
            </a>
          )}
-
+         {data.blog && (
+           <a
+             href={data.blog}
+             target="_blank"
+             rel="noopener noreferrer"
+             class="rounded-full bg-gray-100 p-2.5 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+             aria-label="Blog"
+           >
+             <WebsiteIcon class="h-5 w-5" />
+           </a>
+         )}
       </div>
     </header>
 
@@ -287,6 +302,120 @@ const jsonLd = {
       )}
 
     </div>
+
+    <!-- Awards -->
+    {data.awards && data.awards.length > 0 && (
+      <section class="mb-10">
+        <h2 class="section-title">{labels.awards}</h2>
+        <div class="mt-6 space-y-4">
+          {data.awards.map((award) => (
+            <div class="flex items-start gap-3">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 dark:text-white">{award.name}</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  {award.date}
+                  {award.description && ` — ${award.description}`}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Continuous Learning -->
+    {data.continuousLearning && data.continuousLearning.length > 0 && (
+      <section class="mb-10">
+        <h2 class="section-title">{labels.continuousLearning}</h2>
+        <div class="mt-6 space-y-4">
+          {data.continuousLearning.map((item) => (
+            <div class="flex items-start gap-3">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 dark:text-white">
+                  {item.url ? (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hover:text-primary-600 dark:hover:text-primary-400"
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    item.name
+                  )}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  {item.period} — {item.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Open Source -->
+    {data.openSource && data.openSource.length > 0 && (
+      <section class="mb-10">
+        <h2 class="section-title">{labels.openSource}</h2>
+        <div class="mt-6 space-y-4">
+          {data.openSource.map((item) => (
+            <div class="flex items-start gap-3">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 dark:text-white">
+                  {item.url ? (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hover:text-primary-600 dark:hover:text-primary-400"
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    item.name
+                  )}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">{item.date}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Technical Writing -->
+    {data.technicalWriting && data.technicalWriting.length > 0 && (
+      <section class="mb-10">
+        <h2 class="section-title">{labels.technicalWriting}</h2>
+        <div class="mt-6 space-y-4">
+          {data.technicalWriting.map((item) => (
+            <div class="flex items-start gap-3">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 dark:text-white">
+                  {item.url ? (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hover:text-primary-600 dark:hover:text-primary-400"
+                    >
+                      {item.title}
+                    </a>
+                  ) : (
+                    item.title
+                  )}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  {item.type} — {item.date}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
 
     <!-- Print Buttons -->
     <div class="no-print mt-12 flex flex-wrap justify-center gap-4 border-t border-gray-200 pt-8 dark:border-gray-700">

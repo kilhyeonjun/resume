@@ -9,30 +9,30 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://penguin-dev.tistory.com/"
     },
-    "summary": "3년 7개월 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 BigQuery 비용 82% 절감, 임상시험 시스템 Deadlock 완전 해결, 대형 병원 신규 계약 기여 등 정량적 성과를 달성한 백엔드 엔지니어입니다.\n\n모놀리식에서 Event-Driven 클라우드 네이티브까지 시스템 설계 전문성을 보유하며, 근본 원인 분석과 시스템적 해결책으로 장기적 비즈니스 가치를 창출합니다.",
+    "summary": "4년 8개월 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 10개 이상의 프로젝트를 주도하며 BigQuery 비용 82% 절감, CDK 기반 분석 인프라 코드화, 사내 NPM 패키지 생태계 구축 등 정량적 성과를 달성한 백엔드 엔지니어입니다.\n\n모놀리식에서 Event-Driven 서버리스까지 시스템 설계 전문성을 보유하며, GCP-AWS 하이브리드 데이터 파이프라인 구축과 근본 원인 분석으로 장기적 비즈니스 가치를 창출합니다.",
     "coreCompetencies": [
       {
         "category": "성능 최적화 & 비용 효율성",
         "items": [
-          "클라우드 비용 최적화: BigQuery 비용 82% 절감 (TB당 $6.25→$1.1)",
-          "서버리스 성능 튜닝: Lambda 응답 시간 개선 및 리소스 효율성 확보",
-          "실시간 통신 최적화: 네트워크 트래픽 최적화로 서버 부하 감소"
+          "클라우드 비용 최적화: BigQuery Storage Read API 도입으로 비용 82% 절감 (TB당 $6.25→$1.1)",
+          "CDK 기반 인프라 코드화: Kinesis → Firehose → S3 → Glue → Athena 분석 파이프라인을 IaC로 구축",
+          "서버리스 성능 튜닝: Lambda ARM64 전환 비용 20%, Meta 에셋 동기화 72% 단축"
         ]
       },
       {
         "category": "확장 가능한 시스템 설계",
         "items": [
-          "이벤트 기반 아키텍처: 비동기 메시징으로 시스템 안정성과 확장성 확보",
-          "데이터 일관성 보장: 분산 환경에서 트랜잭션 안전성 구현",
-          "마이크로서비스 전환: 모놀리식에서 서비스 분리 및 독립 배포 가능한 구조"
+          "Event-Driven Architecture: SQS + Lambda + EventBridge 기반 비동기 처리로 데이터 수집 범위 6배 확장",
+          "사내 NPM 패키지 생태계: NestJS 공통 유틸 10개 모듈 + 게임서버 Kit 패키지로 다중 프로젝트 코드 일관성 확보",
+          "GCP-AWS 하이브리드 파이프라인: Pub/Sub → Cloud Function → API Gateway → Lambda 크로스 클라우드 실시간 데이터 연동"
         ]
       },
       {
         "category": "시스템 안정성 & 문제 해결",
         "items": [
-          "장애 분석 및 해결: 복잡한 동시성 문제의 근본 원인 파악 및 완전 해결",
-          "확장 가능한 설계: 기존 시스템 한계 극복하는 아키텍처 개선",
-          "장애 대응 체계: 외부 의존성 장애 시에도 서비스 연속성 보장"
+          "장애 분석 및 해결: 외래키 락 타이밍 분석으로 임상시험 Deadlock 완전 해결",
+          "데이터 일관성 보장: 트랜잭션 아웃박스 패턴 + 분산 락으로 이벤트 정합성 확보",
+          "확률 감사 로그: DynamicModule 기반 확률 패키지를 12개 게임 프로젝트에 통합, 94%+ 테스트 커버리지"
         ]
       }
     ],
@@ -102,6 +102,49 @@
           },
           {
             "name": "ElastiCache"
+          },
+          {
+            "name": "Kinesis"
+          },
+          {
+            "name": "Firehose"
+          },
+          {
+            "name": "Athena"
+          },
+          {
+            "name": "Glue"
+          },
+          {
+            "name": "CDK"
+          }
+        ]
+      },
+      {
+        "category": "GCP",
+        "items": [
+          {
+            "name": "BigQuery"
+          },
+          {
+            "name": "Pub/Sub"
+          },
+          {
+            "name": "Cloud Functions"
+          }
+        ]
+      },
+      {
+        "category": "데이터 처리",
+        "items": [
+          {
+            "name": "Apache Arrow"
+          },
+          {
+            "name": "gRPC"
+          },
+          {
+            "name": "Parquet"
           }
         ]
       },
@@ -744,8 +787,8 @@
       }
     ],
     "links": {
-      "portfolio": "https://www.notion.so/portfolio-cdf7a52d6fe147a4bac6bdd4c410ec37",
-      "careerDetails": "https://www.notion.so/2485159e911e80f08fe1f2d7e40d4e6f"
+      "portfolio": "/resume/portfolio/",
+      "careerDetails": "/resume/experience/gameduo"
     },
     "labels": {
       "summary": "소개",

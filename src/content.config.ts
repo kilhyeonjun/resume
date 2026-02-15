@@ -97,9 +97,14 @@ const personalInfoSchema = z.object({
   blog: safeUrl.optional(),
 });
 
+const linkValue = z.string().refine(
+  (val) => val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/'),
+  'Link must be a URL or a site-relative path starting with /',
+);
+
 const linksSchema = z.object({
-  portfolio: safeUrl.optional(),
-  careerDetails: safeUrl.optional(),
+  portfolio: linkValue.optional(),
+  careerDetails: linkValue.optional(),
 });
 
 const labelsSchema = z.object({

@@ -17,6 +17,7 @@ const resumeData = entry.data;
 const data = {
   ...resumeData.personalInfo,
   summary: resumeData.summary,
+  coreCompetencies: resumeData.coreCompetencies,
   skills: resumeData.skills,
   experience: resumeData.experience,
   education: resumeData.education,
@@ -198,6 +199,22 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     <section>
       <h2>PROFESSIONAL SUMMARY</h2>
       <p>{data.summary}</p>
+    </section>
+  )}
+
+  {data.coreCompetencies && data.coreCompetencies.length > 0 && (
+    <section>
+      <h2>{labels.coreCompetencies.toUpperCase()}</h2>
+      {data.coreCompetencies.map((comp) => (
+        <div style="margin-bottom: 12px;">
+          <p><strong>{comp.category}</strong></p>
+          <ul>
+            {comp.items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </section>
   )}
 

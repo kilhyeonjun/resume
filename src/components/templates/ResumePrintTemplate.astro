@@ -21,6 +21,7 @@ const resumeData = entry.data;
 const data = {
   ...resumeData.personalInfo,
   summary: resumeData.summary,
+  coreCompetencies: resumeData.coreCompetencies,
   skills: resumeData.skills,
   experience: resumeData.experience,
   education: resumeData.education,
@@ -422,6 +423,23 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
           <section>
             <h2 class="section-title">{labels.summary}</h2>
             <p class="summary-text">{data.summary}</p>
+          </section>
+        )}
+
+        <!-- Core Competencies -->
+        {data.coreCompetencies && data.coreCompetencies.length > 0 && (
+          <section>
+            <h2 class="section-title">{labels.coreCompetencies}</h2>
+            {data.coreCompetencies.map((comp) => (
+              <div style="margin-bottom: 10px;">
+                <h3 style="font-size: 10px; font-weight: 600; color: #2563eb; margin-bottom: 4px;">{comp.category}</h3>
+                <ul class="highlights">
+                  {comp.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </section>
         )}
 

@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer with 4 years and 8 months of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 10+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package ecosystem.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
+    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 10+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package ecosystem.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
     "coreCompetencies": [
       {
         "category": "Performance Optimization & Cost Efficiency",
@@ -114,9 +114,6 @@
           },
           {
             "name": "Glue"
-          },
-          {
-            "name": "CDK"
           }
         ]
       },

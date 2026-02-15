@@ -5,6 +5,7 @@ import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 import { getBasePath } from '../../utils/paths';
+import { replaceDurationPlaceholder } from '../../utils/career-duration';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -20,7 +21,7 @@ const resumeData = entry.data;
 
 const data = {
   ...resumeData.personalInfo,
-  summary: resumeData.summary,
+  summary: replaceDurationPlaceholder(resumeData.summary, resumeData.experience, lang),
   coreCompetencies: resumeData.coreCompetencies,
   skills: resumeData.skills,
   experience: resumeData.experience,

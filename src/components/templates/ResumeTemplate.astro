@@ -12,6 +12,7 @@ import CertificateIcon from '../icons/CertificateIcon.astro';
 import PrintIcon from '../icons/PrintIcon.astro';
 import DocumentIcon from '../icons/DocumentIcon.astro';
 import { getBasePath } from '../../utils/paths';
+import { replaceDurationPlaceholder } from '../../utils/career-duration';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -27,7 +28,7 @@ const resumeData = entry.data;
 
 const data = {
   ...resumeData.personalInfo,
-  summary: resumeData.summary,
+  summary: replaceDurationPlaceholder(resumeData.summary, resumeData.experience, lang),
   coreCompetencies: resumeData.coreCompetencies,
   skills: resumeData.skills,
   experience: resumeData.experience,

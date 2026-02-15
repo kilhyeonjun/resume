@@ -1,6 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
 import { getBasePath } from '../../utils/paths';
+import { replaceDurationPlaceholder } from '../../utils/career-duration';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -16,7 +17,7 @@ const resumeData = entry.data;
 
 const data = {
   ...resumeData.personalInfo,
-  summary: resumeData.summary,
+  summary: replaceDurationPlaceholder(resumeData.summary, resumeData.experience, lang),
   coreCompetencies: resumeData.coreCompetencies,
   skills: resumeData.skills,
   experience: resumeData.experience,
@@ -285,6 +286,50 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       {data.certifications.map((cert) => (
         <p>
           <strong>{cert.name}</strong> — {cert.issuer}, {cert.date}
+        </p>
+      ))}
+    </section>
+  )}
+
+  {data.awards && data.awards.length > 0 && (
+    <section>
+      <h2>{labels.awards.toUpperCase()}</h2>
+      {data.awards.map((award) => (
+        <p>
+          <strong>{award.name}</strong>{award.description && ` — ${award.description}`}, {award.date}
+        </p>
+      ))}
+    </section>
+  )}
+
+  {data.continuousLearning && data.continuousLearning.length > 0 && (
+    <section>
+      <h2>{labels.continuousLearning.toUpperCase()}</h2>
+      {data.continuousLearning.map((item) => (
+        <p>
+          <strong>{item.name}</strong> ({item.period}) — {item.description}
+        </p>
+      ))}
+    </section>
+  )}
+
+  {data.openSource && data.openSource.length > 0 && (
+    <section>
+      <h2>{labels.openSource.toUpperCase()}</h2>
+      {data.openSource.map((item) => (
+        <p>
+          <strong>{item.name}</strong>, {item.date}
+        </p>
+      ))}
+    </section>
+  )}
+
+  {data.technicalWriting && data.technicalWriting.length > 0 && (
+    <section>
+      <h2>{labels.technicalWriting.toUpperCase()}</h2>
+      {data.technicalWriting.map((item) => (
+        <p>
+          <strong>{item.title}</strong> ({item.type}) — {item.date}
         </p>
       ))}
     </section>

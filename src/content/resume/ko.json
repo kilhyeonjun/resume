@@ -352,7 +352,9 @@
             "period": "2025.11 ~ 현재",
             "description": "게임서버 공통 로직을 재사용 가능한 NPM 패키지로 분리하여 다중 게임 프로젝트 간 코드 일관성 확보",
             "details": [
-              "Sheet 모듈 NPM 패키지 분리: 게임서버 모놀리식의 Sheet 모듈을 독립 패키지로 추출하여 다중 게임 프로젝트에서 재사용"
+              "Sheet 모듈 NPM 패키지 분리: 게임서버 모놀리식의 Sheet 모듈을 독립 패키지로 추출하여 다중 게임 프로젝트에서 재사용",
+              "5개 서브모듈 추가 분리: sheet-version, sheet-hash-update-request, sheet-acquirable-asset, sheet-data-migration, static-data-lock을 @gameduo/glider-sheet 패키지로 패키지화",
+              "5개 브랜치 적용 및 충돌 선제 대응: main/NB2/BANE/DFD/VG 브랜치별 형상 차이 분석, 고위험 구간(NB2 548커밋, BANE 3,418커밋) 충돌 해결 포함"
             ],
             "techStack": [
               "TypeScript",
@@ -371,6 +373,7 @@
               "LocalStack 통합 테스트: 모킹 테스트 삭제 후 Testcontainers 기반 통합 테스트 전환, 12 suites 115 tests 커버리지 94%+"
             ],
             "techStack": [
+              "TypeScript",
               "NestJS",
               "CDK",
               "Kinesis",
@@ -379,7 +382,8 @@
               "Athena",
               "Glue",
               "Parquet",
-              "LocalStack"
+              "LocalStack",
+              "Testcontainers"
             ]
           }
         ],

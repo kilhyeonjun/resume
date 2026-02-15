@@ -352,7 +352,9 @@
             "period": "2025.11 ~ Present",
             "description": "Separated game server common logic into reusable NPM packages ensuring code consistency across multiple game projects",
             "details": [
-              "Sheet Module NPM Package Extraction: Extracted Sheet module from game server monolith into independent package for multi-game project reuse"
+              "Sheet Module NPM Package Extraction: Extracted Sheet module from game server monolith into independent package for multi-game project reuse",
+              "5 Submodule Extraction: Packaged sheet-version, sheet-hash-update-request, sheet-acquirable-asset, sheet-data-migration, and static-data-lock into @gameduo/glider-sheet",
+              "5-Branch Rollout with Conflict Mitigation: Analyzed divergence across main/NB2/BANE/DFD/VG branches, proactively resolving high-risk conflicts (NB2 548 commits, BANE 3,418 commits behind)"
             ],
             "techStack": [
               "TypeScript",
@@ -371,6 +373,7 @@
               "LocalStack Integration Testing: Replaced mock tests with Testcontainers-based integration tests, achieving 12 suites 115 tests with 94%+ coverage"
             ],
             "techStack": [
+              "TypeScript",
               "NestJS",
               "CDK",
               "Kinesis",
@@ -379,7 +382,8 @@
               "Athena",
               "Glue",
               "Parquet",
-              "LocalStack"
+              "LocalStack",
+              "Testcontainers"
             ]
           }
         ],

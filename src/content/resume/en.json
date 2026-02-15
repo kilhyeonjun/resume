@@ -75,65 +75,122 @@
         "current": true,
         "description": "Mobile game development and publishing company",
         "highlights": [
-          "82% BigQuery Cost Reduction: Storage Read API adoption ($6.25→$1.1 per TB)",
-          "Serverless Architecture: Event-Driven Architecture based AWS Lambda migration",
-          "Marketing Integration Platform: Google Ads/Meta/TikTok unified dashboard",
-          "Game Data Audit System: Repository abstraction-based balance change tracking"
+          "82% BigQuery Cost Reduction: Storage Read API + entity normalization reducing cost from $6.25 to $1.1 per TB, resolving 18-second query bottleneck",
+          "Serverless Architecture Transition: SQS + Lambda + EventBridge-based EDA expanding data collection range 6x (60 days → 360 days)",
+          "Internal Common Library Ecosystem: Developed and maintained 10 NestJS utility modules + 2 Game Server Kit packages",
+          "Game Data Version Control: Git-like Audit Log + 3-Way Merge engine ensuring multi-game balance data consistency",
+          "Marketing Integration Platform: Unified management of Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system with GCP-AWS hybrid pipeline"
         ],
         "projects": [
           {
             "name": "Glider Sheet Audit Log System",
-            "period": "2025.01 ~ 2025.03",
-            "description": "Resolved game balance response delays and operational efficiency issues due to inability to track data change history",
+            "period": "2025.01 ~ 2025.04",
+            "description": "Resolved delayed balance issue response caused by inability to track data change history during game operations",
             "details": [
-              "Repository Abstraction Layer: Dedicated Repository design for entities requiring Audit Log management",
-              "Multi-DB Integrated Version Control: UUID-based cross-environment/project entity tracking system",
-              "Event Sourcing-based Merge System: Git-like multi-environment/game conflict resolution",
-              "Version Diff Engine: Field-level change tracking algorithm for object-level changes"
+              "Git-like Version Control System: UUID-based cross-environment/project entity tracking ensuring multi-game data consistency",
+              "Event Sourcing-based Change Tracking: Auditable decorator + TypeORM Subscriber pattern for automated entity change recording pipeline",
+              "3-Way Merge Engine: Multi-environment version merge system with parent/child entity conflict detection and unique constraint handling",
+              "Version Diff Engine: Dual strategy of incremental comparison and snapshot comparison based on Base Audit availability for cost-efficient version diffing",
+              "sharedUuid-based Identification: Decoupled from PK dependency, ensuring accurate entity tracking during migration, comparison, and merge"
             ],
             "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL"]
           },
           {
-            "name": "Marketing Campaign Integration Platform",
-            "period": "2025.03 ~ 2025.05",
-            "description": "Resolved marketing operational inefficiency and lack of integration from multi-platform distributed management",
+            "name": "Marketing Campaign Automation Platform",
+            "period": "2025.02 ~ Present",
+            "description": "Resolved marketing campaign operational inefficiency caused by distributed management across multiple ad platforms (Google Ads/Meta/TikTok)",
             "details": [
-              "Integrated Dashboard: Manage all platform campaigns per game project in one place",
-              "Platform-specific API Module Separation: Independent API modules specialized for Google Ads/Meta/TikTok"
+              "Marketing Domain DB Separation: Migrated marketing data mixed in Sheet DB to a dedicated DB, establishing service independence foundation",
+              "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, and modification in a single platform",
+              "Campaign Status Change Alerts: Real-time detection of budget changes and on/off status with automated Slack notifications"
             ],
-            "techStack": ["TypeScript", "NestJS", "Google Ads API", "Meta API", "TikTok API"]
+            "techStack": ["TypeScript", "NestJS", "Google Ads API", "Meta API", "TikTok API", "MySQL"]
           },
           {
-            "name": "Marketing Metrics System",
-            "period": "2025.03 ~ 2025.05",
-            "description": "Transitioned BigQuery data from Excel-based to internal admin-based integrated management",
+            "name": "Marketing Creative Management System",
+            "period": "2025.02 ~ Present",
+            "description": "Resolved operational inefficiency and asset stability issues caused by manual creative upload, platform deployment, and lack of backup",
             "details": [
-              "BigQuery Snapshot-based Version Control: Point-in-time data management for periodic ML prediction data changes",
-              "BigQuery Storage Read API: gRPC streaming-based high-performance data reading with 82% cost reduction"
+              "Creative Auto-deployment Pipeline: Integrated pipeline from creative upload to automatic registration on Google/Meta/TikTok platforms",
+              "Creative Domain Normalization: AssetDraft conversion and JSON column → individual column separation for query performance improvement",
+              "NAS-S3 Dual Sync: SQS event-based server-worker separation architecture for bidirectional sync/restore between internal NAS and S3",
+              "Meta Asset Sync Performance Optimization: Bulk INSERT and conditional deletion reducing Image sync by 72% and DB transactions by 95%",
+              "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%"
             ],
-            "techStack": ["TypeScript", "NestJS", "BigQuery", "Storage Read API", "Apache Arrow", "gRPC"]
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL", "S3", "AWS Lambda", "SQS"]
           },
           {
-            "name": "AWS Lambda Migration & EDA Implementation",
-            "period": "2025.05 ~ 2025.07",
-            "description": "Resolved batch job processing limitations for marketing metrics system 60-day → 360-day expansion",
+            "name": "Marketing Metrics Analytics Platform",
+            "period": "2025.04 ~ Present",
+            "description": "Transitioned Excel-based marketing data management to an internal admin integrated platform for real-time campaign performance monitoring",
             "details": [
-              "Hybrid Architecture: API Server (EC2) + Batch/Job Processing (Lambda) separation",
-              "Event-Driven Architecture: SQS + Lambda + EventBridge based async processing",
-              "NestJS DI-based Lambda Factory: Lambda adapter for existing code reuse and DI system",
-              "Transactional Outbox Pattern: Event publishing system for data consistency",
-              "RDS Proxy Connection Management: Resolved DB connection exhaustion during massive Lambda execution"
+              "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25 → $1.1 per TB)",
+              "Multi-dimensional Metrics Analysis System: Metrics integration and CRUD API across 3 axes — campaign, country/OS, and ad channel",
+              "Metrics Query Performance Optimization: Index structure optimization (eliminating Full Table Scan), cursor-based pagination, and generic filtering resolving 18-second query bottleneck",
+              "GCP Pub/Sub-based Real-time Updates: Cloud Function → AWS API Gateway → Lambda hybrid pipeline minimizing metrics reflection delay",
+              "Entity Normalization: Split 100+ column single table into main/time-series/prediction 3 tables, significantly improving query cost and I/O efficiency",
+              "Budget/Cost Integrated Dashboard: Project and game-level total budget/cost aggregation with manual cost input for real-time expenditure tracking"
+            ],
+            "techStack": ["TypeScript", "NestJS", "BigQuery", "Storage Read API", "Apache Arrow", "gRPC", "GCP Pub/Sub", "AWS Lambda", "SQS", "MySQL"]
+          },
+          {
+            "name": "AWS Lambda Migration & Event-Driven Architecture",
+            "period": "2025.05 ~ 2025.08",
+            "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless architecture transition",
+            "details": [
+              "Hybrid Architecture: Maintained API server (EC2) + separated batch/job processing (Lambda) for optimal resource utilization per workload",
+              "Event-Driven Architecture: SQS + Lambda + EventBridge-based async processing expanding data collection range 6x (60 days → 360 days)",
+              "Transactional Outbox Pattern: Scheduled/delayed publishing via scheduledAt/delaySeconds ensuring data consistency",
+              "Lambda Operational Stabilization: Batch Size bulk processing resolving throttling, CloudWatch log optimization reducing costs, build OOM remediation",
+              "RDS Proxy Connection Management: Resolved DB connection exhaustion during massive Lambda execution via RDS Proxy pooling"
             ],
             "techStack": ["TypeScript", "NestJS", "AWS Lambda", "SQS", "SNS", "EventBridge", "RDS Proxy", "AWS CDK"]
           },
           {
-            "name": "Glider Nest Util Library",
-            "period": "2025.07 ~ 2025.08",
-            "description": "Resolved duplicate common logic development and implementation pattern differences across projects",
+            "name": "Cloud Data Sync System",
+            "period": "2025.05 ~ Present",
+            "description": "S3-based sync and automated DDL management system for dynamic game data (user experience, currency, etc.) across environments",
             "details": [
-              "Internal GitHub Private Package: NPM-based library distribution and version management",
-              "Repository Module: Bulk operations, Audit Log, TypeORM type narrowing support",
-              "TypeScript Generics: Function overloading-based type narrowing to overcome TypeORM type limitations"
+              "Cross-environment Data Sync: S3-based dynamic game data synchronization across development/staging/production environments",
+              "Automated DDL Management Engine: Dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME for schema sync automation",
+              "Save/Upload Performance Improvement: Analyzed and optimized Cloud Data ingestion and S3 upload bottlenecks, significantly reducing large-scale processing delays",
+              "Sync Stabilization: Job separation, scheduling approach transition, timeout adjustments, and non-blocking processing for operational reliability"
+            ],
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "MySQL", "S3"]
+          },
+          {
+            "name": "NestJS Common Utility Library (Glider Nest Util)",
+            "period": "2025.07 ~ Present",
+            "description": "Internal NPM package library resolving duplicate common logic development and implementation pattern differences across new projects",
+            "details": [
+              "10-module Library Ecosystem: Expanded to core, repository, cache, lock, slack, crypto, smb, hash, type, and iac modules",
+              "Repository Module: Bulk operations, Audit Log, TypeORM type narrowing support; refactored 2000+ line codebase into SRP-based file separation",
+              "Distributed Lock Module: Redis-based distributed lock decorator for concurrency control in multi-instance environments",
+              "TypeScript Generic-based Type Safety: Overcame TypeORM type limitations through function overloading and generics",
+              "Internal NPM Package Management: GitHub Packages-based distribution with CI optimization testing only changed packages"
+            ],
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "Redis", "GitHub NPM"]
+          },
+          {
+            "name": "LMK Multilingual Notification System",
+            "period": "2025.10 ~ Present",
+            "description": "Resolved translation workflow bottleneck caused by delayed translator awareness when game LMK (Localized Message Key) Korean source text changes",
+            "details": [
+              "Korean Change Detection Slack Alerts: Thread separation by project+environment+version for immediate change notification to translation team",
+              "Translation Completion Status Auto-management: Auto-reset other language completion status on Korean source modification; Korean always marked complete",
+              "Single Upsert API v2: Transitioned from full row save to per-record update/delete/insert structure preventing concurrent work overwrites",
+              "Translator-Language Assignment Management: Language-specific translator assignment improving change notification accuracy"
+            ],
+            "techStack": ["TypeScript", "NestJS", "TypeORM", "Redis", "Slack API"]
+          },
+          {
+            "name": "Game Server Common Logic Packaging (Game Server Kit)",
+            "period": "2025.11 ~ Present",
+            "description": "Separated game server common logic into reusable NPM packages ensuring code consistency across multiple game projects",
+            "details": [
+              "Sheet Module NPM Package Extraction: Extracted Sheet module from game server monolith into independent package for multi-game project reuse",
+              "Large-scale Module Separation: Separated 4 modules (sheet-version, sheet-hash-update-request, sheet-acquirable-asset, static-data-lock) and applied across 5 game branches",
+              "Probability Package: Separated game probability logic into independent package ensuring cross-server consistency"
             ],
             "techStack": ["TypeScript", "NestJS", "TypeORM", "GitHub NPM"]
           }
@@ -142,15 +199,25 @@
           "Node.js",
           "TypeScript",
           "NestJS",
+          "TypeORM",
           "MySQL",
           "Redis",
           "BigQuery",
+          "Apache Arrow",
+          "gRPC",
           "AWS Lambda",
           "SQS",
           "SNS",
           "EventBridge",
+          "S3",
           "RDS Proxy",
           "AWS CDK",
+          "GCP Pub/Sub",
+          "Google Ads API",
+          "Meta API",
+          "TikTok API",
+          "Slack API",
+          "GitHub NPM",
           "CloudWatch",
           "DataDog",
           "Grafana"

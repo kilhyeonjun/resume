@@ -755,6 +755,11 @@
     ],
     "technicalWriting": [
       {
+        "title": "AWS Games on Air 2025 Technical Presentation",
+        "date": "2025-10",
+        "type": "Conference Talk"
+      },
+      {
         "title": "Email Delivery Monitoring through AWS SES Event Logs",
         "date": "2024-03",
         "type": "Tech Blog",

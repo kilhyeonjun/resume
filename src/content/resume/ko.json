@@ -755,6 +755,11 @@
     ],
     "technicalWriting": [
       {
+        "title": "AWS Games on Air 2025 기술 발표",
+        "date": "2025-10",
+        "type": "외부 발표"
+      },
+      {
         "title": "AWS SES 이벤트 로그를 통한 이메일 발송 모니터링",
         "date": "2024-03",
         "type": "기술 블로그",

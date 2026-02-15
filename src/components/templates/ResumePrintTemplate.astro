@@ -322,6 +322,38 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
       border-radius: 3px;
     }
 
+    /* Project summary list within experience */
+    .project-summary-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px 12px;
+      margin-top: 6px;
+      padding-top: 4px;
+      border-top: 1px dashed #e5e7eb;
+    }
+
+    .project-summary-item {
+      font-size: 9px;
+      color: #4b5563;
+      display: flex;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .project-summary-name {
+      font-weight: 500;
+      color: #374151;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .project-summary-period {
+      color: #9ca3af;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
     /* Certifications */
     .cert-item {
       margin-bottom: 8px;
@@ -468,6 +500,16 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
                       <li>{highlight}</li>
                     ))}
                   </ul>
+                )}
+                {exp.projects && exp.projects.length > 0 && (
+                  <div class="project-summary-list">
+                    {exp.projects.map((proj) => (
+                      <div class="project-summary-item">
+                        <span class="project-summary-name">{proj.name}</span>
+                        <span class="project-summary-period">{proj.period}</span>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
             ))}

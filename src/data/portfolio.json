@@ -100,10 +100,6 @@
         "ko": ["대학병원 채용공고 스크래핑", "새로운 채용공고 알림 기능", "키워드 기반 알림 필터링"],
         "en": ["Hospital job posting scraping", "New job notification", "Keyword-based filtering"]
       },
-      "futurePlans": {
-        "ko": ["추가 대학병원 지원 확대", "카카오톡 알림 기능 구현", "프론트엔드 웹 애플리케이션 개발 (Next.js)", "AWS Lambda로 서버리스 전환"],
-        "en": ["Expand hospital support", "KakaoTalk notifications", "Frontend web app (Next.js)", "AWS Lambda serverless migration"]
-      },
       "period": {
         "start": "2024-08-02",
         "end": "2024-08-14"

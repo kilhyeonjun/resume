@@ -29,7 +29,7 @@ export interface PortfolioProject {
   lessons?: { ko: string[]; en: string[] };
   teamComposition?: LocalizedString;
   collaborationTools?: string[];
-  futurePlans?: { ko: string[]; en: string[] };
+
 }
 
 export interface PortfolioLabels {

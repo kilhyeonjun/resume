@@ -165,6 +165,7 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
     .experience-item {
       margin-bottom: 14px;
       page-break-inside: avoid;
+      break-inside: avoid;
     }
 
     .experience-header {
@@ -246,10 +247,6 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
       font-size: 10px;
     }
 
-    .skill-name {
-      color: #374151;
-    }
-
     .skill-item-print {
       margin-bottom: 6px;
     }
@@ -271,6 +268,8 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
     /* Education */
     .education-item {
       margin-bottom: 10px;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
 
     .institution {
@@ -293,6 +292,7 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
     .project-item {
       margin-bottom: 12px;
       page-break-inside: avoid;
+      break-inside: avoid;
     }
 
     .project-name {
@@ -357,6 +357,8 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
     /* Certifications */
     .cert-item {
       margin-bottom: 8px;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
 
     .cert-name {
@@ -450,6 +452,9 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
         )}
         {data.linkedin && (
           <span class="contact-item">{data.linkedin.replace('https://', '')}</span>
+        )}
+        {data.blog && (
+          <span class="contact-item">{data.blog.replace('https://', '')}</span>
         )}
       </div>
     </header>

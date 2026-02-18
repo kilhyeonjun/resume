@@ -114,6 +114,8 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
 
     .item {
       margin-bottom: 16px;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
 
     .item-header {
@@ -192,10 +194,11 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       {data.email && <span class="contact-item">{data.email}</span>}
       {data.location && <span class="contact-item">{data.location}</span>}
     </p>
-    {(data.github || data.linkedin) && (
+    {(data.github || data.linkedin || data.blog) && (
       <p class="contact">
         {data.github && <span class="contact-item">{data.github}</span>}
         {data.linkedin && <span class="contact-item">{data.linkedin}</span>}
+        {data.blog && <span class="contact-item">{data.blog}</span>}
       </p>
     )}
   </header>

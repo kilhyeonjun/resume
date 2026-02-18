@@ -18,7 +18,7 @@ const basePath = getBasePath(lang);
 <Layout title={`${labels.portfolio} | Portfolio`} description={lang === 'ko' ? '개인 프로젝트 포트폴리오' : 'Personal Project Portfolio'} lang={lang}>
   <div class="mx-auto max-w-4xl">
     <header class="mb-10 text-center">
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl lg:text-5xl">
         {labels.portfolio}
       </h1>
       <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
@@ -88,12 +88,12 @@ const basePath = getBasePath(lang);
             {/* Skills */}
             <div class="mb-4 flex flex-wrap gap-1.5">
               {project.skills.slice(0, 4).map((skill: string) => (
-                <span class="rounded-md bg-primary-50 px-2 py-0.5 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
+                 <span class="rounded-md bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
                   {skill}
                 </span>
               ))}
               {project.skills.length > 4 && (
-                <span class="rounded-md bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-300">
+                 <span class="rounded-md bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-300">
                   +{project.skills.length - 4}
                 </span>
               )}

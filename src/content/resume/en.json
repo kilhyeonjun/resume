@@ -62,6 +62,9 @@
           },
           {
             "name": "Spring Boot"
+          },
+          {
+            "name": "TypeORM"
           }
         ]
       },
@@ -70,6 +73,9 @@
         "items": [
           {
             "name": "MySQL"
+          },
+          {
+            "name": "PostgreSQL"
           },
           {
             "name": "Redis"
@@ -92,28 +98,16 @@
             "name": "EventBridge"
           },
           {
-            "name": "RDS"
-          },
-          {
             "name": "S3"
           },
           {
-            "name": "RDS Proxy"
-          },
-          {
-            "name": "ElastiCache"
+            "name": "RDS"
           },
           {
             "name": "Kinesis"
           },
           {
-            "name": "Firehose"
-          },
-          {
             "name": "Athena"
-          },
-          {
-            "name": "Glue"
           }
         ]
       },
@@ -132,27 +126,36 @@
         ]
       },
       {
-        "category": "Data Processing",
+        "category": "Testing",
         "items": [
           {
-            "name": "Apache Arrow"
+            "name": "Jest"
           },
           {
-            "name": "gRPC"
+            "name": "Testcontainers"
           },
           {
-            "name": "Parquet"
+            "name": "LocalStack"
           }
         ]
       },
       {
-        "category": "Infrastructure",
+        "category": "DevOps",
         "items": [
+          {
+            "name": "Docker"
+          },
+          {
+            "name": "Git"
+          },
           {
             "name": "AWS CDK"
           },
           {
             "name": "Serverless Framework"
+          },
+          {
+            "name": "GitHub Actions"
           }
         ]
       },
@@ -862,8 +865,8 @@
       "experience": "Experience",
       "skills": "Technical Skills",
       "education": "Education",
-      "continuousLearning": "Continuous Learning",
-      "technicalWriting": "Technical Writing",
+      "continuousLearning": "Professional Development",
+      "technicalWriting": "Presentations & Writing",
       "openSource": "Open Source",
       "awards": "Awards",
       "certifications": "Certifications",

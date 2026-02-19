@@ -176,29 +176,6 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
 
     .highlight-bullet { color: #1d4ed8; margin-right: 4px; }
 
-    /* Project summary grid */
-    .project-summary-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 8mm;
-      row-gap: 1mm;
-      margin-top: 2mm;
-      padding-top: 2mm;
-      border-top: 0.6pt solid #e5e7eb;
-    }
-
-    .project-summary-item {
-      font-size: 8pt;
-      color: #4b5563;
-      display: flex;
-      justify-content: space-between;
-      gap: 4px;
-      min-width: 0;
-    }
-
-    .project-summary-name { font-weight: 600; color: #374151; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
-    .project-summary-period { color: #6b7280; white-space: nowrap; flex-shrink: 0; }
-
     /* Two-column grid */
     .two-col-grid {
       display: grid;
@@ -314,16 +291,7 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
                 ))}
               </ul>
             )}
-            {exp.projects && exp.projects.length > 0 && (
-              <div class="project-summary-list">
-                {exp.projects.map((proj) => (
-                  <div class="project-summary-item">
-                    <span class="project-summary-name">{proj.name}</span>
-                    <span class="project-summary-period">{proj.period}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+
           </div>
         ))}
       </section>
@@ -371,7 +339,7 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
           {data.certifications.map((cert) => (
             <div class="cert-item">
               <h3 class="cert-name">{cert.name}</h3>
-              <p class="cert-issuer">{cert.issuer} • {cert.date}</p>
+              <p class="cert-issuer">{cert.issuer} • {cert.date.replace('-', '.')}</p>
             </div>
           ))}
         </section>
@@ -383,7 +351,7 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
           <h2 class="section-title">{labels.continuousLearning}</h2>
           {data.continuousLearning.map((item) => (
             <div class="cert-item">
-              <h3 class="cert-name">{item.name}</h3>
+              <h3 class="cert-name">{item.name} — {item.description}</h3>
               <p class="cert-issuer">{item.period}</p>
             </div>
           ))}

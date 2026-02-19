@@ -152,7 +152,7 @@
             "name": "Serverless Framework"
           },
           {
-            "name": "GitHub Actions"
+            "name": "GH Actions"
           }
         ]
       },
@@ -774,7 +774,7 @@
     "technicalWriting": [
       {
         "title": "Games on AWS 2025 기술 발표",
-        "date": "2025-10",
+        "date": "2025.10",
         "type": "외부 발표",
         "description": "Amazon Q Developer를 활용한 개발 생산성 향상",
         "achievement": "주니어 개발자 혼자 10일 만에 데이터 파이프라인 처리 용량 270배 확장 사례 공유",
@@ -783,13 +783,13 @@
       },
       {
         "title": "AWS SES 이벤트 로그를 통한 이메일 발송 모니터링",
-        "date": "2024-03",
+        "date": "2024.03",
         "type": "기술 블로그",
         "url": "https://jnp.tech/posts/2024-03-aws-ses-event-log"
       },
       {
         "title": "메일링 시스템 이메일 발송 결과 수신 기능 도입",
-        "date": "2024-02",
+        "date": "2024.02",
         "type": "사내 세미나"
       }
     ],
@@ -825,7 +825,7 @@
         "status": "Open"
       },
       {
-        "name": "cyan 프레임워크 \"NOT IN\" 쿼리 조건 추가",
+        "name": "cyan: 프레임워크 \"NOT IN\" 쿼리 조건 추가",
         "date": "2024-05",
         "url": "https://github.com/coralblack/cyan/pull/110",
         "status": "Merged"

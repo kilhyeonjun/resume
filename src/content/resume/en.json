@@ -586,7 +586,7 @@
           },
           {
             "name": "Common Module Development",
-            "period": "2022.04 ~ 2022.08",
+            "period": "2022.05 ~ 2022.06",
             "description": "Developed shared modules for doctor, pharmacist, and auth services",
             "details": [
               "Built error log notification module for system monitoring efficiency",

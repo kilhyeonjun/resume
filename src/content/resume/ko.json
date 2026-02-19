@@ -448,7 +448,7 @@
             "techStack": [
               "TypeScript",
               "Express.js",
-              "cyan",
+              "Cyan",
               "Aurora Serverless v2",
               "knex"
             ]
@@ -466,7 +466,7 @@
             "techStack": [
               "TypeScript",
               "Express.js",
-              "cyan",
+              "Cyan",
               "Slate.js",
               "AWS SNS",
               "SQS",
@@ -501,7 +501,7 @@
             "techStack": [
               "TypeScript",
               "Express.js",
-              "cyan",
+              "Cyan",
               "Aurora Serverless v2"
             ]
           },
@@ -526,16 +526,15 @@
           "Node.js",
           "TypeScript",
           "Express.js",
-          "cyan",
+          "Cyan",
           "Aurora Serverless v2",
           "knex",
           "AWS Lambda",
           "S3",
           "SNS",
           "SQS",
-          "SES",
-          "React",
-          "Jotai"
+          "AWS SES",
+          "React"
         ]
       },
       {
@@ -572,7 +571,7 @@
               "TypeORM",
               "MySQL",
               "Socket.IO",
-              "네이버 클로바 OCR",
+              "Naver Clova OCR",
               "Web Push"
             ]
           },
@@ -602,8 +601,8 @@
           "MySQL",
           "TypeORM",
           "Socket.IO",
-          "Web Push Notification",
-          "네이버 클로바 OCR",
+          "Web Push",
+          "Naver Clova OCR",
           "AWS EC2",
           "RDS",
           "S3"
@@ -625,7 +624,7 @@
         "projects": [
           {
             "name": "학습 관리 시스템(LMS) 개발",
-            "period": "2021.07 ~ 2022.04",
+            "period": "2021.07 ~ 2022.03",
             "description": "교육 기관의 수동적 관리 업무와 학습자 편의성 부족 해결",
             "details": [
               "QR 출석체크: 실시간 출석 처리 API 및 중복 체크 로직",
@@ -643,7 +642,7 @@
           },
           {
             "name": "인천 스마트 그린 산단 통합관제센터",
-            "period": "2022.01 ~ 2022.04",
+            "period": "2022.01 ~ 2022.03",
             "description": "산업단지 내 회의실 예약 관리의 비효율성과 수동 알림 체계 해결",
             "details": [
               "예약 시스템 API: 실시간 예약 현황 조회 및 충돌 방지 로직",
@@ -659,7 +658,7 @@
           },
           {
             "name": "미래 서비스 JOB Agent 개발",
-            "period": "2021.07 ~ 2022.04",
+            "period": "2021.07 ~ 2022.03",
             "description": "직업 상담 및 창업 역량 평가의 오프라인 제약과 상담사 평가 업무의 비효율성 해결",
             "details": [
               "평가 시스템 개발: Spring Boot 기반 독립적인 평가 애플리케이션 구축",
@@ -711,10 +710,8 @@
           "Java 8/11",
           "Spring Boot",
           "Spring Security",
-          "MariaDB",
           "MySQL",
           "MyBatis",
-          "JPA",
           "Apache POI",
           "JasperReports",
           "AWS EC2",

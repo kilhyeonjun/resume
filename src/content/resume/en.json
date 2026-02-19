@@ -429,7 +429,7 @@
         "position": "Dev2 Team Docs Squad Backend Engineer",
         "startDate": "2023-06",
         "endDate": "2024-08",
-        "description": "Clinical trial data management solution startup with 16B KRW cumulative investment",
+        "description": "Clinical trial data management solution startup with KRW 16B (~$12M) cumulative investment",
         "highlights": [
           "Complete Deadlock Resolution: Foreign key lock timing analysis preventing clinical trial notification failures",
           "New Contract Contribution: User-organization 1:N structure enabling major hospital and pharma company contracts",
@@ -448,7 +448,7 @@
             "techStack": [
               "TypeScript",
               "Express.js",
-              "cyan",
+              "Cyan",
               "Aurora Serverless v2",
               "knex"
             ]
@@ -466,7 +466,7 @@
             "techStack": [
               "TypeScript",
               "Express.js",
-              "cyan",
+              "Cyan",
               "Slate.js",
               "AWS SNS",
               "SQS",
@@ -501,7 +501,7 @@
             "techStack": [
               "TypeScript",
               "Express.js",
-              "cyan",
+              "Cyan",
               "Aurora Serverless v2"
             ]
           },
@@ -526,16 +526,15 @@
           "Node.js",
           "TypeScript",
           "Express.js",
-          "cyan",
+          "Cyan",
           "Aurora Serverless v2",
           "knex",
           "AWS Lambda",
           "S3",
           "SNS",
           "SQS",
-          "SES",
-          "React",
-          "Jotai"
+          "AWS SES",
+          "React"
         ]
       },
       {
@@ -602,7 +601,7 @@
           "MySQL",
           "TypeORM",
           "Socket.IO",
-          "Web Push Notification",
+          "Web Push",
           "Naver Clova OCR",
           "AWS EC2",
           "RDS",
@@ -619,13 +618,13 @@
         "highlights": [
           "Bulk Data Processing: Apache POI-based batch processing for hundreds of member records",
           "Multi-country Unified Auth: JWT-based cross-domain login system",
-          "Deployment Automation: Travis CI-based CI/CD eliminating hosting costs",
+          "Deployment Automation: Travis CI-based CI/CD reducing hosting costs by 100%",
           "Legacy Integration: iframe-based PHP system non-disruptive feature extension"
         ],
         "projects": [
           {
             "name": "Learning Management System (LMS) Development",
-            "period": "2021.07 ~ 2022.04",
+            "period": "2021.07 ~ 2022.03",
             "description": "Resolved manual administrative tasks and lack of learner convenience in educational institutions",
             "details": [
               "QR Attendance Check: Real-time attendance processing API with duplicate check logic",
@@ -643,7 +642,7 @@
           },
           {
             "name": "Incheon Smart Green Industrial Complex Control Center",
-            "period": "2022.01 ~ 2022.04",
+            "period": "2022.01 ~ 2022.03",
             "description": "Resolved inefficiency in meeting room reservation management and manual notification system",
             "details": [
               "Reservation System API: Real-time availability check and conflict prevention logic",
@@ -659,7 +658,7 @@
           },
           {
             "name": "Future Service JOB Agent Development",
-            "period": "2021.07 ~ 2022.04",
+            "period": "2021.07 ~ 2022.03",
             "description": "Resolved offline constraints in career counseling and startup assessment",
             "details": [
               "Assessment System: Spring Boot-based independent assessment application",
@@ -711,10 +710,8 @@
           "Java 8/11",
           "Spring Boot",
           "Spring Security",
-          "MariaDB",
           "MySQL",
           "MyBatis",
-          "JPA",
           "Apache POI",
           "JasperReports",
           "AWS EC2",
@@ -747,7 +744,8 @@
       {
         "name": "System Design Study Vol. 2",
         "period": "2026.01 ~ Present",
-        "description": "System Design Interview: An Insider's Guide Volume 2"
+        "description": "System Design Interview: An Insider's Guide Volume 2",
+        "url": "https://github.com/seungwontech/system-design-study2"
       },
       {
         "name": "Node.js Design Patterns Bible Study",

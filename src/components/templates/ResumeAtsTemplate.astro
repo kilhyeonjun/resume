@@ -196,9 +196,9 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     </p>
     {(data.github || data.linkedin || data.blog) && (
       <p class="contact">
-        {data.github && <span class="contact-item">{data.github}</span>}
-        {data.linkedin && <span class="contact-item">{data.linkedin}</span>}
-        {data.blog && <span class="contact-item">{data.blog}</span>}
+        {data.github && <a href={data.github} class="contact-item">{data.github.replace('https://', '')}</a>}
+        {data.linkedin && <a href={data.linkedin} class="contact-item">{data.linkedin.replace('https://', '')}</a>}
+        {data.blog && <a href={data.blog} class="contact-item">{data.blog.replace('https://', '')}</a>}
       </p>
     )}
   </header>
@@ -207,6 +207,30 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     <section>
       <h2>{labels.summary.toUpperCase()}</h2>
       <p>{data.summary}</p>
+    </section>
+  )}
+
+  {data.experience && data.experience.length > 0 && (
+    <section>
+      <h2>{labels.experience.toUpperCase()}</h2>
+      {data.experience.map((exp) => (
+        <div class="item">
+          <div class="item-header">
+            <h3>
+              <span class="company">{exp.company}</span> — <span class="position">{exp.position}</span>
+            </h3>
+            <p class="date">{exp.startDate} - {exp.current ? labels.current : exp.endDate}</p>
+          </div>
+          {exp.description && <p>{exp.description}</p>}
+          {exp.highlights && exp.highlights.length > 0 && (
+            <ul>
+              {exp.highlights.map((highlight) => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
     </section>
   )}
 
@@ -234,30 +258,6 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
           <span class="skill-category">{skillGroup.category}:</span>{' '}
           {skillGroup.items.map(s => s.name).join(', ')}
         </p>
-      ))}
-    </section>
-  )}
-
-  {data.experience && data.experience.length > 0 && (
-    <section>
-      <h2>{labels.experience.toUpperCase()}</h2>
-      {data.experience.map((exp) => (
-        <div class="item">
-          <div class="item-header">
-            <h3>
-              <span class="company">{exp.company}</span> — <span class="position">{exp.position}</span>
-            </h3>
-            <p class="date">{exp.startDate} - {exp.current ? labels.current : exp.endDate}</p>
-          </div>
-          {exp.description && <p>{exp.description}</p>}
-          {exp.highlights && exp.highlights.length > 0 && (
-            <ul>
-              {exp.highlights.map((highlight) => (
-                <li>{highlight}</li>
-              ))}
-            </ul>
-          )}
-        </div>
       ))}
     </section>
   )}

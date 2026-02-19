@@ -448,13 +448,13 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
           <span class="contact-item">{data.location}</span>
         )}
         {data.github && (
-          <span class="contact-item">{data.github.replace('https://', '')}</span>
+          <a href={data.github} class="contact-item">{data.github.replace('https://', '')}</a>
         )}
         {data.linkedin && (
-          <span class="contact-item">{data.linkedin.replace('https://', '')}</span>
+          <a href={data.linkedin} class="contact-item">{data.linkedin.replace('https://', '')}</a>
         )}
         {data.blog && (
-          <span class="contact-item">{data.blog.replace('https://', '')}</span>
+          <a href={data.blog} class="contact-item">{data.blog.replace('https://', '')}</a>
         )}
       </div>
     </header>

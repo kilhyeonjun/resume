@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 10+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package ecosystem.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
+    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package ecosystem.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
     "coreCompetencies": [
       {
         "category": "Performance Optimization & Cost Efficiency",
@@ -181,12 +181,12 @@
         "current": true,
         "description": "Mobile game development and publishing company",
         "highlights": [
-          "82% BigQuery Cost Reduction: Storage Read API + entity normalization reducing cost from $6.25 to $1.1 per TB, resolving 18-second query bottleneck",
-          "Serverless Architecture Transition: SQS + Lambda + EventBridge-based EDA expanding data collection range 6x (60 days → 360 days)",
-          "Internal Common Library Ecosystem: Developed and maintained 10 NestJS utility modules + 2 Game Server Kit packages",
-          "Game Data Version Control: Git-like Audit Log + 3-Way Merge engine ensuring multi-game balance data consistency",
-          "Marketing Integration Platform: Unified management of Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system with GCP-AWS hybrid pipeline",
-          "CDK-based Probability Audit Log Analytics Pipeline: Kinesis → Firehose → S3 → Glue → Athena end-to-end infrastructure as code, integrated across 12 game projects with 94%+ test coverage"
+          "Reduced BigQuery costs by 82% (TB: $6.25→$1.1) by switching read methods amid surging marketing data query costs",
+          "Overcame batch processing limitations through serverless migration, expanding data collection range 6x (60→360 days)",
+          "Built internal common library ecosystem with NestJS utility (10 modules) + Game Server Kit (2 packages)",
+          "Developed Git-like Audit Log + 3-Way Merge engine for multi-game balance data consistency",
+          "Unified marketing campaign/creative/metrics management via GCP-AWS hybrid pipeline",
+          "Codified end-to-end audit log analytics infrastructure with CDK, integrating 12 game projects (94%+ test coverage)"
         ],
         "projects": [
           {
@@ -208,49 +208,18 @@
             ]
           },
           {
-            "name": "Marketing Campaign Automation Platform",
+            "name": "Marketing Integrated Platform",
             "period": "2025.02 ~ Present",
-            "description": "Resolved marketing campaign operational inefficiency caused by distributed management across multiple ad platforms (Google Ads/Meta/TikTok)",
+            "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system",
             "details": [
               "Marketing Domain DB Separation: Migrated marketing data mixed in Sheet DB to a dedicated DB, establishing service independence foundation",
               "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, and modification in a single platform",
-              "Campaign Status Change Alerts: Real-time detection of budget changes and on/off status with automated Slack notifications"
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "Google Ads API",
-              "Meta API",
-              "TikTok API",
-              "MySQL"
-            ]
-          },
-          {
-            "name": "Marketing Creative Management System",
-            "period": "2025.02 ~ Present",
-            "description": "Resolved operational inefficiency and asset stability issues caused by manual creative upload, platform deployment, and lack of backup",
-            "details": [
+              "Campaign Status Change Alerts: Real-time detection of budget changes and on/off status with automated Slack notifications",
               "Creative Auto-deployment Pipeline: Integrated pipeline from creative upload to automatic registration on Google/Meta/TikTok platforms",
               "Creative Domain Normalization: AssetDraft conversion and JSON column → individual column separation for query performance improvement",
               "NAS-S3 Dual Sync: SQS event-based server-worker separation architecture for bidirectional sync/restore between internal NAS and S3",
               "Meta Asset Sync Performance Optimization: TypeORM save() → insertBulk() conversion and deleteByCondition adoption — Image sync time reduced by 72% (25.7s→7.1s), DB transaction time reduced by 95% (10-16s→0.3-0.5s)",
-              "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%"
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "TypeORM",
-              "MySQL",
-              "S3",
-              "AWS Lambda",
-              "SQS"
-            ]
-          },
-          {
-            "name": "Marketing Metrics Analytics Platform",
-            "period": "2025.04 ~ Present",
-            "description": "Transitioned Excel-based marketing data management to an internal admin integrated platform for real-time campaign performance monitoring",
-            "details": [
+              "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%",
               "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25 → $1.1 per TB)",
               "Multi-dimensional Metrics Analysis System: Metrics integration and CRUD API across 3 axes — campaign, country/OS, and ad channel",
               "Metrics Query Performance Optimization: Index structure optimization (eliminating Full Table Scan), cursor-based pagination, and generic filtering resolving 18-second query bottleneck",
@@ -261,16 +230,21 @@
               "Retention Metrics Integration: Consistently applied retention metrics across the full pipeline from BigQuery ingestion to entity, API, and field metadata for user retention analysis"
             ],
             "techStack": [
-              "TypeScript",
-              "NestJS",
-              "BigQuery",
-              "Storage Read API",
-              "Apache Arrow",
-              "gRPC",
-              "GCP Pub/Sub",
               "AWS Lambda",
+              "Apache Arrow",
+              "BigQuery",
+              "GCP Pub/Sub",
+              "Google Ads API",
+              "Meta API",
+              "MySQL",
+              "NestJS",
+              "S3",
               "SQS",
-              "MySQL"
+              "Storage Read API",
+              "TikTok API",
+              "TypeORM",
+              "TypeScript",
+              "gRPC"
             ]
           },
           {
@@ -314,56 +288,25 @@
             ]
           },
           {
-            "name": "NestJS Common Utility Library (Glider Nest Util)",
+            "name": "Internal Common Library Ecosystem",
             "period": "2025.07 ~ Present",
-            "description": "Internal NPM package library resolving duplicate common logic development and implementation pattern differences across new projects",
+            "description": "Development and operation of NestJS utility (10 modules) + Game Server Kit (2 packages) for multi-project code consistency",
             "details": [
               "10-module Library Ecosystem: Expanded to core, repository, cache, lock, slack, crypto, smb, hash, type, and iac modules",
               "Repository Module: Bulk operations, Audit Log, TypeORM type narrowing support; refactored 2000+ line codebase into SRP-based file separation",
               "Distributed Lock Module: ElastiCache (Redis)-based distributed lock decorator for concurrency control in multi-instance environments",
               "TypeScript Generic-based Type Safety: Overcame TypeORM type limitations through function overloading and generics",
-              "Internal NPM Package Management: GitHub Packages-based distribution with CI optimization testing only changed packages"
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "TypeORM",
-              "ElastiCache (Redis)",
-              "GitHub NPM"
-            ]
-          },
-          {
-            "name": "LMK Multilingual Notification System",
-            "period": "2025.10 ~ Present",
-            "description": "Resolved translation workflow bottleneck caused by delayed translator awareness when game LMK (Localized Message Key) Korean source text changes",
-            "details": [
-              "Korean Change Detection Slack Alerts: Thread separation by project+environment+version for immediate change notification to translation team",
-              "Translation Completion Status Auto-management: Auto-reset other language completion status on Korean source modification; Korean always marked complete",
-              "Single Upsert API v2: Transitioned from full row save to per-record update/delete/insert structure preventing concurrent work overwrites",
-              "Translator-Language Assignment Management: Language-specific translator assignment improving change notification accuracy"
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "TypeORM",
-              "ElastiCache (Redis)",
-              "Slack API"
-            ]
-          },
-          {
-            "name": "Game Server Common Logic Packaging (Game Server Kit)",
-            "period": "2025.11 ~ Present",
-            "description": "Separated game server common logic into reusable NPM packages ensuring code consistency across multiple game projects",
-            "details": [
+              "Internal NPM Package Management: GitHub Packages-based distribution with CI optimization testing only changed packages",
               "Sheet Module NPM Package Extraction: Extracted Sheet module from game server monolith into independent package for multi-game project reuse",
               "5 Submodule Extraction: Packaged sheet-version, sheet-hash-update-request, sheet-acquirable-asset, sheet-data-migration, and static-data-lock into @gameduo/glider-sheet",
               "5-Branch Rollout with Conflict Mitigation: Analyzed divergence across main/NB2/BANE/DFD/VG branches, proactively resolving high-risk conflicts (NB2 548 commits, BANE 3,418 commits behind)"
             ],
             "techStack": [
-              "TypeScript",
+              "ElastiCache (Redis)",
+              "GitHub NPM",
               "NestJS",
               "TypeORM",
-              "GitHub NPM"
+              "TypeScript"
             ]
           },
           {
@@ -431,10 +374,10 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with KRW 16B (~$12M) cumulative investment",
         "highlights": [
-          "Complete Deadlock Resolution: Foreign key lock timing analysis preventing clinical trial notification failures",
-          "New Contract Contribution: User-organization 1:N structure enabling major hospital and pharma company contracts",
-          "Rapid MVP Launch: VDR 3 weeks, TMF 3 months emergency deployment meeting deadlines",
-          "Event-Driven Architecture: AWS SNS/SQS based system reliability improvement"
+          "Completely resolved deadlocks through foreign key lock timing analysis, preventing clinical trial notification failures",
+          "Contributed to securing major hospital and pharmaceutical contracts by designing user-organization 1:N structure",
+          "Met deadlines with rapid MVP delivery: VDR in 3 weeks + TMF in 3 months emergency deployment",
+          "Improved system stability by introducing Event-Driven Architecture based on AWS SNS/SQS"
         ],
         "projects": [
           {
@@ -563,10 +506,10 @@
         "endDate": "2023-06",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
-          "Backend Architecture Migration: Converted Express.js single-file structure to NestJS modular architecture, achieving 80% test coverage with TDD",
-          "Unified Auth System: Resolved subdomain session conflicts with JWT-based token authentication",
-          "Prescription Automation: Automated manual entry via Naver Clova OCR + MFDS API integration",
-          "Real-time Services: Built Socket.io-based consultation status updates and Web Push notifications"
+          "Migrated from Express.js monolithic structure to NestJS modular architecture, achieving 80% test coverage with TDD",
+          "Resolved subdomain session conflicts by transitioning to JWT-based token authentication",
+          "Automated prescription manual entry through Naver Clova OCR + MFDS API integration",
+          "Implemented real-time consultation status with Socket.io and Web Push notifications"
         ],
         "projects": [
           {
@@ -674,10 +617,9 @@
         "endDate": "2022-03",
         "description": "Custom software solutions SI company",
         "highlights": [
-          "Bulk Data Processing: Apache POI-based batch processing for hundreds of member records",
-          "Multi-country Unified Auth: JWT-based cross-domain login system",
-          "Deployment Automation: Travis CI-based CI/CD reducing hosting costs by 100%",
-          "Legacy Integration: iframe-based PHP system non-disruptive feature extension"
+          "Built bulk member data processing system handling hundreds of records using Apache POI",
+          "Implemented multi-country unified authentication with JWT-based cross-domain login",
+          "Eliminated hosting costs by introducing Travis CI-based CI/CD pipeline"
         ],
         "projects": [
           {
@@ -783,7 +725,7 @@
     "education": [
       {
         "institution": "Inha Technical College",
-        "degree": "Bachelor's",
+        "degree": "Bachelor's (Advanced Major Program)",
         "field": "Computer Information Engineering",
         "startDate": "2022-02",
         "endDate": "2023-02",

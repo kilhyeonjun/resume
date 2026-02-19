@@ -459,6 +459,8 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
         {data.blog && (
           <a href={data.blog} class="contact-item">{data.blog.replace('https://', '')}</a>
         )}
+        <a href={`https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}`} class="contact-item">이력서 웹</a>
+        <a href={`https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}/portfolio`} class="contact-item">포트폴리오</a>
       </div>
     </header>
 
@@ -482,9 +484,9 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
               <div class="experience-item">
                 <div class="experience-header">
                   <span class="position">{exp.position}</span>
-                  <span class="date">{exp.startDate} — {exp.current ? labels.current : exp.endDate}</span>
+                  <span class="date">{exp.startDate.replace('-', '.')} — {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</span>
                 </div>
-                <p class="company">{exp.company}</p>
+                <p class="company"><a href={`https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}/experience/${exp.slug}`} style="color: #2563eb; text-decoration: none;">{exp.company}</a></p>
                 {exp.description && (
                   <p class="description">{exp.description}</p>
                 )}
@@ -535,7 +537,7 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
                 <h3 class="institution">{edu.institution}</h3>
                 <p class="degree">{edu.degree} {edu.field && `• ${edu.field}`}</p>
                 <p class="edu-date">
-                  {edu.startDate} — {edu.endDate}
+                  {edu.startDate.replace('-', '.')} — {edu.endDate.replace('-', '.')}
                   {edu.gpa && ` | GPA: ${edu.gpa}`}
                 </p>
               </div>
@@ -556,11 +558,11 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
           </section>
         )}
 
-        <!-- Awards -->
-        {data.awards && data.awards.length > 0 && (
+        <!-- Awards (recent only for print) -->
+        {data.awards && data.awards.filter(a => parseInt(a.date) >= 2020).length > 0 && (
           <section>
             <h2 class="section-title">{labels.awards}</h2>
-            {data.awards.map((award) => (
+            {data.awards.filter(a => parseInt(a.date) >= 2020).map((award) => (
               <div class="cert-item">
                 <h3 class="cert-name">{award.name}</h3>
                 <p class="cert-issuer">{award.date}{award.description && ` — ${award.description}`}</p>
@@ -586,12 +588,11 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
         {data.openSource && data.openSource.length > 0 && (
           <section>
             <h2 class="section-title">{labels.openSource}</h2>
-            {data.openSource.map((item) => (
-              <div class="cert-item">
-                <h3 class="cert-name">{item.name}</h3>
-                <p class="cert-issuer">{item.date}</p>
-              </div>
-            ))}
+            <p style="font-size: 10px; color: #374151;">
+              {lang === 'ko' ? `오픈소스 기여 ${data.openSource.length}건` : `${data.openSource.length} open source contributions`}
+              {' — '}
+              {[...new Set(data.openSource.map((item) => item.name.split(':')[0].trim()))].join(', ')}
+            </p>
           </section>
         )}
 
@@ -601,7 +602,11 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
             <h2 class="section-title">{labels.technicalWriting}</h2>
             {data.technicalWriting.map((item) => (
               <div class="cert-item">
-                <h3 class="cert-name">{item.title}</h3>
+                <h3 class="cert-name">
+                  {item.links && item.links.length > 0 ? (
+                    <a href={item.links[0].url} style="color: #111827; text-decoration: none;">{item.title}</a>
+                  ) : item.title}
+                </h3>
                 <p class="cert-issuer">{item.type} — {item.date}</p>
               </div>
             ))}

@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 10개 이상의 프로젝트를 주도하며 BigQuery 비용 82% 절감, CDK 기반 분석 인프라 코드화, 사내 NPM 패키지 생태계 구축 등 정량적 성과를 달성한 백엔드 엔지니어입니다.\n\n모놀리식에서 Event-Driven 서버리스까지 시스템 설계 전문성을 보유하며, GCP-AWS 하이브리드 데이터 파이프라인 구축과 근본 원인 분석으로 장기적 비즈니스 가치를 창출합니다.",
+    "summary": "{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 20개 이상의 프로젝트를 주도하며 BigQuery 비용 82% 절감, CDK 기반 분석 인프라 코드화, 사내 NPM 패키지 생태계 구축 등 정량적 성과를 달성한 백엔드 엔지니어입니다.\n\n모놀리식에서 Event-Driven 서버리스까지 시스템 설계 전문성을 보유하며, GCP-AWS 하이브리드 데이터 파이프라인 구축과 근본 원인 분석으로 장기적 비즈니스 가치를 창출합니다.",
     "coreCompetencies": [
       {
         "category": "성능 최적화 & 비용 효율성",
@@ -181,12 +181,12 @@
         "current": true,
         "description": "모바일 게임 개발 및 퍼블리싱 회사",
         "highlights": [
-          "BigQuery 비용 82% 절감: Storage Read API + 엔티티 정규화로 TB당 $6.25→$1.1, 18초 쿼리 병목 해결",
-          "서버리스 아키텍처 전환: SQS + Lambda + EventBridge 기반 EDA로 데이터 수집 범위 6배 확장 (60일 → 360일)",
-          "사내 공통 라이브러리 생태계: NestJS 유틸 10개 모듈 + 게임서버 Kit 2개 패키지 개발·운영",
-          "게임 데이터 버전 관리: Git-like Audit Log + 3-Way Merge 엔진으로 다중 게임 밸런스 데이터 일관성 확보",
-          "마케팅 통합 플랫폼: Google Ads/Meta/TikTok 캠페인·소재·지표를 단일 시스템에서 관리, GCP-AWS 하이브리드 파이프라인 구축",
-          "CDK 기반 확률 감사 로그 분석 파이프라인: Kinesis → Firehose → S3 → Glue → Athena End-to-End 인프라 코드화, 12개 게임 프로젝트 통합, 94%+ 테스트 커버리지"
+          "마케팅 데이터 조회 비용이 급증하는 상황에서 읽기 방식을 전환하여 BigQuery 비용 82% 절감 (TB당 $6.25→$1.1)",
+          "배치 처리 한계를 극복하기 위해 서버리스 전환, 데이터 수집 범위 6배 확장 (60일→360일)",
+          "NestJS 유틸 10개 모듈 + 게임서버 Kit 2개 패키지로 사내 공통 라이브러리 생태계 구축",
+          "다중 게임 밸런스 데이터 일관성 확보를 위한 Git-like Audit Log + 3-Way Merge 엔진 개발",
+          "GCP-AWS 하이브리드 파이프라인으로 마케팅 캠페인·소재·지표 통합 관리 실현",
+          "CDK 기반 End-to-End 감사 로그 분석 인프라 코드화, 12개 게임 프로젝트 통합 (94%+ 테스트 커버리지)"
         ],
         "projects": [
           {
@@ -208,49 +208,18 @@
             ]
           },
           {
-            "name": "마케팅 캠페인 자동화 플랫폼",
+            "name": "마케팅 통합 플랫폼",
             "period": "2025.02 ~ 현재",
-            "description": "다중 광고 플랫폼(Google Ads/Meta/TikTok) 분산 관리로 인한 마케팅 캠페인 운영 비효율성 해결",
+            "description": "Google Ads/Meta/TikTok 캠페인·소재·지표를 단일 시스템에서 관리하는 통합 마케팅 플랫폼",
             "details": [
               "마케팅 도메인 DB 분리: Sheet DB에 혼재된 마케팅 데이터를 전용 DB로 마이그레이션하여 서비스 독립 기반 확보",
               "통합 캠페인 자동화: Google Ads/Meta/TikTok 캠페인 생성·배포·수정을 단일 플랫폼에서 관리하는 API 구축",
-              "캠페인 상태 변경 알림: 예산 변경/On-Off 상태를 실시간 감지하여 Slack 자동 알림"
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "Google Ads API",
-              "Meta API",
-              "TikTok API",
-              "MySQL"
-            ]
-          },
-          {
-            "name": "마케팅 소재 관리 시스템",
-            "period": "2025.02 ~ 현재",
-            "description": "마케팅 소재의 수동 업로드·플랫폼 배포·백업 부재로 인한 운영 비효율성과 자산 안정성 문제 해결",
-            "details": [
+              "캠페인 상태 변경 알림: 예산 변경/On-Off 상태를 실시간 감지하여 Slack 자동 알림",
               "소재 자동 배포 파이프라인: 소재 업로드부터 Google/Meta/TikTok 플랫폼 자동 등록까지 통합 파이프라인 구축",
               "소재 도메인 정규화: AssetDraft 전환 및 JSON 컬럼 → 개별 컬럼 분리로 쿼리 성능 향상",
               "NAS-S3 이중화 동기화: SQS 이벤트 기반 서버-워커 분리 아키텍처로 사내 NAS와 S3 간 양방향 동기화/복원 구현",
               "Meta 에셋 동기화 성능 최적화: TypeORM save() → insertBulk() 전환, deleteByCondition 적용으로 Image 동기화 시간 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)",
-              "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감"
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "TypeORM",
-              "MySQL",
-              "S3",
-              "AWS Lambda",
-              "SQS"
-            ]
-          },
-          {
-            "name": "마케팅 지표 분석 플랫폼",
-            "period": "2025.04 ~ 현재",
-            "description": "엑셀 기반 마케팅 데이터 관리를 사내 어드민 통합 플랫폼으로 전환하여 실시간 캠페인 성과 모니터링 구현",
-            "details": [
+              "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감",
               "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 BigQuery 비용 82% 절감 (TB당 $6.25 → $1.1)",
               "다차원 지표 분석 시스템: 캠페인/국가·OS/광고 매체별 3개 축의 지표 연동 및 CRUD API 구축",
               "지표 조회 성능 최적화: 인덱스 구조 최적화(Full Table Scan 제거), 커서 기반 페이지네이션, 범용 필터링으로 18초 쿼리 병목 해결",
@@ -261,16 +230,21 @@
               "리텐션 지표 통합: BigQuery 수집부터 엔티티·API·필드 메타데이터까지 전 구간에 retention 지표를 일관 반영하여 유저 잔존율 분석 지원"
             ],
             "techStack": [
-              "TypeScript",
-              "NestJS",
-              "BigQuery",
-              "Storage Read API",
-              "Apache Arrow",
-              "gRPC",
-              "GCP Pub/Sub",
               "AWS Lambda",
+              "Apache Arrow",
+              "BigQuery",
+              "GCP Pub/Sub",
+              "Google Ads API",
+              "Meta API",
+              "MySQL",
+              "NestJS",
+              "S3",
               "SQS",
-              "MySQL"
+              "Storage Read API",
+              "TikTok API",
+              "TypeORM",
+              "TypeScript",
+              "gRPC"
             ]
           },
           {
@@ -314,56 +288,25 @@
             ]
           },
           {
-            "name": "NestJS 공통 유틸 라이브러리 (Glider Nest Util)",
+            "name": "사내 공통 라이브러리 생태계",
             "period": "2025.07 ~ 현재",
-            "description": "신규 프로젝트 공통 로직 중복 개발과 개발자별 구현 방식 차이를 해결하는 사내 NPM 패키지 라이브러리",
+            "description": "NestJS 유틸 10개 모듈 + 게임서버 Kit 2개 패키지 개발·운영으로 다중 프로젝트 코드 일관성 확보",
             "details": [
               "10개 모듈 라이브러리 생태계: core, repository, cache, lock, slack, crypto, smb, hash, type, iac 모듈로 확장",
               "Repository 모듈: Bulk 연산, Audit Log, TypeORM 타입 좁히기 지원. 2000줄+ 코드를 SRP 기준 파일 분리 리팩토링",
               "분산 락(Lock) 모듈: ElastiCache (Redis) 기반 분산 락 데코레이터로 멀티 인스턴스 환경의 동시성 제어",
               "TypeScript 제네릭 기반 타입 안전성: TypeORM 타입 한계를 함수 오버로딩과 제네릭으로 극복",
-              "사내 NPM 패키지 관리: GitHub Packages 기반 배포, 변경 패키지만 테스트하는 CI 최적화"
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "TypeORM",
-              "ElastiCache (Redis)",
-              "GitHub NPM"
-            ]
-          },
-          {
-            "name": "LMK 다국어 알림 시스템",
-            "period": "2025.10 ~ 현재",
-            "description": "게임 LMK(Localized Message Key) 한국어 원문 변경 시 번역팀 인지 지연으로 인한 번역 작업 병목 해결",
-            "details": [
-              "한국어 변경 감지 Slack 알림: 프로젝트+환경+버전별 스레드 분리로 번역팀에 변경사항 즉시 전달",
-              "번역 완료 상태 자동 관리: 한국어 원문 수정 시 타 언어 번역 완료 상태 자동 해제, 한국어는 항상 완료 처리",
-              "단건 Upsert API v2: 전체 row 저장에서 단건 update/delete/insert 구조로 전환하여 동시 작업 덮어쓰기 방지",
-              "번역 담당자-언어 매핑 관리: 언어별 번역 담당자 지정으로 변경 알림 정확도 향상"
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "TypeORM",
-              "ElastiCache (Redis)",
-              "Slack API"
-            ]
-          },
-          {
-            "name": "게임서버 공통 로직 패키지화 (Game Server Kit)",
-            "period": "2025.11 ~ 현재",
-            "description": "게임서버 공통 로직을 재사용 가능한 NPM 패키지로 분리하여 다중 게임 프로젝트 간 코드 일관성 확보",
-            "details": [
+              "사내 NPM 패키지 관리: GitHub Packages 기반 배포, 변경 패키지만 테스트하는 CI 최적화",
               "Sheet 모듈 NPM 패키지 분리: 게임서버 모놀리식의 Sheet 모듈을 독립 패키지로 추출하여 다중 게임 프로젝트에서 재사용",
               "5개 서브모듈 추가 분리: sheet-version, sheet-hash-update-request, sheet-acquirable-asset, sheet-data-migration, static-data-lock을 @gameduo/glider-sheet 패키지로 패키지화",
               "5개 브랜치 적용 및 충돌 선제 대응: main/NB2/BANE/DFD/VG 브랜치별 형상 차이 분석, 고위험 구간(NB2 548커밋, BANE 3,418커밋) 충돌 해결 포함"
             ],
             "techStack": [
-              "TypeScript",
+              "ElastiCache (Redis)",
+              "GitHub NPM",
               "NestJS",
               "TypeORM",
-              "GitHub NPM"
+              "TypeScript"
             ]
           },
           {
@@ -431,10 +374,10 @@
         "endDate": "2024-08",
         "description": "누적 160억 투자 유치 임상시험 데이터 관리 솔루션 스타트업",
         "highlights": [
-          "Deadlock 완전 해결: 외래키 락 타이밍 분석으로 임상시험 알림 누락 방지",
-          "신규 계약 기여: 사용자-조직 1:N 구조로 대형 병원 및 제약사 계약 성사",
-          "빠른 MVP 출시: VDR 3주, TMF 3개월 긴급 투입으로 일정 준수",
-          "Event-Driven Architecture: AWS SNS/SQS 기반 시스템 안정성 향상"
+          "외래키 락 타이밍 분석으로 Deadlock을 완전 해결하여 임상시험 알림 누락 방지",
+          "사용자-조직 1:N 구조 설계로 대형 병원 및 제약사 신규 계약 성사에 기여",
+          "VDR 3주 + TMF 3개월 긴급 투입으로 일정 준수, 빠른 MVP 출시 달성",
+          "AWS SNS/SQS 기반 Event-Driven Architecture 도입으로 시스템 안정성 향상"
         ],
         "projects": [
           {
@@ -563,10 +506,10 @@
         "endDate": "2023-06",
         "description": "누적 30만 다운로드 비대면 진료 및 약배달 플랫폼 스타트업",
         "highlights": [
-          "백엔드 아키텍처 전환: Express.js 단일 파일 구조를 NestJS 모듈 아키텍처로 전환, TDD 도입으로 테스트 커버리지 80% 달성",
-          "통합 인증 시스템: JWT 기반 서브도메인 세션 충돌 해결 및 토큰 인증 전환",
-          "처방전 자동화: Naver Clova OCR + 식약처 API 연동으로 수동 입력 과정 자동화",
-          "실시간 서비스: Socket.io 기반 진료 상태 반영 및 Web Push 알림 구현"
+          "Express.js 단일 파일 구조에서 NestJS 모듈 아키텍처로 전환, TDD 도입으로 테스트 커버리지 80% 달성",
+          "서브도메인 간 세션 충돌 문제를 JWT 기반 토큰 인증으로 전환하여 해결",
+          "Naver Clova OCR + 식약처 API 연동으로 처방전 수동 입력 과정 자동화",
+          "Socket.io 기반 실시간 진료 상태 반영 및 Web Push 알림 구현"
         ],
         "projects": [
           {
@@ -674,10 +617,9 @@
         "endDate": "2022-03",
         "description": "고객 맞춤형 소프트웨어 솔루션 SI 중소기업",
         "highlights": [
-          "대량 데이터 처리: Apache POI 기반 수백 명 회원 정보 일괄 처리 시스템",
-          "다중 국가 통합 인증: JWT 기반 크로스 도메인 로그인 시스템 구축",
-          "배포 자동화: Travis CI 기반 CI/CD로 호스팅 비용 100% 절감",
-          "레거시 통합: iframe 방식으로 PHP 시스템 무중단 기능 확장"
+          "Apache POI 기반 수백 명 회원 정보 일괄 처리 시스템 구축",
+          "JWT 기반 크로스 도메인 로그인으로 다중 국가 통합 인증 구현",
+          "Travis CI 기반 CI/CD 도입으로 호스팅 비용 100% 절감"
         ],
         "projects": [
           {
@@ -783,7 +725,7 @@
     "education": [
       {
         "institution": "인하공업전문대학",
-        "degree": "학사",
+        "degree": "학사 (학사학위전공심화)",
         "field": "컴퓨터정보공학과",
         "startDate": "2022-02",
         "endDate": "2023-02",

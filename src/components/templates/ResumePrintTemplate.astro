@@ -109,20 +109,25 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
       gap: 4px;
     }
 
-    /* Two Column Layout - 60% / 40% */
+    /* Single Column Layout */
     .content {
-      display: grid;
-      grid-template-columns: 60% 40%;
-      gap: 20px;
+      display: block;
     }
 
     .main-column {
-      padding-right: 8px;
     }
 
     .side-column {
-      padding-left: 8px;
-      border-left: 1px solid #e5e7eb;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    /* Side sections in 2-column grid */
+    .side-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 20px;
     }
 
     /* Projects Full Width Section */
@@ -515,9 +520,10 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
 
       <!-- Side Column -->
       <div class="side-column">
+       <div class="side-grid">
         <!-- Skills -->
         {data.skills && data.skills.length > 0 && (
-          <section>
+          <section style="grid-column: span 2;">
             <h2 class="section-title">{labels.skills}</h2>
             {data.skills.map((skillGroup) => (
               <div class="skill-group">
@@ -613,6 +619,7 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
           </section>
         )}
 
+       </div>
       </div>
     </div>
 

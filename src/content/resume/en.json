@@ -607,7 +607,7 @@
           },
           {
             "name": "Backend Architecture Migration",
-            "period": "2022.04 ~ 2023.06",
+            "period": "2023.01 ~ 2023.06",
             "description": "Migrated from Express.js single-file (app.js) structure to NestJS modular architecture",
             "details": [
               "Incrementally migrated Express.js + EJS monolith to NestJS + TypeORM",
@@ -624,7 +624,7 @@
           },
           {
             "name": "Prescription OCR & Medication Guide System",
-            "period": "2022.04 ~ 2023.06",
+            "period": "2023.01 ~ 2023.06",
             "description": "Automated pharmacist's manual prescription entry process using OCR",
             "details": [
               "Integrated Naver Clova OCR API for automatic text extraction from prescription images",
@@ -640,7 +640,7 @@
           },
           {
             "name": "Common Module Development",
-            "period": "2022.04 ~ 2023.06",
+            "period": "2022.04 ~ 2022.08",
             "description": "Developed shared modules for doctor, pharmacist, and auth services",
             "details": [
               "Built error log notification module for system monitoring efficiency",

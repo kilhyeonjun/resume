@@ -750,7 +750,8 @@
       {
         "name": "시스템 디자인 스터디 2권",
         "period": "2026.01 ~ 현재",
-        "description": "가상 면접 사례로 배우는 대규모 시스템 설계 기초 2권"
+        "description": "가상 면접 사례로 배우는 대규모 시스템 설계 기초 2권",
+        "url": "https://github.com/seungwontech/system-design-study2"
       },
       {
         "name": "Node.js 디자인 패턴 바이블 스터디",

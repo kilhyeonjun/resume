@@ -563,66 +563,107 @@
         "endDate": "2023-06",
         "description": "누적 30만 다운로드 비대면 진료 및 약배달 플랫폼 스타트업",
         "highlights": [
-          "아키텍처 현대화: Express.js → NestJS 전환으로 코드 일관성 및 타입 안전성 확보",
-          "통합 인증 시스템: JWT 기반 서브도메인 세션 충돌 해결",
-          "의료 서비스 자동화: OCR + 공공기관 API로 처방전 자동 복약지도 시스템",
-          "실시간 최적화: Socket.IO Room 타겟팅으로 네트워크 트래픽 최적화"
+          "백엔드 아키텍처 전환: Express.js 단일 파일 구조를 NestJS 모듈 아키텍처로 전환, TDD 도입으로 테스트 커버리지 80% 달성",
+          "통합 인증 시스템: JWT 기반 서브도메인 세션 충돌 해결 및 토큰 인증 전환",
+          "처방전 자동화: Naver Clova OCR + 식약처 API 연동으로 수동 입력 과정 자동화",
+          "실시간 서비스: Socket.io 기반 진료 상태 반영 및 Web Push 알림 구현"
         ],
         "projects": [
           {
-            "name": "바로필 의사/약사 서비스 아키텍처 개선",
-            "period": "2022.04 ~ 2023.06",
-            "description": "초기 스타트업의 단일 파일(app.js) Express + EJS 구조의 확장성 한계 해결",
+            "name": "Auth 서버 신규 개발",
+            "period": "2022.04 (3주)",
+            "description": "서브도메인 간 세션 충돌 문제를 해결하기 위한 JWT 기반 통합 인증 시스템 신규 구축",
             "details": [
-              "단계적 아키텍처 개선: 단일 파일 → 레이어드 아키텍처 → NestJS 모듈 구조로 점진적 전환",
-              "JavaScript → TypeScript + NestJS: 표준화된 구조로 코드 일관성 확보",
-              "진료 예약 시스템: 의사별 가용 시간 관리 및 환자 예약 선택 인터페이스 구축",
-              "처방전 기반 복약지도 자동화: 네이버 클로바 OCR + 식약처 API 연동으로 완전 자동화",
-              "실시간 상태 반영 시스템: Socket.IO Room 기반 효율적 타겟팅 알림",
-              "내부 API 게이트웨이: 결제 + 배달 API 통합 인터페이스로 추상화"
+              "NestJS + JWT 기반 토큰 인증 시스템 설계 및 구현",
+              "기존 세션 방식에서 토큰 기반으로 마이그레이션하여 서브도메인 간 원활한 사용자 전환 구현"
             ],
             "techStack": [
-              "TypeScript",
               "NestJS",
+              "TypeScript",
+              "JWT",
+              "MySQL"
+            ]
+          },
+          {
+            "name": "의사/약사 웹 서비스 개발",
+            "period": "2022.04 ~ 2023.06",
+            "description": "바로필 의사·약사용 백오피스 시스템의 프론트엔드·백엔드 풀스택 개발",
+            "details": [
+              "의사 진료 예약/요청 시스템 및 약사 조제 요청 시스템 구현",
+              "Socket.io 기반 실시간 진료 상태 반영으로 사용자 응답성 개선",
+              "Web Push 알림 구현으로 진료 예약·조제 요청 즉시 알림 제공",
+              "카카오 간편 로그인 및 본인인증 연동",
+              "관리자 대시보드 고도화로 운영 현황 모니터링 효율화"
+            ],
+            "techStack": [
               "Express.js",
-              "TypeORM",
+              "NestJS",
+              "TypeScript",
+              "EJS",
               "MySQL",
-              "Socket.IO",
-              "Naver Clova OCR",
+              "Socket.io",
               "Web Push"
             ]
           },
           {
-            "name": "회원 인증 시스템 구축",
-            "period": "2022.04 (3주)",
-            "description": "서브도메인 기반 세션 충돌 문제와 다중 플랫폼 통합 인증 요구사항 해결",
+            "name": "백엔드 아키텍처 전환",
+            "period": "2022.04 ~ 2023.06",
+            "description": "Express.js 단일 파일(app.js) 구조에서 NestJS 모듈 아키텍처로 전환",
             "details": [
-              "JWT 기반 인증 서버: 독립적인 인증 서비스로 마이크로서비스 아키텍처 구축",
-              "MySQL 기반 JWT 키 관리: 기존 DB 인프라를 활용한 비용 효율적 JWT 키 관리",
-              "이중 토큰 전략: Access Token + Refresh Token으로 보안성과 사용성 균형"
+              "Express.js + EJS 모놀리식 구조를 NestJS + TypeORM으로 단계적 전환",
+              "Port and Adapter Architecture 적용으로 비즈니스 로직과 인프라 분리",
+              "TDD 도입 및 단위 테스트 커버리지 80% 달성 (약사 서버)"
             ],
             "techStack": [
-              "TypeScript",
               "NestJS",
-              "MySQL",
-              "JWT"
+              "TypeScript",
+              "TypeORM",
+              "Jest",
+              "MySQL"
+            ]
+          },
+          {
+            "name": "처방전 자동 인식 및 복약지도 시스템",
+            "period": "2022.04 ~ 2023.06",
+            "description": "약사의 수동 처방전 입력 과정을 OCR 기반으로 자동화",
+            "details": [
+              "Naver Clova OCR API 연동으로 처방전 이미지에서 텍스트 자동 추출",
+              "추출 데이터 구조화 및 시스템 자동 입력 프로세스 구현",
+              "공공데이터(식약처 API) 의약품 정보 활용한 자동 복약지도 생성"
+            ],
+            "techStack": [
+              "NestJS",
+              "TypeScript",
+              "Naver Clova OCR",
+              "MySQL"
+            ]
+          },
+          {
+            "name": "공통 모듈 개발",
+            "period": "2022.04 ~ 2023.06",
+            "description": "의사·약사·Auth 서비스 공통으로 사용되는 모듈 개발",
+            "details": [
+              "에러 로그 알림 모듈 개발로 시스템 모니터링 효율화",
+              "사용자 권한 확인 미들웨어 구현으로 보안성 강화"
+            ],
+            "techStack": [
+              "NestJS",
+              "TypeScript"
             ]
           }
         ],
         "techStack": [
-          "Node.js",
-          "TypeScript",
-          "JavaScript",
-          "Express.js",
           "NestJS",
-          "MySQL",
+          "Express.js",
+          "TypeScript",
           "TypeORM",
-          "Socket.IO",
+          "EJS",
+          "MySQL",
+          "JWT",
+          "Socket.io",
           "Web Push",
           "Naver Clova OCR",
-          "AWS EC2",
-          "RDS",
-          "S3"
+          "Jest"
         ]
       },
       {

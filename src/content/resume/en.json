@@ -563,66 +563,107 @@
         "endDate": "2023-06",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
-          "Architecture Modernization: Express.js → NestJS transition for code consistency and type safety",
-          "Unified Authentication System: JWT-based subdomain session conflict resolution",
-          "Medical Service Automation: OCR + public API for automated prescription medication guidance",
-          "Real-time Optimization: Socket.IO Room targeting for network traffic optimization"
+          "Backend Architecture Migration: Converted Express.js single-file structure to NestJS modular architecture, achieving 80% test coverage with TDD",
+          "Unified Auth System: Resolved subdomain session conflicts with JWT-based token authentication",
+          "Prescription Automation: Automated manual entry via Naver Clova OCR + MFDS API integration",
+          "Real-time Services: Built Socket.io-based consultation status updates and Web Push notifications"
         ],
         "projects": [
           {
-            "name": "Baropill Doctor/Pharmacist Service Architecture Improvement",
-            "period": "2022.04 ~ 2023.06",
-            "description": "Resolved scalability limitations of early startup's single file (app.js) Express + EJS structure",
+            "name": "Auth Server Development",
+            "period": "2022.04 (3 weeks)",
+            "description": "Built JWT-based unified authentication system to resolve subdomain session conflicts",
             "details": [
-              "Gradual Architecture Improvement: Single file → Layered architecture → NestJS modular structure",
-              "JavaScript → TypeScript + NestJS: Standardized structure for code consistency",
-              "Appointment Reservation System: Doctor availability management and patient reservation interface",
-              "Prescription-based Medication Guidance Automation: Naver Clova OCR + MFDS API for full automation",
-              "Real-time Status Reflection: Socket.IO Room-based efficient targeted notifications",
-              "Internal API Gateway: Payment + Delivery API unified interface abstraction"
+              "Designed and implemented NestJS + JWT token authentication system",
+              "Migrated from session-based to token-based auth for seamless subdomain user transitions"
             ],
             "techStack": [
-              "TypeScript",
               "NestJS",
+              "TypeScript",
+              "JWT",
+              "MySQL"
+            ]
+          },
+          {
+            "name": "Doctor/Pharmacist Web Service Development",
+            "period": "2022.04 ~ 2023.06",
+            "description": "Full-stack development of back-office systems for doctors and pharmacists",
+            "details": [
+              "Built doctor appointment/request system and pharmacist dispensing request system",
+              "Implemented real-time consultation status updates using Socket.io",
+              "Built Web Push notifications for instant appointment and dispensing request alerts",
+              "Integrated Kakao simple login and identity verification",
+              "Enhanced admin dashboard for operational monitoring"
+            ],
+            "techStack": [
               "Express.js",
-              "TypeORM",
+              "NestJS",
+              "TypeScript",
+              "EJS",
               "MySQL",
-              "Socket.IO",
-              "Naver Clova OCR",
+              "Socket.io",
               "Web Push"
             ]
           },
           {
-            "name": "Member Authentication System",
-            "period": "2022.04 (3 weeks)",
-            "description": "Resolved subdomain-based session conflicts and multi-platform unified authentication requirements",
+            "name": "Backend Architecture Migration",
+            "period": "2022.04 ~ 2023.06",
+            "description": "Migrated from Express.js single-file (app.js) structure to NestJS modular architecture",
             "details": [
-              "JWT-based Auth Server: Independent authentication service for microservices architecture",
-              "MySQL-based JWT Key Management: Cost-efficient JWT key management using existing DB infrastructure",
-              "Dual Token Strategy: Access Token + Refresh Token balancing security and usability"
+              "Incrementally migrated Express.js + EJS monolith to NestJS + TypeORM",
+              "Applied Port and Adapter Architecture to separate business logic from infrastructure",
+              "Introduced TDD and achieved 80% unit test coverage (pharmacist server)"
             ],
             "techStack": [
-              "TypeScript",
               "NestJS",
-              "MySQL",
-              "JWT"
+              "TypeScript",
+              "TypeORM",
+              "Jest",
+              "MySQL"
+            ]
+          },
+          {
+            "name": "Prescription OCR & Medication Guide System",
+            "period": "2022.04 ~ 2023.06",
+            "description": "Automated pharmacist's manual prescription entry process using OCR",
+            "details": [
+              "Integrated Naver Clova OCR API for automatic text extraction from prescription images",
+              "Built structured data pipeline for automatic system entry",
+              "Developed automated medication guide generation using MFDS (Korea FDA) drug information API"
+            ],
+            "techStack": [
+              "NestJS",
+              "TypeScript",
+              "Naver Clova OCR",
+              "MySQL"
+            ]
+          },
+          {
+            "name": "Common Module Development",
+            "period": "2022.04 ~ 2023.06",
+            "description": "Developed shared modules for doctor, pharmacist, and auth services",
+            "details": [
+              "Built error log notification module for system monitoring efficiency",
+              "Implemented user permission verification middleware for security enhancement"
+            ],
+            "techStack": [
+              "NestJS",
+              "TypeScript"
             ]
           }
         ],
         "techStack": [
-          "Node.js",
-          "TypeScript",
-          "JavaScript",
-          "Express.js",
           "NestJS",
-          "MySQL",
+          "Express.js",
+          "TypeScript",
           "TypeORM",
-          "Socket.IO",
+          "EJS",
+          "MySQL",
+          "JWT",
+          "Socket.io",
           "Web Push",
           "Naver Clova OCR",
-          "AWS EC2",
-          "RDS",
-          "S3"
+          "Jest"
         ]
       },
       {

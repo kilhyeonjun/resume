@@ -506,6 +506,22 @@
             ]
           },
           {
+            "name": "Maven TMF New Project Development",
+            "period": "2023.06 ~ 2024.08",
+            "description": "Frontend development for clinical Trial Master File (TMF) management system",
+            "details": [
+              "Admin page: Organization member role and permission management",
+              "Archiver page: Document history creation and archival",
+              "Dashboard page: Document status overview and search functionality",
+              "Document Viewer page: Document preview, property management, and commenting"
+            ],
+            "techStack": [
+              "React",
+              "TypeScript",
+              "Jotai"
+            ]
+          },
+          {
             "name": "Maven VDR MVP Development",
             "period": "2024.06 ~ 2024.07 (3 weeks)",
             "description": "Emergency deployment for delayed VDR project under MVP launch pressure",
@@ -534,7 +550,8 @@
           "SNS",
           "SQS",
           "AWS SES",
-          "React"
+          "React",
+          "Jotai"
         ]
       },
       {

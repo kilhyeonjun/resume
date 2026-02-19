@@ -619,8 +619,24 @@
             ]
           },
           {
+            "name": "Prescription OCR & Medication Guide System",
+            "period": "2022.10 ~ 2022.12",
+            "description": "Automated pharmacist's manual prescription entry process using OCR",
+            "details": [
+              "Integrated Naver Clova OCR API for automatic text extraction from prescription images",
+              "Built structured data pipeline for automatic system entry",
+              "Developed automated medication guide generation using MFDS (Korea FDA) drug information API"
+            ],
+            "techStack": [
+              "NestJS",
+              "TypeScript",
+              "Naver Clova OCR",
+              "MySQL"
+            ]
+          },
+          {
             "name": "Backend Architecture Migration",
-            "period": "2023.01 ~ 2023.06",
+            "period": "2023.03 ~ 2023.06",
             "description": "Migrated from Express.js single-file (app.js) structure to NestJS modular architecture",
             "details": [
               "Incrementally migrated Express.js + EJS monolith to NestJS + TypeORM",
@@ -632,22 +648,6 @@
               "TypeScript",
               "TypeORM",
               "Jest",
-              "MySQL"
-            ]
-          },
-          {
-            "name": "Prescription OCR & Medication Guide System",
-            "period": "2023.01 ~ 2023.06",
-            "description": "Automated pharmacist's manual prescription entry process using OCR",
-            "details": [
-              "Integrated Naver Clova OCR API for automatic text extraction from prescription images",
-              "Built structured data pipeline for automatic system entry",
-              "Developed automated medication guide generation using MFDS (Korea FDA) drug information API"
-            ],
-            "techStack": [
-              "NestJS",
-              "TypeScript",
-              "Naver Clova OCR",
               "MySQL"
             ]
           }

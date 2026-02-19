@@ -36,6 +36,7 @@ const labels = resumeData.labels;
 
 const basePath = getBasePath(lang);
 const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
+const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}`;
 ---
 
 <!DOCTYPE html>
@@ -53,7 +54,7 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
     }
 
     html {
-      font-size: 11px;
+      font-size: 10.5px;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -62,113 +63,89 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       color: #1f2937;
       background: #fff;
-      line-height: 1.5;
+      line-height: 1.45;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .resume {
       max-width: 210mm;
       margin: 0 auto;
-      padding: 12mm 15mm;
+      padding: 10mm 14mm;
     }
 
     /* Header */
     .header {
       text-align: center;
-      margin-bottom: 20px;
-      padding-bottom: 16px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
       border-bottom: 2px solid #2563eb;
     }
 
     .name {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 700;
       color: #111827;
       letter-spacing: -0.025em;
     }
 
     .title {
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 500;
       color: #2563eb;
-      margin-top: 4px;
+      margin-top: 2px;
     }
 
     .contact-info {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 12px;
-      font-size: 11px;
+      gap: 10px;
+      margin-top: 6px;
+      font-size: 9.5px;
       color: #4b5563;
     }
 
     .contact-item {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
     }
 
-    /* Single Column Layout */
-    .content {
-      display: block;
-    }
-
-    .main-column {
-    }
-
-    .side-column {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    /* Side sections in 2-column grid */
-    .side-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px 20px;
-    }
-
-    /* Projects Full Width Section */
-    .projects-section {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+    .contact-link {
+      color: #2563eb;
     }
 
     /* Section styles */
     section {
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .section-title {
-      font-size: 13px;
+      font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: #2563eb;
-      margin-bottom: 10px;
-      padding-bottom: 4px;
+      margin-bottom: 5px;
+      padding-bottom: 2px;
       border-bottom: 1px solid #e5e7eb;
     }
 
     /* Summary */
     .summary-text {
-      font-size: 11px;
+      font-size: 10px;
       color: #374151;
       white-space: pre-line;
+      line-height: 1.5;
     }
 
     /* Experience */
     .experience-item {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       page-break-inside: avoid;
       break-inside: avoid;
     }
@@ -177,45 +154,51 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
     }
 
     .position {
-      font-size: 13px;
+      font-size: 11.5px;
       font-weight: 600;
       color: #111827;
     }
 
     .date {
-      font-size: 10px;
+      font-size: 9.5px;
       color: #6b7280;
       white-space: nowrap;
     }
 
     .company {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
       color: #2563eb;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
+    }
+
+    .company a {
+      color: #2563eb;
     }
 
     .description {
-      font-size: 10px;
+      font-size: 9.5px;
       color: #4b5563;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .highlights {
       list-style: none;
       padding-left: 0;
+      margin-bottom: 2px;
     }
 
     .highlights li {
-      font-size: 10px;
+      font-size: 9.5px;
       color: #374151;
-      padding-left: 12px;
+      padding-left: 10px;
       position: relative;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
+      line-height: 1.4;
     }
 
     .highlights li::before {
@@ -225,123 +208,18 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
       color: #2563eb;
     }
 
-    /* Skills */
-    .skill-group {
-      margin-bottom: 4px;
-      font-size: 10px;
-      line-height: 1.4;
-    }
-
-    .skill-category {
-      font-size: 10px;
-      font-weight: 600;
-      color: #4b5563;
-      display: inline;
-    }
-
-    .skill-inline {
-      color: #374151;
-      font-size: 10px;
-    }
-
-    .skill-list {
-      display: none;
-    }
-
-    .skill-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 10px;
-    }
-
-    .skill-item-print {
-      margin-bottom: 6px;
-    }
-
-    .skill-name {
-      font-size: 10px;
-      font-weight: 600;
-      color: #111827;
-      display: block;
-    }
-
-    .skill-desc {
-      font-size: 8px;
-      color: #6b7280;
-      display: block;
-      margin-top: 1px;
-    }
-
-    /* Education */
-    .education-item {
-      margin-bottom: 10px;
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-
-    .institution {
-      font-size: 12px;
-      font-weight: 600;
-      color: #111827;
-    }
-
-    .degree {
-      font-size: 10px;
-      color: #2563eb;
-    }
-
-    .edu-date {
-      font-size: 9px;
-      color: #6b7280;
-    }
-
-    /* Projects */
-    .project-item {
-      margin-bottom: 12px;
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-
-    .project-name {
-      font-size: 12px;
-      font-weight: 600;
-      color: #111827;
-    }
-
-    .project-desc {
-      font-size: 10px;
-      color: #4b5563;
-      margin-top: 2px;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-top: 4px;
-    }
-
-    .tech-tag {
-      font-size: 8px;
-      background: #f3f4f6;
-      color: #374151;
-      padding: 2px 6px;
-      border-radius: 3px;
-    }
-
     /* Project summary list within experience */
     .project-summary-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 2px 12px;
-      margin-top: 6px;
-      padding-top: 4px;
+      gap: 1px 12px;
+      margin-top: 4px;
+      padding-top: 3px;
       border-top: 1px dashed #e5e7eb;
     }
 
     .project-summary-item {
-      font-size: 9px;
+      font-size: 8.5px;
       color: #4b5563;
       display: flex;
       justify-content: space-between;
@@ -362,38 +240,90 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
       flex-shrink: 0;
     }
 
-    /* Certifications */
+    /* Two-column grid for side sections */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 20px;
+    }
+
+    /* Skills */
+    .skill-group {
+      margin-bottom: 2px;
+      font-size: 9.5px;
+      line-height: 1.35;
+    }
+
+    .skill-category {
+      font-weight: 600;
+      color: #4b5563;
+    }
+
+    .skill-inline {
+      color: #374151;
+    }
+
+    /* Education */
+    .education-item {
+      margin-bottom: 4px;
+    }
+
+    .institution {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .degree {
+      font-size: 9.5px;
+      color: #2563eb;
+    }
+
+    .edu-date {
+      font-size: 8.5px;
+      color: #6b7280;
+    }
+
+    /* Certifications & Learning */
     .cert-item {
-      margin-bottom: 8px;
-      page-break-inside: avoid;
-      break-inside: avoid;
+      margin-bottom: 4px;
     }
 
     .cert-name {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       color: #111827;
     }
 
     .cert-issuer {
-      font-size: 9px;
+      font-size: 8.5px;
       color: #6b7280;
     }
 
-    /* Languages */
-    .language-item {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      margin-bottom: 4px;
+    /* Open Source inline */
+    .opensource-inline {
+      font-size: 9.5px;
+      color: #374151;
+      line-height: 1.4;
     }
 
-    .language-name {
-      font-weight: 500;
+    /* Technical Writing */
+    .tw-item {
+      margin-bottom: 3px;
+    }
+
+    .tw-title {
+      font-size: 10px;
+      font-weight: 600;
       color: #111827;
     }
 
-    .proficiency {
+    .tw-title a {
+      color: #111827;
+    }
+
+    .tw-meta {
+      font-size: 8.5px;
       color: #6b7280;
     }
 
@@ -404,7 +334,7 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
       }
 
       .resume {
-        padding: 10mm;
+        padding: 8mm 12mm;
       }
 
       .no-print {
@@ -441,7 +371,7 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
 </head>
 <body>
   <a href={basePath} class="back-link no-print">← {labels.backToResume}</a>
-  
+
   <div class="resume">
     <!-- Header -->
     <header class="header">
@@ -451,179 +381,162 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
         {data.email && (
           <span class="contact-item">{data.email}</span>
         )}
-
         {data.location && (
           <span class="contact-item">{data.location}</span>
         )}
         {data.github && (
-          <a href={data.github} class="contact-item">{data.github.replace('https://', '')}</a>
+          <a href={data.github} class="contact-item contact-link">{data.github.replace('https://', '')}</a>
         )}
         {data.linkedin && (
-          <a href={data.linkedin} class="contact-item">{data.linkedin.replace('https://', '')}</a>
+          <a href={data.linkedin} class="contact-item contact-link">{data.linkedin.replace('https://', '')}</a>
         )}
         {data.blog && (
-          <a href={data.blog} class="contact-item">{data.blog.replace('https://', '')}</a>
+          <a href={data.blog} class="contact-item contact-link">{data.blog.replace('https://', '')}</a>
         )}
-        <a href={`https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}`} class="contact-item">이력서 웹</a>
-        <a href={`https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}/portfolio`} class="contact-item">포트폴리오</a>
+        <a href={resumeUrl} class="contact-item contact-link">{lang === 'ko' ? '이력서 웹' : 'Resume Web'}</a>
+        <a href={`${resumeUrl}/portfolio`} class="contact-item contact-link">{lang === 'ko' ? '포트폴리오' : 'Portfolio'}</a>
       </div>
     </header>
 
-    <!-- Two Column Content -->
-    <div class="content">
-      <!-- Main Column -->
-      <div class="main-column">
-        <!-- Summary -->
-        {data.summary && (
-          <section>
-            <h2 class="section-title">{labels.summary}</h2>
-            <p class="summary-text">{data.summary}</p>
-          </section>
-        )}
+    <!-- Summary -->
+    {data.summary && (
+      <section>
+        <h2 class="section-title">{labels.summary}</h2>
+        <p class="summary-text">{data.summary}</p>
+      </section>
+    )}
 
-        <!-- Experience -->
-        {data.experience && data.experience.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.experience}</h2>
-            {data.experience.map((exp) => (
-              <div class="experience-item">
-                <div class="experience-header">
-                  <span class="position">{exp.position}</span>
-                  <span class="date">{exp.startDate.replace('-', '.')} — {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</span>
-                </div>
-                <p class="company"><a href={`https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}/experience/${exp.slug}`} style="color: #2563eb; text-decoration: none;">{exp.company}</a></p>
-                {exp.description && (
-                  <p class="description">{exp.description}</p>
-                )}
-                {exp.highlights && exp.highlights.length > 0 && (
-                  <ul class="highlights">
-                    {exp.highlights.map((highlight) => (
-                      <li>{highlight}</li>
-                    ))}
-                  </ul>
-                )}
-                {exp.projects && exp.projects.length > 0 && (
-                  <div class="project-summary-list">
-                    {exp.projects.map((proj) => (
-                      <div class="project-summary-item">
-                        <span class="project-summary-name">{proj.name}</span>
-                        <span class="project-summary-period">{proj.period}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </section>
-        )}
-      </div>
-
-      <!-- Side Column -->
-      <div class="side-column">
-       <div class="side-grid">
-        <!-- Skills -->
-        {data.skills && data.skills.length > 0 && (
-          <section style="grid-column: span 2;">
-            <h2 class="section-title">{labels.skills}</h2>
-            {data.skills.map((skillGroup) => (
-              <div class="skill-group">
-                <span class="skill-category">{skillGroup.category}:</span>{' '}
-                <span class="skill-inline">{skillGroup.items.map(s => s.name).join(', ')}</span>
-              </div>
-            ))}
-          </section>
-        )}
-
-        <!-- Education -->
-        {data.education && data.education.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.education}</h2>
-            {data.education.map((edu) => (
-              <div class="education-item">
-                <h3 class="institution">{edu.institution}</h3>
-                <p class="degree">{edu.degree} {edu.field && `• ${edu.field}`}</p>
-                <p class="edu-date">
-                  {edu.startDate.replace('-', '.')} — {edu.endDate.replace('-', '.')}
-                  {edu.gpa && ` | GPA: ${edu.gpa}`}
-                </p>
-              </div>
-            ))}
-          </section>
-        )}
-
-        <!-- Certifications -->
-        {data.certifications && data.certifications.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.certifications}</h2>
-            {data.certifications.map((cert) => (
-              <div class="cert-item">
-                <h3 class="cert-name">{cert.name}</h3>
-                <p class="cert-issuer">{cert.issuer} • {cert.date}</p>
-              </div>
-            ))}
-          </section>
-        )}
-
-        <!-- Awards (recent only for print) -->
-        {data.awards && data.awards.filter(a => parseInt(a.date) >= 2020).length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.awards}</h2>
-            {data.awards.filter(a => parseInt(a.date) >= 2020).map((award) => (
-              <div class="cert-item">
-                <h3 class="cert-name">{award.name}</h3>
-                <p class="cert-issuer">{award.date}{award.description && ` — ${award.description}`}</p>
-              </div>
-            ))}
-          </section>
-        )}
-
-        <!-- Continuous Learning -->
-        {data.continuousLearning && data.continuousLearning.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.continuousLearning}</h2>
-            {data.continuousLearning.map((item) => (
-              <div class="cert-item">
-                <h3 class="cert-name">{item.name}</h3>
-                <p class="cert-issuer">{item.period} — {item.description}</p>
-              </div>
-            ))}
-          </section>
-        )}
-
-        <!-- Open Source -->
-        {data.openSource && data.openSource.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.openSource}</h2>
-            <p style="font-size: 10px; color: #374151;">
-              {lang === 'ko' ? `오픈소스 기여 ${data.openSource.length}건` : `${data.openSource.length} open source contributions`}
-              {' — '}
-              {[...new Set(data.openSource.map((item) => item.name.split(':')[0].trim()))].join(', ')}
+    <!-- Experience -->
+    {data.experience && data.experience.length > 0 && (
+      <section>
+        <h2 class="section-title">{labels.experience}</h2>
+        {data.experience.map((exp) => (
+          <div class="experience-item">
+            <div class="experience-header">
+              <span class="position">{exp.position}</span>
+              <span class="date">{exp.startDate.replace('-', '.')} — {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</span>
+            </div>
+            <p class="company">
+              <a href={`${resumeUrl}/experience/${exp.slug}`}>{exp.company}</a>
             </p>
-          </section>
-        )}
-
-        <!-- Technical Writing -->
-        {data.technicalWriting && data.technicalWriting.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.technicalWriting}</h2>
-            {data.technicalWriting.map((item) => (
-              <div class="cert-item">
-                <h3 class="cert-name">
-                  {item.links && item.links.length > 0 ? (
-                    <a href={item.links[0].url} style="color: #111827; text-decoration: none;">{item.title}</a>
-                  ) : item.title}
-                </h3>
-                <p class="cert-issuer">{item.type} — {item.date}</p>
+            {exp.description && (
+              <p class="description">{exp.description}</p>
+            )}
+            {exp.highlights && exp.highlights.length > 0 && (
+              <ul class="highlights">
+                {exp.highlights.map((highlight) => (
+                  <li>{highlight}</li>
+                ))}
+              </ul>
+            )}
+            {exp.projects && exp.projects.length > 0 && (
+              <div class="project-summary-list">
+                {exp.projects.map((proj) => (
+                  <div class="project-summary-item">
+                    <span class="project-summary-name">{proj.name}</span>
+                    <span class="project-summary-period">{proj.period}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </section>
-        )}
+            )}
+          </div>
+        ))}
+      </section>
+    )}
 
-       </div>
-      </div>
+    <!-- Skills + Education (2-column grid) -->
+    <div class="two-col-grid">
+      <!-- Skills (left) -->
+      {data.skills && data.skills.length > 0 && (
+        <section>
+          <h2 class="section-title">{labels.skills}</h2>
+          {data.skills.map((skillGroup) => (
+            <div class="skill-group">
+              <span class="skill-category">{skillGroup.category}:</span>{' '}
+              <span class="skill-inline">{skillGroup.items.map(s => s.name).join(', ')}</span>
+            </div>
+          ))}
+        </section>
+      )}
+
+      <!-- Education (right) -->
+      {data.education && data.education.length > 0 && (
+        <section>
+          <h2 class="section-title">{labels.education}</h2>
+          {data.education.map((edu) => (
+            <div class="education-item">
+              <h3 class="institution">{edu.institution}</h3>
+              <p class="degree">{edu.degree} {edu.field && `• ${edu.field}`}</p>
+              <p class="edu-date">
+                {edu.startDate.replace('-', '.')} — {edu.endDate.replace('-', '.')}
+                {edu.gpa && ` | GPA: ${edu.gpa}`}
+              </p>
+            </div>
+          ))}
+        </section>
+      )}
     </div>
 
+    <!-- Certifications + Continuous Learning (2-column grid) -->
+    <div class="two-col-grid">
+      <!-- Certifications (left) -->
+      {data.certifications && data.certifications.length > 0 && (
+        <section>
+          <h2 class="section-title">{labels.certifications}</h2>
+          {data.certifications.map((cert) => (
+            <div class="cert-item">
+              <h3 class="cert-name">{cert.name}</h3>
+              <p class="cert-issuer">{cert.issuer} • {cert.date}</p>
+            </div>
+          ))}
+        </section>
+      )}
 
+      <!-- Continuous Learning (right) -->
+      {data.continuousLearning && data.continuousLearning.length > 0 && (
+        <section>
+          <h2 class="section-title">{labels.continuousLearning}</h2>
+          {data.continuousLearning.map((item) => (
+            <div class="cert-item">
+              <h3 class="cert-name">{item.name}</h3>
+              <p class="cert-issuer">{item.period}</p>
+            </div>
+          ))}
+        </section>
+      )}
+    </div>
+
+    <!-- Open Source (inline 1 line) -->
+    {data.openSource && data.openSource.length > 0 && (
+      <section>
+        <h2 class="section-title">{labels.openSource}</h2>
+        <p class="opensource-inline">
+          {lang === 'ko' ? `오픈소스 기여 ${data.openSource.length}건` : `${data.openSource.length} open source contributions`}
+          {' — '}
+          {[...new Set(data.openSource.map((item) => item.name.split(':')[0].trim()))].join(', ')}
+        </p>
+      </section>
+    )}
+
+    <!-- Technical Writing -->
+    {data.technicalWriting && data.technicalWriting.length > 0 && (
+      <section>
+        <h2 class="section-title">{labels.technicalWriting}</h2>
+        {data.technicalWriting.map((item) => {
+          const linkUrl = item.url || item.videoUrl || item.reviewUrl;
+          return (
+            <div class="tw-item">
+              <h3 class="tw-title">
+                {linkUrl ? (
+                  <a href={linkUrl}>{item.title}</a>
+                ) : item.title}
+              </h3>
+              <p class="tw-meta">{item.type} — {item.date}</p>
+            </div>
+          );
+        })}
+      </section>
+    )}
   </div>
 </body>
 </html>

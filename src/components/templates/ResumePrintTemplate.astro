@@ -47,65 +47,70 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
   <title>{data.name} - {pageTitle}</title>
 
   <style>
-    * {
+    @page { margin: 0; size: A4; }
+
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
     html {
-      font-size: 10.5px;
+      font-size: 100%;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      color: #1f2937;
+      font-family: 'Inter', 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
+      font-size: 10pt;
+      color: #111827;
+      line-height: 1.6;
       background: #fff;
-      line-height: 1.45;
+      word-break: keep-all;
+      overflow-wrap: break-word;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
     .resume {
-      max-width: 210mm;
+      width: 210mm;
+      max-width: none;
       margin: 0 auto;
-      padding: 10mm 14mm;
+      padding: 13mm 14mm 15mm;
     }
 
     /* Header */
     .header {
       text-align: center;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #2563eb;
+      margin-bottom: 5mm;
+      padding-bottom: 2.5mm;
+      border-bottom: 1pt solid #1d4ed8;
     }
 
     .name {
-      font-size: 24px;
+      font-size: 20pt;
       font-weight: 700;
       color: #111827;
-      letter-spacing: -0.025em;
+      letter-spacing: -0.01em;
     }
 
     .title {
-      font-size: 13px;
-      font-weight: 500;
-      color: #2563eb;
-      margin-top: 2px;
+      font-size: 11pt;
+      font-weight: 600;
+      color: #1d4ed8;
+      margin-top: 1mm;
     }
 
     .contact-info {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 6px;
-      font-size: 9.5px;
+      column-gap: 5mm;
+      row-gap: 1.5mm;
+      margin-top: 2.5mm;
+      font-size: 9pt;
+      line-height: 1.35;
       color: #4b5563;
     }
 
@@ -115,251 +120,133 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
       gap: 3px;
     }
 
-    .contact-link {
-      color: #2563eb;
-    }
+    .contact-link { color: #1d4ed8; }
 
     /* Section styles */
-    section {
-      margin-bottom: 8px;
-    }
+    section { margin-bottom: 6mm; }
 
     .section-title {
-      font-size: 11.5px;
+      font-size: 12pt;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #2563eb;
-      margin-bottom: 5px;
-      padding-bottom: 2px;
-      border-bottom: 1px solid #e5e7eb;
+      text-transform: none;
+      letter-spacing: 0.08em;
+      color: #1d4ed8;
+      margin: 0 0 2.5mm;
+      padding: 0 0 1.5mm;
+      border-bottom: 0.6pt solid #e5e7eb;
     }
 
     /* Summary */
     .summary-text {
-      font-size: 10px;
-      color: #374151;
+      font-size: 10pt;
+      color: #1f2937;
       white-space: pre-line;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     /* Experience */
     .experience-item {
-      margin-bottom: 8px;
+      margin-bottom: 5mm;
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
 
     .experience-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 1px;
+      margin-bottom: 0.5mm;
     }
 
-    .position {
-      font-size: 11.5px;
-      font-weight: 600;
-      color: #111827;
-    }
+    .position { font-size: 11pt; font-weight: 700; color: #111827; }
+    .date { font-size: 9pt; color: #6b7280; white-space: nowrap; }
+    .company { font-size: 10pt; font-weight: 600; color: #1d4ed8; margin-bottom: 1.5mm; }
+    .company a { color: #1d4ed8; }
+    .description { font-size: 9pt; color: #374151; margin-bottom: 2mm; }
 
-    .date {
-      font-size: 9.5px;
-      color: #6b7280;
-      white-space: nowrap;
-    }
-
-    .company {
-      font-size: 10px;
-      font-weight: 500;
-      color: #2563eb;
-      margin-bottom: 3px;
-    }
-
-    .company a {
-      color: #2563eb;
-    }
-
-    .description {
-      font-size: 9.5px;
-      color: #4b5563;
-      margin-bottom: 3px;
-    }
-
-    .highlights {
-      list-style: none;
-      padding-left: 0;
-      margin-bottom: 2px;
-    }
+    .highlights { list-style: none; padding-left: 0; margin-bottom: 1mm; }
 
     .highlights li {
-      font-size: 9.5px;
+      font-size: 10pt;
       color: #374151;
-      margin-bottom: 1px;
-      line-height: 1.4;
+      margin-bottom: 1mm;
+      line-height: 1.55;
     }
 
-    .highlight-bullet {
-      color: #2563eb;
-      margin-right: 4px;
-    }
+    .highlight-bullet { color: #1d4ed8; margin-right: 4px; }
 
-    /* Project summary list within experience */
+    /* Project summary grid */
     .project-summary-list {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px 12px;
-      margin-top: 4px;
-      padding-top: 3px;
-      border-top: 1px dashed #e5e7eb;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 8mm;
+      row-gap: 1mm;
+      margin-top: 2mm;
+      padding-top: 2mm;
+      border-top: 0.6pt solid #e5e7eb;
     }
 
     .project-summary-item {
-      font-size: 8.5px;
+      font-size: 9pt;
       color: #4b5563;
       display: flex;
       justify-content: space-between;
       gap: 4px;
     }
 
-    .project-summary-name {
-      font-weight: 500;
-      color: #374151;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+    .project-summary-name { font-weight: 600; color: #374151; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .project-summary-period { color: #6b7280; white-space: nowrap; flex-shrink: 0; }
 
-    .project-summary-period {
-      color: #9ca3af;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    /* Two-column grid for side sections */
+    /* Two-column grid */
     .two-col-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px 20px;
+      grid-template-columns: 1.15fr 0.85fr;
+      column-gap: 10mm;
+      row-gap: 3mm;
+      align-items: start;
     }
 
     /* Skills */
-    .skill-group {
-      margin-bottom: 2px;
-      font-size: 9.5px;
-      line-height: 1.35;
-    }
-
-    .skill-category {
-      font-weight: 600;
-      color: #4b5563;
-    }
-
-    .skill-inline {
-      color: #374151;
-    }
+    .skill-group { margin-bottom: 2mm; font-size: 10pt; line-height: 1.5; }
+    .skill-category { font-weight: 600; color: #4b5563; }
+    .skill-inline { color: #374151; }
 
     /* Education */
-    .education-item {
-      margin-bottom: 4px;
-    }
-
-    .institution {
-      font-size: 10.5px;
-      font-weight: 600;
-      color: #111827;
-    }
-
-    .degree {
-      font-size: 9.5px;
-      color: #2563eb;
-    }
-
-    .edu-date {
-      font-size: 8.5px;
-      color: #6b7280;
-    }
+    .education-item { margin-bottom: 2.5mm; }
+    .institution { font-size: 10pt; font-weight: 600; color: #111827; }
+    .degree { font-size: 9pt; color: #1d4ed8; }
+    .edu-date { font-size: 9pt; color: #6b7280; }
 
     /* Certifications & Learning */
-    .cert-item {
-      margin-bottom: 4px;
-    }
+    .cert-item { margin-bottom: 2.5mm; }
+    .cert-name { font-size: 10pt; font-weight: 600; color: #111827; }
+    .cert-issuer { font-size: 9pt; color: #6b7280; }
 
-    .cert-name {
-      font-size: 10px;
-      font-weight: 600;
-      color: #111827;
-    }
-
-    .cert-issuer {
-      font-size: 8.5px;
-      color: #6b7280;
-    }
-
-    /* Open Source inline */
-    .opensource-inline {
-      font-size: 9.5px;
-      color: #374151;
-      line-height: 1.4;
-    }
+    /* Open Source */
+    .opensource-inline { font-size: 10pt; color: #374151; line-height: 1.5; }
 
     /* Technical Writing */
-    .tw-item {
-      margin-bottom: 3px;
-    }
+    .tw-item { margin-bottom: 2mm; }
+    .tw-title { font-size: 10pt; font-weight: 600; color: #111827; }
+    .tw-title a { color: #111827; }
+    .tw-meta { font-size: 9pt; color: #6b7280; }
 
-    .tw-title {
-      font-size: 10px;
-      font-weight: 600;
-      color: #111827;
-    }
-
-    .tw-title a {
-      color: #111827;
-    }
-
-    .tw-meta {
-      font-size: 8.5px;
-      color: #6b7280;
-    }
-
-    /* Print-specific */
-    @media print {
-      html {
-        font-size: 10px;
-      }
-
-      .resume {
-        padding: 8mm 12mm;
-      }
-
-      .no-print {
-        display: none !important;
-      }
-    }
-
-    @page {
-      margin: 0;
-      size: A4;
-    }
-
-    /* Back button for web view */
+    /* Back button (web only) */
     .back-link {
       display: block;
       text-align: center;
       padding: 16px;
       background: #f3f4f6;
-      color: #2563eb;
+      color: #1d4ed8;
       text-decoration: none;
       font-size: 14px;
     }
 
-    .back-link:hover {
-      background: #e5e7eb;
-    }
+    .back-link:hover { background: #e5e7eb; }
 
     @media print {
-      .back-link {
-        display: none;
-      }
+      html { font-size: 100%; }
+      .back-link, .no-print { display: none !important; }
     }
   </style>
 </head>

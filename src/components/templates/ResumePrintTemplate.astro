@@ -384,7 +384,7 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
                   <a href={linkUrl}>{item.title}</a>
                 ) : item.title}
               </h3>
-              <p class="tw-meta">{item.type} — {item.date}</p>
+              <p class="tw-meta">{item.type} — {item.date.replace('-', '.')}</p>
             </div>
           );
         })}

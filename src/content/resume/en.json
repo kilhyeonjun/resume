@@ -774,7 +774,7 @@
     "technicalWriting": [
       {
         "title": "Games on AWS 2025 Technical Presentation",
-        "date": "2025.10",
+        "date": "2025-10",
         "type": "Conference Talk",
         "description": "Boosting Developer Productivity with Amazon Q Developer",
         "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days",
@@ -783,13 +783,13 @@
       },
       {
         "title": "Email Delivery Monitoring through AWS SES Event Logs",
-        "date": "2024.03",
+        "date": "2024-03",
         "type": "Tech Blog",
         "url": "https://jnp.tech/posts/2024-03-aws-ses-event-log"
       },
       {
         "title": "Mailing System Email Delivery Result Tracking Feature",
-        "date": "2024.02",
+        "date": "2024-02",
         "type": "Internal Seminar"
       }
     ],

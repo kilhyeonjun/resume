@@ -193,17 +193,13 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
     .highlights li {
       font-size: 9.5px;
       color: #374151;
-      padding-left: 10px;
-      position: relative;
       margin-bottom: 1px;
       line-height: 1.4;
     }
 
-    .highlights li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
+    .highlight-bullet {
       color: #2563eb;
+      margin-right: 4px;
     }
 
     /* Project summary list within experience */
@@ -423,7 +419,7 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
             {exp.highlights && exp.highlights.length > 0 && (
               <ul class="highlights">
                 {exp.highlights.map((highlight) => (
-                  <li>{highlight}</li>
+                  <li><span class="highlight-bullet">•</span>{highlight}</li>
                 ))}
               </ul>
             )}

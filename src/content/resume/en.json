@@ -598,9 +598,9 @@
             ]
           },
           {
-            "name": "Doctor/Pharmacist Web Service Development",
+            "name": "Doctor/Pharmacist Web Service Enhancement",
             "period": "2022.04 ~ 2023.06",
-            "description": "Full-stack development of back-office systems for doctors and pharmacists",
+            "description": "Feature enhancement and maintenance of back-office systems for doctors and pharmacists",
             "details": [
               "Built doctor appointment/request system and pharmacist dispensing request system",
               "Implemented real-time consultation status updates using Socket.io",

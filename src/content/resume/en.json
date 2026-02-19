@@ -636,7 +636,7 @@
           },
           {
             "name": "Backend Architecture Migration",
-            "period": "2023.03 ~ 2023.06",
+            "period": "2023.03 ~ 2023.05",
             "description": "Migrated from Express.js single-file (app.js) structure to NestJS modular architecture",
             "details": [
               "Incrementally migrated Express.js + EJS monolith to NestJS + TypeORM",

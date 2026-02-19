@@ -641,7 +641,7 @@
             "details": [
               "Express.js + EJS 모놀리식 구조를 NestJS + TypeORM으로 단계적 전환",
               "Port and Adapter Architecture 적용으로 비즈니스 로직과 인프라 분리",
-              "TDD 도입 및 단위 테스트 커버리지 80% 달성 (약사 서버)"
+              "TDD 도입 및 단위 테스트 커버리지 80% 달성"
             ],
             "techStack": [
               "NestJS",

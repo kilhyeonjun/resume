@@ -641,7 +641,7 @@
             "details": [
               "Incrementally migrated Express.js + EJS monolith to NestJS + TypeORM",
               "Applied Port and Adapter Architecture to separate business logic from infrastructure",
-              "Introduced TDD and achieved 80% unit test coverage (pharmacist server)"
+              "Introduced TDD and achieved 80% unit test coverage"
             ],
             "techStack": [
               "NestJS",

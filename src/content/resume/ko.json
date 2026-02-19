@@ -75,9 +75,6 @@
             "name": "MySQL"
           },
           {
-            "name": "PostgreSQL"
-          },
-          {
             "name": "Redis"
           }
         ]

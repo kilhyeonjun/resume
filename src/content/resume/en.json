@@ -620,7 +620,7 @@
           },
           {
             "name": "Prescription OCR & Medication Guide System",
-            "period": "2022.10 ~ 2022.12",
+            "period": "2022.11 ~ 2022.12",
             "description": "Automated pharmacist's manual prescription entry process using OCR",
             "details": [
               "Integrated Naver Clova OCR API for automatic text extraction from prescription images",

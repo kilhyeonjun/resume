@@ -152,7 +152,7 @@
             "name": "Serverless Framework"
           },
           {
-            "name": "GH Actions"
+            "name": "GitHub Actions"
           }
         ]
       },
@@ -503,7 +503,7 @@
         "companyUrl": "https://www.rocketpunch.com/companies/baropill",
         "position": "Dev Team Backend Engineer",
         "startDate": "2022-04",
-        "endDate": "2023-06",
+        "endDate": "2023-05",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
           "Overcame maintenance limitations of Express.js single-file (app.js) structure by incrementally migrating to NestJS modular architecture with TDD, achieving 80% test coverage",
@@ -542,7 +542,7 @@
           },
           {
             "name": "Doctor/Pharmacist Web Service Enhancement",
-            "period": "2022.04 ~ 2023.06",
+            "period": "2022.04 ~ 2023.05",
             "description": "Feature enhancement and maintenance of back-office systems for doctors and pharmacists",
             "details": [
               "Built doctor appointment/request system and pharmacist dispensing request system",
@@ -725,7 +725,7 @@
     "education": [
       {
         "institution": "Inha Technical College",
-        "degree": "Bachelor's (Advanced Major Program)",
+        "degree": "Bachelor's (Advanced Major Program, Concurrent Employment)",
         "field": "Computer Information Engineering",
         "startDate": "2022-02",
         "endDate": "2023-02",
@@ -733,7 +733,7 @@
       },
       {
         "institution": "Inha Technical College",
-        "degree": "Associate",
+        "degree": "Associate (Concurrent Employment)",
         "field": "Computer Information",
         "startDate": "2017-02",
         "endDate": "2022-02",

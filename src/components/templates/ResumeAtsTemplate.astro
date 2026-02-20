@@ -248,6 +248,8 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
         <p class="skills-list">
           <span class="skill-category">{skillGroup.category}:</span>{' '}
           {skillGroup.items.map(s => s.name).join(', ')}
+          {skillGroup.description && ` — ${skillGroup.description}`}
+        </p>
         </p>
       ))}
     </section>

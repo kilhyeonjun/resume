@@ -15,6 +15,7 @@ const skillItemSchema = z.object({
 
 const skillCategorySchema = z.object({
   category: z.string(),
+  description: z.string().optional(),
   items: z.array(skillItemSchema),
 });
 

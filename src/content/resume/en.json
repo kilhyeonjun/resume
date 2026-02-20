@@ -39,6 +39,7 @@
     "skills": [
       {
         "category": "Backend",
+        "description": "REST API design, microservice architecture, test automation",
         "items": [
           {
             "name": "TypeScript"
@@ -65,6 +66,7 @@
       },
       {
         "category": "Database",
+        "description": "Large-scale data pipelines, real-time caching, multi-dimensional analytics",
         "items": [
           {
             "name": "MySQL"
@@ -79,6 +81,7 @@
       },
       {
         "category": "Cloud & Infra",
+        "description": "Serverless architecture, event-driven async processing, IaC",
         "items": [
           {
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"

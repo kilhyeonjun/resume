@@ -295,6 +295,9 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
             <div class="skill-group">
               <span class="skill-category">{skillGroup.category}:</span>{' '}
               <span class="skill-inline">{skillGroup.items.map(s => s.name).join(', ')}</span>
+              {skillGroup.description && (
+                <span class="skill-desc"> — {skillGroup.description}</span>
+              )}
             </div>
           ))}
         </section>

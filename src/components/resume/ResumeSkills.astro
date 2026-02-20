@@ -27,6 +27,9 @@ const { skills, education, certifications, awards, labels } = Astro.props;
             {skillGroup.items.map((skill, i) => (
               <><span class="skill-name">{skill.name}</span>{i < skillGroup.items.length - 1 && <span class="skill-sep">·</span>}</>
             ))}
+            {skillGroup.description && (
+              <span class="skill-desc"> — {skillGroup.description}</span>
+            )}
           </div>
         ))}
       </div>

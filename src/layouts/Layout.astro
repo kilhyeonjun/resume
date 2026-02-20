@@ -14,7 +14,8 @@ interface Props {
   lang?: 'ko' | 'en';
 }
 
-const { title, description = 'Personal Resume and Portfolio', lang = 'ko' } = Astro.props;
+const { title, description: rawDesc, lang = 'ko' } = Astro.props;
+const description = rawDesc || (lang === 'en' ? 'Personal Resume and Portfolio' : '개인 이력서 및 포트폴리오');
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const basePath = getBasePath(lang);
 
@@ -43,7 +44,9 @@ const isPortfolio = currentPath.startsWith(`${basePath}/portfolio`);
     <meta property="og:url" content={canonicalURL.toString()} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={lang === 'ko' ? 'ko_KR' : 'en_US'} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={`${Astro.site}resume/og-image.png`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={`${Astro.site}resume/og-image.png`} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 

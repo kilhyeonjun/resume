@@ -67,7 +67,7 @@
             "name": "Spring Boot"
           },
           {
-            "name": "Redis"
+            "name": "ElastiCache (Redis)"
           },
           {
             "name": "AWS CDK"
@@ -123,19 +123,13 @@
             "details": [
               "Marketing Domain DB Separation: Migrated marketing data mixed in Sheet DB to a dedicated DB, establishing service independence foundation",
               "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, and modification in a single platform",
-              "Campaign Status Change Alerts: Real-time detection of budget changes and on/off status with automated Slack notifications",
               "Creative Auto-deployment Pipeline: Integrated pipeline from creative upload to automatic registration on Google/Meta/TikTok platforms",
-              "Creative Domain Normalization: AssetDraft conversion and JSON column → individual column separation for query performance improvement",
               "NAS-S3 Dual Sync: SQS event-based server-worker separation architecture for bidirectional sync/restore between internal NAS and S3",
               "Meta Asset Sync Performance Optimization: TypeORM save() → insertBulk() conversion and deleteByCondition adoption — Image sync time reduced by 72% (25.7s→7.1s), DB transaction time reduced by 95% (10-16s→0.3-0.5s)",
               "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%",
               "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25 → $1.1 per TB)",
-              "Multi-dimensional Metrics Analysis System: Metrics integration and CRUD API across 3 axes — campaign, country/OS, and ad channel",
               "Metrics Query Performance Optimization: Index structure optimization (eliminating Full Table Scan), cursor-based pagination, and generic filtering resolving 18-second query bottleneck",
-              "GCP Pub/Sub-based Real-time Updates: Cloud Functions → AWS API Gateway → Lambda hybrid pipeline minimizing metrics reflection delay",
               "Entity Normalization: Split 100+ column single table into main/time-series/prediction 3 tables, significantly improving query cost and I/O efficiency",
-              "Budget/Cost Integrated Dashboard: Project and game-level total budget/cost aggregation with manual cost input for real-time expenditure tracking",
-              "Payment Metrics Expansion: Added paying user count, purchase count, and ARPU metrics at country/OS level for multi-dimensional payment performance analysis",
               "Retention Metrics Integration: Consistently applied retention metrics across the full pipeline from BigQuery ingestion to entity, API, and field metadata for user retention analysis"
             ],
             "techStack": [
@@ -285,7 +279,7 @@
         "position": "Dev2 Team Docs Squad Backend Engineer",
         "startDate": "2023-06",
         "endDate": "2024-08",
-        "description": "Clinical trial data management solution startup with KRW 16B (~$12M) cumulative investment",
+        "description": "Clinical trial data management solution startup with KRW 16B cumulative investment",
         "highlights": [
           "Identified root cause of recurring DB Deadlocks in clinical trial e-signature notifications by analyzing foreign key shared-to-exclusive lock timing, completely resolving the issue",
           "Expanded user-organization structure from 1:1 to 1:N with backward compatibility to overcome multi-organization management limitations, contributing to major hospital and pharmaceutical contracts",

@@ -67,7 +67,7 @@
             "name": "Spring Boot"
           },
           {
-            "name": "Redis"
+            "name": "ElastiCache (Redis)"
           },
           {
             "name": "AWS CDK"
@@ -123,19 +123,13 @@
             "details": [
               "마케팅 도메인 DB 분리: Sheet DB에 혼재된 마케팅 데이터를 전용 DB로 마이그레이션하여 서비스 독립 기반 확보",
               "통합 캠페인 자동화: Google Ads/Meta/TikTok 캠페인 생성·배포·수정을 단일 플랫폼에서 관리하는 API 구축",
-              "캠페인 상태 변경 알림: 예산 변경/On-Off 상태를 실시간 감지하여 Slack 자동 알림",
               "소재 자동 배포 파이프라인: 소재 업로드부터 Google/Meta/TikTok 플랫폼 자동 등록까지 통합 파이프라인 구축",
-              "소재 도메인 정규화: AssetDraft 전환 및 JSON 컬럼 → 개별 컬럼 분리로 쿼리 성능 향상",
               "NAS-S3 이중화 동기화: SQS 이벤트 기반 서버-워커 분리 아키텍처로 사내 NAS와 S3 간 양방향 동기화/복원 구현",
               "Meta 에셋 동기화 성능 최적화: TypeORM save() → insertBulk() 전환, deleteByCondition 적용으로 Image 동기화 시간 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)",
               "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감",
               "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 BigQuery 비용 82% 절감 (TB당 $6.25 → $1.1)",
-              "다차원 지표 분석 시스템: 캠페인/국가·OS/광고 매체별 3개 축의 지표 연동 및 CRUD API 구축",
               "지표 조회 성능 최적화: 인덱스 구조 최적화(Full Table Scan 제거), 커서 기반 페이지네이션, 범용 필터링으로 18초 쿼리 병목 해결",
-              "GCP Pub/Sub 기반 실시간 업데이트: Cloud Functions → AWS API Gateway → Lambda 하이브리드 파이프라인으로 지표 반영 지연 최소화",
               "엔티티 정규화: 100+ 컬럼 단일 테이블을 메인/시계열/예측 3개 테이블로 분리하여 쿼리 비용과 I/O 효율 대폭 개선",
-              "예산/비용 통합 대시보드: 프로젝트·게임별 총 예산/비용 집계와 수동 비용 입력으로 집행 현황 실시간 파악",
-              "결제 성과 분석 확대: 국가/OS 레벨에 결제 유저수·결제 횟수·ARPU 지표를 추가하여 다차원 결제 성과 분석 체계 구축",
               "리텐션 지표 통합: BigQuery 수집부터 엔티티·API·필드 메타데이터까지 전 구간에 retention 지표를 일관 반영하여 유저 잔존율 분석 지원"
             ],
             "techStack": [

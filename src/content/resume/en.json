@@ -5,11 +5,11 @@
       "title": "Backend Engineer",
       "email": "kboxstar@gmail.com",
       "location": "Seoul, South Korea",
-      "linkedin": "https://linkedin.com/in/kilhyeonjun",
+      "linkedin": "https://www.linkedin.com/in/kilhyeonjun",
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package ecosystem.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
+    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package ecosystem.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, maximizing productivity through AI-native development with generative AI, and creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
     "coreCompetencies": [
       {
         "category": "Performance Optimization & Cost Efficiency",
@@ -795,6 +795,24 @@
     ],
     "openSource": [
       {
+        "name": "kiro-gateway: Remove :ro from Docker SQLite volume mount",
+        "date": "2026-02",
+        "url": "https://github.com/jwadow/kiro-gateway/pull/79",
+        "status": "Open"
+      },
+      {
+        "name": "CodexBar: Support kiro-cli 1.24+ Q Developer format",
+        "date": "2026-02",
+        "url": "https://github.com/steipete/CodexBar/pull/288",
+        "status": "Merged"
+      },
+      {
+        "name": "oh-my-opencode: Integrate plugin skills into unified skill discovery",
+        "date": "2026-01",
+        "url": "https://github.com/code-yeongyu/oh-my-opencode/pull/974",
+        "status": "Open"
+      },
+      {
         "name": "atlassian-skills: Use ADF format for comments in Jira Cloud API v3",
         "date": "2026-01",
         "url": "https://github.com/langpingxue/atlassian-skills/pull/7",
@@ -822,7 +840,7 @@
         "name": "SuperClaude_Plugin: Correct marketplace name in documentation",
         "date": "2025-12",
         "url": "https://github.com/SuperClaude-Org/SuperClaude_Plugin/pull/18",
-        "status": "Open"
+        "status": "Merged"
       },
       {
         "name": "cyan: framework \"NOT IN\" query condition addition",

@@ -5,11 +5,11 @@
       "title": "Backend Engineer",
       "email": "kboxstar@gmail.com",
       "location": "서울, 대한민국",
-      "linkedin": "https://linkedin.com/in/kilhyeonjun",
+      "linkedin": "https://www.linkedin.com/in/kilhyeonjun",
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 20개 이상의 프로젝트를 주도하며 BigQuery 비용 82% 절감, CDK 기반 분석 인프라 코드화, 사내 NPM 패키지 생태계 구축 등 정량적 성과를 달성한 백엔드 엔지니어입니다.\n\n모놀리식에서 Event-Driven 서버리스까지 시스템 설계 전문성을 보유하며, GCP-AWS 하이브리드 데이터 파이프라인 구축과 근본 원인 분석으로 장기적 비즈니스 가치를 창출합니다.",
+    "summary": "{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 20개 이상의 프로젝트를 주도하며 BigQuery 비용 82% 절감, CDK 기반 분석 인프라 코드화, 사내 NPM 패키지 생태계 구축 등 정량적 성과를 달성한 백엔드 엔지니어입니다.\n\n모놀리식에서 Event-Driven 서버리스까지 시스템 설계 전문성을 보유하며, 생성형 AI를 활용한 AI 네이티브 개발로 생산성을 극대화하고, GCP-AWS 하이브리드 데이터 파이프라인 구축과 근본 원인 분석으로 장기적 비즈니스 가치를 창출합니다.",
     "coreCompetencies": [
       {
         "category": "성능 최적화 & 비용 효율성",
@@ -795,6 +795,24 @@
     ],
     "openSource": [
       {
+        "name": "kiro-gateway: Docker SQLite 볼륨 마운트 :ro 제거",
+        "date": "2026-02",
+        "url": "https://github.com/jwadow/kiro-gateway/pull/79",
+        "status": "Open"
+      },
+      {
+        "name": "CodexBar: kiro-cli 1.24+ Q Developer 포맷 지원",
+        "date": "2026-02",
+        "url": "https://github.com/steipete/CodexBar/pull/288",
+        "status": "Merged"
+      },
+      {
+        "name": "oh-my-opencode: 플러그인 스킬 통합 디스커버리",
+        "date": "2026-01",
+        "url": "https://github.com/code-yeongyu/oh-my-opencode/pull/974",
+        "status": "Open"
+      },
+      {
         "name": "atlassian-skills: Jira Cloud API v3 코멘트 ADF 포맷 적용",
         "date": "2026-01",
         "url": "https://github.com/langpingxue/atlassian-skills/pull/7",
@@ -822,7 +840,7 @@
         "name": "SuperClaude_Plugin: 마켓플레이스 이름 문서 수정",
         "date": "2025-12",
         "url": "https://github.com/SuperClaude-Org/SuperClaude_Plugin/pull/18",
-        "status": "Open"
+        "status": "Merged"
       },
       {
         "name": "cyan: 프레임워크 \"NOT IN\" 쿼리 조건 추가",

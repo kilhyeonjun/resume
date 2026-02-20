@@ -166,6 +166,16 @@ Custom variant defined in `global.css`: `@custom-variant dark (&:where(.dark, .d
 | `scripts/generate-pdf.ts` | PDF generation config and Puppeteer orchestration |
 | `.github/workflows/deploy.yml` | CI/CD: build + deploy to GitHub Pages |
 
+## Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `verify-implementation` | 모든 verify 스킬 순차 실행 → 통합 검증 보고서 생성 |
+| `manage-skills` | 세션 변경사항 분석 → verify 스킬 생성/업데이트/AGENTS.md 관리 |
+| `resume-review` | 이력서 콘텐츠/구조 검증 |
+| `verify-content` | 이력서 콘텐츠 데이터(ko/en JSON)와 Zod 스키마 정합성 검증 |
+| `verify-astro-components` | Astro 컴포넌트/페이지 코드 규칙 준수 검증 |
+
 ## Gotchas
 
 - **Base path**: Site is served under `/resume/` — use `import.meta.env.BASE_URL` for all internal links

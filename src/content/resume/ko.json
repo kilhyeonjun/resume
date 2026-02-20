@@ -81,7 +81,7 @@
         "category": "Cloud & Infra",
         "items": [
           {
-            "name": "AWS (Lambda, S3, SQS/SNS, CDK)"
+            "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
           },
           {
             "name": "Docker"

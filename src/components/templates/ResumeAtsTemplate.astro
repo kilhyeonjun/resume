@@ -210,7 +210,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
             <h3>
               <span class="company">{exp.company}</span> — <span class="position">{exp.position}</span>
             </h3>
-            <p class="date">{exp.startDate} - {exp.current ? labels.current : exp.endDate}</p>
+            <p class="date">{exp.startDate.replace('-', '.')} - {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</p>
           </div>
           {exp.description && <p>{exp.description}</p>}
           {exp.highlights && exp.highlights.length > 0 && (
@@ -266,7 +266,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
             {edu.field && <span>, {edu.field}</span>}
           </p>
           <p class="date">
-            {edu.startDate} - {edu.endDate}
+            {edu.startDate.replace('-', '.')} - {edu.endDate.replace('-', '.')}
             {edu.gpa && <span> | GPA: {edu.gpa}</span>}
           </p>
         </div>
@@ -279,7 +279,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       <h2>{labels.certifications.toUpperCase()}</h2>
       {data.certifications.map((cert) => (
         <p>
-          <strong>{cert.name}</strong> — {cert.issuer}, {cert.date}
+          <strong>{cert.name}</strong> — {cert.issuer}, {cert.date.replace('-', '.')}
         </p>
       ))}
     </section>
@@ -290,7 +290,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       <h2>{labels.awards.toUpperCase()}</h2>
       {data.awards.map((award) => (
         <p>
-          <strong>{award.name}</strong>{award.description && ` — ${award.description}`}, {award.date}
+          <strong>{award.name}</strong>{award.description && ` — ${award.description}`}, {award.date.replace('-', '.')}
         </p>
       ))}
     </section>
@@ -317,7 +317,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
   {data.technicalWriting && data.technicalWriting.length > 0 && (
     <section>
       <h2>{labels.technicalWriting.toUpperCase()}</h2>
-      <p>{data.technicalWriting.map((item) => `${item.title} (${item.type}, ${item.date})`).join(' | ')}</p>
+      <p>{data.technicalWriting.map((item) => `${item.title} (${item.type}, ${item.date.replace('-', '.')})`).join(' | ')}</p>
     </section>
   )}
 

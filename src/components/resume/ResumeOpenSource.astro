@@ -1,16 +1,17 @@
 ---
 import GitHubIcon from '../icons/GitHubIcon.astro';
+import type { OpenSource } from '../../content.config';
 
 interface Props {
-  openSource: any[];
+  openSource: OpenSource[];
   label: string;
 }
 
 const { openSource, label } = Astro.props;
 
 // Group by repo name
-const grouped: Record<string, any[]> = {};
-openSource.forEach((item: any) => {
+const grouped: Record<string, OpenSource[]> = {};
+openSource.forEach((item) => {
   const colonIdx = item.name.indexOf(':');
   const repo = colonIdx > -1 ? item.name.substring(0, colonIdx).trim() : item.name;
   if (!grouped[repo]) grouped[repo] = [];
@@ -32,7 +33,7 @@ openSource.forEach((item: any) => {
                 href={repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+                class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
                 aria-label={repo + ' GitHub'}
               >
                 <GitHubIcon class="h-4 w-4" />
@@ -40,7 +41,7 @@ openSource.forEach((item: any) => {
             )}
           </h3>
           <ul class="mt-1 ml-4 space-y-1">
-            {items.map((item: any) => {
+            {items.map((item) => {
               const colonIdx = item.name.indexOf(':');
               const desc = colonIdx > -1 ? item.name.substring(colonIdx + 1).trim() : item.name;
               return (
@@ -56,7 +57,7 @@ openSource.forEach((item: any) => {
                       {desc}
                     </a>
                   ) : desc}
-                  <span class="text-gray-400 dark:text-gray-400 whitespace-nowrap">({item.date})</span>
+                  <span class="text-gray-400 dark:text-gray-300 whitespace-nowrap">({item.date})</span>
                 </li>
               );
             })}

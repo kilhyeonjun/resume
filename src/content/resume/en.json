@@ -41,16 +41,16 @@
         "category": "Backend",
         "items": [
           {
-            "name": "Java"
-          },
-          {
             "name": "TypeScript"
           },
           {
-            "name": "Spring Boot"
+            "name": "NestJS"
           },
           {
-            "name": "NestJS"
+            "name": "Java"
+          },
+          {
+            "name": "Spring Boot"
           },
           {
             "name": "Express.js"

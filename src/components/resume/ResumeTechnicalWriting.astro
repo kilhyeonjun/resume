@@ -1,0 +1,78 @@
+---
+import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
+import YouTubeIcon from '../icons/YouTubeIcon.astro';
+import BlogIcon from '../icons/BlogIcon.astro';
+import type { TechnicalWriting } from '../../content.config';
+
+interface Props {
+  technicalWriting: TechnicalWriting[];
+  label: string;
+}
+
+const { technicalWriting, label } = Astro.props;
+---
+
+{technicalWriting && technicalWriting.length > 0 && (
+  <section>
+    <h2 class="section-title">{label}</h2>
+    <div class="mt-6 space-y-4">
+      {technicalWriting.map((item) => (
+        <div class="flex items-start gap-3">
+          <div class="flex-1">
+            <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-1.5">
+              {item.title}
+              {item.url && (
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+                  aria-label={item.title + ' 링크'}
+                >
+                  {item.url.includes('youtube.com') || item.url.includes('youtu.be') ? (
+                    <YouTubeIcon class="h-4 w-4" />
+                  ) : item.url.includes('jnp.tech') || item.url.includes('blog') || item.url.includes('tistory') || item.url.includes('github.io') ? (
+                    <BlogIcon class="h-4 w-4" />
+                  ) : (
+                    <ExternalLinkIcon class="h-4 w-4" />
+                  )}
+                </a>
+              )}
+              {item.videoUrl && (
+                <a
+                  href={item.videoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+                  aria-label={item.title + ' 영상'}
+                >
+                  <YouTubeIcon class="h-4 w-4" />
+                </a>
+              )}
+              {item.reviewUrl && (
+                <a
+                  href={item.reviewUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+                  aria-label={item.title + ' 후기'}
+                >
+                  <ExternalLinkIcon class="h-4 w-4" />
+                </a>
+              )}
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300">
+              {item.type} — {item.date}
+            </p>
+            {item.description && (
+              <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{item.description}</p>
+            )}
+            {item.achievement && (
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-300">{item.achievement}</p>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+)}

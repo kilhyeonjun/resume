@@ -1,0 +1,68 @@
+---
+import GitHubIcon from '../icons/GitHubIcon.astro';
+
+interface Props {
+  openSource: any[];
+  label: string;
+}
+
+const { openSource, label } = Astro.props;
+
+// Group by repo name
+const grouped: Record<string, any[]> = {};
+openSource.forEach((item: any) => {
+  const colonIdx = item.name.indexOf(':');
+  const repo = colonIdx > -1 ? item.name.substring(0, colonIdx).trim() : item.name;
+  if (!grouped[repo]) grouped[repo] = [];
+  grouped[repo].push(item);
+});
+---
+
+<section class="mt-8">
+  <h2 class="section-title">{label}</h2>
+  <div class="mt-6 space-y-5">
+    {Object.entries(grouped).map(([repo, items]) => {
+      const repoUrl = items[0].url ? items[0].url.split('/pull/')[0].split('/issues/')[0] : '';
+      return (
+        <div>
+          <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-1.5">
+            {repo}
+            {repoUrl && (
+              <a
+                href={repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+                aria-label={repo + ' GitHub'}
+              >
+                <GitHubIcon class="h-4 w-4" />
+              </a>
+            )}
+          </h3>
+          <ul class="mt-1 ml-4 space-y-1">
+            {items.map((item: any) => {
+              const colonIdx = item.name.indexOf(':');
+              const desc = colonIdx > -1 ? item.name.substring(colonIdx + 1).trim() : item.name;
+              return (
+                <li class="text-sm text-gray-600 dark:text-gray-300 flex items-start gap-1.5">
+                  <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gray-400 dark:bg-gray-500" />
+                  {item.url ? (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hover:text-primary-600 dark:hover:text-primary-400"
+                    >
+                      {desc}
+                    </a>
+                  ) : desc}
+                  <span class="text-gray-400 dark:text-gray-400 whitespace-nowrap">({item.date})</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    })}
+  </div>
+</section>

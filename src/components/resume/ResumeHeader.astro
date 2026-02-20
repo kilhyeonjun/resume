@@ -1,0 +1,84 @@
+---
+import EmailIcon from '../icons/EmailIcon.astro';
+import LocationIcon from '../icons/LocationIcon.astro';
+import GitHubIcon from '../icons/GitHubIcon.astro';
+import LinkedInIcon from '../icons/LinkedInIcon.astro';
+import WebsiteIcon from '../icons/WebsiteIcon.astro';
+
+interface Props {
+  data: {
+    name: string;
+    title: string;
+    email?: string;
+    location?: string;
+    github?: string;
+    linkedin?: string;
+    blog?: string;
+  };
+}
+
+const { data } = Astro.props;
+---
+
+<header class="resume-header mb-10 text-center">
+  <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-3xl md:text-4xl lg:text-5xl">
+    {data.name}
+  </h1>
+  <p class="mt-3 text-2xl font-medium text-primary-600 dark:text-primary-400">
+    {data.title}
+  </p>
+  
+  <!-- Contact Info -->
+  <div class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-600 dark:text-gray-300">
+    {data.email && (
+      <a href={`mailto:${data.email}`} class="flex items-center gap-1.5 transition-colors hover:text-primary-600 dark:hover:text-primary-400">
+        <EmailIcon class="h-4 w-4" />
+        {data.email}
+      </a>
+    )}
+
+    {data.location && (
+      <span class="flex items-center gap-1.5">
+        <LocationIcon class="h-4 w-4" />
+        {data.location}
+      </span>
+    )}
+  </div>
+  
+  <!-- Social Links -->
+  <div class="no-print mt-5 flex justify-center gap-4">
+     {data.github && (
+       <a
+         href={data.github}
+         target="_blank"
+         rel="noopener noreferrer"
+          class="rounded-full bg-gray-100 p-3 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+          aria-label="GitHub"
+       >
+         <GitHubIcon class="h-5 w-5" />
+       </a>
+     )}
+     {data.linkedin && (
+       <a
+         href={data.linkedin}
+         target="_blank"
+         rel="noopener noreferrer"
+          class="rounded-full bg-gray-100 p-3 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+          aria-label="LinkedIn"
+       >
+         <LinkedInIcon class="h-5 w-5" />
+       </a>
+     )}
+     {data.blog && (
+       <a
+         href={data.blog}
+         target="_blank"
+         rel="noopener noreferrer"
+          class="rounded-full bg-gray-100 p-3 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+          aria-label="Blog"
+       >
+         <WebsiteIcon class="h-5 w-5" />
+       </a>
+     )}
+  </div>
+</header>

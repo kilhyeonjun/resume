@@ -1,22 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
-import EmailIcon from '../icons/EmailIcon.astro';
-import LocationIcon from '../icons/LocationIcon.astro';
-import GitHubIcon from '../icons/GitHubIcon.astro';
-import LinkedInIcon from '../icons/LinkedInIcon.astro';
-import WebsiteIcon from '../icons/WebsiteIcon.astro';
-import CheckIcon from '../icons/CheckIcon.astro';
-import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
-import CertificateIcon from '../icons/CertificateIcon.astro';
-import TrophyIcon from '../icons/TrophyIcon.astro';
-import PrintIcon from '../icons/PrintIcon.astro';
-import DocumentIcon from '../icons/DocumentIcon.astro';
-import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
-import YouTubeIcon from '../icons/YouTubeIcon.astro';
-import BlogIcon from '../icons/BlogIcon.astro';
 import { getBasePath } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
+
+import ResumeHeader from '../resume/ResumeHeader.astro';
+import ResumeSummary from '../resume/ResumeSummary.astro';
+import ResumeExperience from '../resume/ResumeExperience.astro';
+import ResumeCoreCompetencies from '../resume/ResumeCoreCompetencies.astro';
+import ResumeSkills from '../resume/ResumeSkills.astro';
+import ResumeTechnicalWriting from '../resume/ResumeTechnicalWriting.astro';
+import ResumeOpenSource from '../resume/ResumeOpenSource.astro';
+import ResumeLearning from '../resume/ResumeLearning.astro';
+import ResumeFooterActions from '../resume/ResumeFooterActions.astro';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -54,450 +50,45 @@ const jsonLd = {
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <article class="resume-container mx-auto max-w-4xl px-4 py-8">
     <!-- Header Section -->
-    <header class="resume-header mb-10 text-center">
-      <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-3xl md:text-4xl lg:text-5xl">
-        {data.name}
-      </h1>
-      <p class="mt-3 text-2xl font-medium text-primary-600 dark:text-primary-400">
-        {data.title}
-      </p>
-      
-      <!-- Contact Info -->
-      <div class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-600 dark:text-gray-300">
-        {data.email && (
-          <a href={`mailto:${data.email}`} class="flex items-center gap-1.5 transition-colors hover:text-primary-600 dark:hover:text-primary-400">
-            <EmailIcon class="h-4 w-4" />
-            {data.email}
-          </a>
-        )}
-
-        {data.location && (
-          <span class="flex items-center gap-1.5">
-            <LocationIcon class="h-4 w-4" />
-            {data.location}
-          </span>
-        )}
-      </div>
-      
-      <!-- Social Links -->
-      <div class="no-print mt-5 flex justify-center gap-4">
-         {data.github && (
-           <a
-             href={data.github}
-             target="_blank"
-             rel="noopener noreferrer"
-              class="rounded-full bg-gray-100 p-3 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-              aria-label="GitHub"
-           >
-             <GitHubIcon class="h-5 w-5" />
-           </a>
-         )}
-         {data.linkedin && (
-           <a
-             href={data.linkedin}
-             target="_blank"
-             rel="noopener noreferrer"
-              class="rounded-full bg-gray-100 p-3 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-              aria-label="LinkedIn"
-           >
-             <LinkedInIcon class="h-5 w-5" />
-           </a>
-         )}
-         {data.blog && (
-           <a
-             href={data.blog}
-             target="_blank"
-             rel="noopener noreferrer"
-              class="rounded-full bg-gray-100 p-3 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-              aria-label="Blog"
-           >
-             <WebsiteIcon class="h-5 w-5" />
-           </a>
-         )}
-      </div>
-    </header>
+    <ResumeHeader data={data} />
 
     <!-- Divider -->
     <div class="mx-auto mb-10 h-px w-24 bg-gradient-to-r from-transparent via-primary-500 to-transparent"></div>
 
     <!-- Summary -->
-    {data.summary && (
-      <section class="mb-10">
-        <h2 class="section-title">{labels.summary}</h2>
-        <p class="mt-4 text-lg leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line">
-          {data.summary}
-        </p>
-      </section>
-    )}
+    <ResumeSummary summary={data.summary} label={labels.summary} />
 
     <!-- Experience -->
-    {data.experience && data.experience.length > 0 && (
-      <section class="mb-10">
-        <h2 class="section-title">{labels.experience}</h2>
-        <div class="mt-6 space-y-8">
-          {data.experience.map((exp) => (
-            <div class="experience-item relative pl-6 before:absolute before:left-0 before:top-2 before:h-2.5 before:w-2.5 before:rounded-full before:bg-primary-500">
-              <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-                <div>
-                  <h3 class="text-xl font-bold text-gray-900 dark:text-white">
-                    {exp.position}
-                  </h3>
-                  <p class="text-lg font-medium text-primary-600 dark:text-primary-400">{exp.company}</p>
-                </div>
-                <p class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-300 sm:mt-0">
-                  {exp.startDate} — {exp.current ? labels.current : exp.endDate}
-                </p>
-              </div>
-              {exp.description && (
-                <p class="mt-2 text-gray-600 dark:text-gray-300">{exp.description}</p>
-              )}
-              {exp.highlights && exp.highlights.length > 0 && (
-                <ul class="mt-3 space-y-1.5">
-                   {exp.highlights.map((highlight) => (
-                     <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
-                       <CheckIcon class="mt-1.5 h-4 w-4 flex-shrink-0 text-primary-500" />
-                       <span>{highlight}</span>
-                     </li>
-                   ))}
-                </ul>
-              )}
-               <a 
-                 href={`${basePath}/experience/${exp.slug}`}
-                 class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
-               >
-                 {labels.viewDetails}
-                 <ArrowRightIcon class="h-4 w-4" />
-               </a>
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
+    <ResumeExperience experience={data.experience} labels={labels} basePath={basePath} />
 
     <!-- Core Competencies -->
-    {data.coreCompetencies && data.coreCompetencies.length > 0 && (
-      <section class="mb-10">
-        <h2 class="section-title">{labels.coreCompetencies}</h2>
-        <div class="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {data.coreCompetencies.map((comp) => (
-            <div>
-              <h3 class="mb-3 text-sm font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">
-                {comp.category}
-              </h3>
-              <ul class="space-y-2">
-                {comp.items.map((item) => (
-                  <li class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-                    <CheckIcon class="mt-1 h-3.5 w-3.5 flex-shrink-0 text-primary-500" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
+    <ResumeCoreCompetencies coreCompetencies={data.coreCompetencies} label={labels.coreCompetencies} />
 
-    <!-- Two Column Layout for Skills & Education -->
-    <div class="mb-10 grid gap-10 md:grid-cols-2">
-      <!-- Skills -->
-      {data.skills && data.skills.length > 0 && (
-        <section>
-          <h2 class="section-title">{labels.skills}</h2>
-          <div class="mt-6 space-y-2">
-            {data.skills.map((skillGroup) => (
-              <div class="skill-row">
-                <span class="skill-category">{skillGroup.category}:</span>
-                {skillGroup.items.map((skill, i) => (
-                  <><span class="skill-name">{skill.name}</span>{i < skillGroup.items.length - 1 && <span class="skill-sep">·</span>}</>
-                ))}
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <!-- Education -->
-      {data.education && data.education.length > 0 && (
-        <section>
-          <h2 class="section-title">{labels.education}</h2>
-          <div class="mt-6 space-y-6">
-            {data.education.map((edu) => (
-              <div class="education-item relative pl-6 before:absolute before:left-0 before:top-2 before:h-2.5 before:w-2.5 before:rounded-full before:bg-primary-500">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white">
-                  {edu.institution}
-                </h3>
-                <p class="text-primary-600 dark:text-primary-400">
-                  {edu.degree} {edu.field && `• ${edu.field}`}
-                </p>
-                <p class="text-sm text-gray-500 dark:text-gray-300">
-                  {edu.startDate} — {edu.endDate}
-                  {edu.gpa && <span class="ml-2">GPA: {edu.gpa}</span>}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-    </div>
-
-    <!-- Certifications & Awards (2-column) -->
-    <div class="mb-10 grid gap-10 md:grid-cols-2">
-      {data.certifications && data.certifications.length > 0 && (
-        <section>
-          <h2 class="section-title">{labels.certifications}</h2>
-          <div class="mt-6 space-y-4">
-            {data.certifications.map((cert) => (
-              <div class="flex items-start gap-3">
-                <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30">
-                  <CertificateIcon class="h-5 w-5 text-primary-600 dark:text-primary-400" />
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-gray-900 dark:text-white">
-                    {cert.url ? (
-                      <a
-                        href={cert.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="hover:text-primary-600 dark:hover:text-primary-400"
-                      >
-                        {cert.name}
-                      </a>
-                    ) : (
-                      cert.name
-                    )}
-                  </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-300">
-                    {cert.issuer} • {cert.date}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {data.awards && data.awards.length > 0 && (
-        <section>
-          <h2 class="section-title">{labels.awards}</h2>
-          <div class="mt-6 space-y-4">
-            {data.awards.map((award) => (
-              <div class="flex items-start gap-3">
-                <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/30">
-                  <TrophyIcon class="h-5 w-5 text-amber-600 dark:text-amber-400" />
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-gray-900 dark:text-white">{award.name}</h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-300">
-                    {award.date}
-                    {award.description && ` — ${award.description}`}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-    </div>
+    <!-- Skills, Education, Certifications, Awards -->
+    <ResumeSkills
+      skills={data.skills}
+      education={data.education}
+      certifications={data.certifications}
+      awards={data.awards}
+      labels={labels}
+    />
 
     <!-- Activities: Technical Writing + Open Source (left) | Continuous Learning (right) -->
     <div class="mb-10 grid gap-10 md:grid-cols-2">
-    <!-- Left column: Technical Writing + Open Source -->
-    <div>
-    <!-- Technical Writing -->
-    {data.technicalWriting && data.technicalWriting.length > 0 && (
-      <section>
-        <h2 class="section-title">{labels.technicalWriting}</h2>
-        <div class="mt-6 space-y-4">
-          {data.technicalWriting.map((item) => (
-            <div class="flex items-start gap-3">
-              <div class="flex-1">
-                <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-1.5">
-                  {item.title}
-                  {item.url && (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
-                      aria-label={`${item.title} 링크`}
-                    >
-                      {item.url.includes('youtube.com') || item.url.includes('youtu.be') ? (
-                        <YouTubeIcon class="h-4 w-4" />
-                      ) : item.url.includes('jnp.tech') || item.url.includes('blog') || item.url.includes('tistory') || item.url.includes('github.io') ? (
-                        <BlogIcon class="h-4 w-4" />
-                      ) : (
-                        <ExternalLinkIcon class="h-4 w-4" />
-                      )}
-                    </a>
-                  )}
-                  {item.videoUrl && (
-                    <a
-                      href={item.videoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
-                      aria-label={`${item.title} 영상`}
-                    >
-                      <YouTubeIcon class="h-4 w-4" />
-                    </a>
-                  )}
-                  {item.reviewUrl && (
-                    <a
-                      href={item.reviewUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
-                      aria-label={`${item.title} 후기`}
-                    >
-                      <ExternalLinkIcon class="h-4 w-4" />
-                    </a>
-                  )}
-                </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300">
-                  {item.type} — {item.date}
-                </p>
-                {item.description && (
-                  <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{item.description}</p>
-                )}
-                {item.achievement && (
-                  <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-300">{item.achievement}</p>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
+      <!-- Left column: Technical Writing + Open Source -->
+      <div>
+        <ResumeTechnicalWriting technicalWriting={data.technicalWriting} label={labels.technicalWriting} />
+        <ResumeOpenSource openSource={data.openSource} label={labels.openSource} />
+      </div>
 
-    <!-- Open Source (same column as Technical Writing) -->
-    {data.openSource && data.openSource.length > 0 && (() => {
-      // Group by repo name (text before colon)
-      const grouped = {} as any;
-      data.openSource.forEach((item: any) => {
-        const colonIdx = item.name.indexOf(':');
-        const repo = colonIdx > -1 ? item.name.substring(0, colonIdx).trim() : item.name;
-        if (!grouped[repo]) grouped[repo] = [];
-        grouped[repo].push(item);
-      });
-      return (
-        <section class="mt-8">
-          <h2 class="section-title">{labels.openSource}</h2>
-          <div class="mt-6 space-y-5">
-            {Object.entries(grouped).map(([repo, items]) => {
-              const repoUrl = items[0].url ? items[0].url.split('/pull/')[0].split('/issues/')[0] : '';
-              return (
-                <div>
-                  <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-1.5">
-                    {repo}
-                    {repoUrl && (
-                      <a
-                        href={repoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
-                        aria-label={`${repo} GitHub`}
-                      >
-                        <GitHubIcon class="h-4 w-4" />
-                      </a>
-                    )}
-                  </h3>
-                  <ul class="mt-1 ml-4 space-y-1">
-                    {items.map((item) => {
-                      const colonIdx = item.name.indexOf(':');
-                      const desc = colonIdx > -1 ? item.name.substring(colonIdx + 1).trim() : item.name;
-                      return (
-                        <li class="text-sm text-gray-600 dark:text-gray-300 flex items-start gap-1.5">
-                          <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gray-400 dark:bg-gray-500" />
-                          {item.url ? (
-                            <a
-                              href={item.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              class="hover:text-primary-600 dark:hover:text-primary-400"
-                            >
-                              {desc}
-                            </a>
-                          ) : desc}
-                          <span class="text-gray-400 dark:text-gray-400 whitespace-nowrap">({item.date})</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      );
-    })()}
-    </div>
-
-    <!-- Continuous Learning (right column) -->
-    <div>
-    {data.continuousLearning && data.continuousLearning.length > 0 && (
-      <section>
-        <h2 class="section-title">{labels.continuousLearning}</h2>
-        <div class="mt-6 space-y-4">
-          {data.continuousLearning.map((item) => (
-            <div class="flex items-start gap-3">
-              <div class="flex-1">
-                <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-1.5">
-                  {item.name}
-                  {item.url && (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex text-gray-400 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
-                      aria-label={`${item.name} 링크`}
-                    >
-                      {item.url.includes('youtube.com') || item.url.includes('youtu.be') ? (
-                        <YouTubeIcon class="h-4 w-4" />
-                      ) : item.url.includes('github.com') ? (
-                        <GitHubIcon class="h-4 w-4" />
-                      ) : (
-                        <ExternalLinkIcon class="h-4 w-4" />
-                      )}
-                    </a>
-                  )}
-                </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300">
-                  {item.period} — {item.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
-    </div>
+      <!-- Continuous Learning (right column) -->
+      <div>
+        <ResumeLearning continuousLearning={data.continuousLearning} label={labels.continuousLearning} />
+      </div>
     </div>
 
     <!-- Print Buttons -->
-    <div class="no-print mt-12 flex flex-wrap justify-center gap-4 border-t border-gray-200 pt-8 dark:border-gray-700">
-       <button
-         onclick="window.print()"
-         class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-6 py-3 font-medium text-white transition-colors hover:bg-primary-700"
-       >
-         <PrintIcon class="h-5 w-5" />
-         {labels.print}
-       </button>
-       <a
-         href={`${basePath}/resume-print`}
-         class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-       >
-         <DocumentIcon class="h-5 w-5" />
-         {labels.pdfVersion}
-       </a>
-       <a
-         href={`${basePath}/resume-ats`}
-         class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-       >
-         <DocumentIcon class="h-5 w-5" />
-         {labels.atsOptimized}
-       </a>
-    </div>
+    <ResumeFooterActions labels={labels} basePath={basePath} />
   </article>
 </Layout>
 

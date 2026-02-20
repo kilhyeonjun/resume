@@ -1,0 +1,34 @@
+---
+import CheckIcon from '../icons/CheckIcon.astro';
+import type { CoreCompetency } from '../../content.config';
+
+interface Props {
+  coreCompetencies: CoreCompetency[];
+  label: string;
+}
+
+const { coreCompetencies, label } = Astro.props;
+---
+
+{coreCompetencies && coreCompetencies.length > 0 && (
+  <section class="mb-10">
+    <h2 class="section-title">{label}</h2>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+      {coreCompetencies.map((comp) => (
+        <div>
+          <h3 class="mb-3 text-sm font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">
+            {comp.category}
+          </h3>
+          <ul class="space-y-2">
+            {comp.items.map((item) => (
+              <li class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                <CheckIcon class="mt-1 h-3.5 w-3.5 flex-shrink-0 text-primary-500" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+)}

@@ -109,9 +109,9 @@ const isPortfolio = currentPath.startsWith(`${basePath}/portfolio`);
           </a>
           <span class="mx-1 h-4 w-px bg-gray-300 dark:bg-gray-600" aria-hidden="true"></span>
           {lang === 'ko' ? (
-            <a href={`${import.meta.env.BASE_URL}/en`} class="rounded-md px-2 py-1 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" aria-label="Switch to English">EN</a>
+            <a href={`${import.meta.env.BASE_URL}/en`} class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" aria-label="Switch to English">EN</a>
           ) : (
-            <a href={import.meta.env.BASE_URL} class="rounded-md px-2 py-1 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" aria-label="한국어로 전환">한</a>
+            <a href={import.meta.env.BASE_URL} class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" aria-label="한국어로 전환">한</a>
           )}
           <ThemeToggle />
         </div>

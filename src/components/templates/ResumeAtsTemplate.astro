@@ -308,7 +308,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       <h2>{labels.openSource.toUpperCase()}</h2>
       {data.openSource.map((item) => (
         <p>
-          <strong>{item.name}</strong>, {item.date}
+          <strong>{item.url ? <a href={item.url}>{item.name}</a> : item.name}</strong>, {item.date} — {item.status}
         </p>
       ))}
     </section>

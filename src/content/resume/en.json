@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package ecosystem.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, maximizing productivity through AI-native development with generative AI, and creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
+    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package ecosystem.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, boosting developer productivity through AI-native development with generative AI, and creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
     "coreCompetencies": [
       {
         "category": "Performance Optimization & Cost Efficiency",
@@ -102,12 +102,12 @@
         "current": true,
         "description": "Mobile game development and publishing company",
         "highlights": [
-          "Reduced BigQuery costs by 82% (TB: $6.25→$1.1) by switching read methods amid surging marketing data query costs",
-          "Overcame batch processing limitations through serverless migration, expanding data collection range 6x (60→360 days)",
-          "Built internal common library ecosystem with NestJS utility (10 modules) + Game Server Kit (2 packages)",
-          "Developed Git-like Audit Log + 3-Way Merge engine for multi-game balance data consistency",
-          "Unified marketing campaign/creative/metrics management via GCP-AWS hybrid pipeline",
-          "Building end-to-end audit log analytics infrastructure with CDK, targeting 12 game project integration (94%+ test coverage)"
+          "Reduced BigQuery costs by 82% ($6.25→$1.1 per TB) by migrating to Storage Read API when marketing data query costs were escalating",
+          "Overcame batch processing limitations from marketing metrics collection period expansion by migrating to serverless, expanding data collection range 6x (60→360 days)",
+          "Built internal common library ecosystem with NestJS utility (10 modules) + Game Server Kit (2 packages) to eliminate recurring code duplication and inconsistency across multi-game projects, ensuring code consistency",
+          "Developed Git-like Audit Log + 3-Way Merge engine to resolve delayed incident response caused by inability to track balance data changes, automating change tracking and merging across 6 games",
+          "Built GCP-AWS hybrid pipeline to unify marketing data scattered across Google Ads/Meta/TikTok, consolidating campaigns, creatives, and metrics from 3 platforms into a single system",
+          "Integrated DynamicModule-based probability package across 12 game projects and built CDK-based audit log analytics pipeline, achieving 94%+ test coverage"
         ],
         "projects": [
           {
@@ -133,17 +133,15 @@
             "name": "Marketing Integrated Platform",
             "period": "2025.02 ~ Present",
             "featured": true,
-            "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system",
+            "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system, built on dedicated marketing DB separation",
             "details": [
-              "Marketing Domain DB Separation: Migrated marketing data mixed in Sheet DB to a dedicated DB, establishing service independence foundation",
               "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, and modification in a single platform",
               "Creative Auto-deployment Pipeline: Integrated pipeline from creative upload to automatic registration on Google/Meta/TikTok platforms",
               "NAS-S3 Dual Sync: SQS event-based server-worker separation architecture for bidirectional sync/restore between internal NAS and S3",
               "Meta Asset Sync Performance Optimization: TypeORM save() → insertBulk() conversion and deleteByCondition adoption — Image sync time reduced by 72% (25.7s→7.1s), DB transaction time reduced by 95% (10-16s→0.3-0.5s)",
               "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%",
               "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25 → $1.1 per TB)",
-              "Metrics Query Performance Optimization: Index structure optimization (eliminating Full Table Scan), cursor-based pagination, and generic filtering resolving 18-second query bottleneck",
-              "Entity Normalization: Split 100+ column single table into main/time-series/prediction 3 tables, significantly improving query cost and I/O efficiency",
+              "DB Optimization: Normalized 100+ column table (main/time-series/prediction split), index optimization and cursor-based pagination resolving 18-second query bottleneck",
               "Retention Metrics Integration: Consistently applied retention metrics across the full pipeline from BigQuery ingestion to entity, API, and field metadata for user retention analysis"
             ],
             "techStack": [
@@ -157,7 +155,7 @@
               "NestJS",
               "S3",
               "SQS",
-              "Storage Read API",
+              "BigQuery (Storage Read API)",
               "TikTok API",
               "TypeORM",
               "TypeScript",
@@ -217,9 +215,7 @@
               "Distributed Lock Module: ElastiCache (Redis)-based distributed lock decorator for concurrency control in multi-instance environments",
               "TypeScript Generic-based Type Safety: Overcame TypeORM type limitations through function overloading and generics",
               "Internal NPM Package Management: GitHub Packages-based distribution with CI optimization testing only changed packages",
-              "Sheet Module NPM Package Extraction: Extracted Sheet module from game server monolith into independent package for multi-game project reuse",
-              "5 Submodule Extraction: Packaged sheet-version, sheet-hash-update-request, sheet-acquirable-asset, sheet-data-migration, and static-data-lock into @gameduo/glider-sheet",
-              "5-Branch Rollout with Conflict Mitigation: Analyzed divergence across main/NB2/BANE/DFD/VG branches, proactively resolving high-risk conflicts (NB2 548 commits, BANE 3,418 commits behind)"
+              "Game Server Kit Package Extraction: Extracted Sheet module + 5 submodules from game server monolith into @gameduo/glider-sheet package for multi-game project reuse, with 5-branch (main/NB2/BANE/DFD/VG) divergence analysis and conflict resolution"
             ],
             "techStack": [
               "ElastiCache (Redis)",
@@ -282,7 +278,7 @@
           "Athena",
           "Glue",
           "CloudWatch",
-          "DataDog",
+          "Datadog",
           "Grafana"
         ]
       },
@@ -295,19 +291,18 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment",
         "highlights": [
-          "Identified root cause of recurring DB Deadlocks in clinical trial e-signature notifications by analyzing foreign key shared-to-exclusive lock timing, completely resolving the issue",
+          "Identified root cause of recurring DB Deadlocks in clinical trial e-signature notifications (5+ monthly failures) by analyzing foreign key shared-to-exclusive lock constraint enforcement timing, completely resolving Deadlocks and migrating to AWS SNS → SQS → Lambda async pipeline to achieve zero notification failures",
           "Expanded user-organization structure from 1:1 to 1:N with backward compatibility to overcome multi-organization management limitations, contributing to major hospital and pharmaceutical contracts",
-          "Delivered VDR MVP within 3 weeks under schedule pressure by implementing Event-Driven PDF conversion and permission-based workflow through emergency deployment",
-          "Designed AWS SNS → SQS → Lambda pipeline to address notification failures threatening system reliability, establishing stable async processing through transaction separation"
+          "Delivered VDR MVP within 3 weeks under schedule pressure by implementing Event-Driven PDF conversion and permission-based workflow through emergency deployment"
         ],
         "projects": [
           {
             "name": "Maven Docs Electronic Consent System",
             "period": "2023.07 ~ 2023.09",
             "featured": false,
-            "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance requirements",
+            "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance using Cyan (in-house Node.js framework)",
             "details": [
-              "Batch Delivery System: Participant group management per clinical trial and efficient consent delivery",
+              "Batch Dispatch System: Participant group management per clinical trial and efficient consent dispatch",
               "Workflow Structure: Request → Researcher → Participant sequential flow management"
             ],
             "techStack": [
@@ -324,7 +319,7 @@
             "featured": true,
             "description": "Resolved critical notification failures due to database Deadlocks in clinical trial e-signature notifications",
             "details": [
-              "Deadlock Root Cause Analysis: Identified shared-to-exclusive lock timing issue during foreign key creation",
+              "Deadlock Root Cause Analysis: Identified shared-to-exclusive lock timing issue during foreign key constraint enforcement",
               "Event-Driven Architecture Design: AWS SNS → SQS → Lambda pipeline implementation",
               "Real-time Cross-reference System: Document relationship tracking and auto-update",
               "Word Document Conversion: Server-side engine converting Slate.js JSON to Word documents"
@@ -360,11 +355,11 @@
           {
             "name": "Maven Auth System Enhancement",
             "period": "2024.01 ~ 2024.02",
-            "featured": true,
+            "featured": false,
             "description": "Resolved user inconvenience and system scalability limitations from 1:1 user-organization structure",
             "details": [
               "User-Organization Relationship Expansion: 1:1 to 1:N structure for multi-organization management",
-              "Backward Compatibility: New features while maintaining existing functionality"
+              "Backward Compatibility: Zero-downtime API migration ensuring service continuity"
             ],
             "techStack": [
               "TypeScript",
@@ -379,10 +374,8 @@
             "featured": false,
             "description": "Frontend development for clinical Trial Master File (TMF) management system",
             "details": [
-              "Admin page: Organization member role and permission management",
-              "Archiver page: Document history creation and archival",
-              "Dashboard page: Document status overview and search functionality",
-              "Document Viewer page: Document preview, property management, and commenting"
+              "Admin/Dashboard: Organization member role/permission management, document status overview and search",
+              "Archiver/Viewer: Document history archival, preview, property management, and commenting"
             ],
             "techStack": [
               "React",
@@ -393,7 +386,7 @@
           {
             "name": "Maven VDR MVP Development",
             "period": "2024.06 ~ 2024.07 (3 weeks)",
-            "featured": false,
+            "featured": true,
             "description": "Emergency deployment for delayed VDR project under MVP launch pressure",
             "details": [
               "Event-Driven PDF Conversion: S3 upload trigger → Lambda lightweight conversion → SNS/SQS notification",
@@ -420,6 +413,8 @@
           "SNS",
           "SQS",
           "AWS SES",
+          "Nodemailer",
+          "Slate.js",
           "React",
           "Jotai"
         ]
@@ -515,7 +510,7 @@
             "description": "Migrated from Express.js single-file (app.js) structure to NestJS modular architecture",
             "details": [
               "Incrementally migrated Express.js + EJS monolith to NestJS + TypeORM",
-              "Applied Port and Adapter Architecture to separate business logic from infrastructure",
+              "Applied Ports and Adapters Architecture to separate business logic from infrastructure",
               "Introduced TDD and achieved 80% unit test coverage"
             ],
             "techStack": [
@@ -547,7 +542,7 @@
         "position": "Dev Team Backend Engineer",
         "startDate": "2021-07",
         "endDate": "2022-03",
-        "description": "Custom software solutions SI company",
+        "description": "Custom software consulting firm",
         "highlights": [
           "Reduced member registration from hours to minutes by building Apache POI-based Excel bulk processing for 300+ students per semester at educational institutions where manual entry was required each term",
           "Built Spring Security + JWT cross-domain authentication server enabling single sign-on across 5 country-specific websites that previously required separate logins per country",
@@ -603,16 +598,14 @@
             "techStack": [
               "Java",
               "Spring Boot",
-              "MySQL",
-              "iframe",
-              "postMessage API"
+              "MySQL"
             ]
           },
           {
             "name": "kfriends Member Management System",
             "period": "2021.09 (3 weeks)",
             "featured": false,
-            "description": "Resolved need for unified member management across country-specific distributed websites",
+            "description": "Resolved need for unified member management and security enhancement across country-specific distributed websites",
             "details": [
               "Unified Auth Server: Spring Security + JWT-based centralized authentication",
               "Multi-domain CORS Handling: Secure token exchange across country-specific domains"
@@ -644,7 +637,7 @@
           }
         ],
         "techStack": [
-          "Java 8/11",
+          "Java",
           "Spring Boot",
           "Spring Security",
           "MySQL",

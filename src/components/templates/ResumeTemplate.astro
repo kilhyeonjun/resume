@@ -58,12 +58,6 @@ const jsonLd = {
     <!-- Summary -->
     <ResumeSummary summary={data.summary} label={labels.summary} />
 
-    <!-- Experience -->
-    <ResumeExperience experience={data.experience} labels={labels} basePath={basePath} />
-
-    <!-- Core Competencies -->
-    <ResumeCoreCompetencies coreCompetencies={data.coreCompetencies} label={labels.coreCompetencies} />
-
     <!-- Skills, Education, Certifications, Awards -->
     <ResumeSkills
       skills={data.skills}
@@ -72,6 +66,12 @@ const jsonLd = {
       awards={data.awards}
       labels={labels}
     />
+
+    <!-- Experience -->
+    <ResumeExperience experience={data.experience} labels={labels} basePath={basePath} />
+
+    <!-- Core Competencies -->
+    <ResumeCoreCompetencies coreCompetencies={data.coreCompetencies} label={labels.coreCompetencies} />
 
     <!-- Activities: Technical Writing + Open Source (left) | Continuous Learning (right) -->
     <div class="mb-10 grid gap-10 md:grid-cols-2">

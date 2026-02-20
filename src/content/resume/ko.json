@@ -250,7 +250,7 @@
           {
             "name": "AWS Lambda 마이그레이션 & Event-Driven Architecture",
             "period": "2025.06 ~ 2025.08",
-            "description": "마케팅 지표 60일 → 360일 확장에 따른 배치 작업 한계 해결 및 서버리스 아키텍처 전환",
+            "description": "마케팅 지표 60일 → 360일 확장에 따른 배치 작업 한계 해결 및 배치 처리 서버리스 전환",
             "details": [
               "하이브리드 아키텍처: API 서버(EC2) 유지 + 배치/Job 처리(Lambda) 분리로 워크로드별 최적 리소스 활용",
               "Event-Driven Architecture: SQS + Lambda + EventBridge 기반 비동기 처리로 데이터 수집 범위 6배 확장 (60일 → 360일)",

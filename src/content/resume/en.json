@@ -250,7 +250,7 @@
           {
             "name": "AWS Lambda Migration & Event-Driven Architecture",
             "period": "2025.06 ~ 2025.08",
-            "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless architecture transition",
+            "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
             "details": [
               "Hybrid Architecture: Maintained API server (EC2) + separated batch/job processing (Lambda) for optimal resource utilization per workload",
               "Event-Driven Architecture: SQS + Lambda + EventBridge-based async processing expanding data collection range 6x (60 days → 360 days)",

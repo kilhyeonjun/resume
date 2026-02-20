@@ -1,7 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
 import { getBasePath } from '../../utils/paths';
-import { replaceDurationPlaceholder } from '../../utils/career-duration';
+import { prepareResumeData } from '../../utils/resume-data';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -15,20 +15,7 @@ if (!entry) {
 }
 const resumeData = entry.data;
 
-const data = {
-  ...resumeData.personalInfo,
-  summary: replaceDurationPlaceholder(resumeData.summary, resumeData.experience, lang),
-  coreCompetencies: resumeData.coreCompetencies,
-  skills: resumeData.skills,
-  experience: resumeData.experience,
-  education: resumeData.education,
-  certifications: resumeData.certifications,
-  continuousLearning: resumeData.continuousLearning,
-  technicalWriting: resumeData.technicalWriting,
-  openSource: resumeData.openSource,
-  awards: resumeData.awards,
-};
-const labels = resumeData.labels;
+const { data, labels } = prepareResumeData(resumeData, lang);
 
 const basePath = getBasePath(lang);
 const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `${data.name} - Resume (ATS Optimized)`;

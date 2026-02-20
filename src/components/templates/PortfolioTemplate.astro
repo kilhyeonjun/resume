@@ -33,7 +33,7 @@ const basePath = getBasePath(lang);
         const period = `${project.period.start} — ${project.period.end}`;
         
         return (
-          <article class="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+          <article class:list={["group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800", index === projects.length - 1 && projects.length % 2 === 1 && "sm:col-span-2 sm:max-w-md sm:mx-auto"]}>
             {/* Cover Image */}
             {project.coverImage ? (
               <a href={`${basePath}/portfolio/${project.slug}`} class="block aspect-video overflow-hidden">
@@ -43,6 +43,7 @@ const basePath = getBasePath(lang);
                   width={800}
                   height={450}
                   class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, 50vw"
                   loading="lazy"
                 />
               </a>

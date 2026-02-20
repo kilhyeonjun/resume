@@ -38,17 +38,28 @@
     ],
     "skills": [
       {
-        "category": "Core Skills",
+        "category": "Backend",
         "items": [
           {
+            "name": "Java"
+          },
+          {
             "name": "TypeScript"
+          },
+          {
+            "name": "Spring Boot"
           },
           {
             "name": "NestJS"
           },
           {
-            "name": "AWS Lambda"
-          },
+            "name": "Jest"
+          }
+        ]
+      },
+      {
+        "category": "Database",
+        "items": [
           {
             "name": "MySQL"
           },
@@ -56,24 +67,21 @@
             "name": "BigQuery"
           },
           {
-            "name": "Docker"
+            "name": "ElastiCache (Redis)"
           }
         ]
       },
       {
-        "category": "Proficient",
+        "category": "Cloud & Infra",
         "items": [
           {
-            "name": "Spring Boot"
-          },
-          {
-            "name": "ElastiCache (Redis)"
+            "name": "AWS Lambda"
           },
           {
             "name": "AWS CDK"
           },
           {
-            "name": "Jest"
+            "name": "Docker"
           }
         ]
       }

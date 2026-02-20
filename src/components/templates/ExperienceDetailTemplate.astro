@@ -42,9 +42,9 @@ const basePath = getBasePath(lang);
 
     <!-- Company Header -->
     <header class="mb-10">
-      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>
-           <h1 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
+           <h1 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl">
              {experience.companyUrl ? (
                <a 
                  href={experience.companyUrl} 
@@ -63,38 +63,38 @@ const basePath = getBasePath(lang);
             {experience.position}
           </p>
         </div>
-        <p class="text-sm font-medium text-gray-500 dark:text-gray-300 sm:text-base">
-          {period}
-        </p>
-      </div>
-      {experience.description && (
-        <p class="mt-4 text-gray-600 dark:text-gray-300">{experience.description}</p>
-      )}
-    </header>
+         <p class="text-sm font-medium text-gray-500 dark:text-gray-300 md:text-base">
+           {period}
+         </p>
+       </div>
+       {experience.description && (
+         <p class="mt-4 text-gray-600 dark:text-gray-300">{experience.description}</p>
+       )}
+     </header>
 
-    <!-- Highlights -->
-    {experience.highlights && experience.highlights.length > 0 && (
-      <section class="mb-10">
-        <h2 class="section-title mb-6">{labels.highlights}</h2>
-        <ul class="space-y-3">
-           {experience.highlights.map((highlight) => (
-             <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
-               <CheckIcon class="mt-1 h-5 w-5 flex-shrink-0 text-primary-500" />
-               <span class="text-lg">{highlight}</span>
-             </li>
-           ))}
-        </ul>
-      </section>
-    )}
+     <!-- Highlights -->
+     {experience.highlights && experience.highlights.length > 0 && (
+       <section class="mb-10">
+         <h2 class="section-title mb-6">{labels.highlights}</h2>
+         <ul class="space-y-3">
+            {experience.highlights.map((highlight) => (
+              <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+                <CheckIcon class="mt-1 h-5 w-5 flex-shrink-0 text-primary-500" />
+                <span class="text-lg">{highlight}</span>
+              </li>
+            ))}
+         </ul>
+       </section>
+     )}
 
-    <!-- Projects -->
-    {experience.projects && experience.projects.length > 0 && (
-      <section class="mb-10">
-        <h2 class="section-title mb-6">{labels.projects}</h2>
-        <div class="space-y-8">
-          {experience.projects.map((project) => (
-            <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-              <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+     <!-- Projects -->
+     {experience.projects && experience.projects.length > 0 && (
+       <section class="mb-10">
+         <h2 class="section-title mb-6">{labels.projects}</h2>
+         <div class="space-y-8">
+           {experience.projects.map((project) => (
+             <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+               <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white">
                   {project.name}
                 </h3>

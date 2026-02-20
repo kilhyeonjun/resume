@@ -5,7 +5,7 @@ import CheckIcon from '../icons/CheckIcon.astro';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon.astro';
 import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
-import type { PortfolioProject, PortfolioLabels } from '../../types/portfolio';
+import type { PortfolioProject, PortfolioLabels, BlogPost } from '../../types/portfolio';
 import { getBasePath } from '../../utils/paths';
 
 interface Props {
@@ -48,18 +48,18 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
 
     <!-- Project Header -->
     <header class="mb-10">
-      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>
           <div class="mb-2 flex items-center gap-2">
             <span class={`inline-block rounded-full px-3 py-1 text-xs font-medium ${project.type === 'team' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'}`}>
               {project.type === 'team' ? labels.team : labels.personal}
             </span>
           </div>
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl">
             {projectName}
           </h1>
         </div>
-        <p class="text-sm font-medium text-gray-500 dark:text-gray-300 sm:text-base">
+        <p class="text-sm font-medium text-gray-500 dark:text-gray-300 md:text-base">
           {period}
         </p>
       </div>
@@ -191,7 +191,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
       <section class="mb-10">
         <h2 class="section-title mb-6">{labels.relatedPosts}</h2>
         <ul class="space-y-3">
-          {project.blogPosts.map((post: any) => {
+          {project.blogPosts.map((post: BlogPost) => {
             const postTitle = post.title[lang] || post.title.ko || post.title;
             return (
               <li>

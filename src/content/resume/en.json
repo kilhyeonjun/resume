@@ -24,7 +24,7 @@
         "items": [
           "Event-Driven Architecture: SQS + Lambda + EventBridge async processing expanding data collection 6x",
           "Internal NPM Package Ecosystem: 10 NestJS utility modules + Game Server Kit packages ensuring multi-project code consistency",
-          "GCP-AWS Hybrid Pipeline: Pub/Sub → Cloud Function → API Gateway → Lambda cross-cloud real-time data integration"
+          "GCP-AWS Hybrid Pipeline: Pub/Sub → Cloud Functions → API Gateway → Lambda cross-cloud real-time data integration"
         ]
       },
       {
@@ -186,7 +186,7 @@
           "Built internal common library ecosystem with NestJS utility (10 modules) + Game Server Kit (2 packages)",
           "Developed Git-like Audit Log + 3-Way Merge engine for multi-game balance data consistency",
           "Unified marketing campaign/creative/metrics management via GCP-AWS hybrid pipeline",
-          "Codified end-to-end audit log analytics infrastructure with CDK, integrating 12 game projects (94%+ test coverage)"
+          "Building end-to-end audit log analytics infrastructure with CDK, targeting 12 game project integration (94%+ test coverage)"
         ],
         "projects": [
           {
@@ -223,7 +223,7 @@
               "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25 → $1.1 per TB)",
               "Multi-dimensional Metrics Analysis System: Metrics integration and CRUD API across 3 axes — campaign, country/OS, and ad channel",
               "Metrics Query Performance Optimization: Index structure optimization (eliminating Full Table Scan), cursor-based pagination, and generic filtering resolving 18-second query bottleneck",
-              "GCP Pub/Sub-based Real-time Updates: Cloud Function → AWS API Gateway → Lambda hybrid pipeline minimizing metrics reflection delay",
+              "GCP Pub/Sub-based Real-time Updates: Cloud Functions → AWS API Gateway → Lambda hybrid pipeline minimizing metrics reflection delay",
               "Entity Normalization: Split 100+ column single table into main/time-series/prediction 3 tables, significantly improving query cost and I/O efficiency",
               "Budget/Cost Integrated Dashboard: Project and game-level total budget/cost aggregation with manual cost input for real-time expenditure tracking",
               "Payment Metrics Expansion: Added paying user count, purchase count, and ARPU metrics at country/OS level for multi-dimensional payment performance analysis",

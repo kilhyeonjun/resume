@@ -24,7 +24,7 @@
         "items": [
           "Event-Driven Architecture: SQS + Lambda + EventBridge 기반 비동기 처리로 데이터 수집 범위 6배 확장",
           "사내 NPM 패키지 생태계: NestJS 공통 유틸 10개 모듈 + 게임서버 Kit 패키지로 다중 프로젝트 코드 일관성 확보",
-          "GCP-AWS 하이브리드 파이프라인: Pub/Sub → Cloud Function → API Gateway → Lambda 크로스 클라우드 실시간 데이터 연동"
+          "GCP-AWS 하이브리드 파이프라인: Pub/Sub → Cloud Functions → API Gateway → Lambda 크로스 클라우드 실시간 데이터 연동"
         ]
       },
       {
@@ -186,7 +186,7 @@
           "NestJS 유틸 10개 모듈 + 게임서버 Kit 2개 패키지로 사내 공통 라이브러리 생태계 구축",
           "다중 게임 밸런스 데이터 일관성 확보를 위한 Git-like Audit Log + 3-Way Merge 엔진 개발",
           "GCP-AWS 하이브리드 파이프라인으로 마케팅 캠페인·소재·지표 통합 관리 실현",
-          "CDK 기반 End-to-End 감사 로그 분석 인프라 코드화, 12개 게임 프로젝트 통합 (94%+ 테스트 커버리지)"
+          "CDK 기반 End-to-End 감사 로그 분석 인프라 코드화 진행 중, 12개 게임 프로젝트 통합 목표 (94%+ 테스트 커버리지)"
         ],
         "projects": [
           {
@@ -223,7 +223,7 @@
               "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 BigQuery 비용 82% 절감 (TB당 $6.25 → $1.1)",
               "다차원 지표 분석 시스템: 캠페인/국가·OS/광고 매체별 3개 축의 지표 연동 및 CRUD API 구축",
               "지표 조회 성능 최적화: 인덱스 구조 최적화(Full Table Scan 제거), 커서 기반 페이지네이션, 범용 필터링으로 18초 쿼리 병목 해결",
-              "GCP Pub/Sub 기반 실시간 업데이트: Cloud Function → AWS API Gateway → Lambda 하이브리드 파이프라인으로 지표 반영 지연 최소화",
+              "GCP Pub/Sub 기반 실시간 업데이트: Cloud Functions → AWS API Gateway → Lambda 하이브리드 파이프라인으로 지표 반영 지연 최소화",
               "엔티티 정규화: 100+ 컬럼 단일 테이블을 메인/시계열/예측 3개 테이블로 분리하여 쿼리 비용과 I/O 효율 대폭 개선",
               "예산/비용 통합 대시보드: 프로젝트·게임별 총 예산/비용 집계와 수동 비용 입력으로 집행 현황 실시간 파악",
               "결제 성과 분석 확대: 국가/OS 레벨에 결제 유저수·결제 횟수·ARPU 지표를 추가하여 다차원 결제 성과 분석 체계 구축",

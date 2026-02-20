@@ -29,6 +29,7 @@ const projectSchema = z.object({
   description: z.string(),
   details: z.array(z.string()),
   techStack: z.array(z.string()).default([]),
+  featured: z.boolean().optional(),
 });
 
 const experienceSchema = z.object({

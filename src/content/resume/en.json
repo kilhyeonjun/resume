@@ -38,135 +38,42 @@
     ],
     "skills": [
       {
-        "category": "Languages",
+        "category": "Core Skills",
         "items": [
-          {
-            "name": "JavaScript"
-          },
           {
             "name": "TypeScript"
           },
           {
-            "name": "Java"
-          }
-        ]
-      },
-      {
-        "category": "Frameworks",
-        "items": [
-          {
             "name": "NestJS"
           },
           {
-            "name": "Express.js"
+            "name": "AWS Lambda"
           },
-          {
-            "name": "Spring Boot"
-          },
-          {
-            "name": "TypeORM"
-          }
-        ]
-      },
-      {
-        "category": "Databases",
-        "items": [
           {
             "name": "MySQL"
           },
           {
-            "name": "Redis"
-          }
-        ]
-      },
-      {
-        "category": "AWS",
-        "items": [
-          {
-            "name": "Lambda"
-          },
-          {
-            "name": "SQS"
-          },
-          {
-            "name": "SNS"
-          },
-          {
-            "name": "EventBridge"
-          },
-          {
-            "name": "S3"
-          },
-          {
-            "name": "RDS"
-          },
-          {
-            "name": "Kinesis"
-          },
-          {
-            "name": "Athena"
-          }
-        ]
-      },
-      {
-        "category": "GCP",
-        "items": [
-          {
             "name": "BigQuery"
           },
           {
-            "name": "Pub/Sub"
-          },
-          {
-            "name": "Cloud Functions"
-          }
-        ]
-      },
-      {
-        "category": "Testing",
-        "items": [
-          {
-            "name": "Jest"
-          },
-          {
-            "name": "Testcontainers"
-          },
-          {
-            "name": "LocalStack"
-          }
-        ]
-      },
-      {
-        "category": "DevOps",
-        "items": [
-          {
             "name": "Docker"
+          }
+        ]
+      },
+      {
+        "category": "Proficient",
+        "items": [
+          {
+            "name": "Spring Boot"
           },
           {
-            "name": "Git"
+            "name": "Redis"
           },
           {
             "name": "AWS CDK"
           },
           {
-            "name": "Serverless Framework"
-          },
-          {
-            "name": "GitHub Actions"
-          }
-        ]
-      },
-      {
-        "category": "Monitoring",
-        "items": [
-          {
-            "name": "CloudWatch"
-          },
-          {
-            "name": "DataDog"
-          },
-          {
-            "name": "Grafana"
+            "name": "Jest"
           }
         ]
       }
@@ -192,6 +99,7 @@
           {
             "name": "Glider Sheet Audit Log System",
             "period": "2025.01 ~ 2025.04",
+            "featured": false,
             "description": "Resolved delayed balance issue response caused by inability to track data change history during game operations",
             "details": [
               "Git-like Version Control System: UUID-based cross-environment/project entity tracking ensuring multi-game data consistency",
@@ -210,6 +118,7 @@
           {
             "name": "Marketing Integrated Platform",
             "period": "2025.02 ~ Present",
+            "featured": true,
             "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system",
             "details": [
               "Marketing Domain DB Separation: Migrated marketing data mixed in Sheet DB to a dedicated DB, establishing service independence foundation",
@@ -250,6 +159,7 @@
           {
             "name": "AWS Lambda Migration & Event-Driven Architecture",
             "period": "2025.06 ~ 2025.08",
+            "featured": true,
             "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
             "details": [
               "Hybrid Architecture: Maintained API server (EC2) + separated batch/job processing (Lambda) for optimal resource utilization per workload",
@@ -272,6 +182,7 @@
           {
             "name": "Cloud Data Sync System",
             "period": "2025.08 ~ Present",
+            "featured": false,
             "description": "S3-based sync and automated DDL management system for dynamic game data (user experience, currency, etc.) across environments",
             "details": [
               "Cross-environment Data Sync: S3-based dynamic game data synchronization across development/staging/production environments",
@@ -290,6 +201,7 @@
           {
             "name": "Internal Common Library Ecosystem",
             "period": "2025.07 ~ Present",
+            "featured": true,
             "description": "Development and operation of NestJS utility (10 modules) + Game Server Kit (2 packages) for multi-project code consistency",
             "details": [
               "10-module Library Ecosystem: Expanded to core, repository, cache, lock, slack, crypto, smb, hash, type, and iac modules",
@@ -312,6 +224,7 @@
           {
             "name": "Probability Calculation & Audit Log Analytics Pipeline (Glider Probability)",
             "period": "2026.02 ~ Present",
+            "featured": false,
             "description": "Built game probability calculation package and CDK-based analytics infrastructure",
             "details": [
               "NestJS DynamicModule-based Probability Package: Packaged 5 probability functions + automatic Kinesis logging as @gameduo/glider-probability, integrated across 12 game projects",
@@ -383,6 +296,7 @@
           {
             "name": "Maven Docs Electronic Consent System",
             "period": "2023.07 ~ 2023.09",
+            "featured": false,
             "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance requirements",
             "details": [
               "Batch Delivery System: Participant group management per clinical trial and efficient consent delivery",
@@ -399,6 +313,7 @@
           {
             "name": "Maven Docs System Reliability Improvement",
             "period": "2023.08 ~ 2023.12",
+            "featured": true,
             "description": "Resolved critical notification failures due to database Deadlocks in clinical trial e-signature notifications",
             "details": [
               "Deadlock Root Cause Analysis: Identified shared-to-exclusive lock timing issue during foreign key creation",
@@ -420,6 +335,7 @@
           {
             "name": "Maven Mailing System Enhancement",
             "period": "2023.12 ~ 2024.02",
+            "featured": false,
             "description": "Resolved lack of delivery status tracking and data consistency issues in email system",
             "details": [
               "AWS SES Monitoring: Real-time tracking of delivery/bounce/complaint status",
@@ -436,6 +352,7 @@
           {
             "name": "Maven Auth System Enhancement",
             "period": "2024.01 ~ 2024.02",
+            "featured": true,
             "description": "Resolved user inconvenience and system scalability limitations from 1:1 user-organization structure",
             "details": [
               "User-Organization Relationship Expansion: 1:1 to 1:N structure for multi-organization management",
@@ -451,6 +368,7 @@
           {
             "name": "Maven TMF New Project Development",
             "period": "2023.06 ~ 2024.08",
+            "featured": false,
             "description": "Frontend development for clinical Trial Master File (TMF) management system",
             "details": [
               "Admin page: Organization member role and permission management",
@@ -467,6 +385,7 @@
           {
             "name": "Maven VDR MVP Development",
             "period": "2024.06 ~ 2024.07 (3 weeks)",
+            "featured": false,
             "description": "Emergency deployment for delayed VDR project under MVP launch pressure",
             "details": [
               "Event-Driven PDF Conversion: S3 upload trigger → Lambda lightweight conversion → SNS/SQS notification",
@@ -506,15 +425,16 @@
         "endDate": "2023-05",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
-          "Overcame maintenance limitations of Express.js single-file (app.js) structure by incrementally migrating to NestJS modular architecture with TDD, achieving 80% test coverage",
-          "Built JWT-based token authentication system from scratch to resolve subdomain session conflicts preventing user transitions, enabling seamless cross-subdomain user switching",
-          "Automated the end-to-end prescription workflow from OCR recognition to medication guide generation by integrating Naver Clova OCR + MFDS API, eliminating manual pharmacist data entry",
-          "Improved user responsiveness by implementing Socket.io real-time consultation status updates and Web Push notifications to address inability to track consultation state changes in real time"
+          "Migrated from 3,000+ line single-file (app.js) structure causing regression bugs on every feature addition to NestJS modular architecture with TDD, achieving 80% test coverage and zero post-deployment incidents",
+          "Built JWT-based token authentication in 3 weeks for a 300K-download platform where subdomain session conflicts forced re-login, enabling seamless user switching across 3 subdomains",
+          "Automated prescription workflow from manual pharmacist entry (3-5 min per prescription) to OCR-based processing under 30 seconds by integrating Naver Clova OCR + MFDS API",
+          "Eliminated patient wait complaints from delayed status updates by implementing Socket.io real-time consultation status and Web Push notifications, reducing status reflection from tens of seconds to instant"
         ],
         "projects": [
           {
             "name": "Auth Server Development",
             "period": "2022.04 (3 weeks)",
+            "featured": false,
             "description": "Built JWT-based unified authentication system to resolve subdomain session conflicts",
             "details": [
               "Designed and implemented NestJS + JWT token authentication system",
@@ -530,6 +450,7 @@
           {
             "name": "Common Module Development",
             "period": "2022.05 ~ 2022.06",
+            "featured": false,
             "description": "Developed shared modules for doctor, pharmacist, and auth services",
             "details": [
               "Built error log notification module for system monitoring efficiency",
@@ -543,6 +464,7 @@
           {
             "name": "Doctor/Pharmacist Web Service Enhancement",
             "period": "2022.04 ~ 2023.05",
+            "featured": true,
             "description": "Feature enhancement and maintenance of back-office systems for doctors and pharmacists",
             "details": [
               "Built doctor appointment/request system and pharmacist dispensing request system",
@@ -564,6 +486,7 @@
           {
             "name": "Prescription OCR & Medication Guide System",
             "period": "2022.11 ~ 2022.12",
+            "featured": false,
             "description": "Automated pharmacist's manual prescription entry process using OCR",
             "details": [
               "Integrated Naver Clova OCR API for automatic text extraction from prescription images",
@@ -580,6 +503,7 @@
           {
             "name": "Backend Architecture Migration",
             "period": "2023.03 ~ 2023.05",
+            "featured": true,
             "description": "Migrated from Express.js single-file (app.js) structure to NestJS modular architecture",
             "details": [
               "Incrementally migrated Express.js + EJS monolith to NestJS + TypeORM",
@@ -617,14 +541,15 @@
         "endDate": "2022-03",
         "description": "Custom software solutions SI company",
         "highlights": [
-          "Automated registration of hundreds of members by building Apache POI-based Excel bulk processing system to resolve manual member management inefficiency at educational institutions",
-          "Built Spring Security + JWT cross-domain authentication server to unify member management across country-specific distributed websites, achieving multi-country unified authentication",
-          "Eliminated hosting costs by migrating from WordPress to Jekyll + GitHub Pages and introducing Travis CI automated deployment to resolve hosting cost burden"
+          "Reduced member registration from hours to minutes by building Apache POI-based Excel bulk processing for 300+ students per semester at educational institutions where manual entry was required each term",
+          "Built Spring Security + JWT cross-domain authentication server enabling single sign-on across 5 country-specific websites that previously required separate logins per country",
+          "Eliminated 100% of hosting costs by migrating from WordPress to Jekyll + GitHub Pages with Travis CI automated deployment pipeline"
         ],
         "projects": [
           {
             "name": "Learning Management System (LMS) Development",
             "period": "2021.07 ~ 2022.03",
+            "featured": true,
             "description": "Resolved manual administrative tasks and lack of learner convenience in educational institutions",
             "details": [
               "QR Attendance Check: Real-time attendance processing API with duplicate check logic",
@@ -643,6 +568,7 @@
           {
             "name": "Incheon Smart Green Industrial Complex Control Center",
             "period": "2022.01 ~ 2022.03",
+            "featured": false,
             "description": "Resolved inefficiency in meeting room reservation management and manual notification system",
             "details": [
               "Reservation System API: Real-time availability check and conflict prevention logic",
@@ -659,6 +585,7 @@
           {
             "name": "Future Service JOB Agent Development",
             "period": "2021.07 ~ 2022.03",
+            "featured": false,
             "description": "Resolved offline constraints in career counseling and startup assessment",
             "details": [
               "Assessment System: Spring Boot-based independent assessment application",
@@ -676,6 +603,7 @@
           {
             "name": "kfriends Member Management System",
             "period": "2021.09 (3 weeks)",
+            "featured": false,
             "description": "Resolved need for unified member management across country-specific distributed websites",
             "details": [
               "Unified Auth Server: Spring Security + JWT-based centralized authentication",
@@ -692,6 +620,7 @@
           {
             "name": "Internal Tech Blog Renewal",
             "period": "2021.09 (3 weeks)",
+            "featured": false,
             "description": "Resolved hosting cost burden and maintenance complexity of WordPress-based blog",
             "details": [
               "WordPress → Jekyll Migration: Static site conversion",
@@ -761,7 +690,7 @@
       },
       {
         "name": "Hanghae Plus Backend 6th Cohort",
-        "period": "2024.09 ~ 2024.11",
+        "period": "2024.09 ~ 2024.12",
         "description": "TDD, Clean Architecture, Concurrency Control, Redis",
         "url": "https://github.com/hhpb-code"
       },

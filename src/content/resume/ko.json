@@ -38,135 +38,42 @@
     ],
     "skills": [
       {
-        "category": "언어",
+        "category": "주력 기술",
         "items": [
-          {
-            "name": "JavaScript"
-          },
           {
             "name": "TypeScript"
           },
           {
-            "name": "Java"
-          }
-        ]
-      },
-      {
-        "category": "프레임워크",
-        "items": [
-          {
             "name": "NestJS"
           },
           {
-            "name": "Express.js"
+            "name": "AWS Lambda"
           },
-          {
-            "name": "Spring Boot"
-          },
-          {
-            "name": "TypeORM"
-          }
-        ]
-      },
-      {
-        "category": "데이터베이스",
-        "items": [
           {
             "name": "MySQL"
           },
           {
-            "name": "Redis"
-          }
-        ]
-      },
-      {
-        "category": "AWS",
-        "items": [
-          {
-            "name": "Lambda"
-          },
-          {
-            "name": "SQS"
-          },
-          {
-            "name": "SNS"
-          },
-          {
-            "name": "EventBridge"
-          },
-          {
-            "name": "S3"
-          },
-          {
-            "name": "RDS"
-          },
-          {
-            "name": "Kinesis"
-          },
-          {
-            "name": "Athena"
-          }
-        ]
-      },
-      {
-        "category": "GCP",
-        "items": [
-          {
             "name": "BigQuery"
           },
           {
-            "name": "Pub/Sub"
-          },
-          {
-            "name": "Cloud Functions"
-          }
-        ]
-      },
-      {
-        "category": "테스트",
-        "items": [
-          {
-            "name": "Jest"
-          },
-          {
-            "name": "Testcontainers"
-          },
-          {
-            "name": "LocalStack"
-          }
-        ]
-      },
-      {
-        "category": "DevOps",
-        "items": [
-          {
             "name": "Docker"
+          }
+        ]
+      },
+      {
+        "category": "활용 기술",
+        "items": [
+          {
+            "name": "Spring Boot"
           },
           {
-            "name": "Git"
+            "name": "Redis"
           },
           {
             "name": "AWS CDK"
           },
           {
-            "name": "Serverless Framework"
-          },
-          {
-            "name": "GitHub Actions"
-          }
-        ]
-      },
-      {
-        "category": "모니터링",
-        "items": [
-          {
-            "name": "CloudWatch"
-          },
-          {
-            "name": "DataDog"
-          },
-          {
-            "name": "Grafana"
+            "name": "Jest"
           }
         ]
       }
@@ -192,6 +99,7 @@
           {
             "name": "Glider Sheet Audit Log 시스템",
             "period": "2025.01 ~ 2025.04",
+            "featured": false,
             "description": "게임 운영 중 데이터 변경 이력 추적 불가로 인한 밸런스 문제 대응 지연 해결",
             "details": [
               "Git-like 버전 관리 시스템: UUID 기반 크로스 환경/프로젝트 엔티티 추적으로 다중 게임 간 데이터 일관성 확보",
@@ -210,6 +118,7 @@
           {
             "name": "마케팅 통합 플랫폼",
             "period": "2025.02 ~ 현재",
+            "featured": true,
             "description": "Google Ads/Meta/TikTok 캠페인·소재·지표를 단일 시스템에서 관리하는 통합 마케팅 플랫폼",
             "details": [
               "마케팅 도메인 DB 분리: Sheet DB에 혼재된 마케팅 데이터를 전용 DB로 마이그레이션하여 서비스 독립 기반 확보",
@@ -250,6 +159,7 @@
           {
             "name": "AWS Lambda 마이그레이션 & Event-Driven Architecture",
             "period": "2025.06 ~ 2025.08",
+            "featured": true,
             "description": "마케팅 지표 60일 → 360일 확장에 따른 배치 작업 한계 해결 및 배치 처리 서버리스 전환",
             "details": [
               "하이브리드 아키텍처: API 서버(EC2) 유지 + 배치/Job 처리(Lambda) 분리로 워크로드별 최적 리소스 활용",
@@ -272,6 +182,7 @@
           {
             "name": "Cloud Data 동기화 시스템",
             "period": "2025.08 ~ 현재",
+            "featured": false,
             "description": "동적 게임 데이터(유저 경험치, 재화 등)의 환경 간 S3 동기화 및 DDL 자동 관리 시스템",
             "details": [
               "환경 간 데이터 동기화: S3 기반 동적 게임 데이터의 개발/스테이징/프로덕션 환경 간 동기화 시스템",
@@ -290,6 +201,7 @@
           {
             "name": "사내 공통 라이브러리 생태계",
             "period": "2025.07 ~ 현재",
+            "featured": true,
             "description": "NestJS 유틸 10개 모듈 + 게임서버 Kit 2개 패키지 개발·운영으로 다중 프로젝트 코드 일관성 확보",
             "details": [
               "10개 모듈 라이브러리 생태계: core, repository, cache, lock, slack, crypto, smb, hash, type, iac 모듈로 확장",
@@ -312,6 +224,7 @@
           {
             "name": "확률 계산 및 감사 로그 분석 파이프라인 (Glider Probability)",
             "period": "2026.02 ~ 현재",
+            "featured": false,
             "description": "게임 확률 계산 패키지와 CDK 기반 분석 인프라 구축",
             "details": [
               "NestJS DynamicModule 기반 확률 패키지: 5가지 확률 함수 + 자동 Kinesis 로깅을 @gameduo/glider-probability로 패키지화, 12개 게임 프로젝트에 통합",
@@ -383,6 +296,7 @@
           {
             "name": "Maven Docs 전자 동의서 시스템",
             "period": "2023.07 ~ 2023.09",
+            "featured": false,
             "description": "임상시험 참여자의 전자 동의서 수집 비효율성과 전자서명 규제 준수 요구사항 해결",
             "details": [
               "배치 발송 시스템: 임상시험별 참여자 그룹 관리 및 효율적 동의서 발송",
@@ -399,6 +313,7 @@
           {
             "name": "Maven Docs 시스템 안정성 개선",
             "period": "2023.08 ~ 2023.12",
+            "featured": true,
             "description": "임상시험 전자서명 알림에서 발생하는 데이터베이스 Deadlock으로 인한 치명적 알림 누락 해결",
             "details": [
               "Deadlock 근본 원인 분석: 외래키 생성 시 공유락에서 배타락 전환 타이밍 이슈 규명",
@@ -420,6 +335,7 @@
           {
             "name": "Maven Mailing 시스템 고도화",
             "period": "2023.12 ~ 2024.02",
+            "featured": false,
             "description": "이메일 발송 시스템의 발송 상태 추적 부족과 데이터 정합성 문제 해결",
             "details": [
               "AWS SES 모니터링: 발송/전달/바운스 상태 실시간 추적",
@@ -436,6 +352,7 @@
           {
             "name": "Maven Auth 시스템 고도화",
             "period": "2024.01 ~ 2024.02",
+            "featured": true,
             "description": "기존 1:1 사용자-조직 구조로 인한 사용자 불편과 시스템 확장성 한계 해결",
             "details": [
               "사용자-조직 관계 구조 확장: 1:1에서 1:N 구조로 변경하여 다중 조직 관리 지원",
@@ -451,6 +368,7 @@
           {
             "name": "Maven TMF 신규 프로젝트 개발",
             "period": "2023.06 ~ 2024.08",
+            "featured": false,
             "description": "임상시험 필수 문서(TMF) 관리 시스템의 프론트엔드 신규 개발",
             "details": [
               "Admin 페이지 개발: 조직 멤버 역할 및 권한 관리 기능 구현",
@@ -467,6 +385,7 @@
           {
             "name": "Maven VDR MVP 개발",
             "period": "2024.06 ~ 2024.07 (3주)",
+            "featured": false,
             "description": "진행 중이던 VDR 프로젝트의 개발 일정 지연과 MVP 출시 압박 상황에서의 긴급 투입",
             "details": [
               "Event-Driven PDF 변환: S3 업로드 트리거 → Lambda 경량화 변환 → SNS/SQS 알림 체계",
@@ -506,15 +425,16 @@
         "endDate": "2023-05",
         "description": "누적 30만 다운로드 비대면 진료 및 약배달 플랫폼 스타트업",
         "highlights": [
-          "Express.js 단일 파일(app.js) 구조의 유지보수 한계를 극복하기 위해 NestJS 모듈 아키텍처로 단계적 전환하고 TDD를 도입하여 테스트 커버리지 80% 달성",
-          "서브도메인 간 세션 충돌로 사용자 전환이 불가능한 상황에서 JWT 기반 토큰 인증 시스템을 신규 구축하여 원활한 서브도메인 간 사용자 전환 실현",
-          "약사의 수동 처방전 입력으로 업무 효율이 저하되는 상황에서 Naver Clova OCR + 식약처 API를 연동하여 처방전 인식부터 복약지도 생성까지 자동화",
-          "진료 상태 변경을 실시간으로 확인할 수 없는 상황에서 Socket.io 기반 실시간 상태 반영과 Web Push 알림을 구현하여 사용자 응답성 개선"
+          "3,000줄+ 단일 파일(app.js) 구조에서 기능 추가마다 회귀 버그가 발생하는 상황에서 NestJS 모듈 아키텍처로 단계적 전환하고 TDD를 도입하여 테스트 커버리지 80% 달성, 배포 후 장애 건수 0건 유지",
+          "30만 다운로드 플랫폼의 서브도메인 간 세션 충돌로 의사·약사 전환 시 재로그인이 필요한 상황에서 JWT 기반 토큰 인증 시스템을 3주 만에 신규 구축하여 3개 서브도메인 간 무중단 사용자 전환 실현",
+          "약사가 처방전 1건당 평균 3~5분 수동 입력하는 비효율 상황에서 Naver Clova OCR + 식약처 API를 연동하여 처방전 인식부터 복약지도 생성까지 자동화, 건당 처리 시간 30초 이내로 단축",
+          "진료 상태 변경을 실시간으로 확인할 수 없어 환자 대기 불만이 발생하는 상황에서 Socket.io 기반 실시간 상태 반영과 Web Push 알림을 구현하여 상태 반영 지연 수십 초→즉시로 개선"
         ],
         "projects": [
           {
             "name": "Auth 서버 신규 개발",
             "period": "2022.04 (3주)",
+            "featured": false,
             "description": "서브도메인 간 세션 충돌 문제를 해결하기 위한 JWT 기반 통합 인증 시스템 신규 구축",
             "details": [
               "NestJS + JWT 기반 토큰 인증 시스템 설계 및 구현",
@@ -530,6 +450,7 @@
           {
             "name": "공통 모듈 개발",
             "period": "2022.05 ~ 2022.06",
+            "featured": false,
             "description": "의사·약사·Auth 서비스 공통으로 사용되는 모듈 개발",
             "details": [
               "에러 로그 알림 모듈 개발로 시스템 모니터링 효율화",
@@ -543,6 +464,7 @@
           {
             "name": "의사/약사 웹 서비스 고도화",
             "period": "2022.04 ~ 2023.05",
+            "featured": true,
             "description": "바로필 의사·약사용 백오피스 시스템의 기능 고도화 및 유지보수",
             "details": [
               "의사 진료 예약/요청 시스템 및 약사 조제 요청 시스템 구현",
@@ -564,6 +486,7 @@
           {
             "name": "처방전 자동 인식 및 복약지도 시스템",
             "period": "2022.11 ~ 2022.12",
+            "featured": false,
             "description": "약사의 수동 처방전 입력 과정을 OCR 기반으로 자동화",
             "details": [
               "Naver Clova OCR API 연동으로 처방전 이미지에서 텍스트 자동 추출",
@@ -580,6 +503,7 @@
           {
             "name": "백엔드 아키텍처 전환",
             "period": "2023.03 ~ 2023.05",
+            "featured": true,
             "description": "Express.js 단일 파일(app.js) 구조에서 NestJS 모듈 아키텍처로 전환",
             "details": [
               "Express.js + EJS 모놀리식 구조를 NestJS + TypeORM으로 단계적 전환",
@@ -617,14 +541,15 @@
         "endDate": "2022-03",
         "description": "고객 맞춤형 소프트웨어 솔루션 SI 중소기업",
         "highlights": [
-          "교육 기관의 수동 회원 관리 비효율을 해결하기 위해 Apache POI 기반 Excel 일괄 처리 시스템을 구축하여 수백 명 회원 정보 등록 자동화",
-          "국가별 분산된 웹사이트의 회원 관리 통합 필요성에 대응하여 Spring Security + JWT 기반 크로스 도메인 인증 서버를 구축하고 다중 국가 통합 인증 실현",
-          "WordPress 기반 블로그의 호스팅 비용 부담을 해결하기 위해 Jekyll + GitHub Pages로 마이그레이션하고 Travis CI 자동 배포를 도입하여 호스팅 비용 100% 절감"
+          "교육 기관에서 수강생 300명+ 회원 정보를 매 학기 수작업으로 등록하는 비효율 상황에서 Apache POI 기반 Excel 일괄 처리 시스템을 구축하여 회원 등록 시간 수 시간→수 분으로 단축",
+          "5개국 분산 웹사이트에서 국가별 개별 로그인이 필요한 상황에서 Spring Security + JWT 기반 크로스 도메인 인증 서버를 구축하여 단일 로그인으로 5개국 통합 인증 실현",
+          "WordPress 기반 블로그의 월 호스팅 비용 부담 상황에서 Jekyll + GitHub Pages로 마이그레이션하고 Travis CI 자동 배포를 도입하여 호스팅 비용 100% 절감"
         ],
         "projects": [
           {
             "name": "학습 관리 시스템(LMS) 개발",
             "period": "2021.07 ~ 2022.03",
+            "featured": true,
             "description": "교육 기관의 수동적 관리 업무와 학습자 편의성 부족 해결",
             "details": [
               "QR 출석체크: 실시간 출석 처리 API 및 중복 체크 로직",
@@ -643,6 +568,7 @@
           {
             "name": "인천 스마트 그린 산단 통합관제센터",
             "period": "2022.01 ~ 2022.03",
+            "featured": false,
             "description": "산업단지 내 회의실 예약 관리의 비효율성과 수동 알림 체계 해결",
             "details": [
               "예약 시스템 API: 실시간 예약 현황 조회 및 충돌 방지 로직",
@@ -659,6 +585,7 @@
           {
             "name": "미래 서비스 JOB Agent 개발",
             "period": "2021.07 ~ 2022.03",
+            "featured": false,
             "description": "직업 상담 및 창업 역량 평가의 오프라인 제약과 상담사 평가 업무의 비효율성 해결",
             "details": [
               "평가 시스템 개발: Spring Boot 기반 독립적인 평가 애플리케이션 구축",
@@ -676,6 +603,7 @@
           {
             "name": "kfriends 회원 관리 시스템",
             "period": "2021.09 (3주)",
+            "featured": false,
             "description": "국가별 분산된 웹사이트의 통합 회원 관리 필요성과 보안 강화 요구 해결",
             "details": [
               "통합 인증 서버 구축: Spring Security + JWT 기반 중앙화된 인증 시스템",
@@ -692,6 +620,7 @@
           {
             "name": "사내 기술 블로그 리뉴얼",
             "period": "2021.09 (3주)",
+            "featured": false,
             "description": "기존 WordPress 기반 블로그의 호스팅 비용 부담과 유지보수 복잡성 해결",
             "details": [
               "WordPress → Jekyll 마이그레이션: 정적 사이트 전환",
@@ -761,7 +690,7 @@
       },
       {
         "name": "항해 플러스 백엔드 6기",
-        "period": "2024.09 ~ 2024.11",
+        "period": "2024.09 ~ 2024.12",
         "description": "TDD 및 클린 아키텍처, 동시성 제어, Redis 활용",
         "url": "https://github.com/hhpb-code"
       },

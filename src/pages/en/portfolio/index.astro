@@ -1,7 +1,9 @@
 ---
 import PortfolioTemplate from '../../../components/templates/PortfolioTemplate.astro';
-import portfolioData from '../../../data/portfolio.json';
+import rawPortfolioData from '../../../data/portfolio.json';
+import { portfolioDataSchema } from '../../../types/portfolio';
 
+const portfolioData = portfolioDataSchema.parse(rawPortfolioData);
 const { projects, labels } = portfolioData;
 ---
 <PortfolioTemplate lang="en" projects={projects} labels={labels.en} />

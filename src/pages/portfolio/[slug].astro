@@ -1,8 +1,10 @@
 ---
 import PortfolioDetailTemplate from '../../components/templates/PortfolioDetailTemplate.astro';
-import portfolioData from '../../data/portfolio.json';
+import rawPortfolioData from '../../data/portfolio.json';
+import { portfolioDataSchema } from '../../types/portfolio';
 
 export function getStaticPaths() {
+  const portfolioData = portfolioDataSchema.parse(rawPortfolioData);
   const { projects, labels } = portfolioData;
   
   return projects.map((project, index) => ({

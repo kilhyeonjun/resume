@@ -370,6 +370,12 @@ const jsonLd = {
                 <p class="text-sm text-gray-600 dark:text-gray-300">
                   {item.type} — {item.date}
                 </p>
+                {item.description && (
+                  <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{item.description}</p>
+                )}
+                {item.achievement && (
+                  <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">{item.achievement}</p>
+                )}
               </div>
             </div>
           ))}

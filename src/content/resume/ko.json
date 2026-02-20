@@ -53,6 +53,12 @@
             "name": "NestJS"
           },
           {
+            "name": "Express.js"
+          },
+          {
+            "name": "TypeORM"
+          },
+          {
             "name": "Jest"
           }
         ]
@@ -75,10 +81,7 @@
         "category": "Cloud & Infra",
         "items": [
           {
-            "name": "AWS Lambda"
-          },
-          {
-            "name": "AWS CDK"
+            "name": "AWS (Lambda, S3, SQS/SNS, CDK)"
           },
           {
             "name": "Docker"

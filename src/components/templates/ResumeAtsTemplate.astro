@@ -189,7 +189,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       <p class="contact">
         {data.github && <a href={data.github} class="contact-item">{data.github.replace('https://', '')}</a>}
         {data.linkedin && <a href={data.linkedin} class="contact-item">{data.linkedin.replace('https://', '')}</a>}
-        {data.blog && <a href={data.blog} class="contact-item">{data.blog.replace('https://', '')}</a>}
+        {data.blog && <a href={data.blog} class="contact-item">{lang === 'ko' ? '블로그' : 'Blog'}: {data.blog.replace('https://', '')}</a>}
       </p>
     )}
   </header>
@@ -299,33 +299,25 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
   {data.continuousLearning && data.continuousLearning.length > 0 && (
     <section>
       <h2>{labels.continuousLearning.toUpperCase()}</h2>
-      {data.continuousLearning.map((item) => (
-        <p>
-          <strong>{item.name}</strong> ({item.period}) — {item.description}
-        </p>
-      ))}
+      <p>{data.continuousLearning.map((item) => `${item.name} (${item.period})`).join(' | ')}</p>
     </section>
   )}
 
   {data.openSource && data.openSource.length > 0 && (
     <section>
       <h2>{labels.openSource.toUpperCase()}</h2>
-      {data.openSource.map((item) => (
-        <p>
-          <strong>{item.url ? <a href={item.url}>{item.name}</a> : item.name}</strong>, {item.date} — {item.status}
-        </p>
-      ))}
+      <p>
+        {lang === 'ko' ? `오픈소스 기여 ${data.openSource.length}건` : `${data.openSource.length} open source contributions`}
+        {' — '}
+        {[...new Set(data.openSource.map((item) => item.name.split(':')[0].trim()))].join(', ')}
+      </p>
     </section>
   )}
 
   {data.technicalWriting && data.technicalWriting.length > 0 && (
     <section>
       <h2>{labels.technicalWriting.toUpperCase()}</h2>
-      {data.technicalWriting.map((item) => (
-        <p>
-          <strong>{item.title}</strong> ({item.type}) — {item.date}
-        </p>
-      ))}
+      <p>{data.technicalWriting.map((item) => `${item.title} (${item.type}, ${item.date})`).join(' | ')}</p>
     </section>
   )}
 

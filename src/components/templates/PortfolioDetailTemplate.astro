@@ -39,9 +39,9 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
     <nav class="mb-8">
       <a 
         href={`${basePath}/portfolio`}
-        class="inline-flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+        class="group inline-flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
       >
-        <ArrowLeftIcon class="h-4 w-4" />
+        <ArrowLeftIcon class="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
         {labels.backToPortfolio}
       </a>
     </nav>

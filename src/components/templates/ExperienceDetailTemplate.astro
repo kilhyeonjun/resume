@@ -29,15 +29,36 @@ const basePath = getBasePath(lang);
 
 <Layout title={`${experience.company} | ${experience.position}`} description={experience.description} lang={lang}>
   <article class="mx-auto max-w-4xl">
-     <!-- Back to Resume -->
-     <nav class="mb-8">
-       <a 
+     <!-- Top Navigation: Prev / Back / Next -->
+     <nav class="mb-8 flex items-center justify-between">
+       {prevExp ? (
+         <a
+           href={`${basePath}/experience/${prevExp.slug}`}
+           class="group inline-flex items-center gap-1.5 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+         >
+           <ArrowLeftIcon class="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+           <span class="hidden sm:inline">{prevExp.company}</span>
+           <span class="sm:hidden">{labels.previousCompany}</span>
+         </a>
+       ) : <div></div>}
+
+       <a
          href={basePath}
-         class="inline-flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+         class="text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
        >
-         <ArrowLeftIcon class="h-4 w-4" />
          {labels.backToResume}
        </a>
+
+       {nextExp ? (
+         <a
+           href={`${basePath}/experience/${nextExp.slug}`}
+           class="group inline-flex items-center gap-1.5 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+         >
+           <span class="hidden sm:inline">{nextExp.company}</span>
+           <span class="sm:hidden">{labels.nextCompany}</span>
+           <ArrowRightIcon class="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+         </a>
+       ) : <div></div>}
      </nav>
 
     <!-- Company Header -->

@@ -44,10 +44,10 @@ const { experience, labels, basePath } = Astro.props;
           )}
            <a 
              href={`${basePath}/experience/${exp.slug}`}
-             class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+             class="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
            >
              {labels.viewDetails}
-             <ArrowRightIcon class="h-4 w-4" />
+             <ArrowRightIcon class="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
            </a>
         </div>
       ))}

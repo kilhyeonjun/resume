@@ -44,7 +44,7 @@ const basePath = getBasePath(lang);
                   height={450}
                   class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, 50vw"
-                  loading="lazy"
+                  loading={index < 2 ? "eager" : "lazy"}
                 />
               </a>
             ) : (

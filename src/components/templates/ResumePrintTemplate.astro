@@ -241,7 +241,7 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
           <a href={data.linkedin} class="contact-item contact-link">{data.linkedin.replace('https://', '')}</a>
         )}
         {data.blog && (
-          <a href={data.blog} class="contact-item contact-link">{data.blog.replace('https://', '')}</a>
+          <a href={data.blog} class="contact-item contact-link">{lang === 'ko' ? '블로그' : 'Blog'}: {data.blog.replace('https://', '')}</a>
         )}
         <a href={resumeUrl} class="contact-item contact-link">{lang === 'ko' ? '이력서 웹' : 'Resume Web'}</a>
         <a href={`${resumeUrl}/portfolio`} class="contact-item contact-link">{lang === 'ko' ? '포트폴리오' : 'Portfolio'}</a>

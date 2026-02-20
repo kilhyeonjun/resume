@@ -374,10 +374,10 @@
         "endDate": "2024-08",
         "description": "누적 160억 투자 유치 임상시험 데이터 관리 솔루션 스타트업",
         "highlights": [
-          "외래키 락 타이밍 분석으로 Deadlock을 완전 해결하여 임상시험 알림 누락 방지",
-          "사용자-조직 1:N 구조 설계로 대형 병원 및 제약사 신규 계약 성사에 기여",
-          "VDR 3주 + TMF 3개월 긴급 투입으로 일정 준수, 빠른 MVP 출시 달성",
-          "AWS SNS/SQS 기반 Event-Driven Architecture 도입으로 시스템 안정성 향상"
+          "임상시험 전자서명 알림에서 DB Deadlock이 반복 발생하는 상황에서 외래키 공유락→배타락 전환 타이밍을 분석하여 근본 원인을 규명하고 Deadlock을 완전 해결",
+          "기존 1:1 사용자-조직 구조로 다중 조직 관리가 불가능한 상황에서 1:N 관계 구조로 확장하고 하위호환성을 보장하여 대형 병원 및 제약사 신규 계약 성사에 기여",
+          "VDR 프로젝트 일정 지연과 MVP 출시 압박 상황에서 3주 긴급 투입으로 Event-Driven PDF 변환 및 권한 기반 워크플로우를 구현하여 일정 준수 달성",
+          "Deadlock으로 인한 알림 누락이 시스템 신뢰성을 위협하는 상황에서 AWS SNS → SQS → Lambda 파이프라인을 설계하여 트랜잭션 분리 기반 안정적 비동기 처리 확보"
         ],
         "projects": [
           {
@@ -411,7 +411,7 @@
               "Express.js",
               "Cyan",
               "Slate.js",
-              "AWS SNS",
+              "SNS",
               "SQS",
               "Lambda",
               "React"
@@ -474,7 +474,7 @@
             ],
             "techStack": [
               "TypeScript",
-              "AWS Lambda",
+              "Lambda",
               "S3",
               "SNS",
               "SQS"
@@ -488,7 +488,7 @@
           "Cyan",
           "Aurora Serverless v2",
           "knex",
-          "AWS Lambda",
+          "Lambda",
           "S3",
           "SNS",
           "SQS",
@@ -506,10 +506,10 @@
         "endDate": "2023-06",
         "description": "누적 30만 다운로드 비대면 진료 및 약배달 플랫폼 스타트업",
         "highlights": [
-          "Express.js 단일 파일 구조에서 NestJS 모듈 아키텍처로 전환, TDD 도입으로 테스트 커버리지 80% 달성",
-          "서브도메인 간 세션 충돌 문제를 JWT 기반 토큰 인증으로 전환하여 해결",
-          "Naver Clova OCR + 식약처 API 연동으로 처방전 수동 입력 과정 자동화",
-          "Socket.io 기반 실시간 진료 상태 반영 및 Web Push 알림 구현"
+          "Express.js 단일 파일(app.js) 구조의 유지보수 한계를 극복하기 위해 NestJS 모듈 아키텍처로 단계적 전환하고 TDD를 도입하여 테스트 커버리지 80% 달성",
+          "서브도메인 간 세션 충돌로 사용자 전환이 불가능한 상황에서 JWT 기반 토큰 인증 시스템을 신규 구축하여 원활한 서브도메인 간 사용자 전환 실현",
+          "약사의 수동 처방전 입력으로 업무 효율이 저하되는 상황에서 Naver Clova OCR + 식약처 API를 연동하여 처방전 인식부터 복약지도 생성까지 자동화",
+          "진료 상태 변경을 실시간으로 확인할 수 없는 상황에서 Socket.io 기반 실시간 상태 반영과 Web Push 알림을 구현하여 사용자 응답성 개선"
         ],
         "projects": [
           {
@@ -617,9 +617,9 @@
         "endDate": "2022-03",
         "description": "고객 맞춤형 소프트웨어 솔루션 SI 중소기업",
         "highlights": [
-          "Apache POI 기반 수백 명 회원 정보 일괄 처리 시스템 구축",
-          "JWT 기반 크로스 도메인 로그인으로 다중 국가 통합 인증 구현",
-          "Travis CI 기반 CI/CD 도입으로 호스팅 비용 100% 절감"
+          "교육 기관의 수동 회원 관리 비효율을 해결하기 위해 Apache POI 기반 Excel 일괄 처리 시스템을 구축하여 수백 명 회원 정보 등록 자동화",
+          "국가별 분산된 웹사이트의 회원 관리 통합 필요성에 대응하여 Spring Security + JWT 기반 크로스 도메인 인증 서버를 구축하고 다중 국가 통합 인증 실현",
+          "WordPress 기반 블로그의 호스팅 비용 부담을 해결하기 위해 Jekyll + GitHub Pages로 마이그레이션하고 Travis CI 자동 배포를 도입하여 호스팅 비용 100% 절감"
         ],
         "projects": [
           {

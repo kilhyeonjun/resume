@@ -374,10 +374,10 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with KRW 16B (~$12M) cumulative investment",
         "highlights": [
-          "Completely resolved deadlocks through foreign key lock timing analysis, preventing clinical trial notification failures",
-          "Contributed to securing major hospital and pharmaceutical contracts by designing user-organization 1:N structure",
-          "Met deadlines with rapid MVP delivery: VDR in 3 weeks + TMF in 3 months emergency deployment",
-          "Improved system stability by introducing Event-Driven Architecture based on AWS SNS/SQS"
+          "Identified root cause of recurring DB Deadlocks in clinical trial e-signature notifications by analyzing foreign key shared-to-exclusive lock timing, completely resolving the issue",
+          "Expanded user-organization structure from 1:1 to 1:N with backward compatibility to overcome multi-organization management limitations, contributing to major hospital and pharmaceutical contracts",
+          "Delivered VDR MVP within 3 weeks under schedule pressure by implementing Event-Driven PDF conversion and permission-based workflow through emergency deployment",
+          "Designed AWS SNS → SQS → Lambda pipeline to address notification failures threatening system reliability, establishing stable async processing through transaction separation"
         ],
         "projects": [
           {
@@ -411,7 +411,7 @@
               "Express.js",
               "Cyan",
               "Slate.js",
-              "AWS SNS",
+              "SNS",
               "SQS",
               "Lambda",
               "React"
@@ -474,7 +474,7 @@
             ],
             "techStack": [
               "TypeScript",
-              "AWS Lambda",
+              "Lambda",
               "S3",
               "SNS",
               "SQS"
@@ -488,7 +488,7 @@
           "Cyan",
           "Aurora Serverless v2",
           "knex",
-          "AWS Lambda",
+          "Lambda",
           "S3",
           "SNS",
           "SQS",
@@ -506,10 +506,10 @@
         "endDate": "2023-06",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
-          "Migrated from Express.js monolithic structure to NestJS modular architecture, achieving 80% test coverage with TDD",
-          "Resolved subdomain session conflicts by transitioning to JWT-based token authentication",
-          "Automated prescription manual entry through Naver Clova OCR + MFDS API integration",
-          "Implemented real-time consultation status with Socket.io and Web Push notifications"
+          "Overcame maintenance limitations of Express.js single-file (app.js) structure by incrementally migrating to NestJS modular architecture with TDD, achieving 80% test coverage",
+          "Built JWT-based token authentication system from scratch to resolve subdomain session conflicts preventing user transitions, enabling seamless cross-subdomain user switching",
+          "Automated the end-to-end prescription workflow from OCR recognition to medication guide generation by integrating Naver Clova OCR + MFDS API, eliminating manual pharmacist data entry",
+          "Improved user responsiveness by implementing Socket.io real-time consultation status updates and Web Push notifications to address inability to track consultation state changes in real time"
         ],
         "projects": [
           {
@@ -617,9 +617,9 @@
         "endDate": "2022-03",
         "description": "Custom software solutions SI company",
         "highlights": [
-          "Built bulk member data processing system handling hundreds of records using Apache POI",
-          "Implemented multi-country unified authentication with JWT-based cross-domain login",
-          "Eliminated hosting costs by introducing Travis CI-based CI/CD pipeline"
+          "Automated registration of hundreds of members by building Apache POI-based Excel bulk processing system to resolve manual member management inefficiency at educational institutions",
+          "Built Spring Security + JWT cross-domain authentication server to unify member management across country-specific distributed websites, achieving multi-country unified authentication",
+          "Eliminated hosting costs by migrating from WordPress to Jekyll + GitHub Pages and introducing Travis CI automated deployment to resolve hosting cost burden"
         ],
         "projects": [
           {

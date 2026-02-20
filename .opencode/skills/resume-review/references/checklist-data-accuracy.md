@@ -74,3 +74,7 @@
 ### 4.3 skills 섹션 정합성
 - [ ] skills 섹션의 기술이 experience techStack에 최소 1회 이상 등장
 - [ ] experience에서 자주 사용된 핵심 기술이 skills 섹션에 포함됨
+
+### 4.4 기타 필드 검증
+- [ ] companyUrl 존재 여부 확인 (없으면 의도적인지, 웹사이트 존재 시 추가 권장)
+- [ ] Nodemailer, Slate.js 등 프로젝트에만 있고 회사 techStack에 누락된 기술 식별

@@ -19,7 +19,7 @@ description: |
 
 | 리뷰 유형 | 트리거 예시 | 가이드 | 체크리스트 |
 |-----------|-----------|--------|-----------|
-| 웹 이력서 전체 | "이력서 리뷰해줘" | [guide-web-review.md](references/guide-web-review.md) | 전체 6개 |
+| 웹 이력서 전체 | "이력서 리뷰해줘" | [guide-web-review.md](references/guide-web-review.md) | data, hr, technical, writing-ko, writing-en, structure |
 | HR Print PDF | "PDF 리뷰", "Print 리뷰" | [guide-print-pdf.md](references/guide-print-pdf.md) | data, hr, writing-ko, writing-en, structure |
 | ATS PDF | "ATS 확인", "ATS 리뷰" | [guide-ats-pdf.md](references/guide-ats-pdf.md) | data, hr, writing-ko, writing-en, structure |
 | 경력 상세 | "{회사명} 리뷰", "경력 상세 리뷰" | [guide-experience-detail.md](references/guide-experience-detail.md) | data, hr, technical, writing-ko, writing-en, structure |
@@ -93,15 +93,4 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 - **ko 기준 진행**: ko.json 기준으로 분석 후 en.json과 비교
 - **교차 검증**: highlights <-> project details <-> portfolio 간 수치 교차 확인
 - **기존 리뷰 참조**: 프로젝트 루트의 `.{slug}-review.md` 파일이 있으면 기존 이슈 추적
-- **점수 기준 일관성**: 기존 리뷰 파일의 점수 체계와 동일한 기준 적용
-
-## 체크리스트 매트릭스
-
-| 체크리스트 \ 유형 | 웹 | Print | ATS | 경력상세 | 포트폴리오 |
-|:-----------------|:--:|:-----:|:---:|:-------:|:---------:|
-| data-accuracy    | O  | O     | O   | O       | O         |
-| hr-perspective   | O  | O     | O   | O       | -         |
-| technical        | O  | -     | -   | O       | O         |
-| writing-ko       | O  | O     | O   | O       | O         |
-| writing-en       | O  | O     | O   | O       | O         |
-| structure        | O  | O     | O   | O       | O         |
+- **점수 기준 일관성**: 10점 만점 기준 사용. 기존 리뷰의 다른 점수 체계(5점 등)와 비교 시 환산 필요

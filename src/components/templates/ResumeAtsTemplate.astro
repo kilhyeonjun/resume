@@ -161,6 +161,10 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       size: A4;
     }
 
+    .competency-group {
+      margin-bottom: 12px;
+    }
+
     .back-link {
       display: block;
       text-align: center;
@@ -225,7 +229,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     <section>
       <h2>{labels.coreCompetencies.toUpperCase()}</h2>
       {data.coreCompetencies.map((comp) => (
-        <div style="margin-bottom: 12px;">
+        <div class="competency-group">
           <p><strong>{comp.category}</strong></p>
           <ul>
             {comp.items.map((item) => (

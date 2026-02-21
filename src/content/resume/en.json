@@ -30,7 +30,7 @@
       {
         "category": "System Reliability & Problem Solving",
         "items": [
-          "Incident Analysis & Resolution: Complete Deadlock resolution through foreign key lock timing analysis in clinical trials",
+          "Incident Analysis & Resolution: Deadlock resolution through foreign key lock timing analysis in clinical trials",
           "Data Consistency: Transactional Outbox pattern + distributed locks ensuring event consistency",
           "Probability Audit Log: DynamicModule-based probability package integrated across 12 game projects with 94%+ test coverage"
         ]
@@ -121,7 +121,7 @@
             "details": [
               "Git-like Version Control System: UUID-based cross-environment/project entity tracking ensuring data consistency across 6 games",
               "Event Sourcing-based Change Tracking: Auditable decorator + TypeORM Subscriber pattern for automated entity change recording pipeline",
-              "3-Way Merge Engine: Multi-environment version merge system with parent/child entity conflict detection and unique constraint handling",
+              "3-Way Merge Engine: Multi-environment version merge system with parent/child entity conflict detection and unique constraint handling across 6 games",
               "Version Diff Engine: Dual strategy of incremental comparison and snapshot comparison based on Base Audit availability for cost-efficient version diffing",
               "sharedUuid-based Identification: Decoupled from PK dependency, ensuring accurate entity tracking during migration, comparison, and merge"
             ],
@@ -295,7 +295,7 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment",
         "highlights": [
-          "Resolved recurring DB Deadlocks in clinical trial e-signature notifications (5+ monthly failures) by analyzing foreign key lock timing, completely eliminating Deadlocks and achieving zero failures via SNS → SQS → Lambda async migration",
+          "Resolved recurring DB Deadlocks in clinical trial e-signature notifications (5+ monthly failures) by analyzing foreign key lock timing, eliminating Deadlocks and achieving zero failures via SNS → SQS → Lambda async migration",
           "Expanded user-organization structure from 1:1 to 1:N with backward compatibility, enabling multi-organization management and contributing to major hospital and pharmaceutical contracts",
           "Delivered VDR MVP within 3 weeks under emergency deployment, implementing Event-Driven PDF conversion and permission-based workflow to meet launch deadline"
         ],
@@ -394,7 +394,9 @@
             "description": "Emergency deployment for delayed VDR project under MVP launch pressure",
             "details": [
               "Implemented Event-Driven PDF conversion triggered by S3 upload → Lambda lightweight conversion → SNS/SQS notification",
-              "Built permission-based workflow managing document access and approval by medical role"
+              "Built permission-based workflow managing document access and approval by medical role",
+              "Delivered MVP within 3-week emergency deployment: Prioritized core features and met launch deadline for delayed project",
+              "PDF Conversion Optimization: Tuned Lambda memory/timeout and implemented large file chunking for conversion reliability"
             ],
             "techStack": [
               "TypeScript",
@@ -458,7 +460,7 @@
             "name": "Common Module Development",
             "period": "2022.05 ~ 2022.06",
             "featured": false,
-            "description": "Consolidated shared modules to resolve code duplication and inconsistency from independent service management",
+            "description": "Resolved code duplication and inconsistency from independent service management by consolidating shared modules",
             "details": [
               "Built error log notification module for system monitoring efficiency",
               "Implemented user permission verification middleware for security enhancement"
@@ -472,7 +474,7 @@
             "name": "Doctor/Pharmacist Web Service Enhancement",
             "period": "2022.04 ~ 2023.05",
             "featured": true,
-            "description": "Enhanced doctor/pharmacist back-office systems to resolve lack of real-time status updates and manual notification workflows",
+            "description": "Resolved lack of real-time status updates and manual notification workflows in doctor/pharmacist back-office systems by introducing Socket.io and Web Push",
             "details": [
               "Built doctor appointment/request system and pharmacist dispensing request system",
               "Implemented real-time consultation status updates using Socket.io",
@@ -652,9 +654,9 @@
           "RDS",
           "S3",
           "Travis CI",
-              "Jekyll",
-              "JWT",
-              "GitHub Pages"
+          "Jekyll",
+          "JWT",
+          "GitHub Pages"
         ]
       }
     ],

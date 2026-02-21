@@ -8,12 +8,12 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "동시성 및 대규모 트래픽을 고려한 콘서트 좌석을 예약 학습 프로젝트",
+        "ko": "동시성 및 대규모 트래픽을 고려한 콘서트 좌석 예약 학습 프로젝트",
         "en": "A learning project for concert seat reservation considering concurrency and large-scale traffic"
       },
       "description": {
         "ko": "비관적 락/낙관적 락 구현 및 성능 비교, Redis 분산 락을 통한 동시성 제어, 캐싱 전략 적용으로 성능 최적화, 인덱싱을 통한 쿼리 성능 개선, K6를 이용한 부하 테스트 및 장애 대응",
-        "en": "Implemented pessimistic/optimistic locks with performance comparison, concurrency control through Redis distributed lock, performance optimization with caching strategies"
+        "en": "Implemented pessimistic/optimistic locks with performance comparison, concurrency control through Redis distributed lock, performance optimization with caching strategies, query performance improvement through indexing, and load testing with incident response using K6"
       },
       "coverImage": "/images/portfolio/concert-reservation-cover.webp",
       "contentImages": [],
@@ -93,8 +93,8 @@
         "en": "Real-time customized job alert service for university hospitals"
       },
       "description": {
-        "ko": "대학병원의 채용공고를 자동으로 스크래핑하고 새로운 공고에 대한 알림을 제공하는 백엔드 서비스입니다. 의료계 취업 준비생들에게 실시간으로 채용 정보를 제공하여 취업 준비에 도움을 주고자 기획했습니다.",
-        "en": "A backend service that automatically scrapes hospital job postings and provides notifications for new listings. Designed to help medical job seekers with real-time recruitment information."
+        "ko": "대학병원의 채용공고를 자동으로 스크래핑하고 새로운 공고에 대한 알림을 제공하는 백엔드 서비스로, 의료계 취업 준비생에게 실시간 채용 정보를 제공하여 취업 준비를 지원하는 프로젝트이다.",
+        "en": "A backend service that automatically scrapes hospital job postings and provides notifications for new listings, designed to support medical job seekers with real-time recruitment information."
       },
       "coverImage": "/images/portfolio/medical-recruit-cover.webp",
       "contentImages": [
@@ -158,8 +158,8 @@
         "en": "Startup vertical network platform"
       },
       "description": {
-        "ko": "'스타트업풀'은 창업을 꿈꾸는 분들에게 창업 진입 장벽을 낮춰주고 리스크 부담 없이 창업에 도전할 수 있도록, 창업 생태계 전반적으로 필요한 기능(팀 빌딩 및 창업 아이템 개발 등)과 창업 정보를 종합적으로 제공하는 창업 버티컬 네트워크 플랫폼이다.",
-        "en": "'StartupPool' is a vertical network platform that helps aspiring entrepreneurs by lowering barriers to entry, providing team building, startup item development, and comprehensive startup information."
+        "ko": "창업 진입 장벽을 낮추고 리스크 부담 없이 창업에 도전할 수 있도록, 팀 빌딩·아이템 개발 등 창업 생태계 전반의 기능과 정보를 종합 제공하는 창업 버티컬 네트워크 플랫폼이다.",
+        "en": "A startup vertical network platform that lowers barriers to entry and provides comprehensive features for team building, item development, and startup information to help aspiring entrepreneurs."
       },
       "features": {
         "ko": [
@@ -189,6 +189,7 @@
       },
       "skills": [
         "NestJS",
+        "TypeScript",
         "PostgreSQL",
         "JavaScript",
         "Node.js",
@@ -229,8 +230,8 @@
         "en": "Slack API Clone Coding"
       },
       "description": {
-        "ko": "Express.js로 백엔드 개발을 하다가 Java의 Spring과 비슷한 NestJS 프레임워크를 알게되어 실무에 도입하고 싶어 공부하게 되었습니다. Slack이라는 협업프로그램의 BE 클론 버전입니다.",
-        "en": "After developing with Express.js, I discovered NestJS framework similar to Java's Spring and wanted to adopt it in practice. This is a BE clone of the Slack collaboration program."
+        "ko": "Java Spring과 유사한 NestJS 프레임워크를 실무에 도입하기 위해 진행한 학습 프로젝트로, Slack 협업 프로그램의 백엔드를 클론 코딩한 프로젝트이다.",
+        "en": "A learning project for adopting NestJS framework (similar to Java Spring) into practice, cloning the backend of the Slack collaboration platform."
       },
       "coverImage": "/images/portfolio/slack-clone-cover.webp",
       "contentImages": [
@@ -296,7 +297,7 @@
     {
       "slug": "react-nodebird",
       "name": {
-        "ko": "react nodebird",
+        "ko": "React Nodebird",
         "en": "React Nodebird"
       },
       "type": "personal",
@@ -305,8 +306,8 @@
         "en": "Twitter clone coding with React Nodebird"
       },
       "description": {
-        "ko": "이직하는 회사 메드고의 기술 스택이 Node.js 기반으로 되어있어서 공부용 프로젝트로 인터넷 강의를 들었습니다. 트위터와 비슷한 SNS 프로젝트 입니다.",
-        "en": "Since my new company Medgo uses Node.js-based tech stack, I took an online course as a study project. This is a Twitter-like SNS project."
+        "ko": "Node.js 기반 기술 스택 학습을 위해 진행한 트위터 유사 SNS 클론 프로젝트이다.",
+        "en": "A Twitter-like SNS clone project for learning Node.js-based tech stack."
       },
       "coverImage": "/images/portfolio/react-nodebird-cover.webp",
       "contentImages": [
@@ -389,8 +390,8 @@
         "en": "Python multi-chat application"
       },
       "description": {
-        "ko": "멀티 스레드를 이용하여 서버에 여러 클라이언트가 다중으로 접속이 가능하게 구현을 하였고 이를 통해 여러 클라이언트가 하나의 서버에서 서로 소통을 할 수 있게 되었습니다.",
-        "en": "Implemented multi-threading to allow multiple clients to connect to a server simultaneously, enabling communication between multiple clients on a single server."
+        "ko": "멀티 스레드를 활용하여 서버에 여러 클라이언트가 동시 접속하고 상호 소통할 수 있는 채팅 애플리케이션이다.",
+        "en": "A chat application using multi-threading to allow multiple clients to connect simultaneously and communicate on a single server."
       },
       "coverImage": "/images/portfolio/multichat-cover.webp",
       "contentImages": [
@@ -454,8 +455,8 @@
         "en": "League of Legends stats search - OP.GG clone"
       },
       "description": {
-        "ko": "Spring Boot를 공부하고 싶어서 좋아하는 게임인 League of Legends의 전적 검색 사이트 OP.GG를 클론 코딩하였습니다. Riot API를 사용하여 연동하였습니다.",
-        "en": "To study Spring Boot, I cloned OP.GG, a League of Legends match history site. Integrated with Riot API."
+        "ko": "Spring Boot 학습을 위해 League of Legends 전적 검색 사이트 OP.GG를 클론 코딩한 프로젝트로, Riot API를 연동하여 전적 검색 및 랭킹 기능을 구현한 프로젝트이다.",
+        "en": "A Spring Boot learning project cloning OP.GG (League of Legends match history site), integrating Riot API for match search and ranking features."
       },
       "coverImage": "/images/portfolio/trollgg-cover.webp",
       "contentImages": [

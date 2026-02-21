@@ -107,7 +107,7 @@
           "Built internal common library ecosystem with NestJS utility (10 modules) + Game Server Kit (2 packages) to eliminate recurring code duplication and inconsistency across multi-game projects, ensuring code consistency",
           "Developed Git-like Audit Log + 3-Way Merge engine to resolve delayed incident response caused by inability to track balance data changes, automating change tracking and merging across 6 games",
           "Built GCP-AWS hybrid pipeline to unify marketing data scattered across Google Ads/Meta/TikTok, consolidating campaigns, creatives, and metrics from 3 platforms into a single system",
-          "Integrated DynamicModule-based probability package across 12 game projects and built CDK-based audit log analytics pipeline, achieving 94%+ test coverage"
+          "Addressed regulatory risk from lack of game probability verification by integrating DynamicModule-based probability package across 12 game projects and building CDK-based audit log analytics pipeline, achieving 94%+ test coverage"
         ],
         "projects": [
           {
@@ -116,7 +116,7 @@
             "featured": false,
             "description": "Resolved delayed balance issue response caused by inability to track data change history during game operations",
             "details": [
-              "Git-like Version Control System: UUID-based cross-environment/project entity tracking ensuring multi-game data consistency",
+              "Git-like Version Control System: UUID-based cross-environment/project entity tracking ensuring data consistency across 6 games",
               "Event Sourcing-based Change Tracking: Auditable decorator + TypeORM Subscriber pattern for automated entity change recording pipeline",
               "3-Way Merge Engine: Multi-environment version merge system with parent/child entity conflict detection and unique constraint handling",
               "Version Diff Engine: Dual strategy of incremental comparison and snapshot comparison based on Base Audit availability for cost-efficient version diffing",
@@ -140,7 +140,7 @@
               "NAS-S3 Dual Sync: SQS event-based server-worker separation architecture for bidirectional sync/restore between internal NAS and S3",
               "Meta Asset Sync Performance Optimization: TypeORM save() → insertBulk() conversion and deleteByCondition adoption — Image sync time reduced by 72% (25.7s→7.1s), DB transaction time reduced by 95% (10-16s→0.3-0.5s)",
               "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%",
-              "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25 → $1.1 per TB)",
+              "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25→$1.1 per TB)",
               "DB Optimization: Normalized 100+ column table (main/time-series/prediction split), index optimization and cursor-based pagination resolving 18-second query bottleneck",
               "Retention Metrics Integration: Consistently applied retention metrics across the full pipeline from BigQuery ingestion to entity, API, and field metadata for user retention analysis"
             ],
@@ -189,11 +189,11 @@
             "name": "Cloud Data Sync System",
             "period": "2025.08 ~ Present",
             "featured": false,
-            "description": "S3-based sync and automated DDL management system for dynamic game data (user experience, currency, etc.) across environments",
+            "description": "Built S3-based sync and automated DDL management system to resolve dynamic game data inconsistency across environments",
             "details": [
               "Cross-environment Data Sync: S3-based dynamic game data synchronization across development/staging/production environments",
               "Automated DDL Management Engine: Dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME for schema sync automation",
-              "Save/Upload Performance Improvement: Analyzed and optimized Cloud Data ingestion and S3 upload bottlenecks, significantly reducing large-scale processing delays",
+              "Save/Upload Performance Improvement: Analyzed and optimized Cloud Data ingestion and S3 upload bottlenecks, resolving large-scale processing delays",
               "Sync Stabilization: Job separation, scheduling approach transition, timeout adjustments, and non-blocking processing for operational reliability"
             ],
             "techStack": [
@@ -221,6 +221,7 @@
               "ElastiCache (Redis)",
               "GitHub NPM",
               "NestJS",
+              "Slack API",
               "TypeORM",
               "TypeScript"
             ]
@@ -229,7 +230,7 @@
             "name": "Probability Calculation & Audit Log Analytics Pipeline (Glider Probability)",
             "period": "2026.02 ~ Present",
             "featured": false,
-            "description": "Built game probability calculation package and CDK-based analytics infrastructure",
+            "description": "Built probability calculation package and CDK-based audit log analytics infrastructure to address regulatory risk from lack of game probability verification",
             "details": [
               "NestJS DynamicModule-based Probability Package: Packaged 5 probability functions + automatic Kinesis logging as @gameduo/glider-probability, integrated across 12 game projects",
               "CDK-based Analytics Pipeline: Codified Kinesis → Firehose (Dynamic Partitioning + Parquet conversion) → S3 → Glue → Athena end-to-end probability audit log analytics infrastructure",
@@ -291,7 +292,7 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment",
         "highlights": [
-          "Identified root cause of recurring DB Deadlocks in clinical trial e-signature notifications (5+ monthly failures) by analyzing foreign key shared-to-exclusive lock constraint enforcement timing, completely resolving Deadlocks and migrating to AWS SNS → SQS → Lambda async pipeline to achieve zero notification failures",
+          "Resolved recurring DB Deadlocks in clinical trial e-signature notifications (5+ monthly failures) by analyzing foreign key lock timing, completely eliminating Deadlocks and achieving zero failures via SNS → SQS → Lambda async migration",
           "Expanded user-organization structure from 1:1 to 1:N with backward compatibility to overcome multi-organization management limitations, contributing to major hospital and pharmaceutical contracts",
           "Delivered VDR MVP within 3 weeks under schedule pressure by implementing Event-Driven PDF conversion and permission-based workflow through emergency deployment"
         ],
@@ -302,7 +303,7 @@
             "featured": false,
             "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance using Cyan (in-house Node.js framework)",
             "details": [
-              "Batch Dispatch System: Participant group management per clinical trial and efficient consent dispatch",
+              "Batch Dispatch System: Participant group management per clinical trial and batch consent dispatch",
               "Workflow Structure: Request → Researcher → Participant sequential flow management"
             ],
             "techStack": [
@@ -310,7 +311,7 @@
               "Express.js",
               "Cyan",
               "Aurora Serverless v2",
-              "knex"
+              "Knex.js"
             ]
           },
           {
@@ -407,7 +408,7 @@
           "Express.js",
           "Cyan",
           "Aurora Serverless v2",
-          "knex",
+          "Knex.js",
           "Lambda",
           "S3",
           "SNS",
@@ -454,7 +455,7 @@
             "name": "Common Module Development",
             "period": "2022.05 ~ 2022.06",
             "featured": false,
-            "description": "Developed shared modules for doctor, pharmacist, and auth services",
+            "description": "Consolidated shared modules to resolve code duplication and inconsistency from independent service management",
             "details": [
               "Built error log notification module for system monitoring efficiency",
               "Implemented user permission verification middleware for security enhancement"
@@ -468,7 +469,7 @@
             "name": "Doctor/Pharmacist Web Service Enhancement",
             "period": "2022.04 ~ 2023.05",
             "featured": true,
-            "description": "Feature enhancement and maintenance of back-office systems for doctors and pharmacists",
+            "description": "Enhanced doctor/pharmacist back-office systems to resolve lack of real-time status updates and manual notification workflows",
             "details": [
               "Built doctor appointment/request system and pharmacist dispensing request system",
               "Implemented real-time consultation status updates using Socket.io",
@@ -589,11 +590,11 @@
             "name": "Future Service JOB Agent Development",
             "period": "2021.07 ~ 2022.03",
             "featured": false,
-            "description": "Resolved offline constraints in career counseling and startup assessment",
+            "description": "Resolved offline constraints in career counseling and inefficiency in counselor evaluation workflows",
             "details": [
               "Assessment System: Spring Boot-based independent assessment application",
               "iframe-based System Integration: Assessment feature embedded in existing PHP system",
-              "Composite Score Calculation: Multi-survey result aggregation algorithm"
+              "Composite Score Calculation: Multi-survey result aggregation and scoring algorithm"
             ],
             "techStack": [
               "Java",
@@ -648,7 +649,9 @@
           "RDS",
           "S3",
           "Travis CI",
-          "Jekyll"
+              "Jekyll",
+              "JWT",
+              "GitHub Pages"
         ]
       }
     ],
@@ -803,7 +806,7 @@
       "careerDetails": "/resume/en/experience/gameduo"
     },
     "labels": {
-      "summary": "About",
+      "summary": "Professional Summary",
       "coreCompetencies": "Core Competencies",
       "experience": "Experience",
       "skills": "Technical Skills",

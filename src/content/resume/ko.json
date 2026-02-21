@@ -107,7 +107,7 @@
           "다중 게임 프로젝트 간 코드 중복과 불일치가 반복되는 상황에서 NestJS 유틸 10개 모듈 + 게임서버 Kit 2개 패키지로 사내 공통 라이브러리 생태계를 구축하여 코드 일관성 확보",
           "다중 게임 밸런스 데이터 변경 이력 추적 불가로 장애 대응이 지연되는 상황에서 Git-like Audit Log + 3-Way Merge 엔진을 개발하여 6개 게임의 데이터 변경 추적·병합 자동화 실현",
           "마케팅 데이터가 Google Ads/Meta/TikTok에 분산되어 통합 분석이 불가능한 상황에서 GCP-AWS 하이브리드 파이프라인을 구축하여 3개 플랫폼의 캠페인·소재·지표를 단일 시스템으로 통합",
-          "DynamicModule 기반 확률 패키지를 12개 게임 프로젝트에 통합하고 CDK 기반 감사 로그 분석 파이프라인을 구축하여 94%+ 테스트 커버리지 확보"
+          "게임 확률 검증 체계 부재로 규제 리스크가 존재하는 상황에서 DynamicModule 기반 확률 패키지를 12개 게임 프로젝트에 통합하고 CDK 기반 감사 로그 분석 파이프라인을 구축하여 94%+ 테스트 커버리지 확보"
         ],
         "projects": [
           {
@@ -116,7 +116,7 @@
             "featured": false,
             "description": "게임 운영 중 데이터 변경 이력 추적 불가로 인한 밸런스 문제 대응 지연 해결",
             "details": [
-              "Git-like 버전 관리 시스템: UUID 기반 크로스 환경/프로젝트 엔티티 추적으로 다중 게임 간 데이터 일관성 확보",
+              "Git-like 버전 관리 시스템: UUID 기반 크로스 환경/프로젝트 엔티티 추적으로 6개 게임 간 데이터 일관성 확보",
               "이벤트 소싱 기반 변경 추적: Auditable 데코레이터 + TypeORM Subscriber 패턴으로 엔티티 변경 자동 기록 파이프라인 구축",
               "3-Way Merge 엔진: 상위/하위 엔티티 충돌 감지와 유니크 제약조건을 고려한 다중 환경 간 버전 병합 시스템",
               "버전 간 Diff 엔진: Base Audit 유무에 따른 증분 비교와 스냅샷 비교의 이중 전략으로 비용 효율적 버전 비교",
@@ -140,7 +140,7 @@
               "NAS-S3 이중화 동기화: SQS 이벤트 기반 서버-워커 분리 아키텍처로 사내 NAS와 S3 간 양방향 동기화/복원 구현",
               "Meta 에셋 동기화 성능 최적화: TypeORM save() → insertBulk() 전환, deleteByCondition 적용으로 Image 동기화 시간 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)",
               "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감",
-              "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 BigQuery 비용 82% 절감 (TB당 $6.25 → $1.1)",
+              "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 BigQuery 비용 82% 절감 (TB당 $6.25→$1.1)",
               "DB 최적화: 100+ 컬럼 테이블 정규화(메인/시계열/예측 3개 분리), 인덱스 최적화 및 커서 기반 페이지네이션으로 18초 쿼리 병목 해결",
               "리텐션 지표 통합: BigQuery 수집부터 엔티티·API·필드 메타데이터까지 전 구간에 retention 지표를 일관 반영하여 유저 잔존율 분석 지원"
             ],
@@ -189,11 +189,11 @@
             "name": "Cloud Data 동기화 시스템",
             "period": "2025.08 ~ 현재",
             "featured": false,
-            "description": "동적 게임 데이터(유저 경험치, 재화 등)의 환경 간 S3 동기화 및 DDL 자동 관리 시스템",
+            "description": "환경 간 동적 게임 데이터 불일치 문제를 해결하기 위한 S3 기반 동기화 및 DDL 자동 관리 시스템",
             "details": [
               "환경 간 데이터 동기화: S3 기반 동적 게임 데이터의 개발/스테이징/프로덕션 환경 간 동기화 시스템",
               "DDL 자동 관리 엔진: PK 컬럼 타입 동적 결정, 컬럼 타입 불일치 감지·MODIFY, 인덱스 자동 생성·RENAME으로 스키마 동기화 자동화",
-              "저장/업로드 성능 개선: Cloud Data 적재 및 S3 업로드 병목 구간 분석·최적화로 대용량 처리 지연 대폭 감소",
+              "저장/업로드 성능 개선: Cloud Data 적재 및 S3 업로드 병목 구간 분석·최적화로 대용량 처리 지연 해소",
               "동기화 안정화: job 분리, 스케줄링 방식 전환, timeout 조정, non-blocking 처리로 운영 안정성 확보"
             ],
             "techStack": [
@@ -221,6 +221,7 @@
               "ElastiCache (Redis)",
               "GitHub NPM",
               "NestJS",
+              "Slack API",
               "TypeORM",
               "TypeScript"
             ]
@@ -229,7 +230,7 @@
             "name": "확률 계산 및 감사 로그 분석 파이프라인 (Glider Probability)",
             "period": "2026.02 ~ 현재",
             "featured": false,
-            "description": "게임 확률 계산 패키지와 CDK 기반 분석 인프라 구축",
+            "description": "게임 확률 검증 체계 부재에 따른 규제 리스크 해소를 위한 확률 계산 패키지와 CDK 기반 감사 로그 분석 인프라 구축",
             "details": [
               "NestJS DynamicModule 기반 확률 패키지: 5가지 확률 함수 + 자동 Kinesis 로깅을 @gameduo/glider-probability로 패키지화, 12개 게임 프로젝트에 통합",
               "CDK 기반 분석 파이프라인: Kinesis → Firehose(Dynamic Partitioning + Parquet 변환) → S3 → Glue → Athena End-to-End 확률 감사 로그 분석 인프라를 코드화",
@@ -291,7 +292,7 @@
         "endDate": "2024-08",
         "description": "누적 160억 투자 유치 임상시험 데이터 관리 솔루션 스타트업",
         "highlights": [
-          "임상시험 전자서명 알림에서 DB Deadlock이 반복 발생하여 알림 누락 월 5건 이상 보고되는 상황에서 외래키 공유락→배타락 전환 타이밍을 분석하여 Deadlock을 완전 해결하고 AWS SNS → SQS → Lambda 비동기 파이프라인으로 전환하여 알림 누락 0건 달성",
+          "임상시험 전자서명 알림 DB Deadlock으로 월 5건+ 알림 누락이 발생하는 상황에서 외래키 락 타이밍을 분석하여 Deadlock을 완전 해결하고 SNS → SQS → Lambda 비동기 전환으로 알림 누락 0건 달성",
           "기존 1:1 사용자-조직 구조로 다중 조직 관리가 불가능한 상황에서 1:N 관계 구조로 확장하고 하위호환성을 보장하여 대형 병원 및 제약사 신규 계약 성사에 기여",
           "VDR 프로젝트 일정 지연과 MVP 출시 압박 상황에서 3주 긴급 투입으로 Event-Driven PDF 변환 및 권한 기반 워크플로우를 구현하여 일정 준수 달성"
         ],
@@ -302,7 +303,7 @@
             "featured": false,
             "description": "Cyan(사내 Node.js 프레임워크) 기반 임상시험 전자 동의서 수집 비효율성과 전자서명 규제 준수 요구사항 해결",
             "details": [
-              "배치 발송 시스템: 임상시험별 참여자 그룹 관리 및 효율적 동의서 발송",
+              "배치 발송 시스템: 임상시험별 참여자 그룹 관리 및 일괄 동의서 발송",
               "워크플로우 기본 구조: 동의서 요청자 → 연구자 → 참여자 순서의 기본 진행 관리"
             ],
             "techStack": [
@@ -310,7 +311,7 @@
               "Express.js",
               "Cyan",
               "Aurora Serverless v2",
-              "knex"
+              "Knex.js"
             ]
           },
           {
@@ -407,7 +408,7 @@
           "Express.js",
           "Cyan",
           "Aurora Serverless v2",
-          "knex",
+          "Knex.js",
           "Lambda",
           "S3",
           "SNS",
@@ -454,7 +455,7 @@
             "name": "공통 모듈 개발",
             "period": "2022.05 ~ 2022.06",
             "featured": false,
-            "description": "의사·약사·Auth 서비스 공통으로 사용되는 모듈 개발",
+            "description": "서비스별 독립 관리로 인한 코드 중복과 일관성 부족을 해결하기 위한 공통 모듈 통합 개발",
             "details": [
               "에러 로그 알림 모듈 개발로 시스템 모니터링 효율화",
               "사용자 권한 확인 미들웨어 구현으로 보안성 강화"
@@ -468,7 +469,7 @@
             "name": "의사/약사 웹 서비스 고도화",
             "period": "2022.04 ~ 2023.05",
             "featured": true,
-            "description": "바로필 의사·약사용 백오피스 시스템의 기능 고도화 및 유지보수",
+            "description": "의사·약사용 백오피스 시스템의 실시간 상태 반영 부재와 수동 알림 체계를 개선하기 위한 기능 고도화",
             "details": [
               "의사 진료 예약/요청 시스템 및 약사 조제 요청 시스템 구현",
               "Socket.io 기반 실시간 진료 상태 반영으로 사용자 응답성 개선",
@@ -648,7 +649,9 @@
           "RDS",
           "S3",
           "Travis CI",
-          "Jekyll"
+              "Jekyll",
+              "JWT",
+              "GitHub Pages"
         ]
       }
     ],

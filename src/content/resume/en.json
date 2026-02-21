@@ -9,13 +9,12 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package ecosystem.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, boosting developer productivity through AI-native development with generative AI, and creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
+    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package system.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, pursuing developer productivity improvements as demonstrated in the Games on AWS 2025 presentation on generative AI adoption, and creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
     "coreCompetencies": [
       {
         "category": "Performance Optimization & Cost Efficiency",
         "items": [
           "Cloud Cost Optimization: 82% BigQuery cost reduction via Storage Read API ($6.25→$1.1 per TB)",
-          "CDK-based Infrastructure as Code: Built Kinesis → Firehose → S3 → Glue → Athena analytics pipeline as IaC",
           "Serverless Performance Tuning: Lambda ARM64 migration 20% cost reduction, Meta asset sync 72% faster"
         ]
       },
@@ -23,8 +22,9 @@
         "category": "Scalable System Design",
         "items": [
           "Event-Driven Architecture: SQS + Lambda + EventBridge async processing expanding data collection 6x",
-          "Internal NPM Package Ecosystem: 10 NestJS utility modules + Game Server Kit packages ensuring multi-project code consistency",
-          "GCP-AWS Hybrid Pipeline: Pub/Sub → Cloud Functions → API Gateway → Lambda cross-cloud real-time data integration"
+          "Internal NPM Package System: 10 NestJS utility modules + Game Server Kit packages ensuring multi-project code consistency",
+          "GCP-AWS Hybrid Pipeline: Pub/Sub → Cloud Functions → API Gateway → Lambda cross-cloud real-time data integration",
+          "CDK-based Infrastructure as Code: Built Kinesis → Firehose → S3 → Glue → Athena analytics pipeline as IaC"
         ]
       },
       {
@@ -87,6 +87,9 @@
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
           },
           {
+            "name": "GCP (BigQuery, Pub/Sub, Cloud Functions)"
+          },
+          {
             "name": "Docker"
           }
         ]
@@ -102,12 +105,12 @@
         "current": true,
         "description": "Mobile game development and publishing company",
         "highlights": [
-          "Reduced BigQuery costs by 82% ($6.25→$1.1 per TB) by migrating to Storage Read API when marketing data query costs were escalating",
-          "Overcame batch processing limitations from marketing metrics collection period expansion by migrating to serverless, expanding data collection range 6x (60→360 days)",
-          "Built internal common library ecosystem with NestJS utility (10 modules) + Game Server Kit (2 packages) to eliminate recurring code duplication and inconsistency across multi-game projects, ensuring code consistency",
-          "Developed Git-like Audit Log + 3-Way Merge engine to resolve delayed incident response caused by inability to track balance data changes, automating change tracking and merging across 6 games",
+          "Achieved 82% BigQuery cost reduction ($6.25→$1.1 per TB) by switching to Storage Read API to address escalating marketing data query costs",
+          "Overcame batch processing limitations by migrating to serverless architecture, expanding marketing metrics collection range 6x (60→360 days)",
+          "Eliminated recurring code duplication across multi-game projects by building NestJS utility (10 modules) + Game Server Kit (2 packages), establishing a shared library structure for code consistency",
+          "Designed and implemented Git-like Audit Log + 3-Way Merge engine to automate balance data change tracking and merging across 6 games, resolving delayed incident response",
           "Built GCP-AWS hybrid pipeline to unify marketing data scattered across Google Ads/Meta/TikTok, consolidating campaigns, creatives, and metrics from 3 platforms into a single system",
-          "Addressed regulatory risk from lack of game probability verification by integrating DynamicModule-based probability package across 12 game projects and building CDK-based audit log analytics pipeline, achieving 94%+ test coverage"
+          "Addressed regulatory risk from mandatory game probability disclosure by integrating DynamicModule-based probability package across 12 game projects and building CDK-based audit log analytics pipeline, achieving 94%+ test coverage"
         ],
         "projects": [
           {
@@ -205,12 +208,12 @@
             ]
           },
           {
-            "name": "Internal Common Library Ecosystem",
+            "name": "Internal Common Library System",
             "period": "2025.07 ~ Present",
             "featured": true,
             "description": "Development and operation of NestJS utility (10 modules) + Game Server Kit (2 packages) for multi-project code consistency",
             "details": [
-              "10-module Library Ecosystem: Expanded to core, repository, cache, lock, slack, crypto, smb, hash, type, and iac modules",
+              "10-module Library System: Expanded to core, repository, cache, lock, slack, crypto, smb, hash, type, and iac modules",
               "Repository Module: Bulk operations, Audit Log, TypeORM type narrowing support; refactored 2000+ line codebase into SRP-based file separation",
               "Distributed Lock Module: ElastiCache (Redis)-based distributed lock decorator for concurrency control in multi-instance environments",
               "TypeScript Generic-based Type Safety: Overcame TypeORM type limitations through function overloading and generics",
@@ -293,8 +296,8 @@
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment",
         "highlights": [
           "Resolved recurring DB Deadlocks in clinical trial e-signature notifications (5+ monthly failures) by analyzing foreign key lock timing, completely eliminating Deadlocks and achieving zero failures via SNS → SQS → Lambda async migration",
-          "Expanded user-organization structure from 1:1 to 1:N with backward compatibility to overcome multi-organization management limitations, contributing to major hospital and pharmaceutical contracts",
-          "Delivered VDR MVP within 3 weeks under schedule pressure by implementing Event-Driven PDF conversion and permission-based workflow through emergency deployment"
+          "Expanded user-organization structure from 1:1 to 1:N with backward compatibility, enabling multi-organization management and contributing to major hospital and pharmaceutical contracts",
+          "Delivered VDR MVP within 3 weeks under emergency deployment, implementing Event-Driven PDF conversion and permission-based workflow to meet launch deadline"
         ],
         "projects": [
           {
@@ -303,8 +306,8 @@
             "featured": false,
             "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance using Cyan (in-house Node.js framework)",
             "details": [
-              "Batch Dispatch System: Participant group management per clinical trial and batch consent dispatch",
-              "Workflow Structure: Request → Researcher → Participant sequential flow management"
+              "Built batch dispatch system for participant group management per clinical trial and batch consent dispatch",
+              "Implemented workflow structure managing Request → Researcher → Participant sequential flow"
             ],
             "techStack": [
               "TypeScript",
@@ -320,10 +323,10 @@
             "featured": true,
             "description": "Resolved critical notification failures due to database Deadlocks in clinical trial e-signature notifications",
             "details": [
-              "Deadlock Root Cause Analysis: Identified shared-to-exclusive lock timing issue during foreign key constraint enforcement",
-              "Event-Driven Architecture Design: AWS SNS → SQS → Lambda pipeline implementation",
-              "Real-time Cross-reference System: Document relationship tracking and auto-update",
-              "Word Document Conversion: Server-side engine converting Slate.js JSON to Word documents"
+              "Identified shared-to-exclusive lock timing issue during foreign key constraint enforcement as Deadlock root cause",
+              "Designed and implemented AWS SNS → SQS → Lambda Event-Driven pipeline",
+              "Built real-time cross-reference system for document relationship tracking and auto-update",
+              "Developed server-side engine converting Slate.js JSON to Word documents"
             ],
             "techStack": [
               "TypeScript",
@@ -342,9 +345,9 @@
             "featured": false,
             "description": "Resolved lack of delivery status tracking and data consistency issues in email system",
             "details": [
-              "AWS SES Monitoring: Real-time tracking of delivery/bounce/complaint status",
-              "Event-based Delivery System: Stable email delivery separated from transactions",
-              "Inline Image Attachment: CID-based image embedding improving display rate"
+              "Implemented real-time tracking of delivery/bounce/complaint status via AWS SES monitoring",
+              "Built event-based delivery system separating email delivery from transactions",
+              "Adopted CID-based inline image embedding to improve display rate"
             ],
             "techStack": [
               "TypeScript",
@@ -359,8 +362,8 @@
             "featured": false,
             "description": "Resolved user inconvenience and system scalability limitations from 1:1 user-organization structure",
             "details": [
-              "User-Organization Relationship Expansion: 1:1 to 1:N structure for multi-organization management",
-              "Backward Compatibility: Zero-downtime API migration ensuring service continuity"
+              "Expanded user-organization relationship from 1:1 to 1:N structure for multi-organization management",
+              "Ensured zero-downtime API migration with backward compatibility for service continuity"
             ],
             "techStack": [
               "TypeScript",
@@ -375,8 +378,8 @@
             "featured": false,
             "description": "Frontend development for clinical Trial Master File (TMF) management system",
             "details": [
-              "Admin/Dashboard: Organization member role/permission management, document status overview and search",
-              "Archiver/Viewer: Document history archival, preview, property management, and commenting"
+              "Built organization member role/permission management and document status overview with search for Admin/Dashboard",
+              "Developed document history archival, preview, property management, and commenting for Archiver/Viewer"
             ],
             "techStack": [
               "React",
@@ -390,8 +393,8 @@
             "featured": true,
             "description": "Emergency deployment for delayed VDR project under MVP launch pressure",
             "details": [
-              "Event-Driven PDF Conversion: S3 upload trigger → Lambda lightweight conversion → SNS/SQS notification",
-              "Permission-based Workflow: Document access and approval permission management by medical role"
+              "Implemented Event-Driven PDF conversion triggered by S3 upload → Lambda lightweight conversion → SNS/SQS notification",
+              "Built permission-based workflow managing document access and approval by medical role"
             ],
             "techStack": [
               "TypeScript",
@@ -429,10 +432,10 @@
         "endDate": "2023-05",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
-          "Migrated from 3,000+ line single-file (app.js) structure causing regression bugs on every feature addition to NestJS modular architecture with TDD, achieving 80% test coverage and zero post-deployment incidents",
+          "Migrated from 3,000+ line single-file (app.js) structure to NestJS modular architecture with TDD, achieving 80% test coverage and zero post-deployment incidents",
           "Built JWT-based token authentication in 3 weeks for a 300K-download platform where subdomain session conflicts forced re-login, enabling seamless user switching across 3 subdomains",
-          "Automated prescription workflow from manual pharmacist entry (3-5 min per prescription) to OCR-based processing under 30 seconds by integrating Naver Clova OCR + MFDS API",
-          "Eliminated patient wait complaints from delayed status updates by implementing Socket.io real-time consultation status and Web Push notifications, reducing status reflection from tens of seconds to instant"
+          "Integrated Naver Clova OCR + MFDS API to automate the full prescription workflow from image recognition to medication guide generation, cutting per-prescription processing from 3-5 minutes to under 30 seconds",
+          "Implemented Socket.io real-time consultation status and Web Push notifications to eliminate patient wait complaints, reducing status reflection from tens of seconds to instant"
         ],
         "projects": [
           {
@@ -545,9 +548,9 @@
         "endDate": "2022-03",
         "description": "Custom software consulting firm",
         "highlights": [
-          "Reduced member registration from hours to minutes by building Apache POI-based Excel bulk processing for 300+ students per semester at educational institutions where manual entry was required each term",
+          "Built Apache POI-based Excel bulk processing to reduce member registration from hours to minutes for 300+ students per semester at educational institutions",
           "Built Spring Security + JWT cross-domain authentication server enabling single sign-on across 5 country-specific websites that previously required separate logins per country",
-          "Eliminated 100% of hosting costs by migrating from WordPress to Jekyll + GitHub Pages with Travis CI automated deployment pipeline"
+          "Migrated from WordPress to Jekyll + GitHub Pages with Travis CI automated deployment pipeline, eliminating 100% of hosting costs"
         ],
         "projects": [
           {

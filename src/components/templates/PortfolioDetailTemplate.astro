@@ -87,7 +87,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
         <div class="overflow-hidden rounded-xl">
           <img 
             src={`${import.meta.env.BASE_URL}${project.coverImage}`}
-            alt={projectName}
+            alt={`${projectName} project cover image`}
             width={1200}
             height={630}
             sizes="(max-width: 896px) 100vw, 896px"
@@ -120,7 +120,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
         <h2 class="section-title mb-4">{labels.collaborationTools}</h2>
         <div class="flex flex-wrap gap-2">
            {project.collaborationTools.map((tool: string) => (
-            <span class="rounded-md bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
+            <span class="tech-badge">
               {tool}
             </span>
           ))}
@@ -179,7 +179,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
         <h2 class="section-title mb-6">{labels.skills}</h2>
         <div class="flex flex-wrap gap-2">
            {project.skills.map((tech: string) => (
-            <span class="rounded-md bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
+            <span class="tech-badge">
               {tech}
             </span>
           ))}

@@ -69,13 +69,19 @@
   themeToggleBtn?.addEventListener('click', () => {
     const isDark = document.documentElement.classList.contains('dark');
     const newTheme = isDark ? 'light' : 'dark';
-    localStorage.setItem('theme', newTheme);
+    try {
+      localStorage.setItem('theme', newTheme);
+    } catch {}
     applyTheme(newTheme);
   });
 
   // Listen for system theme changes
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!localStorage.getItem('theme')) {
+    let hasStoredTheme = false;
+    try {
+      hasStoredTheme = !!localStorage.getItem('theme');
+    } catch {}
+    if (!hasStoredTheme) {
       applyTheme(e.matches ? 'dark' : 'light');
     }
   });

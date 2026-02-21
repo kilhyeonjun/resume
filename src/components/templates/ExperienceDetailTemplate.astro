@@ -139,7 +139,7 @@ const basePath = getBasePath(lang);
               {project.techStack && project.techStack.length > 0 && (
                 <div class="mt-4 flex flex-wrap gap-1.5">
                   {project.techStack.map((tech) => (
-                     <span class="rounded-md bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
+                     <span class="tech-badge">
                       {tech}
                     </span>
                   ))}
@@ -157,7 +157,7 @@ const basePath = getBasePath(lang);
         <h2 class="section-title mb-6">{labels.skills}</h2>
         <div class="flex flex-wrap gap-2">
           {experience.techStack.map((tech) => (
-             <span class="rounded-md bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
+             <span class="tech-badge">
               {tech}
             </span>
           ))}

@@ -13,6 +13,7 @@ import ResumeTechnicalWriting from '../resume/ResumeTechnicalWriting.astro';
 import ResumeOpenSource from '../resume/ResumeOpenSource.astro';
 import ResumeLearning from '../resume/ResumeLearning.astro';
 import ResumeFooterActions from '../resume/ResumeFooterActions.astro';
+import DocumentIcon from '../icons/DocumentIcon.astro';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -53,10 +54,28 @@ const jsonLd = {
     <ResumeHeader data={data} />
 
     <!-- Divider -->
-    <div class="mx-auto mb-10 h-px w-24 bg-gradient-to-r from-transparent via-primary-500 to-transparent"></div>
+    <div class="mx-auto mb-10 h-px w-24 bg-gradient-to-r from-transparent via-primary-500 to-transparent" aria-hidden="true"></div>
 
     <!-- Summary -->
     <ResumeSummary summary={data.summary} label={labels.summary} />
+
+    <!-- PDF Actions (Top) -->
+    <div class="no-print mb-10 flex flex-wrap gap-3">
+      <a
+        href={`${basePath}/resume-print`}
+        class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+      >
+        <DocumentIcon class="h-4 w-4" />
+        {labels.pdfVersion}
+      </a>
+      <a
+        href={`${basePath}/resume-ats`}
+        class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+      >
+        <DocumentIcon class="h-4 w-4" />
+        {labels.atsOptimized}
+      </a>
+    </div>
 
     <!-- Skills, Education, Certifications, Awards -->
     <ResumeSkills

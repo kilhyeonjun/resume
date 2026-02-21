@@ -28,20 +28,20 @@ body {
   @apply bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
   @apply antialiased;
   @apply transition-colors duration-200;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
 /* Resume Typography System */
 .resume-container {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
 .resume-container p,
 .resume-container li,
 .resume-container span:not(.skill-name):not(.skill-category):not(.skill-sep) {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
@@ -256,6 +256,11 @@ body {
 .dark ::selection {
   background-color: var(--color-primary-800);
   color: var(--color-primary-100);
+}
+
+/* Tech Badge (shared across templates) */
+.tech-badge {
+  @apply rounded-md bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-300;
 }
 
 /* Section Title (shared across resume pages) */

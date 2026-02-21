@@ -215,7 +215,7 @@
               "Distributed Lock Module: ElastiCache (Redis)-based distributed lock decorator for concurrency control in multi-instance environments",
               "TypeScript Generic-based Type Safety: Overcame TypeORM type limitations through function overloading and generics",
               "Internal NPM Package Management: GitHub Packages-based distribution with CI optimization testing only changed packages",
-              "Game Server Kit Package Extraction: Extracted Sheet module + 5 submodules from game server monolith into @gameduo/glider-sheet package for multi-game project reuse, with 5-branch (main/NB2/BANE/DFD/VG) divergence analysis and conflict resolution"
+              "Game Server Kit Package Extraction: Extracted Sheet module + 5 submodules from game server monolith into @gameduo/glider-sheet package for multi-game project reuse, with 5-branch divergence analysis and conflict resolution"
             ],
             "techStack": [
               "ElastiCache (Redis)",

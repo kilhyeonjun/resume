@@ -215,7 +215,7 @@
               "분산 락(Lock) 모듈: ElastiCache (Redis) 기반 분산 락 데코레이터로 멀티 인스턴스 환경의 동시성 제어",
               "TypeScript 제네릭 기반 타입 안전성: TypeORM 타입 한계를 함수 오버로딩과 제네릭으로 극복",
               "사내 NPM 패키지 관리: GitHub Packages 기반 배포, 변경 패키지만 테스트하는 CI 최적화",
-              "게임서버 Kit 패키지 분리: 게임서버 모놀리식에서 Sheet 모듈 + 5개 서브모듈을 @gameduo/glider-sheet 패키지로 추출하여 다중 게임 프로젝트 재사용 및 5개 브랜치(main/NB2/BANE/DFD/VG) 형상 차이 분석·충돌 해결"
+              "게임서버 Kit 패키지 분리: 게임서버 모놀리식에서 Sheet 모듈 + 5개 서브모듈을 @gameduo/glider-sheet 패키지로 추출하여 다중 게임 프로젝트 재사용 및 5개 브랜치 형상 차이 분석·충돌 해결"
             ],
             "techStack": [
               "ElastiCache (Redis)",

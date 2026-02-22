@@ -1,6 +1,270 @@
 {
   "projects": [
     {
+      "slug": "ledgerly",
+      "name": {
+        "ko": "Ledgerly",
+        "en": "Ledgerly"
+      },
+      "type": "personal",
+      "summary": {
+        "ko": "가족·조직 단위 공유 가계부 앱 — Next.js 16 풀스택, Supabase PostgreSQL, 3단계 역할 기반 접근 제어(OWNER/ADMIN/MEMBER), NestJS Cron 정기거래 자동 처리, 99.45% 라인 커버리지 단위 테스트 + 300건 이상 E2E 통합 테스트",
+        "en": "Family/organization shared finance management app — Next.js 16 fullstack, Supabase PostgreSQL, 3-tier RBAC (OWNER/ADMIN/MEMBER), NestJS Cron recurring transaction automation, 99.45% line coverage unit tests + 300+ E2E integration tests"
+      },
+      "description": {
+        "ko": "가족이나 조직 단위로 수입·지출을 함께 관리할 수 있는 공유 가계부 애플리케이션이다. Next.js 16 App Router 기반 프론트엔드에서 거래·카테고리·예산의 CRUD와 Recharts 기반 재무 분석 대시보드를 제공하고, Supabase Auth와 Row Level Security로 인증·인가를 처리한다. OWNER/ADMIN/MEMBER 3단계 역할 체계로 조직 내 권한을 세분화하고, TanStack Query v5로 서버 상태를 관리하며 Zod 4로 폼 입력을 검증한다. 정기거래 자동 처리는 Vercel Cron 제한을 우회하기 위해 NestJS 기반 별도 백엔드를 Mac mini에서 Docker로 운영하며, 매일 자정(KST) @nestjs/schedule로 실행한다. Vitest 단위 테스트 397건(라인 커버리지 99.45%)과 Playwright E2E 테스트 300건 이상을 역할별(Admin/Member) 시나리오로 구성하고, 실제 백엔드와 로컬 Supabase를 연동한 풀스택 통합 테스트 환경을 구축했다.",
+        "en": "A shared finance management application for families and organizations to collaboratively track income and expenses. The Next.js 16 App Router frontend provides transaction, category, and budget CRUD with a Recharts-based financial analytics dashboard, handling authentication and authorization through Supabase Auth with Row Level Security. Implements a 3-tier RBAC system (OWNER/ADMIN/MEMBER) for granular organizational permissions, manages server state with TanStack Query v5, and validates form inputs with Zod 4. Recurring transaction automation runs on a separate NestJS backend deployed via Docker on a Mac mini to bypass Vercel Cron limitations, executing daily at midnight (KST) via @nestjs/schedule. Built 397 Vitest unit tests (99.45% line coverage) and 300+ Playwright E2E tests organized by role-based scenarios (Admin/Member), with a full-stack integration test environment connecting to a real backend and local Supabase."
+      },
+      "coverImage": "",
+      "contentImages": [],
+      "features": {
+        "ko": [
+          "거래 관리 — 수입·지출 CRUD, 카테고리별 분류, 날짜·메모·금액 기반 거래 기록",
+          "예산 관리 — 카테고리별·기간별 예산 설정 및 실시간 사용율 추적",
+          "조직 관리 — 다중 조직 생성·전환, 조직별 독립 데이터 관리",
+          "3단계 역할 기반 접근 제어 — OWNER(전체 권한), ADMIN(멤버·설정 관리), MEMBER(본인 거래 관리)",
+          "정기거래 자동 처리 — NestJS Cron 서비스로 매일 자정(KST) 반복 거래 자동 생성",
+          "재무 분석 대시보드 — Recharts 기반 수입·지출 추이, 카테고리별 비율 시각화",
+          "다국어 지원 — next-intl 기반 한국어·영어 UI 전환"
+        ],
+        "en": [
+          "Transaction management — income/expense CRUD with category classification, date/memo/amount-based recording",
+          "Budget management — per-category and per-period budget setting with real-time usage tracking",
+          "Organization management — multi-org creation and switching with independent data per organization",
+          "3-tier RBAC — OWNER (full access), ADMIN (member/settings management), MEMBER (own transaction management)",
+          "Recurring transaction automation — NestJS Cron service auto-generating scheduled transactions daily at midnight (KST)",
+          "Financial analytics dashboard — Recharts-based income/expense trends and category ratio visualization",
+          "Internationalization — next-intl based Korean/English UI switching"
+        ]
+      },
+      "period": {
+        "start": "2025-08-01",
+        "end": "present"
+      },
+      "skills": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Supabase",
+        "PostgreSQL",
+        "Prisma",
+        "NestJS",
+        "Tailwind CSS",
+        "TanStack Query",
+        "Zod",
+        "Vitest",
+        "Playwright",
+        "Docker",
+        "Vercel"
+      ],
+      "links": {
+        "live": "https://ledgerly-fe.vercel.app"
+      },
+      "highlights": {
+        "ko": [
+          "Vitest 397건 단위 테스트, 라인 커버리지 99.45% 달성",
+          "Playwright 300건+ E2E 테스트, 역할별 시나리오 분리",
+          "OWNER/ADMIN/MEMBER 3단계 RBAC + Supabase RLS 적용",
+          "NestJS Cron 정기거래 자동 처리 (Docker 배포)",
+          "풀스택 통합 테스트 환경 구축 (FE+BE+Supabase)"
+        ],
+        "en": [
+          "397 Vitest unit tests with 99.45% line coverage",
+          "300+ Playwright E2E tests with role-based scenario separation",
+          "3-tier RBAC (OWNER/ADMIN/MEMBER) with Supabase RLS",
+          "NestJS Cron recurring transaction automation (Docker)",
+          "Full-stack integration test environment (FE+BE+Supabase)"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "Next.js 16 App Router와 Supabase Auth를 조합하여 SSR 환경에서의 인증 상태 관리와 Row Level Security 기반 데이터 접근 제어를 구현하며, 서버·클라이언트 컴포넌트 간 인증 컨텍스트 전파 패턴을 학습",
+          "OWNER/ADMIN/MEMBER 3단계 역할 체계를 설계하며 조직 단위 멀티테넌시에서의 권한 분리와 데이터 격리 전략을 경험",
+          "Vercel Cron 제한을 우회하기 위해 NestJS 기반 별도 백엔드를 Docker로 분리 운영하며, 마이크로서비스 분리의 실무적 판단 기준과 공유 DB 스키마 관리 전략을 학습",
+          "Vitest 단위 테스트 397건(99.45% 커버리지)과 Playwright E2E 300 이상을 역할별 시나리오로 구성하고, 실제 백엔드와 로컬 Supabase를 연동한 풀스택 통합 테스트 환경을 구축하며 테스트 피라미드 전략을 체득"
+        ],
+        "en": [
+          "Learned SSR authentication state management and RLS-based data access control by combining Next.js 16 App Router with Supabase Auth, understanding auth context propagation patterns between server and client components",
+          "Experienced permission separation and data isolation strategies in organizational multi-tenancy by designing a 3-tier RBAC system (OWNER/ADMIN/MEMBER)",
+          "Learned practical criteria for microservice separation and shared DB schema management by operating a separate NestJS backend via Docker to bypass Vercel Cron limitations",
+          "Internalized test pyramid strategy by building 397 Vitest unit tests (99.45% coverage) and 300+ Playwright E2E tests with role-based scenarios, establishing a full-stack integration test environment with real backend and local Supabase"
+        ]
+      }
+    },
+    {
+      "slug": "daesin-logistics-bot",
+      "name": {
+        "ko": "대신물류 배차현황 챗봇",
+        "en": "Daesin Logistics Dispatch Bot"
+      },
+      "type": "personal",
+      "summary": {
+        "ko": "대신물류 배차현황 데이터를 Cheerio로 크롤링하고 카카오톡 챗봇 스킬서버와 Next.js 모바일웹으로 조회할 수 있는 서비스 — Clean Architecture + TSyringe DI, Express 5, Prisma SQLite, Traefik Blue-Green 무중단 배포",
+        "en": "Logistics dispatch data service crawling with Cheerio, queryable via KakaoTalk chatbot skill server and Next.js mobile web — Clean Architecture + TSyringe DI, Express 5, Prisma SQLite, Traefik Blue-Green zero-downtime deployment"
+      },
+      "description": {
+        "ko": "물류 회사의 배차현황 데이터를 자동 수집하여 카카오톡 챗봇과 모바일 웹으로 실시간 조회할 수 있는 서비스이다. 백엔드는 Clean Architecture와 TSyringe 기반 의존성 주입으로 도메인·애플리케이션·인프라 계층을 분리하고, Cheerio + Axios로 배차 데이터를 크롤링하여 Prisma SQLite에 저장한다. node-cron으로 월~토 오전 6시부터 오후 8시까지 매시 정각에 자동 동기화하며, 카카오 i 오픈빌더 스킬서버로 노선코드·차량번호·도착지 검색과 일별 통계 조회를 제공한다. 프론트엔드는 Next.js 모바일웹으로 TanStack Query 기반 데이터 조회와 Recharts 통계 시각화를 구현했다. Docker 환경에서 Traefik 리버스 프록시를 활용한 Blue-Green 무중단 배포 구조를 설계하고, 자동 배포 스크립트로 빌드→헬스체크→트래픽 전환→롤백까지 자동화했다.",
+        "en": "A service that automatically collects logistics dispatch data for real-time querying via KakaoTalk chatbot and mobile web. The backend separates domain, application, and infrastructure layers using Clean Architecture with TSyringe-based dependency injection, crawling dispatch data with Cheerio + Axios and storing in Prisma SQLite. Auto-syncs via node-cron every hour from 6 AM to 8 PM (Mon-Sat), and provides route code, vehicle number, and destination search with daily statistics through a Kakao i Open Builder skill server. The frontend is a Next.js mobile web with TanStack Query-based data fetching and Recharts statistics visualization. Designed a Blue-Green zero-downtime deployment architecture using Traefik reverse proxy in Docker, automating the full cycle from build to health check to traffic switching to rollback via deployment scripts."
+      },
+      "coverImage": "",
+      "contentImages": [],
+      "features": {
+        "ko": [
+          "자동 크롤링 — Cheerio + Axios로 배차현황 데이터 수집, node-cron으로 월~토 06:00~20:00 매시 정각 자동 동기화",
+          "카카오톡 챗봇 스킬서버 — 카카오 i 오픈빌더 연동, 노선코드·차량번호·도착지 검색, 일별 전체 현황 및 통계 조회",
+          "REST API — 노선·차량·날짜별 검색 엔드포인트, 통계 조회 API, 수동 동기화 트리거",
+          "모바일 웹 — Next.js 기반 반응형 모바일 UI, TanStack Query 서버 상태 관리, Recharts 통계 시각화",
+          "Blue-Green 무중단 배포 — Traefik 리버스 프록시, 자동 배포 스크립트(빌드→헬스체크→트래픽 전환→롤백)",
+          "Clean Architecture — 도메인·애플리케이션·인프라 계층 분리, TSyringe DI 컨테이너, Value Object(LineCode, SearchDate) 패턴"
+        ],
+        "en": [
+          "Auto crawling — Cheerio + Axios dispatch data collection, node-cron auto-sync Mon-Sat 06:00-20:00 hourly",
+          "KakaoTalk chatbot skill server — Kakao i Open Builder integration, route code/vehicle number/destination search, daily statistics",
+          "REST API — route/vehicle/date search endpoints, statistics API, manual sync trigger",
+          "Mobile web — Next.js responsive mobile UI, TanStack Query server state management, Recharts statistics visualization",
+          "Blue-Green zero-downtime deployment — Traefik reverse proxy, automated deploy script (build→health check→traffic switch→rollback)",
+          "Clean Architecture — domain/application/infrastructure layer separation, TSyringe DI container, Value Object (LineCode, SearchDate) pattern"
+        ]
+      },
+      "period": {
+        "start": "2026-01-01",
+        "end": "present"
+      },
+      "skills": [
+        "TypeScript",
+        "Express",
+        "Next.js",
+        "React",
+        "Prisma",
+        "SQLite",
+        "Cheerio",
+        "TSyringe",
+        "TanStack Query",
+        "Recharts",
+        "Docker",
+        "Traefik",
+        "Tailwind CSS",
+        "Vitest"
+      ],
+      "github": "https://github.com/kilhyeonjun/daesin-logistics-bot-be",
+      "links": {
+        "live": "https://daesin-logistics-bot-fe.vercel.app",
+        "github-fe": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe"
+      },
+      "highlights": {
+        "ko": [
+          "Clean Architecture + TSyringe DI로 계층 분리 설계",
+          "Cheerio 크롤링 + node-cron 자동 동기화 (월~토 매시)",
+          "카카오톡 챗봇 스킬서버 연동 (노선·차량·도착지 검색)",
+          "Traefik Blue-Green 무중단 배포 + 자동 배포 스크립트",
+          "Next.js 모바일웹 + Recharts 통계 대시보드"
+        ],
+        "en": [
+          "Clean Architecture + TSyringe DI layer separation",
+          "Cheerio crawling + node-cron auto-sync (Mon-Sat hourly)",
+          "KakaoTalk chatbot skill server (route/vehicle/destination)",
+          "Traefik Blue-Green zero-downtime deploy + auto script",
+          "Next.js mobile web + Recharts statistics dashboard"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "Clean Architecture의 도메인·애플리케이션·인프라 계층 분리와 TSyringe DI 컨테이너를 적용하며, 비즈니스 로직과 외부 의존성(크롤러, DB, 카카오 API)의 결합도를 제거하는 설계를 학습",
+          "카카오 i 오픈빌더 스킬서버 프로토콜을 직접 구현하며 챗봇 플랫폼의 요청·응답 규격과 시나리오 블록 연동 방식을 이해",
+          "Traefik 리버스 프록시 기반 Blue-Green 배포 구조를 설계하고 자동 배포 스크립트를 구축하며, 무중단 배포의 트래픽 전환·헬스체크·롤백 전략을 경험",
+          "Value Object 패턴(LineCode, SearchDate)으로 도메인 규칙을 타입 수준에서 강제하며, 원시 타입 남용을 방지하는 도메인 모델링 기법을 학습"
+        ],
+        "en": [
+          "Learned decoupling business logic from external dependencies (crawler, DB, Kakao API) by applying Clean Architecture layer separation with TSyringe DI container",
+          "Understood chatbot platform request/response protocols and scenario block integration by directly implementing Kakao i Open Builder skill server",
+          "Experienced zero-downtime deployment traffic switching, health checking, and rollback strategies by designing Traefik-based Blue-Green deployment with automated deploy scripts",
+          "Learned domain modeling techniques preventing primitive type abuse by enforcing domain rules at type level through Value Object pattern (LineCode, SearchDate)"
+        ]
+      }
+    },
+    {
+      "slug": "innovalley-menu-bot",
+      "name": {
+        "ko": "냠냠위듀 — 구내식당 식단 알림 봇",
+        "en": "NyamNyam WeDu — Cafeteria Menu Alert Bot"
+      },
+      "type": "personal",
+      "summary": {
+        "ko": "판교 이노밸리 구내식당 주간 식단표를 카카오 채널에서 Playwright로 크롤링하여 Slack으로 자동 발송하는 봇 — Clean Architecture + TSyringe DI, Slack Bot API 슬래시 커맨드, 재시도 최대 6회, DeliveryHistory 중복 방지",
+        "en": "Bot that crawls weekly cafeteria menus from Kakao Channel via Playwright and auto-delivers to Slack — Clean Architecture + TSyringe DI, Slack Bot API slash command, up to 6 retries, DeliveryHistory duplicate prevention"
+      },
+      "description": {
+        "ko": "판교 이노밸리 구내식당의 주간 식단표를 자동으로 수집하여 Slack 채널에 발송하는 봇이다. Playwright 헤드리스 Chrome으로 카카오 채널 게시물에서 식단표 이미지 URL과 메타데이터를 크롤링하고, @slack/bolt Socket Mode 기반으로 지정 채널에 자동 발송한다. 매주 월요일 오전 9시(KST) node-cron으로 스케줄링하며, 발송 실패 시 1시간 간격으로 최대 6회 재시도한다. DeliveryHistory 테이블로 채널별 발송 이력을 관리하여 동일 식단표의 중복 발송을 방지하고, /식단 슬래시 커맨드로 이번 주 식단표를 즉시 조회할 수 있다. Clean Architecture로 도메인·애플리케이션·인프라 계층을 분리하고, TSyringe DI 컨테이너로 의존성을 관리하며, Result<T, E> 패턴으로 예외 대신 명시적 에러 처리를 구현했다.",
+        "en": "A bot that automatically collects weekly cafeteria menus from Pangyo InnoValley and delivers them to Slack channels. Crawls menu image URLs and metadata from Kakao Channel posts using Playwright headless Chrome, and auto-delivers to designated channels via @slack/bolt Socket Mode. Scheduled every Monday at 9 AM (KST) via node-cron, with up to 6 retries at 1-hour intervals on failure. Manages per-channel delivery history through a DeliveryHistory table to prevent duplicate sends, and provides instant menu lookup via the /식단 slash command. Separates domain, application, and infrastructure layers with Clean Architecture, manages dependencies through TSyringe DI container, and implements explicit error handling with Result<T, E> pattern instead of exceptions."
+      },
+      "coverImage": "",
+      "contentImages": [],
+      "features": {
+        "ko": [
+          "자동 발송 — 매주 월요일 09:00(KST) 카카오 채널 크롤링 후 Slack 채널 자동 발송",
+          "Playwright 헤드리스 크롤링 — 카카오 채널 게시물에서 식단표 이미지 URL·제목·게시일 추출",
+          "Slack Bot 슬래시 커맨드 — /식단 입력 시 이번 주 식단표 즉시 조회 (캐시 우선, 없으면 실시간 크롤링)",
+          "재시도 메커니즘 — 발송 실패 시 1시간 간격 최대 6회 자동 재시도",
+          "중복 방지 — DeliveryHistory 테이블로 채널별 발송 이력 관리, 동일 식단표 중복 발송 차단",
+          "Clean Architecture — 도메인·애플리케이션·인프라 계층 분리, TSyringe DI, Result<T, E> 에러 처리 패턴"
+        ],
+        "en": [
+          "Auto delivery — weekly Monday 09:00 (KST) Kakao Channel crawling with Slack channel auto-send",
+          "Playwright headless crawling — extracting menu image URL, title, and publish date from Kakao Channel posts",
+          "Slack Bot slash command — /식단 for instant weekly menu lookup (cache-first, real-time crawling fallback)",
+          "Retry mechanism — up to 6 automatic retries at 1-hour intervals on delivery failure",
+          "Duplicate prevention — DeliveryHistory table managing per-channel delivery records, blocking duplicate sends",
+          "Clean Architecture — domain/application/infrastructure layer separation, TSyringe DI, Result<T, E> error handling pattern"
+        ]
+      },
+      "period": {
+        "start": "2026-01-01",
+        "end": "present"
+      },
+      "skills": [
+        "TypeScript",
+        "Playwright",
+        "Slack Bot API",
+        "Express",
+        "Prisma",
+        "SQLite",
+        "TSyringe",
+        "Docker",
+        "Vitest"
+      ],
+      "github": "https://github.com/kilhyeonjun/innovalley-menu-bot",
+      "highlights": {
+        "ko": [
+          "Playwright 헤드리스 Chrome으로 카카오 채널 크롤링",
+          "Slack Bot Socket Mode + /식단 슬래시 커맨드 구현",
+          "재시도 최대 6회(1시간 간격) + DeliveryHistory 중복 방지",
+          "Clean Architecture + TSyringe DI + Result<T, E> 패턴",
+          "Docker 컨테이너 배포 (Playwright 브라우저 포함)"
+        ],
+        "en": [
+          "Playwright headless Chrome crawling from Kakao Channel",
+          "Slack Bot Socket Mode + /식단 slash command",
+          "Up to 6 retries (1-hour interval) + DeliveryHistory dedup",
+          "Clean Architecture + TSyringe DI + Result<T, E> pattern",
+          "Docker container deployment (with Playwright browser)"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "Playwright 헤드리스 브라우저로 JavaScript 렌더링이 필요한 카카오 채널 페이지를 크롤링하며, 동적 콘텐츠 크롤링에서의 대기 전략과 셀렉터 안정성 확보 방법을 학습",
+          "@slack/bolt Socket Mode로 Slack Bot을 구현하며, 슬래시 커맨드 핸들링과 메시지 포맷팅(Block Kit) 등 Slack 플랫폼 연동 패턴을 경험",
+          "DeliveryHistory 테이블 기반 멱등성 보장과 1시간 간격 최대 6회 재시도 메커니즘을 설계하며, 외부 서비스 연동에서의 신뢰성 확보 전략을 학습",
+          "Result<T, E> 패턴으로 예외 대신 명시적 에러 타입을 반환하며, 함수형 에러 처리가 코드의 예측 가능성과 테스트 용이성을 높이는 것을 체득"
+        ],
+        "en": [
+          "Learned wait strategies and selector stability for dynamic content crawling by scraping JavaScript-rendered Kakao Channel pages with Playwright headless browser",
+          "Experienced Slack platform integration patterns including slash command handling and Block Kit message formatting by implementing a Slack Bot with @slack/bolt Socket Mode",
+          "Learned reliability strategies for external service integration by designing idempotency guarantees via DeliveryHistory table and retry mechanism (up to 6 times at 1-hour intervals)",
+          "Internalized how functional error handling improves code predictability and testability by returning explicit error types via Result<T, E> pattern instead of exceptions"
+        ]
+      }
+    },
+    {
       "slug": "concert-reservation",
       "name": {
         "ko": "콘서트 예약 서비스",

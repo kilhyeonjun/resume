@@ -174,33 +174,29 @@
         "en": "FE(2) BE(2) PM(1) Design(1) Marketing(2) / Responsible for BE"
       },
       "summary": {
-        "ko": "창업 버티컬 네트워크 플랫폼",
-        "en": "Startup vertical network platform"
+        "ko": "창업 생태계의 팀 빌딩·커뮤니티·정보 제공을 통합한 버티컬 네트워크 플랫폼 — 소셜 로그인 4종 통합, 커뮤니티 백엔드, 어드민 시스템 구축 담당",
+        "en": "Startup vertical network platform integrating team building, community, and information services — responsible for 4-provider social login, community backend, and admin system"
       },
       "description": {
-        "ko": "창업 진입 장벽을 낮추고 리스크 부담 없이 창업에 도전할 수 있도록, 팀 빌딩·아이템 개발 등 창업 생태계 전반의 기능과 정보를 종합 제공하는 창업 버티컬 네트워크 플랫폼이다.",
-        "en": "A startup vertical network platform that lowers barriers to entry and provides comprehensive features for team building, item development, and startup information to help aspiring entrepreneurs."
+        "ko": "창업 희망자들이 팀 빌딩부터 아이템 검증까지 원스톱으로 진행할 수 있는 창업 버티컬 네트워크 플랫폼의 백엔드를 담당했다. NestJS 기반으로 커뮤니티 서비스의 핵심 API(게시물·댓글·좋아요·북마크·팔로우)를 설계·구현하고, 구글·네이버·카카오·페이스북 4종 소셜 로그인을 통합하여 사용자 온보딩 흐름을 구축했다. 외부 URL의 OpenGraph 메타데이터를 스크래핑하여 링크 프리뷰를 제공하는 기능과 파일 업로드 API를 개발했으며, 콘텐츠 관리를 위한 어드민 백엔드를 별도로 구축했다. 8인 팀에서 프론트엔드 개발자와 API 스펙을 협의하며 2개월간 스프린트 기반으로 개발을 진행했다.",
+        "en": "Responsible for the backend of a startup vertical network platform enabling aspiring entrepreneurs to handle team building through item validation in one place. Designed and implemented core community APIs (posts, comments, likes, bookmarks, follows) on NestJS, and built a unified user onboarding flow integrating 4 social login providers (Google, Naver, Kakao, Facebook). Developed OpenGraph metadata scraping for link previews and file upload APIs, along with a separate admin backend for content management. Collaborated with frontend developers on API specifications across 2-month sprint cycles in an 8-member team."
       },
       "features": {
         "ko": [
-          "커뮤니티 BE",
-          "소셜 로그인 (구글, 네이버, 카카오, 페이스북)",
-          "회원 CRUD, 팔로우 기능",
-          "게시물 CRUD, 좋아요 기능, 북마크 기능",
-          "댓글 CRUD, 좋아요 기능",
-          "opengraph 스크래핑",
-          "파일 업로드",
-          "어드민 BE"
+          "소셜 로그인 4종 통합 (구글, 네이버, 카카오, 페이스북) — OAuth 2.0 기반 인증 플로우 구현",
+          "커뮤니티 백엔드 API 설계·구현 — 게시물·댓글 CRUD, 좋아요·북마크·팔로우 기능",
+          "OpenGraph 메타데이터 스크래핑 — 외부 URL 링크 프리뷰 제공",
+          "파일 업로드 API 개발",
+          "회원 관리 API — 프로필 CRUD, 팔로우/팔로잉 관계 관리",
+          "어드민 백엔드 시스템 구축 — 콘텐츠 및 사용자 관리 기능"
         ],
         "en": [
-          "Community BE",
-          "Social login (Google, Naver, Kakao, Facebook)",
-          "Member CRUD, Follow",
-          "Post CRUD, Like, Bookmark",
-          "Comment CRUD, Like",
-          "OpenGraph scraping",
-          "File upload",
-          "Admin BE"
+          "4-provider social login integration (Google, Naver, Kakao, Facebook) — OAuth 2.0 authentication flow",
+          "Community backend API design & implementation — post/comment CRUD, like/bookmark/follow features",
+          "OpenGraph metadata scraping — external URL link preview generation",
+          "File upload API development",
+          "Member management API — profile CRUD, follow/following relationship management",
+          "Admin backend system — content and user management"
         ]
       },
       "period": {
@@ -227,14 +223,18 @@
       ],
       "highlights": {
         "ko": [
-          "창업 팀 빌딩 및 아이템 개발 기능",
-          "창업 정보 종합 제공 플랫폼",
-          "팀 프로젝트로 협업 경험"
+          "구글·네이버·카카오·페이스북 4종 소셜 로그인 통합 — OAuth 2.0 기반 통합 인증 플로우 설계",
+          "커뮤니티 핵심 API 전담 구현 — 게시물·댓글·좋아요·북마크·팔로우 등 소셜 기능 백엔드 구축",
+          "OpenGraph 스크래핑 기반 링크 프리뷰 기능 개발 — 외부 URL 메타데이터 파싱 및 캐싱",
+          "어드민 백엔드 시스템 독립 구축 — 콘텐츠·사용자 관리 API 설계",
+          "8인 크로스펑셔널 팀에서 FE 개발자와 API 스펙 협의 및 스프린트 기반 협업"
         ],
         "en": [
-          "Startup team building and item development features",
-          "Comprehensive startup information platform",
-          "Team collaboration experience"
+          "Integrated 4 social login providers (Google, Naver, Kakao, Facebook) — designed unified OAuth 2.0 authentication flow",
+          "Solely implemented core community APIs — posts, comments, likes, bookmarks, and follow features",
+          "Developed OpenGraph scraping-based link preview — external URL metadata parsing and caching",
+          "Built independent admin backend system — content and user management API design",
+          "Collaborated on API specifications with FE developers in an 8-member cross-functional team using sprint methodology"
         ]
       }
     },

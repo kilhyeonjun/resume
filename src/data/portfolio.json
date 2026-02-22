@@ -106,7 +106,7 @@
         "ko": "물류 회사의 배차현황 데이터를 자동 수집하여 카카오톡 챗봇과 모바일 웹으로 실시간 조회할 수 있는 서비스이다. 백엔드는 Clean Architecture와 TSyringe 기반 의존성 주입으로 도메인·애플리케이션·인프라 계층을 분리하고, Cheerio + Axios로 배차 데이터를 크롤링하여 Prisma SQLite에 저장한다. node-cron으로 월~토 오전 6시부터 오후 8시까지 매시 정각에 자동 동기화하며, 카카오 i 오픈빌더 스킬서버로 노선코드·차량번호·도착지 검색과 일별 통계 조회를 제공한다. 프론트엔드는 Next.js 모바일웹으로 TanStack Query 기반 데이터 조회와 Recharts 통계 시각화를 구현했다. Docker 환경에서 Traefik 리버스 프록시를 활용한 Blue-Green 무중단 배포 구조를 설계하고, 자동 배포 스크립트로 빌드→헬스체크→트래픽 전환→롤백까지 자동화했다.",
         "en": "A service that automatically collects logistics dispatch data for real-time querying via KakaoTalk chatbot and mobile web. The backend separates domain, application, and infrastructure layers using Clean Architecture with TSyringe-based dependency injection, crawling dispatch data with Cheerio + Axios and storing in Prisma SQLite. Auto-syncs via node-cron every hour from 6 AM to 8 PM (Mon-Sat), and provides route code, vehicle number, and destination search with daily statistics through a Kakao i Open Builder skill server. The frontend is a Next.js mobile web with TanStack Query-based data fetching and Recharts statistics visualization. Designed a Blue-Green zero-downtime deployment architecture using Traefik reverse proxy in Docker, automating the full cycle from build to health check to traffic switching to rollback via deployment scripts."
       },
-      "coverImage": "",
+      "coverImage": "/images/portfolio/daesin-cover.webp",
       "contentImages": [],
       "features": {
         "ko": [

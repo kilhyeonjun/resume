@@ -15,7 +15,7 @@
         "ko": "가족이나 조직 단위로 수입·지출을 함께 관리할 수 있는 공유 가계부 애플리케이션이다. Next.js 16 App Router 기반 프론트엔드에서 거래·카테고리·예산의 CRUD와 Recharts 기반 재무 분석 대시보드를 제공하고, Supabase Auth와 Row Level Security로 인증·인가를 처리한다. OWNER/ADMIN/MEMBER 3단계 역할 체계로 조직 내 권한을 세분화하고, TanStack Query v5로 서버 상태를 관리하며 Zod 4로 폼 입력을 검증한다. 정기거래 자동 처리는 Vercel Cron 제한을 우회하기 위해 NestJS 기반 별도 백엔드를 Mac mini에서 Docker로 운영하며, 매일 자정(KST) @nestjs/schedule로 실행한다. Vitest 단위 테스트 397건(라인 커버리지 99.45%)과 Playwright E2E 테스트 300건 이상을 역할별(Admin/Member) 시나리오로 구성하고, 실제 백엔드와 로컬 Supabase를 연동한 풀스택 통합 테스트 환경을 구축했다.",
         "en": "A shared finance management application for families and organizations to collaboratively track income and expenses. The Next.js 16 App Router frontend provides transaction, category, and budget CRUD with a Recharts-based financial analytics dashboard, handling authentication and authorization through Supabase Auth with Row Level Security. Implements a 3-tier RBAC system (OWNER/ADMIN/MEMBER) for granular organizational permissions, manages server state with TanStack Query v5, and validates form inputs with Zod 4. Recurring transaction automation runs on a separate NestJS backend deployed via Docker on a Mac mini to bypass Vercel Cron limitations, executing daily at midnight (KST) via @nestjs/schedule. Built 397 Vitest unit tests (99.45% line coverage) and 300+ Playwright E2E tests organized by role-based scenarios (Admin/Member), with a full-stack integration test environment connecting to a real backend and local Supabase."
       },
-      "coverImage": "",
+      "coverImage": "/images/portfolio/ledgerly-cover.webp",
       "contentImages": [],
       "features": {
         "ko": [
@@ -70,10 +70,10 @@
         ],
         "en": [
           "397 Vitest unit tests with 99.45% line coverage",
-          "300+ Playwright E2E tests with role-based scenario separation",
-          "3-tier RBAC (OWNER/ADMIN/MEMBER) with Supabase RLS",
-          "NestJS Cron recurring transaction automation (Docker)",
-          "Full-stack integration test environment (FE+BE+Supabase)"
+          "300+ Playwright E2E tests, role-based scenarios",
+          "3-tier RBAC (OWNER/ADMIN/MEMBER) + Supabase RLS",
+          "NestJS Cron recurring transaction auto (Docker)",
+          "Full-stack integration test env (FE+BE+Supabase)"
         ]
       },
       "lessons": {
@@ -161,9 +161,9 @@
         ],
         "en": [
           "Clean Architecture + TSyringe DI layer separation",
-          "Cheerio crawling + node-cron auto-sync (Mon-Sat hourly)",
-          "KakaoTalk chatbot skill server (route/vehicle/destination)",
-          "Traefik Blue-Green zero-downtime deploy + auto script",
+          "Cheerio crawling + node-cron auto-sync (hourly)",
+          "KakaoTalk chatbot skill server (route/vehicle)",
+          "Traefik Blue-Green zero-downtime deploy + auto",
           "Next.js mobile web + Recharts statistics dashboard"
         ]
       },
@@ -197,7 +197,7 @@
         "ko": "판교 이노밸리 구내식당의 주간 식단표를 자동으로 수집하여 Slack 채널에 발송하는 봇이다. Playwright 헤드리스 Chrome으로 카카오 채널 게시물에서 식단표 이미지 URL과 메타데이터를 크롤링하고, @slack/bolt Socket Mode 기반으로 지정 채널에 자동 발송한다. 매주 월요일 오전 9시(KST) node-cron으로 스케줄링하며, 발송 실패 시 1시간 간격으로 최대 6회 재시도한다. DeliveryHistory 테이블로 채널별 발송 이력을 관리하여 동일 식단표의 중복 발송을 방지하고, /식단 슬래시 커맨드로 이번 주 식단표를 즉시 조회할 수 있다. Clean Architecture로 도메인·애플리케이션·인프라 계층을 분리하고, TSyringe DI 컨테이너로 의존성을 관리하며, Result<T, E> 패턴으로 예외 대신 명시적 에러 처리를 구현했다.",
         "en": "A bot that automatically collects weekly cafeteria menus from Pangyo InnoValley and delivers them to Slack channels. Crawls menu image URLs and metadata from Kakao Channel posts using Playwright headless Chrome, and auto-delivers to designated channels via @slack/bolt Socket Mode. Scheduled every Monday at 9 AM (KST) via node-cron, with up to 6 retries at 1-hour intervals on failure. Manages per-channel delivery history through a DeliveryHistory table to prevent duplicate sends, and provides instant menu lookup via the /식단 slash command. Separates domain, application, and infrastructure layers with Clean Architecture, manages dependencies through TSyringe DI container, and implements explicit error handling with Result<T, E> pattern instead of exceptions."
       },
-      "coverImage": "",
+      "coverImage": "/images/portfolio/innovalley-cover.webp",
       "contentImages": [],
       "features": {
         "ko": [
@@ -242,11 +242,11 @@
           "Docker 컨테이너 배포 (Playwright 브라우저 포함)"
         ],
         "en": [
-          "Playwright headless Chrome crawling from Kakao Channel",
+          "Playwright headless Chrome Kakao Channel crawl",
           "Slack Bot Socket Mode + /식단 slash command",
-          "Up to 6 retries (1-hour interval) + DeliveryHistory dedup",
-          "Clean Architecture + TSyringe DI + Result<T, E> pattern",
-          "Docker container deployment (with Playwright browser)"
+          "6 retries (1h interval) + DeliveryHistory dedup",
+          "Clean Architecture + TSyringe DI + Result<T,E>",
+          "Docker container deploy (with Playwright browser)"
         ]
       },
       "lessons": {

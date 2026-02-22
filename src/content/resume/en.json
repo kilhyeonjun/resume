@@ -572,19 +572,22 @@
         "endDate": "2022-03",
         "description": "Custom software consulting firm",
         "highlights": [
-          "Built Apache POI-based Excel bulk processing to reduce member registration from hours to minutes for 300+ students per semester at educational institutions",
-          "Built Spring Security + JWT cross-domain authentication server enabling single sign-on across 5 country-specific websites that previously required separate logins per country",
-          "Migrated from WordPress to Jekyll + GitHub Pages with Travis CI automated deployment pipeline, eliminating 100% of hosting costs"
+          "Full-stack developed LMS core features (QR attendance, Excel bulk registration, PDF certificates, board CRUD, video upload, progress tracking) over 10 months, digitizing all learning management processes",
+          "Overcame legacy PHP system limitations via iframe + postMessage API cross-frame integration, implementing weighted scoring algorithm and counselor back-office to deliver job agent service",
+          "Built Apache POI-based Excel bulk processing to reduce 300+ student registration from hours to minutes per semester",
+          "Built Spring Security + JWT cross-domain auth server enabling SSO across 5 country-specific websites",
+          "Migrated WordPress to Jekyll + GitHub Pages with Travis CI auto-deploy, eliminating 100% hosting costs"
         ],
         "projects": [
           {
             "name": "Learning Management System (LMS) Development",
             "period": "2021.07 ~ 2022.03",
             "featured": true,
-            "description": "Resolved manual administrative tasks and lack of learner convenience in educational institutions",
+            "description": "Resolved manual learning management (attendance, completion, progress) causing low operational efficiency and frequent errors at educational institutions",
             "details": [
-              "QR Attendance Check: Real-time attendance processing API with duplicate check logic",
-              "Excel-based Bulk Registration: Apache POI-based batch member information processing",
+              "QR Attendance: Built real-time attendance API with date+userID composite unique key preventing duplicate check-ins",
+              "Excel Bulk Registration: Apache POI-based row-by-row sequential processing ensuring data consistency for batch member registration",
+              "Developed LMS core learning features including board CRUD, video upload, and progress tracking",
               "Dynamic Certificate: JasperReports-based PDF auto-generation API"
             ],
             "techStack": [
@@ -600,11 +603,11 @@
             "name": "Incheon Smart Green Industrial Complex Control Center",
             "period": "2022.01 ~ 2022.03",
             "featured": false,
-            "description": "Resolved inefficiency in meeting room reservation management and manual notification system",
+            "description": "Resolved fragmented reservation, monitoring, and SMS systems preventing unified management at industrial complex control center",
             "details": [
-              "Reservation System API: Real-time availability check and conflict prevention logic",
+              "Reservation System: Built real-time booking API with time+location composite unique key preventing scheduling conflicts",
               "Dashboard API: Integrated monitoring data and status aggregation",
-              "Async SMS Processing: Background SMS delivery on reservation confirmation"
+              "Async SMS: Bizppurio SMS API + @Async non-blocking reservation confirmation notifications"
             ],
             "techStack": [
               "Java",
@@ -617,11 +620,12 @@
             "name": "Future Service JOB Agent Development",
             "period": "2021.07 ~ 2022.03",
             "featured": false,
-            "description": "Resolved offline constraints in career counseling and inefficiency in counselor evaluation workflows",
+            "description": "Resolved legacy PHP system's extensibility limitations and lack of structured scoring and counseling management",
             "details": [
-              "Assessment System: Spring Boot-based independent assessment application",
-              "iframe-based System Integration: Assessment feature embedded in existing PHP system",
-              "Composite Score Calculation: Multi-survey result aggregation and scoring algorithm"
+              "iframe Integration: Embedded Spring Boot independent app into existing PHP system, minimizing legacy impact",
+              "Implemented postMessage API-based cross-frame real-time state synchronization",
+              "Composite Scoring: Weighted average-based multi-dimensional assessment scoring algorithm",
+              "Counselor Back-office System: Counseling history management and dashboard"
             ],
             "techStack": [
               "Java",
@@ -633,7 +637,7 @@
             "name": "kfriends Member Management System",
             "period": "2021.09 (3 weeks)",
             "featured": false,
-            "description": "Resolved need for unified member management and security enhancement across country-specific distributed websites",
+            "description": "Resolved lack of unified authentication requiring separate logins across 5 country-specific distributed websites",
             "details": [
               "Unified Auth Server: Spring Security + JWT-based centralized authentication",
               "Multi-domain CORS Handling: Secure token exchange across country-specific domains"
@@ -650,11 +654,10 @@
             "name": "Internal Tech Blog Renewal",
             "period": "2021.09 (3 weeks)",
             "featured": false,
-            "description": "Resolved hosting cost burden and maintenance complexity of WordPress-based blog",
+            "description": "Resolved hosting cost burden and manual deployment workflow of WordPress-based blog",
             "details": [
-              "WordPress → Jekyll Migration: Static site conversion",
-              "GitHub Pages Hosting: Free hosting without server management",
-              "Travis CI Automation: Git push-based auto build and deploy pipeline"
+              "WordPress → Jekyll Migration: Static site conversion eliminating 100% hosting costs",
+              "GitHub Pages + Travis CI: Git push-based automated build and deploy pipeline"
             ],
             "techStack": [
               "Jekyll",

@@ -572,20 +572,23 @@
         "endDate": "2022-03",
         "description": "고객 맞춤형 소프트웨어 솔루션 기업",
         "highlights": [
-          "Apache POI 기반 Excel 일괄 처리 시스템을 구축하여 교육 기관의 매 학기 수강생 300명+ 수작업 등록을 수 시간에서 수 분으로 단축",
-          "5개국 분산 웹사이트에서 국가별 개별 로그인이 필요한 상황에서 Spring Security + JWT 기반 크로스 도메인 인증 서버를 구축하여 단일 로그인으로 5개국 통합 인증 달성",
-          "WordPress에서 Jekyll + GitHub Pages로 마이그레이션하고 Travis CI 자동 배포를 도입하여 호스팅 비용 100% 절감"
+          "교육 기관의 학습 관리 전 과정이 수작업에 의존하는 상황에서 QR 출석·Excel 대량 등록·PDF 수료증·게시판·동영상·진도율 등 LMS 핵심 기능을 10개월간 풀스택 개발하여 관리 업무를 디지털화",
+          "기존 PHP 시스템의 확장성 한계를 iframe + postMessage API 기반 크로스 프레임 통합으로 해결하고, 가중 평균 점수 계산과 상담사 백오피스를 구현하여 채용 에이전트 서비스 완성",
+          "Apache POI 기반 Excel 일괄 처리 시스템을 구축하여 매 학기 수강생 300명+ 수작업 등록을 수 분으로 단축",
+          "5개국 분산 웹사이트에 Spring Security + JWT 기반 크로스 도메인 인증 서버를 구축하여 단일 로그인으로 통합 인증 달성",
+          "WordPress → Jekyll + GitHub Pages 마이그레이션과 Travis CI 자동 배포로 호스팅 비용 100% 절감"
         ],
         "projects": [
           {
             "name": "학습 관리 시스템(LMS) 개발",
             "period": "2021.07 ~ 2022.03",
             "featured": true,
-            "description": "교육 기관의 수동적 관리 업무와 학습자 편의성 부족 해결",
+            "description": "교육 기관의 학습 관리(출석, 수료, 진도율)가 수작업에 의존하여 운영 효율이 낮고 오류가 빈번한 문제 해결",
             "details": [
-              "QR 출석체크: 실시간 출석 처리 API 및 중복 체크 로직",
-              "Excel 기반 대량 등록: Apache POI 활용한 회원 정보 일괄 처리 시스템",
-              "동적 수료증: JasperReports 기반 PDF 자동 생성 API"
+              "QR 출석체크: 날짜+사용자ID 복합 유니크 키로 중복 출석을 방지하는 실시간 출석 처리 API 구현",
+              "Excel 대량 등록: Apache POI 기반 행별 순차 처리로 데이터 정합성을 보장하는 회원 일괄 등록 시스템 구축",
+              "게시판 CRUD, 동영상 업로드, 진도율 계산 등 LMS 핵심 학습 기능 개발",
+              "동적 수료증: JasperReports 기반 PDF 자동 생성 API 구현"
             ],
             "techStack": [
               "Java",
@@ -600,11 +603,11 @@
             "name": "인천 스마트 그린 산단 통합관제센터",
             "period": "2022.01 ~ 2022.03",
             "featured": false,
-            "description": "산업단지 내 회의실 예약 관리의 비효율성과 수동 알림 체계 해결",
+            "description": "산단 관제센터의 회의실 예약·모니터링·SMS 알림이 개별 시스템으로 분산되어 통합 관리가 불가능한 문제 해결",
             "details": [
-              "예약 시스템 API: 실시간 예약 현황 조회 및 충돌 방지 로직",
+              "예약 시스템: 시간+장소 복합 유니크 키로 예약 충돌을 방지하는 실시간 예약 API 구현",
               "대시보드 API: 통합 모니터링 데이터 제공 및 현황 집계",
-              "SMS 비동기 처리: 예약 확정 시 SMS 발송을 백그라운드에서 처리"
+              "SMS 비동기 처리: 비즈뿌리오 SMS API + @Async 비동기 처리로 예약 확정 알림 발송"
             ],
             "techStack": [
               "Java",
@@ -617,11 +620,12 @@
             "name": "미래 서비스 JOB Agent 개발",
             "period": "2021.07 ~ 2022.03",
             "featured": false,
-            "description": "직업 상담 및 창업 역량 평가의 오프라인 제약과 상담사 평가 업무의 비효율성 해결",
+            "description": "기존 PHP 시스템의 확장성 한계로 새로운 기능 추가가 어렵고, 점수 계산과 상담 관리가 체계화되지 않은 문제 해결",
             "details": [
-              "평가 시스템 개발: Spring Boot 기반 독립적인 평가 애플리케이션 구축",
-              "iframe 기반 시스템 통합: 기존 PHP 시스템에 평가 기능 임베드",
-              "복합 점수 계산 로직: 다중 설문 결과를 종합한 평가 점수 산정 알고리즘"
+              "iframe 기반 시스템 통합: Spring Boot 독립 앱을 기존 PHP 시스템에 임베드하여 레거시 영향 최소화",
+              "postMessage API 기반 크로스 프레임 실시간 상태 동기화 구현",
+              "복합 점수 계산: 가중 평균 기반 다차원 평가 점수 산정 알고리즘 구현",
+              "상담사 백오피스 시스템: 상담 이력 관리 및 대시보드 구현"
             ],
             "techStack": [
               "Java",
@@ -633,7 +637,7 @@
             "name": "kfriends 회원 관리 시스템",
             "period": "2021.09 (3주)",
             "featured": false,
-            "description": "국가별 분산된 웹사이트의 통합 회원 관리 필요성과 보안 강화 요구 해결",
+            "description": "5개국 분산 웹사이트에서 국가별 개별 로그인이 필요한 통합 인증 부재 문제 해결",
             "details": [
               "통합 인증 서버 구축: Spring Security + JWT 기반 중앙화된 인증 시스템",
               "다중 도메인 CORS 처리: 국가별 도메인에서의 안전한 토큰 교환"
@@ -650,11 +654,10 @@
             "name": "사내 기술 블로그 리뉴얼",
             "period": "2021.09 (3주)",
             "featured": false,
-            "description": "기존 WordPress 기반 블로그의 호스팅 비용 부담과 유지보수 복잡성 해결",
+            "description": "WordPress 기반 블로그의 호스팅 비용 부담과 수동 배포 문제 해결",
             "details": [
-              "WordPress → Jekyll 마이그레이션: 정적 사이트 전환",
-              "GitHub Pages 호스팅: 서버 관리 없는 무료 호스팅으로 비용 절감",
-              "Travis CI 자동화: Git push 기반 자동 빌드 및 배포 파이프라인"
+              "WordPress → Jekyll 마이그레이션: 정적 사이트 전환으로 호스팅 비용 100% 절감",
+              "GitHub Pages + Travis CI: Git push 기반 자동 빌드·배포 파이프라인 구축"
             ],
             "techStack": [
               "Jekyll",

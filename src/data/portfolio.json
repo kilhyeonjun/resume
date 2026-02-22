@@ -432,12 +432,12 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "Python 멀티채팅 애플리케이션",
-        "en": "Python multi-chat application"
+        "ko": "TCP/IP 소켓 프로그래밍과 멀티스레딩으로 구현한 다중 사용자 실시간 채팅 애플리케이션 — 커스텀 텍스트 프로토콜 설계, 클라이언트별 스레드 관리, tkinter 이벤트 루프와 소켓 스레드 통합",
+        "en": "Multi-user real-time chat application built with TCP/IP socket programming and multi-threading — custom text protocol design, per-client thread management, and tkinter event loop integrated with socket threads"
       },
       "description": {
-        "ko": "멀티 스레드를 활용하여 서버에 여러 클라이언트가 동시 접속하고 상호 소통할 수 있는 채팅 애플리케이션이다.",
-        "en": "A chat application using multi-threading to allow multiple clients to connect simultaneously and communicate on a single server."
+        "ko": "Python의 socket 모듈과 멀티스레딩을 활용하여 서버-클라이언트 구조의 실시간 채팅 시스템을 구현한 프로젝트이다. 서버는 TCP 소켓(AF_INET, SOCK_STREAM)으로 클라이언트 연결을 수락하고, 접속마다 _thread.start_new_thread로 전용 스레드를 생성하여 동시 다중 접속을 처리한다. 파이프(|) 구분자 기반의 커스텀 텍스트 프로토콜을 설계하여 로그인 핸드셰이크(id,|닉네임), 채팅 메시지(닉네임|내용), 시스템 명령([접속인원], [kick], [아이디 중복])을 구분하며, 글로벌 소켓 리스트를 순회하는 브로드캐스트 패턴으로 전체 클라이언트에 메시지를 전달한다. 클라이언트는 threading.Thread로 송신/수신 스레드를 분리하고, 플래그 변수(flag_send, flag_out)를 통한 스레드 간 통신으로 tkinter GUI 이벤트 루프와 소켓 I/O를 동시에 처리한다.",
+        "en": "A real-time chat system with server-client architecture built using Python's socket module and multi-threading. The server accepts client connections via TCP sockets (AF_INET, SOCK_STREAM) and spawns a dedicated thread per connection using _thread.start_new_thread for concurrent multi-user handling. Designed a custom text protocol with pipe (|) delimiter to distinguish login handshake (id,|nickname), chat messages (nickname|content), and system commands ([접속인원], [kick], [아이디 중복]), broadcasting messages to all clients by iterating a global socket list. The client separates send/receive into independent threading.Thread instances, coordinating with the tkinter GUI event loop through flag-based inter-thread communication (flag_send, flag_out) to handle socket I/O and UI updates simultaneously."
       },
       "coverImage": "/images/portfolio/multichat-cover.webp",
       "contentImages": [
@@ -446,26 +446,34 @@
       ],
       "features": {
         "ko": [
-          "채팅 서버 on/off 기능",
-          "강퇴 기능",
-          "접속 목록 기능",
-          "채팅 기능"
+          "TCP 소켓 서버 — socket.bind/listen/accept 기반 서버 실행/종료, 클라이언트 접속마다 전용 스레드 생성(start_new_thread)",
+          "커스텀 텍스트 프로토콜 — 파이프(|) 구분자로 메시지 타입 분리, 브래킷 프리픽스([접속인원], [kick], [아이디 중복], [시스템 추방])로 시스템 명령 체계 구현",
+          "닉네임 중복 검증 — 서버 측 닉네임 리스트 대조 후 중복 시 NameError 예외 발생으로 접속 거부 및 클라이언트 알림",
+          "실시간 접속자 목록 동기화 — 접속/퇴장/강퇴 시 전체 클라이언트에 [접속인원] 메시지 브로드캐스트로 목록 갱신",
+          "서버 관리자 강퇴 기능 — 닉네임 기반 클라이언트 식별 후 [kick] 명령 전송, 소켓 리스트에서 제거 및 전체 공지",
+          "tkinter GUI — 서버/클라이언트 각각 독립 GUI 구성, Text 위젯 기반 채팅 로그 및 접속자 목록, Entry 위젯 기반 입력"
         ],
         "en": [
-          "Chat server on/off",
-          "Kick feature",
-          "Connection list",
-          "Chat feature"
+          "TCP socket server — socket.bind/listen/accept based server start/stop, dedicated thread per client connection (start_new_thread)",
+          "Custom text protocol — pipe (|) delimiter for message type separation, bracket prefix commands ([접속인원], [kick], [아이디 중복], [시스템 추방]) for system command framework",
+          "Nickname duplicate validation — server-side nickname list comparison, connection rejection via NameError exception with client notification on duplicates",
+          "Real-time connected user list sync — broadcasting [접속인원] message to all clients on connect/disconnect/kick events for list refresh",
+          "Server admin kick feature — nickname-based client identification, [kick] command transmission, socket list removal and system-wide announcement",
+          "tkinter GUI — independent GUI for server and client, Text widget-based chat log and user list, Entry widget-based input"
         ]
       },
       "lessons": {
         "ko": [
-          "tcp ip 소켓 통신을 이용하여 realtime 서비스를 만들 수 있다",
-          "thread를 사용하여 다중 사용자 처리를 할 수 있다"
+          "TCP 소켓의 accept-recv-send 흐름을 직접 구현하며 네트워크 프로그래밍의 기본 원리(바인딩, 리스닝, 연결 수락, 데이터 송수신)를 체득하고, 바이트 인코딩/디코딩(encode/decode)의 필요성을 이해",
+          "클라이언트별 전용 스레드를 생성하는 concurrent 서버 모델을 구현하며, 글로벌 리스트를 공유 자원으로 사용할 때의 동시성 이슈와 스레드 안전성의 중요성을 인식",
+          "구분자 기반 텍스트 프로토콜을 직접 설계하며 메시지 프레이밍과 타입 구분의 필요성을 학습 — 이후 WebSocket, HTTP 등 상위 프로토콜의 설계 원리를 이해하는 기반이 됨",
+          "tkinter의 메인 루프(mainloop)와 소켓 블로킹 I/O가 충돌하는 문제를 스레드 분리와 플래그 변수 기반 통신으로 해결하며, GUI 애플리케이션에서의 비동기 처리 패턴을 학습"
         ],
         "en": [
-          "TCP/IP socket communication enables realtime services",
-          "Threading enables multi-user handling"
+          "Internalized core network programming principles (binding, listening, accepting, data transmission) by directly implementing TCP socket accept-recv-send flow, understanding the necessity of byte encoding/decoding",
+          "Built a concurrent server model with per-client dedicated threads, recognizing concurrency issues and thread safety importance when using global lists as shared resources",
+          "Learned message framing and type differentiation by designing a delimiter-based text protocol from scratch — establishing foundation for understanding higher-level protocol design (WebSocket, HTTP)",
+          "Resolved conflicts between tkinter's main loop (mainloop) and socket blocking I/O through thread separation and flag-based inter-thread communication, learning async processing patterns in GUI applications"
         ]
       },
       "period": {
@@ -474,18 +482,23 @@
       },
       "skills": [
         "Python",
-        "tkinter",
-        "thread"
+        "socket",
+        "threading",
+        "tkinter"
       ],
       "github": "https://github.com/kilhyeonjun/MultiChat",
       "highlights": {
         "ko": [
-          "Python tkinter GUI 구현",
-          "멀티스레딩을 이용한 동시 채팅"
+          "TCP 소켓(AF_INET, SOCK_STREAM) 기반 서버-클라이언트 아키텍처 — accept 루프에서 클라이언트별 전용 스레드 생성으로 동시 다중 접속 처리",
+          "파이프 구분자 + 브래킷 프리픽스 기반 커스텀 텍스트 프로토콜 설계 — 로그인 핸드셰이크, 채팅, 시스템 명령(강퇴·접속자 동기화·중복 검증) 메시지 타입 분리",
+          "tkinter GUI 이벤트 루프와 소켓 I/O 스레드 통합 — 플래그 변수(flag_send, flag_out) 기반 스레드 간 통신으로 UI 블로킹 없이 실시간 메시지 송수신",
+          "서버 측 닉네임 중복 검증 및 관리자 강퇴 프로토콜 구현 — 예외 기반 흐름 제어(NameError, ConnectionResetError)로 비정상 접속 처리"
         ],
         "en": [
-          "Python tkinter GUI implementation",
-          "Concurrent chat using multi-threading"
+          "TCP socket (AF_INET, SOCK_STREAM) server-client architecture — per-client dedicated thread spawning from accept loop for concurrent multi-user handling",
+          "Custom text protocol with pipe delimiter + bracket prefix commands — separating login handshake, chat, and system commands (kick, user sync, duplicate validation) message types",
+          "Integrated tkinter GUI event loop with socket I/O threads — flag-based inter-thread communication (flag_send, flag_out) enabling real-time messaging without UI blocking",
+          "Server-side nickname duplicate validation and admin kick protocol — exception-based flow control (NameError, ConnectionResetError) for abnormal connection handling"
         ]
       }
     },

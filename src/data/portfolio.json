@@ -97,12 +97,12 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "실시간 대학병원 채용공고 맞춤형 알림 서비스",
-        "en": "Real-time customized job alert service for university hospitals"
+        "ko": "4개 대학병원 채용공고를 자동 수집하고 키워드 기반 이메일 알림을 제공하는 서버리스 백엔드 서비스",
+        "en": "Serverless backend service that automatically collects job postings from 4 university hospitals and delivers keyword-based email notifications"
       },
       "description": {
-        "ko": "대학병원의 채용공고를 자동으로 스크래핑하고 새로운 공고에 대한 알림을 제공하는 백엔드 서비스로, 의료계 취업 준비생에게 실시간 채용 정보를 제공하여 취업 준비를 지원하는 프로젝트이다.",
-        "en": "A backend service that automatically scrapes hospital job postings and provides notifications for new listings, designed to support medical job seekers with real-time recruitment information."
+        "ko": "의료계 취업 준비생이 여러 대학병원 채용 사이트를 일일이 확인해야 하는 불편함을 해소하기 위해 개발한 프로젝트이다. 세브란스, 이대, 중앙대 등 4개 대학병원의 채용공고를 매시간 자동으로 스크래핑하고, 구독자가 등록한 키워드와 매칭되는 신규 공고를 이메일로 알려준다. 병원별로 상이한 채용 사이트 구조에 대응하기 위해 Strategy 패턴을 적용하여 API 기반 스크래핑과 Puppeteer 브라우저 자동화를 병원별로 분리 구현했으며, 알림 큐에 비관적 락과 재시도 로직을 적용하여 이메일 발송의 신뢰성을 확보했다.",
+        "en": "Built to eliminate the hassle of manually checking multiple hospital career sites for medical job seekers. The service automatically scrapes job postings from 4 university hospitals (Severance, Ewha, Chung-Ang, etc.) every hour and sends email notifications when new postings match subscriber-registered keywords. Applied the Strategy pattern to handle varying hospital site structures — separating API-based scraping and Puppeteer browser automation per hospital. Ensured email delivery reliability through pessimistic locking and retry logic on the notification queue."
       },
       "coverImage": "/images/portfolio/medical-recruit-cover.webp",
       "contentImages": [
@@ -112,14 +112,20 @@
       ],
       "features": {
         "ko": [
-          "대학병원 채용공고 스크래핑",
-          "새로운 채용공고 알림 기능",
-          "키워드 기반 알림 필터링"
+          "4개 대학병원 채용공고 자동 스크래핑 (매시간 크론 스케줄링)",
+          "병원별 Strategy 패턴 기반 스크래핑 — API 방식(세브란스, 이대, 중앙대) + Puppeteer 브라우저 자동화(중앙대 흑석)",
+          "구독자 키워드 매칭 기반 신규 공고 이메일 알림",
+          "알림 큐 관리 — 비관적 락, 배치 처리(10건), 실패 시 최대 3회 재시도",
+          "외부 ID 기반 중복 공고 필터링",
+          "구독 관리 API (병원별 키워드 등록)"
         ],
         "en": [
-          "Hospital job posting scraping",
-          "New job notification",
-          "Keyword-based filtering"
+          "Automated scraping of 4 university hospital job postings (hourly cron scheduling)",
+          "Strategy pattern per hospital — API-based (Severance, Ewha, Chung-Ang) + Puppeteer browser automation (Chung-Ang Heukseok)",
+          "Email notifications for new postings matching subscriber keywords",
+          "Notification queue management — pessimistic locking, batch processing (10), up to 3 retries on failure",
+          "Duplicate post filtering via external ID",
+          "Subscription management API (keyword registration per hospital)"
         ]
       },
       "period": {
@@ -127,26 +133,32 @@
         "end": "2024-08-14"
       },
       "skills": [
-        "Node.js",
-        "TypeORM",
         "NestJS",
-        "PostgreSQL",
         "TypeScript",
+        "PostgreSQL",
+        "TypeORM",
+        "Puppeteer",
+        "Cheerio",
+        "Nodemailer",
+        "Docker",
         "AWS EC2",
         "AWS RDS",
-        "Puppeteer"
+        "AWS Lambda",
+        "Serverless Framework"
       ],
       "github": "https://github.com/kilhyeonjun/medical-recruit-be",
       "highlights": {
         "ko": [
-          "Puppeteer를 이용한 채용공고 웹 스크래핑",
-          "AWS EC2/RDS 기반 서버 배포",
-          "맞춤형 알림 시스템 구현"
+          "4개 대학병원 채용공고 매시간 자동 수집 — Strategy 패턴으로 병원별 스크래핑 전략 분리",
+          "알림 큐에 트랜잭션 기반 비관적 락 적용으로 동시 처리 시 중복 발송 방지",
+          "Docker 컨테이너 기반 EC2 배포 + Serverless Framework 기반 Lambda 이중 배포 구성",
+          "GitHub Actions CI/CD 파이프라인 구축 — 배포 후 헬스체크 자동 검증"
         ],
         "en": [
-          "Job posting web scraping with Puppeteer",
-          "Server deployment based on AWS EC2/RDS",
-          "Customized notification system implementation"
+          "Hourly automated collection from 4 university hospitals — Strategy pattern isolating per-hospital scraping logic",
+          "Transaction-based pessimistic locking on notification queue preventing duplicate sends under concurrency",
+          "Dual deployment: Docker container on EC2 + Serverless Framework on Lambda",
+          "GitHub Actions CI/CD pipeline with automated post-deploy health checks"
         ]
       }
     },

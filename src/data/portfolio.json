@@ -246,12 +246,12 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "슬랙 API 클론 코딩",
-        "en": "Slack API Clone Coding"
+        "ko": "NestJS의 모듈 시스템과 DI/IoC 패턴을 학습하기 위해 Slack 백엔드를 클론 코딩한 프로젝트 — Socket.io 기반 실시간 메시징, Passport 세션 인증, TypeORM 관계형 데이터 모델링 구현",
+        "en": "Slack backend clone project for learning NestJS module system and DI/IoC patterns — implemented Socket.io real-time messaging, Passport session authentication, and TypeORM relational data modeling"
       },
       "description": {
-        "ko": "Java Spring과 유사한 NestJS 프레임워크를 실무에 도입하기 위해 진행한 학습 프로젝트로, Slack 협업 프로그램의 백엔드를 클론 코딩한 프로젝트이다.",
-        "en": "A learning project for adopting NestJS framework (similar to Java Spring) into practice, cloning the backend of the Slack collaboration platform."
+        "ko": "Java Spring과 유사한 NestJS 프레임워크를 실무에 도입하기 위해 진행한 학습 프로젝트로, Slack 협업 도구의 핵심 백엔드를 클론 코딩했다. 6개의 NestJS 모듈(Users, Workspaces, Channels, DMs, Auth, Events)로 도메인을 분리하고, 8개의 TypeORM 엔티티 간 ManyToMany·ManyToOne 관계와 조인 테이블을 설계하여 Workspace-Channel-User 간 멤버십 구조를 구현했다. Socket.io 기반 WebSocket Gateway에서 동적 네임스페이스(/ws-.+/)와 룸 패턴으로 채널별 실시간 메시지 브로드캐스팅과 온라인 사용자 추적을 처리하며, Passport Local Strategy와 express-session으로 세션 기반 인증 체계를 구축했다.",
+        "en": "A learning project for adopting the NestJS framework (similar to Java Spring) into practice by cloning the core backend of Slack. Separated domains into 6 NestJS modules (Users, Workspaces, Channels, DMs, Auth, Events) and designed 8 TypeORM entities with ManyToMany/ManyToOne relationships and join tables to implement the Workspace-Channel-User membership structure. Handled per-channel real-time message broadcasting and online user tracking through a Socket.io-based WebSocket Gateway with dynamic namespaces (/ws-.+/) and room patterns, and built session-based authentication using Passport Local Strategy with express-session."
       },
       "coverImage": "/images/portfolio/slack-clone-cover.webp",
       "contentImages": [
@@ -259,30 +259,32 @@
       ],
       "features": {
         "ko": [
-          "사용자 기능",
-          "WorkSpace 기능",
-          "Channel 기능",
-          "DM 기능",
-          "WebSocket"
+          "회원가입·로그인 — Passport Local Strategy + bcrypt 해싱, express-session 기반 세션 인증, Guard를 활용한 인증/비인증 라우트 분리",
+          "Workspace 관리 — 생성 시 기본 채널·멤버 자동 생성, Owner 기반 소유권 구조, 멤버 초대 및 조회",
+          "Channel 메시징 — 채널 생성·멤버 관리, 페이지네이션 기반 채팅 이력 조회, 이미지 파일 업로드(Multer), 읽지 않은 메시지 수 카운팅",
+          "실시간 통신 — Socket.io WebSocket Gateway, 동적 네임스페이스(/ws-.+/)로 워크스페이스 격리, 룸 기반 채널별 메시지 브로드캐스팅, 온라인 사용자 실시간 추적",
+          "Swagger API 문서화 — @nestjs/swagger 데코레이터 기반 자동 API 문서 생성"
         ],
         "en": [
-          "User features",
-          "Workspace features",
-          "Channel features",
-          "DM features",
-          "WebSocket"
+          "Sign-up/Login — Passport Local Strategy + bcrypt hashing, express-session based authentication, Guard-based route protection for authenticated/unauthenticated access",
+          "Workspace management — auto-creation of default channel and member on workspace creation, Owner-based ownership structure, member invitation and lookup",
+          "Channel messaging — channel creation and member management, paginated chat history, image file upload (Multer), unread message counting",
+          "Real-time communication — Socket.io WebSocket Gateway, dynamic namespaces (/ws-.+/) for workspace isolation, room-based per-channel message broadcasting, real-time online user tracking",
+          "Swagger API documentation — automatic API docs generation via @nestjs/swagger decorators"
         ]
       },
       "lessons": {
         "ko": [
-          "NestJS를 사용하면 Spring에서 사용하던 OOP, IoC, DI, Singleton 패턴을 사용할 수 있다",
-          "Layered Architecture를 활용하여 시스템의 결합도를 낮추고 테스트에 용이하다",
-          "Jest를 통해 서비스 로직을 유닛 테스팅 할 수 있다"
+          "NestJS의 모듈·프로바이더·컨트롤러 구조가 Spring의 IoC/DI 컨테이너와 동일한 설계 철학을 따르며, Java 백엔드 경험을 Node.js로 자연스럽게 전환할 수 있음을 확인",
+          "TypeORM의 ManyToMany 관계에서 JoinTable과 중간 엔티티(WorkspaceMembers, ChannelMembers)를 활용한 멤버십 모델링 경험 — 단순 관계 매핑 대비 추가 메타데이터 관리의 유연성 확보",
+          "Socket.io의 네임스페이스·룸 계층 구조를 활용하면 워크스페이스→채널 단위의 메시지 격리를 효율적으로 구현할 수 있으며, Gateway 라이프사이클 훅(OnInit/OnConnect/OnDisconnect)으로 연결 상태를 체계적으로 관리 가능",
+          "QueryRunner를 활용한 수동 트랜잭션 관리로 회원가입 시 User·WorkspaceMember·ChannelMember 생성의 원자성을 보장하는 패턴 학습"
         ],
         "en": [
-          "NestJS enables OOP, IoC, DI, Singleton patterns from Spring",
-          "Layered Architecture reduces coupling and improves testability",
-          "Jest enables unit testing of service logic"
+          "Confirmed that NestJS module/provider/controller structure follows the same design philosophy as Spring's IoC/DI container, enabling natural transition of Java backend experience to Node.js",
+          "Gained experience modeling memberships with JoinTable and intermediate entities (WorkspaceMembers, ChannelMembers) in TypeORM ManyToMany relationships — achieving flexibility for additional metadata management over simple relation mapping",
+          "Learned that Socket.io namespace/room hierarchy enables efficient workspace→channel message isolation, and Gateway lifecycle hooks (OnInit/OnConnect/OnDisconnect) provide systematic connection state management",
+          "Learned manual transaction management pattern using QueryRunner to ensure atomicity of User, WorkspaceMember, and ChannelMember creation during sign-up"
         ]
       },
       "period": {
@@ -290,11 +292,14 @@
         "end": "2022-07-28"
       },
       "skills": [
-        "JavaScript",
+        "TypeScript",
         "Node.js",
         "NestJS",
+        "Socket.io",
         "MySQL",
         "TypeORM",
+        "Passport",
+        "Swagger",
         "Jest"
       ],
       "github": "https://github.com/kilhyeonjun/node-study/tree/master/slack-nest-typeorm",
@@ -303,14 +308,18 @@
       },
       "highlights": {
         "ko": [
-          "NestJS 기반 백엔드 API 구현",
-          "TypeORM을 이용한 데이터베이스 설계",
-          "Jest를 이용한 테스트 코드 작성"
+          "6개 NestJS 모듈로 도메인 분리 — Users, Workspaces, Channels, DMs, Auth, Events 각각 독립적 모듈·컨트롤러·서비스 구조",
+          "8개 TypeORM 엔티티 간 관계형 데이터 모델링 — ManyToMany 조인 테이블(WorkspaceMembers, ChannelMembers)로 Workspace-Channel-User 멤버십 구조 설계",
+          "Socket.io 기반 실시간 메시징 — 동적 네임스페이스(/ws-.+/)로 워크스페이스 격리, 룸 패턴으로 채널별 메시지 브로드캐스팅 및 온라인 사용자 추적",
+          "Passport Local Strategy + express-session 기반 세션 인증 체계 구축 — Guard 데코레이터로 인증/비인증 라우트 분리",
+          "QueryRunner 수동 트랜잭션으로 회원가입 시 다중 엔티티 생성 원자성 보장"
         ],
         "en": [
-          "Backend API implementation based on NestJS",
-          "Database design using TypeORM",
-          "Test code writing with Jest"
+          "Domain separation across 6 NestJS modules — independent module/controller/service structure for Users, Workspaces, Channels, DMs, Auth, and Events",
+          "Relational data modeling across 8 TypeORM entities — Workspace-Channel-User membership structure via ManyToMany join tables (WorkspaceMembers, ChannelMembers)",
+          "Socket.io-based real-time messaging — workspace isolation via dynamic namespaces (/ws-.+/), per-channel message broadcasting and online user tracking with room patterns",
+          "Session authentication with Passport Local Strategy + express-session — route protection via Guard decorators for authenticated/unauthenticated access",
+          "Atomicity guarantee for multi-entity creation during sign-up via QueryRunner manual transactions"
         ]
       }
     },

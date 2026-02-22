@@ -407,7 +407,7 @@
               "SNS",
               "SQS"
             ]
-          }
+          },
           {
             "name": "Maven Billing Subscription Management System",
             "period": "2023.06 ~ 2024.08",
@@ -425,7 +425,7 @@
               "MySQL",
               "Event Queue"
             ]
-          },
+          }
         ],
         "techStack": [
           "Node.js",

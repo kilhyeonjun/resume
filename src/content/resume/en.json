@@ -307,7 +307,9 @@
             "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance using Cyan (in-house Node.js framework)",
             "details": [
               "Built batch dispatch system for participant group management per clinical trial and batch consent dispatch",
-              "Implemented workflow structure managing Request → Researcher → Participant sequential flow"
+              "Implemented workflow structure managing Request → Researcher → Participant sequential flow",
+              "Migrated from batch + S3 event-based processing to EDA + Outbox pattern, enabling event flow visualization and local test environment setup",
+              "Achieved event replay capability and infrastructure cost reduction"
             ],
             "techStack": [
               "TypeScript",
@@ -406,6 +408,24 @@
               "SQS"
             ]
           }
+          {
+            "name": "Maven Billing Subscription Management System",
+            "period": "2023.06 ~ 2024.08",
+            "featured": false,
+            "description": "Subscription, plan, and license management system for all Maven services",
+            "details": [
+              "Implemented org-specific custom plan Internal API for tailored subscription offerings",
+              "Introduced Event Queue and built automatic inventory cleanUp logic after subscription expiration",
+              "Added withdrawn user validation to stabilize subscription renewal, expiration email, and license processing",
+              "Implemented renewal/re-subscription eligibility check based on bundles.is_renewable"
+            ],
+            "techStack": [
+              "NestJS",
+              "TypeScript",
+              "MySQL",
+              "Event Queue"
+            ]
+          },
         ],
         "techStack": [
           "Node.js",
@@ -480,7 +500,9 @@
               "Implemented real-time consultation status updates using Socket.io",
               "Built Web Push notifications for instant appointment and dispensing request alerts",
               "Integrated Kakao simple login and identity verification",
-              "Enhanced admin dashboard for operational monitoring"
+              "Enhanced admin dashboard for operational monitoring",
+              "Built internal API gateway integrating delivery (Hoodadak) and payment external services with Circuit Breaker pattern for fault isolation",
+              "Implemented real-time error monitoring system via Discord webhooks"
             ],
             "techStack": [
               "Express.js",

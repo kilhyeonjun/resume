@@ -510,12 +510,12 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "롤전적 검색 OP.GG 클론코딩",
-        "en": "League of Legends stats search - OP.GG clone"
+        "ko": "Spring Boot와 Riot Games API를 연동하여 소환사 전적 검색·인게임 정보·챌린저 랭킹을 제공하는 OP.GG 클론 프로젝트 — HttpURLConnection 기반 서버 사이드 API 호출, jQuery AJAX 클라이언트 사이드 데이터 렌더링, MyBatis 기반 소환사 데이터 영속화 구현",
+        "en": "OP.GG clone project integrating Spring Boot with Riot Games API for summoner match history, live game info, and Challenger ranking — server-side API calls via HttpURLConnection, client-side data rendering with jQuery AJAX, and MyBatis-based summoner data persistence"
       },
       "description": {
-        "ko": "Spring Boot 학습을 위해 League of Legends 전적 검색 사이트 OP.GG를 클론 코딩한 프로젝트로, Riot API를 연동하여 전적 검색 및 랭킹 기능을 구현한 프로젝트이다.",
-        "en": "A Spring Boot learning project cloning OP.GG (League of Legends match history site), integrating Riot API for match search and ranking features."
+        "ko": "Spring Boot의 MVC 아키텍처와 외부 REST API 연동을 학습하기 위해 OP.GG를 클론 코딩한 프로젝트이다. 서버 측에서는 HttpURLConnection으로 Riot Games API(summoner-v4)를 호출하여 소환사 정보를 조회하고, Gson으로 JSON 응답을 파싱하여 DTO에 매핑한 뒤 JSP 뷰에 ModelAndView로 전달한다. 클라이언트 측에서는 jQuery AJAX로 5개 Riot API 엔드포인트(match-v5, league-v4, spectator-v4, champion-mastery-v4, Data Dragon)를 직접 호출하여 최근 20경기 전적, 솔로/자유 랭크 정보, 인게임 실시간 관전 데이터, 챌린저 상위 40명 랭킹을 동적으로 렌더링한다. MyBatis Mapper XML로 소환사 데이터를 MariaDB에 저장·조회하는 영속 계층을 구현했으며, VersionCheck 유틸리티 클래스로 Data Dragon CDN의 패치 버전을 자동 감지하여 챔피언·아이템·스펠 이미지 경로를 동적으로 관리한다.",
+        "en": "An OP.GG clone project built to learn Spring Boot MVC architecture and external REST API integration. The server side calls Riot Games API (summoner-v4) via HttpURLConnection, parses JSON responses with Gson into DTOs, and passes data to JSP views through ModelAndView. The client side uses jQuery AJAX to directly call 5 Riot API endpoints (match-v5, league-v4, spectator-v4, champion-mastery-v4, Data Dragon), dynamically rendering recent 20 match histories, solo/flex rank info, live game spectator data, and top 40 Challenger rankings. Implemented a persistence layer with MyBatis Mapper XML for summoner data storage and retrieval in MariaDB, and a VersionCheck utility class that auto-detects Data Dragon CDN patch versions to dynamically manage champion, item, and spell image paths."
       },
       "coverImage": "/images/portfolio/trollgg-cover.webp",
       "contentImages": [
@@ -525,22 +525,34 @@
       ],
       "features": {
         "ko": [
-          "전적 검색 기능",
-          "랭킹 페이지"
+          "소환사 전적 검색 — 서버 측 HttpURLConnection으로 summoner-v4 API 호출 후 Gson 파싱, 클라이언트 측 jQuery AJAX로 match-v5 API에서 최근 20경기 매치 데이터 조회 및 동적 렌더링",
+          "매치 상세 정보 — 10명 참가자별 챔피언·스펠·룬·아이템·KDA·CS·피해량 표시, 팀별 오브젝트(바론·드래곤·타워) 및 총 킬·골드 비교, 킬콤보(더블~펜타킬) 표시",
+          "인게임 실시간 정보 — spectator-v4 API로 현재 진행 중인 게임의 10명 참가자 챔피언·스펠·룬·티어·숙련도 상위 3챔피언 및 밴 정보 조회",
+          "챌린저 랭킹 페이지 — league-v4 API로 챌린저 리그 전체 소환사를 LP 기준 정렬, 상위 40명의 프로필·티어·LP·승률·레벨·숙련도 챔피언 표시",
+          "승률 통계 시각화 — Chart.js 도넛 차트로 승/패 비율 표시, 모스트 챔피언 3개 및 선호 포지션 2개의 승률·KDA 통계 산출",
+          "Data Dragon CDN 버전 자동 감지 — VersionCheck 유틸리티로 Riot Data Dragon realms API를 호출하여 챔피언·아이템·스펠·프로필 아이콘 이미지 경로의 패치 버전을 동적 관리"
         ],
         "en": [
-          "Match history search",
-          "Ranking page"
+          "Summoner match search — server-side summoner-v4 API call via HttpURLConnection with Gson parsing, client-side jQuery AJAX fetching recent 20 matches from match-v5 API with dynamic rendering",
+          "Match detail view — per-participant champion, spell, rune, item, KDA, CS, and damage display for all 10 players, team objective comparison (Baron, Dragon, Tower) with total kill and gold stats, kill combo indicators (Double to Penta)",
+          "Live game info — spectator-v4 API querying current game data including 10 participants' champions, spells, runes, tiers, top 3 mastery champions, and ban information",
+          "Challenger ranking page — league-v4 API fetching all Challenger league summoners sorted by LP, displaying top 40 profiles with tier, LP, win rate, level, and mastery champions",
+          "Win rate statistics visualization — Chart.js doughnut chart for win/loss ratio, top 3 most-played champions and top 2 preferred positions with win rate and KDA statistics",
+          "Data Dragon CDN version auto-detection — VersionCheck utility calling Riot Data Dragon realms API to dynamically manage patch versions for champion, item, spell, and profile icon image paths"
         ]
       },
       "lessons": {
         "ko": [
-          "외부 API를 사용하면 토큰을 사용하여 데이터를 수집할 수 있다",
-          "MVC 패턴을 사용하여 비즈니스 로직과 view, controller를 분리할 수 있다"
+          "HttpURLConnection으로 외부 REST API를 직접 호출하고 Gson으로 JSON 응답을 파싱하는 과정에서, HTTP 통신의 기본 흐름(URL 생성→연결→스트림 읽기→파싱)과 예외 처리의 중요성을 체득 — 이후 RestTemplate, WebClient 등 고수준 HTTP 클라이언트의 설계 원리를 이해하는 기반이 됨",
+          "Spring Boot의 Controller-Service-Mapper 3계층 구조를 직접 구현하며 MVC 패턴에서 각 계층의 역할 분리(요청 라우팅, 비즈니스 로직, 데이터 접근)를 학습하고, ModelAndView를 통한 서버 사이드 렌더링 흐름을 이해",
+          "MyBatis Mapper XML의 동적 SQL(<if> 태그)과 parameterType/resultType 매핑을 활용하여 소환사 검색 시 공백 제거 LIKE 쿼리를 구현하며, ORM 없이도 SQL을 직접 제어하는 데이터 접근 패턴을 경험",
+          "Riot Games API의 다중 엔드포인트(summoner-v4, match-v5, league-v4, spectator-v4, champion-mastery-v4)를 조합하여 하나의 완성된 서비스를 구축하며, API 키 관리, Rate Limit 대응, 리전별 엔드포인트 분리(kr.api vs asia.api) 등 외부 API 연동의 실무적 고려사항을 학습"
         ],
         "en": [
-          "External APIs enable data collection with tokens",
-          "MVC pattern separates business logic from view and controller"
+          "Internalized the fundamentals of HTTP communication (URL creation → connection → stream reading → parsing) and exception handling importance through direct REST API calls with HttpURLConnection and Gson JSON parsing — establishing foundation for understanding higher-level HTTP clients like RestTemplate and WebClient",
+          "Learned MVC layer separation (request routing, business logic, data access) by implementing Spring Boot's Controller-Service-Mapper 3-tier architecture firsthand, understanding server-side rendering flow through ModelAndView",
+          "Experienced SQL-controlled data access patterns without ORM by implementing whitespace-stripped LIKE queries for summoner search using MyBatis Mapper XML dynamic SQL (<if> tags) with parameterType/resultType mapping",
+          "Learned practical considerations for external API integration — API key management, Rate Limit handling, and region-specific endpoint separation (kr.api vs asia.api) — by combining multiple Riot Games API endpoints (summoner-v4, match-v5, league-v4, spectator-v4, champion-mastery-v4) into a complete service"
         ]
       },
       "period": {
@@ -550,20 +562,31 @@
       "skills": [
         "Java",
         "Spring Boot",
+        "MyBatis",
         "MariaDB",
-        "Bootstrap"
+        "JSP",
+        "JSTL",
+        "jQuery",
+        "Bootstrap",
+        "Chart.js",
+        "Gson",
+        "Maven"
       ],
       "github": "https://github.com/kilhyeonjun/TrollGG",
       "highlights": {
         "ko": [
-          "Riot API 연동",
-          "Spring Boot 기반 웹 애플리케이션",
-          "Bootstrap을 이용한 반응형 UI"
+          "Riot Games API 6개 엔드포인트 연동 — summoner-v4, match-v5, league-v4, spectator-v4, champion-mastery-v4, Data Dragon realms를 조합하여 전적 검색·인게임·랭킹 서비스 구축",
+          "서버-클라이언트 하이브리드 API 호출 구조 — 서버 측 HttpURLConnection + Gson으로 소환사 조회, 클라이언트 측 jQuery AJAX로 매치·리그·관전 데이터 동적 렌더링",
+          "MyBatis Mapper XML 기반 데이터 영속 계층 — 동적 SQL로 공백 무시 소환사 검색 쿼리 구현, MariaDB에 소환사 정보 캐싱",
+          "Chart.js 기반 전적 통계 시각화 — 승/패 도넛 차트, 모스트 챔피언 3개 KDA·승률, 선호 포지션별 승률 통계 대시보드 구현",
+          "Data Dragon CDN 패치 버전 자동 동기화 — VersionCheck 유틸리티로 챔피언·아이템·스펠·프로필 아이콘 이미지 경로를 최신 패치에 맞춰 동적 관리"
         ],
         "en": [
-          "Riot API integration",
-          "Web application based on Spring Boot",
-          "Responsive UI with Bootstrap"
+          "Integrated 6 Riot Games API endpoints — summoner-v4, match-v5, league-v4, spectator-v4, champion-mastery-v4, and Data Dragon realms combined into match search, live game, and ranking services",
+          "Hybrid server-client API call architecture — server-side HttpURLConnection + Gson for summoner lookup, client-side jQuery AJAX for dynamic match, league, and spectator data rendering",
+          "MyBatis Mapper XML-based persistence layer — dynamic SQL for whitespace-ignored summoner search queries with summoner info caching in MariaDB",
+          "Chart.js-based match statistics visualization — win/loss doughnut chart, top 3 most-played champion KDA and win rates, preferred position win rate statistics dashboard",
+          "Data Dragon CDN patch version auto-sync — VersionCheck utility dynamically managing champion, item, spell, and profile icon image paths aligned to latest patch"
         ]
       }
     }

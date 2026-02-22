@@ -331,12 +331,12 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "react nodebird 트위터 클론 코딩",
-        "en": "Twitter clone coding with React Nodebird"
+        "ko": "Next.js SSR 기반 트위터 유사 SNS 풀스택 클론 프로젝트 — Redux-Saga 비동기 상태 관리, Passport 세션 인증, Sequelize 관계형 모델링, AWS Lambda 이미지 리사이징 파이프라인 구현",
+        "en": "Full-stack Twitter-like SNS clone built with Next.js SSR — Redux-Saga async state management, Passport session authentication, Sequelize relational modeling, and AWS Lambda image resizing pipeline"
       },
       "description": {
-        "ko": "Node.js 기반 기술 스택 학습을 위해 진행한 트위터 유사 SNS 클론 프로젝트이다.",
-        "en": "A Twitter-like SNS clone project for learning Node.js-based tech stack."
+        "ko": "React/Next.js 프론트엔드와 Express 백엔드로 구성된 트위터 유사 SNS 풀스택 클론 프로젝트로, Node.js 기반 풀스택 개발 역량을 체계적으로 학습하기 위해 진행했다. 프론트엔드는 Next.js의 getServerSideProps를 활용한 SSR로 초기 로딩 성능과 SEO를 확보하고, Redux-Saga로 로그인·게시글 CRUD·팔로우 등 복잡한 비동기 플로우를 제너레이터 기반으로 관리하며 Immer를 적용하여 리듀서의 불변 상태 업데이트를 간결하게 처리했다. 백엔드는 Sequelize ORM으로 User·Post·Comment·Hashtag·Image 5개 모델 간 다대다(BelongsToMany) 관계를 설계하고, Passport Local Strategy + bcrypt 해싱 기반 세션 인증을 구축했다. 이미지 업로드는 multer-s3로 S3에 직접 저장하고, S3 업로드 이벤트를 트리거로 AWS Lambda에서 sharp를 사용하여 400×400 썸네일을 자동 생성하는 서버리스 이미지 리사이징 파이프라인을 구현했다.",
+        "en": "A full-stack Twitter-like SNS clone project with React/Next.js frontend and Express backend, built to systematically learn Node.js-based full-stack development. The frontend leverages Next.js getServerSideProps for SSR to ensure initial load performance and SEO, manages complex async flows (login, post CRUD, follow) through generator-based Redux-Saga, and uses Immer for concise immutable state updates in reducers. The backend designs BelongsToMany relationships across 5 Sequelize models (User, Post, Comment, Hashtag, Image) and implements session authentication with Passport Local Strategy + bcrypt hashing. Image uploads go directly to S3 via multer-s3, with an AWS Lambda function triggered by S3 upload events using sharp to auto-generate 400×400 thumbnails — a serverless image resizing pipeline."
       },
       "coverImage": "/images/portfolio/react-nodebird-cover.webp",
       "contentImages": [
@@ -345,30 +345,38 @@
       ],
       "features": {
         "ko": [
-          "회원가입 로그인 기능",
-          "게시글, 댓글 CRUD",
-          "인피니트 스크롤링 적용",
-          "이미지 캐루셀 구현",
-          "해시태그 기능 구현",
-          "이미지 리사이징 구현"
+          "회원가입·로그인 — Passport Local Strategy + bcrypt 해싱 기반 세션 인증, 쿠키 기반 로그인 유지",
+          "게시글·댓글 CRUD — 게시글 작성·수정·삭제, 댓글 작성, 좋아요·리트윗 기능 구현",
+          "인피니트 스크롤링 — 커서 기반 페이지네이션(lastId)으로 게시글 무한 로딩 구현",
+          "이미지 업로드 및 리사이징 — multer-s3로 S3 직접 업로드, AWS Lambda + sharp로 400×400 썸네일 자동 생성",
+          "해시태그 — 정규표현식 기반 해시태그 파싱, BelongsToMany 관계로 게시글-해시태그 다대다 매핑, 해시태그별 게시글 조회",
+          "팔로우·팔로잉 — User 자기참조 다대다 관계(Followings/Followers)로 소셜 그래프 구현",
+          "이미지 캐루셀 — react-slick 기반 이미지 슬라이더, 1장/2장/다수 이미지 분기 렌더링",
+          "SSR — Next.js getServerSideProps로 서버 사이드 렌더링, next-redux-wrapper로 서버/클라이언트 Redux 스토어 동기화"
         ],
         "en": [
-          "Sign up/login",
-          "Post/comment CRUD",
-          "Infinite scrolling",
-          "Image carousel",
-          "Hashtag feature",
-          "Image resizing"
+          "Sign-up/Login — Passport Local Strategy + bcrypt hashing session authentication with cookie-based login persistence",
+          "Post/Comment CRUD — post create/edit/delete, comment creation, like and retweet features",
+          "Infinite scrolling — cursor-based pagination (lastId) for seamless post loading",
+          "Image upload & resizing — direct S3 upload via multer-s3, AWS Lambda + sharp auto-generating 400×400 thumbnails",
+          "Hashtags — regex-based hashtag parsing, BelongsToMany relationship for post-hashtag many-to-many mapping, per-hashtag post listing",
+          "Follow/Following — User self-referencing BelongsToMany relationship (Followings/Followers) implementing social graph",
+          "Image carousel — react-slick based image slider with conditional rendering for 1/2/multiple images",
+          "SSR — Next.js getServerSideProps for server-side rendering, next-redux-wrapper for server/client Redux store synchronization"
         ]
       },
       "lessons": {
         "ko": [
-          "React의 리렌더링을 이용하면 코드를 효율적으로 짤 수 있다",
-          "Next.js를 활용하면 React에서도 SSR을 사용 할 수 있다"
+          "Redux-Saga의 제너레이터 기반 사이드이펙트 관리가 복잡한 비동기 플로우(로그인→사용자 정보 로드→게시글 로드)를 선언적으로 제어할 수 있게 해주며, takeLatest/throttle 등 이펙트로 중복 요청 방지를 간결하게 처리할 수 있음을 학습",
+          "Next.js의 getServerSideProps와 next-redux-wrapper를 조합하면 서버에서 Redux 스토어를 hydrate하여 SSR 시점에 인증 상태와 초기 데이터를 포함한 완전한 페이지를 렌더링할 수 있음을 확인",
+          "Sequelize의 BelongsToMany 관계에서 through 테이블과 as 별칭을 활용하면 User 자기참조(Followers/Followings), Post-Hashtag 다대다, Post 리트윗(Retweet) 등 복잡한 관계를 하나의 모델 파일에서 선언적으로 정의 가능",
+          "S3 업로드 이벤트를 Lambda 트리거로 연결하면 서버 부하 없이 이미지 후처리를 비동기로 처리할 수 있으며, sharp 라이브러리의 fit: inside 옵션으로 원본 비율을 유지한 리사이징이 가능"
         ],
         "en": [
-          "React re-rendering enables efficient code",
-          "Next.js enables SSR in React"
+          "Learned that Redux-Saga's generator-based side effect management enables declarative control of complex async flows (login → load user → load posts), with effects like takeLatest/throttle providing concise duplicate request prevention",
+          "Confirmed that combining Next.js getServerSideProps with next-redux-wrapper enables hydrating the Redux store on the server, rendering complete pages with auth state and initial data at SSR time",
+          "Discovered that Sequelize BelongsToMany with through tables and as aliases enables declarative definition of complex relationships — User self-reference (Followers/Followings), Post-Hashtag many-to-many, and Post retweet — all within a single model file",
+          "Learned that connecting S3 upload events as Lambda triggers enables async image post-processing without server load, and sharp's fit: inside option maintains original aspect ratio during resizing"
         ]
       },
       "period": {
@@ -380,15 +388,20 @@
         "React",
         "Next.js",
         "Node.js",
-        "Express.js",
+        "Express",
         "MySQL",
         "Redux",
+        "Redux-Saga",
         "Sequelize",
+        "Passport",
+        "Immer",
+        "styled-components",
         "Ant Design",
-        "Lambda",
-        "S3",
-        "EC2",
-        "Route53"
+        "AWS Lambda",
+        "AWS S3",
+        "AWS EC2",
+        "AWS Route53",
+        "PM2"
       ],
       "github": "https://github.com/kilhyeonjun/node-study/tree/master/react-nodebird",
       "links": {
@@ -396,14 +409,18 @@
       },
       "highlights": {
         "ko": [
-          "React/Next.js 기반 프론트엔드",
-          "Redux를 이용한 상태 관리",
-          "AWS Lambda/S3/EC2/Route53 배포"
+          "Next.js getServerSideProps + next-redux-wrapper 기반 SSR — 서버에서 Redux 스토어 hydrate하여 인증 상태 포함 완전한 초기 페이지 렌더링",
+          "Redux-Saga 제너레이터 기반 비동기 상태 관리 — 로그인·게시글·팔로우 등 복잡한 사이드이펙트를 선언적으로 제어, Immer로 불변 상태 업데이트 간소화",
+          "Sequelize ORM 5개 모델 관계형 설계 — User 자기참조 다대다(Followers/Followings), Post-Hashtag BelongsToMany, 리트윗 자기참조 관계 구현",
+          "AWS Lambda + sharp 서버리스 이미지 리사이징 파이프라인 — S3 업로드 이벤트 트리거로 400×400 썸네일 자동 생성, 서버 부하 제로",
+          "Passport Local Strategy + bcrypt + express-session 기반 세션 인증 체계 구축 — 쿠키 기반 로그인 유지 및 CORS 크로스도메인 인증 처리"
         ],
         "en": [
-          "Frontend based on React/Next.js",
-          "State management using Redux",
-          "AWS Lambda/S3/EC2/Route53 deployment"
+          "Next.js getServerSideProps + next-redux-wrapper SSR — server-side Redux store hydration rendering complete initial pages with auth state",
+          "Redux-Saga generator-based async state management — declarative control of complex side effects (login, posts, follow) with Immer simplifying immutable state updates",
+          "Sequelize ORM relational design across 5 models — User self-referencing BelongsToMany (Followers/Followings), Post-Hashtag many-to-many, and retweet self-reference",
+          "AWS Lambda + sharp serverless image resizing pipeline — S3 upload event trigger auto-generating 400×400 thumbnails with zero server load",
+          "Passport Local Strategy + bcrypt + express-session authentication — cookie-based login persistence with CORS cross-domain auth handling"
         ]
       }
     },

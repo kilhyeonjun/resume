@@ -8,12 +8,12 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "동시성 및 대규모 트래픽을 고려한 콘서트 좌석 예약 학습 프로젝트",
-        "en": "A learning project for concert seat reservation considering concurrency and large-scale traffic"
+        "ko": "항해플러스 백엔드 과정에서 동시성 제어와 대규모 트래픽 처리를 심층 학습한 콘서트 좌석 예약 서비스",
+        "en": "Concert seat reservation service built during Hanghae Plus Backend course, focusing on concurrency control and high-traffic handling"
       },
       "description": {
-        "ko": "비관적 락/낙관적 락 구현 및 성능 비교, Redis 분산 락을 통한 동시성 제어, 캐싱 전략 적용으로 성능 최적화, 인덱싱을 통한 쿼리 성능 개선, K6를 이용한 부하 테스트 및 장애 대응",
-        "en": "Implemented pessimistic/optimistic locks with performance comparison, concurrency control through Redis distributed lock, performance optimization with caching strategies, query performance improvement through indexing, and load testing with incident response using K6"
+        "ko": "대규모 트래픽 환경에서의 동시성 문제를 다양한 락 전략(비관적 락, 낙관적 락, Redis 분산 락)으로 해결하고, 시나리오별 최적의 동시성 제어 방식을 선정한 프로젝트이다. 좌석 선점에는 낙관적 락, 포인트 충전과 결제에는 Redisson 기반 분산 락을 적용하는 하이브리드 전략을 설계했으며, Redis 캐싱과 DB 인덱싱으로 조회 성능을 최적화하고 Kafka를 활용한 이벤트 기반 아키텍처로 시스템 간 결합도를 낮췄다. K6 부하 테스트를 통해 성능 병목을 식별하고 개선하는 전 과정을 경험했다.",
+        "en": "A project that resolved concurrency issues in high-traffic environments using multiple locking strategies (pessimistic, optimistic, and Redis distributed locks), selecting the optimal approach per scenario. Designed a hybrid strategy applying optimistic locks for seat reservation and Redisson-based distributed locks for point charging and payments. Optimized read performance through Redis caching and DB indexing, and reduced system coupling with Kafka-based event-driven architecture. Experienced the full cycle of identifying and resolving performance bottlenecks through K6 load testing."
       },
       "coverImage": "/images/portfolio/concert-reservation-cover.webp",
       "contentImages": [],
@@ -26,13 +26,21 @@
         "Spring Boot",
         "JPA",
         "Redis",
-        "MySQL"
+        "MySQL",
+        "Kafka",
+        "Docker",
+        "K6"
       ],
       "github": "https://github.com/hhpb-code/hhplus-concert",
       "links": {
+        "erd": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/ERD.md",
+        "apiSpec": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/API_SPEC.md",
         "sequenceDiagram": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/SEQUENCE_DIAGRAM.md",
         "requirements": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/REQUIREMENT.md",
-        "projectStructure": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/PROJECT_STRUCTURE.md"
+        "projectStructure": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/PROJECT_STRUCTURE.md",
+        "concurrencyAnalysis": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/CONCURRENCY.md",
+        "cachingStrategy": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/CACHING.md",
+        "indexOptimization": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/INDEXING.md"
       },
       "blogPosts": [
         {
@@ -66,18 +74,18 @@
       ],
       "highlights": {
         "ko": [
-          "비관적 락/낙관적 락 구현 및 성능 비교",
-          "Redis 분산 락을 통한 동시성 제어",
-          "캐싱 전략 적용으로 성능 최적화",
-          "인덱싱을 통한 쿼리 성능 개선",
-          "K6를 이용한 부하 테스트 및 장애 대응"
+          "1만 동시 요청 기준 낙관적 락 적용으로 좌석 예약 응답 시간 50% 개선 (1,678ms → 835ms)",
+          "시나리오별 하이브리드 락 전략 설계 — 좌석 선점(낙관적 락), 포인트/결제(Redisson 분산 락)",
+          "Redis 캐싱 적용으로 TPS 15배 향상 (100 → 1,500) 및 DB 쿼리 94% 감소",
+          "Kafka 기반 이벤트 드리븐 아키텍처로 도메인 간 결합도 제거",
+          "K6 부하 테스트를 통한 성능 병목 식별 및 인덱싱/캐싱으로 개선"
         ],
         "en": [
-          "Implemented pessimistic/optimistic locks with performance comparison",
-          "Concurrency control through Redis distributed lock",
-          "Performance optimization with caching strategies",
-          "Query performance improvement through indexing",
-          "Load testing and incident response with K6"
+          "50% seat reservation response time improvement with optimistic locking under 10K concurrent requests (1,678ms → 835ms)",
+          "Hybrid locking strategy per scenario — optimistic lock for seats, Redisson distributed lock for points/payments",
+          "15x TPS improvement (100 → 1,500) and 94% DB query reduction through Redis caching",
+          "Kafka-based event-driven architecture eliminating inter-domain coupling",
+          "Performance bottleneck identification via K6 load testing, resolved with indexing and caching"
         ]
       }
     },

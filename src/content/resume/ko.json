@@ -467,7 +467,10 @@
             "description": "서브도메인 간 세션 충돌 문제를 해결하기 위한 JWT 기반 통합 인증 시스템 신규 구축",
             "details": [
               "NestJS + JWT 기반 토큰 인증 시스템 설계 및 구현",
-              "기존 세션 방식에서 토큰 기반으로 마이그레이션하여 서브도메인 간 원활한 사용자 전환 구현"
+              "기존 세션 방식에서 토큰 기반으로 마이그레이션하여 서브도메인 간 원활한 사용자 전환 구현",
+              "MySQL 기반 JWT 키 관리 (Redis 대신 인프라 단순화)",
+              "Access Token + Refresh Token 이중 토큰 구조",
+              "웹(의사/약사/관리자) + 모바일 앱 통합 인증"
             ],
             "techStack": [
               "NestJS",
@@ -496,9 +499,10 @@
             "featured": true,
             "description": "의사·약사용 백오피스 시스템의 실시간 상태 반영 부재와 수동 알림 체계 문제를 Socket.io 및 Web Push 도입으로 해결",
             "details": [
+              "의사ID+시간대 복합 유니크 키로 중복 예약 원천 차단",
               "의사 진료 예약/요청 시스템 및 약사 조제 요청 시스템 구현",
-              "Socket.io 기반 실시간 진료 상태 반영으로 사용자 응답성 개선",
-              "Web Push 알림 구현으로 진료 예약·조제 요청 즉시 알림 제공",
+              "Socket.IO Room 기반 실시간 상태 동기화로 진료·조제·배달 이벤트를 관련 사용자에게 즉시 반영",
+              "VAPID + Service Worker 기반 백그라운드 알림으로 브라우저 비활성 시에도 진료 예약·조제 요청 즉시 알림",
               "카카오 간편 로그인 및 본인인증 연동",
               "관리자 대시보드 고도화로 운영 현황 모니터링 효율화",
               "배달(후다닥) 및 결제 외부 서비스 통합 API 게이트웨이 구축, Circuit Breaker 패턴으로 장애 전파 차단",
@@ -537,8 +541,8 @@
             "featured": true,
             "description": "Express.js 단일 파일(app.js) 구조에서 NestJS 모듈 아키텍처로 전환",
             "details": [
-              "Express.js + EJS 모놀리식 구조를 NestJS + TypeORM으로 단계적 전환",
-              "Ports and Adapters Architecture 적용으로 비즈니스 로직과 인프라 분리",
+              "3단계 점진적 전환: app.js 단일 파일 → 레이어드 아키텍처(Controller/Service/Repository) → NestJS 프레임워크 도입",
+              "JavaScript → TypeScript 마이그레이션으로 타입 안정성 확보",
               "TDD 도입 및 단위 테스트 커버리지 80% 달성"
             ],
             "techStack": [

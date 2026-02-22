@@ -264,6 +264,20 @@
           "Built independent admin backend for content and user management",
           "API spec collaboration with FE in 8-member cross-functional sprint team"
         ]
+      },
+      "lessons": {
+        "ko": [
+          "4종 OAuth 2.0 소셜 로그인 통합 과정에서 프로바이더별 인증 플로우 차이와 토큰 관리 전략을 학습",
+          "8인 크로스펑셔널 팀에서 FE와 API 스펙을 협의하며 인터페이스 기반 협업과 커뮤니케이션 역량 강화",
+          "커뮤니티 서비스의 핵심 API를 전담 설계·구현하며 게시물·댓글·좋아요·팔로우 등 소셜 기능의 데이터 모델링과 관계 설계 경험",
+          "콘텐츠 관리용 어드민 백엔드를 독립 구축하며 사용자향 서비스와 관리자향 시스템의 관심사 분리 설계를 학습"
+        ],
+        "en": [
+          "Learned provider-specific auth flow differences and token management strategies through integrating 4 OAuth 2.0 social login providers",
+          "Strengthened interface-based collaboration and communication skills by negotiating API specs with FE in an 8-member cross-functional team",
+          "Gained experience in social feature data modeling and relationship design by solely designing and implementing core community APIs (posts, comments, likes, follows)",
+          "Learned separation of concerns between user-facing services and admin systems by independently building a content management admin backend"
+        ]
       }
     },
     {
@@ -301,20 +315,6 @@
           "Swagger API documentation — automatic API docs generation via @nestjs/swagger decorators"
         ]
       },
-      "lessons": {
-        "ko": [
-          "NestJS의 모듈·프로바이더·컨트롤러 구조가 Spring의 IoC/DI 컨테이너와 동일한 설계 철학을 따르며, Java 백엔드 경험을 Node.js로 자연스럽게 전환할 수 있음을 확인",
-          "TypeORM의 ManyToMany 관계에서 JoinTable과 중간 엔티티(WorkspaceMembers, ChannelMembers)를 활용한 멤버십 모델링 경험 — 단순 관계 매핑 대비 추가 메타데이터 관리의 유연성 확보",
-          "Socket.io의 네임스페이스·룸 계층 구조를 활용하면 워크스페이스→채널 단위의 메시지 격리를 효율적으로 구현할 수 있으며, Gateway 라이프사이클 훅(OnInit/OnConnect/OnDisconnect)으로 연결 상태를 체계적으로 관리 가능",
-          "QueryRunner를 활용한 수동 트랜잭션 관리로 회원가입 시 User·WorkspaceMember·ChannelMember 생성의 원자성을 보장하는 패턴 학습"
-        ],
-        "en": [
-          "Confirmed that NestJS module/provider/controller structure follows the same design philosophy as Spring's IoC/DI container, enabling natural transition of Java backend experience to Node.js",
-          "Gained experience modeling memberships with JoinTable and intermediate entities (WorkspaceMembers, ChannelMembers) in TypeORM ManyToMany relationships — achieving flexibility for additional metadata management over simple relation mapping",
-          "Learned that Socket.io namespace/room hierarchy enables efficient workspace→channel message isolation, and Gateway lifecycle hooks (OnInit/OnConnect/OnDisconnect) provide systematic connection state management",
-          "Learned manual transaction management pattern using QueryRunner to ensure atomicity of User, WorkspaceMember, and ChannelMember creation during sign-up"
-        ]
-      },
       "period": {
         "start": "2022-03-25",
         "end": "2022-07-28"
@@ -348,6 +348,20 @@
           "Socket.io real-time messaging with dynamic namespaces and room patterns",
           "Passport + express-session auth with Guard-based route protection",
           "QueryRunner manual transactions ensuring multi-entity creation atomicity"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "NestJS의 모듈·프로바이더·컨트롤러 구조가 Spring의 IoC/DI 컨테이너와 동일한 설계 철학을 따르며, Java 백엔드 경험을 Node.js로 자연스럽게 전환할 수 있음을 확인",
+          "TypeORM의 ManyToMany 관계에서 JoinTable과 중간 엔티티(WorkspaceMembers, ChannelMembers)를 활용한 멤버십 모델링 경험 — 단순 관계 매핑 대비 추가 메타데이터 관리의 유연성 확보",
+          "Socket.io의 네임스페이스·룸 계층 구조를 활용하면 워크스페이스→채널 단위의 메시지 격리를 효율적으로 구현할 수 있으며, Gateway 라이프사이클 훅(OnInit/OnConnect/OnDisconnect)으로 연결 상태를 체계적으로 관리 가능",
+          "QueryRunner를 활용한 수동 트랜잭션 관리로 회원가입 시 User·WorkspaceMember·ChannelMember 생성의 원자성을 보장하는 패턴 학습"
+        ],
+        "en": [
+          "Confirmed that NestJS module/provider/controller structure follows the same design philosophy as Spring's IoC/DI container, enabling natural transition of Java backend experience to Node.js",
+          "Gained experience modeling memberships with JoinTable and intermediate entities (WorkspaceMembers, ChannelMembers) in TypeORM ManyToMany relationships — achieving flexibility for additional metadata management over simple relation mapping",
+          "Learned that Socket.io namespace/room hierarchy enables efficient workspace→channel message isolation, and Gateway lifecycle hooks (OnInit/OnConnect/OnDisconnect) provide systematic connection state management",
+          "Learned manual transaction management pattern using QueryRunner to ensure atomicity of User, WorkspaceMember, and ChannelMember creation during sign-up"
         ]
       }
     },
@@ -393,20 +407,6 @@
           "SSR — Next.js getServerSideProps for server-side rendering, next-redux-wrapper for server/client Redux store synchronization"
         ]
       },
-      "lessons": {
-        "ko": [
-          "Redux-Saga의 제너레이터 기반 사이드이펙트 관리가 복잡한 비동기 플로우(로그인→사용자 정보 로드→게시글 로드)를 선언적으로 제어할 수 있게 해주며, takeLatest/throttle 등 이펙트로 중복 요청 방지를 간결하게 처리할 수 있음을 학습",
-          "Next.js의 getServerSideProps와 next-redux-wrapper를 조합하면 서버에서 Redux 스토어를 hydrate하여 SSR 시점에 인증 상태와 초기 데이터를 포함한 완전한 페이지를 렌더링할 수 있음을 확인",
-          "Sequelize의 BelongsToMany 관계에서 through 테이블과 as 별칭을 활용하면 User 자기참조(Followers/Followings), Post-Hashtag 다대다, Post 리트윗(Retweet) 등 복잡한 관계를 하나의 모델 파일에서 선언적으로 정의 가능",
-          "S3 업로드 이벤트를 Lambda 트리거로 연결하면 서버 부하 없이 이미지 후처리를 비동기로 처리할 수 있으며, sharp 라이브러리의 fit: inside 옵션으로 원본 비율을 유지한 리사이징이 가능"
-        ],
-        "en": [
-          "Learned that Redux-Saga's generator-based side effect management enables declarative control of complex async flows (login → load user → load posts), with effects like takeLatest/throttle providing concise duplicate request prevention",
-          "Confirmed that combining Next.js getServerSideProps with next-redux-wrapper enables hydrating the Redux store on the server, rendering complete pages with auth state and initial data at SSR time",
-          "Discovered that Sequelize BelongsToMany with through tables and as aliases enables declarative definition of complex relationships — User self-reference (Followers/Followings), Post-Hashtag many-to-many, and Post retweet — all within a single model file",
-          "Learned that connecting S3 upload events as Lambda triggers enables async image post-processing without server load, and sharp's fit: inside option maintains original aspect ratio during resizing"
-        ]
-      },
       "period": {
         "start": "2022-03-25",
         "end": "2022-07-28"
@@ -444,11 +444,25 @@
           "Passport + bcrypt + express-session 세션 인증 및 CORS 처리"
         ],
         "en": [
-          "Next.js SSR with next-redux-wrapper for auth-inclusive initial rendering",
-          "Redux-Saga generator-based async state management with Immer",
-          "Sequelize 5-model relational design with self-referencing BelongsToMany",
-          "Lambda + sharp serverless image resizing (S3 trigger, 400×400)",
-          "Passport + bcrypt + express-session auth with CORS handling"
+          "Next.js SSR + next-redux-wrapper auth rendering",
+          "Redux-Saga async state management + Immer",
+          "Sequelize 5-model design (self-ref BelongsToMany)",
+          "Lambda + sharp image resize (S3, 400×400)",
+          "Passport + bcrypt + express-session auth + CORS"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "Redux-Saga의 제너레이터 기반 사이드이펙트 관리가 복잡한 비동기 플로우(로그인→사용자 정보 로드→게시글 로드)를 선언적으로 제어할 수 있게 해주며, takeLatest/throttle 등 이펙트로 중복 요청 방지를 간결하게 처리할 수 있음을 학습",
+          "Next.js의 getServerSideProps와 next-redux-wrapper를 조합하면 서버에서 Redux 스토어를 hydrate하여 SSR 시점에 인증 상태와 초기 데이터를 포함한 완전한 페이지를 렌더링할 수 있음을 확인",
+          "Sequelize의 BelongsToMany 관계에서 through 테이블과 as 별칭을 활용하면 User 자기참조(Followers/Followings), Post-Hashtag 다대다, Post 리트윗(Retweet) 등 복잡한 관계를 하나의 모델 파일에서 선언적으로 정의 가능",
+          "S3 업로드 이벤트를 Lambda 트리거로 연결하면 서버 부하 없이 이미지 후처리를 비동기로 처리할 수 있으며, sharp 라이브러리의 fit: inside 옵션으로 원본 비율을 유지한 리사이징이 가능"
+        ],
+        "en": [
+          "Learned that Redux-Saga's generator-based side effect management enables declarative control of complex async flows (login → load user → load posts), with effects like takeLatest/throttle providing concise duplicate request prevention",
+          "Confirmed that combining Next.js getServerSideProps with next-redux-wrapper enables hydrating the Redux store on the server, rendering complete pages with auth state and initial data at SSR time",
+          "Discovered that Sequelize BelongsToMany with through tables and as aliases enables declarative definition of complex relationships — User self-reference (Followers/Followings), Post-Hashtag many-to-many, and Post retweet — all within a single model file",
+          "Learned that connecting S3 upload events as Lambda triggers enables async image post-processing without server load, and sharp's fit: inside option maintains original aspect ratio during resizing"
         ]
       }
     },
@@ -490,20 +504,6 @@
           "tkinter GUI — independent GUI for server and client, Text widget-based chat log and user list, Entry widget-based input"
         ]
       },
-      "lessons": {
-        "ko": [
-          "TCP 소켓의 accept-recv-send 흐름을 직접 구현하며 네트워크 프로그래밍의 기본 원리(바인딩, 리스닝, 연결 수락, 데이터 송수신)를 체득하고, 바이트 인코딩/디코딩(encode/decode)의 필요성을 이해",
-          "클라이언트별 전용 스레드를 생성하는 concurrent 서버 모델을 구현하며, 글로벌 리스트를 공유 자원으로 사용할 때의 동시성 이슈와 스레드 안전성의 중요성을 인식",
-          "구분자 기반 텍스트 프로토콜을 직접 설계하며 메시지 프레이밍과 타입 구분의 필요성을 학습 — 이후 WebSocket, HTTP 등 상위 프로토콜의 설계 원리를 이해하는 기반이 됨",
-          "tkinter의 메인 루프(mainloop)와 소켓 블로킹 I/O가 충돌하는 문제를 스레드 분리와 플래그 변수 기반 통신으로 해결하며, GUI 애플리케이션에서의 비동기 처리 패턴을 학습"
-        ],
-        "en": [
-          "Internalized core network programming principles (binding, listening, accepting, data transmission) by directly implementing TCP socket accept-recv-send flow, understanding the necessity of byte encoding/decoding",
-          "Built a concurrent server model with per-client dedicated threads, recognizing concurrency issues and thread safety importance when using global lists as shared resources",
-          "Learned message framing and type differentiation by designing a delimiter-based text protocol from scratch — establishing foundation for understanding higher-level protocol design (WebSocket, HTTP)",
-          "Resolved conflicts between tkinter's main loop (mainloop) and socket blocking I/O through thread separation and flag-based inter-thread communication, learning async processing patterns in GUI applications"
-        ]
-      },
       "period": {
         "start": "2021-06-07",
         "end": "2021-06-17"
@@ -527,6 +527,20 @@
           "Custom text protocol with pipe delimiter for message type separation",
           "Integrated tkinter GUI event loop with socket I/O threads",
           "Server-side nickname validation and admin kick protocol"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "TCP 소켓의 accept-recv-send 흐름을 직접 구현하며 네트워크 프로그래밍의 기본 원리(바인딩, 리스닝, 연결 수락, 데이터 송수신)를 체득하고, 바이트 인코딩/디코딩(encode/decode)의 필요성을 이해",
+          "클라이언트별 전용 스레드를 생성하는 concurrent 서버 모델을 구현하며, 글로벌 리스트를 공유 자원으로 사용할 때의 동시성 이슈와 스레드 안전성의 중요성을 인식",
+          "구분자 기반 텍스트 프로토콜을 직접 설계하며 메시지 프레이밍과 타입 구분의 필요성을 학습 — 이후 WebSocket, HTTP 등 상위 프로토콜의 설계 원리를 이해하는 기반이 됨",
+          "tkinter의 메인 루프(mainloop)와 소켓 블로킹 I/O가 충돌하는 문제를 스레드 분리와 플래그 변수 기반 통신으로 해결하며, GUI 애플리케이션에서의 비동기 처리 패턴을 학습"
+        ],
+        "en": [
+          "Internalized core network programming principles (binding, listening, accepting, data transmission) by directly implementing TCP socket accept-recv-send flow, understanding the necessity of byte encoding/decoding",
+          "Built a concurrent server model with per-client dedicated threads, recognizing concurrency issues and thread safety importance when using global lists as shared resources",
+          "Learned message framing and type differentiation by designing a delimiter-based text protocol from scratch — establishing foundation for understanding higher-level protocol design (WebSocket, HTTP)",
+          "Resolved conflicts between tkinter's main loop (mainloop) and socket blocking I/O through thread separation and flag-based inter-thread communication, learning async processing patterns in GUI applications"
         ]
       }
     },
@@ -569,20 +583,6 @@
           "Data Dragon CDN version auto-detection — VersionCheck utility calling Riot Data Dragon realms API to dynamically manage patch versions for champion, item, spell, and profile icon image paths"
         ]
       },
-      "lessons": {
-        "ko": [
-          "HttpURLConnection으로 외부 REST API를 직접 호출하고 Gson으로 JSON 응답을 파싱하는 과정에서, HTTP 통신의 기본 흐름(URL 생성→연결→스트림 읽기→파싱)과 예외 처리의 중요성을 체득 — 이후 RestTemplate, WebClient 등 고수준 HTTP 클라이언트의 설계 원리를 이해하는 기반이 됨",
-          "Spring Boot의 Controller-Service-Mapper 3계층 구조를 직접 구현하며 MVC 패턴에서 각 계층의 역할 분리(요청 라우팅, 비즈니스 로직, 데이터 접근)를 학습하고, ModelAndView를 통한 서버 사이드 렌더링 흐름을 이해",
-          "MyBatis Mapper XML의 동적 SQL(<if> 태그)과 parameterType/resultType 매핑을 활용하여 소환사 검색 시 공백 제거 LIKE 쿼리를 구현하며, ORM 없이도 SQL을 직접 제어하는 데이터 접근 패턴을 경험",
-          "Riot Games API의 다중 엔드포인트(summoner-v4, match-v5, league-v4, spectator-v4, champion-mastery-v4)를 조합하여 하나의 완성된 서비스를 구축하며, API 키 관리, Rate Limit 대응, 리전별 엔드포인트 분리(kr.api vs asia.api) 등 외부 API 연동의 실무적 고려사항을 학습"
-        ],
-        "en": [
-          "Internalized the fundamentals of HTTP communication (URL creation → connection → stream reading → parsing) and exception handling importance through direct REST API calls with HttpURLConnection and Gson JSON parsing — establishing foundation for understanding higher-level HTTP clients like RestTemplate and WebClient",
-          "Learned MVC layer separation (request routing, business logic, data access) by implementing Spring Boot's Controller-Service-Mapper 3-tier architecture firsthand, understanding server-side rendering flow through ModelAndView",
-          "Experienced SQL-controlled data access patterns without ORM by implementing whitespace-stripped LIKE queries for summoner search using MyBatis Mapper XML dynamic SQL (<if> tags) with parameterType/resultType mapping",
-          "Learned practical considerations for external API integration — API key management, Rate Limit handling, and region-specific endpoint separation (kr.api vs asia.api) — by combining multiple Riot Games API endpoints (summoner-v4, match-v5, league-v4, spectator-v4, champion-mastery-v4) into a complete service"
-        ]
-      },
       "period": {
         "start": "2021-04-28",
         "end": "2021-05-30"
@@ -615,6 +615,20 @@
           "MyBatis dynamic SQL persistence with summoner data caching",
           "Chart.js match statistics dashboard with win rate and KDA visualization",
           "Data Dragon CDN patch version auto-sync utility"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "HttpURLConnection으로 외부 REST API를 직접 호출하고 Gson으로 JSON 응답을 파싱하는 과정에서, HTTP 통신의 기본 흐름(URL 생성→연결→스트림 읽기→파싱)과 예외 처리의 중요성을 체득 — 이후 RestTemplate, WebClient 등 고수준 HTTP 클라이언트의 설계 원리를 이해하는 기반이 됨",
+          "Spring Boot의 Controller-Service-Mapper 3계층 구조를 직접 구현하며 MVC 패턴에서 각 계층의 역할 분리(요청 라우팅, 비즈니스 로직, 데이터 접근)를 학습하고, ModelAndView를 통한 서버 사이드 렌더링 흐름을 이해",
+          "MyBatis Mapper XML의 동적 SQL(<if> 태그)과 parameterType/resultType 매핑을 활용하여 소환사 검색 시 공백 제거 LIKE 쿼리를 구현하며, ORM 없이도 SQL을 직접 제어하는 데이터 접근 패턴을 경험",
+          "Riot Games API의 다중 엔드포인트(summoner-v4, match-v5, league-v4, spectator-v4, champion-mastery-v4)를 조합하여 하나의 완성된 서비스를 구축하며, API 키 관리, Rate Limit 대응, 리전별 엔드포인트 분리(kr.api vs asia.api) 등 외부 API 연동의 실무적 고려사항을 학습"
+        ],
+        "en": [
+          "Internalized the fundamentals of HTTP communication (URL creation → connection → stream reading → parsing) and exception handling importance through direct REST API calls with HttpURLConnection and Gson JSON parsing — establishing foundation for understanding higher-level HTTP clients like RestTemplate and WebClient",
+          "Learned MVC layer separation (request routing, business logic, data access) by implementing Spring Boot's Controller-Service-Mapper 3-tier architecture firsthand, understanding server-side rendering flow through ModelAndView",
+          "Experienced SQL-controlled data access patterns without ORM by implementing whitespace-stripped LIKE queries for summoner search using MyBatis Mapper XML dynamic SQL (<if> tags) with parameterType/resultType mapping",
+          "Learned practical considerations for external API integration — API key management, Rate Limit handling, and region-specific endpoint separation (kr.api vs asia.api) — by combining multiple Riot Games API endpoints (summoner-v4, match-v5, league-v4, spectator-v4, champion-mastery-v4) into a complete service"
         ]
       }
     }

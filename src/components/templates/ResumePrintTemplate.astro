@@ -25,14 +25,17 @@ const basePath = getBasePath(lang);
 const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
 const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}`;
 
-// Group open source by repo name (before colon)
-const osGrouped: Record<string, typeof data.openSource> = {};
+// Group open source by repo name (before colon) + derive repoUrl
+const osGrouped: Record<string, { repoUrl?: string; items: typeof data.openSource }> = {};
 if (data.openSource) {
   data.openSource.forEach((item) => {
     const colonIdx = item.name.indexOf(':');
     const repo = colonIdx > -1 ? item.name.substring(0, colonIdx).trim() : item.name;
-    if (!osGrouped[repo]) osGrouped[repo] = [];
-    osGrouped[repo].push(item);
+    if (!osGrouped[repo]) {
+      const repoUrl = item.url?.replace(/\/(pull|issues)\/.*$/, '') || undefined;
+      osGrouped[repo] = { repoUrl, items: [] };
+    }
+    osGrouped[repo].items.push(item);
   });
 }
 ---
@@ -388,7 +391,7 @@ if (data.openSource) {
           <h2 class="section-title">{labels.continuousLearning}</h2>
           {data.continuousLearning.map((item) => (
             <div class="cert-item">
-              <h3 class="cert-name">{item.name} — {item.description}</h3>
+              <h3 class="cert-name">{item.url ? <a href={item.url}>{item.name}</a> : item.name} — {item.description}</h3>
               <p class="cert-issuer">{item.period}</p>
             </div>
           ))}
@@ -404,10 +407,10 @@ if (data.openSource) {
         {data.trainingPrograms.map((program) => (
           <div class="training-item">
             <div class="training-header">
-              <span class="training-name">{program.name}</span>
+              <span class="training-name">{program.url ? <a href={program.url}>{program.name}</a> : program.name}</span>
               <span class="date">{program.period}</span>
             </div>
-            <p class="training-org">{program.organization}</p>
+            <p class="training-org">{program.organization}{program.reviewUrl && <>{' · '}<a href={program.reviewUrl}>{lang === 'ko' ? '후기' : 'Review'}</a></>}</p>
             {program.description && <p class="training-desc">{program.description}</p>}
             {program.achievement && <p class="training-achievement">{program.achievement}</p>}
           </div>
@@ -419,9 +422,9 @@ if (data.openSource) {
     {data.openSource && data.openSource.length > 0 && (
       <section>
         <h2 class="section-title">{labels.openSource}</h2>
-        {Object.entries(osGrouped).map(([repo, items]) => (
+        {Object.entries(osGrouped).map(([repo, { repoUrl, items }]) => (
           <div class="os-repo">
-            <h3 class="os-repo-name">{repo}</h3>
+            <h3 class="os-repo-name">{repoUrl ? <a href={repoUrl}>{repo}</a> : repo}</h3>
             <ul class="os-list">
               {items.map((item) => {
                 const colonIdx = item.name.indexOf(':');
@@ -429,7 +432,7 @@ if (data.openSource) {
                 return (
                   <li>
                     <span class="highlight-bullet">•</span>
-                    {desc} — <span class="os-date">{item.date}</span>
+                    {item.url ? <a href={item.url}>{desc}</a> : desc} — <span class="os-date">{item.date}</span>
                   </li>
                 );
               })}
@@ -444,13 +447,14 @@ if (data.openSource) {
       <section>
         <h2 class="section-title">{labels.technicalWriting}</h2>
         {data.technicalWriting.map((item) => {
-          const linkUrl = item.url || item.videoUrl || item.reviewUrl;
           return (
             <div class="tw-item">
               <h3 class="tw-title">
-                {linkUrl ? (
-                  <a href={linkUrl}>{item.title}</a>
+                {item.url ? (
+                  <a href={item.url}>{item.title}</a>
                 ) : item.title}
+                {item.videoUrl && <>{' '}<a href={item.videoUrl}>{lang === 'ko' ? '영상' : 'Video'}</a></>}
+                {item.reviewUrl && <>{' '}<a href={item.reviewUrl}>{lang === 'ko' ? '후기' : 'Review'}</a></>}
               </h3>
               <p class="tw-meta">{item.type} — {item.date.replace('-', '.')}</p>
               {item.description && (

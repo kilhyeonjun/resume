@@ -22,7 +22,7 @@
       {
         "category": "System Design & Architecture",
         "items": [
-          "Event-driven async architecture — 6x data collection expansion",
+          "Serverless event-driven architecture — batch processing 2hrs→5min, data pipeline 270x expansion",
           "Game admin logic and shared utility package system — code consistency across 12 projects",
           "Legacy architecture modernization — monolith to modular migration, TDD 80%+ coverage"
         ]

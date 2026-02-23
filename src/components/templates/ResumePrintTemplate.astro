@@ -107,23 +107,21 @@ if (data.openSource) {
 
     .contact-info {
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      column-gap: 4mm;
-      row-gap: 1mm;
+      flex-direction: column;
+      align-items: center;
+      gap: 1mm;
       margin-top: 2mm;
       font-size: 8pt;
       line-height: 1.35;
-      color: #4b5563;
     }
-
-    .contact-item {
+    .contact-row {
       display: flex;
-      align-items: center;
-      gap: 3px;
+      justify-content: center;
+      flex-wrap: wrap;
+      column-gap: 1.5mm;
     }
-
-    .contact-link { color: #1d4ed8; text-decoration: none; }
+    .contact-row-text { color: #4b5563; }
+    .contact-row-links a { color: #1d4ed8; text-decoration: none; }
 
     /* Section styles */
     section { margin-bottom: 3mm; }
@@ -227,7 +225,7 @@ if (data.openSource) {
     /* Technical Writing */
     .tw-item { margin-bottom: 1.5mm; }
     .tw-title { font-size: 9pt; font-weight: 600; color: #111827; }
-    .tw-title a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 2px; }
+    .tw-title a { color: #111827; text-decoration: none; }
     .tw-meta { font-size: 8pt; color: #6b7280; }
     .tw-desc { font-size: 8pt; color: #374151; margin-top: 1pt; }
 
@@ -259,23 +257,19 @@ if (data.openSource) {
       <h1 class="name">{data.name}</h1>
       <p class="title">{data.title}</p>
       <div class="contact-info">
-        {data.email && (
-          <span class="contact-item">{data.email}</span>
-        )}
-        {data.location && (
-          <span class="contact-item">{data.location}</span>
-        )}
-        {data.github && (
-          <a href={data.github} class="contact-item contact-link">{data.github.replace('https://', '')}</a>
-        )}
-        {data.linkedin && (
-          <a href={data.linkedin} class="contact-item contact-link">{data.linkedin.replace('https://', '')}</a>
-        )}
-        {data.blog && (
-          <a href={data.blog} class="contact-item contact-link">{lang === 'ko' ? '블로그' : 'Blog'}: {data.blog.replace('https://', '')}</a>
-        )}
-        <a href={resumeUrl} class="contact-item contact-link">{lang === 'ko' ? '이력서 웹' : 'Resume Web'}</a>
-        <a href={`${resumeUrl}/portfolio`} class="contact-item contact-link">{lang === 'ko' ? '포트폴리오' : 'Portfolio'}</a>
+        <div class="contact-row contact-row-text">
+          {data.email && <span>{data.email}</span>}
+          {data.email && data.location && <span> · </span>}
+          {data.location && <span>{data.location}</span>}
+        </div>
+        <div class="contact-row contact-row-links">
+          {data.github && <><a href={data.github}>GitHub</a><span> · </span></>}
+          {data.linkedin && <><a href={data.linkedin}>LinkedIn</a><span> · </span></>}
+          {data.blog && <><a href={data.blog}>{lang === 'ko' ? '블로그' : 'Blog'}</a><span> · </span></>}
+          <a href={resumeUrl}>{lang === 'ko' ? '이력서 웹' : 'Resume Web'}</a>
+          <span> · </span>
+          <a href={`${resumeUrl}/portfolio`}>{lang === 'ko' ? '포트폴리오' : 'Portfolio'}</a>
+        </div>
       </div>
     </header>
 
@@ -298,7 +292,7 @@ if (data.openSource) {
               <span class="date">{exp.startDate.replace('-', '.')} — {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</span>
             </div>
             <p class="company">
-              <a href={`${resumeUrl}/experience/${exp.slug}`}>{exp.company}</a>
+              {exp.company} <a href={`${resumeUrl}/experience/${exp.slug}`}>[{lang === 'ko' ? '상세' : 'Detail'}]</a>
             </p>
             {exp.description && (
               <p class="description">{exp.description}</p>
@@ -391,7 +385,7 @@ if (data.openSource) {
           <h2 class="section-title">{labels.continuousLearning}</h2>
           {data.continuousLearning.map((item) => (
             <div class="cert-item">
-              <h3 class="cert-name">{item.url ? <a href={item.url}>{item.name}</a> : item.name} — {item.description}</h3>
+              <h3 class="cert-name">{item.name}{item.url && <>{' '}<a href={item.url}>{item.url.includes('github.com') ? '[GitHub]' : '[' + (lang === 'ko' ? '링크' : 'Link') + ']'}</a></>} — {item.description}</h3>
               <p class="cert-issuer">{item.period}</p>
             </div>
           ))}
@@ -407,10 +401,10 @@ if (data.openSource) {
         {data.trainingPrograms.map((program) => (
           <div class="training-item">
             <div class="training-header">
-              <span class="training-name">{program.url ? <a href={program.url}>{program.name}</a> : program.name}</span>
+              <span class="training-name">{program.name}{program.url && <>{' '}<a href={program.url}>[GitHub]</a></>}</span>
               <span class="date">{program.period}</span>
             </div>
-            <p class="training-org">{program.organization}{program.reviewUrl && <>{' · '}<a href={program.reviewUrl}>{lang === 'ko' ? '후기' : 'Review'}</a></>}</p>
+            <p class="training-org">{program.organization}{program.reviewUrl && <>{' · '}<a href={program.reviewUrl}>[{lang === 'ko' ? '후기' : 'Review'}]</a></>}</p>
             {program.description && <p class="training-desc">{program.description}</p>}
             {program.achievement && <p class="training-achievement">{program.achievement}</p>}
           </div>
@@ -424,15 +418,17 @@ if (data.openSource) {
         <h2 class="section-title">{labels.openSource}</h2>
         {Object.entries(osGrouped).map(([repo, { repoUrl, items }]) => (
           <div class="os-repo">
-            <h3 class="os-repo-name">{repoUrl ? <a href={repoUrl}>{repo}</a> : repo}</h3>
+            <h3 class="os-repo-name">{repo}{repoUrl && <>{' '}<a href={repoUrl}>[GitHub]</a></>}</h3>
             <ul class="os-list">
               {items.map((item) => {
                 const colonIdx = item.name.indexOf(':');
                 const desc = colonIdx > -1 ? item.name.substring(colonIdx + 1).trim() : item.name;
+                const prMatch = item.url?.match(/\/(pull|issues)\/(\d+)/);
+                const linkLabel = prMatch ? `#${prMatch[2]}` : '[PR]';
                 return (
                   <li>
                     <span class="highlight-bullet">•</span>
-                    {item.url ? <a href={item.url}>{desc}</a> : desc} — <span class="os-date">{item.date}</span>
+                    {desc}{item.url && <>{' '}<a href={item.url}>{linkLabel}</a></>} — <span class="os-date">{item.date}</span>
                   </li>
                 );
               })}
@@ -450,11 +446,10 @@ if (data.openSource) {
           return (
             <div class="tw-item">
               <h3 class="tw-title">
-                {item.url ? (
-                  <a href={item.url}>{item.title}</a>
-                ) : item.title}
-                {item.videoUrl && <>{' '}<a href={item.videoUrl}>{lang === 'ko' ? '영상' : 'Video'}</a></>}
-                {item.reviewUrl && <>{' '}<a href={item.reviewUrl}>{lang === 'ko' ? '후기' : 'Review'}</a></>}
+                {item.title}
+                {item.url && <>{' '}<a href={item.url}>[{lang === 'ko' ? '링크' : 'Link'}]</a></>}
+                {item.videoUrl && <>{' '}<a href={item.videoUrl}>[{lang === 'ko' ? '영상' : 'Video'}]</a></>}
+                {item.reviewUrl && <>{' '}<a href={item.reviewUrl}>[{lang === 'ko' ? '후기' : 'Review'}]</a></>}
               </h3>
               <p class="tw-meta">{item.type} — {item.date.replace('-', '.')}</p>
               {item.description && (

@@ -123,7 +123,7 @@
               "Event Sourcing-based Change Tracking: Auditable decorator + TypeORM Subscriber pattern for automated entity change recording pipeline",
               "3-Way Merge Engine: Multi-environment version merge system with parent/child entity conflict detection and unique constraint handling across 6 games",
               "Version Diff Engine: Dual strategy of incremental comparison and snapshot comparison based on Base Audit availability for cost-efficient version diffing",
-              "sharedUuid-based Identification: Decoupled from PK dependency, ensuring accurate entity tracking during migration, comparison, and merge"
+              "Shared identifier-based Identification: Decoupled from PK dependency, ensuring accurate entity tracking during migration, comparison, and merge"
             ],
             "techStack": [
               "TypeScript",
@@ -141,7 +141,7 @@
               "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, and modification in a single platform",
               "Creative Auto-deployment Pipeline: Integrated pipeline from creative upload to automatic registration on Google/Meta/TikTok platforms",
               "NAS-S3 Dual Sync: SQS event-based server-worker separation architecture for bidirectional sync/restore between internal NAS and S3",
-              "Meta Asset Sync Performance Optimization: TypeORM save() → insertBulk() conversion and deleteByCondition adoption — Image sync time reduced by 72% (25.7s→7.1s), DB transaction time reduced by 95% (10-16s→0.3-0.5s)",
+              "Meta Asset Sync Performance Optimization: ORM single-row saves to bulk operations conversion reducing Image sync time by 72% (25.7s→7.1s), DB transactions by 95% (10~16s→0.3~0.5s)",
               "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%",
               "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25→$1.1 per TB)",
               "DB Optimization: Normalized 100+ column table (main/time-series/prediction split), index optimization and cursor-based pagination resolving 18-second query bottleneck",
@@ -173,7 +173,7 @@
             "details": [
               "Hybrid Architecture: Maintained API server (EC2) + separated batch/job processing (Lambda) for optimal resource utilization per workload",
               "Event-Driven Architecture: SQS + Lambda + EventBridge-based async processing expanding data collection range 6x (60 days → 360 days)",
-              "Transactional Outbox Pattern: Scheduled/delayed publishing via scheduledAt/delaySeconds ensuring data consistency",
+              "Transactional Outbox Pattern: Scheduled and delayed event publishing ensuring data consistency",
               "Lambda Operational Stabilization: Batch Size bulk processing resolving throttling, CloudWatch log optimization reducing costs, build OOM remediation",
               "RDS Proxy Connection Management: Resolved DB connection exhaustion during massive Lambda execution via RDS Proxy pooling"
             ],

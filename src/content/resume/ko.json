@@ -123,7 +123,7 @@
               "이벤트 소싱 기반 변경 추적: Auditable 데코레이터 + TypeORM Subscriber 패턴으로 엔티티 변경 자동 기록 파이프라인 구축",
               "3-Way Merge 엔진: 6개 게임의 상위/하위 엔티티 충돌 감지와 유니크 제약조건을 고려한 다중 환경 간 버전 병합 시스템",
               "버전 간 Diff 엔진: Base Audit 유무에 따른 증분 비교와 스냅샷 비교의 이중 전략으로 비용 효율적 버전 비교",
-              "sharedUuid 기반 식별 체계: PK 의존 탈피, 마이그레이션/비교/병합 시 정확한 엔티티 추적 보장"
+              "공유 식별자 기반 크로스 환경 엔티티 추적 체계: PK 의존 탈피, 마이그레이션/비교/병합 시 정확한 엔티티 추적 보장"
             ],
             "techStack": [
               "TypeScript",
@@ -141,7 +141,7 @@
               "통합 캠페인 자동화: Google Ads/Meta/TikTok 캠페인 생성·배포·수정을 단일 플랫폼에서 관리하는 API 구축",
               "소재 자동 배포 파이프라인: 소재 업로드부터 Google/Meta/TikTok 플랫폼 자동 등록까지 통합 파이프라인 구축",
               "NAS-S3 이중화 동기화: SQS 이벤트 기반 서버-워커 분리 아키텍처로 사내 NAS와 S3 간 양방향 동기화/복원 구현",
-              "Meta 에셋 동기화 성능 최적화: TypeORM save() → insertBulk() 전환, deleteByCondition 적용으로 Image 동기화 시간 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)",
+              "Meta 에셋 동기화 성능 최적화: ORM 단건 저장을 벌크 연산으로 전환하여 Image 동기화 시간 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)",
               "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감",
               "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 BigQuery 비용 82% 절감 (TB당 $6.25→$1.1)",
               "DB 최적화: 100+ 컬럼 테이블 정규화(메인/시계열/예측 3개 분리), 인덱스 최적화 및 커서 기반 페이지네이션으로 18초 쿼리 병목 해결",
@@ -173,7 +173,7 @@
             "details": [
               "하이브리드 아키텍처: API 서버(EC2) 유지 + 배치/Job 처리(Lambda) 분리로 워크로드별 최적 리소스 활용",
               "Event-Driven Architecture: SQS + Lambda + EventBridge 기반 비동기 처리로 데이터 수집 범위 6배 확장 (60일 → 360일)",
-              "트랜잭션 아웃박스 패턴: scheduledAt/delaySeconds 기반 예약·지연 발행으로 데이터 정합성 보장",
+              "트랜잭션 아웃박스 패턴: 예약·지연 발행 기반 트랜잭션 아웃박스 패턴으로 데이터 정합성 보장",
               "Lambda 운영 안정화: Batch Size 벌크 처리로 스로틀링 해결, CloudWatch 로그 경량화로 비용 절감, 빌드 OOM 조치",
               "RDS Proxy 커넥션 관리: Lambda 대량 실행 시 DB 커넥션 고갈 문제를 RDS Proxy 풀링으로 해결"
             ],

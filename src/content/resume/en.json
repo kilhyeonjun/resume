@@ -537,6 +537,7 @@
               "Doctor ID + time slot composite unique key preventing duplicate appointments",
               "Extended existing consultation request→doctor approval flow by adding per-doctor availability management and appointment booking to enhance the scheduling system",
               "Socket.IO Room-based real-time status sync reflecting consultation/dispensing/delivery events to relevant users instantly",
+              "Reduced status reflection delay from tens of seconds to instant, eliminating patient wait complaints",
               "VAPID + Service Worker-based background notifications for instant appointment and dispensing alerts even when browser is inactive",
               "Integrated Kakao simple login and identity verification",
               "Enhanced admin dashboard for operational monitoring",
@@ -561,7 +562,8 @@
             "details": [
               "Integrated Naver Clova OCR API for automatic text extraction from prescription images",
               "Built structured data pipeline for automatic system entry",
-              "Developed automated medication guide generation using MFDS (Korea FDA) drug information API"
+              "Developed automated medication guide generation using MFDS (Korea FDA) drug information API",
+              "Reduced pharmacist processing time from 3-5 minutes to under 30 seconds per prescription"
             ],
             "techStack": [
               "NestJS",

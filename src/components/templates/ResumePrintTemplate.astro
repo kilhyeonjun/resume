@@ -24,6 +24,17 @@ const { data, labels } = prepareResumeData(resumeData, lang);
 const basePath = getBasePath(lang);
 const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
 const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}`;
+
+// Group open source by repo name (before colon)
+const osGrouped: Record<string, typeof data.openSource> = {};
+if (data.openSource) {
+  data.openSource.forEach((item) => {
+    const colonIdx = item.name.indexOf(':');
+    const repo = colonIdx > -1 ? item.name.substring(0, colonIdx).trim() : item.name;
+    if (!osGrouped[repo]) osGrouped[repo] = [];
+    osGrouped[repo].push(item);
+  });
+}
 ---
 
 <!DOCTYPE html>
@@ -190,8 +201,24 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
     .cert-name { font-size: 9pt; font-weight: 600; color: #111827; }
     .cert-issuer { font-size: 8pt; color: #6b7280; }
 
+
+    /* Core Competencies */
+    .competency-group { margin-bottom: 1.5mm; }
+    .competency-category { font-size: 9pt; font-weight: 600; color: #4b5563; margin-bottom: 0.5mm; }
+
+    /* Training Programs */
+    .training-item { margin-bottom: 2mm; break-inside: avoid; page-break-inside: avoid; }
+    .training-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5mm; }
+    .training-name { font-size: 9pt; font-weight: 600; color: #111827; }
+    .training-org { font-size: 8pt; color: #1d4ed8; margin-bottom: 0.5mm; }
+    .training-desc { font-size: 8pt; color: #374151; }
+    .training-achievement { font-size: 8pt; color: #374151; font-style: italic; }
     /* Open Source */
-    .opensource-inline { font-size: 9pt; color: #374151; line-height: 1.45; }
+    .os-repo { margin-bottom: 1.5mm; }
+    .os-repo-name { font-size: 9pt; font-weight: 600; color: #111827; margin-bottom: 0.3mm; }
+    .os-list { margin: 0; padding-left: 0; list-style: none; }
+    .os-list li { font-size: 8pt; color: #374151; line-height: 1.45; margin-bottom: 0.2mm; }
+    .os-date { color: #6b7280; white-space: nowrap; }
 
     /* Technical Writing */
     .tw-item { margin-bottom: 1.5mm; }
@@ -285,6 +312,24 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
       </section>
     )}
 
+
+    <!-- Core Competencies -->
+    {data.coreCompetencies && data.coreCompetencies.length > 0 && (
+      <section>
+        <h2 class="section-title">{labels.coreCompetencies}</h2>
+        {data.coreCompetencies.map((comp) => (
+          <div class="competency-group">
+            <p class="competency-category">{comp.category}</p>
+            <ul class="highlights">
+              {comp.items.map((item) => (
+                <li><span class="highlight-bullet">•</span>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+    )}
+
     <!-- Skills + Education (2-column grid) -->
     <div class="two-col-grid">
       <!-- Skills (left) -->
@@ -350,15 +395,46 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
       )}
     </div>
 
-    <!-- Open Source (inline 1 line) -->
+
+    <!-- Training Programs -->
+    {data.trainingPrograms && data.trainingPrograms.length > 0 && (
+      <section>
+        <h2 class="section-title">{labels.trainingPrograms}</h2>
+        {data.trainingPrograms.map((program) => (
+          <div class="training-item">
+            <div class="training-header">
+              <span class="training-name">{program.name}</span>
+              <span class="date">{program.period}</span>
+            </div>
+            <p class="training-org">{program.organization}</p>
+            {program.description && <p class="training-desc">{program.description}</p>}
+            {program.achievement && <p class="training-achievement">{program.achievement}</p>}
+          </div>
+        ))}
+      </section>
+    )}
+
+    <!-- Open Source (detailed by repo) -->
     {data.openSource && data.openSource.length > 0 && (
       <section>
         <h2 class="section-title">{labels.openSource}</h2>
-        <p class="opensource-inline">
-          {lang === 'ko' ? `오픈소스 기여 ${data.openSource.length}건` : `${data.openSource.length} open source contributions`}
-          {' — '}
-          {[...new Set(data.openSource.map((item) => item.name.split(':')[0].trim()))].join(', ')}
-        </p>
+        {Object.entries(osGrouped).map(([repo, items]) => (
+          <div class="os-repo">
+            <h3 class="os-repo-name">{repo}</h3>
+            <ul class="os-list">
+              {items.map((item) => {
+                const colonIdx = item.name.indexOf(':');
+                const desc = colonIdx > -1 ? item.name.substring(colonIdx + 1).trim() : item.name;
+                return (
+                  <li>
+                    <span class="highlight-bullet">•</span>
+                    {desc} — <span class="os-date">{item.date}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
       </section>
     )}
 

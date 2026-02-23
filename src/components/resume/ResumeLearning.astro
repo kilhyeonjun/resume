@@ -13,7 +13,7 @@ const { continuousLearning, label } = Astro.props;
 ---
 
 {continuousLearning && continuousLearning.length > 0 && (
-  <section class="mt-8">
+  <section>
     <h2 class="section-title">{label}</h2>
     <div class="mt-6 space-y-4">
       {continuousLearning.map((item) => (

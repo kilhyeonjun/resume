@@ -73,18 +73,14 @@ const jsonLd = {
       awards={data.awards}
       labels={labels}
     />
-    <!-- Activities: Technical Writing + Open Source (left) | Training Programs + Continuous Learning (right) -->
+    <!-- Activities: 2-column grid with row-aligned sections -->
     <div class="mb-10 grid gap-10 md:grid-cols-2">
-      <!-- Left column: Technical Writing + Open Source -->
-      <div>
-        <ResumeTechnicalWriting technicalWriting={data.technicalWriting} label={labels.technicalWriting} />
-        <ResumeOpenSource openSource={data.openSource} label={labels.openSource} />
-      </div>
-      <!-- Right column: Training Programs + Continuous Learning -->
-      <div>
-        <ResumeTrainingPrograms trainingPrograms={data.trainingPrograms} label={labels.trainingPrograms} />
-        <ResumeLearning continuousLearning={data.continuousLearning} label={labels.continuousLearning} />
-      </div>
+      <!-- Row 1: Technical Writing (left) + Training Programs (right) -->
+      <ResumeTechnicalWriting technicalWriting={data.technicalWriting} label={labels.technicalWriting} />
+      <ResumeTrainingPrograms trainingPrograms={data.trainingPrograms} label={labels.trainingPrograms} />
+      <!-- Row 2: Open Source (left) + Continuous Learning (right) -->
+      <ResumeOpenSource openSource={data.openSource} label={labels.openSource} />
+      <ResumeLearning continuousLearning={data.continuousLearning} label={labels.continuousLearning} />
     </div>
 
     <!-- Print Buttons -->

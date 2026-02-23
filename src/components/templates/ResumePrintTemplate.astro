@@ -364,7 +364,7 @@ if (data.openSource) {
       )}
     </div>
 
-    <!-- Certifications + Continuous Learning (2-column grid) -->
+    <!-- Certifications + Awards (2-column grid) -->
     <div class="two-col-grid">
       <!-- Certifications (left) -->
       {data.certifications && data.certifications.length > 0 && (
@@ -378,8 +378,85 @@ if (data.openSource) {
           ))}
         </section>
       )}
+      <!-- Awards (right) -->
+      {data.awards && data.awards.length > 0 && (
+        <section>
+          <h2 class="section-title">{labels.awards}</h2>
+          {data.awards.map((award) => (
+            <div class="cert-item">
+              <h3 class="cert-name">{award.name}</h3>
+              <p class="cert-issuer">{award.description && `${award.description} • `}{award.date.replace('-', '.')}</p>
+            </div>
+          ))}
+        </section>
+      )}
+    </div>
 
-      <!-- Continuous Learning (right) -->
+    <!-- Activities: 2-column grid with row-aligned sections (matches web layout) -->
+    <div class="two-col-grid">
+      <!-- Row 1: Technical Writing (left) + Training Programs (right) -->
+      {data.technicalWriting && data.technicalWriting.length > 0 && (
+        <section>
+          <h2 class="section-title">{labels.technicalWriting}</h2>
+          {data.technicalWriting.map((item) => {
+            return (
+              <div class="tw-item">
+                <h3 class="tw-title">
+                  {item.title}
+                  {item.url && <>{' '}<a href={item.url}>[{lang === 'ko' ? '링크' : 'Link'}]</a></>}
+                  {item.videoUrl && <>{' '}<a href={item.videoUrl}>[{lang === 'ko' ? '영상' : 'Video'}]</a></>}
+                  {item.reviewUrl && <>{' '}<a href={item.reviewUrl}>[{lang === 'ko' ? '후기' : 'Review'}]</a></>}
+                </h3>
+                <p class="tw-meta">{item.type} — {item.date.replace('-', '.')}</p>
+                {item.description && (
+                  <p class="tw-desc">{item.description}</p>
+                )}
+              </div>
+            );
+          })}
+        </section>
+      )}
+      {data.trainingPrograms && data.trainingPrograms.length > 0 && (
+        <section>
+          <h2 class="section-title">{labels.trainingPrograms}</h2>
+          {data.trainingPrograms.map((program) => (
+            <div class="training-item">
+              <div class="training-header">
+                <span class="training-name">{program.name}{program.url && <>{' '}<a href={program.url}>[GitHub]</a></>}</span>
+                <span class="date">{program.period}</span>
+              </div>
+              <p class="training-org">{program.organization}{program.reviewUrl && <>{' · '}<a href={program.reviewUrl}>[{lang === 'ko' ? '후기' : 'Review'}]</a></>}</p>
+              {program.description && <p class="training-desc">{program.description}</p>}
+              {program.achievement && <p class="training-achievement">{program.achievement}</p>}
+            </div>
+          ))}
+        </section>
+      )}
+      <!-- Row 2: Open Source (left) + Continuous Learning (right) -->
+      {data.openSource && data.openSource.length > 0 && (
+        <section>
+          <h2 class="section-title">{labels.openSource}</h2>
+          {Object.entries(osGrouped).map(([repo, { repoUrl, items }]) => (
+            <div class="os-repo">
+              <h3 class="os-repo-name">{repo}{repoUrl && <>{' '}<a href={repoUrl}>[GitHub]</a></>}</h3>
+              <ul class="os-list">
+                {items.map((item) => {
+                  const colonIdx = item.name.indexOf(':');
+                  const desc = colonIdx > -1 ? item.name.substring(colonIdx + 1).trim() : item.name;
+                  const prMatch = item.url?.match(/\/(pull|issues)\/(\d+)/);
+                  const linkLabel = prMatch ? `#${prMatch[2]}` : '[PR]';
+                  return (
+                    <li>
+                      <span class="highlight-bullet">•</span>
+                      {desc}{item.url && <>{' '}<a href={item.url}>{linkLabel}</a></>} — <span class="os-date">{item.date}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </section>
+      )}
       {data.continuousLearning && data.continuousLearning.length > 0 && (
         <section>
           <h2 class="section-title">{labels.continuousLearning}</h2>
@@ -391,78 +468,6 @@ if (data.openSource) {
           ))}
         </section>
       )}
-    </div>
-
-    <!-- Technical Writing + Open Source (left) | Training Programs (right) -->
-    <div class="two-col-grid">
-      <!-- Left column: Technical Writing + Open Source -->
-      <div>
-        {data.technicalWriting && data.technicalWriting.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.technicalWriting}</h2>
-            {data.technicalWriting.map((item) => {
-              return (
-                <div class="tw-item">
-                  <h3 class="tw-title">
-                    {item.title}
-                    {item.url && <>{' '}<a href={item.url}>[{lang === 'ko' ? '링크' : 'Link'}]</a></>}
-                    {item.videoUrl && <>{' '}<a href={item.videoUrl}>[{lang === 'ko' ? '영상' : 'Video'}]</a></>}
-                    {item.reviewUrl && <>{' '}<a href={item.reviewUrl}>[{lang === 'ko' ? '후기' : 'Review'}]</a></>}
-                  </h3>
-                  <p class="tw-meta">{item.type} — {item.date.replace('-', '.')}</p>
-                  {item.description && (
-                    <p class="tw-desc">{item.description}</p>
-                  )}
-                </div>
-              );
-            })}
-          </section>
-        )}
-        {data.openSource && data.openSource.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.openSource}</h2>
-            {Object.entries(osGrouped).map(([repo, { repoUrl, items }]) => (
-              <div class="os-repo">
-                <h3 class="os-repo-name">{repo}{repoUrl && <>{' '}<a href={repoUrl}>[GitHub]</a></>}</h3>
-                <ul class="os-list">
-                  {items.map((item) => {
-                    const colonIdx = item.name.indexOf(':');
-                    const desc = colonIdx > -1 ? item.name.substring(colonIdx + 1).trim() : item.name;
-                    const prMatch = item.url?.match(/\/(pull|issues)\/(\d+)/);
-                    const linkLabel = prMatch ? `#${prMatch[2]}` : '[PR]';
-                    return (
-                      <li>
-                        <span class="highlight-bullet">•</span>
-                        {desc}{item.url && <>{' '}<a href={item.url}>{linkLabel}</a></>} — <span class="os-date">{item.date}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
-          </section>
-        )}
-      </div>
-      <!-- Right column: Training Programs -->
-      <div>
-        {data.trainingPrograms && data.trainingPrograms.length > 0 && (
-          <section>
-            <h2 class="section-title">{labels.trainingPrograms}</h2>
-            {data.trainingPrograms.map((program) => (
-              <div class="training-item">
-                <div class="training-header">
-                  <span class="training-name">{program.name}{program.url && <>{' '}<a href={program.url}>[GitHub]</a></>}</span>
-                  <span class="date">{program.period}</span>
-                </div>
-                <p class="training-org">{program.organization}{program.reviewUrl && <>{' · '}<a href={program.reviewUrl}>[{lang === 'ko' ? '후기' : 'Review'}]</a></>}</p>
-                {program.description && <p class="training-desc">{program.description}</p>}
-                {program.achievement && <p class="training-achievement">{program.achievement}</p>}
-              </div>
-            ))}
-          </section>
-        )}
-      </div>
-    </div>
   </div>
 </body>
 </html>

@@ -297,6 +297,18 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     </section>
   )}
 
+  {data.technicalWriting && data.technicalWriting.length > 0 && (
+    <section>
+      <h2>{labels.technicalWriting.toUpperCase()}</h2>
+      {data.technicalWriting.map((item) => (
+        <div class="item">
+          <h3>{item.title}</h3>
+          <p class="date">{item.type} — {item.date.replace('-', '.')}</p>
+          {item.description && <p>{item.description}</p>}
+        </div>
+      ))}
+    </section>
+  )}
   {data.trainingPrograms && data.trainingPrograms.length > 0 && (
     <section>
       <h2>{labels.trainingPrograms.toUpperCase()}</h2>
@@ -313,25 +325,6 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       ))}
     </section>
   )}
-  {data.continuousLearning && data.continuousLearning.length > 0 && (
-    <section>
-      <h2>{labels.continuousLearning.toUpperCase()}</h2>
-      <p>{data.continuousLearning.map((item) => `${item.name} (${item.period})`).join(' | ')}</p>
-    </section>
-  )}
-
-  {data.technicalWriting && data.technicalWriting.length > 0 && (
-    <section>
-      <h2>{labels.technicalWriting.toUpperCase()}</h2>
-      {data.technicalWriting.map((item) => (
-        <div class="item">
-          <h3>{item.title}</h3>
-          <p class="date">{item.type} — {item.date.replace('-', '.')}</p>
-          {item.description && <p>{item.description}</p>}
-        </div>
-      ))}
-    </section>
-  )}
   {data.openSource && data.openSource.length > 0 && (
     <section>
       <h2>{labels.openSource.toUpperCase()}</h2>
@@ -341,6 +334,12 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
           <p class="date">{item.date.replace('-', '.')}</p>
         </div>
       ))}
+    </section>
+  )}
+  {data.continuousLearning && data.continuousLearning.length > 0 && (
+    <section>
+      <h2>{labels.continuousLearning.toUpperCase()}</h2>
+      <p>{data.continuousLearning.map((item) => `${item.name} (${item.period})`).join(' | ')}</p>
     </section>
   )}
 

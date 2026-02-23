@@ -14,16 +14,17 @@
       {
         "category": "Cost Optimization & Performance",
         "items": [
-          "82% cloud cost reduction — data pipeline optimization (BigQuery, Lambda)",
-          "72% server performance improvement — serverless architecture tuning and ARM64 migration"
+          "82% cloud cost reduction — BigQuery read method migration ($6.25→$1.1 per TB)",
+          "Bulk data processing optimization — ORM bulk operation reducing sync time by 72%",
+          "DB query bottleneck resolution — table normalization and index optimization for 18s query"
         ]
       },
       {
         "category": "System Design & Architecture",
         "items": [
           "Event-driven async architecture — 6x data collection expansion",
-          "Cross-cloud (GCP↔AWS) real-time data pipeline",
-          "Internal shared package system — code consistency across 12 projects"
+          "Game admin logic and shared utility package system — code consistency across 12 projects",
+          "Legacy architecture modernization — monolith to modular migration, TDD 80%+ coverage"
         ]
       },
       {

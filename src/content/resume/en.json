@@ -105,11 +105,11 @@
         "current": true,
         "description": "Mobile game development and publishing company",
         "highlights": [
-          "Achieved 82% BigQuery cost reduction ($6.25→$1.1 per TB) by switching to Storage Read API to address escalating marketing data query costs",
+          "Resolved escalating marketing data query costs by switching BigQuery read method, achieving 82% cost reduction ($6.25→$1.1 per TB)",
           "Overcame batch processing limitations by migrating to serverless architecture, expanding marketing metrics collection range 6x (60→360 days)",
           "Eliminated recurring code duplication across multi-game projects by building NestJS utility (10 modules) + Game Server Kit (2 packages), establishing a shared library structure for code consistency",
           "Designed and implemented Git-like Audit Log + 3-Way Merge engine to automate balance data change tracking and merging across 6 games, resolving delayed incident response",
-          "Built GCP-AWS hybrid pipeline to unify marketing data scattered across Google Ads/Meta/TikTok, consolidating campaigns, creatives, and metrics from 3 platforms into a single system",
+          "Unified marketing data from 3 ad platforms (Google Ads/Meta/TikTok) via GCP-AWS hybrid pipeline, improving metrics query performance 97% (18s→0.5s) through table normalization",
           "Addressed regulatory risk from mandatory game probability disclosure by integrating DynamicModule-based probability package across 12 game projects and building CDK-based audit log analytics pipeline, achieving 94%+ test coverage"
         ],
         "projects": [
@@ -306,7 +306,7 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment (MSA-based)",
         "highlights": [
-          "Resolved recurring DB Deadlocks in clinical trial e-signature notifications (5+ monthly failures) by analyzing foreign key lock timing, eliminating Deadlocks and achieving zero failures via SNS → SQS → Lambda async migration",
+          "Reduced 5+ monthly notification failures to zero — analyzed DB Deadlock foreign key lock timing, then stabilized clinical trial e-signature notifications via SNS → SQS → Lambda async migration",
           "Expanded user-organization structure from 1:1 to 1:N with backward compatibility, enabling multi-organization management and contributing to major hospital and pharmaceutical contracts",
           "Delivered VDR MVP within 3 weeks under emergency deployment, implementing Event-Driven PDF conversion and permission-based workflow to meet launch deadline"
         ],

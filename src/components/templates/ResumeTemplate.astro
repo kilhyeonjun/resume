@@ -73,19 +73,16 @@ const jsonLd = {
       awards={data.awards}
       labels={labels}
     />
-    <!-- Training Programs -->
-    <ResumeTrainingPrograms trainingPrograms={data.trainingPrograms} label={labels.trainingPrograms} />
-
-    <!-- Activities: Technical Writing + Open Source (left) | Continuous Learning (right) -->
+    <!-- Activities: Technical Writing + Open Source (left) | Training Programs + Continuous Learning (right) -->
     <div class="mb-10 grid gap-10 md:grid-cols-2">
       <!-- Left column: Technical Writing + Open Source -->
       <div>
         <ResumeTechnicalWriting technicalWriting={data.technicalWriting} label={labels.technicalWriting} />
         <ResumeOpenSource openSource={data.openSource} label={labels.openSource} />
       </div>
-
-      <!-- Continuous Learning (right column) -->
+      <!-- Right column: Training Programs + Continuous Learning -->
       <div>
+        <ResumeTrainingPrograms trainingPrograms={data.trainingPrograms} label={labels.trainingPrograms} />
         <ResumeLearning continuousLearning={data.continuousLearning} label={labels.continuousLearning} />
       </div>
     </div>

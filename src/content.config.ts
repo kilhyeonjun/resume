@@ -33,6 +33,14 @@ const projectSchema = z.object({
   featured: z.boolean().optional(),
 });
 
+
+const activitySchema = z.object({
+  name: z.string(),
+  period: z.string(),
+  description: z.string(),
+  url: safeUrl.optional(),
+});
+
 const experienceSchema = z.object({
   slug: z.string(),
   company: z.string(),
@@ -45,6 +53,7 @@ const experienceSchema = z.object({
   highlights: z.array(z.string()).default([]),
   projects: z.array(projectSchema).default([]),
   techStack: z.array(z.string()).default([]),
+  activities: z.array(activitySchema).default([]),
 });
 
 const educationSchema = z.object({
@@ -135,6 +144,7 @@ const labelsSchema = z.object({
   previousCompany: z.string(),
   nextCompany: z.string(),
   viewDetails: z.string(),
+  activities: z.string().optional(),
 });
 
 const resumeSchema = z.object({
@@ -183,3 +193,4 @@ export type Award = z.infer<typeof awardSchema>;
 export type Certification = z.infer<typeof certificationSchema>;
 export type Labels = z.infer<typeof labelsSchema>;
 export type Links = z.infer<typeof linksSchema>;
+export type Activity = z.infer<typeof activitySchema>;

@@ -284,6 +284,13 @@
           "CloudWatch",
           "Datadog",
           "Grafana"
+        ],
+        "activities": [
+          {
+            "name": "AWS Game on AWS 고객 사례 발표",
+            "period": "2025.10",
+            "description": "AWS Game on AWS 컨퍼런스에서 마케팅 통합 플랫폼의 GCP-AWS 하이브리드 아키텍처 및 BigQuery Storage Read API 도입 사례 발표"
+          }
         ]
       },
       {
@@ -859,7 +866,8 @@
       "backToResume": "이력서 페이지로 돌아가기",
       "previousCompany": "이전 회사",
       "nextCompany": "다음 회사",
-      "viewDetails": "상세 보기"
+      "viewDetails": "상세 보기",
+      "activities": "외부 활동"
     }
   }
 }

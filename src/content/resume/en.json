@@ -284,6 +284,13 @@
           "CloudWatch",
           "Datadog",
           "Grafana"
+        ],
+        "activities": [
+          {
+            "name": "AWS Game on AWS Customer Case Presentation",
+            "period": "2025.10",
+            "description": "Presented GCP-AWS hybrid architecture and BigQuery Storage Read API adoption case for the marketing integrated platform at AWS Game on AWS conference"
+          }
         ]
       },
       {
@@ -861,7 +868,8 @@
       "backToResume": "Back to Resume",
       "previousCompany": "Previous Company",
       "nextCompany": "Next Company",
-      "viewDetails": "View Details"
+      "viewDetails": "View Details",
+      "activities": "Activities"
     }
   }
 }

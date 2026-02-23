@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
+import BlogIcon from '../icons/BlogIcon.astro';
+import YouTubeIcon from '../icons/YouTubeIcon.astro';
 import CheckIcon from '../icons/CheckIcon.astro';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon.astro';
 import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
@@ -195,15 +197,22 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
           {project.blogPosts.map((post: BlogPost) => {
             const postTitle = post.title[lang] || post.title.ko || post.title;
             return (
-              <li>
-                <a 
-                  href={post.url} 
-                  target="_blank" 
+              <li class="flex items-center gap-1.5">
+                <span class="text-gray-700 dark:text-gray-300">{postTitle}</span>
+                <a
+                  href={post.url}
+                  target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                  class="inline-flex text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                  aria-label={postTitle + ' 링크'}
                 >
-                  <span>{postTitle}</span>
-                  <ExternalLinkIcon class="h-4 w-4" />
+                  {post.url.includes('youtube.com') || post.url.includes('youtu.be') ? (
+                    <YouTubeIcon class="h-4 w-4" />
+                  ) : post.url.includes('jnp.tech') || post.url.includes('blog') || post.url.includes('tistory') || post.url.includes('github.io') ? (
+                    <BlogIcon class="h-4 w-4" />
+                  ) : (
+                    <ExternalLinkIcon class="h-4 w-4" />
+                  )}
                 </a>
               </li>
             );
@@ -219,14 +228,15 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
         <ul class="space-y-3">
           {Object.entries(project.links).map(([key, url]) => (
             typeof url === 'string' && (
-              <li>
-                <a 
-                  href={url} 
-                  target="_blank" 
+              <li class="flex items-center gap-1.5">
+                <span class="capitalize text-gray-700 dark:text-gray-300">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                <a
+                  href={url}
+                  target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                  class="inline-flex text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                  aria-label={key.replace(/([A-Z])/g, ' $1').trim() + ' 링크'}
                 >
-                  <span class="capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
                   <ExternalLinkIcon class="h-4 w-4" />
                 </a>
               </li>

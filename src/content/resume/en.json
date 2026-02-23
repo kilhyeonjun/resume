@@ -308,7 +308,8 @@
         "highlights": [
           "Reduced 5+ monthly signing failures to zero — reproduced and identified FK shared lock deadlock pattern, fundamentally resolving clinical trial e-signature auto-processing Deadlock",
           "Expanded user-organization structure from 1:1 to 1:N with backward compatibility, enabling multi-organization management and contributing to major hospital and pharmaceutical contracts",
-          "Delivered VDR MVP within 3 weeks under emergency deployment, implementing Event-Driven PDF conversion and permission-based workflow to meet launch deadline"
+          "Delivered VDR MVP within 3 weeks under emergency deployment, implementing Event-Driven PDF conversion and permission-based workflow to meet launch deadline",
+          "Eliminated delayed detection of email delivery failures — built event-driven monitoring pipeline for real-time bounce/complaint tracking and instant alert system (published tech blog)"
         ],
         "projects": [
           {

@@ -30,7 +30,7 @@
       {
         "category": "Reliability & Quality",
         "items": [
-          "Root cause analysis and async migration — resolving recurring failures at the architecture level after identifying root causes",
+          "Root cause analysis — reproduced and identified lock deadlock patterns in recurring failures, resolving at the architecture level",
           "Data consistency design — outbox pattern (event integrity), distributed lock (concurrency control)",
           "Regulatory compliance framework — integrated verification package across 12 projects + audit log pipeline achieving 94%+ coverage"
         ]
@@ -306,7 +306,7 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment (MSA-based)",
         "highlights": [
-          "Reduced 5+ monthly notification failures to zero — analyzed DB Deadlock foreign key lock timing, then stabilized clinical trial e-signature notifications via SNS → SQS → Lambda async migration",
+          "Reduced 5+ monthly signing failures to zero — reproduced and identified FK shared lock deadlock pattern, fundamentally resolving clinical trial e-signature auto-processing Deadlock",
           "Expanded user-organization structure from 1:1 to 1:N with backward compatibility, enabling multi-organization management and contributing to major hospital and pharmaceutical contracts",
           "Delivered VDR MVP within 3 weeks under emergency deployment, implementing Event-Driven PDF conversion and permission-based workflow to meet launch deadline"
         ],

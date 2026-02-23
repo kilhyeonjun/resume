@@ -287,9 +287,29 @@
         ],
         "activities": [
           {
-            "name": "AWS Game on AWS 고객 사례 발표",
+            "name": "Games on AWS 2025 고객 사례 발표",
             "period": "2025.10",
             "description": "AWS Game on AWS 컨퍼런스에서 마케팅 통합 플랫폼의 GCP-AWS 하이브리드 아키텍처 및 BigQuery Storage Read API 도입 사례 발표"
+          },
+          {
+            "name": "시스템 디자인 스터디 1권",
+            "period": "2025.08 ~ 2025.10",
+            "description": "가상 면접 사례로 배우는 대규모 시스템 설계 기초"
+          },
+          {
+            "name": "Node.js 디자인 패턴 바이블 스터디",
+            "period": "2025.10 ~ 2025.12",
+            "description": "Node 코어 개념, 동시성, 이벤트 루프, 모듈 시스템 심화 학습"
+          },
+          {
+            "name": "시스템 디자인 스터디 2권",
+            "period": "2026.01 ~ 현재",
+            "description": "가상 면접 사례로 배우는 대규모 시스템 설계 기초 2권"
+          },
+          {
+            "name": "SQLD 자격증 취득",
+            "period": "2025.12",
+            "description": "한국데이터산업진흥원 SQL Developer 자격증 취득"
           }
         ]
       },
@@ -468,7 +488,12 @@
           {
             "name": "AWS SAA 스터디",
             "period": "2023.09 ~ 2023.12",
-            "description": "AWS Solutions Architect Associate 자격증 취득을 위한 사내 스터디 참여"
+            "description": "제이앤피메디 사내 스터디, 클라우드 아키텍처 심화 학습"
+          },
+          {
+            "name": "정보처리기사 취득",
+            "period": "2023.06",
+            "description": "한국산업인력공단 정보처리기사 자격증 취득"
           }
         ]
       },

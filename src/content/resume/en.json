@@ -287,9 +287,29 @@
         ],
         "activities": [
           {
-            "name": "AWS Game on AWS Customer Case Presentation",
+            "name": "Games on AWS 2025 Customer Case Presentation",
             "period": "2025.10",
             "description": "Presented GCP-AWS hybrid architecture and BigQuery Storage Read API adoption case for the marketing integrated platform at AWS Game on AWS conference"
+          },
+          {
+            "name": "System Design Study Vol.1",
+            "period": "2025.08 ~ 2025.10",
+            "description": "System Design Interview: An Insider's Guide"
+          },
+          {
+            "name": "Node.js Design Patterns Bible Study",
+            "period": "2025.10 ~ 2025.12",
+            "description": "Deep dive into Node core concepts, concurrency, event loop, and module system"
+          },
+          {
+            "name": "System Design Study Vol.2",
+            "period": "2026.01 ~ Present",
+            "description": "System Design Interview: An Insider's Guide Vol.2"
+          },
+          {
+            "name": "SQLD Certification",
+            "period": "2025.12",
+            "description": "SQL Developer certification from Korea Data Agency"
           }
         ]
       },
@@ -468,7 +488,12 @@
           {
             "name": "AWS SAA Study Group",
             "period": "2023.09 ~ 2023.12",
-            "description": "Participated in internal study group for AWS Solutions Architect Associate certification"
+            "description": "Internal study group for cloud architecture deep dive"
+          },
+          {
+            "name": "Engineer Information Processing Certification",
+            "period": "2023.06",
+            "description": "National certification from Human Resources Development Service of Korea"
           }
         ]
       },

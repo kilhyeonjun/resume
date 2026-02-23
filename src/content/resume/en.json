@@ -773,7 +773,9 @@
         "period": "2024.09 ~ 2024.12",
         "description": "TDD and Clean Architecture, Concurrency Control, Redis",
         "url": "https://github.com/hhpb-code",
-        "organization": "Hanghae99"
+        "organization": "Hanghae99",
+        "achievement": "Week 1 Hall of Fame, Black Badge Completion",
+        "reviewUrl": "https://penguin-dev.tistory.com/29"
       }
     ],
     "technicalWriting": [

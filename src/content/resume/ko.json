@@ -771,7 +771,9 @@
         "period": "2024.09 ~ 2024.12",
         "description": "TDD 및 클린 아키텍처, 동시성 제어, Redis 활용",
         "url": "https://github.com/hhpb-code",
-        "organization": "항해99"
+        "organization": "항해99",
+        "achievement": "1주차 명예의 전당 선정, 블랙 배지 수료",
+        "reviewUrl": "https://penguin-dev.tistory.com/29"
       }
     ],
     "technicalWriting": [

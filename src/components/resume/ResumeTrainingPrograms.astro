@@ -1,6 +1,7 @@
 ---
 import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
+import BlogIcon from '../icons/BlogIcon.astro';
 import type { TrainingProgram } from '../../content.config';
 
 interface Props {
@@ -35,12 +36,30 @@ const { trainingPrograms, label } = Astro.props;
                   )}
                 </a>
               )}
+              {item.reviewUrl && (
+                <a
+                  href={item.reviewUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                  aria-label={item.name + ' 후기'}
+                >
+                  {item.reviewUrl.includes('tistory') || item.reviewUrl.includes('blog') || item.reviewUrl.includes('github.io') ? (
+                    <BlogIcon class="h-4 w-4" />
+                  ) : (
+                    <ExternalLinkIcon class="h-4 w-4" />
+                  )}
+                </a>
+              )}
             </h3>
             <p class="text-sm text-gray-600 dark:text-gray-300">
               {item.period}
               {item.organization && <span> · {item.organization}</span>}
               {' — '}{item.description}
             </p>
+            {item.achievement && (
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-300">{item.achievement}</p>
+            )}
           </div>
         </div>
       ))}

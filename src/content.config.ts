@@ -82,6 +82,8 @@ const trainingProgramSchema = z.object({
   description: z.string(),
   url: safeUrl.optional(),
   organization: z.string().optional(),
+  achievement: z.string().optional(),
+  reviewUrl: safeUrl.optional(),
 });
 
 const technicalWritingSchema = z.object({

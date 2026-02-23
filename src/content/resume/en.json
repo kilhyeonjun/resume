@@ -462,12 +462,14 @@
             "name": "Email Delivery Monitoring through AWS SES Event Logs",
             "type": "Tech Blog",
             "period": "2024.03",
-            "url": "https://jnp.tech/posts/2024-03-aws-ses-event-log"
+            "url": "https://jnp.tech/posts/2024-03-aws-ses-event-log",
+            "description": "Published technical article on building email delivery monitoring system using AWS SES event logs"
           },
           {
             "name": "Mailing System Email Delivery Result Tracking Feature",
             "type": "Internal Seminar",
-            "period": "2024.02"
+            "period": "2024.02",
+            "description": "Presented mailing system email delivery result tracking feature implementation and architecture"
           },
           {
             "name": "AWS SAA Study Group",

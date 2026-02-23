@@ -31,8 +31,8 @@
         "category": "Reliability & Quality",
         "items": [
           "Root cause analysis — DB Deadlock, concurrency issue resolution",
-          "Data consistency design — outbox pattern, distributed lock-based event integrity",
-          "94%+ test coverage — audit log system enterprise-wide integration"
+          "Data consistency design — outbox pattern (event integrity), distributed lock (concurrency control)",
+          "Game probability regulatory compliance — integrated probability package across 12 projects + CDK audit log pipeline"
         ]
       }
     ],

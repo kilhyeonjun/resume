@@ -419,7 +419,7 @@
               "Implemented org-specific custom plan Internal API for tailored subscription offerings",
               "Introduced Event Queue and built automatic inventory cleanUp logic after subscription expiration",
               "Added withdrawn user validation to stabilize subscription renewal, expiration email, and license processing",
-              "Implemented renewal/re-subscription eligibility check based on bundles.is_renewable"
+              "Implemented non-renewable plan subscription renewal/re-subscription blocking logic to ensure business policy consistency"
             ],
             "techStack": [
               "NestJS",

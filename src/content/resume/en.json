@@ -290,26 +290,6 @@
             "name": "Games on AWS 2025 Customer Case Presentation",
             "period": "2025.10",
             "description": "Presented GCP-AWS hybrid architecture and BigQuery Storage Read API adoption case for the marketing integrated platform at AWS Game on AWS conference"
-          },
-          {
-            "name": "System Design Study Vol.1",
-            "period": "2025.08 ~ 2025.10",
-            "description": "System Design Interview: An Insider's Guide"
-          },
-          {
-            "name": "Node.js Design Patterns Bible Study",
-            "period": "2025.10 ~ 2025.12",
-            "description": "Deep dive into Node core concepts, concurrency, event loop, and module system"
-          },
-          {
-            "name": "System Design Study Vol.2",
-            "period": "2026.01 ~ Present",
-            "description": "System Design Interview: An Insider's Guide Vol.2"
-          },
-          {
-            "name": "SQLD Certification",
-            "period": "2025.12",
-            "description": "SQL Developer certification from Korea Data Agency"
           }
         ]
       },

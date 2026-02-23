@@ -16,7 +16,7 @@
         "items": [
           "82% cloud cost reduction — BigQuery read method migration ($6.25→$1.1 per TB)",
           "Bulk data processing optimization — ORM bulk operation reducing sync time by 72%",
-          "DB query bottleneck resolution — table normalization and index optimization for 18s query"
+          "DB query bottleneck resolution — table normalization and index optimization (18s→0.5s)"
         ]
       },
       {

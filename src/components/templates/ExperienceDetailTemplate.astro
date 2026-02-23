@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
+import YouTubeIcon from '../icons/YouTubeIcon.astro';
 import CheckIcon from '../icons/CheckIcon.astro';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon.astro';
 import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
@@ -161,7 +162,7 @@ const basePath = getBasePath(lang);
              <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
                <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                  <div>
-                   <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                   <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
                      {activity.url ? (
                        <a
                          href={activity.url}
@@ -174,6 +175,28 @@ const basePath = getBasePath(lang);
                        </a>
                      ) : (
                        activity.name
+                     )}
+                     {activity.videoUrl && (
+                       <a
+                         href={activity.videoUrl}
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         class="inline-flex text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                         aria-label={activity.name + ' 영상'}
+                       >
+                         <YouTubeIcon class="h-4 w-4" />
+                       </a>
+                     )}
+                     {activity.reviewUrl && (
+                       <a
+                         href={activity.reviewUrl}
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         class="inline-flex text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                         aria-label={activity.name + ' 후기'}
+                       >
+                         <ExternalLinkIcon class="h-4 w-4" />
+                       </a>
                      )}
                    </h3>
                    {activity.type && (
@@ -193,32 +216,6 @@ const basePath = getBasePath(lang);
                  <p class="mt-2 text-gray-700 dark:text-gray-200 font-medium">
                    {activity.achievement}
                  </p>
-               )}
-               {(activity.videoUrl || activity.reviewUrl) && (
-                 <div class="mt-3 flex flex-wrap gap-3">
-                   {activity.videoUrl && (
-                     <a
-                       href={activity.videoUrl}
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
-                     >
-                       🎬 Video
-                       <ExternalLinkIcon class="h-3.5 w-3.5" />
-                     </a>
-                   )}
-                   {activity.reviewUrl && (
-                     <a
-                       href={activity.reviewUrl}
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
-                     >
-                       📝 Review
-                       <ExternalLinkIcon class="h-3.5 w-3.5" />
-                     </a>
-                   )}
-                 </div>
                )}
              </div>
            ))}

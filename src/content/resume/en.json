@@ -347,7 +347,7 @@
             "featured": false,
             "description": "Resolved lack of delivery status tracking and data consistency issues in email system",
             "details": [
-              "Implemented real-time tracking of delivery/bounce/complaint status via AWS SES monitoring",
+              "Implemented delivery/bounce/complaint status tracking via SES Configuration Set → SNS → event processing pipeline with Datadog logging + Slack real-time alerts",
               "Built event-based delivery system separating email delivery from transactions",
               "Adopted CID-based inline image embedding to improve display rate"
             ],
@@ -365,6 +365,8 @@
             "description": "Resolved user inconvenience and system scalability limitations from 1:1 user-organization structure",
             "details": [
               "Expanded user-organization relationship from 1:1 to 1:N structure for multi-organization management",
+              "Added post-login organization selection flow to support organization context switching for multi-org accounts",
+              "Batch-updated account-organization reference logic across downstream services (Docs, Billing, Mailing, etc.)",
               "Ensured zero-downtime API migration with backward compatibility for service continuity"
             ],
             "techStack": [
@@ -380,7 +382,7 @@
             "featured": false,
             "description": "Frontend development for clinical Trial Master File (TMF) management system",
             "details": [
-              "Built organization member role/permission management and document status overview with search for Admin/Dashboard",
+              "Implemented document upload, classification, version management, and Audit Trail functionality for Admin/Dashboard",
               "Developed document history archival, preview, property management, and commenting for Archiver/Viewer"
             ],
             "techStack": [

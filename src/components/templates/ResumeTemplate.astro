@@ -59,11 +59,11 @@ const jsonLd = {
     <!-- Summary -->
     <ResumeSummary summary={data.summary} label={labels.summary} />
 
-    <!-- Experience -->
-    <ResumeExperience experience={data.experience} labels={labels} basePath={basePath} />
-
     <!-- Core Competencies -->
     <ResumeCoreCompetencies coreCompetencies={data.coreCompetencies} label={labels.coreCompetencies} />
+
+    <!-- Experience -->
+    <ResumeExperience experience={data.experience} labels={labels} basePath={basePath} />
 
     <!-- Skills, Education, Certifications, Awards -->
     <ResumeSkills

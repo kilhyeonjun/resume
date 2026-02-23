@@ -281,6 +281,23 @@ if (data.openSource) {
       </section>
     )}
 
+    <!-- Core Competencies -->
+    {data.coreCompetencies && data.coreCompetencies.length > 0 && (
+      <section>
+        <h2 class="section-title">{labels.coreCompetencies}</h2>
+        {data.coreCompetencies.map((comp) => (
+          <div class="competency-group">
+            <p class="competency-category">{comp.category}</p>
+            <ul class="highlights">
+              {comp.items.map((item) => (
+                <li><span class="highlight-bullet">•</span>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+    )}
+
     <!-- Experience -->
     {data.experience && data.experience.length > 0 && (
       <section>
@@ -310,23 +327,6 @@ if (data.openSource) {
       </section>
     )}
 
-
-    <!-- Core Competencies -->
-    {data.coreCompetencies && data.coreCompetencies.length > 0 && (
-      <section>
-        <h2 class="section-title">{labels.coreCompetencies}</h2>
-        {data.coreCompetencies.map((comp) => (
-          <div class="competency-group">
-            <p class="competency-category">{comp.category}</p>
-            <ul class="highlights">
-              {comp.items.map((item) => (
-                <li><span class="highlight-bullet">•</span>{item}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </section>
-    )}
 
     <!-- Skills + Education (2-column grid) -->
     <div class="two-col-grid">

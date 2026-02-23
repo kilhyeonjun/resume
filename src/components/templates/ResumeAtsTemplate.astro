@@ -201,6 +201,22 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     </section>
   )}
 
+  {data.coreCompetencies && data.coreCompetencies.length > 0 && (
+    <section>
+      <h2>{labels.coreCompetencies.toUpperCase()}</h2>
+      {data.coreCompetencies.map((comp) => (
+        <div class="competency-group">
+          <p><strong>{comp.category}</strong></p>
+          <ul>
+            {comp.items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+  )}
+
   {data.experience && data.experience.length > 0 && (
     <section>
       <h2>{labels.experience.toUpperCase()}</h2>
@@ -220,22 +236,6 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
               ))}
             </ul>
           )}
-        </div>
-      ))}
-    </section>
-  )}
-
-  {data.coreCompetencies && data.coreCompetencies.length > 0 && (
-    <section>
-      <h2>{labels.coreCompetencies.toUpperCase()}</h2>
-      {data.coreCompetencies.map((comp) => (
-        <div class="competency-group">
-          <p><strong>{comp.category}</strong></p>
-          <ul>
-            {comp.items.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
         </div>
       ))}
     </section>

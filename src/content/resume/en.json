@@ -762,15 +762,18 @@
         "url": "https://github.com/jyjae/system-design-study"
       },
       {
-        "name": "Hanghae Plus Backend 6th Cohort",
-        "period": "2024.09 ~ 2024.12",
-        "description": "TDD, Clean Architecture, Concurrency Control, Redis",
-        "url": "https://github.com/hhpb-code"
-      },
-      {
         "name": "AWS SAA Study Group",
         "period": "2023.09 ~ 2023.12",
         "description": "JNPMedi internal study group, Cloud Architecture deep dive"
+      }
+    ],
+    "trainingPrograms": [
+      {
+        "name": "Hanghae Plus Backend 6th",
+        "period": "2024.09 ~ 2024.12",
+        "description": "TDD and Clean Architecture, Concurrency Control, Redis",
+        "url": "https://github.com/hhpb-code",
+        "organization": "Hanghae99"
       }
     ],
     "technicalWriting": [
@@ -881,6 +884,7 @@
       "skills": "Technical Skills",
       "education": "Education",
       "continuousLearning": "Professional Development",
+      "trainingPrograms": "Training Programs",
       "technicalWriting": "Presentations & Writing",
       "openSource": "Open Source",
       "awards": "Awards",

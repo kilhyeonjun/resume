@@ -76,6 +76,14 @@ const continuousLearningSchema = z.object({
   url: safeUrl.optional(),
 });
 
+const trainingProgramSchema = z.object({
+  name: z.string(),
+  period: z.string(),
+  description: z.string(),
+  url: safeUrl.optional(),
+  organization: z.string().optional(),
+});
+
 const technicalWritingSchema = z.object({
   title: z.string(),
   date: dateString,
@@ -134,6 +142,7 @@ const labelsSchema = z.object({
   skills: z.string(),
   education: z.string(),
   continuousLearning: z.string(),
+  trainingPrograms: z.string(),
   technicalWriting: z.string(),
   openSource: z.string(),
   awards: z.string(),
@@ -159,6 +168,7 @@ const resumeSchema = z.object({
   experience: z.array(experienceSchema),
   education: z.array(educationSchema),
   continuousLearning: z.array(continuousLearningSchema).default([]),
+  trainingPrograms: z.array(trainingProgramSchema).default([]),
   technicalWriting: z.array(technicalWritingSchema).default([]),
   openSource: z.array(openSourceSchema).default([]),
   awards: z.array(awardSchema).default([]),
@@ -198,3 +208,4 @@ export type Certification = z.infer<typeof certificationSchema>;
 export type Labels = z.infer<typeof labelsSchema>;
 export type Links = z.infer<typeof linksSchema>;
 export type Activity = z.infer<typeof activitySchema>;
+export type TrainingProgram = z.infer<typeof trainingProgramSchema>;

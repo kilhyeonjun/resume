@@ -760,15 +760,18 @@
         "url": "https://github.com/jyjae/system-design-study"
       },
       {
-        "name": "항해 플러스 백엔드 6기",
-        "period": "2024.09 ~ 2024.12",
-        "description": "TDD 및 클린 아키텍처, 동시성 제어, Redis 활용",
-        "url": "https://github.com/hhpb-code"
-      },
-      {
         "name": "AWS SAA 스터디",
         "period": "2023.09 ~ 2023.12",
         "description": "제이앤피메디 사내 스터디, 클라우드 아키텍처 심화 학습"
+      }
+    ],
+    "trainingPrograms": [
+      {
+        "name": "항해 플러스 백엔드 6기",
+        "period": "2024.09 ~ 2024.12",
+        "description": "TDD 및 클린 아키텍처, 동시성 제어, Redis 활용",
+        "url": "https://github.com/hhpb-code",
+        "organization": "항해99"
       }
     ],
     "technicalWriting": [
@@ -879,6 +882,7 @@
       "skills": "기술 스택",
       "education": "학력",
       "continuousLearning": "학습 활동",
+      "trainingPrograms": "교육 프로그램",
       "technicalWriting": "기술 공유",
       "openSource": "오픈소스",
       "awards": "수상",

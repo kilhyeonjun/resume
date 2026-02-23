@@ -12,6 +12,7 @@ import ResumeSkills from '../resume/ResumeSkills.astro';
 import ResumeTechnicalWriting from '../resume/ResumeTechnicalWriting.astro';
 import ResumeOpenSource from '../resume/ResumeOpenSource.astro';
 import ResumeLearning from '../resume/ResumeLearning.astro';
+import ResumeTrainingPrograms from '../resume/ResumeTrainingPrograms.astro';
 import ResumeFooterActions from '../resume/ResumeFooterActions.astro';
 
 interface Props {
@@ -66,6 +67,9 @@ const jsonLd = {
       awards={data.awards}
       labels={labels}
     />
+
+    <!-- Training Programs -->
+    <ResumeTrainingPrograms trainingPrograms={data.trainingPrograms} label={labels.trainingPrograms} />
 
     <!-- Experience -->
     <ResumeExperience experience={data.experience} labels={labels} basePath={basePath} />

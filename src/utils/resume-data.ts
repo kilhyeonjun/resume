@@ -16,6 +16,7 @@ interface PreparedResumeData {
   education: ResumeData['education'];
   certifications: ResumeData['certifications'];
   continuousLearning: ResumeData['continuousLearning'];
+  trainingPrograms: ResumeData['trainingPrograms'];
   technicalWriting: ResumeData['technicalWriting'];
   openSource: ResumeData['openSource'];
   awards: ResumeData['awards'];
@@ -31,6 +32,7 @@ export function prepareResumeData(resumeData: ResumeData, lang: 'ko' | 'en'): { 
     education: resumeData.education,
     certifications: resumeData.certifications,
     continuousLearning: resumeData.continuousLearning,
+    trainingPrograms: resumeData.trainingPrograms,
     technicalWriting: resumeData.technicalWriting,
     openSource: resumeData.openSource,
     awards: resumeData.awards,

@@ -489,7 +489,7 @@
         "endDate": "2023-05",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
-          "Migrated from 3,000+ line single-file (app.js) structure to NestJS modular architecture with TDD, achieving 80% test coverage and zero post-deployment incidents",
+          "Modernized 3,000-line legacy codebase via 3-stage progressive migration strategy (single-file → layered → NestJS), achieving zero post-deployment incidents through JS→TS migration and 80% TDD coverage",
           "Built JWT-based token authentication in 3 weeks for a 300K-download platform where subdomain session conflicts forced re-login, enabling seamless user switching across 3 subdomains",
           "Integrated Naver Clova OCR + MFDS API to automate the full prescription workflow from image recognition to medication guide generation, cutting per-prescription processing from 3-5 minutes to under 30 seconds",
           "Implemented Socket.io real-time consultation status and Web Push notifications to eliminate patient wait complaints, reducing status reflection from tens of seconds to instant"

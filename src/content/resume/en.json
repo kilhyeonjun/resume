@@ -39,7 +39,7 @@
     "skills": [
       {
         "category": "Backend",
-        "description": "REST API design, microservice architecture, test automation",
+        "description": "Legacy-to-NestJS progressive migration, shared package system across 12 projects, 80% TDD coverage",
         "items": [
           {
             "name": "TypeScript"
@@ -66,7 +66,7 @@
       },
       {
         "category": "Database",
-        "description": "Large-scale data pipelines, distributed locking and caching, multi-dimensional analytics",
+        "description": "Query optimization (18s→0.5s), deadlock root cause analysis, large-scale table normalization, Redis distributed locking",
         "items": [
           {
             "name": "MySQL"
@@ -81,7 +81,7 @@
       },
       {
         "category": "Cloud & Infra",
-        "description": "Serverless architecture, event-driven async processing, IaC",
+        "description": "Batch-to-serverless migration (270x expansion), GCP-AWS hybrid data pipeline, CDK-based analytics infrastructure as code",
         "items": [
           {
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"

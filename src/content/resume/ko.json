@@ -39,7 +39,7 @@
     "skills": [
       {
         "category": "Backend",
-        "description": "REST API 설계, 마이크로서비스 아키텍처, 테스트 자동화",
+        "description": "레거시→NestJS 점진적 전환, 12개 프로젝트 공통 패키지 체계, TDD 80% 커버리지",
         "items": [
           {
             "name": "TypeScript"
@@ -66,7 +66,7 @@
       },
       {
         "category": "Database",
-        "description": "대용량 데이터 파이프라인, 분산 락 및 캐싱, 다차원 지표 분석",
+        "description": "쿼리 최적화(18초→0.5초), Deadlock 근본 원인 분석·해결, 대규모 테이블 정규화, Redis 분산 락",
         "items": [
           {
             "name": "MySQL"
@@ -81,7 +81,7 @@
       },
       {
         "category": "Cloud & Infra",
-        "description": "서버리스 아키텍처, 이벤트 기반 비동기 처리, IaC",
+        "description": "배치→서버리스 전환(270배 확장), GCP-AWS 하이브리드 데이터 파이프라인, CDK 기반 분석 인프라 코드화",
         "items": [
           {
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"

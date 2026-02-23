@@ -14,7 +14,7 @@
       {
         "category": "Cost Optimization & Performance",
         "items": [
-          "82% cloud cost reduction — BigQuery read method migration ($6.25→$1.1 per TB)",
+          "BigQuery read method migration — 82% cloud cost reduction ($6.25→$1.1 per TB)",
           "Bulk data processing optimization — ORM bulk operation reducing sync time by 72%",
           "DB query bottleneck resolution — table normalization and index optimization (18s→0.5s)"
         ]
@@ -24,13 +24,13 @@
         "items": [
           "Serverless event-driven architecture — batch processing 2hrs→5min, data pipeline 270x expansion",
           "Game admin logic and shared utility package system — code consistency across 12 projects",
-          "Legacy architecture modernization — monolith to modular migration, TDD 80%+ coverage"
+          "Legacy architecture modernization — monolith to NestJS modular migration, TDD 80%+ achieving zero post-deployment incidents"
         ]
       },
       {
         "category": "Reliability & Quality",
         "items": [
-          "Root cause analysis — DB Deadlock, concurrency issue resolution",
+          "Root cause analysis — DB Deadlock foreign key lock timing identified, monthly 5+ notification failures → 0",
           "Data consistency design — outbox pattern (event integrity), distributed lock (concurrency control)",
           "Game probability regulatory compliance — integrated probability package across 12 projects + CDK audit log pipeline"
         ]

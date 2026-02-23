@@ -611,6 +611,8 @@
         "endDate": "2022-03",
         "description": "고객 맞춤형 소프트웨어 솔루션 기업",
         "highlights": [
+          "10개월간 LMS 핵심 기능(QR 출석, Excel 일괄 등록, PDF 수료증, 게시판, 동영상, 진도율)을 풀스택 개발하여 학습 관리 전 과정 디지털화",
+          "레거시 PHP 시스템 한계를 iframe + postMessage API 크로스프레임 통합으로 극복, 가중 평균 점수 알고리즘과 상담사 백오피스를 구현하여 JOB Agent 서비스 출시",
           "Apache POI 기반 Excel 일괄 처리 시스템을 구축하여 매 학기 수강생 300명+ 수작업 등록을 수 분으로 단축",
           "5개국 분산 웹사이트에 Spring Security + JWT 기반 크로스 도메인 인증 서버를 구축하여 단일 로그인으로 통합 인증 달성",
           "WordPress → Jekyll + GitHub Pages 마이그레이션과 Travis CI 자동 배포로 호스팅 비용 100% 절감"

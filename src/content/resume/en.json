@@ -12,27 +12,26 @@
     "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package system.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, pursuing developer productivity improvements as demonstrated in the Games on AWS 2025 presentation on generative AI adoption, and creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
     "coreCompetencies": [
       {
-        "category": "Performance Optimization & Cost Efficiency",
+        "category": "Cost Optimization & Performance",
         "items": [
-          "Cloud Cost Optimization: 82% BigQuery cost reduction via Storage Read API ($6.25→$1.1 per TB)",
-          "Serverless Performance Tuning: Lambda ARM64 migration 20% cost reduction, Meta asset sync 72% faster"
+          "82% cloud cost reduction — data pipeline optimization (BigQuery, Lambda)",
+          "72% server performance improvement — serverless architecture tuning and ARM64 migration"
         ]
       },
       {
-        "category": "Scalable System Design",
+        "category": "System Design & Architecture",
         "items": [
-          "Event-Driven Architecture: SQS + Lambda + EventBridge async processing expanding data collection 6x",
-          "Internal NPM Package System: 10 NestJS utility modules + Game Server Kit packages ensuring multi-project code consistency",
-          "GCP-AWS Hybrid Pipeline: Pub/Sub → Cloud Functions → API Gateway → Lambda cross-cloud real-time data integration",
-          "CDK-based Infrastructure as Code: Built Kinesis → Firehose → S3 → Glue → Athena analytics pipeline as IaC"
+          "Event-driven async architecture — 6x data collection expansion",
+          "Cross-cloud (GCP↔AWS) real-time data pipeline",
+          "Internal shared package system — code consistency across 12 projects"
         ]
       },
       {
-        "category": "System Reliability & Problem Solving",
+        "category": "Reliability & Quality",
         "items": [
-          "Incident Analysis & Resolution: Deadlock resolution through foreign key lock timing analysis in clinical trials",
-          "Data Consistency: Transactional Outbox pattern + distributed locks ensuring event consistency",
-          "Probability Audit Log: DynamicModule-based probability package integrated across 12 game projects with 94%+ test coverage"
+          "Root cause analysis — DB Deadlock, concurrency issue resolution",
+          "Data consistency design — outbox pattern, distributed lock-based event integrity",
+          "94%+ test coverage — audit log system enterprise-wide integration"
         ]
       }
     ],

@@ -19,14 +19,14 @@ const { technicalWriting, label } = Astro.props;
       {technicalWriting.map((item) => (
         <div class="flex items-start gap-3">
           <div class="flex-1">
-            <h3 class="font-semibold text-gray-900 dark:text-white flex items-start gap-1.5">
+            <h3 class="font-semibold text-gray-900 dark:text-white">
               {item.title}
               {item.url && (
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center flex-shrink-0 mt-0.5 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                  class="inline-flex align-middle ml-1 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
                   aria-label={item.title + ' 링크'}
                 >
                   {item.url.includes('youtube.com') || item.url.includes('youtu.be') ? (
@@ -43,7 +43,7 @@ const { technicalWriting, label } = Astro.props;
                   href={item.videoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center flex-shrink-0 mt-0.5 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                  class="inline-flex align-middle ml-0.5 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
                   aria-label={item.title + ' 영상'}
                 >
                   <YouTubeIcon class="h-4 w-4" />
@@ -54,7 +54,7 @@ const { technicalWriting, label } = Astro.props;
                   href={item.reviewUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center flex-shrink-0 mt-0.5 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                  class="inline-flex align-middle ml-0.5 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
                   aria-label={item.title + ' 후기'}
                 >
                   <ExternalLinkIcon class="h-4 w-4" />

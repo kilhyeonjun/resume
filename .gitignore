@@ -36,3 +36,4 @@ pnpm-debug.log*
 REVIEW.md
 !.opencode/skills/**
 .sisyphus/
+test-results/

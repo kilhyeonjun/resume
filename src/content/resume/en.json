@@ -500,7 +500,7 @@
             "description": "Resolved lack of real-time status updates and manual notification workflows in doctor/pharmacist back-office systems by introducing Socket.io and Web Push",
             "details": [
               "Doctor ID + time slot composite unique key preventing duplicate appointments",
-              "Built doctor appointment/request system and pharmacist dispensing request system",
+              "Extended existing consultation request→doctor approval flow by adding per-doctor availability management and appointment booking to enhance the scheduling system",
               "Socket.IO Room-based real-time status sync reflecting consultation/dispensing/delivery events to relevant users instantly",
               "VAPID + Service Worker-based background notifications for instant appointment and dispensing alerts even when browser is inactive",
               "Integrated Kakao simple login and identity verification",

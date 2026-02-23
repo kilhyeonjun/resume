@@ -203,7 +203,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
                   href={post.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                  class="inline-flex items-center text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
                   aria-label={postTitle + ' 링크'}
                 >
                   {post.url.includes('youtube.com') || post.url.includes('youtu.be') ? (
@@ -234,7 +234,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                  class="inline-flex items-center text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
                   aria-label={key.replace(/([A-Z])/g, ' $1').trim() + ' 링크'}
                 >
                   <ExternalLinkIcon class="h-4 w-4" />

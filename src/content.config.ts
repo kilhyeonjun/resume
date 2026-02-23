@@ -36,9 +36,13 @@ const projectSchema = z.object({
 
 const activitySchema = z.object({
   name: z.string(),
+  type: z.string().optional(),
   period: z.string(),
   description: z.string(),
+  achievement: z.string().optional(),
   url: safeUrl.optional(),
+  videoUrl: safeUrl.optional(),
+  reviewUrl: safeUrl.optional(),
 });
 
 const experienceSchema = z.object({

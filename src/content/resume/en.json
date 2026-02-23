@@ -287,9 +287,13 @@
         ],
         "activities": [
           {
-            "name": "Games on AWS 2025 Customer Case Presentation",
+            "name": "Games on AWS 2025 Technical Presentation",
+            "type": "Conference Talk",
             "period": "2025.10",
-            "description": "Presented GCP-AWS hybrid architecture and BigQuery Storage Read API adoption case for the marketing integrated platform at AWS Game on AWS conference"
+            "description": "Boosting Developer Productivity with Amazon Q Developer",
+            "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days",
+            "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
+            "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"
           }
         ]
       },
@@ -455,23 +459,25 @@
         ],
         "activities": [
           {
-            "name": "JNP Tech Blog Publication",
+            "name": "Email Delivery Monitoring through AWS SES Event Logs",
+            "type": "Tech Blog",
             "period": "2024.03",
-            "description": "Published technical article on building email delivery monitoring system using AWS SES event logs",
             "url": "https://jnp.tech/posts/2024-03-aws-ses-event-log"
           },
           {
-            "name": "Internal Tech Seminar Presentation",
-            "period": "2024.02",
-            "description": "Presented mailing system email delivery result tracking feature implementation and architecture"
+            "name": "Mailing System Email Delivery Result Tracking Feature",
+            "type": "Internal Seminar",
+            "period": "2024.02"
           },
           {
             "name": "AWS SAA Study Group",
+            "type": "Study Group",
             "period": "2023.09 ~ 2023.12",
             "description": "Internal study group for cloud architecture deep dive"
           },
           {
             "name": "Engineer Information Processing Certification",
+            "type": "Certification",
             "period": "2023.06",
             "description": "National certification from Human Resources Development Service of Korea"
           }

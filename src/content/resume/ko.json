@@ -287,9 +287,13 @@
         ],
         "activities": [
           {
-            "name": "Games on AWS 2025 고객 사례 발표",
+            "name": "Games on AWS 2025 기술 발표",
+            "type": "외부 발표",
             "period": "2025.10",
-            "description": "AWS Game on AWS 컨퍼런스에서 마케팅 통합 플랫폼의 GCP-AWS 하이브리드 아키텍처 및 BigQuery Storage Read API 도입 사례 발표"
+            "description": "Amazon Q Developer를 활용한 개발 생산성 향상",
+            "achievement": "주니어 개발자 혼자 10일 만에 데이터 파이프라인 처리 용량 270배 확장 사례 공유",
+            "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
+            "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"
           }
         ]
       },
@@ -455,23 +459,25 @@
         ],
         "activities": [
           {
-            "name": "JNP Tech 기술 블로그 기고",
+            "name": "AWS SES 이벤트 로그를 통한 이메일 발송 모니터링",
+            "type": "기술 블로그",
             "period": "2024.03",
-            "description": "AWS SES 이벤트 로그를 통한 이메일 발송 모니터링 시스템 구축 사례 공유",
             "url": "https://jnp.tech/posts/2024-03-aws-ses-event-log"
           },
           {
-            "name": "사내 기술 세미나 발표",
-            "period": "2024.02",
-            "description": "메일링 시스템 이메일 발송 결과 수신 기능 도입 과정 및 아키텍처 공유"
+            "name": "메일링 시스템 이메일 발송 결과 수신 기능 도입",
+            "type": "사내 세미나",
+            "period": "2024.02"
           },
           {
             "name": "AWS SAA 스터디",
+            "type": "스터디",
             "period": "2023.09 ~ 2023.12",
             "description": "제이앤피메디 사내 스터디, 클라우드 아키텍처 심화 학습"
           },
           {
             "name": "정보처리기사 취득",
+            "type": "자격증",
             "period": "2023.06",
             "description": "한국산업인력공단 정보처리기사 자격증 취득"
           }

@@ -452,6 +452,24 @@
           "Slate.js",
           "React",
           "Jotai"
+        ],
+        "activities": [
+          {
+            "name": "JNP Tech Blog Publication",
+            "period": "2024.03",
+            "description": "Published technical article on building email delivery monitoring system using AWS SES event logs",
+            "url": "https://jnp.tech/posts/2024-03-aws-ses-event-log"
+          },
+          {
+            "name": "Internal Tech Seminar Presentation",
+            "period": "2024.02",
+            "description": "Presented mailing system email delivery result tracking feature implementation and architecture"
+          },
+          {
+            "name": "AWS SAA Study Group",
+            "period": "2023.09 ~ 2023.12",
+            "description": "Participated in internal study group for AWS Solutions Architect Associate certification"
+          }
         ]
       },
       {

@@ -304,7 +304,7 @@
         "position": "Dev2 Team Docs Squad Backend Engineer",
         "startDate": "2023-06",
         "endDate": "2024-08",
-        "description": "Clinical trial data management solution startup with KRW 16B cumulative investment",
+        "description": "Clinical trial data management solution startup with KRW 16B cumulative investment (MSA-based)",
         "highlights": [
           "Resolved recurring DB Deadlocks in clinical trial e-signature notifications (5+ monthly failures) by analyzing foreign key lock timing, eliminating Deadlocks and achieving zero failures via SNS → SQS → Lambda async migration",
           "Expanded user-organization structure from 1:1 to 1:N with backward compatibility, enabling multi-organization management and contributing to major hospital and pharmaceutical contracts",
@@ -433,10 +433,11 @@
               "Implemented non-renewable plan subscription renewal/re-subscription blocking logic to ensure business policy consistency"
             ],
             "techStack": [
-              "NestJS",
               "TypeScript",
-              "MySQL",
-              "Event Queue"
+              "Express.js",
+              "Cyan",
+              "Aurora Serverless v2",
+              "Knex.js"
             ]
           }
         ],

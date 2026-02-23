@@ -304,7 +304,7 @@
         "position": "개발2팀 Docs Squad Backend Engineer",
         "startDate": "2023-06",
         "endDate": "2024-08",
-        "description": "누적 160억 투자 유치 임상시험 데이터 관리 솔루션 스타트업",
+        "description": "누적 160억 투자 유치 임상시험 데이터 관리 솔루션 스타트업 (MSA 기반)",
         "highlights": [
           "임상시험 전자서명 알림 DB Deadlock으로 월 5건+ 알림 누락이 발생하는 상황에서 외래키 락 타이밍을 분석하여 Deadlock을 해결하고 SNS → SQS → Lambda 비동기 전환으로 알림 누락 0건 달성",
           "사용자-조직 1:1 구조를 1:N으로 확장하고 하위호환성을 보장하여 다중 조직 관리를 가능하게 함으로써 대형 병원 및 제약사 신규 계약 성사에 기여",
@@ -433,10 +433,11 @@
               "갱신 불가 플랜의 구독 갱신·재구독 차단 로직 구현으로 비즈니스 정책 정합성 확보"
             ],
             "techStack": [
-              "NestJS",
               "TypeScript",
-              "MySQL",
-              "Event Queue"
+              "Express.js",
+              "Cyan",
+              "Aurora Serverless v2",
+              "Knex.js"
             ]
           }
         ],

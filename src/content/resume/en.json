@@ -48,16 +48,16 @@
             "name": "NestJS"
           },
           {
-            "name": "Java"
-          },
-          {
-            "name": "Spring Boot"
-          },
-          {
             "name": "Express.js"
           },
           {
             "name": "TypeORM"
+          },
+          {
+            "name": "Java"
+          },
+          {
+            "name": "Spring Boot"
           },
           {
             "name": "Jest"
@@ -66,7 +66,7 @@
       },
       {
         "category": "Database",
-        "description": "Large-scale data pipelines, real-time caching, multi-dimensional analytics",
+        "description": "Large-scale data pipelines, distributed locking and caching, multi-dimensional analytics",
         "items": [
           {
             "name": "MySQL"
@@ -87,10 +87,13 @@
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
           },
           {
-            "name": "GCP (BigQuery, Pub/Sub, Cloud Functions)"
+            "name": "GCP (BigQuery, Pub/Sub)"
           },
           {
             "name": "Docker"
+          },
+          {
+            "name": "GitHub Actions"
           }
         ]
       }

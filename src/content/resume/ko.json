@@ -48,16 +48,16 @@
             "name": "NestJS"
           },
           {
-            "name": "Java"
-          },
-          {
-            "name": "Spring Boot"
-          },
-          {
             "name": "Express.js"
           },
           {
             "name": "TypeORM"
+          },
+          {
+            "name": "Java"
+          },
+          {
+            "name": "Spring Boot"
           },
           {
             "name": "Jest"
@@ -66,7 +66,7 @@
       },
       {
         "category": "Database",
-        "description": "대용량 데이터 파이프라인, 실시간 캐싱, 다차원 지표 분석",
+        "description": "대용량 데이터 파이프라인, 분산 락 및 캐싱, 다차원 지표 분석",
         "items": [
           {
             "name": "MySQL"
@@ -87,10 +87,13 @@
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
           },
           {
-            "name": "GCP (BigQuery, Pub/Sub, Cloud Functions)"
+            "name": "GCP (BigQuery, Pub/Sub)"
           },
           {
             "name": "Docker"
+          },
+          {
+            "name": "GitHub Actions"
           }
         ]
       }

@@ -490,9 +490,9 @@
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
           "Modernized 3,000-line legacy codebase via 3-stage progressive migration strategy (single-file → layered → NestJS), achieving zero post-deployment incidents through JS→TS migration and 80% TDD coverage",
-          "Built JWT-based token authentication in 3 weeks for a 300K-download platform where subdomain session conflicts forced re-login, enabling seamless user switching across 3 subdomains",
-          "Integrated Naver Clova OCR + MFDS API to automate the full prescription workflow from image recognition to medication guide generation, cutting per-prescription processing from 3-5 minutes to under 30 seconds",
-          "Implemented Socket.io real-time consultation status and Web Push notifications to eliminate patient wait complaints, reducing status reflection from tens of seconds to instant"
+          "Enabled seamless user switching across 3 subdomains on 300K-download platform — built JWT-based token authentication in 3 weeks to resolve session conflicts",
+          "Cut pharmacist processing time 90% (3-5min→30sec) — automated full prescription workflow from OCR to medication guide via Naver Clova + MFDS API integration",
+          "Eliminated patient wait complaints — reduced status reflection delay from tens of seconds to instant via Socket.io real-time sync + Web Push notifications"
         ],
         "projects": [
           {
@@ -611,11 +611,11 @@
         "endDate": "2022-03",
         "description": "Custom software consulting firm",
         "highlights": [
-          "Full-stack developed LMS core features (QR attendance, Excel bulk registration, PDF certificates, board CRUD, video upload, progress tracking) over 10 months, digitizing all learning management processes",
-          "Overcame legacy PHP system limitations via iframe + postMessage API cross-frame integration, implementing weighted scoring algorithm and counselor back-office to deliver job agent service",
-          "Built Apache POI-based Excel bulk processing to reduce 300+ student registration from hours to minutes per semester",
-          "Built Spring Security + JWT cross-domain auth server enabling SSO across 5 country-specific websites",
-          "Migrated WordPress to Jekyll + GitHub Pages with Travis CI auto-deploy, eliminating 100% hosting costs"
+          "Digitized all learning management processes — full-stack developed LMS core features (QR attendance, Excel bulk registration, PDF certificates, board CRUD, video upload, progress tracking) over 10 months",
+          "Launched JOB Agent service — overcame legacy PHP system limitations via iframe + postMessage API cross-frame integration, implementing weighted scoring algorithm and counselor back-office",
+          "Reduced 300+ student registration from hours to minutes per semester — built Apache POI-based Excel bulk processing system",
+          "Unified SSO across 5 country-specific websites — built Spring Security + JWT cross-domain auth server",
+          "Eliminated 100% hosting costs — migrated WordPress to Jekyll + GitHub Pages with Travis CI auto-deploy"
         ],
         "projects": [
           {

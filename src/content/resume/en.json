@@ -110,10 +110,10 @@
         "highlights": [
           "Resolved escalating marketing data query costs by switching BigQuery read method, achieving 82% cost reduction ($6.25→$1.1 per TB)",
           "Overcame batch processing limitations by migrating to serverless architecture, expanding marketing metrics collection range 6x (60→360 days)",
-          "Eliminated recurring code duplication across multi-game projects by building NestJS utility (10 modules) + Game Server Kit (2 packages), establishing a shared library structure for code consistency",
+          "Eliminated code duplication across multi-game projects by building NestJS utility (10 modules) + Game Server Kit (2 packages) for code consistency",
           "Designed and implemented Git-like Audit Log + 3-Way Merge engine to automate balance data change tracking and merging across 6 games, resolving delayed incident response",
-          "Unified marketing data from 3 ad platforms (Google Ads/Meta/TikTok) via GCP-AWS hybrid pipeline, improving metrics query performance 97% (18s→0.5s) through table normalization",
-          "Addressed regulatory risk from mandatory game probability disclosure by integrating DynamicModule-based probability package across 12 game projects and building CDK-based audit log analytics pipeline, achieving 94%+ test coverage"
+          "Unified 3 ad platform (Google Ads/Meta/TikTok) data via GCP-AWS hybrid pipeline, improving query performance 97% (18s→0.5s) through table normalization",
+          "Addressed game probability disclosure regulation risk by integrating DynamicModule-based package across 12 projects, building CDK-based audit log pipeline (94%+ coverage)"
         ],
         "projects": [
           {

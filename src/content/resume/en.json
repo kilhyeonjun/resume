@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects and achieving quantifiable results including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and building an internal NPM package system.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures, pursuing developer productivity improvements as demonstrated in the Games on AWS 2025 presentation on generative AI adoption, and creating long-term business value through GCP-AWS hybrid data pipeline construction and root cause analysis.",
+    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects with quantifiable results: 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and internal NPM package system.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures. Demonstrated developer productivity focus through Games on AWS 2025 presentation (generative AI adoption). Creates long-term business value via GCP-AWS hybrid data pipeline construction and root cause analysis.",
     "coreCompetencies": [
       {
         "category": "Cost Optimization & Performance",
@@ -22,7 +22,7 @@
       {
         "category": "System Design & Architecture",
         "items": [
-          "Event-driven architecture design — batch→serverless migration reducing processing 2hrs→5min, 270x pipeline expansion",
+          "Event-Driven Architecture design — batch→Lambda serverless migration reducing processing 2hrs→5min, 270x pipeline expansion",
           "Multi-project shared package system design — code consistency and reusability across 12 projects",
           "Legacy progressive modernization strategy — staged architecture migration + TDD adoption achieving zero-incident deployments"
         ]
@@ -32,7 +32,7 @@
         "items": [
           "Root cause analysis — reproduced and identified lock deadlock patterns in recurring failures, resolving at the architecture level",
           "Data consistency design — outbox pattern (event integrity), distributed lock (concurrency control)",
-          "Regulatory compliance framework — integrated verification package across 12 projects + audit log pipeline achieving 94%+ coverage"
+          "Regulatory compliance framework — integrated verification package across 12 projects + CDK-based audit log analytics pipeline achieving 94%+ coverage"
         ]
       }
     ],

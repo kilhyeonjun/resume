@@ -188,9 +188,10 @@ if (data.openSource) {
     }
 
     /* Skills */
-    .skill-group { margin-bottom: 1.5mm; font-size: 9pt; line-height: 1.45; }
+    .skill-group { margin-bottom: 2.5mm; font-size: 9pt; line-height: 1.45; }
     .skill-category { font-weight: 600; color: #4b5563; }
     .skill-inline { color: #374151; }
+    .skill-desc { display: block; font-size: 8pt; color: #6b7280; margin-top: 0.3mm; line-height: 1.35; }
 
     /* Education */
     .education-item { margin-bottom: 2mm; }
@@ -339,7 +340,7 @@ if (data.openSource) {
               <span class="skill-category">{skillGroup.category}:</span>{' '}
               <span class="skill-inline">{skillGroup.items.map(s => s.name).join(', ')}</span>
               {skillGroup.description && (
-                <span class="skill-desc"> — {skillGroup.description}</span>
+                <span class="skill-desc">{skillGroup.description}</span>
               )}
             </div>
           ))}

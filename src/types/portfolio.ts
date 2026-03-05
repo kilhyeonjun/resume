@@ -13,7 +13,7 @@ const blogPostSchema = z.object({
 const portfolioProjectSchema = z.object({
   slug: z.string(),
   name: localizedStringSchema,
-  type: z.string(),
+  type: z.enum(['team', 'personal']),
   summary: localizedStringSchema,
   description: localizedStringSchema.optional(),
   coverImage: z.string().optional(),

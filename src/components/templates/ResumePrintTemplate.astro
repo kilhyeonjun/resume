@@ -6,6 +6,7 @@ import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 import { getBasePath } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
+import { groupOpenSourceByRepo, parseOpenSourceName } from '../../utils/open-source';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -15,7 +16,7 @@ const { lang } = Astro.props;
 
 const entry = await getEntry(`resume-${lang}`, 'main');
 if (!entry) {
-  throw new Error('Resume data not found');
+  throw new Error(`Resume data not found for lang: ${lang}`);
 }
 const resumeData = entry.data;
 
@@ -25,19 +26,9 @@ const basePath = getBasePath(lang);
 const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
 const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}`;
 
-// Group open source by repo name (before colon) + derive repoUrl
 // HR-PDF: limit to first 4 items (most recent) to keep focus on career impact
 const osItems = data.openSource ? data.openSource.slice(0, 4) : [];
-const osGrouped: Record<string, { repoUrl?: string; items: typeof data.openSource }> = {};
-osItems.forEach((item) => {
-    const colonIdx = item.name.indexOf(':');
-    const repo = colonIdx > -1 ? item.name.substring(0, colonIdx).trim() : item.name;
-    if (!osGrouped[repo]) {
-      const repoUrl = item.url?.replace(/\/(pull|issues)\/.*$/, '') || undefined;
-      osGrouped[repo] = { repoUrl, items: [] };
-    }
-    osGrouped[repo].items.push(item);
-  });
+const osGrouped = groupOpenSourceByRepo(osItems);
 ---
 
 <!DOCTYPE html>
@@ -442,8 +433,7 @@ osItems.forEach((item) => {
               <h3 class="os-repo-name">{repo}{repoUrl && <>{' '}<a href={repoUrl}>[GitHub]</a></>}</h3>
               <ul class="os-list">
                 {items.map((item) => {
-                  const colonIdx = item.name.indexOf(':');
-                  const desc = colonIdx > -1 ? item.name.substring(colonIdx + 1).trim() : item.name;
+                  const { description: desc } = parseOpenSourceName(item.name);
                   const prMatch = item.url?.match(/\/(pull|issues)\/(\d+)/);
                   const linkLabel = prMatch ? `#${prMatch[2]}` : '[PR]';
                   return (

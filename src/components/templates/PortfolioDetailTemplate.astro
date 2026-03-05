@@ -94,7 +94,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
             height={630}
             sizes="(max-width: 896px) 100vw, 896px"
             class="w-full object-cover"
-            loading="lazy"
+            loading="eager"
           />
         </div>
       </section>
@@ -204,7 +204,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
                   target="_blank"
                   rel="noopener noreferrer"
                   class="inline-flex align-middle ml-1 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                  aria-label={postTitle + ' 링크'}
+                  aria-label={postTitle + (lang === 'ko' ? ' 링크' : ' link')}
                 >
                   {post.url.includes('youtube.com') || post.url.includes('youtu.be') ? (
                     <YouTubeIcon class="h-4 w-4" />
@@ -235,7 +235,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
                   target="_blank"
                   rel="noopener noreferrer"
                   class="inline-flex align-middle ml-1 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                  aria-label={key.replace(/([A-Z])/g, ' $1').trim() + ' 링크'}
+                  aria-label={key.replace(/([A-Z])/g, ' $1').trim() + (lang === 'ko' ? ' 링크' : ' link')}
                 >
                   <ExternalLinkIcon class="h-4 w-4" />
                 </a>

@@ -23,7 +23,7 @@ const { lang } = Astro.props;
 
 const entry = await getEntry(`resume-${lang}`, 'main');
 if (!entry) {
-  throw new Error('Resume data not found');
+  throw new Error(`Resume data not found for lang: ${lang}`);
 }
 const resumeData = entry.data;
 
@@ -52,6 +52,13 @@ const jsonLd = {
   <article class="resume-container mx-auto max-w-4xl px-4 py-8">
     <!-- Header Section -->
     <ResumeHeader data={data} />
+
+    <!-- Quick Actions (top) -->
+    <div class="no-print mb-4 flex justify-end gap-3 text-sm text-gray-500 dark:text-gray-400">
+      <a href={`${basePath}/resume-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{labels.pdfVersion}</a>
+      <span aria-hidden="true">·</span>
+      <a href={`${basePath}/resume-ats`} class="hover:text-primary-600 dark:hover:text-primary-400">{labels.atsOptimized}</a>
+    </div>
 
     <!-- Divider -->
     <div class="mx-auto mb-10 h-px w-24 bg-gradient-to-r from-transparent via-primary-500 to-transparent" aria-hidden="true"></div>

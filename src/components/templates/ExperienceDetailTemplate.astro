@@ -171,7 +171,7 @@ const basePath = getBasePath(lang);
                          target="_blank"
                          rel="noopener noreferrer"
                          class="inline-flex align-middle ml-1 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                         aria-label={activity.name + ' 링크'}
+                         aria-label={activity.name + (lang === 'ko' ? ' 링크' : ' link')}
                        >
                          {activity.url.includes('jnp.tech') || activity.url.includes('blog') || activity.url.includes('tistory') || activity.url.includes('github.io') ? (
                            <BlogIcon class="h-4 w-4" />
@@ -186,7 +186,7 @@ const basePath = getBasePath(lang);
                          target="_blank"
                          rel="noopener noreferrer"
                          class="inline-flex align-middle ml-0.5 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                         aria-label={activity.name + ' 영상'}
+                         aria-label={activity.name + (lang === 'ko' ? ' 영상' : ' video')}
                        >
                          <YouTubeIcon class="h-4 w-4" />
                        </a>
@@ -197,7 +197,7 @@ const basePath = getBasePath(lang);
                          target="_blank"
                          rel="noopener noreferrer"
                          class="inline-flex align-middle ml-0.5 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                         aria-label={activity.name + ' 후기'}
+                         aria-label={activity.name + (lang === 'ko' ? ' 후기' : ' review')}
                        >
                          <ExternalLinkIcon class="h-4 w-4" />
                        </a>

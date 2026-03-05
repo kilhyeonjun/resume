@@ -16,7 +16,7 @@
   --color-primary-900: #1e3a8a;
   --color-primary-950: #172554;
 
-  --font-family-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-sans: 'Inter', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Base styles */

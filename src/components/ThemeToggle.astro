@@ -7,6 +7,7 @@
   type="button"
   class="no-print rounded-lg p-3 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
   aria-label="Toggle dark mode"
+  aria-pressed="false"
 >
   <svg
     id="theme-toggle-dark-icon"
@@ -60,10 +61,12 @@
       document.documentElement.classList.remove('dark');
     }
     updateIcons(theme);
+    themeToggleBtn?.setAttribute('aria-pressed', String(theme === 'dark'));
   }
 
   // Initialize icons based on Layout's already-applied theme
   updateIcons(getCurrentTheme());
+  themeToggleBtn?.setAttribute('aria-pressed', String(getCurrentTheme() === 'dark'));
 
   // Toggle theme on button click
   themeToggleBtn?.addEventListener('click', () => {

@@ -22,6 +22,11 @@ const basePath = getBasePath(lang);
 const currentPath = Astro.url.pathname;
 const isResume = currentPath === basePath || currentPath === `${basePath}/`;
 const isPortfolio = currentPath.startsWith(`${basePath}/portfolio`);
+
+// Compute hreflang alternate URLs
+const hrefRelativePath = currentPath.slice(basePath.length) || '/';
+const koHref = `${Astro.site}resume${hrefRelativePath}`;
+const enHref = `${Astro.site}resume/en${hrefRelativePath}`;
 ---
 
 <!doctype html>
@@ -51,9 +56,9 @@ const isPortfolio = currentPath.startsWith(`${basePath}/portfolio`);
     <meta name="twitter:description" content={description} />
 
     <!-- hreflang -->
-    <link rel="alternate" hreflang="ko" href={`${Astro.site}resume/`} />
-    <link rel="alternate" hreflang="en" href={`${Astro.site}resume/en/`} />
-    <link rel="alternate" hreflang="x-default" href={`${Astro.site}resume/`} />
+    <link rel="alternate" hreflang="ko" href={koHref} />
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="x-default" href={koHref} />
     
     <!-- Prevent flash of unstyled content for dark mode -->
     <script is:inline>
@@ -81,14 +86,14 @@ const isPortfolio = currentPath.startsWith(`${basePath}/portfolio`);
     </a>
     <header class="no-print sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/80">
       <nav class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
-        <a href={import.meta.env.BASE_URL} class="text-xl font-bold text-primary-600 dark:text-primary-400">
+        <a href={basePath} class="text-xl font-bold text-primary-600 dark:text-primary-400">
           Resume
         </a>
         <div class="flex items-center gap-1 sm:gap-2 md:gap-4">
           <a
             href={basePath}
             class:list={[
-              'transition-colors text-sm sm:text-base',
+              'inline-flex min-h-[44px] items-center px-2 transition-colors text-sm sm:text-base',
               isResume
                 ? 'font-semibold text-primary-600 dark:text-primary-400'
                 : 'text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400',
@@ -100,7 +105,7 @@ const isPortfolio = currentPath.startsWith(`${basePath}/portfolio`);
           <a
             href={`${basePath}/portfolio`}
             class:list={[
-              'transition-colors text-sm sm:text-base',
+              'inline-flex min-h-[44px] items-center px-2 transition-colors text-sm sm:text-base',
               isPortfolio
                 ? 'font-semibold text-primary-600 dark:text-primary-400'
                 : 'text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400',

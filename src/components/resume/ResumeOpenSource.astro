@@ -1,6 +1,6 @@
 ---
 import GitHubIcon from '../icons/GitHubIcon.astro';
-import type { OpenSource } from '../../content.config';
+import { groupOpenSourceByRepo, parseOpenSourceName } from '../../utils/open-source';
 
 interface Props {
   openSource: OpenSource[];
@@ -10,20 +10,13 @@ interface Props {
 const { openSource, label } = Astro.props;
 
 // Group by repo name
-const grouped: Record<string, OpenSource[]> = {};
-openSource.forEach((item) => {
-  const colonIdx = item.name.indexOf(':');
-  const repo = colonIdx > -1 ? item.name.substring(0, colonIdx).trim() : item.name;
-  if (!grouped[repo]) grouped[repo] = [];
-  grouped[repo].push(item);
-});
+const grouped = groupOpenSourceByRepo(openSource);
 ---
 
 <section>
   <h2 class="section-title">{label}</h2>
   <div class="mt-6 space-y-5">
-    {Object.entries(grouped).map(([repo, items]) => {
-      const repoUrl = items[0].url ? items[0].url.split('/pull/')[0].split('/issues/')[0] : '';
+    {Object.entries(grouped).map(([repo, { repoUrl, items }]) => {
       return (
         <div>
           <h3 class="font-semibold text-gray-900 dark:text-white">
@@ -42,8 +35,7 @@ openSource.forEach((item) => {
           </h3>
           <ul class="mt-1 ml-4 space-y-1">
             {items.map((item) => {
-              const colonIdx = item.name.indexOf(':');
-              const desc = colonIdx > -1 ? item.name.substring(colonIdx + 1).trim() : item.name;
+              const { description: desc } = parseOpenSourceName(item.name);
               return (
                 <li class="text-sm text-gray-600 dark:text-gray-300 flex items-start gap-1.5">
                   <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gray-400 dark:bg-gray-500" />

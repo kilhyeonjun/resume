@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects with quantifiable results: 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and internal NPM package system.\n\nSpecialized in system design from monolithic to Event-Driven serverless architectures. Demonstrated developer productivity focus through Games on AWS 2025 presentation (generative AI adoption). Creates long-term business value via GCP-AWS hybrid data pipeline construction and root cause analysis.",
+    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects with quantifiable results: 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and internal NPM package system.\n\nSpecializes in serverless/EDA-based system design and cloud cost optimization. Presented at Games on AWS 2025 on scaling data pipeline capacity 270x through batch-to-Lambda migration. Ensures system reliability through architecture-level root cause analysis, including resolving recurring Deadlock patterns.",
     "coreCompetencies": [
       {
         "category": "Cost Optimization & Performance",
@@ -81,7 +81,7 @@
       },
       {
         "category": "Cloud & Infra",
-        "description": "Batch-to-serverless migration (270x expansion), GCP-AWS hybrid data pipeline, CDK-based analytics infrastructure as code",
+        "description": "Batch-to-serverless migration (270x expansion), 82% BigQuery cost reduction, CDK-based analytics infrastructure as code",
         "items": [
           {
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
@@ -110,9 +110,9 @@
         "highlights": [
           "Resolved escalating marketing data query costs by switching BigQuery read method, achieving 82% cost reduction ($6.25→$1.1 per TB)",
           "Overcame batch processing limitations by migrating to serverless architecture, expanding marketing metrics collection range 6x (60→360 days)",
-          "Eliminated code duplication across multi-game projects by building NestJS utility (10 modules) + Game Server Kit (2 packages) for code consistency",
+          "Eliminated code duplication across multi-game projects by building NestJS utility (10 modules) + Game Server Kit (2 packages), achieving code consistency across 12 projects",
           "Designed and implemented Git-like Audit Log + 3-Way Merge engine to automate balance data change tracking and merging across 6 games, resolving delayed incident response",
-          "Unified 3 ad platform (Google Ads/Meta/TikTok) data via GCP-AWS hybrid pipeline, improving query performance 97% (18s→0.5s) through table normalization",
+          "Unified 3 ad platform (Google Ads/Meta/TikTok) data and improved query performance 97% (18s→0.5s) through table normalization",
           "Addressed game probability disclosure regulation risk by integrating DynamicModule-based package across 12 projects, building CDK-based audit log pipeline (94%+ coverage)"
         ],
         "projects": [
@@ -275,18 +275,12 @@
           "RDS Proxy",
           "AWS CDK",
           "GCP Pub/Sub",
-          "Google Ads API",
-          "Meta API",
-          "TikTok API",
+          "Ad Platform APIs (Google, Meta, TikTok)",
           "Slack API",
           "GitHub NPM",
-          "Kinesis",
-          "Firehose",
+          "Kinesis / Firehose",
           "Athena",
-          "Glue",
-          "CloudWatch",
-          "Datadog",
-          "Grafana"
+          "Datadog"
         ],
         "activities": [
           {
@@ -309,10 +303,10 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment (MSA-based)",
         "highlights": [
-          "Reduced 5+ monthly signing failures to zero — reproduced and identified FK shared lock deadlock pattern, fundamentally resolving clinical trial e-signature auto-processing Deadlock",
-          "Expanded user-organization structure from 1:1 to 1:N with backward compatibility, enabling multi-organization management and contributing to major hospital and pharmaceutical contracts",
-          "Delivered VDR MVP within 3 weeks under emergency deployment, implementing Event-Driven PDF conversion and permission-based workflow to meet launch deadline",
-          "Eliminated delayed detection of email delivery failures — built event-driven monitoring pipeline for real-time bounce/complaint tracking and instant alert system (published tech blog)"
+          "Reduced 5+ monthly e-signature processing failures to zero by reproducing and identifying FK shared lock deadlock pattern, fundamentally resolving clinical trial Deadlock",
+          "Expanded user-organization 1:1 to 1:N mapping with full API backward compatibility ensuring zero-disruption migration, enabling multi-org onboarding for enterprise hospitals and pharma",
+          "Deployed as part of 3-person team (2 BE + 1 FE) for 3-week emergency sprint on delayed VDR project, implementing Event-Driven PDF conversion and permission-based workflow to meet MVP launch deadline",
+          "Resolved delayed detection of email delivery failures by building event-driven monitoring pipeline for real-time bounce/complaint tracking with instant alerting (published tech blog)"
         ],
         "projects": [
           {
@@ -493,10 +487,10 @@
         "endDate": "2023-05",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
-          "Zero post-deployment incidents — modernized 3,000-line legacy via 3-stage progressive migration (single-file → layered → NestJS) with JS→TS + 80% TDD coverage",
-          "Enabled seamless user switching across 3 subdomains on 300K-download platform — built JWT-based token authentication in 3 weeks to resolve session conflicts",
-          "Cut pharmacist processing time 90% (3-5min→30sec) — automated full prescription workflow from OCR to medication guide via Naver Clova + MFDS API integration",
-          "Eliminated patient wait complaints — resolved status reflection delays via real-time sync + Web Push notifications"
+          "Modernized 3,000-line legacy codebase via 3-stage progressive migration (single-file → layered → NestJS) with JS→TS + 80% TDD coverage, maintaining zero post-deployment incidents",
+          "Resolved session conflicts across 3 subdomains on 300K-download platform by building JWT-based token authentication in 3 weeks, enabling seamless user switching",
+          "Automated full prescription-to-medication-guide workflow via Naver Clova OCR + MFDS (Korea FDA) API integration, cutting pharmacist processing time 90% (3-5min→30sec)",
+          "Introduced Socket.IO-based real-time status sync + Web Push notifications, reducing status reflection delay from tens of seconds to instant and eliminating patient wait complaints"
         ],
         "projects": [
           {
@@ -617,11 +611,9 @@
         "endDate": "2022-03",
         "description": "Custom software consulting firm",
         "highlights": [
-          "Digitized all learning management processes — full-stack developed LMS core features (QR attendance, PDF certificates, board CRUD, video upload, progress tracking, etc.) over 10 months",
-          "Launched JOB Agent service — overcame legacy PHP limitations via cross-frame integration, implementing weighted matching algorithm and counselor back-office",
-          "Reduced 300+ student registration from hours to minutes per semester — built Excel bulk processing system",
-          "Unified SSO across 5 country-specific websites — built cross-domain auth server to consolidate fragmented user experience",
-          "Eliminated 100% hosting costs — migrated WordPress to Jekyll + GitHub Pages with Travis CI auto-deploy"
+          "Developed LMS core features (QR attendance, PDF certificates, Excel bulk registration) full-stack over 10 months, digitizing learning management for 300+ students per semester",
+          "Overcame legacy PHP system limitations via cross-frame integration, implementing weighted matching algorithm and counselor back-office to launch JOB Agent service",
+          "Built cross-domain auth server to unify login across 5 country-specific websites into a single authentication system"
         ],
         "projects": [
           {

@@ -34,6 +34,14 @@
           "Data consistency design — outbox pattern (event integrity), distributed lock (concurrency control)",
           "Regulatory compliance framework — integrated verification package across 12 projects + CDK-based audit log analytics pipeline achieving 94%+ coverage"
         ]
+      },
+      {
+        "category": "Technical Sharing & Development Culture",
+        "items": [
+          "AI development adoption leadership — guided team on AI agent workflows (Cursor, Claude Code) and context engineering practices, driving company-wide AI adoption (Games on AWS 2025 speaker)",
+          "TDD foundation for AI code reliability — established test-driven development framework to ensure AI-generated code quality, embedding TDD culture across the team",
+          "Developer meeting-driven knowledge sharing — authored shared library contribution guides and merge rules, established code conventions, standardized architecture patterns across teams"
+        ]
       }
     ],
     "skills": [

@@ -181,7 +181,7 @@ body {
 
   /* Section titles in print */
   .section-title {
-    color: #2563eb !important;
+    color: #1e40af !important;
   }
 
   .section-title::after {

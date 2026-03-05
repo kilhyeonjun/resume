@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects with quantifiable results: 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and internal NPM package system.\n\nSpecializes in serverless/EDA-based system design and cloud cost optimization. Presented at Games on AWS 2025 on scaling data pipeline capacity 270x through batch-to-Lambda migration. Ensures system reliability through architecture-level root cause analysis, including resolving recurring Deadlock patterns.",
+    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects with quantifiable results: 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and internal NPM package system.\n\nSpecializes in serverless/EDA-based system design and cloud cost optimization. Presented at Games on AWS 2025 on leveraging AI to scale data pipeline capacity 270x through batch-to-Lambda architecture improvement. Ensures system reliability through architecture-level root cause analysis, including resolving recurring Deadlock patterns.",
     "coreCompetencies": [
       {
         "category": "Cost Optimization & Performance",
@@ -292,10 +292,10 @@
         ],
         "activities": [
           {
-            "name": "Games on AWS 2025 Technical Presentation",
+            "name": "Boosting Developer Productivity with Amazon Q Developer",
             "type": "Conference Talk",
             "period": "2025.10",
-            "description": "Boosting Developer Productivity with Amazon Q Developer",
+            "description": "Games on AWS 2025 Customer Session",
             "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days",
             "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
             "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"
@@ -786,10 +786,10 @@
     ],
     "technicalWriting": [
       {
-        "title": "Games on AWS 2025 Technical Presentation",
+        "title": "Boosting Developer Productivity with Amazon Q Developer",
         "date": "2025-10",
         "type": "Conference Talk",
-        "description": "Boosting Developer Productivity with Amazon Q Developer",
+        "description": "Games on AWS 2025 Customer Session",
         "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days",
         "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
         "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"

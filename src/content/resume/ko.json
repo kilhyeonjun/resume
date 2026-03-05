@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 20개 이상의 프로젝트를 주도하며 BigQuery 비용 82% 절감, CDK 기반 분석 인프라 코드화, 사내 NPM 패키지 체계 구축 등 정량적 성과를 달성한 백엔드 엔지니어입니다.\n\n서버리스·EDA 기반 시스템 설계와 클라우드 비용 최적화에 강점을 가지며, 배치→Lambda 전환으로 파이프라인 처리 용량을 270배 확장한 경험을 Games on AWS 2025에서 발표하였습니다. 반복 장애의 Deadlock 근본 원인을 아키텍처 수준에서 해결하는 등 안정성과 확장성을 함께 확보합니다.",
+    "summary": "{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 20개 이상의 프로젝트를 주도하며 BigQuery 비용 82% 절감, CDK 기반 분석 인프라 코드화, 사내 NPM 패키지 체계 구축 등 정량적 성과를 달성한 백엔드 엔지니어입니다.\n\n서버리스·EDA 기반 시스템 설계와 클라우드 비용 최적화에 강점을 가지며, AI를 활용한 배치→Lambda 아키텍처 개선으로 파이프라인 처리 용량을 270배 확장한 사례를 Games on AWS 2025에서 발표하였습니다. 반복 장애의 Deadlock 근본 원인을 아키텍처 수준에서 해결하는 등 안정성과 확장성을 함께 확보합니다.",
     "coreCompetencies": [
       {
         "category": "비용 최적화 & 성능 개선",
@@ -292,10 +292,10 @@
         ],
         "activities": [
           {
-            "name": "Games on AWS 2025 기술 발표",
+            "name": "Amazon Q Developer를 활용한 개발 생산성 향상",
             "type": "외부 발표",
             "period": "2025.10",
-            "description": "Amazon Q Developer를 활용한 개발 생산성 향상",
+            "description": "Games on AWS 2025 고객 세션 발표",
             "achievement": "주니어 개발자 혼자 10일 만에 데이터 파이프라인 처리 용량 270배 확장 사례 공유",
             "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
             "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"
@@ -786,10 +786,10 @@
     ],
     "technicalWriting": [
       {
-        "title": "Games on AWS 2025 기술 발표",
+        "title": "Amazon Q Developer를 활용한 개발 생산성 향상",
         "date": "2025-10",
         "type": "외부 발표",
-        "description": "Amazon Q Developer를 활용한 개발 생산성 향상",
+        "description": "Games on AWS 2025 고객 세션 발표",
         "achievement": "주니어 개발자 혼자 10일 만에 데이터 파이프라인 처리 용량 270배 확장 사례 공유",
         "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
         "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"

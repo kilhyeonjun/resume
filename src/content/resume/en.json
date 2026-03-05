@@ -14,7 +14,7 @@
       {
         "category": "Cost Optimization & Performance",
         "items": [
-          "Cloud cost structure analysis and pricing model optimization — 82% cost reduction ($6.25→$1.1/TB)",
+          "Cloud cost structure analysis and pricing model optimization — 82% cost reduction ($6.25→$1.1 per TB)",
           "Bulk data processing bottleneck diagnosis — 72% sync time reduction via bulk operation migration",
           "Data model redesign and query optimization — 97% query performance improvement (18s→0.5s)"
         ]
@@ -175,7 +175,7 @@
             "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
             "details": [
               "Hybrid Architecture: Maintained API server (EC2) + separated batch/job processing (Lambda) for optimal resource utilization per workload",
-              "Event-Driven Architecture: SQS + Lambda + EventBridge-based async processing expanding data collection range 6x (60 days → 360 days)",
+              "Event-Driven Architecture: SQS + Lambda + EventBridge-based async processing reducing batch processing time from 2hrs to 5min, expanding data collection range 6x (60 days → 360 days)",
               "Transactional Outbox Pattern: Scheduled and delayed event publishing ensuring data consistency",
               "Lambda Operational Stabilization: Batch Size bulk processing resolving throttling, CloudWatch log optimization reducing costs, build OOM remediation",
               "RDS Proxy Connection Management: Resolved DB connection exhaustion during massive Lambda execution via RDS Proxy pooling"
@@ -392,7 +392,7 @@
             ]
           },
           {
-            "name": "Maven TMF New Project Development",
+            "name": "Maven TMF New Project Development (Frontend)",
             "period": "2023.06 ~ 2024.08",
             "featured": false,
             "description": "Frontend development for clinical Trial Master File (TMF) management system",

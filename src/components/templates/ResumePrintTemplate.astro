@@ -26,9 +26,10 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
 const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}`;
 
 // Group open source by repo name (before colon) + derive repoUrl
+// HR-PDF: limit to first 4 items (most recent) to keep focus on career impact
+const osItems = data.openSource ? data.openSource.slice(0, 4) : [];
 const osGrouped: Record<string, { repoUrl?: string; items: typeof data.openSource }> = {};
-if (data.openSource) {
-  data.openSource.forEach((item) => {
+osItems.forEach((item) => {
     const colonIdx = item.name.indexOf(':');
     const repo = colonIdx > -1 ? item.name.substring(0, colonIdx).trim() : item.name;
     if (!osGrouped[repo]) {
@@ -37,7 +38,6 @@ if (data.openSource) {
     }
     osGrouped[repo].items.push(item);
   });
-}
 ---
 
 <!DOCTYPE html>

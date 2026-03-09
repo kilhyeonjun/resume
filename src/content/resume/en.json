@@ -9,45 +9,45 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer with {{CAREER_DURATION}} of experience across 4 domains (Education, Healthcare, Clinical Trials, Gaming), leading 20+ projects with quantifiable results: 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and internal NPM package system.\n\nSpecializes in serverless/EDA-based system design and cloud cost optimization. Presented at Games on AWS 2025 on leveraging AI to scale data pipeline capacity 270x through batch-to-Lambda architecture improvement. Ensures system reliability through architecture-level root cause analysis, including resolving recurring Deadlock patterns.",
+    "summary": "Backend engineer focused on serverless/EDA-based system design and cloud cost optimization over {{CAREER_DURATION}}.\n\nAcross 20+ projects in 4 domains (Education, Healthcare, Clinical Trials, Gaming), delivered measurable outcomes including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and an internal NPM package system. Presented at Games on AWS 2025 on an AI-assisted batch-to-Lambda migration that expanded pipeline capacity 270x by concurrent jobs processed in the same time window. Improves system reliability through architecture-level root cause analysis, including resolving recurring Deadlock patterns.",
     "coreCompetencies": [
       {
         "category": "Cost Optimization & Performance",
         "items": [
-          "Cloud cost structure analysis and pricing model optimization — 82% cost reduction ($6.25→$1.1 per TB)",
-          "Bulk data processing bottleneck diagnosis — 72% sync time reduction via bulk operation migration",
-          "Data model redesign and query optimization — 97% query performance improvement (18s→0.5s)"
+          "Cloud cost structure analysis and pricing model optimization: achieved 82% cost reduction ($6.25→$1.1 per TB)",
+          "Diagnosed bulk data processing bottlenecks and migrated to bulk operations, reducing sync time by 72%",
+          "Redesigned data models and optimized queries, improving query performance by 97% (18s→0.5s)"
         ]
       },
       {
         "category": "System Design & Architecture",
         "items": [
-          "Event-Driven Architecture design — batch→Lambda serverless migration reducing processing 2hrs→5min, 270x pipeline expansion",
-          "Multi-project shared package system design — code consistency and reusability across 12 projects",
-          "Legacy progressive modernization strategy — staged architecture migration + TDD adoption achieving zero-incident deployments"
+          "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel processing, reducing processing time 2hrs→5min and expanding pipeline capacity 270x by concurrent jobs per time window",
+          "Designed a shared package system for multi-project environments, improving code consistency and reusability",
+          "Established a staged modernization strategy; after phased architecture migration with TDD, maintained incident-free deployments during major release windows"
         ]
       },
       {
         "category": "Reliability & Quality",
         "items": [
-          "Root cause analysis — reproduced and identified lock deadlock patterns in recurring failures, resolving at the architecture level",
-          "Data consistency design — outbox pattern (event integrity), distributed lock (concurrency control)",
-          "Regulatory compliance framework — integrated verification package across 12 projects + CDK-based audit log analytics pipeline achieving 94%+ coverage"
+          "Performed root cause analysis by reproducing recurring lock deadlock patterns and resolving them at the architecture level",
+          "Designed data consistency mechanisms with outbox pattern (event integrity) and distributed locks (concurrency control)",
+          "Built a regulatory compliance framework with integrated verification packages and a CDK-based audit log analytics pipeline, securing 94%+ integration test coverage"
         ]
       },
       {
         "category": "Technical Sharing & Development Culture",
         "items": [
-          "AI development adoption leadership — guided team on AI agent workflows (Cursor, Claude Code) and context engineering practices, driving company-wide AI adoption (Games on AWS 2025 speaker)",
-          "TDD foundation for AI code reliability — established test-driven development framework to ensure AI-generated code quality, embedding TDD culture across the team",
-          "Developer meeting-driven knowledge sharing — authored shared library contribution guides and merge rules, established code conventions, standardized architecture patterns across teams"
+          "Led AI development adoption by sharing Cursor and Claude Code workflows plus context engineering practices in developer meetings, expanding team-level AI usage (Games on AWS 2025 speaker)",
+          "Established a TDD foundation for AI code reliability to ensure AI-generated code quality and reinforce test-driven team culture",
+          "Strengthened knowledge-sharing culture through developer meetings, shared library contribution guides, merge rules, code conventions, and architecture pattern standardization"
         ]
       }
     ],
     "skills": [
       {
         "category": "Backend",
-        "description": "Legacy-to-NestJS progressive migration, shared package system across 12 projects, 80% TDD coverage",
+        "description": "Legacy-to-NestJS progressive migration, shared package system establishment, 80% TDD coverage",
         "items": [
           {
             "name": "TypeScript"
@@ -89,7 +89,7 @@
       },
       {
         "category": "Cloud & Infra",
-        "description": "Batch-to-serverless migration (270x expansion), 82% BigQuery cost reduction, CDK-based analytics infrastructure as code",
+        "description": "Batch-to-serverless migration (270x expansion by concurrent jobs per time window), 82% BigQuery cost reduction, CDK-based analytics infrastructure as code",
         "items": [
           {
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
@@ -118,10 +118,10 @@
         "highlights": [
           "Resolved escalating marketing data query costs by switching BigQuery read method, achieving 82% cost reduction ($6.25→$1.1 per TB)",
           "Overcame batch processing limitations by migrating to serverless architecture, expanding marketing metrics collection range 6x (60→360 days)",
-          "Eliminated code duplication across multi-game projects by building NestJS utility (10 modules) + Game Server Kit (2 packages), achieving code consistency across 12 projects",
+          "Led shared package architecture decisions and code convention standards across multi-game projects, building NestJS utility (10 modules) + Game Server Kit (2 packages) to secure code consistency",
           "Designed and implemented Git-like Audit Log + 3-Way Merge engine to automate balance data change tracking and merging across 6 games, resolving delayed incident response",
           "Unified 3 ad platform (Google Ads/Meta/TikTok) data and improved query performance 97% (18s→0.5s) through table normalization",
-          "Addressed game probability disclosure regulation risk by integrating DynamicModule-based package across 12 projects, building CDK-based audit log pipeline (94%+ coverage)"
+          "Addressed game probability disclosure regulation risk by integrating a DynamicModule-based package across multi-game projects and building a CDK-based audit log pipeline, securing 94%+ integration test coverage"
         ],
         "projects": [
           {
@@ -152,10 +152,10 @@
               "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, and modification in a single platform",
               "Creative Auto-deployment Pipeline: Integrated pipeline from creative upload to automatic registration on Google/Meta/TikTok platforms",
               "NAS-S3 Dual Sync: SQS event-based server-worker separation architecture for bidirectional sync/restore between internal NAS and S3",
-              "Meta Asset Sync Performance Optimization: ORM single-row saves to bulk operations conversion reducing Image sync time by 72% (25.7s→7.1s), DB transactions by 95% (10~16s→0.3~0.5s)",
+              "Meta Asset Sync Performance Optimization: Converted ORM single-row saves to bulk operations, reducing Image sync time by 72% (25.7s→7.1s) and DB transactions by 95% (10~16s→0.3~0.5s)",
               "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%",
               "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25→$1.1 per TB)",
-              "DB Optimization: Normalized 100+ column table (main/time-series/prediction split), index optimization and cursor-based pagination improving query performance from 18s to 0.5s",
+              "DB Optimization: Prioritized read-latency reduction over additional write-path complexity, normalizing a 100+ column table into main/time-series/prediction partitions; combined index tuning and cursor pagination improved query performance from 18s to 0.5s",
               "Retention Metrics Integration: Consistently applied retention metrics across the full pipeline from BigQuery ingestion to entity, API, and field metadata for user retention analysis"
             ],
             "techStack": [
@@ -182,7 +182,7 @@
             "featured": true,
             "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
             "details": [
-              "Hybrid Architecture: Maintained API server (EC2) + separated batch/job processing (Lambda) for optimal resource utilization per workload",
+              "Hybrid Architecture: Prioritized operational stability over full serverless migration, keeping the API server on EC2 while separating batch/job processing to Lambda for workload-optimized resource usage",
               "Event-Driven Architecture: SQS + Lambda + EventBridge-based async processing reducing batch processing time from 2hrs to 5min, expanding data collection range 6x (60 days → 360 days)",
               "Transactional Outbox Pattern: Scheduled and delayed event publishing ensuring data consistency",
               "Lambda Operational Stabilization: Batch Size bulk processing resolving throttling, CloudWatch log optimization reducing costs, build OOM remediation",
@@ -248,7 +248,7 @@
             "details": [
               "NestJS DynamicModule-based Probability Package: Packaged 5 probability functions + automatic Kinesis logging as @gameduo/glider-probability, integrated across 12 game projects",
               "CDK-based Analytics Pipeline: Codified Kinesis → Firehose (Dynamic Partitioning + Parquet conversion) → S3 → Glue → Athena end-to-end probability audit log analytics infrastructure",
-              "LocalStack Integration Testing: Replaced mock tests with Testcontainers-based integration tests, achieving 12 suites 115 tests with 94%+ coverage"
+              "LocalStack Integration Testing: Prioritized regression confidence over short-term delivery speed, replacing mock tests with Testcontainers-based integration tests and securing 94%+ integration test coverage across 12 suites and 115 tests"
             ],
             "techStack": [
               "TypeScript",
@@ -296,7 +296,7 @@
             "type": "Conference Talk",
             "period": "2025.10",
             "description": "Games on AWS 2025 Customer Session",
-            "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days",
+            "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days, measured by concurrent jobs processed per time window",
             "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
             "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"
           }
@@ -496,7 +496,7 @@
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
           "Modernized 3,000-line legacy codebase via 3-stage progressive migration (single-file → layered → NestJS) with JS→TS + 80% TDD coverage, maintaining zero post-deployment incidents",
-          "Resolved session conflicts across 3 subdomains on 300K-download platform by building JWT-based token authentication in 3 weeks, enabling seamless user switching",
+          "Resolved session conflicts across 3 subdomains on a 300K-download platform by building JWT-based token authentication in 3 weeks, enabling uninterrupted user switching",
           "Automated full prescription-to-medication-guide workflow via Naver Clova OCR + MFDS (Korea FDA) API integration, cutting pharmacist processing time 90% (3-5min→30sec)",
           "Introduced Socket.IO-based real-time status sync + Web Push notifications, reducing status reflection delay from tens of seconds to instant and eliminating patient wait complaints"
         ],
@@ -508,7 +508,7 @@
             "description": "Built JWT-based unified authentication system to resolve subdomain session conflicts",
             "details": [
               "Designed and implemented NestJS + JWT token authentication system",
-              "Migrated from session-based to token-based auth for seamless subdomain user transitions",
+              "Migrated from session-based to token-based auth for reliable subdomain user transitions",
               "MySQL-based JWT key management (infrastructure simplification over Redis)",
               "Access Token + Refresh Token dual token structure",
               "Unified authentication for web (doctor/pharmacist/admin) + mobile app"
@@ -790,7 +790,7 @@
         "date": "2025-10",
         "type": "Conference Talk",
         "description": "Games on AWS 2025 Customer Session",
-        "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days",
+        "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days, measured by concurrent jobs processed per time window",
         "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
         "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"
       },

@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer focused on serverless/EDA-based system design and cloud cost optimization over {{CAREER_DURATION}}.\n\nAcross 20+ projects in 4 domains (Education, Healthcare, Clinical Trials, Gaming), delivered measurable outcomes including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and an internal NPM package system. Presented at Games on AWS 2025 on an AI-assisted batch-to-Lambda migration that expanded pipeline capacity 270x by concurrent jobs processed in the same time window. Improves system reliability through architecture-level root cause analysis, including resolving recurring Deadlock patterns.",
+    "summary": "Backend engineer focused on serverless/EDA-based system design and cloud cost optimization over {{CAREER_DURATION}}.\n\nAcross 20+ projects in 4 domains (Education, Healthcare, Clinical Trials, Gaming), delivered measurable outcomes including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and an internal NPM package system. Presented at Games on AWS 2025 on an AI-assisted batch-to-Lambda migration that expanded pipeline capacity 270x by hourly concurrent job throughput. Improves system reliability through architecture-level root cause analysis, including resolving recurring Deadlock patterns.",
     "coreCompetencies": [
       {
         "category": "Cost Optimization & Performance",
@@ -32,7 +32,7 @@
         "items": [
           "Performed root cause analysis by reproducing recurring lock deadlock patterns and resolving them at the architecture level",
           "Designed data consistency mechanisms with outbox pattern (event integrity) and distributed locks (concurrency control)",
-          "Built a regulatory compliance framework with integrated verification packages and a CDK-based audit log analytics pipeline, securing 94%+ integration test coverage"
+          "Built a regulatory compliance framework with integrated verification packages and a CDK-based audit log analytics pipeline, securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
         ]
       },
       {
@@ -121,7 +121,7 @@
           "Led shared package architecture decisions and code convention standards across multi-game projects, building NestJS utility (10 modules) + Game Server Kit (2 packages) to secure code consistency",
           "Designed and implemented Git-like Audit Log + 3-Way Merge engine to automate balance data change tracking and merging across 6 games, resolving delayed incident response",
           "Unified 3 ad platform (Google Ads/Meta/TikTok) data and improved query performance 97% (18s→0.5s) through table normalization",
-          "Addressed game probability disclosure regulation risk by integrating a DynamicModule-based package across multi-game projects and building a CDK-based audit log pipeline, securing 94%+ integration test coverage"
+          "Addressed game probability disclosure regulation risk by integrating a DynamicModule-based package across multi-game projects and building a CDK-based audit log pipeline, securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
         ],
         "projects": [
           {
@@ -134,7 +134,7 @@
               "Event Sourcing-based Change Tracking: Auditable decorator + TypeORM Subscriber pattern for automated entity change recording pipeline",
               "3-Way Merge Engine: Multi-environment version merge system with parent/child entity conflict detection and unique constraint handling across 6 games",
               "Version Diff Engine: Dual strategy of incremental comparison and snapshot comparison based on Base Audit availability for cost-efficient version diffing",
-              "Shared identifier-based Identification: Decoupled from PK dependency, ensuring accurate entity tracking during migration, comparison, and merge"
+              "Shared identifier-based Entity Tracking: Decoupled from PK dependency, ensuring accurate entity tracking during migration, comparison, and merge"
             ],
             "techStack": [
               "TypeScript",
@@ -248,7 +248,7 @@
             "details": [
               "NestJS DynamicModule-based Probability Package: Packaged 5 probability functions + automatic Kinesis logging as @gameduo/glider-probability, integrated across 12 game projects",
               "CDK-based Analytics Pipeline: Codified Kinesis → Firehose (Dynamic Partitioning + Parquet conversion) → S3 → Glue → Athena end-to-end probability audit log analytics infrastructure",
-              "LocalStack Integration Testing: Prioritized regression confidence over short-term delivery speed, replacing mock tests with Testcontainers-based integration tests and securing 94%+ integration test coverage across 12 suites and 115 tests"
+              "LocalStack Integration Testing: Prioritized regression confidence over short-term delivery speed, replacing mock tests with Testcontainers-based integration tests and securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
             ],
             "techStack": [
               "TypeScript",
@@ -296,7 +296,7 @@
             "type": "Conference Talk",
             "period": "2025.10",
             "description": "Games on AWS 2025 Customer Session",
-            "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days, measured by concurrent jobs processed per time window",
+            "achievement": "Shared a case study of a single engineer scaling data pipeline capacity 270x in 10 days, measured by hourly concurrent job throughput",
             "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
             "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"
           }
@@ -495,7 +495,7 @@
         "endDate": "2023-05",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
-          "Modernized 3,000-line legacy codebase via 3-stage progressive migration (single-file → layered → NestJS) with JS→TS + 80% TDD coverage, maintaining zero post-deployment incidents",
+          "Modernized 3,000-line legacy codebase via 3-stage progressive migration (single-file → layered → NestJS) with JS→TS + 80% TDD coverage, maintaining zero post-deployment incidents during major release windows",
           "Resolved session conflicts across 3 subdomains on a 300K-download platform by building JWT-based token authentication in 3 weeks, enabling uninterrupted user switching",
           "Automated full prescription-to-medication-guide workflow via Naver Clova OCR + MFDS (Korea FDA) API integration, cutting pharmacist processing time 90% (3-5min→30sec)",
           "Introduced Socket.IO-based real-time status sync + Web Push notifications, reducing status reflection delay from tens of seconds to instant and eliminating patient wait complaints"
@@ -790,7 +790,7 @@
         "date": "2025-10",
         "type": "Conference Talk",
         "description": "Games on AWS 2025 Customer Session",
-        "achievement": "Shared case study of a junior developer scaling data pipeline capacity 270x in just 10 days, measured by concurrent jobs processed per time window",
+        "achievement": "Shared a case study of a single engineer scaling data pipeline capacity 270x in 10 days, measured by hourly concurrent job throughput",
         "videoUrl": "https://www.youtube.com/watch?v=2jRicD15jXk",
         "reviewUrl": "https://www.linkedin.com/posts/kilhyeonjun_제-생애-첫-대외-컨퍼런스-발표를-성공적으로-마쳤습니다-지난-10월-activity-7383826538632249344--0Yz"
       },

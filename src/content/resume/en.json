@@ -2,41 +2,41 @@
   "main": {
     "personalInfo": {
       "name": "Hyeonjun Kil",
-      "title": "Backend Engineer",
+      "title": "AI Native Engineer",
       "email": "kboxstar@gmail.com",
       "location": "Seoul, South Korea",
       "linkedin": "https://www.linkedin.com/in/kilhyeonjun",
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer focused on serverless/EDA-based system design and cloud cost optimization over {{CAREER_DURATION}}.\n\nAcross 20+ projects in 4 domains (Education, Healthcare, Clinical Trials, Gaming), delivered measurable outcomes including 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, and an internal NPM package system. Presented at Games on AWS 2025 on an AI-assisted batch-to-Lambda migration that expanded pipeline capacity 270x by hourly concurrent job throughput. Improves system reliability through architecture-level root cause analysis, including resolving recurring Deadlock patterns.",
+    "summary": "AI Native Engineer who shifted to agent-based development in late 2024, focusing on problem framing, agent orchestration, and verification rather than manual implementation.\n\nAcross {{CAREER_DURATION}} and 20+ projects in four domains\u2014Education, Healthcare, Clinical Trials, and Gaming\u2014delivered an 82% BigQuery cost reduction and 270x pipeline capacity growth in hourly concurrent jobs through multi-agent orchestration and context engineering. Presented an AI-assisted architecture migration case study at Games on AWS 2025, led team-wide AI adoption, and built a TDD framework to improve the reliability of AI-generated code.",
     "coreCompetencies": [
       {
-        "category": "Cost Optimization & Performance",
+        "category": "AI Agent Orchestration & Delivery",
         "items": [
-          "Cloud cost structure analysis and pricing model optimization: achieved 82% cost reduction ($6.25→$1.1 per TB)",
-          "Diagnosed bulk data processing bottlenecks and migrated to bulk operations, reducing sync time by 72%",
-          "Redesigned data models and optimized queries, improving query performance by 97% (18s→0.5s)"
+          "Established a multi-agent development environment, orchestrating Claude Code, Codex, and Gemini for distinct roles in production software delivery (since late 2024)",
+          "Established an AI-generated code reliability framework with TDD, reinforcing test-driven development culture across the team",
+          "Developed context engineering practices to structure problems, set guardrails, and verify agent outputs; presented the approach at Games on AWS 2025"
         ]
       },
       {
         "category": "System Design & Architecture",
         "items": [
-          "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel processing, reducing processing time 2hrs→5min and expanding pipeline capacity 270x by concurrent jobs per time window",
+          "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel processing, reducing processing time 2hrs\u21925min and expanding pipeline capacity 270x by concurrent jobs per time window",
           "Designed a shared package system for multi-project environments, improving code consistency and reusability",
           "Established a staged modernization strategy; after phased architecture migration with TDD, maintained incident-free deployments during major release windows"
         ]
       },
       {
-        "category": "Reliability & Quality",
+        "category": "Cost Optimization & Reliability",
         "items": [
-          "Performed root cause analysis by reproducing recurring lock deadlock patterns and resolving them at the architecture level",
-          "Designed data consistency mechanisms with outbox pattern (event integrity) and distributed locks (concurrency control)",
-          "Built a regulatory compliance framework with integrated verification packages and a CDK-based audit log analytics pipeline, securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
+          "Cloud cost structure analysis and pricing model optimization: achieved 82% cost reduction ($6.25\u2192$1.1 per TB)",
+          "Diagnosed bulk data processing bottlenecks and optimized queries, reducing sync time by 72% and improving query performance by 97% (18s\u21920.5s)",
+          "Root cause analysis of recurring deadlock patterns at architecture level + regulatory compliance with CDK-based audit log pipeline securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
         ]
       },
       {
-        "category": "Technical Sharing & Development Culture",
+        "category": "Technical Leadership & Culture",
         "items": [
           "Led AI development adoption by sharing Cursor and Claude Code workflows plus context engineering practices in developer meetings, expanding team-level AI usage (Games on AWS 2025 speaker)",
           "Established a TDD foundation for AI code reliability to ensure AI-generated code quality and reinforce test-driven team culture",
@@ -46,63 +46,48 @@
     ],
     "skills": [
       {
+        "category": "AI Development",
+        "description": "Multi-agent orchestration-based development, context engineering, AI-generated code quality assurance",
+        "items": [
+          { "name": "Claude Code" },
+          { "name": "OpenCode (OMO)" },
+          { "name": "Codex" },
+          { "name": "Kiro" },
+          { "name": "Amazon Q Developer" },
+          { "name": "Cursor" },
+          { "name": "Context Engineering" }
+        ]
+      },
+      {
         "category": "Backend",
         "description": "Legacy-to-NestJS progressive migration, shared package system establishment, 80% TDD coverage",
         "items": [
-          {
-            "name": "TypeScript"
-          },
-          {
-            "name": "NestJS"
-          },
-          {
-            "name": "Express.js"
-          },
-          {
-            "name": "TypeORM"
-          },
-          {
-            "name": "Java"
-          },
-          {
-            "name": "Spring Boot"
-          },
-          {
-            "name": "Jest"
-          }
+          { "name": "TypeScript" },
+          { "name": "NestJS" },
+          { "name": "Express.js" },
+          { "name": "TypeORM" },
+          { "name": "Java" },
+          { "name": "Spring Boot" },
+          { "name": "Jest" }
         ]
       },
       {
         "category": "Database",
-        "description": "Query optimization (18s→0.5s), deadlock root cause analysis, large-scale table normalization, Redis distributed locking",
+        "description": "Query optimization (18s\u21920.5s), deadlock root cause analysis, large-scale table normalization, Redis distributed locking",
         "items": [
-          {
-            "name": "MySQL"
-          },
-          {
-            "name": "BigQuery"
-          },
-          {
-            "name": "ElastiCache (Redis)"
-          }
+          { "name": "MySQL" },
+          { "name": "BigQuery" },
+          { "name": "ElastiCache (Redis)" }
         ]
       },
       {
         "category": "Cloud & Infra",
         "description": "Batch-to-serverless migration (270x expansion by concurrent jobs per time window), 82% BigQuery cost reduction, CDK-based analytics infrastructure as code",
         "items": [
-          {
-            "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
-          },
-          {
-            "name": "GCP (BigQuery, Pub/Sub)"
-          },
-          {
-            "name": "Docker"
-          },
-          {
-            "name": "GitHub Actions"
-          }
+          { "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)" },
+          { "name": "GCP (BigQuery, Pub/Sub)" },
+          { "name": "Docker" },
+          { "name": "GitHub Actions" }
         ]
       }
     ],
@@ -114,7 +99,7 @@
         "position": "DEV Team Server Developer",
         "startDate": "2025-01",
         "current": true,
-        "description": "Mobile game development and publishing company",
+        "description": "Mobile game development and publishing company. Transitioned to AI agent-based development in late 2024 for backend architecture design and live service feature development",
         "highlights": [
           "Resolved escalating marketing data query costs by switching BigQuery read method, achieving 82% cost reduction ($6.25→$1.1 per TB)",
           "Overcame batch processing limitations by migrating to serverless architecture, expanding marketing metrics collection range 6x (60→360 days)",

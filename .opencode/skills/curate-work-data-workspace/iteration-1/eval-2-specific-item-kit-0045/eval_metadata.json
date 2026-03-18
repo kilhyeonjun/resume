@@ -1,0 +1,7 @@
+{
+  "eval_id": 2,
+  "eval_name": "specific-item-kit-0045-curation",
+  "prompt": "work-data에 있는 kit-0045 작업을 이력서에 넣고 싶어",
+  "expected": "kit-0045 탐색 후 하이라이트 KO/EN 초안 생성 및 피드백 루프 체크",
+  "assertions": []
+}

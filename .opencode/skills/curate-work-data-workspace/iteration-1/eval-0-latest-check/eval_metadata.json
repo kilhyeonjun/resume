@@ -1,0 +1,7 @@
+{
+  "eval_id": 0,
+  "eval_name": "latest-work-data-diff-and-evaluate",
+  "prompt": "work-data 최신화하고 이력서에 반영할 거 있는지 확인해줘",
+  "expected": "Phase 1 (Diff) + Phase 2 (Evaluate) 실행 및 미반영 항목 테이블 출력",
+  "assertions": []
+}

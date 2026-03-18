@@ -48,14 +48,15 @@ cd ~/.work-data && git pull
 ```
 
 2. 필터 조건 적용
-   - `period >= last sync`
+   - 기간 기준(`last sync`) 결정 순서: ① 사용자가 명시한 기간 → ② 이력서에서 가장 최근 period → ③ 당월(현재 YYYY-MM)
    - `size == major OR medium`
-   - `status == done` 우선 (필요 시 `in_progress`는 선택적으로 검토)
+   - `status == done` 기본. 단, **사용자가 work item ID를 직접 지정한 경우** `in_progress`도 허용하되 `⚠️ in_progress` 라벨을 붙여 사용자에게 알린다
 
 3. 중복 반영 방지 비교
-   - `src/content/resume/ko.json`의 `experience[].projects[].name`
-   - `src/content/resume/ko.json`의 `experience[].highlights[]`
-   - 필요하면 `en.json`도 함께 확인해 ko/en 괴리 여부 파악
+   - `src/content/resume/ko.json`의 `experience[].projects[].highlights[]`와 문자열 유사도 비교
+   - **판단 기준**: 동일 문제를 다루면 의미 중복 → 기존 문장이 더 약하면 `replace`, 시각이 다르면 `append`
+   - 기존 하이라이트와 70%+ 내용 겹침이면 중복으로 분류하고 교체 가치 평가
+   - `en.json`도 함께 확인해 ko/en 괴리 여부 파악
 
 4. 산출물 작성
    - 이력서 미반영 항목만 추출
@@ -80,6 +81,8 @@ cd ~/.work-data && git pull
    - Situation/Task/Action/Result로 최소 1문장 재구성 가능한지
 3. 기존 하이라이트 대비 우위
    - 더 최근/더 큰 영향/더 명확한 기술 키워드가 있는지
+   - **교체 vs 추가 판단**: `replace`(기존보다 우위) / `append`(비중복, 새 관점) / `skip`(기존이 더 강함)
+   - 프로젝트당 하이라이트 예산: 최대 4개. 초과 시 가장 약한 기존 항목과 교체 검토
 
 등급:
 
@@ -130,8 +133,26 @@ cd ~/.work-data && git pull
    - 최대 3라운드 반복
    - 3라운드 후에도 실패 시, 원문 근거 부족으로 표시하고 사용자 확인 요청
 
-4. 최종 승인안 제시
-   - KO/EN 쌍으로 보여주고 "반영 전 최종안"으로 합의
+4. 최종 승인안 제시 (아래 템플릿 사용)
+
+```markdown
+### 최종안 (Phase 4 PASS)
+
+**KO**: [한국어 문장]
+**EN**: [영어 문장]
+
+| 체크 | 결과 |
+|------|------|
+| 어순 | PASS |
+| 문체 | PASS |
+| AI 슬롭 | PASS |
+| 과장 | PASS |
+| HR 가독성 | PASS |
+| 부정 인식 | PASS |
+| ATS | PASS |
+
+**적용 계획**: [append/replace] → [대상 프로젝트명] highlights[N]
+```
 
 이 루프를 넣는 이유는, 내용의 정확성만으로는 채용 문서 품질이 완성되지 않기 때문이다.
 

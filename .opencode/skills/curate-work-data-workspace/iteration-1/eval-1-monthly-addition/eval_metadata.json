@@ -1,0 +1,7 @@
+{
+  "eval_id": 1,
+  "eval_name": "monthly-new-items-full-pipeline-dry-run",
+  "prompt": "이번 달 새로 한 작업들 이력서에 추가해줘",
+  "expected": "Phase 1-5 중 DRY RUN 범위(Phase 1-4) 실행 및 KO/EN 초안+피드백 루프 결과 제시",
+  "assertions": []
+}

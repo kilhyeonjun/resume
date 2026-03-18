@@ -25,6 +25,7 @@ description: |
 | ATS PDF | "ATS 확인", "ATS 리뷰" | [guide-ats-pdf.md](references/guide-ats-pdf.md) | data, hr, writing-ko, writing-en, structure, hr-deep, position-fit, ai-detection |
 | 경력 상세 | "{회사명} 리뷰", "경력 상세 리뷰" | [guide-experience-detail.md](references/guide-experience-detail.md) | data, hr, technical, writing-ko, writing-en, structure, hr-deep, ai-detection |
 | 포트폴리오 | "포트폴리오 리뷰" | [guide-portfolio.md](references/guide-portfolio.md) | data, technical, writing-ko, writing-en, structure, code-quality, ui-ux |
+| 편집 피드백 루프 | "문장 검토", "표현 검토" | [checklist-editing-feedback.md](references/checklist-editing-feedback.md) | editing-feedback |
 
 ### 체크리스트 목록
 
@@ -51,6 +52,7 @@ description: |
 - "PDF", "Print" 언급 → **HR Print PDF 리뷰**
 - "ATS" 언급 → **ATS PDF 리뷰**
 - "포트폴리오" 언급 → **포트폴리오 리뷰**
+- "문장 검토", "표현 검토", "피드백 루프" → **편집 피드백 루프**
 - 일반 "이력서 리뷰" → **웹 이력서 전체 리뷰**
 - 모호한 경우 유저에게 확인
 

@@ -16,7 +16,7 @@
         "items": [
           "Established a multi-agent development environment, orchestrating Claude Code, Codex, and Gemini for distinct roles in production software delivery (since late 2024)",
           "Established an AI-generated code reliability framework with TDD, reinforcing test-driven development culture across the team",
-          "Developed context engineering practices to structure problems, set guardrails, and verify agent outputs; presented the approach at Games on AWS 2025"
+          "Applied context engineering and harness engineering practices — structuring problems, designing architectural guardrails, and building feedback loops for reliable agent output; presented the approach at Games on AWS 2025"
         ]
       },
       {

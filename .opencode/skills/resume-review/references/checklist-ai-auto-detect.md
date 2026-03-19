@@ -34,7 +34,8 @@ const fs = require('fs');
 const ko = JSON.stringify(JSON.parse(fs.readFileSync('src/content/resume/ko.json','utf8')));
 const en = JSON.stringify(JSON.parse(fs.readFileSync('src/content/resume/en.json','utf8')));
 const koSlop = ['혁신적','획기적','를 통해','함으로써','뿐만 아니라','나아가','더불어','최첨단','선도적'];
-const enSlop = ['leveraging','comprehensive','robust','streamline','cutting-edge','utilize','foster','delve','seamless','groundbreaking','transformative','synergy','innovative','dynamic','proactive'];
+const enSlop = ['leveraging','comprehensive','robust','streamline','cutting-edge','utilize','foster','delve','seamless','groundbreaking','transformative','synergy','innovative','proactive'];
+// 'dynamic'은 제외 — 'dynamic game data' 같은 기술 맥락에서 정상 사용. 'dynamic team player' 같은 버즈워드와 구분 필요.
 const found = [];
 koSlop.forEach(w => { if (ko.includes(w)) found.push('KO: ' + w); });
 enSlop.forEach(w => { if (en.toLowerCase().includes(w)) found.push('EN: ' + w); });

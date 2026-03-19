@@ -35,17 +35,17 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     }
 
     html {
-      font-size: 11pt;
+      font-size: 8.5pt;
     }
 
     body {
       font-family: Arial, Helvetica, sans-serif;
       color: #000;
       background: #fff;
-      line-height: 1.6;
+      line-height: 1.25;
       max-width: 210mm;
       margin: 0 auto;
-      padding: 15mm;
+      padding: 8mm;
     }
 
     header {
@@ -55,20 +55,20 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     }
 
     h1 {
-      font-size: 24pt;
+      font-size: 18pt;
       font-weight: bold;
       margin-bottom: 4px;
     }
 
     .title {
-      font-size: 14pt;
+      font-size: 11pt;
       font-weight: normal;
       color: #333;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
 
     .contact {
-      font-size: 11pt;
+      font-size: 9pt;
     }
 
     .contact-item {
@@ -76,31 +76,31 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     }
 
     section {
-      margin-bottom: 14px;
+      margin-bottom: 8px;
     }
 
     h2 {
-      font-size: 14pt;
+      font-size: 11pt;
       font-weight: bold;
       text-transform: uppercase;
       border-bottom: 1px solid #000;
       padding-bottom: 4px;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
 
     h3 {
-      font-size: 12pt;
+      font-size: 10pt;
       font-weight: bold;
       margin-bottom: 2px;
     }
 
     p {
-      font-size: 11pt;
+      font-size: 9pt;
       margin-bottom: 4px;
     }
 
     .item {
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       page-break-inside: avoid;
       break-inside: avoid;
     }
@@ -129,12 +129,12 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     }
 
     li {
-      font-size: 11pt;
+      font-size: 9pt;
       margin-bottom: 4px;
     }
 
     .skills-list {
-      font-size: 11pt;
+      font-size: 9pt;
     }
 
     .skill-category {
@@ -144,6 +144,16 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     a {
       color: #000;
       text-decoration: none;
+    }
+
+    body[data-lang='en'] {
+      font-size: 8pt;
+      line-height: 1.2;
+      padding: 7mm;
+    }
+    body[data-lang='en'] li {
+      font-size: 8pt;
+      margin-bottom: 2px;
     }
 
     @media print {
@@ -175,7 +185,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     }
   </style>
 </head>
-<body>
+<body data-lang={lang}>
   <a href={basePath} class="back-link no-print">&larr; {labels.backToResume}</a>
 
   <header>

@@ -134,15 +134,12 @@
             "featured": true,
             "description": "마케팅 전용 DB 분리 기반 위에 Google Ads/Meta/TikTok 캠페인·소재·지표를 단일 시스템에서 관리하는 통합 마케팅 플랫폼",
             "details": [
-              "통합 캠페인 자동화: Google Ads/Meta/TikTok 캠페인 생성·배포·수정을 단일 플랫폼에서 관리하는 API 구축",
-              "소재 자동 배포 파이프라인: 소재 업로드부터 Google/Meta/TikTok 플랫폼 자동 등록까지 통합 파이프라인 구축",
-              "NAS-S3 이중화 동기화: SQS 이벤트 기반 서버-워커 분리 아키텍처로 사내 NAS와 S3 간 양방향 동기화/복원 구현",
-              "파일 교체 NAS 자동 동기화: NAS sync outbox 이벤트 자동 발행, asset_nas_sync 상태 추적(PENDING/PROCESSING/COMPLETED/FAILED), 버전 누적 경로 정책 적용으로 동기화 신뢰도 개선",
+              "통합 캠페인 자동화: Google Ads/Meta/TikTok 캠페인 생성·배포·수정과 리텐션 지표 관리를 단일 플랫폼에서 처리하는 API 구축",
+              "NAS-S3 이중화 동기화: SQS 이벤트 기반 서버-워커 분리 아키텍처와 NAS sync outbox 이벤트 자동 발행, asset_nas_sync 상태 추적(PENDING/PROCESSING/COMPLETED/FAILED), 버전 누적 경로 정책 적용으로 사내 NAS-S3 양방향 동기화·복원 신뢰도 확보",
               "Meta 에셋 동기화 성능 최적화: ORM 단건 저장을 벌크 연산으로 전환하여 Image 동기화 시간 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)",
               "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감",
               "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 BigQuery 비용 82% 절감 (TB당 $6.25→$1.1)",
-              "DB 최적화: 쓰기 경로 복잡도 증가를 감수하더라도 조회 지연 해소가 더 중요하다고 판단하여 100+ 컬럼 테이블을 메인/시계열/예측 3개로 정규화, 인덱스 최적화와 커서 기반 페이지네이션으로 18초→0.5초 개선",
-              "리텐션 지표 통합: BigQuery 수집부터 엔티티·API·필드 메타데이터까지 전 구간에 retention 지표를 일관 반영하여 유저 잔존율 분석 지원"
+              "DB 최적화: 쓰기 경로 복잡도 증가를 감수하더라도 조회 지연 해소가 더 중요하다고 판단하여 100+ 컬럼 테이블을 메인/시계열/예측 3개로 정규화, 인덱스 최적화와 커서 기반 페이지네이션으로 18초→0.5초 개선"
             ],
             "techStack": [
               "AWS Lambda",
@@ -213,9 +210,8 @@
             "description": "NestJS 유틸 10개 모듈 + 게임서버 Kit 2개 패키지 개발·운영으로 다중 프로젝트 코드 일관성 확보",
             "details": [
               "10개 모듈 라이브러리 체계: core, repository, cache, lock, slack, crypto, smb, hash, type, iac 모듈로 확장",
-              "Repository 모듈: Bulk 연산, Audit Log, TypeORM 타입 좁히기 지원. 2000줄+ 코드를 SRP 기준 파일 분리 리팩토링",
+              "Repository 모듈: Bulk 연산, Audit Log, TypeORM 타입 좁히기를 함수 오버로딩·TypeScript 제네릭으로 지원하고 2000줄+ 코드를 SRP 기준 파일 분리 리팩토링",
               "분산 락(Lock) 모듈: ElastiCache (Redis) 기반 분산 락 데코레이터로 멀티 인스턴스 환경의 동시성 제어",
-              "TypeScript 제네릭 기반 타입 안전성: TypeORM 타입 한계를 함수 오버로딩과 제네릭으로 극복",
               "glider-sheet 업그레이드 자동화: GitHub Packages 기반 배포 파이프라인 위에 GitHub Actions workflow_dispatch와 matrix 병렬 실행, 변경 패키지만 테스트하는 CI 최적화로 7개 프로젝트 처리 시간을 약 3시간에서 약 15분으로 단축",
               "게임서버 Kit 패키지 분리: 게임서버 모놀리식에서 Sheet 모듈 + 5개 서브모듈을 @gameduo/glider-sheet 패키지로 추출하여 다중 게임 프로젝트 재사용 및 5개 브랜치 형상 차이 분석·충돌 해결",
               "테스트 인프라 성능 최적화: ts-jest isolatedModules 전환과 Entity 컬럼 타입 명시로 CI 평균 시간을 15분47초에서 6분6초로 61% 단축, 81 suites 978 tests 전체 통과"
@@ -530,12 +526,9 @@
             "description": "의사·약사용 백오피스 시스템의 실시간 상태 반영 부재와 수동 알림 체계 문제를 Socket.io 및 Web Push 도입으로 해결",
             "details": [
               "의사ID+시간대 복합 유니크 키로 중복 예약 원천 차단",
-              "기존 진료 요청→의사 승인 구조에서 의사별 진료 가능 시간대 관리 및 예약 기능을 추가하여 예약 체계 고도화",
               "Socket.IO Room 기반 실시간 상태 동기화로 진료·조제·배달 이벤트를 관련 사용자에게 즉시 반영",
               "상태 반영 지연을 수십 초에서 즉시로 개선하여 환자 대기 불만 해소",
               "VAPID + Service Worker 기반 백그라운드 알림으로 브라우저 비활성 시에도 진료 예약·조제 요청 즉시 알림",
-              "카카오 간편 로그인 및 본인인증 연동",
-              "관리자 대시보드 고도화로 운영 현황 모니터링 효율화",
               "배달(후다닥) 및 결제 외부 서비스 통합 API 게이트웨이 구축, Circuit Breaker 패턴으로 장애 전파 차단",
               "Discord 웹훅 기반 실시간 에러 모니터링 시스템 구축"
             ],

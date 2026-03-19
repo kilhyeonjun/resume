@@ -134,15 +134,12 @@
             "featured": true,
             "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system, built on dedicated marketing DB separation",
             "details": [
-              "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, and modification in a single platform",
-              "Creative Auto-deployment Pipeline: Integrated pipeline from creative upload to automatic registration on Google/Meta/TikTok platforms",
-              "NAS-S3 Dual Sync: Built an SQS event-based server-worker separation architecture for bidirectional sync and restore between internal NAS and S3",
-              "Automated NAS Sync on File Replacement: Triggered NAS sync outbox events automatically, tracked asset_nas_sync states (PENDING/PROCESSING/COMPLETED/FAILED), and applied a version-accumulating path policy to improve synchronization reliability",
+              "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, modification, and retention metrics in a single platform",
+              "NAS-S3 Dual Sync: Built an SQS event-based server-worker separation architecture with automatic NAS sync outbox event publication, asset_nas_sync state tracking (PENDING/PROCESSING/COMPLETED/FAILED), and a version-accumulating path policy to secure reliable bidirectional sync and restore between internal NAS and S3",
               "Meta Asset Sync Performance Optimization: Converted ORM single-row saves to bulk operations, reducing Image sync time by 72% (25.7s→7.1s) and DB transactions by 95% (10~16s→0.3~0.5s)",
               "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%",
               "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25→$1.1 per TB)",
-              "DB Optimization: Prioritized read-latency reduction over additional write-path complexity, normalizing a 100+ column table into main/time-series/prediction partitions; combined index tuning and cursor pagination improved query performance from 18s to 0.5s",
-              "Retention Metrics Integration: Consistently applied retention metrics across the full pipeline from BigQuery ingestion to entity, API, and field metadata for user retention analysis"
+              "DB Optimization: Prioritized read-latency reduction over additional write-path complexity, normalizing a 100+ column table into main/time-series/prediction partitions; combined index tuning and cursor pagination improved query performance from 18s to 0.5s"
             ],
             "techStack": [
               "AWS Lambda",
@@ -213,9 +210,8 @@
             "description": "Development and operation of NestJS utility (10 modules) + Game Server Kit (2 packages) for multi-project code consistency",
             "details": [
               "10-module Library System: Expanded to core, repository, cache, lock, slack, crypto, smb, hash, type, and iac modules",
-              "Repository Module: Bulk operations, Audit Log, TypeORM type narrowing support; refactored 2000+ line codebase into SRP-based file separation",
+              "Repository Module: Added Bulk operations, Audit Log, and TypeORM type narrowing with function overloading and TypeScript generics, then refactored a 2000+ line codebase into SRP-based file separation",
               "Distributed Lock Module: ElastiCache (Redis)-based distributed lock decorator for concurrency control in multi-instance environments",
-              "TypeScript Generic-based Type Safety: Overcame TypeORM type limitations through function overloading and generics",
               "Automated glider-sheet Upgrades: Built on a GitHub Packages distribution pipeline with CI optimization for changed packages only, then added GitHub Actions workflow_dispatch and matrix parallel jobs to reduce seven-project processing time from about three hours to about fifteen minutes",
               "Game Server Kit Package Extraction: Extracted the Sheet module and five submodules from the game server monolith into the @gameduo/glider-sheet package for multi-game reuse, and resolved conflicts through five-branch divergence analysis",
               "CI Test Runtime Optimization: Switched ts-jest to isolatedModules and added explicit Entity column types, cutting average CI time from 15m47s to 6m06s (61%) while passing all 81 suites and 978 tests"
@@ -530,12 +526,9 @@
             "description": "Resolved lack of real-time status updates and manual notification workflows in doctor/pharmacist back-office systems by introducing Socket.io and Web Push",
             "details": [
               "Doctor ID + time slot composite unique key preventing duplicate appointments",
-              "Extended existing consultation request→doctor approval flow by adding per-doctor availability management and appointment booking to enhance the scheduling system",
               "Socket.IO Room-based real-time status sync reflecting consultation/dispensing/delivery events to relevant users instantly",
               "Reduced status reflection delay from tens of seconds to instant, eliminating patient wait complaints",
               "VAPID + Service Worker-based background notifications for instant appointment and dispensing alerts even when browser is inactive",
-              "Integrated Kakao simple login and identity verification",
-              "Enhanced admin dashboard for operational monitoring",
               "Built internal API gateway integrating delivery (Hoodadak) and payment external services with Circuit Breaker pattern for fault isolation",
               "Implemented real-time error monitoring system via Discord webhooks"
             ],

@@ -25,6 +25,7 @@ description: |
 | ATS PDF | "ATS 확인", "ATS 리뷰" | [guide-ats-pdf.md](references/guide-ats-pdf.md) | data, hr, writing-ko, writing-en, structure, hr-deep, position-fit, ai-detection |
 | 경력 상세 | "{회사명} 리뷰", "경력 상세 리뷰" | [guide-experience-detail.md](references/guide-experience-detail.md) | data, hr, technical, writing-ko, writing-en, structure, hr-deep, ai-detection |
 | 포트폴리오 | "포트폴리오 리뷰" | [guide-portfolio.md](references/guide-portfolio.md) | data, technical, writing-ko, writing-en, structure, code-quality, ui-ux |
+| 밀도 검증 | "밀도 검토", "details 많지 않나" | [checklist-density.md](references/checklist-density.md) | density |
 | 편집 피드백 루프 | "문장 검토", "표현 검토" | [checklist-editing-feedback.md](references/checklist-editing-feedback.md) | editing-feedback |
 
 ### 체크리스트 목록
@@ -42,6 +43,7 @@ description: |
 | HR 심층 분석 | [checklist-hr-deep.md](references/checklist-hr-deep.md) | Summary 임팩트, 7.4초 스캔, STAR 정량화, 경력 스토리라인, 성장 궤적, 차별화 |
 | 포지션 적합성 | [checklist-position-fit.md](references/checklist-position-fit.md) | 경력 커버리지, 도메인 균형, 하이라이트 다양성, 깊이 vs 넓이, 맞춤 PDF 용이성 |
 | AI 탐지 | [checklist-ai-detection.md](references/checklist-ai-detection.md) | AI 슬롭 패턴, 과장 표현, AI 특유 어휘, 한국어 AI 패턴, 사람 vs AI 문체 판별 |
+| 밀도 검증 | [checklist-density.md](references/checklist-density.md) | 표면별 밀도 기준, details 수, 총 bullet 수, detail 길이, HR PDF 페이지 수, ATS 단일 컬럼 |
 
 ## 워크플로우
 
@@ -52,6 +54,7 @@ description: |
 - "PDF", "Print" 언급 → **HR Print PDF 리뷰**
 - "ATS" 언급 → **ATS PDF 리뷰**
 - "포트폴리오" 언급 → **포트폴리오 리뷰**
+- "밀도 검토", "details 많지 않나" 언급 → **밀도 검증**
 - "문장 검토", "표현 검토", "피드백 루프" → **편집 피드백 루프**
 - 일반 "이력서 리뷰" → **웹 이력서 전체 리뷰**
 - 모호한 경우 유저에게 확인
@@ -90,6 +93,7 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 9. **HR 심층**: Summary 임팩트, 7.4초 스캔 시뮬레이션, STAR 정량화, 경력 스토리라인, 성장 궤적, 차별화
 10. **포지션 적합성**: 경력 커버리지, 도메인 균형, 하이라이트 다양성, 기술 깊이 vs 넓이, 맞춤 PDF 용이성
 11. **AI 탐지**: AI 슬롭 패턴, 과장/홍보 표현, AI 특유 어휘, 한국어 AI 패턴, 사람 vs AI 문체 판별
+12. **밀도 검증**: 표면별 밀도 목표(웹/HR PDF/ATS/경력상세/포트폴리오), details 상한, 총 bullet, 문장 길이, HR PDF 페이지 수, ATS 단일 컬럼 확인
 
 ### Step 5: 결과 작성
 

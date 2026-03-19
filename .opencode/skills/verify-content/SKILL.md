@@ -123,6 +123,34 @@ content.config.ts의 `labelsSchema`에 정의된 모든 키가 ko.json과 en.jso
 
 **수정 방법:** 누락된 키를 추가합니다.
 
+### Step 7: 밀도 검증
+
+**도구:** Bash (node script)
+
+프로젝트당 details 수와 총 bullet 수가 적정 범위 내인지 자동 검증:
+
+```bash
+node -e "
+const ko = JSON.parse(require('fs').readFileSync('src/content/resume/ko.json','utf8')).main;
+const warns = [];
+let totalBullets = 0;
+ko.experience.forEach(e => {
+  totalBullets += e.highlights.length;
+  e.projects.forEach(p => {
+    totalBullets += p.details.length;
+    if (p.details.length > 6) warns.push('WARN: ' + p.name + ' details ' + p.details.length + '개 (>6)');
+    p.details.forEach((d,i) => { if (d.length > 100) warns.push('WARN: ' + p.name + ' details[' + i + '] ' + d.length + '자 (>100)'); });
+  });
+});
+if (totalBullets > 80) warns.push('WARN: 총 bullet ' + totalBullets + '개 (>80)');
+if (warns.length === 0) console.log('PASS: 밀도 적정');
+else warns.forEach(w => console.log(w));
+"
+```
+
+**PASS:** 경고 0건
+**WARN:** 1건 이상 초과 (즉시 수정 필요는 아니나 검토 권장)
+
 ## Output Format
 
 ```markdown
@@ -134,6 +162,7 @@ content.config.ts의 `labelsSchema`에 정의된 모든 키가 ko.json과 en.jso
 | 4 | URL 프로토콜 | PASS/FAIL | 위반 URL |
 | 5 | slug 고유성 | PASS/FAIL | 중복 slug |
 | 6 | labels 완전성 | PASS/FAIL | 누락 키 |
+| 7 | 밀도 검증 | PASS/WARN | 초과 항목 상세 |
 ```
 
 ## Exceptions

@@ -36,7 +36,7 @@ description: |
 | `src/content/resume/ko.json` | 현재 한국어 이력서 기준본 |
 | `src/content/resume/en.json` | 영어 이력서 동기화 대상 |
 
-## 6-Phase Workflow
+## 6-Phase Workflow (+ Density Gate)
 
 ### Phase 1: Diff
 
@@ -100,6 +100,27 @@ cd ~/.work-data && git pull
 | mkt-0113 | 선택적 | 기존 NAS와 부분 중복 | `replace` highlights[2] | 마케팅 통합 플랫폼 |
 
 적용 전략은 Phase 4 최종안 템플릿의 `적용 계획`에 그대로 이어진다. Phase 2에서 결정하지 않으면 Phase 4에서 누락된다.
+
+### Phase 2.5: Density Check
+
+큐레이션 항목을 추가하기 전에 현재 이력서의 밀도가 적정 범위 내인지 확인한다.
+초과 상태에서 항목을 추가하면 가독성이 떨어지고 HR PDF가 2페이지를 넘길 수 있다.
+
+1. 현재 밀도 측정
+   - 프로젝트당 details 수 확인
+   - 총 bullet 수 확인 (highlights + details)
+
+2. 기준 초과 여부 판정
+   - 프로젝트당 details 6개 초과 → WARN
+   - 총 bullet 80개 초과 → WARN
+   - detail 1개 길이 100자 초과 → WARN
+
+3. 초과 시 대응
+   - 가장 약한 기존 항목을 삭제 후보로 제시 (정량 성과 없는 것, 오래된 것 우선)
+   - 삭제 후보 목록을 사용자에게 보여주고 승인 받은 후 삭제
+   - 삭제 후 신규 항목 추가
+
+이 단계를 건너뛰면 details가 무한히 늘어나서 이력서 밀도가 관리되지 않는다.
 
 ### Phase 3: Draft
 

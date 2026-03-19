@@ -160,10 +160,10 @@
           "Next.js 모바일웹 + Recharts 통계 대시보드"
         ],
         "en": [
-          "Clean Architecture + TSyringe DI layer separation",
-          "Cheerio crawling + node-cron auto-sync (hourly)",
-          "KakaoTalk chatbot skill server (route/vehicle)",
-          "Traefik Blue-Green zero-downtime deploy + auto",
+          "Clean Architecture + TSyringe DI layer separation design",
+          "Cheerio crawling + node-cron hourly auto-sync (Mon-Sat)",
+          "KakaoTalk chatbot skill server (route/vehicle/destination search)",
+          "Traefik Blue-Green zero-downtime deploy + automated deploy scripts",
           "Next.js mobile web + Recharts statistics dashboard"
         ]
       },
@@ -242,11 +242,11 @@
           "Docker 컨테이너 배포 (Playwright 브라우저 포함)"
         ],
         "en": [
-          "Playwright headless Chrome Kakao Channel crawl",
-          "Slack Bot Socket Mode + /식단 slash command",
-          "6 retries (1h interval) + DeliveryHistory dedup",
-          "Clean Architecture + TSyringe DI + Result<T,E>",
-          "Docker container deploy (with Playwright browser)"
+          "Playwright headless Chrome crawling for Kakao Channel menus",
+          "Slack Bot Socket Mode + /식단 slash command implementation",
+          "Up to 6 retries (1h interval) + DeliveryHistory duplicate prevention",
+          "Clean Architecture + TSyringe DI + Result<T, E> error handling",
+          "Docker container deployment (bundled Playwright browser)"
         ]
       },
       "lessons": {
@@ -272,8 +272,8 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "항해플러스 백엔드 과정에서 동시성 제어와 대규모 트래픽 처리를 심층 학습한 콘서트 좌석 예약 서비스",
-        "en": "Concert seat reservation service built during Hanghae Plus Backend course, focusing on concurrency control and high-traffic handling"
+        "ko": "1만 동시 요청 환경에서 좌석 선점·결제·포인트 충전의 동시성 문제를 시나리오별 하이브리드 락 전략으로 해결한 콘서트 좌석 예약 서비스 — 낙관적 락 + Redisson 분산 락, Redis 캐싱 TPS 15배 향상, Kafka 이벤트 드리븐 아키텍처, K6 부하 테스트 기반 병목 개선",
+        "en": "Concert seat reservation service resolving concurrency across seat locking, payments, and point charging under 10K concurrent requests \u2014 hybrid locking strategy (optimistic + Redisson distributed lock), 15x TPS improvement via Redis caching, Kafka event-driven architecture, K6 load test-driven optimization"
       },
       "description": {
         "ko": "대규모 트래픽 환경에서의 동시성 문제를 다양한 락 전략(비관적 락, 낙관적 락, Redis 분산 락)으로 해결하고, 시나리오별 최적의 동시성 제어 방식을 선정한 프로젝트이다. 좌석 선점에는 낙관적 락, 포인트 충전과 결제에는 Redisson 기반 분산 락을 적용하는 하이브리드 전략을 설계했으며, Redis 캐싱과 DB 인덱싱으로 조회 성능을 최적화하고 Kafka를 활용한 이벤트 기반 아키텍처로 시스템 간 결합도를 낮췄다. K6 부하 테스트를 통해 성능 병목을 식별하고 개선하는 전 과정을 경험했다.",
@@ -281,6 +281,24 @@
       },
       "coverImage": "/images/portfolio/concert-reservation-cover.webp",
       "contentImages": [],
+      "features": {
+        "ko": [
+          "좌석 예약 — 낙관적 락 기반 좌석 선점, 임시 배정 후 5분 내 결제 미완료 시 자동 해제",
+          "포인트 충전·결제 — Redisson 분산 락으로 동시 충전/결제 시 잔액 정합성 보장",
+          "대기열 시스템 — Redis Sorted Set 기반 대기열로 입장 순서 관리, 폴링 기반 순번 조회",
+          "Redis 캐싱 — 콘서트·좌석 조회에 캐시 적용, TPS 100→1,500 (15배 향상), DB 쿼리 94% 감소",
+          "Kafka 이벤트 드리븐 — 예약 완료 이벤트를 Kafka로 발행하여 결제·알림 도메인 간 결합도 제거",
+          "K6 부하 테스트 — 1만 동시 요청 시나리오별 성능 측정, 병목 식별 및 락 전략 비교 검증"
+        ],
+        "en": [
+          "Seat reservation — optimistic lock-based seat preemption, auto-release after 5-min payment timeout",
+          "Point charging & payment — Redisson distributed lock ensuring balance consistency under concurrent operations",
+          "Queue system — Redis Sorted Set-based waiting queue with polling-based position lookup",
+          "Redis caching — cache layer on concert/seat queries, TPS 100→1,500 (15x), 94% DB query reduction",
+          "Kafka event-driven — reservation completion events published via Kafka, eliminating payment/notification domain coupling",
+          "K6 load testing — per-scenario performance measurement under 10K concurrent requests, bottleneck identification and lock strategy comparison"
+        ]
+      },
       "period": {
         "start": "2024-10-05",
         "end": "2024-11-30"
@@ -466,8 +484,8 @@
         "en": "FE(2) BE(2) PM(1) Design(1) Marketing(2) / Responsible for BE"
       },
       "summary": {
-        "ko": "창업 생태계의 팀 빌딩·커뮤니티·정보 제공을 통합한 버티컬 네트워크 플랫폼 — 소셜 로그인 4종 통합, 커뮤니티 백엔드, 어드민 시스템 구축 담당",
-        "en": "Startup vertical network platform integrating team building, community, and information services — responsible for 4-provider social login, community backend, and admin system"
+        "ko": "8인 크로스펑셔널 팀에서 창업 버티컬 네트워크 플랫폼의 백엔드를 전담 — NestJS 기반 커뮤니티 핵심 API 설계·구현, OAuth 2.0 소셜 로그인 4종 통합, 어드민 백엔드 독립 구축, 2개월 스프린트 협업",
+        "en": "Backend developer in 8-member cross-functional team building a startup vertical network platform — designed and implemented core community APIs on NestJS, integrated 4 OAuth 2.0 social login providers, built independent admin backend across 2-month sprints"
       },
       "description": {
         "ko": "창업 희망자들이 팀 빌딩부터 아이템 검증까지 원스톱으로 진행할 수 있는 창업 버티컬 네트워크 플랫폼의 백엔드를 담당했다. NestJS 기반으로 커뮤니티 서비스의 핵심 API(게시물·댓글·좋아요·북마크·팔로우)를 설계·구현하고, 구글·네이버·카카오·페이스북 4종 소셜 로그인을 통합하여 사용자 온보딩 흐름을 구축했다. 외부 URL의 OpenGraph 메타데이터를 스크래핑하여 링크 프리뷰를 제공하는 기능과 파일 업로드 API를 개발했으며, 콘텐츠 관리를 위한 어드민 백엔드를 별도로 구축했다. 8인 팀에서 프론트엔드 개발자와 API 스펙을 협의하며 2개월간 스프린트 기반으로 개발을 진행했다.",
@@ -522,11 +540,11 @@
           "8인 크로스펀셔널 팀에서 FE와 API 스펙 협의 및 스프린트 협업"
         ],
         "en": [
-          "Integrated 4 social login providers with unified OAuth 2.0 auth flow",
-          "Solely implemented core community APIs (posts, comments, likes, follows)",
-          "OpenGraph scraping-based link preview with metadata parsing and caching",
+          "Integrated 4 social login providers (Google, Naver, Kakao, Facebook) with unified OAuth 2.0 flow",
+          "Solely implemented core community APIs (posts, comments, likes, bookmarks, follows)",
+          "Developed OpenGraph scraping-based link preview with metadata parsing",
           "Built independent admin backend for content and user management",
-          "API spec collaboration with FE in 8-member cross-functional sprint team"
+          "Collaborated on API spec design with FE in 8-member cross-functional sprint team"
         ]
       },
       "lessons": {
@@ -708,11 +726,11 @@
           "Passport + bcrypt + express-session 세션 인증 및 CORS 처리"
         ],
         "en": [
-          "Next.js SSR + next-redux-wrapper auth rendering",
-          "Redux-Saga async state management + Immer",
-          "Sequelize 5-model design (self-ref BelongsToMany)",
-          "Lambda + sharp image resize (S3, 400×400)",
-          "Passport + bcrypt + express-session auth + CORS"
+          "Next.js SSR + next-redux-wrapper for auth-aware initial page rendering",
+          "Redux-Saga generator-based async state management + Immer immutable updates",
+          "Sequelize 5-model relational design (self-referencing BelongsToMany, retweet)",
+          "AWS Lambda + sharp serverless image resizing (S3 trigger, 400×400 thumbnails)",
+          "Passport + bcrypt + express-session authentication with CORS handling"
         ]
       },
       "lessons": {

@@ -2,12 +2,9 @@
 name: curate-work-data
 description: |
   월간 work-data(~/.work-data/)를 선별/평가해 이력서 콘텐츠(src/content/resume/ko.json, en.json)에 반영하는 큐레이션 스킬.
-  사용자가 "work-data 반영", "최근/이번 달/지난달 성과 이력서 업데이트", "이력서에 추가", "work-data 동기화",
-  "update resume from work-data", "sync work items into resume highlights"처럼 work-data 기반 반영을 요청하면 반드시 사용한다.
-  work item ID(misc-0183, billing-0042, kit-0045 같은 [domain]-[4digits])를 언급하면 매우 강한 트리거로 즉시 사용한다.
-  단, 이력서 전체 리뷰/문장 검토/포지셔닝 변경은 resume-review,
-  ko/en 구조 동기화·스키마 검증은 verify-content,
-  일반 이력서 사이트 수정(PDF 생성, 다크모드 버그, 컴포넌트 규칙, 빌드 에러 디버깅, 디자인 개선)은 이 스킬이 아니라 다른 작업 경로를 사용한다.
+  "work-data 반영", "최근/이번 달 성과 이력서 업데이트", "이력서에 추가", "work-data 동기화", "update resume from work-data" 요청이 나오면 즉시 사용한다.
+  [domain]-[4digits] 형식 work item ID(misc-0183, billing-0042, kit-0045 등)를 언급하면 최우선 트리거로 바로 실행한다.
+  이 스킬은 큐레이션/문장 반영 전용이며, 전체 리뷰는 resume-review, 구조/스키마 검증은 verify-content, 일반 사이트 수정은 별도 작업 경로를 사용한다.
 ---
 
 # curate-work-data

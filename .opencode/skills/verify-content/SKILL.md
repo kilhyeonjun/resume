@@ -1,6 +1,9 @@
 ---
 name: verify-content
-description: 이력서 콘텐츠 데이터(ko.json, en.json)와 Zod 스키마(content.config.ts)의 정합성을 검증합니다. 콘텐츠 수정 후, 스키마 변경 후, PR 전 사용.
+description: |
+  이력서 콘텐츠 데이터(ko.json, en.json)와 Zod 스키마(content.config.ts)의 정합성을 검증하는 스킬.
+  "JSON 검증", "스키마 확인", "ko/en 동기화", "콘텐츠 정합성 체크", "labels 누락 확인" 요청이 나오면 우선 실행한다.
+  콘텐츠 수정 후, 스키마 변경 후, PR 전 검증, 날짜/URL/slug/밀도 점검이 필요할 때 사용한다.
 ---
 
 # 콘텐츠 데이터 검증

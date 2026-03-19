@@ -7,6 +7,7 @@ description: |
   코드 품질, UI/UX, HR 심층, 포지션 적합성, AI 탐지)와
   5개 가이드(웹, Print PDF, ATS PDF, 경력 상세, 포트폴리오)를 조합하여 리뷰한다.
   트리거: "이력서 리뷰", "resume review", "리뷰해줘", "검토해줘",
+  "문장 검토", "표현 검토", "밀도 검토", "피드백 루프",
   "데이터 정확성 확인", "HR 관점 리뷰", "ATS 최적화 확인",
   "경력 상세 리뷰", "포트폴리오 리뷰", "ko/en 동기화 확인",
   "{회사명} 리뷰", "PDF 리뷰", "Print 리뷰"
@@ -44,6 +45,31 @@ description: |
 | 포지션 적합성 | [checklist-position-fit.md](references/checklist-position-fit.md) | 경력 커버리지, 도메인 균형, 하이라이트 다양성, 깊이 vs 넓이, 맞춤 PDF 용이성 |
 | AI 탐지 | [checklist-ai-detection.md](references/checklist-ai-detection.md) | AI 슬롭 패턴, 과장 표현, AI 특유 어휘, 한국어 AI 패턴, 사람 vs AI 문체 판별 |
 | 밀도 검증 | [checklist-density.md](references/checklist-density.md) | 표면별 밀도 기준, details 수, 총 bullet 수, detail 길이, HR PDF 페이지 수, ATS 단일 컬럼 |
+
+## Related Files
+
+아래 `references/` 파일은 리뷰 시 직접 로드하는 기준 문서다(파일 존재 확인 완료).
+
+| 파일 | 용도 |
+|------|------|
+| `references/guide-web-review.md` | 웹 이력서 전체 리뷰 가이드 |
+| `references/guide-print-pdf.md` | HR Print PDF 리뷰 가이드 |
+| `references/guide-ats-pdf.md` | ATS PDF 리뷰 가이드 |
+| `references/guide-experience-detail.md` | 경력 상세 리뷰 가이드 |
+| `references/guide-portfolio.md` | 포트폴리오 리뷰 가이드 |
+| `references/checklist-data-accuracy.md` | 데이터 정확성 체크리스트 |
+| `references/checklist-hr-perspective.md` | HR/채용 관점 체크리스트 |
+| `references/checklist-technical.md` | 기술적 정확성 체크리스트 |
+| `references/checklist-writing-ko.md` | 한국어 문장 체크리스트 |
+| `references/checklist-writing-en.md` | 영문 번역 체크리스트 |
+| `references/checklist-structure.md` | 구조/레이아웃 체크리스트 |
+| `references/checklist-code-quality.md` | 코드 품질 체크리스트 |
+| `references/checklist-ui-ux.md` | UI/UX 체크리스트 |
+| `references/checklist-hr-deep.md` | HR 심층 분석 체크리스트 |
+| `references/checklist-position-fit.md` | 포지션 적합성 체크리스트 |
+| `references/checklist-ai-detection.md` | AI 탐지 체크리스트 |
+| `references/checklist-density.md` | 밀도 검증 체크리스트 |
+| `references/checklist-editing-feedback.md` | 편집 피드백 루프 체크리스트 |
 
 ## 워크플로우
 

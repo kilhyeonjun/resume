@@ -1,6 +1,9 @@
 ---
 name: verify-astro-components
-description: Astro 컴포넌트와 페이지의 코드 규칙 준수를 검증합니다. 컴포넌트 수정 후, 새 페이지 추가 후, 템플릿 변경 후 사용.
+description: |
+  Astro 컴포넌트와 페이지의 코드 규칙 준수를 검증하는 스킬.
+  "컴포넌트 규칙", "페이지 검증", "Astro 구조 점검", "접근성 확인", "ko/en 페이지 미러링 확인" 요청이 나오면 우선 실행한다.
+  컴포넌트 수정 후, 새 페이지 추가 후, 템플릿 변경 후, PR 전 빌드/규칙 점검이 필요할 때 사용한다.
 ---
 
 # Astro 컴포넌트 규칙 검증
@@ -48,7 +51,9 @@ description: Astro 컴포넌트와 페이지의 코드 규칙 준수를 검증�
 | `src/components/resume/ResumeHeader.astro` | 헤더 컴포넌트 |
 | `src/components/resume/ResumeExperience.astro` | 경력 섹션 컴포넌트 |
 | `src/styles/global.css` | 전역 스타일 (테마, 프린트) |
-| `src/utils/paths.ts` | 경로 유틸리티 (BASE_URL 기반) |
+| `src/utils/paths.ts` | 경로 유틸리티 (BASE_URL 규칙 확인 시 참조 전용, 직접 검증 대상 아님) |
+
+참고: `src/utils/*.ts` 유틸 파일은 이 스킬의 직접 검증 대상이 아니라, 페이지/레이아웃 링크 규칙 확인 시 참고 정보로만 사용한다.
 
 ## Workflow
 

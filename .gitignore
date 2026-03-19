@@ -37,3 +37,4 @@ REVIEW.md
 !.opencode/skills/**
 .sisyphus/
 test-results/
+**/*-workspace/

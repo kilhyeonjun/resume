@@ -49,45 +49,87 @@
         "category": "AI Development",
         "description": "멀티 에이전트 오케스트레이션 기반 개발, 컨텍스트 엔지니어링, AI 생성 코드 품질 보장",
         "items": [
-          { "name": "Claude Code" },
-          { "name": "OpenCode (OMO)" },
-          { "name": "Codex" },
-          { "name": "Kiro" },
-          { "name": "Amazon Q Developer" },
-          { "name": "Cursor" },
-          { "name": "Context Engineering" }
+          {
+            "name": "Claude Code"
+          },
+          {
+            "name": "OpenCode (OMO)"
+          },
+          {
+            "name": "Codex"
+          },
+          {
+            "name": "Kiro"
+          },
+          {
+            "name": "Amazon Q Developer"
+          },
+          {
+            "name": "Cursor"
+          },
+          {
+            "name": "Context Engineering"
+          }
         ]
       },
       {
         "category": "Backend",
         "description": "레거시→NestJS 점진적 전환, 공통 패키지 체계 정립, TDD 80% 커버리지",
         "items": [
-          { "name": "TypeScript" },
-          { "name": "NestJS" },
-          { "name": "Express.js" },
-          { "name": "TypeORM" },
-          { "name": "Java" },
-          { "name": "Spring Boot" },
-          { "name": "Jest" }
+          {
+            "name": "TypeScript"
+          },
+          {
+            "name": "NestJS"
+          },
+          {
+            "name": "Express.js"
+          },
+          {
+            "name": "TypeORM"
+          },
+          {
+            "name": "Java"
+          },
+          {
+            "name": "Spring Boot"
+          },
+          {
+            "name": "Jest"
+          }
         ]
       },
       {
         "category": "Database",
         "description": "쿼리 최적화(18초→0.5초), Deadlock 근본 원인 분석·해결, 대규모 테이블 정규화, Redis 분산 락",
         "items": [
-          { "name": "MySQL" },
-          { "name": "BigQuery" },
-          { "name": "ElastiCache (Redis)" }
+          {
+            "name": "MySQL"
+          },
+          {
+            "name": "BigQuery"
+          },
+          {
+            "name": "ElastiCache (Redis)"
+          }
         ]
       },
       {
         "category": "Cloud & Infra",
         "description": "배치→서버리스 전환(시간당 병렬 처리 Job 수 기준 270배 확장), BigQuery 비용 82% 절감, CDK 기반 분석 인프라 코드화",
         "items": [
-          { "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)" },
-          { "name": "GCP (BigQuery, Pub/Sub)" },
-          { "name": "Docker" },
-          { "name": "GitHub Actions" }
+          {
+            "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
+          },
+          {
+            "name": "GCP (BigQuery, Pub/Sub)"
+          },
+          {
+            "name": "Docker"
+          },
+          {
+            "name": "GitHub Actions"
+          }
         ]
       }
     ],
@@ -135,11 +177,11 @@
             "description": "마케팅 전용 DB 분리 기반 위에 Google Ads/Meta/TikTok 캠페인·소재·지표를 단일 시스템에서 관리하는 통합 마케팅 플랫폼",
             "details": [
               "통합 캠페인 자동화: Google Ads/Meta/TikTok 캠페인 생성·배포·수정과 리텐션 지표 관리를 단일 플랫폼에서 처리하는 API 구축",
-              "NAS-S3 이중화 동기화: SQS 이벤트 기반 서버-워커 분리 아키텍처와 NAS sync outbox 이벤트 자동 발행, asset_nas_sync 상태 추적(PENDING/PROCESSING/COMPLETED/FAILED), 버전 누적 경로 정책 적용으로 사내 NAS-S3 양방향 동기화·복원 신뢰도 확보",
-              "Meta 에셋 동기화 성능 최적화: ORM 단건 저장을 벌크 연산으로 전환하여 Image 동기화 시간 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)",
+              "NAS-S3 동기화: SQS 서버-워커 분리, outbox 자동 발행, asset_nas_sync 상태추적으로 복원 신뢰도 확보",
+              "Meta 에셋 동기화: ORM→벌크 전환으로 Image 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)",
               "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감",
               "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 BigQuery 비용 82% 절감 (TB당 $6.25→$1.1)",
-              "DB 최적화: 쓰기 경로 복잡도 증가를 감수하더라도 조회 지연 해소가 더 중요하다고 판단하여 100+ 컬럼 테이블을 메인/시계열/예측 3개로 정규화, 인덱스 최적화와 커서 기반 페이지네이션으로 18초→0.5초 개선"
+              "DB 최적화: 100+ 컬럼 테이블 3개(메인/시계열/예측) 정규화, 인덱스+커서 페이지네이션으로 18s→0.5s"
             ],
             "techStack": [
               "AWS Lambda",
@@ -166,7 +208,7 @@
             "description": "마케팅 지표 60일 → 360일 확장에 따른 배치 작업 한계 해결 및 배치 처리 서버리스 전환",
             "details": [
               "하이브리드 아키텍처: 전체 서버리스 전환보다 운영 안정성이 중요하다고 판단하여 API 서버(EC2)는 유지하고 배치/Job 처리만 Lambda로 분리, 워크로드별 최적 리소스 활용",
-              "Event-Driven Architecture: SQS + Lambda + EventBridge 기반 비동기 처리로 배치 처리 시간 2시간→5분 단축, 데이터 수집 범위 6배 확장 (60일 → 360일)",
+              "Event-Driven: SQS+Lambda+EventBridge 비동기 처리로 배치 2h→5m, 수집 범위 6x 확장(60일→360일)",
               "트랜잭션 아웃박스 패턴: 예약·지연 발행 기반 트랜잭션 아웃박스 패턴으로 데이터 정합성 보장",
               "Lambda 운영 안정화: Batch Size 벌크 처리로 스로틀링 해결, CloudWatch 로그 경량화로 비용 절감, 빌드 OOM 조치",
               "RDS Proxy 커넥션 관리: Lambda 대량 실행 시 DB 커넥션 고갈 문제를 RDS Proxy 풀링으로 해결"
@@ -192,7 +234,7 @@
               "DDL 자동 관리 엔진: PK 컬럼 타입 동적 결정, 컬럼 타입 불일치 감지·MODIFY, 인덱스 자동 생성·RENAME으로 스키마 동기화 자동화",
               "저장/업로드 성능 개선: Cloud Data 적재 및 S3 업로드 병목 구간 분석·최적화로 대용량 처리 지연 해소",
               "동기화 안정화: job 분리, 스케줄링 방식 전환, timeout 조정, non-blocking 처리로 운영 안정성 확보",
-              "CloudData 안정화 이슈 4건 일괄 수정: Redis 캐시 무효화 누락, DDL SKIP 메타데이터 누락, 복사 시 키 삭제 누락, excludeCloudData 미전달 버그 해결",
+              "CloudData 안정화 4건: Redis 캐시 무효화, DDL SKIP 메타데이터, 복사 키 삭제, excludeCloudData 전달 누락 수정",
               "excludeCloudData 옵션 전파 보강: 시트 마이그레이션 POST 경로 4곳에 옵션 전달을 추가해 Cloud Data 전체 삭제 리스크 차단"
             ],
             "techStack": [
@@ -210,11 +252,11 @@
             "description": "NestJS 유틸 10개 모듈 + 게임서버 Kit 2개 패키지 개발·운영으로 다중 프로젝트 코드 일관성 확보",
             "details": [
               "10개 모듈 라이브러리 체계: core, repository, cache, lock, slack, crypto, smb, hash, type, iac 모듈로 확장",
-              "Repository 모듈: Bulk 연산, Audit Log, TypeORM 타입 좁히기를 함수 오버로딩·TypeScript 제네릭으로 지원하고 2000줄+ 코드를 SRP 기준 파일 분리 리팩토링",
+              "Repository 모듈: Bulk·Audit Log·TypeORM 타입 좁히기 지원, 함수 오버로딩+TypeScript 제네릭 적용, 2000+줄 SRP 분리",
               "분산 락(Lock) 모듈: ElastiCache (Redis) 기반 분산 락 데코레이터로 멀티 인스턴스 환경의 동시성 제어",
-              "glider-sheet 업그레이드 자동화: GitHub Packages 기반 배포 파이프라인 위에 GitHub Actions workflow_dispatch와 matrix 병렬 실행, 변경 패키지만 테스트하는 CI 최적화로 7개 프로젝트 처리 시간을 약 3시간에서 약 15분으로 단축",
-              "게임서버 Kit 패키지 분리: 게임서버 모놀리식에서 Sheet 모듈 + 5개 서브모듈을 @gameduo/glider-sheet 패키지로 추출하여 다중 게임 프로젝트 재사용 및 5개 브랜치 형상 차이 분석·충돌 해결",
-              "테스트 인프라 성능 최적화: ts-jest isolatedModules 전환과 Entity 컬럼 타입 명시로 CI 평균 시간을 15분47초에서 6분6초로 61% 단축, 81 suites 978 tests 전체 통과"
+              "업그레이드 자동화: workflow_dispatch+matrix 병렬, 변경 패키지 CI 테스트로 7개 프로젝트 3h→15m 단축(GitHub Packages)",
+              "게임서버 Kit 분리: Sheet+5개 서브모듈을 @gameduo/glider-sheet로 추출, 5개 브랜치 차이 분석·충돌 해결",
+              "테스트 인프라: ts-jest isolatedModules+Entity 타입 명시로 CI 61% 단축(15m47s→6m06s), 81 suites 978 tests 통과"
             ],
             "techStack": [
               "ElastiCache (Redis)",
@@ -231,9 +273,9 @@
             "featured": false,
             "description": "게임 확률 검증 체계 부재에 따른 규제 리스크 해소를 위한 확률 계산 패키지와 CDK 기반 감사 로그 분석 인프라 구축",
             "details": [
-              "NestJS DynamicModule 기반 확률 패키지: 5가지 확률 함수 + 자동 Kinesis 로깅을 @gameduo/glider-probability로 패키지화, 12개 게임 프로젝트에 통합",
-              "CDK 기반 분석 파이프라인: Kinesis → Firehose(Dynamic Partitioning + Parquet 변환) → S3 → Glue → Athena End-to-End 확률 감사 로그 분석 인프라를 코드화",
-              "LocalStack 통합 테스트: 단기 개발 속도보다 회귀 검증 신뢰도를 우선해 모킹 테스트를 삭제하고 Testcontainers 기반 통합 테스트로 전환, 핵심 시나리오(12 suites, 115 tests) 기준 통합 테스트 커버리지 94%+ 확보"
+              "확률 패키지: NestJS DynamicModule 기반 5개 함수+Kinesis 로깅을 @gameduo/glider-probability로 패키지화, 12개 게임 통합",
+              "CDK 분석 파이프라인: Kinesis→Firehose(Dynamic Partitioning+Parquet)→S3→Glue→Athena E2E 확률 감사 로그 코드화",
+              "LocalStack 통합 테스트: 모킹 삭제, Testcontainers 전환으로 회귀 신뢰도 강화, 12 suites 115 tests 커버리지 94%+ 확보"
             ],
             "techStack": [
               "TypeScript",

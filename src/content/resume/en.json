@@ -22,7 +22,7 @@
       {
         "category": "System Design & Architecture",
         "items": [
-          "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel processing, reducing processing time 2hrs\u21925min and expanding pipeline capacity 270x by concurrent jobs per time window",
+          "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel processing, reducing processing time 2hrs→5min and expanding pipeline capacity 270x by concurrent jobs per time window",
           "Designed a shared package system for multi-project environments, improving code consistency and reusability",
           "Established a staged modernization strategy; after phased architecture migration with TDD, maintained incident-free deployments during major release windows"
         ]
@@ -30,8 +30,8 @@
       {
         "category": "Cost Optimization & Reliability",
         "items": [
-          "Cloud cost structure analysis and pricing model optimization: achieved 82% cost reduction ($6.25\u2192$1.1 per TB)",
-          "Diagnosed bulk data processing bottlenecks and optimized queries, reducing sync time by 72% and improving query performance by 97% (18s\u21920.5s)",
+          "Cloud cost structure analysis and pricing model optimization: achieved 82% cost reduction ($6.25→$1.1 per TB)",
+          "Diagnosed bulk data processing bottlenecks and optimized queries, reducing sync time by 72% and improving query performance by 97% (18s→0.5s)",
           "Root cause analysis of recurring deadlock patterns at architecture level + regulatory compliance with CDK-based audit log pipeline securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
         ]
       },
@@ -49,45 +49,87 @@
         "category": "AI Development",
         "description": "Multi-agent orchestration-based development, context engineering, AI-generated code quality assurance",
         "items": [
-          { "name": "Claude Code" },
-          { "name": "OpenCode (OMO)" },
-          { "name": "Codex" },
-          { "name": "Kiro" },
-          { "name": "Amazon Q Developer" },
-          { "name": "Cursor" },
-          { "name": "Context Engineering" }
+          {
+            "name": "Claude Code"
+          },
+          {
+            "name": "OpenCode (OMO)"
+          },
+          {
+            "name": "Codex"
+          },
+          {
+            "name": "Kiro"
+          },
+          {
+            "name": "Amazon Q Developer"
+          },
+          {
+            "name": "Cursor"
+          },
+          {
+            "name": "Context Engineering"
+          }
         ]
       },
       {
         "category": "Backend",
         "description": "Legacy-to-NestJS progressive migration, shared package system establishment, 80% TDD coverage",
         "items": [
-          { "name": "TypeScript" },
-          { "name": "NestJS" },
-          { "name": "Express.js" },
-          { "name": "TypeORM" },
-          { "name": "Java" },
-          { "name": "Spring Boot" },
-          { "name": "Jest" }
+          {
+            "name": "TypeScript"
+          },
+          {
+            "name": "NestJS"
+          },
+          {
+            "name": "Express.js"
+          },
+          {
+            "name": "TypeORM"
+          },
+          {
+            "name": "Java"
+          },
+          {
+            "name": "Spring Boot"
+          },
+          {
+            "name": "Jest"
+          }
         ]
       },
       {
         "category": "Database",
-        "description": "Query optimization (18s\u21920.5s), deadlock root cause analysis, large-scale table normalization, Redis distributed locking",
+        "description": "Query optimization (18s→0.5s), deadlock root cause analysis, large-scale table normalization, Redis distributed locking",
         "items": [
-          { "name": "MySQL" },
-          { "name": "BigQuery" },
-          { "name": "ElastiCache (Redis)" }
+          {
+            "name": "MySQL"
+          },
+          {
+            "name": "BigQuery"
+          },
+          {
+            "name": "ElastiCache (Redis)"
+          }
         ]
       },
       {
         "category": "Cloud & Infra",
         "description": "Batch-to-serverless migration (270x expansion by concurrent jobs per time window), 82% BigQuery cost reduction, CDK-based analytics infrastructure as code",
         "items": [
-          { "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)" },
-          { "name": "GCP (BigQuery, Pub/Sub)" },
-          { "name": "Docker" },
-          { "name": "GitHub Actions" }
+          {
+            "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
+          },
+          {
+            "name": "GCP (BigQuery, Pub/Sub)"
+          },
+          {
+            "name": "Docker"
+          },
+          {
+            "name": "GitHub Actions"
+          }
         ]
       }
     ],
@@ -135,11 +177,11 @@
             "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system, built on dedicated marketing DB separation",
             "details": [
               "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, modification, and retention metrics in a single platform",
-              "NAS-S3 Dual Sync: Built an SQS event-based server-worker separation architecture with automatic NAS sync outbox event publication, asset_nas_sync state tracking (PENDING/PROCESSING/COMPLETED/FAILED), and a version-accumulating path policy to secure reliable bidirectional sync and restore between internal NAS and S3",
-              "Meta Asset Sync Performance Optimization: Converted ORM single-row saves to bulk operations, reducing Image sync time by 72% (25.7s→7.1s) and DB transactions by 95% (10~16s→0.3~0.5s)",
+              "NAS-S3 sync: Separated SQS server-worker flow, automated outbox events, tracked asset_nas_sync state to secure restore reliability",
+              "Optimized Meta asset sync: Converted ORM single-row saves to bulk, cutting Image sync 72%(25.7s→7.1s) and DB transactions 95%(10~16s→0.3~0.5s)",
               "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%",
               "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25→$1.1 per TB)",
-              "DB Optimization: Prioritized read-latency reduction over additional write-path complexity, normalizing a 100+ column table into main/time-series/prediction partitions; combined index tuning and cursor pagination improved query performance from 18s to 0.5s"
+              "Optimized DB reads: Normalized 100+ column table into main/time-series/prediction, tuned indexes+cursor pagination (18s→0.5s)"
             ],
             "techStack": [
               "AWS Lambda",
@@ -166,7 +208,7 @@
             "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
             "details": [
               "Hybrid Architecture: Prioritized operational stability over full serverless migration, keeping the API server on EC2 while separating batch/job processing to Lambda for workload-optimized resource usage",
-              "Event-Driven Architecture: SQS + Lambda + EventBridge-based async processing reducing batch processing time from 2hrs to 5min, expanding data collection range 6x (60 days → 360 days)",
+              "Built Event-Driven flow with SQS+Lambda+EventBridge, reducing batch time 2h→5m and expanding collection 6x(60→360 days)",
               "Transactional Outbox Pattern: Scheduled and delayed event publishing ensuring data consistency",
               "Lambda Operational Stabilization: Batch Size bulk processing resolving throttling, CloudWatch log optimization reducing costs, build OOM remediation",
               "RDS Proxy Connection Management: Resolved DB connection exhaustion during massive Lambda execution via RDS Proxy pooling"
@@ -192,7 +234,7 @@
               "Automated DDL Management Engine: Dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME for schema sync automation",
               "Save/Upload Performance Improvement: Analyzed and optimized Cloud Data ingestion and S3 upload bottlenecks, resolving large-scale processing delays",
               "Sync Stabilization: Implemented job separation, transitioned scheduling approach, tuned timeouts, and introduced non-blocking processing to secure operational reliability",
-              "CloudData Stabilization Across Four Issues: Fixed missing Redis cache invalidation, DDL SKIP metadata omission, copy-key deletion omission, and excludeCloudData propagation bugs",
+              "Stabilized CloudData: Fixed four issues—Redis cache invalidation, DDL SKIP metadata, copy key deletion, excludeCloudData propagation",
               "excludeCloudData Propagation Patch: Added option forwarding to four POST migration paths to block unintended full Cloud Data deletion risk"
             ],
             "techStack": [
@@ -210,11 +252,11 @@
             "description": "Development and operation of NestJS utility (10 modules) + Game Server Kit (2 packages) for multi-project code consistency",
             "details": [
               "10-module Library System: Expanded to core, repository, cache, lock, slack, crypto, smb, hash, type, and iac modules",
-              "Repository Module: Added Bulk operations, Audit Log, and TypeORM type narrowing with function overloading and TypeScript generics, then refactored a 2000+ line codebase into SRP-based file separation",
+              "Enhanced Repository module: Added Bulk/Audit Log/TypeORM narrowing with overloading+TypeScript generics; refactored 2000+ lines by SRP",
               "Distributed Lock Module: ElastiCache (Redis)-based distributed lock decorator for concurrency control in multi-instance environments",
-              "Automated glider-sheet Upgrades: Built on a GitHub Packages distribution pipeline with CI optimization for changed packages only, then added GitHub Actions workflow_dispatch and matrix parallel jobs to reduce seven-project processing time from about three hours to about fifteen minutes",
-              "Game Server Kit Package Extraction: Extracted the Sheet module and five submodules from the game server monolith into the @gameduo/glider-sheet package for multi-game reuse, and resolved conflicts through five-branch divergence analysis",
-              "CI Test Runtime Optimization: Switched ts-jest to isolatedModules and added explicit Entity column types, cutting average CI time from 15m47s to 6m06s (61%) while passing all 81 suites and 978 tests"
+              "Automated upgrades: Added workflow_dispatch+matrix and changed-package CI tests, reducing 7-project runtime 3h→15m on GitHub Packages",
+              "Extracted game-server Kit: Moved Sheet+5 submodules to @gameduo/glider-sheet, resolved conflicts via 5-branch divergence analysis",
+              "Optimized test infra: Switched ts-jest isolatedModules and explicit Entity types, cutting CI 61%(15m47s→6m06s); passed 81 suites/978 tests"
             ],
             "techStack": [
               "ElastiCache (Redis)",
@@ -231,9 +273,9 @@
             "featured": false,
             "description": "Built probability calculation package and CDK-based audit log analytics infrastructure to address regulatory risk from lack of game probability verification",
             "details": [
-              "NestJS DynamicModule-based Probability Package: Packaged 5 probability functions + automatic Kinesis logging as @gameduo/glider-probability, integrated across 12 game projects",
-              "CDK-based Analytics Pipeline: Codified Kinesis → Firehose (Dynamic Partitioning + Parquet conversion) → S3 → Glue → Athena end-to-end probability audit log analytics infrastructure",
-              "LocalStack Integration Testing: Prioritized regression confidence over short-term delivery speed, replacing mock tests with Testcontainers-based integration tests and securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
+              "Packaged probability module: Built NestJS DynamicModule with 5 functions+Kinesis logging as @gameduo/glider-probability, integrated into 12 games",
+              "Codified CDK analytics: Kinesis→Firehose(Dynamic Partitioning+Parquet)→S3→Glue→Athena for end-to-end probability audit logs",
+              "Replaced mocks with LocalStack+Testcontainers integration tests, prioritizing regression confidence and securing 94%+ coverage (12 suites/115 tests)"
             ],
             "techStack": [
               "TypeScript",

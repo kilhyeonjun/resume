@@ -149,7 +149,11 @@ else warns.forEach(w => console.log(w));
 ```
 
 **PASS:** 경고 0건
-**WARN:** 1건 이상 초과 (즉시 수정 필요는 아니나 검토 권장)
+**WARN:** 1건 이상 초과. 아래 액션을 제안한다:
+
+- **총 bullet 초과**: `curate-work-data` 스킬의 Phase 2.5 Density Check를 실행하여 약한 항목 제거
+- **100자 초과**: `curate-work-data/references/guide-curation.md`의 "문장 압축 기법" 섹션을 적용 (중복 구조어 제거 → 도메인 접두사 분리 → 결과 괄호 압축 → 판단 근거 분리)
+- **프로젝트당 초과**: 해당 프로젝트의 details 중 정량 성과 없는 항목을 제거 바 삭제
 
 ## Output Format
 

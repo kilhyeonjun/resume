@@ -309,9 +309,7 @@
             "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance using Cyan (in-house Node.js framework)",
             "details": [
               "Built batch dispatch system for participant group management per clinical trial and batch consent dispatch",
-              "Implemented workflow structure managing Request → Researcher → Participant sequential flow",
-              "Migrated from batch + S3 event-based processing to EDA + Outbox pattern, enabling event flow visualization and local test environment setup",
-              "Achieved event replay capability and infrastructure cost reduction"
+              "Migrated from batch + S3 event-based processing to EDA + Outbox pattern, enabling event flow visualization and local test environment setup"
             ],
             "techStack": [
               "TypeScript",
@@ -328,9 +326,7 @@
             "description": "Resolved critical notification failures due to database Deadlocks in clinical trial e-signature notifications",
             "details": [
               "Identified shared-to-exclusive lock timing issue during foreign key constraint enforcement as Deadlock root cause",
-              "Designed and implemented AWS SNS → SQS → Lambda Event-Driven pipeline",
-              "Built real-time cross-reference system for document relationship tracking and auto-update",
-              "Developed server-side engine converting Slate.js JSON to Word documents"
+              "Designed and implemented AWS SNS → SQS → Lambda Event-Driven pipeline"
             ],
             "techStack": [
               "TypeScript",
@@ -349,9 +345,7 @@
             "featured": false,
             "description": "Resolved lack of delivery status tracking and data consistency issues in email system",
             "details": [
-              "Implemented delivery/bounce/complaint status tracking via SES Configuration Set → SNS → event processing pipeline with Datadog logging + Slack real-time alerts",
-              "Built event-based delivery system separating email delivery from transactions",
-              "Adopted CID-based inline image embedding to improve display rate"
+              "Implemented delivery/bounce/complaint status tracking via SES Configuration Set → SNS → event processing pipeline with Datadog logging + Slack real-time alerts"
             ],
             "techStack": [
               "TypeScript",
@@ -367,8 +361,6 @@
             "description": "Resolved user inconvenience and system scalability limitations from 1:1 user-organization structure",
             "details": [
               "Expanded user-organization relationship from 1:1 to 1:N structure for multi-organization management",
-              "Added post-login organization selection flow to support organization context switching for multi-org accounts",
-              "Batch-updated account-organization reference logic across downstream services (Docs, Billing, Mailing, etc.)",
               "Ensured zero-downtime API migration with backward compatibility for service continuity"
             ],
             "techStack": [
@@ -384,8 +376,7 @@
             "featured": false,
             "description": "Frontend development for clinical Trial Master File (TMF) management system",
             "details": [
-              "Implemented document upload, classification, version management, and Audit Trail functionality for Admin/Dashboard",
-              "Developed document history archival, preview, property management, and commenting for Archiver/Viewer"
+              "Implemented document upload, classification, version management, and Audit Trail functionality for Admin/Dashboard"
             ],
             "techStack": [
               "React",
@@ -401,8 +392,7 @@
             "details": [
               "Implemented Event-Driven PDF conversion triggered by S3 upload → Lambda lightweight conversion → SNS/SQS notification",
               "Built permission-based workflow managing document access and approval by medical role",
-              "Delivered MVP within 3-week emergency deployment: Prioritized core features and met launch deadline for delayed project",
-              "PDF Conversion Optimization: Tuned Lambda memory/timeout and implemented large file chunking for conversion reliability"
+              "Delivered MVP within 3-week emergency deployment: Prioritized core features and met launch deadline for delayed project"
             ],
             "techStack": [
               "TypeScript",
@@ -419,8 +409,6 @@
             "description": "Subscription, plan, and license management system for all Maven services",
             "details": [
               "Implemented org-specific custom plan Internal API for tailored subscription offerings",
-              "Introduced Event Queue and built automatic inventory cleanUp logic after subscription expiration",
-              "Added withdrawn user validation to stabilize subscription renewal, expiration email, and license processing",
               "Implemented non-renewable plan subscription renewal/re-subscription blocking logic to ensure business policy consistency"
             ],
             "techStack": [
@@ -493,10 +481,7 @@
             "description": "Built JWT-based unified authentication system to resolve subdomain session conflicts",
             "details": [
               "Designed and implemented NestJS + JWT token authentication system",
-              "Migrated from session-based to token-based auth for reliable subdomain user transitions",
-              "MySQL-based JWT key management (infrastructure simplification over Redis)",
-              "Access Token + Refresh Token dual token structure",
-              "Unified authentication for web (doctor/pharmacist/admin) + mobile app"
+              "Migrated from session-based to token-based auth for reliable subdomain user transitions"
             ],
             "techStack": [
               "NestJS",
@@ -511,7 +496,6 @@
             "featured": false,
             "description": "Resolved code duplication and inconsistency from independent service management by consolidating shared modules",
             "details": [
-              "Built error log notification module for system monitoring efficiency",
               "Implemented user permission verification middleware for security enhancement"
             ],
             "techStack": [
@@ -528,9 +512,7 @@
               "Doctor ID + time slot composite unique key preventing duplicate appointments",
               "Socket.IO Room-based real-time status sync reflecting consultation/dispensing/delivery events to relevant users instantly",
               "Reduced status reflection delay from tens of seconds to instant, eliminating patient wait complaints",
-              "VAPID + Service Worker-based background notifications for instant appointment and dispensing alerts even when browser is inactive",
-              "Built internal API gateway integrating delivery (Hoodadak) and payment external services with Circuit Breaker pattern for fault isolation",
-              "Implemented real-time error monitoring system via Discord webhooks"
+              "Built internal API gateway integrating delivery (Hoodadak) and payment external services with Circuit Breaker pattern for fault isolation"
             ],
             "techStack": [
               "Express.js",
@@ -549,7 +531,6 @@
             "description": "Automated pharmacist's manual prescription entry process using OCR",
             "details": [
               "Integrated Naver Clova OCR API for automatic text extraction from prescription images",
-              "Built structured data pipeline for automatic system entry",
               "Developed automated medication guide generation using MFDS (Korea FDA) drug information API",
               "Reduced pharmacist processing time from 3-5 minutes to under 30 seconds per prescription"
             ],
@@ -614,7 +595,6 @@
             "details": [
               "QR Attendance: Built real-time attendance API with date+userID composite unique key preventing duplicate check-ins",
               "Excel Bulk Registration: Apache POI-based row-by-row sequential processing ensuring data consistency for batch member registration",
-              "Developed LMS core learning features including board CRUD, video upload, and progress tracking",
               "Dynamic Certificate: JasperReports-based PDF auto-generation API"
             ],
             "techStack": [
@@ -633,7 +613,6 @@
             "description": "Resolved fragmented reservation, monitoring, and SMS systems preventing unified management at industrial complex control center",
             "details": [
               "Reservation System: Built real-time booking API with time+location composite unique key preventing scheduling conflicts",
-              "Dashboard API: Integrated monitoring data and status aggregation",
               "Async SMS: Bizppurio SMS API + @Async non-blocking reservation confirmation notifications"
             ],
             "techStack": [
@@ -650,9 +629,7 @@
             "description": "Resolved legacy PHP system's extensibility limitations and lack of structured scoring and counseling management",
             "details": [
               "iframe Integration: Embedded Spring Boot independent app into existing PHP system, minimizing legacy impact",
-              "Implemented postMessage API-based cross-frame real-time state synchronization",
-              "Composite Scoring: Weighted average-based multi-dimensional assessment scoring algorithm",
-              "Counselor Back-office System: Counseling history management and dashboard"
+              "Composite Scoring: Weighted average-based multi-dimensional assessment scoring algorithm"
             ],
             "techStack": [
               "Java",
@@ -666,8 +643,7 @@
             "featured": false,
             "description": "Resolved lack of unified authentication requiring separate logins across 5 country-specific distributed websites",
             "details": [
-              "Unified Auth Server: Spring Security + JWT-based centralized authentication",
-              "Multi-domain CORS Handling: Secure token exchange across country-specific domains"
+              "Unified Auth Server: Spring Security + JWT-based centralized authentication"
             ],
             "techStack": [
               "Java",
@@ -683,8 +659,7 @@
             "featured": false,
             "description": "Resolved hosting cost burden and manual deployment workflow of WordPress-based blog",
             "details": [
-              "WordPress → Jekyll Migration: Static site conversion eliminating 100% hosting costs",
-              "GitHub Pages + Travis CI: Git push-based automated build and deploy pipeline"
+              "WordPress → Jekyll Migration: Static site conversion eliminating 100% hosting costs"
             ],
             "techStack": [
               "Jekyll",

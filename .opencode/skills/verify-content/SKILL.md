@@ -71,16 +71,18 @@ npm run build 2>&1 | head -50
 
 **도구:** Grep
 
-ko.json과 en.json에서 날짜 필드를 추출하여 YYYY-MM 형식 검증:
+ko.json과 en.json에서 **`dateString`/`dateStringLoose` 스키마가 적용된 필드만** 추출하여 YYYY-MM 형식 검증:
 
 ```bash
-grep -nE '"(startDate|endDate|date|period)":\s*"' src/content/resume/ko.json
+grep -nE '"(startDate|endDate|date)":\s*"' src/content/resume/ko.json
 ```
 
-날짜 값이 `YYYY-MM` 또는 `YYYY` 형식(awardSchema의 dateStringLoose)인지 확인합니다.
+`startDate`/`endDate`는 `YYYY-MM` 형식, `date`는 스키마에 따라 `YYYY-MM` 또는 `YYYY`(`dateStringLoose`) 형식인지 확인한다.
 
-**PASS:** 모든 날짜가 YYYY-MM 또는 YYYY 형식
-**FAIL:** 형식에 맞지 않는 날짜 값 발견
+**주의:** `period` 필드는 `z.string()`(자유 문자열)으로 정의되어 있으므로 `YYYY-MM` 검증 대상이 아니다. `2025.01 ~ 2025.04`, `2024.03`, `2022.04 (3주)` 같은 자유 형식이 정상이다.
+
+**PASS:** `startDate`/`endDate`/`date` 필드가 모두 YYYY-MM 또는 YYYY 형식
+**FAIL:** `startDate`/`endDate`/`date` 필드에서 형식 위반 발견
 
 **수정 방법:** 해당 날짜 값을 올바른 형식으로 수정합니다.
 

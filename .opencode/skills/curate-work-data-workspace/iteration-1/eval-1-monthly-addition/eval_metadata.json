@@ -1,7 +1,15 @@
 {
   "eval_id": 1,
-  "eval_name": "monthly-new-items-full-pipeline-dry-run",
+  "eval_name": "monthly-new-items-full-pipeline",
   "prompt": "이번 달 새로 한 작업들 이력서에 추가해줘",
-  "expected": "Phase 1-5 중 DRY RUN 범위(Phase 1-4) 실행 및 KO/EN 초안+피드백 루프 결과 제시",
-  "assertions": []
+  "expected": "Phase 1-4 실행: Diff \u2192 Evaluate \u2192 Draft ko/en \u2192 Feedback Loop 7-point check",
+  "assertions": [
+    { "text": "당월 기준 필터링이 적용됨", "type": "boolean" },
+    { "text": "KO 초안이 명사형 종결로 작성됨", "type": "boolean" },
+    { "text": "EN 초안이 과거형 동사로 시작됨", "type": "boolean" },
+    { "text": "KO/EN 초안이 쌍으로 제시됨", "type": "boolean" },
+    { "text": "7-point 피드백 체크 결과 테이블이 출력됨", "type": "boolean" },
+    { "text": "AI 슬롭 단어가 0건", "type": "boolean" },
+    { "text": "work-data에 없는 수치가 만들어지지 않음", "type": "boolean" }
+  ]
 }

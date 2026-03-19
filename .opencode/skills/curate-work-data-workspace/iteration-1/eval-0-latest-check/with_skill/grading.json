@@ -1,0 +1,12 @@
+{
+  "eval_id": 0,
+  "config": "with_skill",
+  "expectations": [
+    { "text": "git pull이 실행되어 work-data가 최신화됨", "passed": true, "evidence": "Phase 1에서 git pull 실행 확인" },
+    { "text": "major/medium 항목만 필터링됨", "passed": true, "evidence": "status=done, size in (major, medium) 필터 적용" },
+    { "text": "미반영 항목이 테이블 형식으로 출력됨", "passed": true, "evidence": "resumeProject|itemId|period|topic|size|outcome|status 테이블 출력" },
+    { "text": "각 항목에 반영추천/선택적/불필요 등급이 부여됨", "passed": true, "evidence": "mkt-0113: 선택적, mkt-0114: 불필요 등급 명시" },
+    { "text": "등급 판단에 이유가 명시됨", "passed": true, "evidence": "각 항목에 reason 컬럼으로 판단 근거 명시" },
+    { "text": "resumeProject 기준으로 그룹화됨", "passed": true, "evidence": "marketing-asset으로 그룹화" }
+  ]
+}

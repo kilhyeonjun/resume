@@ -2,6 +2,14 @@
   "eval_id": 2,
   "eval_name": "specific-item-kit-0045-curation",
   "prompt": "work-data에 있는 kit-0045 작업을 이력서에 넣고 싶어",
-  "expected": "kit-0045 탐색 후 하이라이트 KO/EN 초안 생성 및 피드백 루프 체크",
-  "assertions": []
+  "expected": "특정 ID 트리거로 해당 항목만 큐레이션: Diff \u2192 Evaluate \u2192 Draft \u2192 Feedback Loop",
+  "assertions": [
+    { "text": "kit-0045 항목이 정확히 식별됨", "type": "boolean" },
+    { "text": "in_progress 상태임에도 ID 직접 요청이므로 처리됨", "type": "boolean" },
+    { "text": "KO 초안이 도메인+문제+해결+결과 구조를 따름", "type": "boolean" },
+    { "text": "EN 초안이 KO와 의미적으로 동등함", "type": "boolean" },
+    { "text": "7-point 피드백 체크가 수행됨", "type": "boolean" },
+    { "text": "최종 문장에 과장이 없음", "type": "boolean" },
+    { "text": "apply 계획(append/replace + 대상 프로젝트)이 제시됨", "type": "boolean" }
+  ]
 }

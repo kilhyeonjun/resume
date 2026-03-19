@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "skill_name": "curate-work-data",
+    "timestamp": "2026-03-19T00:47:00Z",
+    "evals_run": ["eval-0-latest-check", "eval-1-monthly-addition", "eval-2-specific-item-kit-0045"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_name": "eval-0-latest-check",
+      "with_skill": { "pass_rate": 1.0, "passed": 6, "total": 6 },
+      "without_skill": { "pass_rate": 0.5, "passed": 3, "total": 6 }
+    },
+    {
+      "eval_name": "eval-1-monthly-addition",
+      "with_skill": { "pass_rate": 1.0, "passed": 7, "total": 7 },
+      "without_skill": { "pass_rate": 0.714, "passed": 5, "total": 7 }
+    },
+    {
+      "eval_name": "eval-2-specific-item-kit-0045",
+      "with_skill": { "pass_rate": 0.857, "passed": 6, "total": 7 },
+      "without_skill": { "pass_rate": 0.571, "passed": 4, "total": 7 }
+    }
+  ],
+  "run_summary": {
+    "with_skill": { "avg_pass_rate": 0.952, "total_passed": 19, "total_assertions": 20 },
+    "without_skill": { "avg_pass_rate": 0.6, "total_passed": 12, "total_assertions": 20 },
+    "delta": { "pass_rate": "+0.352" }
+  },
+  "analysis": [
+    "with-skill이 without-skill 대비 pass rate +35.2% 우위",
+    "가장 큰 차이: 구조화된 출력 형식(테이블/등급체계)과 7-point 피드백 루프",
+    "without-skill도 기본 작업(필터링, 초안 작성)은 가능하나 일관된 품질 보장이 안 됨",
+    "with-skill의 유일한 FAIL: eval-2에서 apply 계획 미제시 (스킬 개선 후 테스트이므로 다음 iteration에서 해결 예상)"
+  ]
+}

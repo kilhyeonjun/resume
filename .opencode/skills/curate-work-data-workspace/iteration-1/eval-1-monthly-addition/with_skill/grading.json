@@ -1,0 +1,13 @@
+{
+  "eval_id": 1,
+  "config": "with_skill",
+  "expectations": [
+    { "text": "당월 기준 필터링이 적용됨", "passed": true, "evidence": "2026-03 기준 필터링 적용" },
+    { "text": "KO 초안이 명사형 종결로 작성됨", "passed": true, "evidence": "정착/확보 등 명사형 종결 사용" },
+    { "text": "EN 초안이 과거형 동사로 시작됨", "passed": true, "evidence": "Redesigned로 시작" },
+    { "text": "KO/EN 초안이 쌍으로 제시됨", "passed": true, "evidence": "KO draft v1 + EN draft v1 쌍으로 제시" },
+    { "text": "7-point 피드백 체크 결과 테이블이 출력됨", "passed": true, "evidence": "7-point checklist summary 테이블 출력 (7/7 PASS)" },
+    { "text": "AI 슬롭 단어가 0건", "passed": true, "evidence": "금지어 미사용 확인됨" },
+    { "text": "work-data에 없는 수치가 만들어지지 않음", "passed": true, "evidence": "work-data 범위 내 기술 사실만 사용" }
+  ]
+}

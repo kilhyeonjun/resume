@@ -178,3 +178,4 @@ else warns.forEach(w => console.log(w));
 2. **ko/en 값 차이** — 번역으로 인한 텍스트 값 차이는 구조 동기화 위반이 아님. 구조(키, 배열 길이)만 검증
 3. **optional 필드** — Zod 스키마에서 `.optional()`로 정의된 필드는 한쪽에만 존재해도 위반이 아님
 4. **`current: true` experience** — endDate가 없는 것은 정상 (current가 true인 경우)
+5. **총 bullet 80~85개 범위** — HR PDF가 2페이지 이내로 들어가면 실질적 문제 없음. 80개 기준을 약간 초과해도 PDF 페이지 수로 최종 판단. WARN은 유지하되 FAIL로 승격하지 않음

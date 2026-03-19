@@ -27,7 +27,7 @@ if (!entry) {
 }
 const resumeData = entry.data;
 
-const { data, labels } = prepareResumeData(resumeData, lang);
+const { data, labels } = prepareResumeData(resumeData, lang, 'web');
 
 const basePath = getBasePath(lang);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -94,4 +94,3 @@ const jsonLd = {
     <ResumeFooterActions labels={labels} basePath={basePath} />
   </article>
 </Layout>
-

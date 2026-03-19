@@ -1,6 +1,8 @@
 import { replaceDurationPlaceholder } from './career-duration';
 import type { ResumeData, Labels } from '../content.config';
 
+export type ResumeSurface = 'web' | 'print' | 'ats' | 'experience';
+
 interface PreparedResumeData {
   name: string;
   title: string;
@@ -22,19 +24,47 @@ interface PreparedResumeData {
   awards: ResumeData['awards'];
 }
 
-export function prepareResumeData(resumeData: ResumeData, lang: 'ko' | 'en'): { data: PreparedResumeData; labels: Labels } {
+function filterProjectsForSurface(projects: ResumeData['experience'][number]['projects'], surface: ResumeSurface) {
+  if (surface === 'experience') {
+    return projects;
+  }
+
+  return projects.filter((project) => project.featured !== false);
+}
+
+function filterActivitiesForSurface(activities: ResumeData['experience'][number]['activities'], surface: ResumeSurface) {
+  return surface === 'experience' ? activities : [];
+}
+
+function filterExperienceForSurface(experience: ResumeData['experience'], surface: ResumeSurface) {
+  return experience.map((item) => ({
+    ...item,
+    projects: filterProjectsForSurface(item.projects, surface),
+    activities: filterActivitiesForSurface(item.activities, surface),
+  }));
+}
+
+function filterOpenSourceForSurface(openSource: ResumeData['openSource'], surface: ResumeSurface) {
+  return surface === 'print' ? openSource.slice(0, 4) : openSource;
+}
+
+export function prepareResumeData(
+  resumeData: ResumeData,
+  lang: 'ko' | 'en',
+  surface: ResumeSurface = 'web',
+): { data: PreparedResumeData; labels: Labels } {
   const data: PreparedResumeData = {
     ...resumeData.personalInfo,
     summary: replaceDurationPlaceholder(resumeData.summary, resumeData.experience, lang),
     coreCompetencies: resumeData.coreCompetencies,
     skills: resumeData.skills,
-    experience: resumeData.experience,
+    experience: filterExperienceForSurface(resumeData.experience, surface),
     education: resumeData.education,
     certifications: resumeData.certifications,
     continuousLearning: resumeData.continuousLearning,
     trainingPrograms: resumeData.trainingPrograms,
     technicalWriting: resumeData.technicalWriting,
-    openSource: resumeData.openSource,
+    openSource: filterOpenSourceForSurface(resumeData.openSource, surface),
     awards: resumeData.awards,
   };
   const labels = resumeData.labels;

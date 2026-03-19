@@ -2,6 +2,7 @@
 name: verify-implementation
 description: |
   프로젝트의 모든 verify 스킬을 순차 실행해 통합 검증 보고서를 생성하는 스킬.
+  source-of-truth 검증과 projection 검증을 함께 엮어 통합 결과를 만든다.
   "검증 실행", "verify", "구현 검증", "전체 검증", "빌드 검증", "PR 전 확인", "코드 체크", "검증 보고서" 요청이 나오면 우선 실행한다.
   기능 구현 후, PR 생성 전, 코드 리뷰 시점에 규칙 누락 없이 한 번에 점검해야 할 때 사용한다.
 ---
@@ -30,9 +31,9 @@ description: |
 
 | # | 스킬 | 설명 |
 |---|------|------|
-| 1 | `verify-content` | 이력서 콘텐츠 데이터와 Zod 스키마 정합성 검증 |
+| 1 | `verify-content` | source-of-truth 콘텐츠 데이터와 Zod 스키마 정합성 검증 |
 | 2 | `verify-astro-components` | Astro 컴포넌트/페이지 코드 규칙 준수 검증 |
-| 3 | `verify-visual-qa` | 웹/PDF/상세 표면의 시각 품질, 링크, ATS 호환성 검증 |
+| 3 | `verify-visual-qa` | projection된 웹/PDF/상세 표면의 시각 품질, 링크, ATS 호환성 검증 |
 
 ### 참고
 

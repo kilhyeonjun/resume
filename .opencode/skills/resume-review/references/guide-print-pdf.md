@@ -4,6 +4,7 @@
 
 - `src/pages/resume-print.astro` (ko), `src/pages/en/resume-print.astro` (en)
 - `src/components/templates/ResumePrintTemplate.astro` — Print 전용 템플릿
+- `src/utils/resume-data.ts` — HR print surface projection 기준
 - `scripts/generate-pdf.ts` — Puppeteer PDF 생성 스크립트
 - `src/content/resume/{ko,en}.json` — 이력서 데이터
 
@@ -11,7 +12,7 @@
 
 ## 사용할 체크리스트
 
-5개: data-accuracy, hr-perspective, writing-ko, writing-en, structure
+8개: data-accuracy, hr-perspective, writing-ko, writing-en, structure, hr-deep, position-fit, ai-detection
 
 ## Print PDF 특화 검증 기준
 
@@ -72,4 +73,4 @@
 ## 출력
 
 리뷰 결과를 `assets/review-output-template.md` 형식으로 작성.
-Print PDF 리뷰는 5개 체크리스트를 사용.
+Print PDF 리뷰는 8개 체크리스트를 사용.

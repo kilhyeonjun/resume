@@ -7,6 +7,7 @@ description: |
   11개 체크리스트(데이터 정확성, HR 관점, 기술적 정확성, 한국어 문장, 영문 번역, 구조,
   코드 품질, UI/UX, HR 심층, 포지션 적합성, AI 탐지)와
   5개 가이드(웹, Print PDF, ATS PDF, 경력 상세, 포트폴리오)를 조합하여 리뷰한다.
+  surface별 projection 차이를 결함이 아닌 설계 의도로 구분해 리뷰한다.
   트리거: "이력서 리뷰", "resume review", "리뷰해줘", "검토해줘",
   "문장 검토", "표현 검토", "밀도 검토", "피드백 루프", "AI 탐지", "AI 체크",
   "HR 시뮬레이션", "리크루터 관점", "7.4초 테스트", "7.4초 스캔",
@@ -108,6 +109,7 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 | 한국어 이력서 | `src/content/resume/ko.json` | 기본 리뷰 대상 |
 | 영어 이력서 | `src/content/resume/en.json` | ko/en 비교 |
 | 포트폴리오 | `src/data/portfolio.json` | 포트폴리오 리뷰 시 |
+| projection 유틸 | `src/utils/resume-data.ts` | surface별 노출 차이 기준 확인 |
 | 템플릿 | `src/components/templates/*.astro` | 렌더링 로직 확인 |
 | 스타일 | `src/styles/global.css` | 디자인 리뷰 시 |
 | 콘텐츠 스키마 | `src/content.config.ts` | 필드 구조 확인 |
@@ -123,7 +125,7 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 3. **기술적 정확성**: 서비스명/패턴명 공식 표기, techStack 포함관계
 4. **한국어 문장**: 문체 통일(서술형/명사형), 조사/호응, 과장 표현 검출
 5. **영문 번역**: 누락 없음, Action Verb 과거형, 금액/단위 표기
-6. **구조/레이아웃**: details 개수 균형, description 길이, 프로젝트 순서
+6. **구조/레이아웃**: details 개수 균형, description 길이, 프로젝트 순서, surface별 projection 일관성
 7. **코드 품질**: Astro 컴포넌트 구조, CSS 품질/중복, 접근성, SEO, 성능, 타입 안전성, 에러 처리
 8. **UI/UX**: 반응형, 다크모드, 타이포그래피 계층, 여백/정렬, 인터랙션, 시각적 계층, F/Z패턴, CTA
 9. **HR 심층**: Summary 임팩트, 7.4초 스캔 시뮬레이션, STAR 정량화, 경력 스토리라인, 성장 궤적, 차별화
@@ -147,5 +149,6 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 - **읽기 전용**: 코드/데이터 수정 없이 리뷰 문서만 작성
 - **ko 기준 진행**: ko.json 기준으로 분석 후 en.json과 비교
 - **교차 검증**: highlights <-> project details <-> portfolio 간 수치 교차 확인
+- **Projection 인지**: surface별 생략/축약은 `src/utils/resume-data.ts` 규칙과 일치하는지 먼저 확인
 - **기존 리뷰 참조**: 프로젝트 루트의 `.{slug}-review.md` 파일이 있으면 기존 이슈 추적
 - **점수 기준 일관성**: 10점 만점 기준 사용. 기존 리뷰의 다른 점수 체계(5점 등)와 비교 시 환산 필요

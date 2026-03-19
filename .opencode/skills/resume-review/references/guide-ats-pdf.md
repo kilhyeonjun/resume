@@ -4,12 +4,13 @@
 
 - `src/pages/resume-ats.astro` (ko), `src/pages/en/resume-ats.astro` (en)
 - ATS(Applicant Tracking System) 파싱 최적화 전용 PDF
+- `src/utils/resume-data.ts` — ATS surface projection 기준
 - `scripts/generate-pdf.ts` — Puppeteer PDF 생성
 - `src/content/resume/{ko,en}.json` — 이력서 데이터
 
 ## 사용할 체크리스트
 
-5개: data-accuracy, hr-perspective, writing-ko, writing-en, structure
+8개: data-accuracy, hr-perspective, writing-ko, writing-en, structure, hr-deep, position-fit, ai-detection
 
 ## ATS 특화 검증 기준
 
@@ -78,4 +79,4 @@ ATS는 표준 섹션명을 기대함:
 ## 출력
 
 리뷰 결과를 `assets/review-output-template.md` 형식으로 작성.
-ATS PDF 리뷰는 5개 체크리스트 + ATS 특화 기준.
+ATS PDF 리뷰는 8개 체크리스트 + ATS 특화 기준.

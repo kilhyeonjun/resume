@@ -42,6 +42,7 @@ src/
 │   └── templates/          # Page template components
 │       ├── ResumeTemplate.astro
 │       ├── ResumePrintTemplate.astro
+│       ├── ResumeAtsTemplate.astro
 │       ├── PortfolioTemplate.astro
 │       ├── PortfolioDetailTemplate.astro
 │       └── ExperienceDetailTemplate.astro
@@ -55,11 +56,10 @@ src/
 ├── layouts/
 │   └── Layout.astro        # Main layout (nav, header, footer, dark mode)
 ├── pages/
-│   ├── index.astro         # Home page
-│   ├── resume.astro        # Korean resume (thin wrapper)
+│   ├── index.astro         # Korean resume home page (thin wrapper)
 │   ├── resume-print.astro  # Korean HR PDF page
 │   ├── resume-ats.astro    # Korean ATS PDF page
-│   ├── resume/experience/  # Experience detail pages
+│   ├── experience/         # Experience detail pages
 │   ├── portfolio/          # Portfolio list + detail ([slug].astro)
 │   └── en/                 # English versions (mirrors KO structure)
 └── styles/
@@ -83,6 +83,7 @@ import ResumeTemplate from '../components/templates/ResumeTemplate.astro';
 ### Content Collections
 Resume data lives in `src/content/resume/{ko,en}.json`, validated by Zod schemas in `content.config.ts`.
 Access via `getEntry('resume-ko', 'main')` or `getEntry('resume-en', 'main')`.
+Treat `ko.json`/`en.json` as the source of truth, then apply surface-specific projection in `src/utils/resume-data.ts` before rendering.
 Portfolio data is a plain JSON import from `src/data/portfolio.json`.
 
 ### i18n
@@ -100,6 +101,7 @@ Custom variant defined in `global.css`: `@custom-variant dark (&:where(.dark, .d
 ### Print / PDF
 - `no-print` class hides elements during print (nav, footer, buttons)
 - Dedicated print templates (`ResumePrintTemplate.astro`) with inline styles (no Tailwind)
+- Surface-specific content differences should live in `src/utils/resume-data.ts` when they need to be shared across templates
 - PDF generated via Puppeteer navigating to print pages on dev server
 
 ## Code Style
@@ -162,6 +164,7 @@ Custom variant defined in `global.css`: `@custom-variant dark (&:where(.dark, .d
 | `src/styles/global.css` | Theme colors, print styles, shared CSS classes |
 | `src/layouts/Layout.astro` | Shell: head, nav, footer, dark mode script |
 | `src/components/templates/ResumeTemplate.astro` | Main resume rendering logic |
+| `src/components/templates/ResumeAtsTemplate.astro` | ATS resume rendering logic |
 | `src/content/resume/ko.json` | Korean resume data (source of truth) |
 | `scripts/generate-pdf.ts` | PDF generation config and Puppeteer orchestration |
 | `.github/workflows/deploy.yml` | CI/CD: build + deploy to GitHub Pages |
@@ -170,14 +173,14 @@ Custom variant defined in `global.css`: `@custom-variant dark (&:where(.dark, .d
 
 | Skill | Purpose |
 |-------|---------|
-| `verify-implementation` | 모든 verify 스킬 순차 실행 → 통합 검증 보고서 생성 |
+| `verify-implementation` | 모든 verify 스킬 순차 실행 → 통합 검증 보고서 생성 (source-of-truth + projection) |
 | `manage-skills` | 세션 변경사항 분석 → verify 스킬 생성/업데이트/AGENTS.md 관리 |
-| `resume-review` | 이력서 콘텐츠/구조 검증 |
+| `resume-review` | 표면별 projection을 고려한 이력서 콘텐츠/구조 리뷰 |
 | `curate-work-data` | work-data → 이력서 큐레이션 (Diff → Evaluate → Draft → Feedback Loop → Apply) |
 | `curate-portfolio` | portfolio.json 프로젝트 큐레이션 (추가/수정/삭제 + 편집 피드백 루프 + 빌드 검증) |
-| `verify-content` | 이력서 콘텐츠 데이터(ko/en JSON)와 Zod 스키마 정합성 검증 |
+| `verify-content` | source-of-truth 기준 이력서 콘텐츠 데이터(ko/en JSON)와 Zod 스키마 정합성 검증 |
 | `verify-astro-components` | Astro 컴포넌트/페이지 코드 규칙 준수 검증 |
-| `verify-visual-qa` | 8개 렌더링 표면(웹/PDF/상세)의 시각 QA 및 링크/ATS 호환성 검증 |
+| `verify-visual-qa` | projection 기준 8개 렌더링 표면(웹/PDF/상세)의 시각 QA 및 링크/ATS 호환성 검증 |
 
 ## Gotchas
 

@@ -2,6 +2,7 @@
 name: verify-content
 description: |
   이력서 콘텐츠 데이터(ko.json, en.json)와 Zod 스키마(content.config.ts)의 정합성을 검증하는 스킬.
+  공통 source-of-truth(JSON)와 projection 레이어(`src/utils/resume-data.ts`)의 전제를 함께 확인한다.
   "JSON 검증", "스키마 확인", "ko/en 동기화", "콘텐츠 정합성 체크", "labels 누락 확인" 요청이 나오면 우선 실행한다.
   콘텐츠 수정 후, 스키마 변경 후, PR 전 검증, 날짜/URL/slug/밀도 점검이 필요할 때 사용한다.
 ---
@@ -15,6 +16,7 @@ description: |
 3. **날짜 형식 검증** — YYYY-MM 형식 준수 여부 (dateString regex 기반)
 4. **URL 유효성** — safeUrl 스키마에 따른 http/https 프로토콜 검증
 5. **필수 필드 누락** — labels, personalInfo 등 필수 객체의 키 누락 탐지
+6. **Projection 전제 확인** — `src/utils/resume-data.ts`의 surface별 projection이 source-of-truth 구조 가정을 깨지 않는지 확인
 
 ## When to Run
 
@@ -179,3 +181,4 @@ else warns.forEach(w => console.log(w));
 3. **optional 필드** — Zod 스키마에서 `.optional()`로 정의된 필드는 한쪽에만 존재해도 위반이 아님
 4. **`current: true` experience** — endDate가 없는 것은 정상 (current가 true인 경우)
 5. **총 bullet 80~85개 범위** — HR PDF가 2페이지 이내로 들어가면 실질적 문제 없음. 80개 기준을 약간 초과해도 PDF 페이지 수로 최종 판단. WARN은 유지하되 FAIL로 승격하지 않음
+6. **표면별 노출 차이** — `src/utils/resume-data.ts` projection으로 인한 surface 간 노출 차이는 source-of-truth 불일치가 아니므로 구조 위반으로 판단하지 않음

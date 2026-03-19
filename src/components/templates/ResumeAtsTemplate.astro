@@ -15,7 +15,7 @@ if (!entry) {
 }
 const resumeData = entry.data;
 
-const { data, labels } = prepareResumeData(resumeData, lang);
+const { data, labels } = prepareResumeData(resumeData, lang, 'ats');
 
 const basePath = getBasePath(lang);
 const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `${data.name} - Resume (ATS Optimized)`;
@@ -245,6 +245,9 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
                 <li>{highlight}</li>
               ))}
             </ul>
+          )}
+          {exp.projects && exp.projects.length > 0 && (
+            <p><strong>{labels.projects.toUpperCase()}</strong>: {exp.projects.map((project) => project.name).join(', ')}</p>
           )}
         </div>
       ))}

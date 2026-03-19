@@ -1,22 +1,23 @@
 ---
 import { getEntry } from 'astro:content';
 import ExperienceDetailTemplate from '../../../components/templates/ExperienceDetailTemplate.astro';
+import { prepareResumeData } from '../../../utils/resume-data';
 
 export async function getStaticPaths() {
   const entry = await getEntry('resume-en', 'main');
   if (!entry) {
     throw new Error('Resume data not found');
   }
-  const resumeData = entry.data;
-  
-  return resumeData.experience.map((exp, index) => ({
+  const { data, labels } = prepareResumeData(entry.data, 'en', 'experience');
+
+  return data.experience.map((exp, index) => ({
     params: { slug: exp.slug },
     props: { 
       experience: exp, 
       index,
-      total: resumeData.experience.length,
-      allExperience: resumeData.experience,
-      labels: resumeData.labels
+      total: data.experience.length,
+      allExperience: data.experience,
+      labels,
     }
   }));
 }

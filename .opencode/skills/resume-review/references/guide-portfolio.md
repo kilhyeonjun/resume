@@ -4,6 +4,8 @@
 
 - `src/pages/portfolio/index.astro` — 포트폴리오 목록
 - `src/pages/portfolio/[slug].astro` — 포트폴리오 상세
+- `src/pages/en/portfolio/index.astro` — 포트폴리오 목록 (en)
+- `src/pages/en/portfolio/[slug].astro` — 포트폴리오 상세 (en)
 - `src/components/templates/PortfolioTemplate.astro` — 목록 렌더링
 - `src/components/templates/PortfolioDetailTemplate.astro` — 상세 렌더링
 - `src/data/portfolio.json` — 포트폴리오 데이터
@@ -11,7 +13,7 @@
 
 ## 사용할 체크리스트
 
-5개: data-accuracy, technical, writing-ko, writing-en, structure
+7개: data-accuracy, technical, writing-ko, writing-en, structure, code-quality, ui-ux
 
 (hr-perspective는 포트폴리오에 미적용 — 포트폴리오는 STAR/featured 개념과 무관)
 
@@ -70,4 +72,4 @@
 ## 출력
 
 리뷰 결과를 `assets/review-output-template.md` 형식으로 작성.
-포트폴리오 리뷰는 5개 체크리스트 + 포트폴리오 특화 기준.
+포트폴리오 리뷰는 7개 체크리스트 + 포트폴리오 특화 기준.

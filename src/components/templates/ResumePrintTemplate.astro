@@ -20,15 +20,13 @@ if (!entry) {
 }
 const resumeData = entry.data;
 
-const { data, labels } = prepareResumeData(resumeData, lang);
+const { data, labels } = prepareResumeData(resumeData, lang, 'print');
 
 const basePath = getBasePath(lang);
 const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
 const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}`;
 
-// HR-PDF: limit to first 4 items (most recent) to keep focus on career impact
-const osItems = data.openSource ? data.openSource.slice(0, 4) : [];
-const osGrouped = groupOpenSourceByRepo(osItems);
+const osGrouped = groupOpenSourceByRepo(data.openSource);
 ---
 
 <!DOCTYPE html>
@@ -320,6 +318,9 @@ const osGrouped = groupOpenSourceByRepo(osItems);
                   <li><span class="highlight-bullet">•</span>{highlight}</li>
                 ))}
               </ul>
+            )}
+            {exp.projects && exp.projects.length > 0 && (
+              <p class="description">{labels.projects}: {exp.projects.map((project) => project.name).join(', ')}</p>
             )}
 
           </div>

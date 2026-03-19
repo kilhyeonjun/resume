@@ -2,15 +2,16 @@
 
 ## 범위
 
-- `src/pages/resume.astro` (ko), `src/pages/en/resume.astro` (en)
+- `src/pages/index.astro` (ko), `src/pages/en/index.astro` (en)
 - `src/components/templates/ResumeTemplate.astro` — 메인 렌더링 로직
+- `src/utils/resume-data.ts` — 웹 surface projection 기준
 - `src/layouts/Layout.astro` — 전체 레이아웃 (nav, header, footer, dark mode)
 - `src/styles/global.css` — Tailwind 테마, 공유 스타일, print 스타일
 - `src/content/resume/{ko,en}.json` — 이력서 데이터
 
 ## 사용할 체크리스트
 
-전체 6개: data-accuracy, hr-perspective, technical, writing-ko, writing-en, structure
+전체 11개: data-accuracy, hr-perspective, technical, writing-ko, writing-en, structure, code-quality, ui-ux, hr-deep, position-fit, ai-detection
 
 ## 웹 특화 검증 기준
 
@@ -66,4 +67,4 @@
 ## 출력
 
 리뷰 결과를 `assets/review-output-template.md` 형식으로 작성.
-웹 리뷰는 6개 체크리스트 전체를 사용하므로 카테고리별 점수 6개 + 종합 점수.
+웹 리뷰는 11개 체크리스트 전체를 사용하므로 카테고리별 점수 11개 + 종합 점수.

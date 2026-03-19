@@ -42,6 +42,12 @@ const { experience, labels, basePath } = Astro.props;
                ))}
             </ul>
           )}
+          {exp.projects && exp.projects.length > 0 && (
+            <p class="mt-3 text-sm text-gray-600 dark:text-gray-300">
+              <span class="font-medium text-gray-700 dark:text-gray-200">{labels.projects}:</span>{' '}
+              {exp.projects.map((project) => project.name).join(', ')}
+            </p>
+          )}
            <a 
              href={`${basePath}/experience/${exp.slug}`}
              class="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"

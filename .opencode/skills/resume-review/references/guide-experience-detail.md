@@ -2,14 +2,15 @@
 
 ## 범위
 
-- `src/pages/resume/experience/[slug].astro` (ko)
-- `src/pages/en/resume/experience/[slug].astro` (en)
+- `src/pages/experience/[slug].astro` (ko)
+- `src/pages/en/experience/[slug].astro` (en)
 - `src/components/templates/ExperienceDetailTemplate.astro` — 렌더링 로직
+- `src/utils/resume-data.ts` — experience surface projection 기준
 - `src/content/resume/{ko,en}.json` → 대상 experience[N] 데이터
 
 ## 사용할 체크리스트
 
-6개: data-accuracy, hr-perspective, technical, writing-ko, writing-en, structure
+8개: data-accuracy, hr-perspective, technical, writing-ko, writing-en, structure, hr-deep, ai-detection
 
 ## 리뷰 절차
 
@@ -95,6 +96,7 @@ data-accuracy → hr-perspective → technical → writing-ko → writing-en →
 
 리뷰 결과를 `assets/review-output-template.md` 형식으로 작성.
 경력 상세 리뷰의 카테고리별 점수 체계:
+- 8개 체크리스트 기준 카테고리별 점수 + 종합 점수
 - 10점 만점 방식 (기존 리뷰 파일과 동일)
 - 이슈별 CRITICAL/HIGH/MEDIUM/LOW 분류
 - 종합 점수 + 핵심 개선 권장사항

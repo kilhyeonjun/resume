@@ -191,6 +191,9 @@ FAIL:
 3. **ATS 무채색 출력** (`printBackground: false`)  
    → 색상/배경 부재는 의도된 동작이므로 시각 결함으로 분류하지 않는다.
 
+4. **외부 서비스 anti-bot/비표준 차단 응답** (LinkedIn `999`, Glassdoor `403` 등)  
+   → 자동화 환경에서만 발생하는 차단 응답이므로 WARN으로 분류하고 FAIL로 승격하지 않는다. 단, 링크 자체가 정상인지는 브라우저에서 수동 확인을 권장한다.
+
 ## Output Format
 
 ```markdown

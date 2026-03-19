@@ -22,7 +22,7 @@
 
 **허용 예외 WARN 2건:**
 1. verify-content 밀도 83개 (>80) — HR PDF 2페이지 이내이므로 실질적 문제 없음 (verify-content Exceptions #5 참조)
-2. verify-visual-qa LinkedIn 999 — anti-bot 응답으로 실제 링크 정상 (verify-visual-qa Exceptions #2 참조)
+2. verify-visual-qa LinkedIn 999 — 자동화 환경 전용 anti-bot 응답으로 실제 링크 정상 (verify-visual-qa Exceptions #4 참조)
 
 ---
 

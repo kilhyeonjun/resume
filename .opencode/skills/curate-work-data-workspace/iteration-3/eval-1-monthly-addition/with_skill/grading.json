@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "config": "with_skill",
+  "expectations": [
+    { "text": "당월 기준 필터링이 적용됨", "passed": true, "evidence": "Phase 1에서 monthly filter 2026-03 적용" },
+    { "text": "KO 초안이 명사형 종결로 작성됨", "passed": true, "evidence": "KO final 문장이 강화/개선 계열 명사형 종결로 작성" },
+    { "text": "EN 초안이 과거형 동사로 시작됨", "passed": true, "evidence": "EN final이 Enhanced로 시작" },
+    { "text": "KO/EN 초안이 쌍으로 제시됨", "passed": true, "evidence": "mkt-0113, mkt-0114에 대해 KO/EN pair 모두 제시" },
+    { "text": "7-point 피드백 체크 결과 테이블이 출력됨", "passed": true, "evidence": "Phase 4 Final PASS 테이블(7개 체크) 제공" },
+    { "text": "AI 슬롭 단어가 0건", "passed": true, "evidence": "체크리스트 AI 슬롭 PASS 및 금지어 미사용 명시" },
+    { "text": "work-data에 없는 수치가 만들어지지 않음", "passed": true, "evidence": "기존 수치(없음)와 구조적 사실만 사용, 신규 임의 수치 없음" },
+    { "text": "replace 전략 시 기존 문장을 읽고 핵심 정보를 보존함", "passed": true, "evidence": "replace 사전 읽기에서 기존 KO/EN 문장을 인용하고 NAS-S3/SQS/server-worker/bidirectional sync 정보를 신규 문장에 병합" },
+    { "text": "apply 계획이 명시적으로 제시됨", "passed": true, "evidence": "Phase 4 적용 계획에 replace/append + 대상 프로젝트/인덱스 명시" }
+  ]
+}

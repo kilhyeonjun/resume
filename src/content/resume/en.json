@@ -136,7 +136,7 @@
             "details": [
               "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, and modification in a single platform",
               "Creative Auto-deployment Pipeline: Integrated pipeline from creative upload to automatic registration on Google/Meta/TikTok platforms",
-              "NAS-S3 Dual Sync: SQS event-based server-worker separation architecture for bidirectional sync/restore between internal NAS and S3",
+              "Automated NAS Sync on File Replacement: Triggered NAS sync outbox events automatically, tracked asset_nas_sync states (PENDING/PROCESSING/COMPLETED/FAILED), and applied a version-accumulating path policy to improve synchronization reliability",
               "Meta Asset Sync Performance Optimization: Converted ORM single-row saves to bulk operations, reducing Image sync time by 72% (25.7s→7.1s) and DB transactions by 95% (10~16s→0.3~0.5s)",
               "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%",
               "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25→$1.1 per TB)",
@@ -193,7 +193,8 @@
               "Cross-environment Data Sync: S3-based dynamic game data synchronization across development/staging/production environments",
               "Automated DDL Management Engine: Dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME for schema sync automation",
               "Save/Upload Performance Improvement: Analyzed and optimized Cloud Data ingestion and S3 upload bottlenecks, resolving large-scale processing delays",
-              "Sync Stabilization: Job separation, scheduling approach transition, timeout adjustments, and non-blocking processing for operational reliability"
+              "CloudData Stabilization Across Four Issues: Fixed missing Redis cache invalidation, DDL SKIP metadata omission, copy-key deletion omission, and excludeCloudData propagation bugs",
+              "excludeCloudData Propagation Patch: Added option forwarding to four POST migration paths to block unintended full Cloud Data deletion risk"
             ],
             "techStack": [
               "TypeScript",
@@ -213,8 +214,8 @@
               "Repository Module: Bulk operations, Audit Log, TypeORM type narrowing support; refactored 2000+ line codebase into SRP-based file separation",
               "Distributed Lock Module: ElastiCache (Redis)-based distributed lock decorator for concurrency control in multi-instance environments",
               "TypeScript Generic-based Type Safety: Overcame TypeORM type limitations through function overloading and generics",
-              "Internal NPM Package Management: GitHub Packages-based distribution with CI optimization testing only changed packages",
-              "Game Server Kit Package Extraction: Extracted Sheet module + 5 submodules from game server monolith into @gameduo/glider-sheet package for multi-game project reuse, with 5-branch divergence analysis and conflict resolution"
+              "Automated glider-sheet Upgrades: Built GitHub Actions workflow_dispatch with matrix parallel jobs, reducing seven-project processing time from about three hours to about fifteen minutes",
+              "CI Test Runtime Optimization: Switched ts-jest to isolatedModules and added explicit Entity column types, cutting average CI time from 15m47s to 6m06s (61%) while passing all 81 suites and 978 tests"
             ],
             "techStack": [
               "ElastiCache (Redis)",

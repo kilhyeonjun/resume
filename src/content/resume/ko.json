@@ -136,7 +136,7 @@
             "details": [
               "통합 캠페인 자동화: Google Ads/Meta/TikTok 캠페인 생성·배포·수정을 단일 플랫폼에서 관리하는 API 구축",
               "소재 자동 배포 파이프라인: 소재 업로드부터 Google/Meta/TikTok 플랫폼 자동 등록까지 통합 파이프라인 구축",
-              "NAS-S3 이중화 동기화: SQS 이벤트 기반 서버-워커 분리 아키텍처로 사내 NAS와 S3 간 양방향 동기화/복원 구현",
+              "파일 교체 NAS 자동 동기화: NAS sync outbox 이벤트 자동 발행, asset_nas_sync 상태 추적(PENDING/PROCESSING/COMPLETED/FAILED), 버전 누적 경로 정책 적용으로 동기화 신뢰도 개선",
               "Meta 에셋 동기화 성능 최적화: ORM 단건 저장을 벌크 연산으로 전환하여 Image 동기화 시간 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)",
               "Lambda ARM64 전환: Graviton2 아키텍처 전환으로 소재 처리 Lambda 비용 20% 절감",
               "BigQuery Storage Read API 도입: gRPC 스트리밍 기반 고성능 데이터 읽기로 BigQuery 비용 82% 절감 (TB당 $6.25→$1.1)",
@@ -193,7 +193,8 @@
               "환경 간 데이터 동기화: S3 기반 동적 게임 데이터의 개발/스테이징/프로덕션 환경 간 동기화 시스템",
               "DDL 자동 관리 엔진: PK 컬럼 타입 동적 결정, 컬럼 타입 불일치 감지·MODIFY, 인덱스 자동 생성·RENAME으로 스키마 동기화 자동화",
               "저장/업로드 성능 개선: Cloud Data 적재 및 S3 업로드 병목 구간 분석·최적화로 대용량 처리 지연 해소",
-              "동기화 안정화: job 분리, 스케줄링 방식 전환, timeout 조정, non-blocking 처리로 운영 안정성 확보"
+              "CloudData 안정화 이슈 4건 일괄 수정: Redis 캐시 무효화 누락, DDL SKIP 메타데이터 누락, 복사 시 키 삭제 누락, excludeCloudData 미전달 버그 해결",
+              "excludeCloudData 옵션 전파 보강: 시트 마이그레이션 POST 경로 4곳에 옵션 전달을 추가해 Cloud Data 전체 삭제 리스크 차단"
             ],
             "techStack": [
               "TypeScript",
@@ -213,8 +214,8 @@
               "Repository 모듈: Bulk 연산, Audit Log, TypeORM 타입 좁히기 지원. 2000줄+ 코드를 SRP 기준 파일 분리 리팩토링",
               "분산 락(Lock) 모듈: ElastiCache (Redis) 기반 분산 락 데코레이터로 멀티 인스턴스 환경의 동시성 제어",
               "TypeScript 제네릭 기반 타입 안전성: TypeORM 타입 한계를 함수 오버로딩과 제네릭으로 극복",
-              "사내 NPM 패키지 관리: GitHub Packages 기반 배포, 변경 패키지만 테스트하는 CI 최적화",
-              "게임서버 Kit 패키지 분리: 게임서버 모놀리식에서 Sheet 모듈 + 5개 서브모듈을 @gameduo/glider-sheet 패키지로 추출하여 다중 게임 프로젝트 재사용 및 5개 브랜치 형상 차이 분석·충돌 해결"
+              "glider-sheet 업그레이드 자동화: GitHub Actions workflow_dispatch와 matrix 병렬 실행으로 7개 프로젝트 처리 시간을 약 3시간에서 약 15분으로 단축",
+              "테스트 인프라 성능 최적화: ts-jest isolatedModules 전환과 Entity 컬럼 타입 명시로 CI 평균 시간을 15분47초에서 6분6초로 61% 단축, 81 suites 978 tests 전체 통과"
             ],
             "techStack": [
               "ElastiCache (Redis)",

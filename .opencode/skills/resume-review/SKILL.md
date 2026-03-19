@@ -3,11 +3,13 @@ name: resume-review
 description: |
   이력서 사이트(Astro + Tailwind CSS)의 체계적 리뷰를 수행하는 스킬.
   웹 이력서, HR Print PDF, ATS PDF, 경력 상세 페이지, 포트폴리오 등 유형별 리뷰를 지원한다.
+  AI 자동 탐지 모드와 HR 리크루터 시뮬레이션 모드를 포함해 자동/수동 혼합 리뷰를 지원한다.
   11개 체크리스트(데이터 정확성, HR 관점, 기술적 정확성, 한국어 문장, 영문 번역, 구조,
   코드 품질, UI/UX, HR 심층, 포지션 적합성, AI 탐지)와
   5개 가이드(웹, Print PDF, ATS PDF, 경력 상세, 포트폴리오)를 조합하여 리뷰한다.
   트리거: "이력서 리뷰", "resume review", "리뷰해줘", "검토해줘",
-  "문장 검토", "표현 검토", "밀도 검토", "피드백 루프",
+  "문장 검토", "표현 검토", "밀도 검토", "피드백 루프", "AI 탐지", "AI 체크",
+  "HR 시뮬레이션", "리크루터 관점", "7.4초 테스트", "7.4초 스캔",
   "데이터 정확성 확인", "HR 관점 리뷰", "ATS 최적화 확인",
   "경력 상세 리뷰", "포트폴리오 리뷰", "ko/en 동기화 확인",
   "{회사명} 리뷰", "PDF 리뷰", "Print 리뷰"
@@ -28,6 +30,8 @@ description: |
 | 포트폴리오 | "포트폴리오 리뷰" | [guide-portfolio.md](references/guide-portfolio.md) | data, technical, writing-ko, writing-en, structure, code-quality, ui-ux |
 | 밀도 검증 | "밀도 검토", "details 많지 않나" | [checklist-density.md](references/checklist-density.md) | density |
 | 편집 피드백 루프 | "문장 검토", "표현 검토" | [checklist-editing-feedback.md](references/checklist-editing-feedback.md) | editing-feedback |
+| AI 자동 탐지 | "AI 탐지", "AI 체크", "AI detection" | [checklist-ai-auto-detect.md](references/checklist-ai-auto-detect.md) | ai-auto-detect |
+| HR 시뮬레이션 | "HR 시뮬레이션", "리크루터 관점", "7.4초 테스트" | [checklist-hr-simulation.md](references/checklist-hr-simulation.md) | hr-simulation |
 
 ### 체크리스트 목록
 
@@ -45,6 +49,8 @@ description: |
 | 포지션 적합성 | [checklist-position-fit.md](references/checklist-position-fit.md) | 경력 커버리지, 도메인 균형, 하이라이트 다양성, 깊이 vs 넓이, 맞춤 PDF 용이성 |
 | AI 탐지 | [checklist-ai-detection.md](references/checklist-ai-detection.md) | AI 슬롭 패턴, 과장 표현, AI 특유 어휘, 한국어 AI 패턴, 사람 vs AI 문체 판별 |
 | 밀도 검증 | [checklist-density.md](references/checklist-density.md) | 표면별 밀도 기준, details 수, 총 bullet 수, detail 길이, HR PDF 페이지 수, ATS 단일 컬럼 |
+| AI 자동 탐지 | [checklist-ai-auto-detect.md](references/checklist-ai-auto-detect.md) | 문장 길이 분산, 금지어 자동 스캔, 정량 성과 비율, 구조 반복 탐지 |
+| HR 시뮬레이션 | [checklist-hr-simulation.md](references/checklist-hr-simulation.md) | 7.4초 스캔, 키워드 매칭, 정량 밀도, 도구 명시성 |
 
 ## Related Files
 
@@ -70,6 +76,8 @@ description: |
 | `references/checklist-ai-detection.md` | AI 탐지 체크리스트 |
 | `references/checklist-density.md` | 밀도 검증 체크리스트 |
 | `references/checklist-editing-feedback.md` | 편집 피드백 루프 체크리스트 |
+| `references/checklist-ai-auto-detect.md` | AI 자동 탐지 체크리스트 |
+| `references/checklist-hr-simulation.md` | HR 리크루터 시뮬레이션 체크리스트 |
 
 ## 워크플로우
 
@@ -82,6 +90,8 @@ description: |
 - "포트폴리오" 언급 → **포트폴리오 리뷰**
 - "밀도 검토", "details 많지 않나" 언급 → **밀도 검증**
 - "문장 검토", "표현 검토", "피드백 루프" → **편집 피드백 루프**
+- "AI 탐지", "AI 체크" → **AI 자동 탐지**
+- "HR 시뮬레이션", "리크루터 관점", "7.4초 테스트" → **HR 리크루터 시뮬레이션**
 - 일반 "이력서 리뷰" → **웹 이력서 전체 리뷰**
 - 모호한 경우 유저에게 확인
 
@@ -120,6 +130,8 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 10. **포지션 적합성**: 경력 커버리지, 도메인 균형, 하이라이트 다양성, 기술 깊이 vs 넓이, 맞춤 PDF 용이성
 11. **AI 탐지**: AI 슬롭 패턴, 과장/홍보 표현, AI 특유 어휘, 한국어 AI 패턴, 사람 vs AI 문체 판별
 12. **밀도 검증**: 표면별 밀도 목표(웹/HR PDF/ATS/경력상세/포트폴리오), details 상한, 총 bullet, 문장 길이, HR PDF 페이지 수, ATS 단일 컬럼 확인
+13. **AI 자동 탐지**: 문장 길이 분산, 금지어 자동 스캔, 정량 성과 비율, 구조 반복 탐지
+14. **HR 시뮬레이션**: 7.4초 스캔, 키워드 매칭, 정량 밀도, 도구 명시성
 
 ### Step 5: 결과 작성
 

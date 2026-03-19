@@ -32,6 +32,7 @@ description: |
 |------|------|---------------|
 | `verify-content` | 이력서 콘텐츠 데이터와 Zod 스키마 정합성 검증 | `src/content/resume/*.json`, `src/content.config.ts` |
 | `verify-astro-components` | Astro 컴포넌트/페이지 코드 규칙 준수 검증 | `src/components/**/*.astro`, `src/pages/**/*.astro`, `src/layouts/*.astro` |
+| `verify-visual-qa` | 8개 렌더링 표면의 시각 품질 및 PDF/반응형/링크 검증 | `dist/pdf/*.pdf`, `scripts/generate-pdf.ts`, `src/components/templates/*.astro`, `src/pages/**/*.astro`, `src/styles/global.css` |
 
 참고: `curate-work-data`처럼 검증이 아닌 큐레이션/작성 스킬은 이 테이블에 등록하지 않습니다.
 

@@ -32,6 +32,7 @@ description: |
 |---|------|------|
 | 1 | `verify-content` | 이력서 콘텐츠 데이터와 Zod 스키마 정합성 검증 |
 | 2 | `verify-astro-components` | Astro 컴포넌트/페이지 코드 규칙 준수 검증 |
+| 3 | `verify-visual-qa` | 웹/PDF/상세 표면의 시각 품질, 링크, ATS 호환성 검증 |
 
 ### 참고
 

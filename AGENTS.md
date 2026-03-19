@@ -174,8 +174,10 @@ Custom variant defined in `global.css`: `@custom-variant dark (&:where(.dark, .d
 | `manage-skills` | 세션 변경사항 분석 → verify 스킬 생성/업데이트/AGENTS.md 관리 |
 | `resume-review` | 이력서 콘텐츠/구조 검증 |
 | `curate-work-data` | work-data → 이력서 큐레이션 (Diff → Evaluate → Draft → Feedback Loop → Apply) |
+| `curate-portfolio` | portfolio.json 프로젝트 큐레이션 (추가/수정/삭제 + 편집 피드백 루프 + 빌드 검증) |
 | `verify-content` | 이력서 콘텐츠 데이터(ko/en JSON)와 Zod 스키마 정합성 검증 |
 | `verify-astro-components` | Astro 컴포넌트/페이지 코드 규칙 준수 검증 |
+| `verify-visual-qa` | 8개 렌더링 표면(웹/PDF/상세)의 시각 QA 및 링크/ATS 호환성 검증 |
 
 ## Gotchas
 

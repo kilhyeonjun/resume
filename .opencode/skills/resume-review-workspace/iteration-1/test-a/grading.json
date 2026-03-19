@@ -1,0 +1,27 @@
+{
+  "eval_id": "test-a",
+  "run_id": "resume-review-test-a",
+  "expectations": [
+    {
+      "text": "7-point 체크리스트 테이블 출력됨",
+      "passed": true,
+      "evidence": "output.md에 7개 항목(어순~ATS 호환) 테이블이 제시됨"
+    },
+    {
+      "text": "AI 슬롭 단어 탐지됨 (혁신적, 활용하여)",
+      "passed": true,
+      "evidence": "AI 슬롭 항목에서 활용하여/혁신적인/혁신적으로를 명시적으로 탐지"
+    },
+    {
+      "text": "수정안이 명사형 종결로 제시됨",
+      "passed": true,
+      "evidence": "수정안: 'AI 에이전트 기반 개발 프로세스 설계 및 팀 생산성 향상'"
+    },
+    {
+      "text": "입니다/했습니다 서술형이 교정됨",
+      "passed": true,
+      "evidence": "원문 '향상시켰습니다'를 명사형 표현으로 치환"
+    }
+  ],
+  "overall_pass": true
+}

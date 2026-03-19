@@ -1,0 +1,30 @@
+{
+  "thin_wrapper": {
+    "pass": true,
+    "details": []
+  },
+  "ko_en_mirroring": {
+    "pass": true,
+    "details": []
+  },
+  "props_interface": {
+    "pass": true,
+    "details": []
+  },
+  "external_link_security": {
+    "pass": true,
+    "details": []
+  },
+  "base_url_usage": {
+    "pass": true,
+    "details": []
+  },
+  "html_tag_balance": {
+    "pass": true,
+    "details": []
+  },
+  "build": {
+    "pass": true,
+    "details": "npm run build exit code 0"
+  }
+}

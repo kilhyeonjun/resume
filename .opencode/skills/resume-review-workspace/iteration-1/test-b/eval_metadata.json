@@ -1,0 +1,12 @@
+{
+  "eval_id": "test-b",
+  "eval_name": "editing-feedback-summary-check",
+  "skill": "resume-review",
+  "mode": "editing-feedback-loop",
+  "prompt": "summary 표현 검토해줘 (ko.json 현재 summary 기준)",
+  "source": "src/content/resume/ko.json:12",
+  "assertions": [
+    "7-point 체크리스트 테이블 출력됨",
+    "PASS 또는 구체 이슈 제시"
+  ]
+}

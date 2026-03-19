@@ -1,0 +1,17 @@
+{
+  "eval_id": "test-b",
+  "run_id": "resume-review-test-b",
+  "expectations": [
+    {
+      "text": "7-point 체크리스트 테이블 출력됨",
+      "passed": true,
+      "evidence": "output.md에 7개 항목 PASS/FAIL 표 제공"
+    },
+    {
+      "text": "PASS 또는 구체 이슈 제시",
+      "passed": true,
+      "evidence": "6/7 PASS, HR 가독성 FAIL 사유와 개선 포인트를 구체적으로 제시"
+    }
+  ],
+  "overall_pass": true
+}

@@ -1,0 +1,11 @@
+{
+  "eval_id": "test-d",
+  "eval_name": "verify-astro-components-full-workflow",
+  "skill": "verify-astro-components",
+  "prompt": "Astro 컴포넌트 검증해줘",
+  "assertions": [
+    "7개 검사 수행됨",
+    "PASS/FAIL 결과 테이블 출력됨",
+    "빌드 검증 포함됨"
+  ]
+}

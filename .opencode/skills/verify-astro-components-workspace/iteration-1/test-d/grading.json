@@ -1,0 +1,22 @@
+{
+  "eval_id": "test-d",
+  "run_id": "verify-astro-components-test-d",
+  "expectations": [
+    {
+      "text": "7개 검사 수행됨",
+      "passed": true,
+      "evidence": "output.md에 1~7번 검사 모두 기재"
+    },
+    {
+      "text": "PASS/FAIL 결과 테이블 출력됨",
+      "passed": true,
+      "evidence": "검사별 PASS/FAIL 컬럼이 있는 표 제공"
+    },
+    {
+      "text": "빌드 검증 포함됨",
+      "passed": true,
+      "evidence": "7번 항목 Astro build PASS 명시"
+    }
+  ],
+  "overall_pass": true
+}

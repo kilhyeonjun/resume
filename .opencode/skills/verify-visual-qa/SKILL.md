@@ -42,40 +42,35 @@ description: |
 
 ### Step 1: PDF 페이지 수 검증
 
-먼저 `dist/pdf/`에 PDF가 생성되어 있는지 확인한 뒤, 페이지 수 제한을 점검합니다.
+먼저 `dist/pdf/`에 PDF가 생성되어 있는지 확인한 뒤, **Read 도구로 각 PDF의 파싱된 페이지 수를 확인**합니다.
 
-```bash
-node -e "
-const fs = require('fs');
-['resume-hr-ko.pdf','resume-hr-en.pdf','resume-ats-ko.pdf','resume-ats-en.pdf'].forEach(f => {
-  const buf = fs.readFileSync('dist/pdf/' + f);
-  const pages = (buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g)||[]).length;
-  const ok = f.includes('hr') ? pages <= 2 : pages <= 3;
-  console.log((ok?'PASS':'FAIL') + ': ' + f + ' ' + pages + 'p');
-});
-"
-```
+검사 방법:
+1. `Read`로 `dist/pdf/resume-hr-ko.pdf`, `dist/pdf/resume-hr-en.pdf`, `dist/pdf/resume-ats-ko.pdf`, `dist/pdf/resume-ats-en.pdf`를 읽는다.
+2. 반환된 `PARSED TEXT FOR PAGE: N / M` 메타데이터에서 총 페이지 수 `M`을 확인한다.
+3. 기준과 비교한다:
+   - HR PDF: `<= 2p`
+   - ATS PDF: `<= 3p`
 
 PASS: HR PDF `<= 2p`, ATS PDF `<= 3p`  
 FAIL: 페이지 제한 초과
 
+주의: raw PDF 바이너리에서 `/Type /Page` 패턴을 세는 방식은 object tree 때문에 overcount될 수 있으므로 단독 기준으로 쓰지 않는다.
+
 ### Step 2: PDF 텍스트 추출 가능 확인
 
-스캔 이미지 PDF가 아닌지 확인하기 위해 텍스트 시그니처를 검사합니다.
+스캔 이미지 PDF가 아닌지 확인하기 위해 **Read 도구의 파싱 결과에서 실제 텍스트가 추출되는지** 확인합니다.
 
-```bash
-node -e "
-const fs = require('fs');
-['resume-hr-ko.pdf','resume-ats-ko.pdf','resume-hr-en.pdf','resume-ats-en.pdf'].forEach(f => {
-  const text = fs.readFileSync('dist/pdf/' + f, 'latin1');
-  const hasText = text.includes('AI Native Engineer') || text.includes('경력') || text.includes('Experience');
-  console.log((hasText?'PASS':'FAIL') + ': ' + f + ' text extractable');
-});
-"
-```
+검사 방법:
+1. Step 1과 동일하게 `Read`로 각 PDF를 읽는다.
+2. `PARSED TEXT FOR PAGE` 블록 안에 다음 키워드 중 하나 이상이 보이는지 확인한다.
+   - `AI Native Engineer`
+   - `경력`
+   - `Experience`
+   - `기술 스택`
+   - `Technical Skills`
 
-PASS: 모든 PDF에서 텍스트 시그니처 감지  
-FAIL: 텍스트 시그니처 미검출 (이미지 기반 PDF 가능성)
+PASS: 모든 PDF에서 실제 텍스트 블록이 파싱됨  
+FAIL: 텍스트 블록이 비어 있거나 핵심 키워드가 전혀 보이지 않음 (이미지 기반 PDF 가능성)
 
 ### Step 3: PDF 필수 섹션 존재 확인
 
@@ -86,7 +81,7 @@ FAIL: 텍스트 시그니처 미검출 (이미지 기반 PDF 가능성)
 - 스킬 섹션: `skills` 또는 `기술`
 
 검사 방법:
-1. Step 2의 텍스트 추출 결과에서 키워드 포함 여부 점검
+1. Step 2의 Read 기반 텍스트 추출 결과에서 키워드 포함 여부 점검
 2. 누락 시 `scripts/generate-pdf.ts`의 라우트/스타일 설정 확인
 3. `src/components/templates/ResumePrintTemplate.astro`, `src/components/templates/ResumeAtsTemplate.astro` 섹션 렌더링 조건 확인
 
@@ -154,8 +149,8 @@ FAIL:
 |---|------|------|------|------|
 | 1 | HR PDF KO | 페이지 수 | PASS/FAIL | Np |
 | 2 | HR PDF EN | 페이지 수 | PASS/FAIL | Np |
-| 3 | ATS PDF KO | 텍스트 추출 | PASS/FAIL | signature hit/miss |
-| 4 | ATS PDF EN | 텍스트 추출 | PASS/FAIL | signature hit/miss |
+| 3 | ATS PDF KO | 텍스트 추출 | PASS/FAIL | parsed text hit/miss |
+| 4 | ATS PDF EN | 텍스트 추출 | PASS/FAIL | parsed text hit/miss |
 | 5 | Web KO | 375px 오버플로우 | PASS/FAIL | scrollWidth vs clientWidth |
 | 6 | Web EN | 375px 오버플로우 | PASS/FAIL | scrollWidth vs clientWidth |
 | 7 | Experience Detail | 링크/레이아웃 | PASS/FAIL | broken links N건 |

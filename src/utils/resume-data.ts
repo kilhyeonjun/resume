@@ -45,7 +45,15 @@ function filterExperienceForSurface(experience: ResumeData['experience'], surfac
 }
 
 function filterOpenSourceForSurface(openSource: ResumeData['openSource'], surface: ResumeSurface) {
-  return surface === 'print' ? openSource.slice(0, 4) : openSource;
+  return surface === 'print' ? openSource.slice(0, 1) : openSource;
+}
+
+function filterTechnicalWritingForSurface(technicalWriting: ResumeData['technicalWriting'], surface: ResumeSurface) {
+  return surface === 'print' ? technicalWriting.slice(0, 2) : technicalWriting;
+}
+
+function filterContinuousLearningForSurface(continuousLearning: ResumeData['continuousLearning'], surface: ResumeSurface) {
+  return surface === 'print' ? continuousLearning.slice(0, 1) : continuousLearning;
 }
 
 export function prepareResumeData(
@@ -61,9 +69,9 @@ export function prepareResumeData(
     experience: filterExperienceForSurface(resumeData.experience, surface),
     education: resumeData.education,
     certifications: resumeData.certifications,
-    continuousLearning: resumeData.continuousLearning,
+    continuousLearning: filterContinuousLearningForSurface(resumeData.continuousLearning, surface),
     trainingPrograms: resumeData.trainingPrograms,
-    technicalWriting: resumeData.technicalWriting,
+    technicalWriting: filterTechnicalWritingForSurface(resumeData.technicalWriting, surface),
     openSource: filterOpenSourceForSurface(resumeData.openSource, surface),
     awards: resumeData.awards,
   };

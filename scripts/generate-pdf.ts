@@ -48,7 +48,7 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-hr-ko.pdf',
       format: 'A4',
       printBackground: true,
-      margin: { top: '12mm', right: '0mm', bottom: '10mm', left: '0mm' },
+      margin: { top: '8mm', right: '0mm', bottom: '6mm', left: '0mm' },
     },
     {
       name: 'ATS Version (Korean)',
@@ -66,7 +66,7 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-hr-en.pdf',
       format: 'A4',
       printBackground: true,
-      margin: { top: '10mm', right: '0mm', bottom: '8mm', left: '0mm' },
+      margin: { top: '8mm', right: '0mm', bottom: '6mm', left: '0mm' },
     },
     {
       name: 'ATS Version (English)',

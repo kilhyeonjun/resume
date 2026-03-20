@@ -129,9 +129,10 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 4. `agent-browser` 또는 `webapp-testing`으로 실제 표면 확인
 
 필수 증거:
-- 웹/경력 상세/포트폴리오: desktop + mobile screenshot
-- HR/ATS PDF: 생성된 `dist/pdf/*.pdf` 실제 파일 확인 결과
+- 웹/경력 상세/포트폴리오: **전체 관련 라우트**에 대한 desktop + mobile screenshot
+- HR/ATS PDF: **생성된 모든 `dist/pdf/*.pdf`** 실제 파일 확인 결과
 - projection 변경이 있는 경우: `src/utils/resume-data.ts` 규칙과 화면 차이 비교 메모
+- 섹션 단위 메모: `핵심 역량`, `경력`, `기술 스택`, `포트폴리오 카드`, `포트폴리오 상세`, `경력 상세` 등
 
 기본 증거 저장 위치:
 - `resume-review-workspace/iteration-*/`
@@ -173,6 +174,7 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 - **교차 검증**: highlights <-> project details <-> portfolio 간 수치 교차 확인
 - **Projection 인지**: surface별 생략/축약은 `src/utils/resume-data.ts` 규칙과 일치하는지 먼저 확인
 - **실행 근거 필수**: 웹/상세/포트폴리오 리뷰는 브라우저 캡처 없이 완료로 간주하지 않음
+- **전체 표면 필수**: exhaustive review 요청에서는 대표 페이지만 보지 않고, 관련 페이지 전체를 확인해야 완료로 본다
 - **PDF 실물 확인 필수**: Print/ATS 리뷰는 생성된 `dist/pdf/*.pdf` 실제 결과 확인 없이 완료로 간주하지 않음
 - **기존 리뷰 참조**: 프로젝트 루트의 `.{slug}-review.md` 파일이 있으면 기존 이슈 추적
 - **점수 기준 일관성**: 10점 만점 기준 사용. 기존 리뷰의 다른 점수 체계(5점 등)와 비교 시 환산 필요

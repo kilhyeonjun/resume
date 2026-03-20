@@ -16,5 +16,14 @@
       "desktop/mobile browser evidence를 포함한다",
       "projection rule과 generated PDF result를 함께 언급한다"
     ]
+  },
+  {
+    "id": "exhaustive-local-review",
+    "prompt": "코드레벨을 검토하든 데이터를 검토하든 agent-browser나 playwright로 실제 보이는 것도 검토하고 PDF ATS는 print까지 해서 나온 결과물도 확인해야 해. 모든 페이지와 모든 PDF, 현재 이력서의 모든 부분을 꼼꼼하게 검토하는 resume-review 흐름을 설명해줘.",
+    "expect": [
+      "로컬 build/dev/pdf generation 순서를 포함한다",
+      "모든 관련 페이지와 모든 PDF를 대상으로 삼는다",
+      "섹션 단위 메모와 screenshot evidence를 요구한다"
+    ]
   }
 ]

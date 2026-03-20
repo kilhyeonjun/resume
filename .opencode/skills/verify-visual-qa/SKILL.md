@@ -6,6 +6,7 @@ description: |
   특히 PDF 생성 직후, 콘텐츠(ko/en/portfolio) 변경 직후, 템플릿/스타일 수정 직후에는 반드시 실행해 회귀를 차단한다.
   8개 렌더링 표면(웹 KO/EN, HR PDF KO/EN, ATS PDF KO/EN, 경력 상세, 포트폴리오 리스트/상세)을 한 번에 검증한다.
   `src/utils/resume-data.ts` projection으로 발생한 의도된 표면 차이와 실제 회귀를 구분한다.
+  대표 페이지만 샘플링하지 않고, 로컬에서 띄운 실제 사이트의 모든 관련 페이지와 모든 생성 PDF를 확인하는 것을 기본값으로 한다.
 ---
 
 # 시각 QA 검증
@@ -45,15 +46,16 @@ description: |
 브라우저 확인을 **선택 사항이 아니라 기본 경로**로 취급합니다.
 
 준비 순서:
-1. `npm run dev`로 로컬 서버를 실행한다.
-2. `agent-browser` 또는 `webapp-testing`을 사용해 실제 페이지를 연다.
-3. 기본 표면을 최소 다음 순서로 확인한다.
-   - `/`
-   - `/en/`
-   - `/experience/gameduo`
-   - `/portfolio/`
-   - `/portfolio/ledgerly`
-4. 데스크톱과 모바일 뷰포트를 모두 확인한다.
+1. `npm run build`로 현재 상태가 실제 빌드되는지 먼저 확인한다.
+2. `npm run dev`로 로컬 서버를 실행한다.
+3. `agent-browser` 또는 `webapp-testing`을 사용해 실제 페이지를 연다.
+4. **대표 라우트 샘플링이 아니라, 현재 사이트의 모든 관련 페이지를 확인 대상으로 수집한다.**
+   - 웹 이력서: `/`, `/en/`
+   - HR print 라우트: `/resume-print`, `/en/resume-print`
+   - ATS 라우트: `/resume-ats`, `/en/resume-ats`
+   - 경력 상세: `src/pages/experience/[slug].astro`, `src/pages/en/experience/[slug].astro`에서 생성되는 전체 slug
+   - 포트폴리오 목록/상세: `/portfolio/`, `/en/portfolio/`, 각 portfolio slug 전체
+5. 데스크톱과 모바일 뷰포트를 모두 확인한다.
 
 권장 뷰포트:
 - Desktop: `1440x900`
@@ -67,12 +69,12 @@ agent-browser set viewport 1440 900 && agent-browser screenshot --full
 agent-browser set viewport 375 812 && agent-browser screenshot --full
 ```
 
-PASS: 브라우저 세션에서 주요 표면 접근 가능  
-FAIL: dev server 미기동, 주요 라우트 미접근, 브라우저 도구 미실행
+PASS: 브라우저 세션에서 전체 대상 라우트 접근 가능  
+FAIL: dev server 미기동, 일부 라우트 미접근, 브라우저 도구 미실행
 
 ### Step 2: 실브라우저 시각 가독성 검증
 
-각 표면에서 다음을 직접 확인한다.
+각 표면에서 다음을 직접 확인한다. **섹션 단위 메모를 남기고, 표면별 screenshot을 저장한다.**
 
 검사 항목:
 1. above-the-fold에서 이름/직함/핵심 정보가 즉시 읽히는지
@@ -82,16 +84,17 @@ FAIL: dev server 미기동, 주요 라우트 미접근, 브라우저 도구 미�
 5. 포트폴리오/상세 카드와 경력 상세가 과밀하거나 끊겨 보이지 않는지
 
 권장 증거:
-- Desktop full-page screenshot 1장 이상
-- Mobile full-page screenshot 1장 이상
-- 문제 표면별 간단 메모
+- 각 라우트당 Desktop full-page screenshot 1장 이상
+- 각 라우트당 Mobile full-page screenshot 1장 이상
+- 문제 섹션별 메모 (`핵심 역량`, `경력`, `기술 스택`, `포트폴리오 카드`, `포트폴리오 상세 기능/회고` 등)
+- 브라우저에서 확인한 오버플로우/링크/시선 흐름 메모
 
-PASS: 표면별 가독성/레이아웃 문제 없음  
-FAIL: 과밀, 줄바꿈 깨짐, 계층 불명확, 모바일 오버플로우, 시선 흐름 문제 발견
+PASS: 모든 관련 페이지에서 표면별 가독성/레이아웃 문제 없음  
+FAIL: 과밀, 줄바꿈 깨짐, 계층 불명확, 모바일 오버플로우, 시선 흐름 문제가 일부 페이지 또는 일부 섹션에서라도 발견됨
 
 ### Step 3: Projection 차이 검증
 
-브라우저와 빌드 산출물에서 표면별 의도된 차이를 확인한다.
+브라우저와 빌드 산출물에서 표면별 의도된 차이를 확인한다. 이 검사는 최소 1개 페이지가 아니라 해당 surface의 관련 페이지 전체를 기준으로 본다.
 
 핵심 확인:
 1. Web/HR PDF/ATS는 filtered project 집합을 소비하는지
@@ -104,10 +107,11 @@ FAIL: 숨겨져야 할 항목 노출, 보여야 할 항목 누락, 상세 surfac
 
 ### Step 4: PDF 페이지 수 검증
 
-먼저 `dist/pdf/`에 PDF가 생성되어 있는지 확인한 뒤, **Read 도구로 각 PDF의 파싱된 페이지 수를 확인**합니다.
+먼저 `dist/pdf/`에 PDF가 생성되어 있는지 확인한 뒤, **모든 생성 PDF를 실제 결과물 기준으로 확인**합니다.
 
 검사 방법:
-1. `Read`로 `dist/pdf/resume-hr-ko.pdf`, `dist/pdf/resume-hr-en.pdf`, `dist/pdf/resume-ats-ko.pdf`, `dist/pdf/resume-ats-en.pdf`를 읽는다.
+1. 필요 시 `npm run pdf` 또는 `npm run pdf:hr`, `npm run pdf:ats`를 실행해 최신 PDF를 생성한다.
+2. `Read`로 `dist/pdf/resume-hr-ko.pdf`, `dist/pdf/resume-hr-en.pdf`, `dist/pdf/resume-ats-ko.pdf`, `dist/pdf/resume-ats-en.pdf`를 읽는다.
 2. 반환된 `PARSED TEXT FOR PAGE: N / M` 메타데이터에서 총 페이지 수 `M`을 확인한다.
 3. 기준과 비교한다:
    - HR PDF: `<= 2p`
@@ -152,7 +156,7 @@ FAIL: 섹션 누락 또는 텍스트 누락
 
 ### Step 7: 웹 빌드 후 라우트 존재 확인
 
-정적 빌드 결과물에서 필수 라우트가 생성됐는지 검증합니다.
+정적 빌드 결과물에서 필수 라우트가 생성됐는지 검증합니다. **동적 상세 페이지도 전체 존재 여부를 확인한다.**
 
 ```bash
 ls dist/index.html dist/en/index.html dist/resume-print/index.html dist/en/resume-print/index.html dist/portfolio/index.html dist/en/portfolio/index.html 2>/dev/null | wc -l
@@ -161,19 +165,19 @@ ls dist/index.html dist/en/index.html dist/resume-print/index.html dist/en/resum
 PASS: `6` 이상 존재  
 FAIL: 누락 라우트 있음 (템플릿 연결/페이지 파일 점검 필요)
 
-권장 추가 확인:
+필수 추가 확인:
 - `dist/resume-ats/index.html`, `dist/en/resume-ats/index.html`
-- `dist/experience/`, `dist/en/experience/`
+- `dist/experience/*/index.html`, `dist/en/experience/*/index.html`
 - `dist/portfolio/*/index.html`, `dist/en/portfolio/*/index.html`
 
 ### Step 8: 브라우저 링크/오버플로우/이미지 체크
 
-Step 2의 실브라우저 순회 중 다음 기술적 체크를 함께 수행한다.
+Step 2의 실브라우저 순회 중 다음 기술적 체크를 함께 수행한다. **웹 이력서/경력 상세/포트폴리오 관련 전체 페이지를 다 돈다.**
 
 검사 항목:
 1. `document.body.scrollWidth > document.body.clientWidth` 여부
 2. 주요 이미지/아이콘 로드 실패 여부
-3. 내부 링크 이동 성공 여부 (`/experience/*`, `/portfolio/*`, `/en/*`)
+3. 내부 링크 이동 성공 여부 (`/experience/*`, `/portfolio/*`, `/en/*`, `/resume-print`, `/resume-ats`)
 4. 외부 링크가 명백히 깨져 보이지 않는지
 
 PASS: 오버플로우 없음, 링크 이동 정상, 이미지/아이콘 문제 없음  
@@ -203,10 +207,10 @@ FAIL:
 ```markdown
 | # | 표면 | 검사 | 상태 | 상세 |
 |---|------|------|------|------|
-| 1 | Web KO | desktop/mobile 가독성 | PASS/FAIL | screenshot + note |
-| 2 | Web EN | desktop/mobile 가독성 | PASS/FAIL | screenshot + note |
-| 3 | Experience Detail | projection/레이아웃 | PASS/FAIL | hidden vs visible items |
-| 4 | Portfolio List/Detail | layout/링크 | PASS/FAIL | screenshot + note |
+| 1 | Web KO | desktop/mobile 가독성 | PASS/FAIL | all relevant screenshots + notes |
+| 2 | Web EN | desktop/mobile 가독성 | PASS/FAIL | all relevant screenshots + notes |
+| 3 | Experience Detail | projection/레이아웃 | PASS/FAIL | every slug reviewed |
+| 4 | Portfolio List/Detail | layout/링크 | PASS/FAIL | every slug reviewed |
 | 5 | HR PDF KO | 페이지 수 | PASS/FAIL | Np |
 | 6 | HR PDF EN | 페이지 수 | PASS/FAIL | Np |
 | 7 | ATS PDF KO | 텍스트 추출 | PASS/FAIL | parsed text hit/miss |
@@ -231,7 +235,7 @@ FAIL:
 | `src/components/templates/ExperienceDetailTemplate.astro` | 경력 상세 렌더링 |
 | `src/components/templates/PortfolioTemplate.astro` | 포트폴리오 목록 렌더링 |
 | `src/components/templates/PortfolioDetailTemplate.astro` | 포트폴리오 상세 렌더링 |
-| `src/pages/**/*.astro` | KO/EN 페이지 엔트리 및 라우트 |
+| `src/pages/**/*.astro` | KO/EN 페이지 엔트리 및 전체 라우트 |
 | `src/styles/global.css` | 반응형/레이아웃/인쇄 스타일 |
 
 ## Exceptions
@@ -240,7 +244,7 @@ FAIL:
    → FAIL로 단정하지 않고 "PDF 생성 선행 필요" 안내 후 PDF 검사를 보류한다.
 
 2. **Dev server 미실행** (`http://localhost:4321/resume` 접속 불가)  
-   → 브라우저 기반 Step 1~3, Step 8은 `SKIP` 처리하고 정적 빌드/PDF 검사만 진행한다. 단, 이 경우 최종 판정은 `WARN` 이상으로 유지한다.
+   → exhaustive visual QA를 완료할 수 없으므로 `FAIL`로 분류한다. 정적 빌드/PDF 검사만으로는 완료 판정을 내리지 않는다.
 
 3. **ATS 무채색 출력** (`printBackground: false`)  
    → 색상/배경 부재는 의도된 동작이므로 시각 결함으로 분류하지 않는다.
@@ -249,7 +253,7 @@ FAIL:
    → 자동화 환경에서만 발생하는 차단 응답이므로 WARN으로 분류하고 FAIL로 승격하지 않는다. 단, 링크 자체가 정상인지는 브라우저에서 수동 확인을 권장한다.
 
 5. **브라우저 도구 선택**  
-   → `agent-browser`를 우선 사용하고, 더 복잡한 다단계 확인이 필요할 때 `webapp-testing`(Playwright)로 확장한다.
+   → `agent-browser` CLI 또는 `webapp-testing`(Playwright) 중 실제 실행 가능한 도구를 사용한다. 특정 스킬 이름이 환경에 없으면 대체 가능한 브라우저 도구로 즉시 전환하되, 브라우저 증거 수집 자체를 생략하지 않는다.
 
 ## Output Format
 

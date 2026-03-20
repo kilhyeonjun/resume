@@ -39,6 +39,7 @@ description: |
 
 `curate-work-data`, `manage-skills` 같은 비검증 스킬은 `verify-*` 네이밍 패턴이 아니며 자체 검증/리뷰 로직을 내장하므로, 이 스킬의 자동 실행 대상에 포함하지 않는다.
 단, 콘텐츠/템플릿/가독성 검토가 필요한 변경에서는 `resume-review`를 읽기 전용 후속 리뷰로 실행할 수 있다.
+사용자가 "꼼꼼히", "다방면으로", "모든 페이지", "모든 PDF", "실브라우저" 같은 표현을 쓰면 이 후속 리뷰를 사실상 필수 단계로 간주한다.
 
 ## 워크플로우
 
@@ -231,12 +232,14 @@ X개 수정 완료.
 - `src/components/templates/*.astro` 변경
 - `src/styles/global.css` 변경
 - 사용자가 가독성, HR 관점, PDF 품질, ATS 품질, 포트폴리오 읽기 경험을 명시적으로 요구
+- 사용자가 전체 페이지/전체 PDF/실브라우저 기반 exhaustive review를 요구
 
 실행 기준:
 1. `npm run build` 성공 상태 유지
-2. 필요 시 `npm run dev`, `npm run pdf`, `npm run pdf:hr`, `npm run pdf:ats` 실행
+2. `npm run dev`, `npm run pdf`, `npm run pdf:hr`, `npm run pdf:ats`를 필요 범위에 따라 실행
 3. `resume-review`로 코드/데이터/브라우저/PDF evidence를 포함한 읽기 전용 리뷰 수행
-4. verify 결과와 review 결과를 분리해서 최종 보고서에 함께 명시
+4. exhaustive 요청이면 관련 라우트 전체와 생성 PDF 전체를 모두 검토 대상으로 명시
+5. verify 결과와 review 결과를 분리해서 최종 보고서에 함께 명시
 
 ---
 

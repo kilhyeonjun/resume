@@ -103,7 +103,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
     {/* Description */}
     {projectDescription && (
       <section class="mb-10">
-        <h2 class="section-title mb-4">{labels.description}</h2>
+        <h2 class="section-title mb-6">{labels.description}</h2>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{projectDescription}</p>
       </section>
     )}
@@ -111,7 +111,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
     {/* Team Composition */}
     {teamComposition && (
       <section class="mb-10">
-        <h2 class="section-title mb-4">{labels.teamComposition}</h2>
+        <h2 class="section-title mb-6">{labels.teamComposition}</h2>
         <p class="text-gray-700 dark:text-gray-300">{teamComposition}</p>
       </section>
     )}
@@ -137,8 +137,8 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
         <ul class="space-y-3">
           {projectHighlights.map((highlight: string) => (
             <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
-              <CheckIcon class="mt-1 h-5 w-5 flex-shrink-0 text-primary-500" />
-              <span class="text-lg">{highlight}</span>
+              <CheckIcon class="mt-1.5 h-4 w-4 flex-shrink-0 text-primary-500" />
+              <span class="leading-7">{highlight}</span>
             </li>
           ))}
         </ul>
@@ -152,8 +152,8 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
         <ul class="space-y-3">
           {projectFeatures.map((feature: string) => (
             <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
-              <CheckIcon class="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
-              <span class="text-lg">{feature}</span>
+              <CheckIcon class="mt-1.5 h-4 w-4 flex-shrink-0 text-green-500" />
+              <span class="leading-7">{feature}</span>
             </li>
           ))}
         </ul>
@@ -168,7 +168,7 @@ const projectLessons = project.lessons ? (project.lessons[lang] || project.lesso
           {projectLessons.map((lesson: string) => (
             <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
               <span class="mt-1 flex-shrink-0 text-amber-500">💡</span>
-              <span class="text-lg">{lesson}</span>
+              <span class="leading-7">{lesson}</span>
             </li>
           ))}
         </ul>

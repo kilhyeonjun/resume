@@ -33,7 +33,7 @@ const basePath = getBasePath(lang);
         const period = `${project.period.start} — ${project.period.end}`;
         
         return (
-          <article class:list={["group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800", index === projects.length - 1 && projects.length % 2 === 1 && "sm:col-span-2 sm:max-w-md sm:mx-auto"]}>
+          <article class:list={["group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-gray-700 dark:bg-gray-800", index === projects.length - 1 && projects.length % 2 === 1 && "sm:col-span-2 sm:max-w-md sm:mx-auto"]}>
             {/* Cover Image */}
             {project.coverImage ? (
               <a href={`${basePath}/portfolio/${project.slug}`} class="block aspect-video overflow-hidden">
@@ -63,8 +63,8 @@ const basePath = getBasePath(lang);
               </a>
             )}
             
-            <div class="p-6">
-            <div class="mb-3 flex items-center justify-between">
+            <div class="p-5 sm:p-6">
+            <div class="mb-3 flex items-center justify-between gap-3">
               <span class={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${project.type === 'team' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'}`}>
                 {project.type === 'team' ? labels.team : labels.personal}
               </span>
@@ -82,7 +82,7 @@ const basePath = getBasePath(lang);
               </a>
             </h2>
 
-            <p class="mb-4 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
+            <p class="mb-5 line-clamp-2 text-sm leading-6 text-gray-600 dark:text-gray-300">
               {projectSummary}
             </p>
 
@@ -117,7 +117,7 @@ const basePath = getBasePath(lang);
               </div>
               <a 
                 href={`${basePath}/portfolio/${project.slug}`}
-                class="inline-flex items-center gap-1 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                class="-mr-2 inline-flex items-center gap-1 rounded-md px-2 py-1 text-sm font-semibold text-primary-600 transition-colors hover:bg-primary-50 hover:text-primary-700 dark:text-primary-400 dark:hover:bg-primary-900/30 dark:hover:text-primary-300"
               >
                 {labels.viewDetails}
                 <ExternalLinkIcon class="h-3.5 w-3.5" />

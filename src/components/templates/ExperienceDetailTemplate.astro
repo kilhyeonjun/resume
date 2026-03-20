@@ -116,7 +116,7 @@ const basePath = getBasePath(lang);
          <h2 class="section-title mb-6">{labels.projects}</h2>
          <div class="space-y-8">
            {experience.projects.map((project) => (
-             <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+              <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
                <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white">
                   {project.name}
@@ -133,7 +133,7 @@ const basePath = getBasePath(lang);
                   {project.details.map((detail) => (
                     <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
                       <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary-500"></span>
-                      <span>{detail}</span>
+                      <span class="leading-7">{detail}</span>
                     </li>
                   ))}
                 </ul>
@@ -160,7 +160,7 @@ const basePath = getBasePath(lang);
          <h2 class="section-title mb-6">{labels.activities}</h2>
          <div class="space-y-8">
            {experience.activities.map((activity) => (
-             <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+             <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
                <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                  <div>
                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">

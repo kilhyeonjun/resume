@@ -1,0 +1,12 @@
+[
+  {
+    "id": "core-competency-live-issue",
+    "prompt": "https://kilhyeonjun.github.io/resume/ 페이지의 핵심역량 부분이 이상해 보여. 스크린샷 찍고 검토해서 문제를 설명해줘. 특히 컬럼 균형, 카테고리 구분감, 줄바꿈 밀도, 경력 섹션과의 위계 차이까지 봐줘.",
+    "expect": [
+      "브라우저 screenshot evidence를 요구하거나 사용한다",
+      "핵심 역량의 컬럼/카드 균형을 지적한다",
+      "카테고리 구분감과 bullet wrapping 밀도를 지적한다",
+      "경력 섹션과의 위계 분리 문제를 언급한다"
+    ]
+  }
+]

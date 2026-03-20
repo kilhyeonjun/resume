@@ -12,9 +12,9 @@ description: |
 
 ## Purpose
 
-1. **PDF 검증** — 페이지 수 제한, 텍스트 추출 가능성, 필수 섹션 존재 여부를 확인한다.
-2. **웹 페이지 검증** — 가로 오버플로우, 반응형 레이아웃, 이미지/아이콘 로드를 점검한다.
-3. **깨진 링크 탐지** — 모든 표면에서 내부/외부 링크를 수집해 유효성을 검증한다.
+1. **실브라우저 가독성 검증** — 실제 렌더링된 페이지를 열어 정보 밀도, 줄길이, 시각적 계층, 반응형 레이아웃을 점검한다.
+2. **증거 기반 시각 QA** — 스크린샷, 뷰포트별 관찰 결과, 라우트별 상태를 남긴다.
+3. **PDF 검증** — 페이지 수 제한, 텍스트 추출 가능성, 필수 섹션 존재 여부를 확인한다.
 4. **ATS 호환성 검증** — 단일 컬럼 구조, 불필요한 그래픽 배제, 텍스트 파싱 가능성을 확인한다.
 5. **Projection 차이 검증** — 표면별로 의도한 노출/생략이 유지되는지 확인한다.
 
@@ -40,7 +40,69 @@ description: |
 
 ## Workflow
 
-### Step 1: PDF 페이지 수 검증
+### Step 1: 브라우저 QA 환경 준비
+
+브라우저 확인을 **선택 사항이 아니라 기본 경로**로 취급합니다.
+
+준비 순서:
+1. `npm run dev`로 로컬 서버를 실행한다.
+2. `agent-browser` 또는 `webapp-testing`을 사용해 실제 페이지를 연다.
+3. 기본 표면을 최소 다음 순서로 확인한다.
+   - `/`
+   - `/en/`
+   - `/experience/gameduo`
+   - `/portfolio/`
+   - `/portfolio/ledgerly`
+4. 데스크톱과 모바일 뷰포트를 모두 확인한다.
+
+권장 뷰포트:
+- Desktop: `1440x900`
+- Mobile: `375x812`
+
+`agent-browser` 예시:
+
+```bash
+agent-browser open http://localhost:4321/resume && agent-browser wait --load networkidle
+agent-browser set viewport 1440 900 && agent-browser screenshot --full
+agent-browser set viewport 375 812 && agent-browser screenshot --full
+```
+
+PASS: 브라우저 세션에서 주요 표면 접근 가능  
+FAIL: dev server 미기동, 주요 라우트 미접근, 브라우저 도구 미실행
+
+### Step 2: 실브라우저 시각 가독성 검증
+
+각 표면에서 다음을 직접 확인한다.
+
+검사 항목:
+1. above-the-fold에서 이름/직함/핵심 정보가 즉시 읽히는지
+2. 긴 문장이 비정상적으로 좁은 폭에서 세로로 찢기지 않는지
+3. 모바일에서 가로 스크롤 없이 주요 섹션이 읽히는지
+4. 링크, 버튼, 상세 이동 UI가 시각적으로 식별 가능한지
+5. 포트폴리오/상세 카드와 경력 상세가 과밀하거나 끊겨 보이지 않는지
+
+권장 증거:
+- Desktop full-page screenshot 1장 이상
+- Mobile full-page screenshot 1장 이상
+- 문제 표면별 간단 메모
+
+PASS: 표면별 가독성/레이아웃 문제 없음  
+FAIL: 과밀, 줄바꿈 깨짐, 계층 불명확, 모바일 오버플로우, 시선 흐름 문제 발견
+
+### Step 3: Projection 차이 검증
+
+브라우저와 빌드 산출물에서 표면별 의도된 차이를 확인한다.
+
+핵심 확인:
+1. Web/HR PDF/ATS는 filtered project 집합을 소비하는지
+2. Experience detail은 unfiltered `experience` surface를 유지하는지
+3. non-featured 프로젝트가 웹/프린트/ATS에는 숨겨지고 상세에서는 남는지
+4. `src/utils/resume-data.ts` 규칙과 실제 화면 차이가 일치하는지
+
+PASS: 의도된 차이만 존재  
+FAIL: 숨겨져야 할 항목 노출, 보여야 할 항목 누락, 상세 surface 정보 손실
+
+### Step 4: PDF 페이지 수 검증
 
 먼저 `dist/pdf/`에 PDF가 생성되어 있는지 확인한 뒤, **Read 도구로 각 PDF의 파싱된 페이지 수를 확인**합니다.
 
@@ -56,7 +118,7 @@ FAIL: 페이지 제한 초과
 
 주의: raw PDF 바이너리에서 `/Type /Page` 패턴을 세는 방식은 object tree 때문에 overcount될 수 있으므로 단독 기준으로 쓰지 않는다.
 
-### Step 2: PDF 텍스트 추출 가능 확인
+### Step 5: PDF 텍스트 추출 가능 확인
 
 스캔 이미지 PDF가 아닌지 확인하기 위해 **Read 도구의 파싱 결과에서 실제 텍스트가 추출되는지** 확인합니다.
 
@@ -72,7 +134,7 @@ FAIL: 페이지 제한 초과
 PASS: 모든 PDF에서 실제 텍스트 블록이 파싱됨  
 FAIL: 텍스트 블록이 비어 있거나 핵심 키워드가 전혀 보이지 않음 (이미지 기반 PDF 가능성)
 
-### Step 3: PDF 필수 섹션 존재 확인
+### Step 6: PDF 필수 섹션 존재 확인
 
 각 PDF에서 다음 최소 섹션을 확인합니다.
 
@@ -88,7 +150,7 @@ FAIL: 텍스트 블록이 비어 있거나 핵심 키워드가 전혀 보이지 
 PASS: 3개 키워드 그룹 모두 충족  
 FAIL: 섹션 누락 또는 텍스트 누락
 
-### Step 4: 웹 빌드 후 라우트 존재 확인
+### Step 7: 웹 빌드 후 라우트 존재 확인
 
 정적 빌드 결과물에서 필수 라우트가 생성됐는지 검증합니다.
 
@@ -104,26 +166,20 @@ FAIL: 누락 라우트 있음 (템플릿 연결/페이지 파일 점검 필요)
 - `dist/experience/`, `dist/en/experience/`
 - `dist/portfolio/*/index.html`, `dist/en/portfolio/*/index.html`
 
-### Step 5: 반응형/오버플로우/링크/이미지 체크 (Puppeteer 가능 시)
+### Step 8: 브라우저 링크/오버플로우/이미지 체크
 
-Dev server(`npm run dev`)가 실행 중이면 375px 뷰포트 기준으로 주요 페이지를 순회합니다.
+Step 2의 실브라우저 순회 중 다음 기술적 체크를 함께 수행한다.
 
 검사 항목:
 1. `document.body.scrollWidth > document.body.clientWidth` 여부
-2. `img`/`picture` 요소 로드 실패(`naturalWidth === 0`) 여부
-3. 내부 링크(`href`가 `/resume` base 하위) 404 여부
-4. 외부 링크(`http://`, `https://`) 응답 실패 여부
+2. 주요 이미지/아이콘 로드 실패 여부
+3. 내부 링크 이동 성공 여부 (`/experience/*`, `/portfolio/*`, `/en/*`)
+4. 외부 링크가 명백히 깨져 보이지 않는지
 
-예시 스니펫:
-
-```js
-const hasOverflow = document.body.scrollWidth > document.body.clientWidth;
-```
-
-PASS: 오버플로우 없음, 이미지 로드 정상, 링크 유효  
+PASS: 오버플로우 없음, 링크 이동 정상, 이미지/아이콘 문제 없음  
 FAIL: 하나라도 위반 시 이슈 등록
 
-### Step 6: ATS PDF 특수 검증
+### Step 9: ATS PDF 특수 검증
 
 ATS PDF는 읽기/파싱 안정성을 우선합니다.
 
@@ -140,21 +196,21 @@ PASS:
 FAIL:
 - 배경 그래픽/다중 컬럼 레이아웃/텍스트 추출 실패 발견
 
-### Step 7: 종합 결과 테이블 작성
+### Step 10: 종합 결과 테이블 작성
 
 아래 형식으로 결과를 통합합니다.
 
 ```markdown
 | # | 표면 | 검사 | 상태 | 상세 |
 |---|------|------|------|------|
-| 1 | HR PDF KO | 페이지 수 | PASS/FAIL | Np |
-| 2 | HR PDF EN | 페이지 수 | PASS/FAIL | Np |
-| 3 | ATS PDF KO | 텍스트 추출 | PASS/FAIL | parsed text hit/miss |
-| 4 | ATS PDF EN | 텍스트 추출 | PASS/FAIL | parsed text hit/miss |
-| 5 | Web KO | 375px 오버플로우 | PASS/FAIL | scrollWidth vs clientWidth |
-| 6 | Web EN | 375px 오버플로우 | PASS/FAIL | scrollWidth vs clientWidth |
-| 7 | Experience Detail | 링크/레이아웃 | PASS/FAIL | broken links N건 |
-| 8 | Portfolio List/Detail | 링크/이미지 | PASS/FAIL | broken links N건 |
+| 1 | Web KO | desktop/mobile 가독성 | PASS/FAIL | screenshot + note |
+| 2 | Web EN | desktop/mobile 가독성 | PASS/FAIL | screenshot + note |
+| 3 | Experience Detail | projection/레이아웃 | PASS/FAIL | hidden vs visible items |
+| 4 | Portfolio List/Detail | layout/링크 | PASS/FAIL | screenshot + note |
+| 5 | HR PDF KO | 페이지 수 | PASS/FAIL | Np |
+| 6 | HR PDF EN | 페이지 수 | PASS/FAIL | Np |
+| 7 | ATS PDF KO | 텍스트 추출 | PASS/FAIL | parsed text hit/miss |
+| 8 | ATS PDF EN | 텍스트 추출 | PASS/FAIL | parsed text hit/miss |
 ```
 
 최종 판정:
@@ -168,6 +224,7 @@ FAIL:
 |------|---------|
 | `dist/pdf/*.pdf` | HR/ATS PDF 산출물 검증 대상 |
 | `scripts/generate-pdf.ts` | PDF 생성 옵션 및 ATS 설정 검증 |
+| `src/utils/resume-data.ts` | projection 규칙 검증 |
 | `src/components/templates/ResumeTemplate.astro` | 웹 이력서 렌더링 |
 | `src/components/templates/ResumePrintTemplate.astro` | HR PDF 템플릿 |
 | `src/components/templates/ResumeAtsTemplate.astro` | ATS PDF 템플릿 |
@@ -183,13 +240,16 @@ FAIL:
    → FAIL로 단정하지 않고 "PDF 생성 선행 필요" 안내 후 PDF 검사를 보류한다.
 
 2. **Dev server 미실행** (`http://localhost:4321/resume` 접속 불가)  
-   → Step 5 반응형/링크 실시간 검사는 `SKIP` 처리하고 정적 빌드 검사만 진행한다.
+   → 브라우저 기반 Step 1~3, Step 8은 `SKIP` 처리하고 정적 빌드/PDF 검사만 진행한다. 단, 이 경우 최종 판정은 `WARN` 이상으로 유지한다.
 
 3. **ATS 무채색 출력** (`printBackground: false`)  
    → 색상/배경 부재는 의도된 동작이므로 시각 결함으로 분류하지 않는다.
 
 4. **외부 서비스 anti-bot/비표준 차단 응답** (LinkedIn `999`, Glassdoor `403` 등)  
    → 자동화 환경에서만 발생하는 차단 응답이므로 WARN으로 분류하고 FAIL로 승격하지 않는다. 단, 링크 자체가 정상인지는 브라우저에서 수동 확인을 권장한다.
+
+5. **브라우저 도구 선택**  
+   → `agent-browser`를 우선 사용하고, 더 복잡한 다단계 확인이 필요할 때 `webapp-testing`(Playwright)로 확장한다.
 
 ## Output Format
 

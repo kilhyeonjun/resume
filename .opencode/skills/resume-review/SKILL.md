@@ -4,6 +4,7 @@ description: |
   이력서 사이트(Astro + Tailwind CSS)의 체계적 리뷰를 수행하는 스킬.
   웹 이력서, HR Print PDF, ATS PDF, 경력 상세 페이지, 포트폴리오 등 유형별 리뷰를 지원한다.
   AI 자동 탐지 모드와 HR 리크루터 시뮬레이션 모드를 포함해 자동/수동 혼합 리뷰를 지원한다.
+  코드/데이터 검토만으로 끝내지 않고, 실제 브라우저 화면과 생성된 HR/ATS PDF 결과물까지 확인하는 full-spectrum 리뷰를 수행한다.
   11개 체크리스트(데이터 정확성, HR 관점, 기술적 정확성, 한국어 문장, 영문 번역, 구조,
   코드 품질, UI/UX, HR 심층, 포지션 적합성, AI 탐지)와
   5개 가이드(웹, Print PDF, ATS PDF, 경력 상세, 포트폴리오)를 조합하여 리뷰한다.
@@ -19,6 +20,7 @@ description: |
 # Resume Review
 
 이력서 프로젝트의 체계적 리뷰를 수행한다. 리뷰는 **읽기 전용** — 코드/데이터 수정 없이 리뷰 문서만 작성.
+단, 리뷰 근거는 반드시 코드/데이터 + 실제 브라우저 렌더링 + 생성된 PDF 산출물에서 함께 수집한다.
 
 ## Quick Reference
 
@@ -116,6 +118,25 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 
 경력 상세 리뷰 시: 대상 slug의 experience 데이터만 추출하여 집중 분석.
 
+### Step 3.5: 실행 기반 증거 수집
+
+정적 파일 읽기만으로 리뷰를 끝내지 않는다. 표면 리뷰가 포함되면 아래 실행 근거를 수집한다.
+
+필수 순서:
+1. `npm run build` — 현재 코드/데이터 상태가 실제 빌드되는지 확인
+2. `npm run dev` — 로컬 리뷰 서버 실행
+3. 필요 시 `npm run pdf:hr`, `npm run pdf:ats` 또는 `npm run pdf` 실행
+4. `agent-browser` 또는 `webapp-testing`으로 실제 표면 확인
+
+필수 증거:
+- 웹/경력 상세/포트폴리오: desktop + mobile screenshot
+- HR/ATS PDF: 생성된 `dist/pdf/*.pdf` 실제 파일 확인 결과
+- projection 변경이 있는 경우: `src/utils/resume-data.ts` 규칙과 화면 차이 비교 메모
+
+기본 증거 저장 위치:
+- `resume-review-workspace/iteration-*/`
+- 또는 세션에서 명시한 임시 evidence 디렉터리
+
 ### Step 4: 체크리스트 기반 리뷰 실행
 
 각 체크리스트 항목을 순회하며 검증:
@@ -143,6 +164,7 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 - 발견 사항별 "현재 / 제안" 형식
 - 수정 불필요 판정도 명시적으로 포함
 - 종합 점수 + 핵심 개선 권장사항 (우선순위순)
+- 실제 실행 증거(스크린샷, PDF 파일, 브라우저 관찰 메모)를 함께 기록
 
 ## 주의사항
 
@@ -150,5 +172,7 @@ Quick Reference 테이블에 따라 `references/`에서 해당 가이드 + 체�
 - **ko 기준 진행**: ko.json 기준으로 분석 후 en.json과 비교
 - **교차 검증**: highlights <-> project details <-> portfolio 간 수치 교차 확인
 - **Projection 인지**: surface별 생략/축약은 `src/utils/resume-data.ts` 규칙과 일치하는지 먼저 확인
+- **실행 근거 필수**: 웹/상세/포트폴리오 리뷰는 브라우저 캡처 없이 완료로 간주하지 않음
+- **PDF 실물 확인 필수**: Print/ATS 리뷰는 생성된 `dist/pdf/*.pdf` 실제 결과 확인 없이 완료로 간주하지 않음
 - **기존 리뷰 참조**: 프로젝트 루트의 `.{slug}-review.md` 파일이 있으면 기존 이슈 추적
 - **점수 기준 일관성**: 10점 만점 기준 사용. 기존 리뷰의 다른 점수 체계(5점 등)와 비교 시 환산 필요

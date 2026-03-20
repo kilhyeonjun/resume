@@ -67,7 +67,11 @@
 1. `src/data/portfolio.json` 읽기
 2. `src/content/resume/{ko,en}.json`과 교차 검증
 3. 템플릿 파일 확인 — 렌더링 로직이 데이터를 올바르게 표시하는지
-4. 빌드 검증 — `npm run build` 성공 확인
+4. `npm run build` 성공 확인
+5. `npm run dev` 후 `/portfolio/`, `/en/portfolio/`, `/portfolio/[slug]`, `/en/portfolio/[slug]`를 실제 브라우저에서 확인
+6. 목록/상세 각각 desktop + mobile screenshot 확보
+
+포트폴리오 리뷰는 카드 밀도, 상세 페이지 리듬, 링크/이미지 상태를 실제 화면으로 확인해야 완료로 본다.
 
 ## 출력
 

@@ -73,8 +73,12 @@ ATS는 표준 섹션명을 기대함:
 
 1. `npm run dev` 실행
 2. `npm run pdf:ats` — ATS PDF 생성
-3. 생성된 PDF에서 전체 텍스트 복사 → 텍스트 에디터에 붙여넣기 → 순서/구조 확인
-4. 데이터 검증 — ko.json/en.json 기반 체크리스트 순회
+3. 생성된 PDF를 실제 확인하고 텍스트 추출/복사 결과를 검토
+4. `dist/pdf/resume-ats-ko.pdf`, `dist/pdf/resume-ats-en.pdf`를 `Read`로 읽어 페이지 수와 파싱 결과 확인
+5. ats 라우트(`/resume-ats`, `/en/resume-ats`)를 브라우저에서 열어 단일 컬럼/가독성 확인
+6. 데이터 검증 — ko.json/en.json + `src/utils/resume-data.ts` 기반 체크리스트 순회
+
+ATS 리뷰는 정적 데이터 검토만으로 끝내지 않는다. 실제 PDF 결과와 텍스트 파싱 가능성까지 반드시 확인한다.
 
 ## 출력
 

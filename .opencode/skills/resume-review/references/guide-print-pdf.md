@@ -67,8 +67,12 @@
 
 1. `npm run dev` 실행 (PDF 생성 전 필수)
 2. `npm run pdf:hr` — HR PDF 생성
-3. 생성된 PDF 열어 페이지 수, 레이아웃, 폰트 확인
-4. 데이터 검증 — ko.json/en.json 기반 체크리스트 순회
+3. `dist/pdf/resume-hr-ko.pdf`, `dist/pdf/resume-hr-en.pdf` 실제 파일 확인 (`Read` 기반 페이지/텍스트 확인)
+4. 필요 시 print 라우트(`/resume-print`, `/en/resume-print`)를 브라우저에서 열어 인쇄 전 렌더링과 PDF 결과 차이 비교
+5. 페이지 수, 레이아웃, 폰트, 줄바꿈, 페이지 분할 기록
+6. 데이터 검증 — ko.json/en.json + `src/utils/resume-data.ts` 기반 체크리스트 순회
+
+PDF는 생성 명령만으로 검토 완료로 간주하지 않는다. 실제 생성된 결과물의 페이지 수와 텍스트 가독성을 확인해야 한다.
 
 ## 출력
 

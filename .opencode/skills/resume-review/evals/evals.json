@@ -1,0 +1,20 @@
+[
+  {
+    "id": "full-spectrum-web-review",
+    "prompt": "이력서 사이트를 리뷰할 때 코드나 데이터만 보지 말고 실제 브라우저에서 보이는 화면도 봐야 하고, HR/ATS PDF까지 생성해서 확인해야 할 것 같은데 resume-review 기준으로 어떤 순서로 검토해야 해?",
+    "expect": [
+      "npm run build / npm run dev / pdf generation 흐름을 포함한다",
+      "실브라우저 확인과 screenshot evidence를 포함한다",
+      "생성된 HR/ATS PDF 결과 확인을 포함한다"
+    ]
+  },
+  {
+    "id": "portfolio-and-experience-review",
+    "prompt": "포트폴리오랑 경력 상세도 resume-review로 검토할 건데 실제 보이는 결과까지 꼼꼼히 보려면 어떻게 해야 해? 모바일/데스크탑, 브라우저, PDF, projection 차이까지 다 포함해서 설명해줘.",
+    "expect": [
+      "portfolio + experience detail routes를 모두 포함한다",
+      "desktop/mobile browser evidence를 포함한다",
+      "projection rule과 generated PDF result를 함께 언급한다"
+    ]
+  }
+]

@@ -2,7 +2,7 @@
 name: verify-implementation
 description: |
   프로젝트의 모든 verify 스킬을 순차 실행해 통합 검증 보고서를 생성하는 스킬.
-  source-of-truth 검증과 projection 검증을 함께 엮어 통합 결과를 만든다.
+  source-of-truth 검증과 projection 검증을 함께 엮고, 필요 시 `resume-review`의 읽기 전용 full-spectrum 리뷰까지 연결해 통합 결과를 만든다.
   "검증 실행", "verify", "구현 검증", "전체 검증", "빌드 검증", "PR 전 확인", "코드 체크", "검증 보고서" 요청이 나오면 우선 실행한다.
   기능 구현 후, PR 생성 전, 코드 리뷰 시점에 규칙 누락 없이 한 번에 점검해야 할 때 사용한다.
 ---
@@ -37,7 +37,8 @@ description: |
 
 ### 참고
 
-`curate-work-data`, `resume-review`, `manage-skills` 같은 비검증 스킬은 `verify-*` 네이밍 패턴이 아니며 자체 검증/리뷰 로직을 내장하므로, 이 스킬의 자동 실행 대상에 포함하지 않는다.
+`curate-work-data`, `manage-skills` 같은 비검증 스킬은 `verify-*` 네이밍 패턴이 아니며 자체 검증/리뷰 로직을 내장하므로, 이 스킬의 자동 실행 대상에 포함하지 않는다.
+단, 콘텐츠/템플릿/가독성 검토가 필요한 변경에서는 `resume-review`를 읽기 전용 후속 리뷰로 실행할 수 있다.
 
 ## 워크플로우
 
@@ -221,6 +222,21 @@ X개 수정 완료.
 
 수동으로 해결한 후 `verify-implementation`을 다시 실행하세요.
 ```
+
+### Step 7: 확장 리뷰 단계 (조건부)
+
+아래 조건 중 하나에 해당하면 `resume-review`를 후속 읽기 전용 리뷰로 실행한다.
+
+- `src/content/resume/*.json` 변경
+- `src/components/templates/*.astro` 변경
+- `src/styles/global.css` 변경
+- 사용자가 가독성, HR 관점, PDF 품질, ATS 품질, 포트폴리오 읽기 경험을 명시적으로 요구
+
+실행 기준:
+1. `npm run build` 성공 상태 유지
+2. 필요 시 `npm run dev`, `npm run pdf`, `npm run pdf:hr`, `npm run pdf:ats` 실행
+3. `resume-review`로 코드/데이터/브라우저/PDF evidence를 포함한 읽기 전용 리뷰 수행
+4. verify 결과와 review 결과를 분리해서 최종 보고서에 함께 명시
 
 ---
 

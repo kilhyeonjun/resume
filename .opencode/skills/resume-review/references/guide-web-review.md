@@ -61,8 +61,12 @@
 
 1. `npm run build` — 빌드 성공 확인 (exit code 0)
 2. LSP diagnostics — 타입 에러 확인
-3. 브라우저 테스트 — 필요 시 `npm run dev` 후 Playwright 또는 수동 확인
-4. 데이터 검증 — ko.json/en.json 읽어 체크리스트 항목 순회
+3. `npm run dev` 실행
+4. `agent-browser` 또는 `webapp-testing`으로 `/`, `/en/`을 desktop/mobile에서 실제 확인
+5. desktop + mobile full-page screenshot 저장
+6. 데이터 검증 — ko.json/en.json + `src/utils/resume-data.ts` 읽어 체크리스트 항목 순회
+
+브라우저 확인은 선택이 아니라 필수다. above-the-fold, line length, 모바일 가독성, 상세 진입 링크 식별성을 실제 화면 기준으로 기록한다.
 
 ## 출력
 

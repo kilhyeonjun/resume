@@ -100,3 +100,9 @@ data-accuracy → hr-perspective → technical → writing-ko → writing-en →
 - 10점 만점 방식 (기존 리뷰 파일과 동일)
 - 이슈별 CRITICAL/HIGH/MEDIUM/LOW 분류
 - 종합 점수 + 핵심 개선 권장사항
+
+## 실행 근거
+
+- `npm run dev` 후 `/experience/[slug]`, `/en/experience/[slug]`를 실제 브라우저에서 확인
+- desktop + mobile screenshot 확보
+- detailed surface에서 non-featured 프로젝트가 실제로 보이는지 projection 결과 확인

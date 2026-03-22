@@ -242,7 +242,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
           {exp.highlights && exp.highlights.length > 0 && (
             <ul>
               {exp.highlights.map((highlight) => (
-                <li>{highlight.problem} → {highlight.solution} → {highlight.result}</li>
+                <li>{highlight.problem}. {highlight.solution}. {highlight.result}.</li>
               ))}
             </ul>
           )}

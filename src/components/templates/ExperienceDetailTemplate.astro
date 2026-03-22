@@ -103,7 +103,7 @@ const basePath = getBasePath(lang);
             {experience.highlights.map((highlight) => (
               <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
                 <CheckIcon class="mt-1 h-5 w-5 flex-shrink-0 text-primary-500" />
-                <span class="text-lg"><strong>{highlight.problem}</strong> → {highlight.solution} → <em class="text-primary-600 dark:text-primary-400">{highlight.result}</em></span>
+                <span class="text-lg"><strong>{highlight.problem}</strong> — {highlight.solution}, <em class="text-primary-600 dark:text-primary-400">{highlight.result}</em></span>
               </li>
             ))}
          </ul>

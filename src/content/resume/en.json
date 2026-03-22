@@ -14,7 +14,7 @@
       {
         "category": "AI Agent Orchestration & Delivery",
         "items": [
-          "Established a multi-agent development environment, orchestrating Claude Code, Codex, and Gemini for distinct roles in production software delivery (since late 2024)",
+          "Designed a multi-agent development environment, orchestrating Claude Code, Codex, and Gemini for distinct roles in production software delivery (since late 2024)",
           "Established an AI-generated code reliability framework with TDD, reinforcing test-driven development culture and strengthening production stability across the team",
           "Applied context engineering and harness engineering practices — structuring problems, designing architectural guardrails, and building feedback loops for reliable agent output"
         ]
@@ -22,7 +22,7 @@
       {
         "category": "System Design & Architecture",
         "items": [
-          "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel execution, building serverless pipelines that dramatically expanded throughput and collection range",
+          "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel execution, architecting serverless pipelines that dramatically expanded throughput and collection range",
           "Designed a shared package system for multi-project environments, enhancing code consistency and reusability",
           "Established a staged modernization strategy; after phased architecture migration with TDD, maintained incident-free deployments during major release windows"
         ]
@@ -40,7 +40,7 @@
         "items": [
           "Led AI development adoption by sharing Cursor and Claude Code workflows plus context engineering practices in developer meetings, expanding team-level AI usage (Games on AWS 2025 customer session speaker)",
           "Strengthened knowledge-sharing culture through developer meetings, shared library contribution guides, merge rules, code conventions, and architecture pattern standardization",
-          "Built incident response culture — propagated Deadlock and data consistency root cause analysis methodology across the team, establishing systematic recurrence prevention"
+          "Established incident response culture — propagated Deadlock and data consistency root cause analysis methodology across the team, systematizing recurrence prevention"
         ]
       }
     ],
@@ -514,7 +514,7 @@
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
           "Modernized 3,000-line legacy codebase via 3-stage progressive migration (single-file → layered → NestJS) with JS→TS + 80% TDD coverage, maintaining zero post-deployment incidents during major release windows",
-          "Resolved session conflicts across 3 subdomains on a 300K-download platform by building JWT-based token authentication in 3 weeks, enabling uninterrupted user switching",
+          "Resolved session conflicts across 3 subdomains on a 300K-download platform with JWT-based token authentication completed in 3 weeks, enabling uninterrupted user switching",
           "Automated full prescription-to-medication-guide workflow via Naver Clova OCR + MFDS (Korea FDA) API integration, cutting pharmacist processing time 90% (3-5min→30sec)",
           "Introduced Socket.IO-based real-time status sync + Web Push notifications, reducing status reflection delay from tens of seconds to under 1 second, eliminating patient wait complaints"
         ],
@@ -629,7 +629,7 @@
         "highlights": [
           "Developed LMS core features (QR attendance, PDF certificates, Excel bulk registration) full-stack over 10 months, digitizing learning management for 300+ students per semester",
           "Embedded Spring Boot app into legacy PHP system via iframe to overcome extensibility limitations, implemented weighted-average matching algorithm for JOB Agent service launch",
-          "Built cross-domain auth server to unify login across 5 country-specific websites into a single authentication system"
+          "Developed cross-domain auth server to unify login across 5 country-specific websites into a single authentication system, completed in 3 weeks"
         ],
         "projects": [
           {

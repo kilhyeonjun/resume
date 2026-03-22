@@ -138,6 +138,17 @@ const basePath = getBasePath(lang);
                   ))}
                 </ul>
               )}
+              {project.techRationale && (
+                <div class="mt-4 rounded-lg bg-blue-50 p-3 dark:bg-blue-900/20">
+                  <h4 class="text-sm font-semibold text-blue-800 dark:text-blue-300">{lang === 'ko' ? '기술 선택 이유' : 'Tech Rationale'}</h4>
+                  <p class="mt-1 text-sm text-blue-700 dark:text-blue-200">{project.techRationale}</p>
+                </div>
+              )}
+              {project.contribution && (
+                <div class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                  <span class="font-semibold">{lang === 'ko' ? '기여도' : 'Contribution'}:</span> {project.contribution}
+                </div>
+              )}
               {project.techStack && project.techStack.length > 0 && (
                 <div class="mt-4 flex flex-wrap gap-1.5">
                   {project.techStack.map((tech) => (

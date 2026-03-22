@@ -31,6 +31,8 @@ const projectSchema = z.object({
   details: z.array(z.string()),
   techStack: z.array(z.string()).default([]),
   featured: z.boolean().optional(),
+  techRationale: z.string().optional(),
+  contribution: z.string().optional(),
 });
 
 

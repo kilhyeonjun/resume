@@ -15,7 +15,7 @@
         "category": "AI Agent Orchestration & Delivery",
         "items": [
           "Established a multi-agent development environment, orchestrating Claude Code, Codex, and Gemini for distinct roles in production software delivery (since late 2024)",
-          "Established an AI-generated code reliability framework with TDD, reinforcing test-driven development culture and production stability across the team",
+          "Established an AI-generated code reliability framework with TDD, reinforcing test-driven development culture and strengthening production stability across the team",
           "Applied context engineering and harness engineering practices — structuring problems, designing architectural guardrails, and building feedback loops for reliable agent output"
         ]
       },
@@ -23,7 +23,7 @@
         "category": "System Design & Architecture",
         "items": [
           "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel execution, building serverless pipelines that dramatically expanded throughput and collection range",
-          "Designed a shared package system for multi-project environments, improving code consistency and reusability",
+          "Designed a shared package system for multi-project environments, enhancing code consistency and reusability",
           "Established a staged modernization strategy; after phased architecture migration with TDD, maintained incident-free deployments during major release windows"
         ]
       },
@@ -40,7 +40,7 @@
         "items": [
           "Led AI development adoption by sharing Cursor and Claude Code workflows plus context engineering practices in developer meetings, expanding team-level AI usage (Games on AWS 2025 customer session speaker)",
           "Strengthened knowledge-sharing culture through developer meetings, shared library contribution guides, merge rules, code conventions, and architecture pattern standardization",
-          "Built AI-generated code quality assurance workflow with automated test gates ensuring production deployment reliability"
+          "Built incident response culture — propagated Deadlock and data consistency root cause analysis methodology across the team, establishing systematic recurrence prevention"
         ]
       }
     ],
@@ -148,7 +148,7 @@
         "highlights": [
           "Resolved escalating marketing data query costs by switching BigQuery read method, achieving 82% cost reduction ($6.25→$1.1 per TB)",
           "Overcame batch processing limitations by migrating to serverless architecture, expanding marketing metrics collection range 6x (60→360 days)",
-          "Led shared package architecture decisions and code convention standards across multi-game projects, building NestJS utility (10 modules) + Game Server Kit (2 packages) to secure code consistency",
+          "Led shared package architecture decisions and code convention standards across multi-game projects, deploying NestJS utility (10 modules) + Game Server Kit (2 packages) to 7 projects with automated upgrades reducing deployment time from 3hrs to 15min",
           "Designed and implemented Git-like Audit Log + 3-Way Merge engine to automate balance data change tracking and merging across 6 games, eliminating manual comparison and reducing incident root-cause identification time",
           "Unified 3 ad platform (Google Ads/Meta/TikTok) data and improved query performance 97% (18s→0.5s) through table normalization",
           "Addressed game probability disclosure regulation risk by integrating a DynamicModule-based package across multi-game projects and building a CDK-based audit log pipeline, securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
@@ -628,7 +628,7 @@
         "description": "Custom software consulting firm",
         "highlights": [
           "Developed LMS core features (QR attendance, PDF certificates, Excel bulk registration) full-stack over 10 months, digitizing learning management for 300+ students per semester",
-          "Embedded Spring Boot app into legacy PHP system via iframe for extensibility, implemented weighted-average matching algorithm for JOB Agent service launch and automated counselor matching",
+          "Embedded Spring Boot app into legacy PHP system via iframe to overcome extensibility limitations, implemented weighted-average matching algorithm for JOB Agent service launch",
           "Built cross-domain auth server to unify login across 5 country-specific websites into a single authentication system"
         ],
         "projects": [

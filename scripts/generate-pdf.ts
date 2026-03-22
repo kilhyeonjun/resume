@@ -27,12 +27,6 @@ interface PDFConfig {
   filename: string;
   format?: 'A4' | 'Letter';
   printBackground: boolean;
-  margin?: {
-    top: string;
-    right: string;
-    bottom: string;
-    left: string;
-  };
 }
 
 interface PDFConfigSet {
@@ -48,7 +42,6 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-hr-ko.pdf',
       format: 'A4',
       printBackground: true,
-      margin: { top: '8mm', right: '0mm', bottom: '6mm', left: '0mm' },
     },
     {
       name: 'ATS Version (Korean)',
@@ -56,7 +49,6 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-ats-ko.pdf',
       format: 'A4',
       printBackground: false,
-      margin: { top: '6mm', right: '0mm', bottom: '6mm', left: '0mm' },
     },
   ],
   en: [
@@ -66,7 +58,6 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-hr-en.pdf',
       format: 'A4',
       printBackground: true,
-      margin: { top: '8mm', right: '0mm', bottom: '6mm', left: '0mm' },
     },
     {
       name: 'ATS Version (English)',
@@ -74,7 +65,6 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-ats-en.pdf',
       format: 'A4',
       printBackground: false,
-      margin: { top: '6mm', right: '0mm', bottom: '6mm', left: '0mm' },
     },
   ],
 };
@@ -140,7 +130,6 @@ async function generatePDF(
       path: outputPath,
       format: config.format || 'A4',
       printBackground: config.printBackground,
-      margin: config.margin,
     });
 
     console.log(`     ✅ Saved to: ${outputPath}`);

@@ -24,11 +24,17 @@ const coreCompetencySchema = z.object({
   items: z.array(z.string()),
 });
 
+const projectDetailSchema = z.object({
+  problem: z.string(),
+  solution: z.string(),
+  result: z.string(),
+});
+
 const projectSchema = z.object({
   name: z.string(),
   period: z.string(),
   description: z.string(),
-  details: z.array(z.string()),
+  details: z.array(projectDetailSchema).default([]),
   techStack: z.array(z.string()).default([]),
   featured: z.boolean().optional(),
   techRationale: z.string().optional(),
@@ -219,4 +225,5 @@ export type Labels = z.infer<typeof labelsSchema>;
 export type Links = z.infer<typeof linksSchema>;
 export type Activity = z.infer<typeof activitySchema>;
 export type TrainingProgram = z.infer<typeof trainingProgramSchema>;
+export type ProjectDetail = z.infer<typeof projectDetailSchema>;
 export type Highlight = z.infer<typeof highlightSchema>;

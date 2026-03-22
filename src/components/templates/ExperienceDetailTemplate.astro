@@ -133,7 +133,7 @@ const basePath = getBasePath(lang);
                   {project.details.map((detail) => (
                     <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
                       <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary-500"></span>
-                      <span class="leading-7">{detail}</span>
+                      <span class="leading-7"><strong>{detail.problem}</strong> — {detail.solution}, <em class="text-primary-600 dark:text-primary-400">{detail.result}</em></span>
                     </li>
                   ))}
                 </ul>

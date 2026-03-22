@@ -179,11 +179,31 @@
             "featured": false,
             "description": "Resolved delayed balance issue response caused by inability to track data change history during game operations",
             "details": [
-              "Git-like Version Control System: UUID-based cross-environment/project entity tracking ensuring data consistency across 6 games",
-              "Event Sourcing-based Change Tracking: Auditable decorator + TypeORM Subscriber pattern for automated entity change recording pipeline",
-              "3-Way Merge Engine: Multi-environment version merge system with parent/child entity conflict detection and unique constraint handling across 6 games",
-              "Version Diff Engine: Dual strategy of incremental comparison and snapshot comparison based on Base Audit availability for cost-efficient version diffing",
-              "Shared identifier-based Entity Tracking: Decoupled from PK dependency, ensuring accurate entity tracking during migration, comparison, and merge"
+              {
+                "problem": "Inability to track data change history across environments and projects",
+                "solution": "Built Git-like version control system with UUID-based cross-environment/project entity tracking",
+                "result": "Ensured data consistency across 6 games"
+              },
+              {
+                "problem": "Manual entity change recording prone to omission",
+                "solution": "Implemented Event Sourcing-based change tracking with Auditable decorator + TypeORM Subscriber pattern",
+                "result": "Automated entity change recording pipeline"
+              },
+              {
+                "problem": "Multi-environment version conflicts during data merge",
+                "solution": "Built 3-Way Merge Engine with parent/child entity conflict detection and unique constraint handling",
+                "result": "Enabled reliable version merging across 6 games"
+              },
+              {
+                "problem": "Expensive full-snapshot comparison for every version diff",
+                "solution": "Designed Version Diff Engine with dual strategy: incremental comparison and snapshot comparison based on Base Audit availability",
+                "result": "Achieved cost-efficient version diffing"
+              },
+              {
+                "problem": "Entity tracking failures due to PK dependency during migration and merge",
+                "solution": "Implemented shared identifier-based entity tracking decoupled from PK dependency",
+                "result": "Ensured accurate entity tracking during migration, comparison, and merge"
+              }
             ],
             "techStack": [
               "TypeScript",
@@ -198,12 +218,36 @@
             "featured": true,
             "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system, built on dedicated marketing DB separation",
             "details": [
-              "Unified Campaign Automation: Built API for managing Google Ads/Meta/TikTok campaign creation, deployment, modification, and retention metrics in a single platform",
-              "NAS-S3 sync: Separated SQS server-worker flow, automated outbox events, tracked asset_nas_sync state to secure restore reliability",
-              "Optimized Meta asset sync: Converted ORM single-row saves to bulk, cutting Image sync 72%(25.7s→7.1s) and DB transactions 95%(10~16s→0.3~0.5s)",
-              "Lambda ARM64 Migration: Graviton2 architecture migration reducing creative processing Lambda costs by 20%",
-              "BigQuery Storage Read API Adoption: gRPC streaming-based high-performance data reading reducing BigQuery costs by 82% ($6.25→$1.1 per TB)",
-              "Optimized DB reads: Normalized 100+ column table into main/time-series/prediction, tuned indexes+cursor pagination (18s→0.5s)"
+              {
+                "problem": "Fragmented ad platform management across Google Ads/Meta/TikTok",
+                "solution": "Built unified campaign automation API for creation, deployment, modification, and retention metrics in a single platform",
+                "result": "Consolidated multi-platform campaign management into one system"
+              },
+              {
+                "problem": "NAS-S3 sync reliability and restore failures",
+                "solution": "Separated SQS server-worker flow, automated outbox events, tracked asset_nas_sync state",
+                "result": "Secured restore reliability with state-tracked sync pipeline"
+              },
+              {
+                "problem": "Meta asset sync performance bottleneck",
+                "solution": "Converted ORM single-row saves to bulk processing",
+                "result": "Image sync reduced 72% (25.7s→7.1s), DB transactions reduced 95% (10~16s→0.3~0.5s)"
+              },
+              {
+                "problem": "High creative processing Lambda costs on x86 architecture",
+                "solution": "Migrated Lambda to ARM64 Graviton2 architecture",
+                "result": "Reduced creative processing Lambda costs by 20%"
+              },
+              {
+                "problem": "High BigQuery query costs for marketing data reads",
+                "solution": "Adopted BigQuery Storage Read API with gRPC streaming-based high-performance data reading",
+                "result": "Reduced BigQuery costs by 82% ($6.25→$1.1 per TB)"
+              },
+              {
+                "problem": "Marketing query latency (18s) from 100+ column denormalized table",
+                "solution": "Normalized table into main/time-series/prediction, tuned indexes + cursor pagination",
+                "result": "Performance improved 97% (18s→0.5s)"
+              }
             ],
             "techStack": [
               "AWS Lambda",
@@ -229,11 +273,31 @@
             "featured": true,
             "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
             "details": [
-              "Hybrid Architecture: Prioritized operational stability over full serverless migration, keeping the API server on EC2 while separating batch/job processing to Lambda for workload-optimized resource usage",
-              "Established Event-Driven flow with SQS+Lambda+EventBridge, reducing batch time 2h→5m and expanding collection 6x(60→360 days)",
-              "Transactional Outbox Pattern: Scheduled and delayed event publishing ensuring data consistency",
-              "Lambda Operational Stabilization: Batch Size bulk processing resolving throttling, CloudWatch log optimization reducing costs, build OOM remediation",
-              "RDS Proxy Connection Management: Resolved DB connection exhaustion during massive Lambda execution via RDS Proxy pooling"
+              {
+                "problem": "Full serverless migration risked operational stability",
+                "solution": "Designed hybrid architecture keeping API server on EC2 while separating batch/job processing to Lambda",
+                "result": "Achieved workload-optimized resource usage without disrupting live services"
+              },
+              {
+                "problem": "Batch processing limited to 60-day collection range with 2-hour runtime",
+                "solution": "Established Event-Driven flow with SQS+Lambda+EventBridge",
+                "result": "Reduced batch time 2h→5min, expanded collection 6x (60→360 days)"
+              },
+              {
+                "problem": "Data consistency risk during event publishing",
+                "solution": "Implemented Transactional Outbox Pattern for scheduled and delayed event publishing",
+                "result": "Ensured data consistency across distributed event processing"
+              },
+              {
+                "problem": "Lambda throttling, high log costs, and build OOM issues",
+                "solution": "Applied Batch Size bulk processing, CloudWatch log optimization, and build OOM remediation",
+                "result": "Stabilized Lambda operations and reduced operational costs"
+              },
+              {
+                "problem": "DB connection exhaustion during massive Lambda execution",
+                "solution": "Introduced RDS Proxy connection pooling",
+                "result": "Resolved connection exhaustion and stabilized database access"
+              }
             ],
             "techStack": [
               "TypeScript",
@@ -252,12 +316,36 @@
             "featured": false,
             "description": "Built S3-based sync and automated DDL management system to resolve dynamic game data inconsistency across environments",
             "details": [
-              "Cross-environment Data Sync: S3-based dynamic game data synchronization across development/staging/production environments",
-              "Automated DDL Management Engine: Dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME for schema sync automation",
-              "Save/Upload Performance Improvement: Analyzed and optimized Cloud Data ingestion and S3 upload bottlenecks, resolving large-scale processing delays",
-              "Sync Stabilization: Implemented job separation, transitioned scheduling approach, tuned timeouts, and introduced non-blocking processing to secure operational reliability",
-              "Stabilized CloudData: Fixed four issues—Redis cache invalidation, DDL SKIP metadata, copy key deletion, excludeCloudData propagation",
-              "excludeCloudData Propagation Patch: Added option forwarding to four POST migration paths to block unintended full Cloud Data deletion risk"
+              {
+                "problem": "Dynamic game data inconsistency across environments",
+                "solution": "Built S3-based cross-environment data synchronization across development/staging/production",
+                "result": "Unified game data state across all environments"
+              },
+              {
+                "problem": "Manual DDL schema management causing sync failures",
+                "solution": "Built automated DDL management engine with dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME",
+                "result": "Automated schema sync across environments"
+              },
+              {
+                "problem": "Large-scale Cloud Data ingestion and S3 upload bottlenecks",
+                "solution": "Analyzed and optimized ingestion and upload pipeline",
+                "result": "Resolved large-scale processing delays"
+              },
+              {
+                "problem": "Sync job instability causing operational issues",
+                "solution": "Implemented job separation, transitioned scheduling approach, tuned timeouts, and introduced non-blocking processing",
+                "result": "Secured operational reliability for sync pipeline"
+              },
+              {
+                "problem": "Four CloudData bugs: Redis cache invalidation, DDL SKIP metadata, copy key deletion, excludeCloudData propagation",
+                "solution": "Diagnosed and fixed all four issues systematically",
+                "result": "Stabilized CloudData operations"
+              },
+              {
+                "problem": "Unintended full Cloud Data deletion risk from missing option forwarding",
+                "solution": "Added excludeCloudData option forwarding to four POST migration paths",
+                "result": "Blocked unintended data deletion risk"
+              }
             ],
             "techStack": [
               "TypeScript",
@@ -273,12 +361,36 @@
             "featured": true,
             "description": "Development and operation of NestJS utility (10 modules) + Game Server Kit (2 packages) for multi-project code consistency",
             "details": [
-              "10-module Library System: Expanded to core, repository, cache, lock, slack, crypto, smb, hash, type, and iac modules",
-              "Enhanced Repository module: Added Bulk/Audit Log/TypeORM narrowing with overloading+TypeScript generics; refactored 2000+ lines by SRP",
-              "Distributed Lock Module: ElastiCache (Redis)-based distributed lock decorator for concurrency control in multi-instance environments",
-              "Automated upgrades: Added workflow_dispatch+matrix and changed-package CI tests, reducing 7-project runtime 3h→15m on GitHub Packages",
-              "Extracted game-server Kit: Moved Sheet+5 submodules to @gameduo/glider-sheet, resolved conflicts via 5-branch divergence analysis",
-              "Optimized test infra: Switched ts-jest isolatedModules and explicit Entity types, cutting CI 61%(15m47s→6m06s); passed 81 suites/978 tests"
+              {
+                "problem": "Common code duplication across services increasing maintenance cost",
+                "solution": "Designed 10-module library system: core, repository, cache, lock, slack, crypto, smb, hash, type, iac",
+                "result": "Unified shared code across 7 projects with standardized dependency management"
+              },
+              {
+                "problem": "Repository module lacking bulk operations and audit logging capabilities",
+                "solution": "Enhanced Repository module with Bulk/Audit Log/TypeORM narrowing using overloading + TypeScript generics; refactored 2000+ lines by SRP",
+                "result": "Improved module extensibility and maintainability"
+              },
+              {
+                "problem": "Concurrency conflicts in multi-instance environments",
+                "solution": "Built distributed lock module with ElastiCache (Redis)-based distributed lock decorator",
+                "result": "Enabled safe concurrency control across multi-instance deployments"
+              },
+              {
+                "problem": "Manual library upgrades taking 3 hours across 7 projects",
+                "solution": "Added workflow_dispatch+matrix and changed-package CI tests on GitHub Packages",
+                "result": "Reduced 7-project upgrade runtime 3h→15min"
+              },
+              {
+                "problem": "Game server shared code tightly coupled in monolithic package",
+                "solution": "Extracted game-server Kit: moved Sheet+5 submodules to @gameduo/glider-sheet, resolved conflicts via 5-branch divergence analysis",
+                "result": "Achieved independent package versioning and deployment"
+              },
+              {
+                "problem": "Slow CI pipeline (15m47s) due to test infrastructure inefficiency",
+                "solution": "Switched ts-jest isolatedModules and explicit Entity types",
+                "result": "Cut CI time 61% (15m47s→6m06s); passed 81 suites/978 tests"
+              }
             ],
             "techStack": [
               "ElastiCache (Redis)",
@@ -295,9 +407,21 @@
             "featured": false,
             "description": "Built probability calculation package and CDK-based audit log analytics infrastructure to address regulatory risk from lack of game probability verification",
             "details": [
-              "Packaged probability module: Built NestJS DynamicModule with 5 functions+Kinesis logging as @gameduo/glider-probability, integrated into 12 games",
-              "Codified CDK analytics: Kinesis→Firehose(Dynamic Partitioning+Parquet)→S3→Glue→Athena for end-to-end probability audit logs",
-              "Replaced mocks with LocalStack+Testcontainers integration tests, prioritizing regression confidence and securing 94%+ coverage (12 suites/115 tests)"
+              {
+                "problem": "No reusable probability calculation module across game projects",
+                "solution": "Built NestJS DynamicModule with 5 functions + Kinesis logging as @gameduo/glider-probability",
+                "result": "Integrated into 12 games with standardized probability calculation"
+              },
+              {
+                "problem": "No audit log analytics infrastructure for probability verification",
+                "solution": "Codified CDK analytics pipeline: Kinesis→Firehose (Dynamic Partitioning+Parquet)→S3→Glue→Athena",
+                "result": "Enabled end-to-end probability audit log querying"
+              },
+              {
+                "problem": "Mock-based tests lacking regression confidence for infrastructure code",
+                "solution": "Replaced mocks with LocalStack + Testcontainers integration tests",
+                "result": "Secured 94%+ coverage (12 suites/115 tests)"
+              }
             ],
             "techStack": [
               "TypeScript",
@@ -383,8 +507,16 @@
             "featured": false,
             "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance using Cyan (in-house Node.js framework)",
             "details": [
-              "Created batch dispatch system for participant group management per clinical trial and batch consent dispatch",
-              "Migrated from batch + S3 event-based processing to EDA + Outbox pattern, enabling event flow visualization and local test environment setup"
+              {
+                "problem": "Inefficient individual consent dispatch for clinical trial participants",
+                "solution": "Created batch dispatch system for participant group management and batch consent dispatch",
+                "result": "Streamlined consent collection per clinical trial"
+              },
+              {
+                "problem": "Opaque event flow from batch + S3 event-based processing",
+                "solution": "Migrated to EDA + Outbox pattern",
+                "result": "Enabled event flow visualization and local test environment setup"
+              }
             ],
             "techStack": [
               "TypeScript",
@@ -400,8 +532,16 @@
             "featured": true,
             "description": "Resolved critical notification failures due to database Deadlocks in clinical trial e-signature notifications",
             "details": [
-              "Identified shared-to-exclusive lock timing issue during foreign key constraint enforcement as Deadlock root cause",
-              "Designed and implemented AWS SNS → SQS → Lambda Event-Driven pipeline"
+              {
+                "problem": "Production Deadlock incidents in clinical trial e-signature notifications",
+                "solution": "Analyzed shared-to-exclusive lock timing during foreign key constraint enforcement",
+                "result": "Identified root cause and prevented Deadlock recurrence"
+              },
+              {
+                "problem": "Synchronous notification processing causing cascading failures",
+                "solution": "Designed and implemented AWS SNS → SQS → Lambda Event-Driven pipeline",
+                "result": "Decoupled notification delivery from main transaction flow"
+              }
             ],
             "techStack": [
               "TypeScript",
@@ -420,7 +560,11 @@
             "featured": false,
             "description": "Resolved lack of delivery status tracking and data consistency issues in email system",
             "details": [
-              "Implemented delivery/bounce/complaint status tracking via SES Configuration Set → SNS → event processing pipeline with Datadog logging + Slack real-time alerts"
+              {
+                "problem": "No email delivery status tracking — failures detected hours later",
+                "solution": "Implemented SES Configuration Set → SNS → event processing pipeline with Datadog logging + Slack real-time alerts",
+                "result": "Bounce/complaint detection cut to seconds with instant Slack alerting"
+              }
             ],
             "techStack": [
               "TypeScript",
@@ -435,8 +579,16 @@
             "featured": false,
             "description": "Resolved user inconvenience and system scalability limitations from 1:1 user-organization structure",
             "details": [
-              "Expanded user-organization relationship from 1:1 to 1:N structure for multi-organization management",
-              "Ensured zero-downtime API migration with backward compatibility for service continuity"
+              {
+                "problem": "1:1 user-organization structure limiting multi-organization management",
+                "solution": "Expanded user-organization relationship from 1:1 to 1:N structure",
+                "result": "Enabled multi-organization management per user"
+              },
+              {
+                "problem": "API migration risking service downtime",
+                "solution": "Ensured backward compatibility throughout migration process",
+                "result": "Achieved zero-downtime API migration with service continuity"
+              }
             ],
             "techStack": [
               "TypeScript",
@@ -451,7 +603,11 @@
             "featured": false,
             "description": "Frontend development for clinical Trial Master File (TMF) management system",
             "details": [
-              "Implemented document upload, classification, version management, and Audit Trail functionality for Admin/Dashboard"
+              {
+                "problem": "No document management interface for clinical Trial Master File system",
+                "solution": "Implemented document upload, classification, version management, and Audit Trail functionality for Admin/Dashboard",
+                "result": "Delivered complete TMF management frontend"
+              }
             ],
             "techStack": [
               "React",
@@ -465,9 +621,21 @@
             "featured": true,
             "description": "Emergency deployment for delayed VDR project under MVP launch pressure",
             "details": [
-              "Implemented Event-Driven PDF conversion triggered by S3 upload → Lambda lightweight conversion → SNS/SQS notification",
-              "Engineered permission-based workflow managing document access and approval by medical role",
-              "Delivered MVP within 3-week emergency deployment: Prioritized core features and met launch deadline for delayed project"
+              {
+                "problem": "Synchronous PDF conversion blocking document upload flow",
+                "solution": "Implemented Event-Driven PDF conversion triggered by S3 upload → Lambda lightweight conversion → SNS/SQS notification",
+                "result": "Achieved non-blocking document processing pipeline"
+              },
+              {
+                "problem": "No role-based document access control for medical workflows",
+                "solution": "Engineered permission-based workflow managing document access and approval by medical role",
+                "result": "Secured compliant document access control"
+              },
+              {
+                "problem": "VDR project schedule delay under MVP launch pressure",
+                "solution": "Executed 3-week emergency sprint prioritizing core features",
+                "result": "Delivered MVP on schedule meeting launch deadline"
+              }
             ],
             "techStack": [
               "TypeScript",
@@ -483,8 +651,16 @@
             "featured": false,
             "description": "Subscription, plan, and license management system for all Maven services",
             "details": [
-              "Implemented org-specific custom plan Internal API for tailored subscription offerings",
-              "Implemented non-renewable plan subscription renewal/re-subscription blocking logic to ensure business policy consistency"
+              {
+                "problem": "No support for organization-specific subscription plans",
+                "solution": "Implemented org-specific custom plan Internal API",
+                "result": "Enabled tailored subscription offerings per organization"
+              },
+              {
+                "problem": "Non-renewable plans could be incorrectly renewed or re-subscribed",
+                "solution": "Implemented renewal/re-subscription blocking logic for non-renewable plans",
+                "result": "Ensured business policy consistency for subscription lifecycle"
+              }
             ],
             "techStack": [
               "TypeScript",
@@ -566,8 +742,16 @@
             "featured": false,
             "description": "Built JWT-based unified authentication system to resolve subdomain session conflicts",
             "details": [
-              "Designed and implemented NestJS + JWT token authentication system",
-              "Migrated from session-based to token-based auth for reliable subdomain user transitions"
+              {
+                "problem": "No unified authentication system for multi-subdomain architecture",
+                "solution": "Designed and implemented NestJS + JWT token authentication system",
+                "result": "Established centralized auth infrastructure"
+              },
+              {
+                "problem": "Session-based auth causing subdomain transition failures",
+                "solution": "Migrated from session-based to token-based authentication",
+                "result": "Enabled reliable user transitions across subdomains"
+              }
             ],
             "techStack": [
               "NestJS",
@@ -582,7 +766,11 @@
             "featured": false,
             "description": "Resolved code duplication and inconsistency from independent service management by consolidating shared modules",
             "details": [
-              "Implemented user permission verification middleware for security enhancement"
+              {
+                "problem": "No centralized permission verification across services",
+                "solution": "Implemented user permission verification middleware",
+                "result": "Enhanced security with unified access control"
+              }
             ],
             "techStack": [
               "NestJS",
@@ -595,10 +783,21 @@
             "featured": true,
             "description": "Resolved lack of real-time status updates and manual notification workflows in doctor/pharmacist back-office systems by introducing Socket.io and Web Push",
             "details": [
-              "Doctor ID + time slot composite unique key preventing duplicate appointments",
-              "Socket.IO Room-based real-time status sync reflecting consultation/dispensing/delivery events to relevant users instantly",
-              "Reduced status reflection delay from tens of seconds to instant, eliminating patient wait complaints",
-              "Architected internal API gateway integrating delivery (Hoodadak) and payment external services with Circuit Breaker pattern for fault isolation"
+              {
+                "problem": "Duplicate appointment bookings causing scheduling conflicts",
+                "solution": "Implemented Doctor ID + time slot composite unique key constraint",
+                "result": "Prevented duplicate appointments at the database level"
+              },
+              {
+                "problem": "Status reflection delay (tens of seconds) in consultation/dispensing/delivery",
+                "solution": "Built Socket.IO Room-based real-time status sync reflecting events to relevant users instantly",
+                "result": "Reduced delay to under 1 second, eliminated patient wait complaints"
+              },
+              {
+                "problem": "External service failures (delivery, payment) cascading to main application",
+                "solution": "Architected internal API gateway integrating delivery (Hoodadak) and payment services with Circuit Breaker pattern",
+                "result": "Achieved fault isolation preventing cascading failures"
+              }
             ],
             "techStack": [
               "Express.js",
@@ -616,9 +815,16 @@
             "featured": false,
             "description": "Automated pharmacist's manual prescription entry process using OCR",
             "details": [
-              "Integrated Naver Clova OCR API for automatic text extraction from prescription images",
-              "Developed automated medication guide generation using MFDS (Korea FDA) drug information API",
-              "Reduced pharmacist processing time from 3-5 minutes to under 30 seconds per prescription"
+              {
+                "problem": "Manual prescription text entry from images (3-5 min per case)",
+                "solution": "Integrated Naver Clova OCR API for automatic text extraction from prescription images",
+                "result": "Automated prescription data entry"
+              },
+              {
+                "problem": "Manual medication guide creation inefficiency",
+                "solution": "Developed automated medication guide generation using MFDS (Korea FDA) drug information API",
+                "result": "Reduced pharmacist processing time 90% (3-5min→30sec per prescription)"
+              }
             ],
             "techStack": [
               "NestJS",
@@ -633,9 +839,21 @@
             "featured": true,
             "description": "Migrated from Express.js single-file (app.js) structure to NestJS modular architecture",
             "details": [
-              "3-phase incremental migration: app.js single file → Layered Architecture (Controller/Service/Repository) → NestJS framework adoption",
-              "JavaScript → TypeScript migration for type safety",
-              "Introduced TDD and achieved 80% unit test coverage"
+              {
+                "problem": "Express.js single-file (app.js) 3,000-line codebase unmaintainable",
+                "solution": "Executed 3-phase incremental migration: app.js single file → Layered Architecture (Controller/Service/Repository) → NestJS framework adoption",
+                "result": "Achieved modular architecture with clear separation of concerns"
+              },
+              {
+                "problem": "JavaScript lacking type safety causing runtime errors",
+                "solution": "Migrated JavaScript → TypeScript across the codebase",
+                "result": "Established type safety and improved developer experience"
+              },
+              {
+                "problem": "No automated testing culture or regression safety net",
+                "solution": "Introduced TDD practices with comprehensive unit tests",
+                "result": "Achieved 80% unit test coverage, zero incidents during major releases"
+              }
             ],
             "techStack": [
               "NestJS",
@@ -686,9 +904,21 @@
             "featured": true,
             "description": "Resolved manual learning management (attendance, completion, progress) causing low operational efficiency and frequent errors at educational institutions",
             "details": [
-              "QR Attendance: Built real-time attendance API with date+userID composite unique key preventing duplicate check-ins",
-              "Excel Bulk Registration: Apache POI-based row-by-row sequential processing ensuring data consistency for batch member registration",
-              "Dynamic Certificate: JasperReports-based PDF auto-generation API"
+              {
+                "problem": "Manual attendance tracking prone to duplicates and errors",
+                "solution": "Built QR attendance API with date+userID composite unique key preventing duplicate check-ins",
+                "result": "Digitized real-time attendance for 300+ students per semester"
+              },
+              {
+                "problem": "Manual member registration causing data inconsistency",
+                "solution": "Built Apache POI-based Excel bulk registration with row-by-row sequential processing",
+                "result": "Ensured data consistency for batch member registration"
+              },
+              {
+                "problem": "Manual certificate generation workflow",
+                "solution": "Built JasperReports-based PDF auto-generation API",
+                "result": "Automated dynamic certificate creation"
+              }
             ],
             "techStack": [
               "Java",
@@ -705,8 +935,16 @@
             "featured": false,
             "description": "Resolved fragmented reservation, monitoring, and SMS systems preventing unified management at industrial complex control center",
             "details": [
-              "Reservation System: Built real-time booking API with time+location composite unique key preventing scheduling conflicts",
-              "Async SMS: Bizppurio SMS API + @Async non-blocking reservation confirmation notifications"
+              {
+                "problem": "Scheduling conflicts from concurrent facility reservations",
+                "solution": "Built real-time booking API with time+location composite unique key",
+                "result": "Prevented scheduling conflicts at the database level"
+              },
+              {
+                "problem": "Synchronous SMS sending blocking reservation confirmation flow",
+                "solution": "Implemented Bizppurio SMS API + @Async non-blocking notification",
+                "result": "Achieved non-blocking reservation confirmation notifications"
+              }
             ],
             "techStack": [
               "Java",
@@ -721,8 +959,16 @@
             "featured": false,
             "description": "Resolved legacy PHP system's extensibility limitations and lack of structured scoring and counseling management",
             "details": [
-              "iframe Integration: Embedded Spring Boot independent app into existing PHP system, minimizing legacy impact",
-              "Composite Scoring: Weighted average-based multi-dimensional assessment scoring algorithm"
+              {
+                "problem": "Legacy PHP system could not be extended for new features",
+                "solution": "Embedded Spring Boot independent app via iframe integration, minimizing legacy impact",
+                "result": "Launched JOB Agent service without disrupting existing system"
+              },
+              {
+                "problem": "No structured scoring system for multi-dimensional assessments",
+                "solution": "Implemented weighted average-based composite scoring algorithm",
+                "result": "Enabled standardized multi-dimensional assessment scoring"
+              }
             ],
             "techStack": [
               "Java",
@@ -736,7 +982,11 @@
             "featured": false,
             "description": "Resolved lack of unified authentication requiring separate logins across 5 country-specific distributed websites",
             "details": [
-              "Unified Auth Server: Spring Security + JWT-based centralized authentication"
+              {
+                "problem": "Separate logins required across 5 country-specific websites",
+                "solution": "Built unified auth server with Spring Security + JWT-based centralized authentication",
+                "result": "Enabled single sign-on across all 5 country sites"
+              }
             ],
             "techStack": [
               "Java",
@@ -752,7 +1002,11 @@
             "featured": false,
             "description": "Resolved hosting cost burden and manual deployment workflow of WordPress-based blog",
             "details": [
-              "WordPress → Jekyll Migration: Static site conversion eliminating 100% hosting costs"
+              {
+                "problem": "WordPress hosting cost burden and manual deployment workflow",
+                "solution": "Migrated WordPress → Jekyll with static site generation",
+                "result": "Eliminated 100% hosting costs with automated deployment"
+              }
             ],
             "techStack": [
               "Jekyll",

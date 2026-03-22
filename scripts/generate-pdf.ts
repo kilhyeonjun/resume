@@ -56,7 +56,7 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-ats-ko.pdf',
       format: 'A4',
       printBackground: false,
-      margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
+      margin: { top: '6mm', right: '0mm', bottom: '6mm', left: '0mm' },
     },
   ],
   en: [
@@ -74,7 +74,7 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-ats-en.pdf',
       format: 'A4',
       printBackground: false,
-      margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
+      margin: { top: '6mm', right: '0mm', bottom: '6mm', left: '0mm' },
     },
   ],
 };

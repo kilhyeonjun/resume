@@ -9,20 +9,20 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "AI Native Engineer who shifted to agent-based development in late 2024, focusing on problem framing, agent orchestration, and verification rather than manual implementation.\n\nOver {{CAREER_DURATION}}, delivered 20+ projects across four domains (Education, Healthcare, Clinical Trials, Gaming). Achieved 82% BigQuery cost reduction and 270x pipeline capacity growth by hourly concurrent job throughput. Presented an AI-assisted architecture migration case at Games on AWS 2025, led team-wide AI adoption, and built a TDD framework for AI-generated code reliability.",
+    "summary": "AI Native Engineer who shifted to agent-based development in late 2024, focusing on problem framing, agent orchestration, and verification rather than manual implementation.\n\nOver {{CAREER_DURATION}}, delivered 20+ projects across four domains (Education, Healthcare, Clinical Trials, Gaming). Key results: 82% BigQuery cost reduction, 270x pipeline expansion via serverless migration, Games on AWS 2025 speaker.",
     "coreCompetencies": [
       {
         "category": "AI Agent Orchestration & Delivery",
         "items": [
           "Established a multi-agent development environment, orchestrating Claude Code, Codex, and Gemini for distinct roles in production software delivery (since late 2024)",
           "Established an AI-generated code reliability framework with TDD, reinforcing test-driven development culture across the team",
-          "Applied context engineering and harness engineering practices — structuring problems, designing architectural guardrails, and building feedback loops for reliable agent output; presented the approach at Games on AWS 2025"
+          "Applied context engineering and harness engineering practices — structuring problems, designing architectural guardrails, and building feedback loops for reliable agent output"
         ]
       },
       {
         "category": "System Design & Architecture",
         "items": [
-          "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel processing, reducing processing time 2hrs→5min and expanding pipeline capacity 270x by concurrent jobs per time window",
+          "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel execution, building serverless pipelines that dramatically expanded throughput and collection range",
           "Designed a shared package system for multi-project environments, improving code consistency and reusability",
           "Established a staged modernization strategy; after phased architecture migration with TDD, maintained incident-free deployments during major release windows"
         ]
@@ -30,17 +30,17 @@
       {
         "category": "Cost Optimization & Reliability",
         "items": [
-          "Cloud cost structure analysis and pricing model optimization: achieved 82% cost reduction ($6.25→$1.1 per TB)",
-          "Diagnosed bulk data processing bottlenecks and optimized queries, reducing sync time by 72% and improving query performance by 97% (18s→0.5s)",
-          "Root cause analysis of recurring deadlock patterns at architecture level + regulatory compliance with CDK-based audit log pipeline securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
+          "Cloud cost structure analysis and pricing model optimization — significantly reduced costs through read-method migration and architecture redesign",
+          "Diagnosed bulk data processing bottlenecks and optimized queries — bulk operation migration, table normalization, and index tuning for major sync and query performance gains",
+          "Root cause analysis of recurring deadlock patterns at architecture level + regulatory compliance — outbox pattern, distributed lock-based data consistency design, CDK-based audit log infrastructure as code"
         ]
       },
       {
         "category": "Technical Leadership & Culture",
         "items": [
-          "Led AI development adoption by sharing Cursor and Claude Code workflows plus context engineering practices in developer meetings, expanding team-level AI usage (Games on AWS 2025 speaker)",
-          "Established a TDD foundation for AI code reliability to ensure AI-generated code quality and reinforce test-driven team culture",
-          "Strengthened knowledge-sharing culture through developer meetings, shared library contribution guides, merge rules, code conventions, and architecture pattern standardization"
+          "Led AI development adoption by sharing Cursor and Claude Code workflows plus context engineering practices in developer meetings, expanding team-level AI usage (Games on AWS 2025 customer session speaker)",
+          "Strengthened knowledge-sharing culture through developer meetings, shared library contribution guides, merge rules, code conventions, and architecture pattern standardization",
+          "Built AI-generated code reliability framework with TDD achieving 80% coverage, maintaining incident-free deployments during major release windows"
         ]
       }
     ],
@@ -74,8 +74,11 @@
       },
       {
         "category": "Backend",
-        "description": "Legacy-to-NestJS progressive migration, shared package system establishment, 80% TDD coverage",
+        "description": "Legacy-to-NestJS progressive migration, shared package system establishment, 80% TDD coverage, REST API design",
         "items": [
+          {
+            "name": "Node.js"
+          },
           {
             "name": "TypeScript"
           },
@@ -116,7 +119,7 @@
       },
       {
         "category": "Cloud & Infra",
-        "description": "Batch-to-serverless migration (270x expansion by concurrent jobs per time window), 82% BigQuery cost reduction, CDK-based analytics infrastructure as code",
+        "description": "Batch-to-serverless migration (270x expansion by concurrent jobs per time window), 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, CI/CD pipeline",
         "items": [
           {
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
@@ -146,7 +149,7 @@
           "Resolved escalating marketing data query costs by switching BigQuery read method, achieving 82% cost reduction ($6.25→$1.1 per TB)",
           "Overcame batch processing limitations by migrating to serverless architecture, expanding marketing metrics collection range 6x (60→360 days)",
           "Led shared package architecture decisions and code convention standards across multi-game projects, building NestJS utility (10 modules) + Game Server Kit (2 packages) to secure code consistency",
-          "Designed and implemented Git-like Audit Log + 3-Way Merge engine to automate balance data change tracking and merging across 6 games, resolving delayed incident response",
+          "Designed and implemented Git-like Audit Log + 3-Way Merge engine to automate balance data change tracking and merging across 6 games, eliminating manual comparison and reducing incident root-cause identification time",
           "Unified 3 ad platform (Google Ads/Meta/TikTok) data and improved query performance 97% (18s→0.5s) through table normalization",
           "Addressed game probability disclosure regulation risk by integrating a DynamicModule-based package across multi-game projects and building a CDK-based audit log pipeline, securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
         ],
@@ -339,9 +342,9 @@
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment (MSA-based)",
         "highlights": [
           "Reduced 5+ monthly e-signature processing failures to zero by reproducing and identifying FK shared lock deadlock pattern, fundamentally resolving clinical trial Deadlock",
-          "Expanded user-organization 1:1 to 1:N mapping with full API backward compatibility ensuring zero-disruption migration, enabling multi-org onboarding for enterprise hospitals and pharma",
+          "Expanded user-organization 1:1 to 1:N mapping with full API backward compatibility ensuring zero-disruption migration for 20+ existing organizations, enabling multi-org onboarding for enterprise hospitals and pharma",
           "Deployed as part of 3-person team (2 BE + 1 FE) for 3-week emergency sprint on delayed VDR project, implementing Event-Driven PDF conversion and permission-based workflow to meet MVP launch deadline",
-          "Resolved delayed detection of email delivery failures by building event-driven monitoring pipeline for real-time bounce/complaint tracking with instant alerting (published tech blog)"
+          "Reduced email failure detection from hours to seconds by building SES+SNS event pipeline for real-time bounce/complaint tracking with Slack instant alerting (published tech blog)"
         ],
         "projects": [
           {
@@ -513,7 +516,7 @@
           "Modernized 3,000-line legacy codebase via 3-stage progressive migration (single-file → layered → NestJS) with JS→TS + 80% TDD coverage, maintaining zero post-deployment incidents during major release windows",
           "Resolved session conflicts across 3 subdomains on a 300K-download platform by building JWT-based token authentication in 3 weeks, enabling uninterrupted user switching",
           "Automated full prescription-to-medication-guide workflow via Naver Clova OCR + MFDS (Korea FDA) API integration, cutting pharmacist processing time 90% (3-5min→30sec)",
-          "Introduced Socket.IO-based real-time status sync + Web Push notifications, reducing status reflection delay from tens of seconds to instant and eliminating patient wait complaints"
+          "Introduced Socket.IO-based real-time status sync + Web Push notifications, reducing status reflection delay from tens of seconds to under 1 second, eliminating patient wait complaints"
         ],
         "projects": [
           {
@@ -625,7 +628,7 @@
         "description": "Custom software consulting firm",
         "highlights": [
           "Developed LMS core features (QR attendance, PDF certificates, Excel bulk registration) full-stack over 10 months, digitizing learning management for 300+ students per semester",
-          "Overcame legacy PHP system limitations via cross-frame integration, implementing weighted matching algorithm and counselor back-office to launch JOB Agent service",
+          "Embedded Spring Boot app into legacy PHP system via iframe for extensibility, implemented weighted-average matching algorithm for JOB Agent service launch and automated counselor matching",
           "Built cross-domain auth server to unify login across 5 country-specific websites into a single authentication system"
         ],
         "projects": [

@@ -211,7 +211,7 @@
             "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
             "details": [
               "Hybrid Architecture: Prioritized operational stability over full serverless migration, keeping the API server on EC2 while separating batch/job processing to Lambda for workload-optimized resource usage",
-              "Built Event-Driven flow with SQS+Lambda+EventBridge, reducing batch time 2h→5m and expanding collection 6x(60→360 days)",
+              "Established Event-Driven flow with SQS+Lambda+EventBridge, reducing batch time 2h→5m and expanding collection 6x(60→360 days)",
               "Transactional Outbox Pattern: Scheduled and delayed event publishing ensuring data consistency",
               "Lambda Operational Stabilization: Batch Size bulk processing resolving throttling, CloudWatch log optimization reducing costs, build OOM remediation",
               "RDS Proxy Connection Management: Resolved DB connection exhaustion during massive Lambda execution via RDS Proxy pooling"
@@ -353,7 +353,7 @@
             "featured": false,
             "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance using Cyan (in-house Node.js framework)",
             "details": [
-              "Built batch dispatch system for participant group management per clinical trial and batch consent dispatch",
+              "Created batch dispatch system for participant group management per clinical trial and batch consent dispatch",
               "Migrated from batch + S3 event-based processing to EDA + Outbox pattern, enabling event flow visualization and local test environment setup"
             ],
             "techStack": [
@@ -436,7 +436,7 @@
             "description": "Emergency deployment for delayed VDR project under MVP launch pressure",
             "details": [
               "Implemented Event-Driven PDF conversion triggered by S3 upload → Lambda lightweight conversion → SNS/SQS notification",
-              "Built permission-based workflow managing document access and approval by medical role",
+              "Engineered permission-based workflow managing document access and approval by medical role",
               "Delivered MVP within 3-week emergency deployment: Prioritized core features and met launch deadline for delayed project"
             ],
             "techStack": [
@@ -557,7 +557,7 @@
               "Doctor ID + time slot composite unique key preventing duplicate appointments",
               "Socket.IO Room-based real-time status sync reflecting consultation/dispensing/delivery events to relevant users instantly",
               "Reduced status reflection delay from tens of seconds to instant, eliminating patient wait complaints",
-              "Built internal API gateway integrating delivery (Hoodadak) and payment external services with Circuit Breaker pattern for fault isolation"
+              "Architected internal API gateway integrating delivery (Hoodadak) and payment external services with Circuit Breaker pattern for fault isolation"
             ],
             "techStack": [
               "Express.js",

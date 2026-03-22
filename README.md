@@ -14,17 +14,21 @@ https://kilhyeonjun.github.io/resume/
 - 반응형 디자인
 - 포트폴리오
 
+## Tech Stack
+
+Astro 5 · Tailwind CSS 4 · TypeScript (strict) · Puppeteer (PDF) · GitHub Pages
+
 ## Structure
 
 ```
 src/
 ├── components/
 │   ├── icons/              # SVG icon components
+│   ├── resume/             # Resume section components
 │   └── templates/          # Page template components
-├── content/
-│   └── resume/
-│       ├── ko.json         # 한국어 데이터
-│       └── en.json         # 영어 데이터
+├── content/resume/
+│   ├── ko.json             # 한국어 데이터 (source of truth)
+│   └── en.json             # 영어 데이터
 ├── data/
 │   └── portfolio.json      # 포트폴리오 데이터
 ├── layouts/
@@ -36,11 +40,10 @@ src/
 │   ├── experience/         # 경력 상세
 │   ├── portfolio/          # 포트폴리오
 │   └── en/                 # 영어 버전
-├── styles/
-│   └── global.css
-├── types/
-│   └── portfolio.ts
+├── styles/global.css
 └── utils/
+    ├── resume-data.ts      # 표면별 데이터 projection
+    ├── career-duration.ts  # 경력 기간 계산
     └── paths.ts
 scripts/
 └── generate-pdf.ts         # PDF 생성 (Puppeteer)

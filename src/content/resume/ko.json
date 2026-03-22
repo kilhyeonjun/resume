@@ -161,7 +161,7 @@
             "description": "게임 운영 중 데이터 변경 이력 추적 불가로 인한 밸런스 문제 대응 지연 해결",
             "details": [
               "Git-like 버전 관리 시스템: UUID 기반 크로스 환경/프로젝트 엔티티 추적으로 6개 게임 간 데이터 일관성 보장",
-              "이벤트 소싱 기반 변경 추적: Auditable 데코레이터 + TypeORM Subscriber 패턴으로 엔티티 변경 자동 기록 파이프라인 구축",
+              "이벤트 소싱 기반 변경 추적: Auditable 데코레이터 + TypeORM Subscriber 패턴으로 엔티티 변경 자동 기록 파이프라인 설계",
               "3-Way Merge 엔진: 6개 게임의 상위/하위 엔티티 충돌 감지와 유니크 제약조건을 고려한 다중 환경 간 버전 병합 시스템",
               "버전 간 Diff 엔진: Base Audit 유무에 따른 증분 비교와 스냅샷 비교의 이중 전략으로 비용 효율적 버전 비교",
               "공유 식별자 기반 크로스 환경 엔티티 추적 체계: PK 의존 탈피, 마이그레이션/비교/병합 시 정확한 엔티티 추적 보장"
@@ -274,7 +274,7 @@
             "name": "확률 계산 및 감사 로그 분석 파이프라인 (Glider Probability)",
             "period": "2026.02 ~ 현재",
             "featured": false,
-            "description": "게임 확률 검증 체계 부재에 따른 규제 리스크 해소를 위한 확률 계산 패키지와 CDK 기반 감사 로그 분석 인프라 구축",
+            "description": "게임 확률 검증 체계 부재에 따른 규제 리스크 해소를 위한 확률 계산 패키지와 CDK 기반 감사 로그 분석 인프라 개발",
             "details": [
               "확률 패키지: NestJS DynamicModule 기반 5개 함수+Kinesis 로깅을 @gameduo/glider-probability로 패키지화, 12개 게임 통합",
               "CDK 분석 파이프라인: Kinesis→Firehose(Dynamic Partitioning+Parquet)→S3→Glue→Athena E2E 확률 감사 로그 코드화",
@@ -354,7 +354,7 @@
             "description": "Cyan(사내 Node.js 프레임워크) 기반 임상시험 전자 동의서 수집 비효율성과 전자서명 규제 준수 요구사항 해결",
             "details": [
               "배치 발송 시스템: 임상시험별 참여자 그룹 관리 및 일괄 동의서 발송",
-              "배치+S3 이벤트 기반에서 EDA+아웃박스 패턴으로 전환하여 이벤트 흐름 가시화 및 로컬 테스트 환경 구축"
+              "배치+S3 이벤트 기반에서 EDA+아웃박스 패턴으로 전환하여 이벤트 흐름 가시화 및 로컬 테스트 환경 정비"
             ],
             "techStack": [
               "TypeScript",
@@ -371,7 +371,7 @@
             "description": "임상시험 전자서명 알림에서 발생하는 데이터베이스 Deadlock으로 인한 치명적 알림 누락 해결",
             "details": [
               "Deadlock 근본 원인 분석: 외래키 생성 시 공유락에서 배타락 전환 타이밍 이슈 규명",
-              "Event-Driven Architecture 설계: AWS SNS → SQS → Lambda 파이프라인 구축"
+              "Event-Driven Architecture 설계: AWS SNS → SQS → Lambda 파이프라인 완성"
             ],
             "techStack": [
               "TypeScript",
@@ -639,7 +639,7 @@
             "description": "교육 기관의 학습 관리(출석, 수료, 진도율)가 수작업에 의존하여 운영 효율이 낮고 오류가 빈번한 문제 해결",
             "details": [
               "QR 출석체크: 날짜+사용자ID 복합 유니크 키로 중복 출석을 방지하는 실시간 출석 처리 API 구현",
-              "Excel 대량 등록: Apache POI 기반 행별 순차 처리로 데이터 정합성을 보장하는 회원 일괄 등록 시스템 구축",
+              "Excel 대량 등록: Apache POI 기반 행별 순차 처리로 데이터 정합성을 보장하는 회원 일괄 등록 시스템 개발",
               "동적 수료증: JasperReports 기반 PDF 자동 생성 API 구현"
             ],
             "techStack": [
@@ -688,7 +688,7 @@
             "featured": false,
             "description": "5개국 분산 웹사이트에서 국가별 개별 로그인이 필요한 통합 인증 부재 문제 해결",
             "details": [
-              "통합 인증 서버 구축: Spring Security + JWT 기반 중앙화된 인증 시스템"
+              "통합 인증 서버 개발: Spring Security + JWT 기반 중앙화된 인증 시스템"
             ],
             "techStack": [
               "Java",

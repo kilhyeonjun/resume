@@ -44,24 +44,26 @@ function filterExperienceForSurface(experience: ResumeData['experience'], surfac
   }));
 }
 
-function filterCoreCompetenciesForSurface(coreCompetencies: ResumeData['coreCompetencies'], surface: ResumeSurface) {
-  if (surface !== 'print') return coreCompetencies;
-  return coreCompetencies.map((group) => ({
-    ...group,
-    items: group.items.slice(0, 2),
-  }));
+function filterCoreCompetenciesForSurface(coreCompetencies: ResumeData['coreCompetencies']) {
+  return coreCompetencies;
 }
 
 function filterOpenSourceForSurface(openSource: ResumeData['openSource'], surface: ResumeSurface) {
-  return surface === 'print' ? openSource.slice(0, 3) : openSource;
+  if (surface !== 'print') return openSource;
+  // Merged first, then Open — Merged is a stronger hiring signal
+  const sorted = [...openSource].sort((a, b) => {
+    const order = { Merged: 0, Open: 1, Closed: 2 };
+    return (order[a.status ?? 'Closed'] ?? 2) - (order[b.status ?? 'Closed'] ?? 2);
+  });
+  return sorted.slice(0, 3);
 }
 
-function filterTechnicalWritingForSurface(technicalWriting: ResumeData['technicalWriting'], _surface: ResumeSurface) {
+function filterTechnicalWritingForSurface(technicalWriting: ResumeData['technicalWriting']) {
   return technicalWriting;
 }
 
 function filterContinuousLearningForSurface(continuousLearning: ResumeData['continuousLearning'], surface: ResumeSurface) {
-  return surface === 'print' ? continuousLearning.slice(0, 2) : continuousLearning;
+  return surface === 'print' ? continuousLearning.slice(0, 3) : continuousLearning;
 }
 
 export function prepareResumeData(
@@ -72,14 +74,14 @@ export function prepareResumeData(
   const data: PreparedResumeData = {
     ...resumeData.personalInfo,
     summary: replaceDurationPlaceholder(resumeData.summary, resumeData.experience, lang),
-    coreCompetencies: filterCoreCompetenciesForSurface(resumeData.coreCompetencies, surface),
+    coreCompetencies: filterCoreCompetenciesForSurface(resumeData.coreCompetencies),
     skills: resumeData.skills,
     experience: filterExperienceForSurface(resumeData.experience, surface),
     education: resumeData.education,
     certifications: resumeData.certifications,
     continuousLearning: filterContinuousLearningForSurface(resumeData.continuousLearning, surface),
     trainingPrograms: resumeData.trainingPrograms,
-    technicalWriting: filterTechnicalWritingForSurface(resumeData.technicalWriting, surface),
+    technicalWriting: filterTechnicalWritingForSurface(resumeData.technicalWriting),
     openSource: filterOpenSourceForSurface(resumeData.openSource, surface),
     awards: resumeData.awards,
   };

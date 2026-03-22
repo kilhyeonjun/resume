@@ -11,8 +11,11 @@ interface Props {
   labels: PortfolioLabels;
 }
 
-const { lang, projects, labels } = Astro.props;
+const { lang, projects: rawProjects, labels } = Astro.props;
 const basePath = getBasePath(lang);
+const projects = [...rawProjects].sort((a, b) =>
+  new Date(b.period.start).getTime() - new Date(a.period.start).getTime()
+);
 ---
 
 <Layout title={`${labels.portfolio} | Portfolio`} description={lang === 'ko' ? '개인 프로젝트 포트폴리오' : 'Personal Project Portfolio'} lang={lang}>

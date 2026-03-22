@@ -50,7 +50,7 @@ const { skills, education, certifications, awards, labels } = Astro.props;
               {edu.degree} {edu.field && `• ${edu.field}`}
             </p>
             <p class="text-sm text-gray-500 dark:text-gray-300">
-              {edu.startDate} — {edu.endDate}
+              {edu.startDate.replace('-', '.')} — {edu.endDate.replace('-', '.')}
               {edu.gpa && <span class="ml-2">GPA: {edu.gpa}</span>}
             </p>
           </div>

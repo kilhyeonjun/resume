@@ -22,9 +22,9 @@ const { lang, experience, index, total, allExperience, labels } = Astro.props;
 const prevExp = index > 0 ? allExperience[index - 1] : null;
 const nextExp = index < total - 1 ? allExperience[index + 1] : null;
 
-const period = experience.current 
-  ? `${experience.startDate} — ${labels.current}`
-  : `${experience.startDate} — ${experience.endDate}`;
+const period = experience.current
+  ? `${experience.startDate.replace('-', '.')} — ${labels.current}`
+  : `${experience.startDate.replace('-', '.')} — ${experience.endDate?.replace('-', '.')}`;
 
 const basePath = getBasePath(lang);
 ---

@@ -249,6 +249,9 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
 </head>
 <body class={lang === 'en' ? 'lang-en' : ''}>
   <a href={basePath} class="back-link no-print">← {labels.backToResume}</a>
+  <button onclick="window.print()" class="no-print" style="position:fixed;bottom:24px;right:24px;padding:10px 20px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);z-index:100;">
+    {lang === 'ko' ? '인쇄 / PDF 저장' : 'Print / Save PDF'}
+  </button>
 
   <div class="resume">
     <!-- Header -->

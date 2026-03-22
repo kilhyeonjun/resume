@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "2024년 말부터 AI 에이전트 기반 개발로 전환, 코드 작성 자체보다 문제 구조화·에이전트 오케스트레이션·검증 체계 설계에 집중하는 AI Native Engineer.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 20개+ 프로젝트 수행. 대표 성과: BigQuery 비용 82% 절감, 서버리스 전환으로 파이프라인 270배 확장, Games on AWS 2025 발표.",
+    "summary": "문제 구조화·에이전트 오케스트레이션·검증 체계를 설계하여 팀의 개발 생산성과 시스템 안정성을 높이는 AI Native Engineer. 12개 게임 라이브 서비스, 7개 프로젝트 공통 패키지 환경에서 백엔드 아키텍처와 데이터 파이프라인을 설계·운영합니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 20개+ 프로젝트 수행. 대표 성과: BigQuery 비용 82% 절감, 서버리스 전환으로 파이프라인 270배 확장, Games on AWS 2025 발표.",
     "coreCompetencies": [
       {
         "category": "AI 에이전트 오케스트레이션 & 개발 체계",

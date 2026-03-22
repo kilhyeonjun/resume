@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "AI Native Engineer who shifted to agent-based development in late 2024, focusing on problem framing, agent orchestration, and verification rather than manual implementation.\n\nOver {{CAREER_DURATION}}, delivered 20+ projects across four domains (Education, Healthcare, Clinical Trials, Gaming). Key results: 82% BigQuery cost reduction, 270x pipeline expansion via serverless migration, Games on AWS 2025 speaker.",
+    "summary": "AI Native Engineer who designs problem framing, agent orchestration, and verification systems to elevate team productivity and system reliability. Currently operating across 12 live game services and a 7-project shared package ecosystem, architecting backend systems and data pipelines.\n\nOver {{CAREER_DURATION}}, delivered 20+ projects across four domains (Education, Healthcare, Clinical Trials, Gaming). Key results: 82% BigQuery cost reduction, 270x pipeline expansion via serverless migration, Games on AWS 2025 speaker.",
     "coreCompetencies": [
       {
         "category": "AI Agent Orchestration & Delivery",

@@ -53,15 +53,15 @@ function filterCoreCompetenciesForSurface(coreCompetencies: ResumeData['coreComp
 }
 
 function filterOpenSourceForSurface(openSource: ResumeData['openSource'], surface: ResumeSurface) {
-  return surface === 'print' ? openSource.slice(0, 1) : openSource;
+  return surface === 'print' ? openSource.slice(0, 3) : openSource;
 }
 
-function filterTechnicalWritingForSurface(technicalWriting: ResumeData['technicalWriting'], surface: ResumeSurface) {
-  return surface === 'print' ? technicalWriting.slice(0, 2) : technicalWriting;
+function filterTechnicalWritingForSurface(technicalWriting: ResumeData['technicalWriting'], _surface: ResumeSurface) {
+  return technicalWriting;
 }
 
 function filterContinuousLearningForSurface(continuousLearning: ResumeData['continuousLearning'], surface: ResumeSurface) {
-  return surface === 'print' ? continuousLearning.slice(0, 1) : continuousLearning;
+  return surface === 'print' ? continuousLearning.slice(0, 2) : continuousLearning;
 }
 
 export function prepareResumeData(

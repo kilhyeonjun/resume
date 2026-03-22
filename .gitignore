@@ -39,6 +39,7 @@ test-results/
 
 # screenshots (regenerable)
 *.png
+!public/og-image.png
 
 # temporary work files
 .all-reviews-fixes.md

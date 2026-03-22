@@ -13,7 +13,7 @@ const { coreCompetencies, label } = Astro.props;
 {coreCompetencies && coreCompetencies.length > 0 && (
   <section class="mb-10">
     <h2 class="section-title">{label}</h2>
-    <div class="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+    <div class="mt-6 grid gap-6 sm:grid-cols-2">
       {coreCompetencies.map((comp) => (
         <div>
           <h3 class="mb-3 text-sm font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">

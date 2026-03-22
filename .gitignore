@@ -39,3 +39,11 @@ test-results/
 
 # screenshots (regenerable)
 *.png
+
+# temporary work files
+.all-reviews-fixes.md
+.web-review-v5-fixes.md
+IMPROVEMENT_PLAN.md
+capture-screenshots.mjs
+screenshot-puppeteer.js
+screenshot-puppeteer.mjs

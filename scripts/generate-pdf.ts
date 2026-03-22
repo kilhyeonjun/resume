@@ -141,7 +141,6 @@ async function generatePDF(
       format: config.format || 'A4',
       printBackground: config.printBackground,
       margin: config.margin,
-      preferCSSPageSize: true,
     });
 
     console.log(`     ✅ Saved to: ${outputPath}`);

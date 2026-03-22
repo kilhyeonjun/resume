@@ -15,7 +15,7 @@
         "category": "AI Agent Orchestration & Delivery",
         "items": [
           "Established a multi-agent development environment, orchestrating Claude Code, Codex, and Gemini for distinct roles in production software delivery (since late 2024)",
-          "Established an AI-generated code reliability framework with TDD, reinforcing test-driven development culture across the team",
+          "Established an AI-generated code reliability framework with TDD, reinforcing test-driven development culture and production stability across the team",
           "Applied context engineering and harness engineering practices — structuring problems, designing architectural guardrails, and building feedback loops for reliable agent output"
         ]
       },
@@ -40,7 +40,7 @@
         "items": [
           "Led AI development adoption by sharing Cursor and Claude Code workflows plus context engineering practices in developer meetings, expanding team-level AI usage (Games on AWS 2025 customer session speaker)",
           "Strengthened knowledge-sharing culture through developer meetings, shared library contribution guides, merge rules, code conventions, and architecture pattern standardization",
-          "Built AI-generated code reliability framework with TDD achieving 80% coverage, maintaining incident-free deployments during major release windows"
+          "Built AI-generated code quality assurance workflow with automated test gates ensuring production deployment reliability"
         ]
       }
     ],
@@ -74,7 +74,7 @@
       },
       {
         "category": "Backend",
-        "description": "Legacy-to-NestJS progressive migration, shared package system establishment, 80% TDD coverage, REST API design",
+        "description": "Legacy-to-NestJS progressive migration, shared package system establishment, TDD-driven development, REST API design",
         "items": [
           {
             "name": "Node.js"
@@ -104,7 +104,7 @@
       },
       {
         "category": "Database",
-        "description": "Query optimization (18s→0.5s), deadlock root cause analysis, large-scale table normalization, Redis distributed locking",
+        "description": "Query optimization, deadlock root cause analysis, large-scale table normalization, Redis distributed locking",
         "items": [
           {
             "name": "MySQL"
@@ -119,7 +119,7 @@
       },
       {
         "category": "Cloud & Infra",
-        "description": "Batch-to-serverless migration (270x expansion by concurrent jobs per time window), 82% BigQuery cost reduction, CDK-based analytics infrastructure as code, CI/CD pipeline",
+        "description": "Batch-to-serverless migration, BigQuery cost optimization, CDK-based analytics infrastructure as code, CI/CD pipeline",
         "items": [
           {
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"

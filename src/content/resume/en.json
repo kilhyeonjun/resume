@@ -146,11 +146,31 @@
         "current": true,
         "description": "Mobile game development and publishing company. Transitioned to AI agent-based development in late 2024 for backend architecture design and live service feature development",
         "highlights": [
-          "Resolved marketing data query cost surge by adopting BigQuery Storage Read API, cutting costs 82% ($6.25→$1.1 per TB)",
-          "Eliminated batch processing collection limits by migrating to serverless architecture, expanding metrics range 6x (60→360 days) and reducing processing time 2h→5min",
-          "Resolved code duplication and convention inconsistency across 7 projects by establishing shared package system (NestJS utility 10 modules + Game Server Kit 2 packages), automating upgrades to cut deployment time 3hrs→15min",
-          "Resolved marketing query latency (18s) caused by fragmented ad platform data (Google Ads/Meta/TikTok) via table normalization, improving performance 97% (18s→0.5s)",
-          "Mitigated regulatory risk from game probability disclosure requirements by integrating DynamicModule-based probability package across multi-game projects with CDK-based audit log pipeline, achieving 94%+ test coverage (12 suites, 115 tests)"
+          {
+            "problem": "Marketing data query cost surge",
+            "solution": "Adopted BigQuery Storage Read API",
+            "result": "Cut costs 82% ($6.25→$1.1 per TB)"
+          },
+          {
+            "problem": "Batch processing collection limits (60 days)",
+            "solution": "Migrated to serverless architecture (SQS+Lambda+EventBridge)",
+            "result": "Expanded metrics range 6x (60→360 days), processing time 2h→5min"
+          },
+          {
+            "problem": "Code duplication and convention inconsistency across 7 projects",
+            "solution": "Established shared package system (NestJS utility 10 modules + Game Server Kit 2 packages)",
+            "result": "Automated upgrades cutting deployment time 3hrs→15min"
+          },
+          {
+            "problem": "Marketing query latency (18s) from fragmented ad platform data (Google Ads/Meta/TikTok)",
+            "solution": "Table normalization and index tuning",
+            "result": "Performance improved 97% (18s→0.5s)"
+          },
+          {
+            "problem": "Regulatory risk from game probability disclosure requirements",
+            "solution": "Integrated DynamicModule-based probability package across multi-game projects + CDK-based audit log pipeline",
+            "result": "Achieved 94%+ integration test coverage (12 suites, 115 tests)"
+          }
         ],
         "projects": [
           {
@@ -340,9 +360,21 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment (MSA-based)",
         "highlights": [
-          "Eliminated 5+ monthly e-signature failures by reproducing and identifying FK shared lock deadlock pattern, resolving clinical trial Deadlock at its root",
-          "Delivered MVP on schedule as part of a 3-person team (2 BE + 1 FE) in a 3-week emergency sprint on a delayed VDR project, implementing Event-Driven PDF conversion and permission-based workflow",
-          "Resolved delayed email failure detection (hours) via SES+SNS event pipeline, cutting bounce/complaint detection to seconds with Slack instant alerting (published tech blog)"
+          {
+            "problem": "5+ monthly e-signature processing failures (clinical trial Deadlock)",
+            "solution": "Reproduced and identified FK shared lock deadlock pattern",
+            "result": "Failures reduced to 0, Deadlock root cause eliminated"
+          },
+          {
+            "problem": "VDR project schedule delay under MVP launch pressure",
+            "solution": "3-week emergency sprint (2 BE + 1 FE), Event-Driven PDF conversion + permission-based workflow",
+            "result": "MVP launched on schedule"
+          },
+          {
+            "problem": "Delayed email failure detection (hours)",
+            "solution": "Built SES+SNS event pipeline",
+            "result": "Bounce/complaint detection cut to seconds, Slack instant alerting (published tech blog)"
+          }
         ],
         "projects": [
           {
@@ -511,9 +543,21 @@
         "endDate": "2023-05",
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
-          "Resolved maintainability limits of Express.js single-file (app.js) 3,000-line legacy via 3-stage progressive migration, achieving JS→TS + 80% TDD coverage with zero incidents during major releases",
-          "Resolved manual prescription entry bottleneck via Naver Clova OCR + MFDS API integration, automating full workflow and cutting pharmacist processing time 90% (3-5min→30sec)",
-          "Resolved status reflection delay (tens of seconds) in consultation/dispensing/delivery via Socket.IO real-time sync + Web Push notifications, cutting to under 1 second"
+          {
+            "problem": "Express.js single-file (app.js) 3,000-line legacy maintainability limits",
+            "solution": "3-stage progressive migration (single-file→layered→NestJS) + JS→TS",
+            "result": "TDD 80% coverage, zero incidents during major releases"
+          },
+          {
+            "problem": "Manual prescription entry bottleneck (3-5min per case)",
+            "solution": "Naver Clova OCR + MFDS (Korea FDA) API integration for full workflow automation",
+            "result": "Pharmacist processing time cut 90% (3-5min→30sec)"
+          },
+          {
+            "problem": "Status reflection delay in consultation/dispensing/delivery (tens of seconds)",
+            "solution": "Socket.IO real-time sync + Web Push notifications",
+            "result": "Reduced to under 1 second, eliminated patient wait complaints"
+          }
         ],
         "projects": [
           {
@@ -624,8 +668,16 @@
         "endDate": "2022-03",
         "description": "Custom software consulting firm",
         "highlights": [
-          "Resolved manual learning management inefficiency by building LMS full-stack (QR attendance, PDF certificates, Excel bulk registration), digitizing operations for 300+ students per semester",
-          "Resolved legacy PHP extensibility limits by embedding Spring Boot app via iframe, launching JOB Agent service with weighted-average matching algorithm"
+          {
+            "problem": "Manual learning management (attendance, completion, progress tracking)",
+            "solution": "Built LMS full-stack (QR attendance, PDF certificates, Excel bulk registration)",
+            "result": "Digitized operations for 300+ students per semester"
+          },
+          {
+            "problem": "Legacy PHP system extensibility limits",
+            "solution": "Embedded Spring Boot app via iframe + weighted-average matching algorithm",
+            "result": "JOB Agent service launched"
+          }
         ],
         "projects": [
           {

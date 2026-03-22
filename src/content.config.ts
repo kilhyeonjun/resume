@@ -45,6 +45,12 @@ const activitySchema = z.object({
   reviewUrl: safeUrl.optional(),
 });
 
+const highlightSchema = z.object({
+  problem: z.string(),
+  solution: z.string(),
+  result: z.string(),
+});
+
 const experienceSchema = z.object({
   slug: z.string(),
   company: z.string(),
@@ -54,7 +60,7 @@ const experienceSchema = z.object({
   endDate: dateString.optional(),
   current: z.boolean().optional(),
   description: z.string().optional(),
-  highlights: z.array(z.string()).default([]),
+  highlights: z.array(highlightSchema).default([]),
   projects: z.array(projectSchema).default([]),
   techStack: z.array(z.string()).default([]),
   activities: z.array(activitySchema).default([]),
@@ -211,3 +217,4 @@ export type Labels = z.infer<typeof labelsSchema>;
 export type Links = z.infer<typeof linksSchema>;
 export type Activity = z.infer<typeof activitySchema>;
 export type TrainingProgram = z.infer<typeof trainingProgramSchema>;
+export type Highlight = z.infer<typeof highlightSchema>;

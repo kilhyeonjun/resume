@@ -333,7 +333,7 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
             {exp.highlights && exp.highlights.length > 0 && (
               <ul class="highlights">
                 {exp.highlights.map((highlight) => (
-                  <li><span class="highlight-bullet">•</span>{highlight}</li>
+                  <li><span class="highlight-bullet">•</span>{highlight.problem} → {highlight.solution} → {highlight.result}</li>
                 ))}
               </ul>
             )}

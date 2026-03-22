@@ -847,13 +847,9 @@
       {
         "title": "Email Delivery Monitoring through AWS SES Event Logs",
         "date": "2024-03",
-        "type": "Tech Blog",
-        "url": "https://jnp.tech/posts/2024-03-aws-ses-event-log"
-      },
-      {
-        "title": "Mailing System Email Delivery Result Tracking Feature",
-        "date": "2024-02",
-        "type": "Internal Seminar"
+        "type": "Internal Seminar → Tech Blog",
+        "url": "https://jnp.tech/posts/2024-03-aws-ses-event-log",
+        "description": "Presented internally then published as tech blog"
       }
     ],
     "openSource": [

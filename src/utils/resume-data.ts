@@ -44,6 +44,14 @@ function filterExperienceForSurface(experience: ResumeData['experience'], surfac
   }));
 }
 
+function filterCoreCompetenciesForSurface(coreCompetencies: ResumeData['coreCompetencies'], surface: ResumeSurface) {
+  if (surface !== 'print') return coreCompetencies;
+  return coreCompetencies.map((group) => ({
+    ...group,
+    items: group.items.slice(0, 2),
+  }));
+}
+
 function filterOpenSourceForSurface(openSource: ResumeData['openSource'], surface: ResumeSurface) {
   return surface === 'print' ? openSource.slice(0, 1) : openSource;
 }
@@ -64,7 +72,7 @@ export function prepareResumeData(
   const data: PreparedResumeData = {
     ...resumeData.personalInfo,
     summary: replaceDurationPlaceholder(resumeData.summary, resumeData.experience, lang),
-    coreCompetencies: resumeData.coreCompetencies,
+    coreCompetencies: filterCoreCompetenciesForSurface(resumeData.coreCompetencies, surface),
     skills: resumeData.skills,
     experience: filterExperienceForSurface(resumeData.experience, surface),
     education: resumeData.education,

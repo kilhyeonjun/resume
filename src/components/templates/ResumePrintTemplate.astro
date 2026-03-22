@@ -230,6 +230,20 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
 
     .back-link:hover { background: #e5e7eb; }
 
+    /* Korean: tighter spacing to fit 2 pages */
+    body.lang-ko { font-size: 9pt; line-height: 1.35; }
+    body.lang-ko .highlights li { font-size: 8.5pt; line-height: 1.3; }
+    body.lang-ko .summary-text { font-size: 8.5pt; line-height: 1.4; }
+    body.lang-ko .skill-group { font-size: 8.5pt; line-height: 1.3; }
+    body.lang-ko .resume { padding: 0 12mm; }
+    body.lang-ko .section-title { font-size: 10.5pt; margin: 0 0 1.2mm; }
+    body.lang-ko .header { margin-bottom: 2mm; padding-bottom: 1.5mm; }
+    body.lang-ko .experience-item { margin-bottom: 1.5mm; }
+    body.lang-ko .competency-group { margin-bottom: 0.5mm; }
+    body.lang-ko section { margin-bottom: 1.5mm; }
+    body.lang-ko .description { font-size: 7.5pt; }
+    body.lang-ko .skill-desc { font-size: 7.5pt; }
+
     /* English: tighter spacing to fit 2 pages */
     body.lang-en { font-size: 8.5pt; line-height: 1.3; }
     body.lang-en .highlights li { font-size: 8pt; line-height: 1.25; }
@@ -247,7 +261,7 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
     }
   </style>
 </head>
-<body class={lang === 'en' ? 'lang-en' : ''}>
+<body class={lang === 'en' ? 'lang-en' : 'lang-ko'}>
   <a href={basePath} class="back-link no-print">← {labels.backToResume}</a>
   <button onclick="window.print()" class="no-print" style="position:fixed;bottom:24px;right:24px;padding:10px 20px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);z-index:100;">
     {lang === 'ko' ? '인쇄 / PDF 저장' : 'Print / Save PDF'}

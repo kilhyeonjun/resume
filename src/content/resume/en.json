@@ -32,7 +32,7 @@
         "items": [
           "Cloud cost structure analysis and pricing model optimization — significantly reduced costs through read-method migration and architecture redesign",
           "Diagnosed bulk data processing bottlenecks and optimized queries — bulk operation migration, table normalization, and index tuning for major sync and query performance gains",
-          "Root cause analysis of recurring deadlock patterns at architecture level + regulatory compliance — outbox pattern, distributed lock-based data consistency design, CDK-based audit log infrastructure as code"
+          "Analyzed recurring deadlock root causes at the architecture level and ensured regulatory compliance — outbox pattern, distributed lock-based data consistency design, CDK-based audit log infrastructure as code"
         ]
       },
       {
@@ -146,12 +146,12 @@
         "current": true,
         "description": "Mobile game development and publishing company. Transitioned to AI agent-based development in late 2024 for backend architecture design and live service feature development",
         "highlights": [
-          "Resolved escalating marketing data query costs by switching BigQuery read method, achieving 82% cost reduction ($6.25→$1.1 per TB)",
-          "Overcame batch processing limitations by migrating to serverless architecture, expanding marketing metrics collection range 6x (60→360 days)",
+          "Cut marketing data query costs 82% ($6.25→$1.1 per TB) by adopting the BigQuery Storage Read API",
+          "Eliminated batch processing bottlenecks by migrating to serverless architecture, expanding marketing metrics collection range 6x (60→360 days)",
           "Led shared package architecture decisions and code convention standards across multi-game projects, deploying NestJS utility (10 modules) + Game Server Kit (2 packages) to 7 projects with automated upgrades reducing deployment time from 3hrs to 15min",
           "Designed and implemented Git-like Audit Log + 3-Way Merge engine to automate balance data change tracking and merging across 6 games, eliminating manual comparison and reducing incident root-cause identification time",
-          "Unified 3 ad platform (Google Ads/Meta/TikTok) data and improved query performance 97% (18s→0.5s) through table normalization",
-          "Addressed game probability disclosure regulation risk by integrating a DynamicModule-based package across multi-game projects and building a CDK-based audit log pipeline, securing 94%+ integration test coverage for core scenarios (12 suites, 115 tests)"
+          "Unified data from 3 ad platforms (Google Ads/Meta/TikTok) and improved query performance 97% (18s→0.5s) via table normalization",
+          "Mitigated regulatory risk from game probability disclosure requirements by integrating a DynamicModule-based probability package across multi-game projects with a CDK-based audit log pipeline, achieving 94%+ integration test coverage (12 suites, 115 tests)"
         ],
         "projects": [
           {
@@ -341,10 +341,10 @@
         "endDate": "2024-08",
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment (MSA-based)",
         "highlights": [
-          "Reduced 5+ monthly e-signature processing failures to zero by reproducing and identifying FK shared lock deadlock pattern, fundamentally resolving clinical trial Deadlock",
+          "Eliminated 5+ monthly e-signature processing failures by reproducing and identifying FK shared lock deadlock pattern, resolving the clinical trial deadlock at its root",
           "Expanded user-organization 1:1 to 1:N mapping with full API backward compatibility ensuring zero-disruption migration for 20+ existing organizations, enabling multi-org onboarding for enterprise hospitals and pharma",
-          "Deployed as part of 3-person team (2 BE + 1 FE) for 3-week emergency sprint on delayed VDR project, implementing Event-Driven PDF conversion and permission-based workflow to meet MVP launch deadline",
-          "Reduced email failure detection from hours to seconds by building SES+SNS event pipeline for real-time bounce/complaint tracking with Slack instant alerting (published tech blog)"
+          "Delivered as part of a 3-person team (2 BE + 1 FE) in a 3-week emergency sprint on a delayed VDR project, implementing Event-Driven PDF conversion and permission-based workflow to meet MVP launch deadline",
+          "Accelerated email failure detection from hours to seconds via SES+SNS event pipeline for real-time bounce/complaint tracking with Slack instant alerting (published tech blog)"
         ],
         "projects": [
           {

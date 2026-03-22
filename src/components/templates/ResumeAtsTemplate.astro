@@ -352,7 +352,13 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
   {data.continuousLearning && data.continuousLearning.length > 0 && (
     <section>
       <h2>{labels.continuousLearning.toUpperCase()}</h2>
-      <p>{data.continuousLearning.map((item) => `${item.name} (${item.period})`).join(' | ')}</p>
+      {data.continuousLearning.map((item) => (
+        <div class="item">
+          <h3>{item.name}</h3>
+          <p class="date">{item.period}</p>
+          {item.description && <p>{item.description}</p>}
+        </div>
+      ))}
     </section>
   )}
 

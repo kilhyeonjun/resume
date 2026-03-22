@@ -24,17 +24,18 @@ pnpm-debug.log*
 .idea/
 .vscode/
 
-# opencode drafts
+# OpenCode (legacy, migrated to .claude/)
+.opencode/
 .sisyphus/
 
-# PDF output
-*.pdf
+# OMC runtime state
+.omc/
 
-# review/plan files
-*.REVIEW.md
-*REVIEW*.md
-REVIEW.md
-!.opencode/skills/**
-.sisyphus/
+# test artifacts
 test-results/
-**/*-workspace/
+
+# skill eval workspaces (large, regenerable)
+.claude/skills/*-workspace/
+
+# screenshots (regenerable)
+*.png

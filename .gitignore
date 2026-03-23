@@ -51,3 +51,6 @@ screenshot-puppeteer.mjs
 
 # JD customization outputs (regenerable)
 .jd-custom/
+
+# JD pipeline benchmark workspace (regenerable)
+jd-pipeline-workspace/

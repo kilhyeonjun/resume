@@ -50,6 +50,13 @@ const PDF_CONFIGS: PDFConfigSet = {
       format: 'A4',
       printBackground: false,
     },
+    {
+      name: 'Career Description (Korean)',
+      path: '/experience-print',
+      filename: 'career-detail-ko.pdf',
+      format: 'A4',
+      printBackground: true,
+    },
   ],
   en: [
     {
@@ -65,6 +72,13 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-ats-en.pdf',
       format: 'A4',
       printBackground: false,
+    },
+    {
+      name: 'Career Description (English)',
+      path: '/en/experience-print',
+      filename: 'career-detail-en.pdf',
+      format: 'A4',
+      printBackground: true,
     },
   ],
 };

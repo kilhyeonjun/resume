@@ -1,0 +1,411 @@
+---
+import { getEntry } from 'astro:content';
+import { getBasePath } from '../../utils/paths';
+import { prepareResumeData } from '../../utils/resume-data';
+
+interface Props {
+  lang: 'ko' | 'en';
+}
+
+const { lang } = Astro.props;
+const entry = await getEntry(`resume-${lang}`, 'main');
+if (!entry) throw new Error('Resume data not found');
+const resumeData = entry.data;
+const { data, labels } = prepareResumeData(resumeData, lang, 'experience');
+const basePath = getBasePath(lang);
+const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{data.name} - {pageTitle}</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <style>
+    @page { margin: 10mm; size: A4; }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 100%;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-family: 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+      font-size: 9pt;
+      color: #111827;
+      line-height: 1.4;
+      background: #fff;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a[href^="http"] { color: #1d4ed8; text-decoration: underline; text-underline-offset: 2px; }
+
+    .document {
+      width: 210mm;
+      max-width: none;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    /* Document Title */
+    .doc-title {
+      font-size: 16pt;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 6mm;
+      padding-bottom: 2mm;
+      border-bottom: 1.5pt solid #111827;
+    }
+
+    /* Company Section */
+    .company-section {
+      page-break-after: always;
+    }
+
+    .company-section:last-child {
+      page-break-after: auto;
+    }
+
+    .company-header {
+      margin-bottom: 3mm;
+      padding-bottom: 2mm;
+      border-bottom: 1pt solid #d1d5db;
+    }
+
+    .company-name {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 1mm;
+    }
+
+    .company-position {
+      font-size: 10pt;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .company-period {
+      font-size: 9pt;
+      color: #6b7280;
+      margin-top: 0.5mm;
+    }
+
+    .company-description {
+      font-size: 9pt;
+      color: #374151;
+      margin-top: 2mm;
+      margin-bottom: 2mm;
+    }
+
+    /* Section headings */
+    .section-heading {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #111827;
+      margin: 4mm 0 2mm;
+      padding-bottom: 1mm;
+      border-bottom: 0.5pt solid #e5e7eb;
+    }
+
+    /* Highlights */
+    .highlights {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 3mm;
+    }
+
+    .highlights li {
+      font-size: 9pt;
+      color: #374151;
+      margin-bottom: 1mm;
+      line-height: 1.4;
+      padding-left: 3mm;
+      text-indent: -3mm;
+    }
+
+    .highlight-bullet {
+      color: #374151;
+      margin-right: 1mm;
+    }
+
+    /* Projects */
+    .project-item {
+      margin-bottom: 4mm;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1mm;
+    }
+
+    .project-name {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .project-period {
+      font-size: 8.5pt;
+      color: #6b7280;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .project-description {
+      font-size: 9pt;
+      color: #374151;
+      margin-bottom: 1.5mm;
+    }
+
+    .project-details {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 1.5mm;
+    }
+
+    .project-details li {
+      font-size: 9pt;
+      color: #374151;
+      margin-bottom: 0.8mm;
+      line-height: 1.4;
+      padding-left: 3mm;
+      text-indent: -3mm;
+    }
+
+    /* Tech Rationale */
+    .tech-rationale {
+      background: #f8f9fa;
+      border: 0.5pt solid #e5e7eb;
+      border-radius: 2mm;
+      padding: 2mm 3mm;
+      margin-bottom: 1.5mm;
+    }
+
+    .tech-rationale-label {
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.5mm;
+    }
+
+    .tech-rationale-text {
+      font-size: 8.5pt;
+      color: #4b5563;
+      line-height: 1.4;
+    }
+
+    /* Contribution */
+    .contribution {
+      font-size: 8.5pt;
+      font-style: italic;
+      color: #4b5563;
+      margin-bottom: 1.5mm;
+    }
+
+    .contribution-label {
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    /* Tech Stack */
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1mm;
+      margin-top: 1mm;
+    }
+
+    .tech-badge {
+      display: inline-block;
+      font-size: 8pt;
+      color: #374151;
+      background: #f3f4f6;
+      padding: 0.5mm 2mm;
+      border-radius: 1.5mm;
+      line-height: 1.4;
+    }
+
+    /* Activities */
+    .activity-item {
+      margin-bottom: 3mm;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5mm;
+    }
+
+    .activity-name {
+      font-size: 10pt;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .activity-type {
+      font-size: 8.5pt;
+      color: #6b7280;
+      margin-left: 2mm;
+    }
+
+    .activity-period {
+      font-size: 8.5pt;
+      color: #6b7280;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .activity-description {
+      font-size: 9pt;
+      color: #374151;
+      margin-bottom: 0.5mm;
+    }
+
+    .activity-achievement {
+      font-size: 9pt;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    /* Back button (web only) */
+    .back-link {
+      display: block;
+      text-align: center;
+      padding: 16px;
+      background: #f3f4f6;
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link:hover { background: #e5e7eb; }
+
+    @media print {
+      html { font-size: 100%; }
+      .back-link, .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a href={basePath} class="back-link no-print">&larr; {labels.backToResume}</a>
+  <button onclick="window.print()" class="no-print" style="position:fixed;bottom:24px;right:24px;padding:10px 20px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);z-index:100;">
+    {lang === 'ko' ? '인쇄 / PDF 저장' : 'Print / Save PDF'}
+  </button>
+
+  <div class="document">
+    <h1 class="doc-title">{pageTitle} — {data.name}</h1>
+
+    {data.experience.map((exp, idx) => {
+      const period = exp.current
+        ? `${exp.startDate.replace('-', '.')} — ${labels.current}`
+        : `${exp.startDate.replace('-', '.')} — ${exp.endDate?.replace('-', '.')}`;
+
+      return (
+        <div class={idx < data.experience.length - 1 ? 'company-section' : ''}>
+          <header class="company-header">
+            <h2 class="company-name">{exp.company}</h2>
+            <p class="company-position">{exp.position}</p>
+            <p class="company-period">{period}</p>
+          </header>
+
+          {exp.description && (
+            <p class="company-description">{exp.description}</p>
+          )}
+
+          {exp.highlights && exp.highlights.length > 0 && (
+            <>
+              <h3 class="section-heading">{labels.highlights}</h3>
+              <ul class="highlights">
+                {exp.highlights.map((highlight) => (
+                  <li><span class="highlight-bullet">&bull;</span>{highlight.problem}. {highlight.solution}. {highlight.result}.</li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {exp.projects && exp.projects.length > 0 && (
+            <>
+              <h3 class="section-heading">{labels.projects}</h3>
+              {exp.projects.map((project) => (
+                <div class="project-item">
+                  <div class="project-header">
+                    <h4 class="project-name">{project.name}</h4>
+                    <span class="project-period">{project.period}</span>
+                  </div>
+                  <p class="project-description">{project.description}</p>
+                  {project.details && project.details.length > 0 && (
+                    <ul class="project-details">
+                      {project.details.map((detail) => (
+                        <li><span class="highlight-bullet">&bull;</span><b>{detail.problem}</b> — {detail.solution}, {detail.result}</li>
+                      ))}
+                    </ul>
+                  )}
+                  {project.techRationale && (
+                    <div class="tech-rationale">
+                      <p class="tech-rationale-label">{lang === 'ko' ? '기술 선택 이유' : 'Tech Rationale'}</p>
+                      <p class="tech-rationale-text">{project.techRationale}</p>
+                    </div>
+                  )}
+                  {project.contribution && (
+                    <p class="contribution">
+                      <span class="contribution-label">{lang === 'ko' ? '기여도' : 'Contribution'}:</span> {project.contribution}
+                    </p>
+                  )}
+                  {project.techStack && project.techStack.length > 0 && (
+                    <div class="tech-stack">
+                      {project.techStack.map((tech) => (
+                        <span class="tech-badge">{tech}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </>
+          )}
+
+          {exp.activities && exp.activities.length > 0 && labels.activities && (
+            <>
+              <h3 class="section-heading">{labels.activities}</h3>
+              {exp.activities.map((activity) => (
+                <div class="activity-item">
+                  <div class="activity-header">
+                    <span>
+                      <span class="activity-name">{activity.name}</span>
+                      {activity.type && <span class="activity-type">{activity.type}</span>}
+                    </span>
+                    <span class="activity-period">{activity.period}</span>
+                  </div>
+                  <p class="activity-description">{activity.description}</p>
+                  {activity.achievement && (
+                    <p class="activity-achievement">{activity.achievement}</p>
+                  )}
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      );
+    })}
+  </div>
+</body>
+</html>

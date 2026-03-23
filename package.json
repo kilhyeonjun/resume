@@ -15,7 +15,6 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
-    "@fontsource/inter": "^5.2.8",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.17.1",

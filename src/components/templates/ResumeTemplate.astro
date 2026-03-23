@@ -13,7 +13,7 @@ import ResumeTechnicalWriting from '../resume/ResumeTechnicalWriting.astro';
 import ResumeOpenSource from '../resume/ResumeOpenSource.astro';
 import ResumeLearning from '../resume/ResumeLearning.astro';
 import ResumeTrainingPrograms from '../resume/ResumeTrainingPrograms.astro';
-import ResumeFooterActions from '../resume/ResumeFooterActions.astro';
+
 
 interface Props {
   lang: 'ko' | 'en';
@@ -60,8 +60,6 @@ const jsonLd = {
       <a href={`${basePath}/resume-ats`} class="hover:text-primary-600 dark:hover:text-primary-400">{labels.atsOptimized}</a>
       <span aria-hidden="true">·</span>
       <a href={`${basePath}/experience-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{lang === 'ko' ? '경력기술서' : 'Career Detail'}</a>
-      <span aria-hidden="true">·</span>
-      <a href={`${basePath}/pdf/resume-hr-${lang}.pdf`} download type="application/pdf" class="hover:text-primary-600 dark:hover:text-primary-400">{labels.downloadResume}</a>
     </div>
 
     <!-- Divider -->
@@ -95,6 +93,5 @@ const jsonLd = {
     </div>
 
     <!-- Print Buttons -->
-    <ResumeFooterActions labels={labels} basePath={basePath} lang={lang} />
   </article>
 </Layout>

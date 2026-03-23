@@ -366,13 +366,13 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     </section>
   )}
 
-  <button
-    id="print-button"
-    class="no-print"
-    style="position: fixed; bottom: 20px; right: 20px; padding: 12px 24px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 100;"
-    onclick="window.print()"
-  >
-    {lang === 'ko' ? '인쇄 / PDF 저장' : 'Print / Save PDF'}
-  </button>
+  <div class="no-print" style="position:fixed;bottom:20px;right:20px;display:flex;gap:8px;z-index:100;">
+    <button onclick="window.print()" style="padding:12px 24px;background:#6b7280;color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+      {lang === 'ko' ? '인쇄' : 'Print'}
+    </button>
+    <a href={`${basePath}/pdf/resume-ats-${lang}.pdf`} download type="application/pdf" style="padding:12px 24px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;box-shadow:0 2px 8px rgba(0,0,0,0.15);text-decoration:none;display:inline-block;">
+      {lang === 'ko' ? '다운로드' : 'Download'}
+    </a>
+  </div>
 </body>
 </html>

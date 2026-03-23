@@ -260,9 +260,14 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
 </head>
 <body class={lang === 'en' ? 'lang-en' : 'lang-ko'}>
   <a href={basePath} class="back-link no-print">← {labels.backToResume}</a>
-  <button onclick="window.print()" class="no-print" style="position:fixed;bottom:24px;right:24px;padding:10px 20px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);z-index:100;">
-    {lang === 'ko' ? '인쇄 / PDF 저장' : 'Print / Save PDF'}
-  </button>
+  <div class="no-print" style="position:fixed;bottom:24px;right:24px;display:flex;gap:8px;z-index:100;">
+    <button onclick="window.print()" style="padding:10px 20px;background:#6b7280;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+      {lang === 'ko' ? '인쇄' : 'Print'}
+    </button>
+    <a href={`${basePath}/pdf/resume-hr-${lang}.pdf`} download type="application/pdf" style="padding:10px 20px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);text-decoration:none;display:inline-block;">
+      {lang === 'ko' ? '다운로드' : 'Download'}
+    </a>
+  </div>
 
   <div class="resume">
     <!-- Header -->

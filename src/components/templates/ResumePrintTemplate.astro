@@ -375,50 +375,35 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
         </section>
       )}
 
-      <!-- Education (right) -->
-      {data.education && data.education.length > 0 && (
-        <section>
-          <h2 class="section-title">{labels.education}</h2>
-          {data.education.map((edu) => (
-            <div class="education-item">
-              <h3 class="institution">{edu.institution}</h3>
-              <p class="degree">{edu.degree} {edu.field && `• ${edu.field}`}</p>
-              <p class="edu-date">
-                {edu.startDate.replace('-', '.')} — {edu.endDate.replace('-', '.')}
-                {edu.gpa && ` | GPA: ${edu.gpa}`}
-              </p>
-            </div>
-          ))}
-        </section>
-      )}
-    </div>
-
-    <!-- Certifications + Awards (2-column grid) -->
-    <div class="two-col-grid">
-      <!-- Certifications (left) -->
-      {data.certifications && data.certifications.length > 0 && (
-        <section>
-          <h2 class="section-title">{labels.certifications}</h2>
-          {data.certifications.map((cert) => (
-            <div class="cert-item">
-              <h3 class="cert-name">{cert.name}</h3>
-              <p class="cert-issuer">{cert.issuer} • {cert.date.replace('-', '.')}</p>
-            </div>
-          ))}
-        </section>
-      )}
-      <!-- Awards (right) -->
-      {data.awards && data.awards.length > 0 && (
-        <section>
-          <h2 class="section-title">{labels.awards}</h2>
-          {data.awards.map((award) => (
-            <div class="cert-item">
-              <h3 class="cert-name">{award.name}</h3>
-              <p class="cert-issuer">{award.description && `${award.description} • `}{award.date.replace('-', '.')}</p>
-            </div>
-          ))}
-        </section>
-      )}
+      <!-- Education + Certifications (right) -->
+      <section>
+        {data.education && data.education.length > 0 && (
+          <div>
+            <h2 class="section-title">{labels.education}</h2>
+            {data.education.map((edu) => (
+              <div class="education-item">
+                <h3 class="institution">{edu.institution}</h3>
+                <p class="degree">{edu.degree} {edu.field && `• ${edu.field}`}</p>
+                <p class="edu-date">
+                  {edu.startDate.replace('-', '.')} — {edu.endDate.replace('-', '.')}
+                  {edu.gpa && ` | GPA: ${edu.gpa}`}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+        {data.certifications && data.certifications.length > 0 && (
+          <div style="margin-top:2mm;">
+            <h2 class="section-title">{labels.certifications}</h2>
+            {data.certifications.map((cert) => (
+              <div class="cert-item">
+                <h3 class="cert-name">{cert.name}</h3>
+                <p class="cert-issuer">{cert.issuer} • {cert.date.replace('-', '.')}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
 
     <!-- Activities Row 1: Technical Writing + Training Programs -->

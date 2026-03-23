@@ -36,85 +36,51 @@ const { skills, education, certifications, awards, labels } = Astro.props;
     </section>
   )}
 
-  <!-- Education -->
-  {education && education.length > 0 && (
-    <section>
-      <h2 class="section-title">{labels.education}</h2>
-      <div class="mt-6 space-y-6">
-        {education.map((edu) => (
-          <div class="education-item relative pl-6 before:absolute before:left-0 before:top-2 before:h-2.5 before:w-2.5 before:rounded-full before:bg-primary-500">
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white">
-              {edu.institution}
-            </h3>
-            <p class="text-primary-600 dark:text-primary-400">
-              {edu.degree} {edu.field && `• ${edu.field}`}
-            </p>
-            <p class="text-sm text-gray-500 dark:text-gray-300">
-              {edu.startDate.replace('-', '.')} — {edu.endDate.replace('-', '.')}
-              {edu.gpa && <span class="ml-2">GPA: {edu.gpa}</span>}
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
-  )}
-</div>
-
-<!-- Certifications & Awards (2-column) -->
-<div class="mb-10 grid gap-10 md:grid-cols-2">
-  {certifications && certifications.length > 0 && (
-    <section>
-      <h2 class="section-title">{labels.certifications}</h2>
-      <div class="mt-6 space-y-4">
-        {certifications.map((cert) => (
-          <div class="flex items-start gap-3">
-            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30">
-              <CertificateIcon class="h-5 w-5 text-primary-600 dark:text-primary-400" />
-            </div>
-            <div class="flex-1">
-              <h3 class="font-semibold text-gray-900 dark:text-white">
-                {cert.url ? (
-                  <a
-                    href={cert.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover:text-primary-600 dark:hover:text-primary-400"
-                  >
-                    {cert.name}
-                  </a>
-                ) : (
-                  cert.name
-                )}
+  <!-- Education + Certifications -->
+  <section>
+    {education && education.length > 0 && (
+      <div>
+        <h2 class="section-title">{labels.education}</h2>
+        <div class="mt-6 space-y-6">
+          {education.map((edu) => (
+            <div class="education-item relative pl-6 before:absolute before:left-0 before:top-2 before:h-2.5 before:w-2.5 before:rounded-full before:bg-primary-500">
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                {edu.institution}
               </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300">
-                {cert.issuer} • {cert.date}
+              <p class="text-primary-600 dark:text-primary-400">
+                {edu.degree} {edu.field && `• ${edu.field}`}
+              </p>
+              <p class="text-sm text-gray-500 dark:text-gray-300">
+                {edu.startDate.replace('-', '.')} — {edu.endDate.replace('-', '.')}
+                {edu.gpa && <span class="ml-2">GPA: {edu.gpa}</span>}
               </p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </section>
-  )}
+    )}
 
-  {awards && awards.length > 0 && (
-    <section>
-      <h2 class="section-title">{labels.awards}</h2>
-      <div class="mt-6 space-y-4">
-        {awards.map((award) => (
-          <div class="flex items-start gap-3">
-            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30">
-              <TrophyIcon class="h-5 w-5 text-primary-600 dark:text-primary-400" />
+    {certifications && certifications.length > 0 && (
+      <div class="mt-8">
+        <h2 class="section-title">{labels.certifications}</h2>
+        <div class="mt-6 space-y-4">
+          {certifications.map((cert) => (
+            <div class="flex items-start gap-3">
+              <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30">
+                <CertificateIcon class="h-5 w-5 text-primary-600 dark:text-primary-400" />
+              </div>
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 dark:text-white">
+                  {cert.url ? (
+                    <a href={cert.url} target="_blank" rel="noopener noreferrer" class="hover:text-primary-600 dark:hover:text-primary-400">{cert.name}</a>
+                  ) : cert.name}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">{cert.issuer} • {cert.date}</p>
+              </div>
             </div>
-            <div class="flex-1">
-              <h3 class="font-semibold text-gray-900 dark:text-white">{award.name}</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300">
-                {award.date}
-                {award.description && ` — ${award.description}`}
-              </p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </section>
-  )}
+    )}
+  </section>
 </div>

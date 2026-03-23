@@ -21,7 +21,9 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.8",
     "puppeteer": "^24.10.0",
-    "tsx": "^4.19.4"
+    "tsx": "^4.19.4",
+    "typescript": "^5.9.3"
   }
 }

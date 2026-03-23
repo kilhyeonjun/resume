@@ -10,8 +10,8 @@ const { summary, label } = Astro.props;
 {summary && (
   <section class="mb-10">
     <h2 class="section-title">{label}</h2>
-    <p class="mt-4 max-w-3xl text-lg leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line">
-      {summary}
-    </p>
+    <p class="mt-4 max-w-3xl text-lg leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line"
+       set:html={summary.replace('Games on AWS 2025', '<a href="https://www.youtube.com/watch?v=2jRicD15jXk" class="text-primary-600 dark:text-primary-400 underline underline-offset-2 hover:text-primary-500" target="_blank" rel="noopener noreferrer">Games on AWS 2025</a>')} />
+
   </section>
 )}

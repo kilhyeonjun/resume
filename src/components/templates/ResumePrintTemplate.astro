@@ -147,7 +147,7 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
     .position { font-size: 10pt; font-weight: 700; color: #111827; min-width: 0; }
     .date { font-size: 8pt; color: #6b7280; white-space: nowrap; flex-shrink: 0; }
     .company { font-size: 9pt; font-weight: 600; color: #1d4ed8; margin-bottom: 1mm; }
-    .company a { color: #1d4ed8; text-decoration: none; }
+    .company a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 2px; }
     .description { font-size: 8pt; color: #374151; margin-bottom: 1mm; }
     .project-line { font-size: 7.5pt; line-height: 1.25; margin-bottom: 0.5mm; }
 
@@ -179,7 +179,7 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
 
     /* Skills */
     .skill-group { margin-bottom: 2mm; font-size: 9pt; line-height: 1.4; break-inside: avoid; }
-    .skill-category { font-weight: 600; color: #4b5563; }
+    .skill-category { font-weight: 700; color: #1f2937; }
     .skill-inline { color: #374151; }
     .skill-desc { display: block; font-size: 8pt; color: #6b7280; margin-top: 0.3mm; line-height: 1.35; }
 
@@ -301,7 +301,7 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
     {data.summary && (
       <section>
         <h2 class="section-title">{labels.summary}</h2>
-        <p class="summary-text">{data.summary}</p>
+        <p class="summary-text" set:html={data.summary.replace('Games on AWS 2025', '<a href="https://www.youtube.com/watch?v=2jRicD15jXk">Games on AWS 2025</a>')} />
       </section>
     )}
 

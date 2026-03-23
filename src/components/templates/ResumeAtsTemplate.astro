@@ -209,7 +209,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
   {data.summary && (
     <section>
       <h2>{labels.summary.toUpperCase()}</h2>
-      <p>{data.summary}</p>
+      <p set:html={data.summary.replace('Games on AWS 2025', '<a href="https://www.youtube.com/watch?v=2jRicD15jXk">Games on AWS 2025</a>')} />
     </section>
   )}
 

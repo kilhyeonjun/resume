@@ -30,4 +30,30 @@ if (koP !== enP) {
 console.log('✅ ko/en sync OK (highlights: ' + koH + ', projects: ' + koP + ')');
 "
 
+# PDF staleness check (warning only — does not block commit)
+PDF_AFFECTING=$(git diff --cached --name-only | grep -E '(content/resume/.*\.json|templates/.*\.astro|utils/resume-data\.ts)' || true)
+if [ -n "$PDF_AFFECTING" ]; then
+  PDF_EXISTS=true
+  for pdf in dist/pdf/resume-hr-ko.pdf dist/pdf/resume-ats-ko.pdf dist/pdf/resume-hr-en.pdf dist/pdf/resume-ats-en.pdf; do
+    if [ ! -f "$pdf" ]; then
+      PDF_EXISTS=false
+      break
+    fi
+  done
+  if [ "$PDF_EXISTS" = false ]; then
+    echo "⚠️  PDF files missing — run 'npm run dev & npm run pdf' before push"
+  else
+    # Check if any staged file is newer than the oldest PDF
+    OLDEST_PDF=$(ls -t dist/pdf/*.pdf 2>/dev/null | tail -1)
+    if [ -n "$OLDEST_PDF" ]; then
+      for f in $PDF_AFFECTING; do
+        if [ "$f" -nt "$OLDEST_PDF" ] 2>/dev/null; then
+          echo "⚠️  PDF may be stale (content changed) — run 'npm run dev & npm run pdf' to regenerate"
+          break
+        fi
+      done
+    fi
+  fi
+fi
+
 echo "✅ All pre-commit checks passed"

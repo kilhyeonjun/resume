@@ -56,4 +56,42 @@ if [ -n "$PDF_AFFECTING" ]; then
   fi
 fi
 
+# Link underline lint — detect text-decoration:none on CSS selectors targeting links in templates
+# Excludes: global reset (bare "a {"), inline button styles, no-print elements
+echo "🔍 Pre-commit: Link underline lint..."
+LINK_ISSUES=""
+for tpl in src/components/templates/ResumePrintTemplate.astro src/components/templates/ResumeAtsTemplate.astro; do
+  if [ -f "$tpl" ]; then
+    MATCHES=$(grep -n 'text-decoration:\s*none' "$tpl" | grep -E '\.[a-z].*a\s*\{|a\[|a\.' | grep -v 'style=' || true)
+    if [ -n "$MATCHES" ]; then
+      LINK_ISSUES="$LINK_ISSUES\n  $tpl:\n$MATCHES"
+    fi
+  fi
+done
+if [ -n "$LINK_ISSUES" ]; then
+  echo "⚠️  CSS selectors with text-decoration:none on links:$LINK_ISSUES"
+else
+  echo "✅ Link underline lint PASS"
+fi
+
+# Empty section layout hole detection
+echo "🔍 Pre-commit: Empty section check..."
+node -e "
+const ko = require('./src/content/resume/ko.json');
+const sections = [
+  ['awards', ko.main.awards],
+  ['certifications', ko.main.certifications],
+  ['openSource', ko.main.openSource],
+  ['continuousLearning', ko.main.continuousLearning],
+  ['technicalWriting', ko.main.technicalWriting],
+  ['trainingPrograms', ko.main.trainingPrograms]
+];
+const empty = sections.filter(([k, v]) => !v || v.length === 0);
+if (empty.length > 0) {
+  console.log('⚠️  Empty sections: ' + empty.map(e => e[0]).join(', ') + ' — verify no layout holes in 2-col grids');
+} else {
+  console.log('✅ No empty sections');
+}
+"
+
 echo "✅ All pre-commit checks passed"

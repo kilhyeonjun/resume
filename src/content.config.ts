@@ -169,6 +169,8 @@ const labelsSchema = z.object({
   print: z.string(),
   pdfVersion: z.string(),
   atsOptimized: z.string(),
+  downloadResume: z.string(),
+  downloadAts: z.string(),
   backToResume: z.string(),
   previousCompany: z.string(),
   nextCompany: z.string(),

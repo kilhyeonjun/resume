@@ -39,6 +39,21 @@ jobs:
       - name: Build with Astro
         run: npm run build
 
+      - name: Start dev server for PDF generation
+        run: npm run dev &
+
+      - name: Wait for dev server
+        run: |
+          for i in $(seq 1 30); do
+            curl -s http://localhost:4321/resume/ > /dev/null && break || sleep 1
+          done
+
+      - name: Generate PDFs
+        run: npm run pdf
+
+      - name: Stop dev server
+        run: kill $(lsof -ti:4321) 2>/dev/null || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -1,43 +1,37 @@
 ---
-import PrintIcon from '../icons/PrintIcon.astro';
+import DownloadIcon from '../icons/DownloadIcon.astro';
 import DocumentIcon from '../icons/DocumentIcon.astro';
 import type { Labels } from '../../content.config';
 
 interface Props {
   labels: Labels;
   basePath: string;
+  lang: 'ko' | 'en';
 }
 
-const { labels, basePath } = Astro.props;
+const { labels, basePath, lang } = Astro.props;
+
+const pdfHrPath = `${basePath}/pdf/resume-hr-${lang}.pdf`;
+const pdfAtsPath = `${basePath}/pdf/resume-ats-${lang}.pdf`;
 ---
 
 <div class="no-print mt-12 flex flex-wrap justify-center gap-3 border-t border-gray-200 pt-8 dark:border-gray-700 md:gap-4">
-   <button
-     id="print-button"
-     type="button"
+   <a
+     href={pdfHrPath}
+     download
+     type="application/pdf"
      class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-6 py-3 font-medium text-white transition-colors hover:bg-primary-700"
    >
-     <PrintIcon class="h-5 w-5" />
-     {labels.print}
-   </button>
-   <a
-     href={`${basePath}/resume-print`}
-     class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-   >
-     <DocumentIcon class="h-5 w-5" />
-     {labels.pdfVersion}
+     <DownloadIcon class="h-5 w-5" />
+     {labels.downloadResume}
    </a>
    <a
-     href={`${basePath}/resume-ats`}
+     href={pdfAtsPath}
+     download
+     type="application/pdf"
      class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
    >
      <DocumentIcon class="h-5 w-5" />
-     {labels.atsOptimized}
+     {labels.downloadAts}
    </a>
 </div>
-
-<script>
-  document.getElementById('print-button')?.addEventListener('click', () => {
-    window.print();
-  });
-</script>

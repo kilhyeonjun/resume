@@ -1203,6 +1203,8 @@
       "print": "인쇄하기",
       "pdfVersion": "PDF 버전",
       "atsOptimized": "ATS 최적화",
+      "downloadResume": "이력서 다운로드",
+      "downloadAts": "ATS 버전 다운로드",
       "backToResume": "이력서 페이지로 돌아가기",
       "previousCompany": "이전 회사",
       "nextCompany": "다음 회사",

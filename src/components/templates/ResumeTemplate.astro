@@ -55,9 +55,9 @@ const jsonLd = {
 
     <!-- Quick Actions (top) -->
     <div class="no-print mb-4 flex justify-end gap-3 text-sm text-gray-500 dark:text-gray-400">
-      <a href={`${basePath}/resume-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{labels.pdfVersion}</a>
+      <a href={`${basePath}/pdf/resume-hr-${lang}.pdf`} download type="application/pdf" class="hover:text-primary-600 dark:hover:text-primary-400">{labels.downloadResume}</a>
       <span aria-hidden="true">·</span>
-      <a href={`${basePath}/resume-ats`} class="hover:text-primary-600 dark:hover:text-primary-400">{labels.atsOptimized}</a>
+      <a href={`${basePath}/pdf/resume-ats-${lang}.pdf`} download type="application/pdf" class="hover:text-primary-600 dark:hover:text-primary-400">{labels.downloadAts}</a>
     </div>
 
     <!-- Divider -->
@@ -91,6 +91,6 @@ const jsonLd = {
     </div>
 
     <!-- Print Buttons -->
-    <ResumeFooterActions labels={labels} basePath={basePath} />
+    <ResumeFooterActions labels={labels} basePath={basePath} lang={lang} />
   </article>
 </Layout>

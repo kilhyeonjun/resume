@@ -1203,6 +1203,8 @@
       "print": "Print",
       "pdfVersion": "PDF Version",
       "atsOptimized": "ATS Optimized",
+      "downloadResume": "Download Resume",
+      "downloadAts": "Download ATS Version",
       "backToResume": "Back to Resume",
       "previousCompany": "Previous Company",
       "nextCompany": "Next Company",

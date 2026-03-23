@@ -83,6 +83,9 @@
             "name": "TypeScript"
           },
           {
+            "name": "JavaScript"
+          },
+          {
             "name": "NestJS"
           },
           {
@@ -99,6 +102,12 @@
           },
           {
             "name": "Jest"
+          },
+          {
+            "name": "TDD"
+          },
+          {
+            "name": "REST API"
           }
         ]
       },
@@ -114,6 +123,9 @@
           },
           {
             "name": "ElastiCache (Redis)"
+          },
+          {
+            "name": "Redis"
           }
         ]
       },
@@ -132,6 +144,9 @@
           },
           {
             "name": "GitHub Actions"
+          },
+          {
+            "name": "CI/CD"
           }
         ]
       }
@@ -197,7 +212,7 @@
               {
                 "problem": "버전 간 변경 사항 비교 비효율",
                 "solution": "Base Audit 유무에 따른 증분 비교와 스냅샷 비교의 이중 전략 Diff 엔진 설계",
-                "result": "비용 효율적 버전 비교 체계 구축"
+                "result": "비용 효율적 버전 비교 체계 확립"
               },
               {
                 "problem": "PK 의존 엔티티 추적의 환경 간 불일치",
@@ -221,7 +236,7 @@
               {
                 "problem": "3개 광고 플랫폼 캠페인 관리 분산",
                 "solution": "Google Ads/Meta/TikTok 캠페인 생성·배포·수정과 리텐션 지표 관리를 단일 플랫폼에서 처리하는 API 개발",
-                "result": "통합 캠페인 자동화 체계 구축"
+                "result": "통합 캠페인 자동화 체계 마련"
               },
               {
                 "problem": "NAS-S3 간 에셋 동기화 신뢰성 부족",
@@ -415,11 +430,11 @@
               {
                 "problem": "확률 감사 로그 분석 인프라 부재",
                 "solution": "Kinesis→Firehose(Dynamic Partitioning+Parquet)→S3→Glue→Athena E2E 파이프라인 CDK 코드화",
-                "result": "확률 감사 로그 분석 인프라 구축"
+                "result": "확률 감사 로그 분석 인프라 조성"
               },
               {
                 "problem": "모킹 기반 테스트의 회귀 신뢰도 부족",
-                "solution": "모킹 삭제, LocalStack+Testcontainers 기반 통합 테스트 전환",
+                "solution": "모킹 삭제, LocalStack+Testcontainers 기반 통합 테스트 교체",
                 "result": "회귀 신뢰도 강화, 12 suites 115 tests 커버리지 94%+ 확보"
               }
             ],
@@ -514,7 +529,7 @@
               },
               {
                 "problem": "배치+S3 이벤트 기반 아키텍처의 이벤트 흐름 비가시성",
-                "solution": "EDA+아웃박스 패턴으로 전환",
+                "solution": "EDA+아웃박스 패턴으로 변경",
                 "result": "이벤트 흐름 가시화 및 로컬 테스트 환경 정비"
               }
             ],
@@ -582,7 +597,7 @@
               {
                 "problem": "1:1 사용자-조직 구조의 확장성 한계",
                 "solution": "1:N 구조로 관계 확장하여 다중 조직 관리 지원",
-                "result": "다중 조직 관리 기능 구현"
+                "result": "다중 조직 관리 기능 제공"
               },
               {
                 "problem": "구조 변경 시 기존 API 호환성 단절 리스크",
@@ -628,7 +643,7 @@
               },
               {
                 "problem": "의료진별 문서 접근 권한 체계 부재",
-                "solution": "역할 기반 문서 접근 및 승인 권한 관리 워크플로우 구현",
+                "solution": "역할 기반 문서 접근 및 승인 권한 관리 워크플로우 제작",
                 "result": "권한 기반 문서 관리 체계 구축"
               },
               {
@@ -658,7 +673,7 @@
               },
               {
                 "problem": "갱신 불가 플랜의 구독 갱신·재구독 정책 미적용",
-                "solution": "갱신 불가 플랜 구독 갱신·재구독 차단 로직 구현",
+                "solution": "갱신 불가 플랜 구독 갱신·재구독 차단 로직 작성",
                 "result": "비즈니스 정책 정합성 보장"
               }
             ],
@@ -842,7 +857,7 @@
               {
                 "problem": "Express.js 단일 파일(app.js) 3,000줄 레거시 유지보수 한계",
                 "solution": "3단계 점진적 전환: app.js 단일 파일 → 레이어드 아키텍처(Controller/Service/Repository) → NestJS 프레임워크 도입",
-                "result": "모듈 아키텍처 전환 완료"
+                "result": "모듈 아키텍처 이관 완료"
               },
               {
                 "problem": "JavaScript 기반 코드의 타입 안정성 부족",

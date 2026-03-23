@@ -83,6 +83,9 @@
             "name": "TypeScript"
           },
           {
+            "name": "JavaScript"
+          },
+          {
             "name": "NestJS"
           },
           {
@@ -99,6 +102,12 @@
           },
           {
             "name": "Jest"
+          },
+          {
+            "name": "TDD"
+          },
+          {
+            "name": "REST API"
           }
         ]
       },
@@ -114,6 +123,9 @@
           },
           {
             "name": "ElastiCache (Redis)"
+          },
+          {
+            "name": "Redis"
           }
         ]
       },
@@ -132,6 +144,9 @@
           },
           {
             "name": "GitHub Actions"
+          },
+          {
+            "name": "CI/CD"
           }
         ]
       }
@@ -181,27 +196,27 @@
             "details": [
               {
                 "problem": "Inability to track data change history across environments and projects",
-                "solution": "Built Git-like version control system with UUID-based cross-environment/project entity tracking",
+                "solution": "Designed Git-like version control system with UUID-based cross-environment/project entity tracking",
                 "result": "Ensured data consistency across 6 games"
               },
               {
                 "problem": "Manual entity change recording prone to omission",
-                "solution": "Implemented Event Sourcing-based change tracking with Auditable decorator + TypeORM Subscriber pattern",
+                "solution": "Applied Event Sourcing-based change tracking with Auditable decorator + TypeORM Subscriber pattern",
                 "result": "Automated entity change recording pipeline"
               },
               {
                 "problem": "Multi-environment version conflicts during data merge",
-                "solution": "Built 3-Way Merge Engine with parent/child entity conflict detection and unique constraint handling",
+                "solution": "Developed 3-Way Merge Engine with parent/child entity conflict detection and unique constraint handling",
                 "result": "Enabled reliable version merging across 6 games"
               },
               {
                 "problem": "Expensive full-snapshot comparison for every version diff",
                 "solution": "Designed Version Diff Engine with dual strategy: incremental comparison and snapshot comparison based on Base Audit availability",
-                "result": "Achieved cost-efficient version diffing"
+                "result": "Established cost-efficient version diffing"
               },
               {
                 "problem": "Entity tracking failures due to PK dependency during migration and merge",
-                "solution": "Implemented shared identifier-based entity tracking decoupled from PK dependency",
+                "solution": "Introduced shared identifier-based entity tracking decoupled from PK dependency",
                 "result": "Ensured accurate entity tracking during migration, comparison, and merge"
               }
             ],
@@ -220,7 +235,7 @@
             "details": [
               {
                 "problem": "Fragmented ad platform management across Google Ads/Meta/TikTok",
-                "solution": "Built unified campaign automation API for creation, deployment, modification, and retention metrics in a single platform",
+                "solution": "Delivered unified campaign automation API for creation, deployment, modification, and retention metrics in a single platform",
                 "result": "Consolidated multi-platform campaign management into one system"
               },
               {
@@ -276,7 +291,7 @@
               {
                 "problem": "Full serverless migration risked operational stability",
                 "solution": "Designed hybrid architecture keeping API server on EC2 while separating batch/job processing to Lambda",
-                "result": "Achieved workload-optimized resource usage without disrupting live services"
+                "result": "Attained workload-optimized resource usage without disrupting live services"
               },
               {
                 "problem": "Batch processing limited to 60-day collection range with 2-hour runtime",
@@ -285,7 +300,7 @@
               },
               {
                 "problem": "Data consistency risk during event publishing",
-                "solution": "Implemented Transactional Outbox Pattern for scheduled and delayed event publishing",
+                "solution": "Adopted Transactional Outbox Pattern for scheduled and delayed event publishing",
                 "result": "Ensured data consistency across distributed event processing"
               },
               {
@@ -323,7 +338,7 @@
               },
               {
                 "problem": "Manual DDL schema management causing sync failures",
-                "solution": "Built automated DDL management engine with dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME",
+                "solution": "Created automated DDL management engine with dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME",
                 "result": "Automated schema sync across environments"
               },
               {
@@ -373,7 +388,7 @@
               },
               {
                 "problem": "Concurrency conflicts in multi-instance environments",
-                "solution": "Built distributed lock module with ElastiCache (Redis)-based distributed lock decorator",
+                "solution": "Engineered distributed lock module with ElastiCache (Redis)-based distributed lock decorator",
                 "result": "Enabled safe concurrency control across multi-instance deployments"
               },
               {
@@ -384,7 +399,7 @@
               {
                 "problem": "Game server shared code tightly coupled in monolithic package",
                 "solution": "Extracted game-server Kit: moved Sheet+5 submodules to @gameduo/glider-sheet, resolved conflicts via 5-branch divergence analysis",
-                "result": "Achieved independent package versioning and deployment"
+                "result": "Realized independent package versioning and deployment"
               },
               {
                 "problem": "Slow CI pipeline (15m47s) due to test infrastructure inefficiency",
@@ -409,13 +424,13 @@
             "details": [
               {
                 "problem": "No reusable probability calculation module across game projects",
-                "solution": "Built NestJS DynamicModule with 5 functions + Kinesis logging as @gameduo/glider-probability",
+                "solution": "Packaged NestJS DynamicModule with 5 functions + Kinesis logging as @gameduo/glider-probability",
                 "result": "Integrated into 12 games with standardized probability calculation"
               },
               {
                 "problem": "No audit log analytics infrastructure for probability verification",
                 "solution": "Codified CDK analytics pipeline: Kinesis→Firehose (Dynamic Partitioning+Parquet)→S3→Glue→Athena",
-                "result": "Enabled end-to-end probability audit log querying"
+                "result": "Unlocked end-to-end probability audit log querying"
               },
               {
                 "problem": "Mock-based tests lacking regression confidence for infrastructure code",
@@ -496,7 +511,7 @@
           },
           {
             "problem": "Delayed email failure detection (hours)",
-            "solution": "Built SES+SNS event pipeline",
+            "solution": "Constructed SES+SNS event pipeline",
             "result": "Bounce/complaint detection cut to seconds, Slack instant alerting (published tech blog)"
           }
         ],
@@ -562,7 +577,7 @@
             "details": [
               {
                 "problem": "No email delivery status tracking — failures detected hours later",
-                "solution": "Implemented SES Configuration Set → SNS → event processing pipeline with Datadog logging + Slack real-time alerts",
+                "solution": "Configured SES Configuration Set → SNS → event processing pipeline with Datadog logging + Slack real-time alerts",
                 "result": "Bounce/complaint detection cut to seconds with instant Slack alerting"
               }
             ],
@@ -623,8 +638,8 @@
             "details": [
               {
                 "problem": "Synchronous PDF conversion blocking document upload flow",
-                "solution": "Implemented Event-Driven PDF conversion triggered by S3 upload → Lambda lightweight conversion → SNS/SQS notification",
-                "result": "Achieved non-blocking document processing pipeline"
+                "solution": "Designed Event-Driven PDF conversion triggered by S3 upload → Lambda lightweight conversion → SNS/SQS notification",
+                "result": "Delivered non-blocking document processing pipeline"
               },
               {
                 "problem": "No role-based document access control for medical workflows",
@@ -653,12 +668,12 @@
             "details": [
               {
                 "problem": "No support for organization-specific subscription plans",
-                "solution": "Implemented org-specific custom plan Internal API",
-                "result": "Enabled tailored subscription offerings per organization"
+                "solution": "Shipped org-specific custom plan Internal API",
+                "result": "Facilitated tailored subscription offerings per organization"
               },
               {
                 "problem": "Non-renewable plans could be incorrectly renewed or re-subscribed",
-                "solution": "Implemented renewal/re-subscription blocking logic for non-renewable plans",
+                "solution": "Added renewal/re-subscription blocking logic for non-renewable plans",
                 "result": "Ensured business policy consistency for subscription lifecycle"
               }
             ],
@@ -790,7 +805,7 @@
               },
               {
                 "problem": "Status reflection delay (tens of seconds) in consultation/dispensing/delivery",
-                "solution": "Built Socket.IO Room-based real-time status sync reflecting events to relevant users instantly",
+                "solution": "Deployed Socket.IO Room-based real-time status sync reflecting events to relevant users instantly",
                 "result": "Reduced delay to under 1 second, eliminated patient wait complaints"
               },
               {
@@ -967,7 +982,7 @@
               {
                 "problem": "No structured scoring system for multi-dimensional assessments",
                 "solution": "Implemented weighted average-based composite scoring algorithm",
-                "result": "Enabled standardized multi-dimensional assessment scoring"
+                "result": "Delivered standardized multi-dimensional assessment scoring"
               }
             ],
             "techStack": [

@@ -39,6 +39,11 @@ jobs:
       - name: Build with Astro
         run: npm run build
 
+      - name: Install Korean fonts for PDF generation
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk > /dev/null 2>&1
+
       - name: Start dev server for PDF generation
         run: npm run dev &
 

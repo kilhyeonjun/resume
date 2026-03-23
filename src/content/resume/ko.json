@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "문제 구조화·에이전트 오케스트레이션·검증 체계를 설계하여 팀의 개발 생산성과 시스템 안정성을 높이는 AI Native Engineer. 12개 게임 라이브 서비스, 7개 프로젝트 공통 패키지 환경에서 백엔드 아키텍처와 데이터 파이프라인을 설계·운영합니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 20개+ 프로젝트 수행. 대표 성과: BigQuery 비용 82% 절감, 서버리스 전환으로 파이프라인 270배 확장, Games on AWS 2025 발표.",
+    "summary": "백엔드 엔지니어에서 AI Native 아키텍트로 — AI 에이전트가 프로덕션 코드를 안정적으로 배포하는 시스템을 설계합니다. 게임듀오에서 12개 라이브 서비스를 운영하며 BigQuery 비용 82% 절감, 서버리스 전환으로 파이프라인 270배 확장을 이끌고, Games on AWS 2025 고객 세션에서 그 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 20개+ 프로젝트를 수행하며 일관된 패턴을 만들었습니다: 구조적 병목을 찾고, 그것을 제거하는 시스템을 설계하고, 결과를 측정합니다.",
     "coreCompetencies": [
       {
         "category": "AI 에이전트 오케스트레이션 & 개발 체계",
@@ -1106,9 +1106,9 @@
     ],
     "continuousLearning": [
       {
-        "name": "시스템 디자인 스터디 2권",
-        "period": "2026.01 ~ 현재",
-        "description": "가상 면접 사례로 배우는 대규모 시스템 설계 기초 2권",
+        "name": "시스템 디자인 스터디",
+        "period": "2025.08 ~ 현재",
+        "description": "가상 면접 사례로 배우는 대규모 시스템 설계 기초 1·2권",
         "url": "https://github.com/seungwontech/system-design-study2"
       },
       {
@@ -1116,17 +1116,6 @@
         "period": "2025.10 ~ 2025.12",
         "description": "Node 코어 개념, 동시성, 이벤트 루프, 모듈 시스템",
         "url": "https://github.com/TSBM-Studio/nodejs-design-pattern-study"
-      },
-      {
-        "name": "시스템 디자인 스터디 1권",
-        "period": "2025.08 ~ 2025.10",
-        "description": "가상 면접 사례로 배우는 대규모 시스템 설계 기초",
-        "url": "https://github.com/jyjae/system-design-study"
-      },
-      {
-        "name": "AWS SAA 스터디",
-        "period": "2023.09 ~ 2023.12",
-        "description": "제이앤피메디 사내 스터디, 클라우드 아키텍처 심화 학습"
       }
     ],
     "trainingPrograms": [
@@ -1160,10 +1149,10 @@
     ],
     "openSource": [
       {
-        "name": "kiro-gateway: Docker SQLite 볼륨 마운트 :ro 제거",
-        "date": "2026-02",
-        "url": "https://github.com/jwadow/kiro-gateway/pull/79",
-        "status": "Open"
+        "name": "kiro-gateway: thinking 태그 주입 스킵 · SSO 토큰 리프레시 등 2건 기여",
+        "date": "2026-01",
+        "url": "https://github.com/jwadow/kiro-gateway/pull/23",
+        "status": "Merged"
       },
       {
         "name": "CodexBar: kiro-cli 1.24+ Q Developer 포맷 지원",
@@ -1172,39 +1161,9 @@
         "status": "Merged"
       },
       {
-        "name": "oh-my-opencode: 플러그인 스킬 통합 디스커버리",
-        "date": "2026-01",
-        "url": "https://github.com/code-yeongyu/oh-my-opencode/pull/974",
-        "status": "Open"
-      },
-      {
         "name": "atlassian-skills: Jira Cloud API v3 코멘트 ADF 포맷 적용",
         "date": "2026-01",
         "url": "https://github.com/langpingxue/atlassian-skills/pull/7",
-        "status": "Merged"
-      },
-      {
-        "name": "atlassian-skills: Jira Cloud 검색 API 엔드포인트 마이그레이션",
-        "date": "2026-01",
-        "url": "https://github.com/langpingxue/atlassian-skills/pull/6",
-        "status": "Merged"
-      },
-      {
-        "name": "kiro-gateway: toolResults 존재 시 thinking 태그 주입 스킵",
-        "date": "2026-01",
-        "url": "https://github.com/jwadow/kiro-gateway/pull/23",
-        "status": "Merged"
-      },
-      {
-        "name": "kiro-gateway: AWS SSO OIDC 토큰 갱신 전 SQLite 자격증명 리로드",
-        "date": "2026-01",
-        "url": "https://github.com/jwadow/kiro-gateway/pull/22",
-        "status": "Merged"
-      },
-      {
-        "name": "SuperClaude_Plugin: 마켓플레이스 이름 문서 수정",
-        "date": "2025-12",
-        "url": "https://github.com/SuperClaude-Org/SuperClaude_Plugin/pull/18",
         "status": "Merged"
       },
       {
@@ -1214,13 +1173,7 @@
         "status": "Merged"
       }
     ],
-    "awards": [
-      {
-        "name": "2014 청소년미래상상 기술 경진대회 금상 (특허청장상)",
-        "date": "2014",
-        "description": "AppKeeper 모바일 앱 출시"
-      }
-    ],
+    "awards": [],
     "certifications": [
       {
         "name": "SQLD (Structured Query Language Developer)",

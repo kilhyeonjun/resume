@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "AI Native Engineer who designs problem framing, agent orchestration, and verification systems to elevate team productivity and system reliability. Currently operating across 12 live game services and a 7-project shared package ecosystem, architecting backend systems and data pipelines.\n\nOver {{CAREER_DURATION}}, delivered 20+ projects across four domains (Education, Healthcare, Clinical Trials, Gaming). Key results: 82% BigQuery cost reduction, 270x pipeline expansion via serverless migration, Games on AWS 2025 speaker.",
+    "summary": "From backend engineer to AI-native architect — building systems where AI agents ship production code reliably. At GameDuo, operating 12 live services while cutting BigQuery costs by 82%, expanding pipeline capacity 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), one consistent pattern: find the structural bottleneck, design the system that eliminates it, measure the result.",
     "coreCompetencies": [
       {
         "category": "AI Agent Orchestration & Delivery",
@@ -1106,9 +1106,9 @@
     ],
     "continuousLearning": [
       {
-        "name": "System Design Study Vol. 2",
-        "period": "2026.01 ~ Present",
-        "description": "System Design Interview: An Insider's Guide Volume 2",
+        "name": "System Design Interview Study",
+        "period": "2025.08 ~ Present",
+        "description": "System Design Interview: An Insider's Guide Vol. 1 & 2",
         "url": "https://github.com/seungwontech/system-design-study2"
       },
       {
@@ -1116,17 +1116,6 @@
         "period": "2025.10 ~ 2025.12",
         "description": "Node core concepts, concurrency, event loop, module system",
         "url": "https://github.com/TSBM-Studio/nodejs-design-pattern-study"
-      },
-      {
-        "name": "System Design Study Vol. 1",
-        "period": "2025.08 ~ 2025.10",
-        "description": "System Design Interview: An Insider's Guide",
-        "url": "https://github.com/jyjae/system-design-study"
-      },
-      {
-        "name": "AWS SAA Study Group",
-        "period": "2023.09 ~ 2023.12",
-        "description": "JNPMedi internal study group, Cloud Architecture deep dive"
       }
     ],
     "trainingPrograms": [
@@ -1160,10 +1149,10 @@
     ],
     "openSource": [
       {
-        "name": "kiro-gateway: Remove :ro from Docker SQLite volume mount",
-        "date": "2026-02",
-        "url": "https://github.com/jwadow/kiro-gateway/pull/79",
-        "status": "Open"
+        "name": "kiro-gateway: Skip thinking tag injection + SSO token refresh (2 merged PRs)",
+        "date": "2026-01",
+        "url": "https://github.com/jwadow/kiro-gateway/pull/23",
+        "status": "Merged"
       },
       {
         "name": "CodexBar: Support kiro-cli 1.24+ Q Developer format",
@@ -1172,55 +1161,19 @@
         "status": "Merged"
       },
       {
-        "name": "oh-my-opencode: Integrate plugin skills into unified skill discovery",
-        "date": "2026-01",
-        "url": "https://github.com/code-yeongyu/oh-my-opencode/pull/974",
-        "status": "Open"
-      },
-      {
-        "name": "atlassian-skills: Use ADF format for comments in Jira Cloud API v3",
+        "name": "atlassian-skills: Use ADF format for Jira Cloud API v3 comments",
         "date": "2026-01",
         "url": "https://github.com/langpingxue/atlassian-skills/pull/7",
         "status": "Merged"
       },
       {
-        "name": "atlassian-skills: Migrate to new Jira Cloud search API endpoint",
-        "date": "2026-01",
-        "url": "https://github.com/langpingxue/atlassian-skills/pull/6",
-        "status": "Merged"
-      },
-      {
-        "name": "kiro-gateway: Skip thinking tag injection when toolResults present",
-        "date": "2026-01",
-        "url": "https://github.com/jwadow/kiro-gateway/pull/23",
-        "status": "Merged"
-      },
-      {
-        "name": "kiro-gateway: Reload SQLite credentials before AWS SSO OIDC token refresh",
-        "date": "2026-01",
-        "url": "https://github.com/jwadow/kiro-gateway/pull/22",
-        "status": "Merged"
-      },
-      {
-        "name": "SuperClaude_Plugin: Correct marketplace name in documentation",
-        "date": "2025-12",
-        "url": "https://github.com/SuperClaude-Org/SuperClaude_Plugin/pull/18",
-        "status": "Merged"
-      },
-      {
-        "name": "cyan: framework \"NOT IN\" query condition addition",
+        "name": "cyan: Add \"NOT IN\" query condition to framework",
         "date": "2024-05",
         "url": "https://github.com/coralblack/cyan/pull/110",
         "status": "Merged"
       }
     ],
-    "awards": [
-      {
-        "name": "2014 Youth Future Imagination Technology Competition Gold Award (KIPO Commissioner's Award)",
-        "date": "2014",
-        "description": "AppKeeper mobile app launch"
-      }
-    ],
+    "awards": [],
     "certifications": [
       {
         "name": "SQLD (Structured Query Language Developer)",

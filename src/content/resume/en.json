@@ -193,6 +193,7 @@
             "period": "2025.01 ~ 2025.04",
             "featured": false,
             "description": "Resolved delayed balance issue response caused by inability to track data change history during game operations",
+            "techRationale": "Adopted TypeORM EntitySubscriberInterface after dedicated analysis of subscriber behavior and constraints. Designed AOP-based approach combining Auditable decorator + Subscriber to automatically collect entity changes into a standardized audit pipeline.",
             "details": [
               {
                 "problem": "Inability to track data change history across environments and projects",
@@ -232,6 +233,7 @@
             "period": "2025.02 ~ Present",
             "featured": true,
             "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system, built on dedicated marketing DB separation",
+            "techRationale": "Reduced BigQuery costs 82% via Storage Read API migration. Designed hybrid GCP Pub/Sub → AWS Lambda/SQS pipeline for event-driven processing with Outbox pattern for non-blocking async event publishing.",
             "details": [
               {
                 "problem": "Fragmented ad platform management across Google Ads/Meta/TikTok",
@@ -287,6 +289,7 @@
             "period": "2025.06 ~ 2025.08",
             "featured": true,
             "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
+            "techRationale": "Chose Lambda to decouple batch/event workloads bound to the monolith server, enabling independent deployment. Adopted SQS for async processing to resolve scaling limitations under traffic fluctuation.",
             "details": [
               {
                 "problem": "Full serverless migration risked operational stability",
@@ -330,6 +333,7 @@
             "period": "2025.08 ~ Present",
             "featured": false,
             "description": "Built S3-based sync and automated DDL management system to resolve dynamic game data inconsistency across environments",
+            "techRationale": "Applied S3 Lifecycle policies (30d Glacier IR, 90d expiry) for cost optimization. Switched from event-triggered to scheduled execution to reduce sync miss risk.",
             "details": [
               {
                 "problem": "Dynamic game data inconsistency across environments",
@@ -375,6 +379,7 @@
             "period": "2025.07 ~ Present",
             "featured": true,
             "description": "Development and operation of NestJS utility (10 modules) + Game Server Kit (2 packages) for multi-project code consistency",
+            "techRationale": "Implemented ElastiCache (Redis) distributed lock as AOP decorator to separate lock logic from business code. Evaluated 5 options for Jest 30 VM isolation and adopted poolSize=2.",
             "details": [
               {
                 "problem": "Common code duplication across services increasing maintenance cost",
@@ -421,6 +426,8 @@
             "period": "2026.02 ~ Present",
             "featured": false,
             "description": "Built probability calculation package and CDK-based audit log analytics infrastructure to address regulatory risk from lack of game probability verification",
+            "techRationale": "Codified Kinesis → Firehose (Dynamic Partitioning + Parquet) → S3 → Glue → Athena pipeline with CDK. Chose Parquet columnar format for Athena SQL cost optimization. Replaced mock-based tests with LocalStack Testcontainers for integration testing.",
+            "contribution": "Restructured changmin's initial implementation into a package. Independently handled P0 bug fixes, test stabilization (94%+ coverage), CDK infrastructure, and deployment across 12 projects.",
             "details": [
               {
                 "problem": "No reusable probability calculation module across game projects",
@@ -521,6 +528,8 @@
             "period": "2023.07 ~ 2023.09",
             "featured": false,
             "description": "Resolved inefficiency in collecting participant consent and e-signature regulatory compliance using Cyan (in-house Node.js framework)",
+            "techRationale": "Adopted EDA + Outbox pattern to eliminate synchronous service coupling. Designed plugin architecture for extensible input methods (text, checkbox, signature).",
+            "contribution": "Designed EDA transition, implemented plugin architecture, built batch participant registration with Signer table migration. 2-person BE team.",
             "details": [
               {
                 "problem": "Inefficient individual consent dispatch for clinical trial participants",
@@ -546,6 +555,8 @@
             "period": "2023.08 ~ 2023.12",
             "featured": true,
             "description": "Resolved critical notification failures due to database Deadlocks in clinical trial e-signature notifications",
+            "techRationale": "Identified FK child INSERT S-Lock → X-Lock escalation as deadlock root cause. Applied SELECT FOR UPDATE to pre-acquire X-Lock before INSERT, eliminating the deadlock ordering entirely.",
+            "contribution": "Independently performed deadlock reproduction, analysis, and resolution. Reproduced deadlock scenario with SQL in DBeaver and verified via INNODB lock tables.",
             "details": [
               {
                 "problem": "Production Deadlock incidents in clinical trial e-signature notifications",
@@ -574,6 +585,8 @@
             "period": "2023.12 ~ 2024.02",
             "featured": false,
             "description": "Resolved lack of delivery status tracking and data consistency issues in email system",
+            "techRationale": "AWS SES cannot synchronously confirm delivery status due to its async nature. Added SNS event destination to SES Configuration Set for async delivery/bounce/complaint event subscription.",
+            "contribution": "Designed and implemented SES Configuration Set → SNS → event processing pipeline. Led tech blog publication and internal seminar presentation.",
             "details": [
               {
                 "problem": "No email delivery status tracking — failures detected hours later",
@@ -593,6 +606,8 @@
             "period": "2024.01 ~ 2024.02",
             "featured": false,
             "description": "Resolved user inconvenience and system scalability limitations from 1:1 user-organization structure",
+            "techRationale": "Redesigned account-organization from 1:1 to 1:N to support clinical trial researchers participating in multiple organizations simultaneously. Added post-login organization selection flow for context switching.",
+            "contribution": "Full-stack change: schema migration, auth flow modification, and batch update of downstream service (Docs/Billing/Mailing) account-organization reference logic.",
             "details": [
               {
                 "problem": "1:1 user-organization structure limiting multi-organization management",
@@ -617,6 +632,8 @@
             "period": "2023.06 ~ 2024.08",
             "featured": false,
             "description": "Frontend development for clinical Trial Master File (TMF) management system",
+            "techRationale": "Defined MVP scope focusing on core features (document upload, classification, version control, audit trail) under 3-month delivery constraint.",
+            "contribution": "FE developer in 1 BE + 2 FE team. Implemented Admin/Dashboard document upload, classification, and audit trail features.",
             "details": [
               {
                 "problem": "No document management interface for clinical Trial Master File system",
@@ -635,6 +652,8 @@
             "period": "2024.06 ~ 2024.07 (3 weeks)",
             "featured": true,
             "description": "Emergency deployment for delayed VDR project under MVP launch pressure",
+            "techRationale": "Designed EDA-based async conversion pipeline (S3 trigger → Lambda conversion → SNS/SQS notification) to structurally resolve synchronous PDF conversion timeout issues.",
+            "contribution": "1 of 2 BE developers. Designed and implemented EDA document processing pipeline and large-scale async PDF conversion worker. Delivered MVP within 3-week emergency sprint.",
             "details": [
               {
                 "problem": "Synchronous PDF conversion blocking document upload flow",
@@ -665,6 +684,8 @@
             "period": "2023.06 ~ 2024.08",
             "featured": false,
             "description": "Subscription, plan, and license management system for all Maven services",
+            "techRationale": "Introduced event queue for async cleanup processing after subscription expiry. Enforced non-renewable plan re-subscription blocking via bundles.is_renewable schema attribute at the data level.",
+            "contribution": "Implemented org-specific custom plans, event queue-based inventory auto-deletion, and renewal eligibility logic. Multiple PRs directly contributed.",
             "details": [
               {
                 "problem": "No support for organization-specific subscription plans",
@@ -756,6 +777,8 @@
             "period": "2022.04 (3 weeks)",
             "featured": false,
             "description": "Built JWT-based unified authentication system to resolve subdomain session conflicts",
+            "techRationale": "Structurally resolved subdomain cookie-based session conflicts with stateless JWT tokens. Chose MySQL over Redis for key management — Redis deemed over-engineering given traffic volume, prioritizing infrastructure simplicity.",
+            "contribution": "Independently designed and implemented over 3 weeks. Covered entire auth system for web (doctor/pharmacist/admin portals) + mobile app.",
             "details": [
               {
                 "problem": "No unified authentication system for multi-subdomain architecture",
@@ -797,6 +820,8 @@
             "period": "2022.04 ~ 2023.05",
             "featured": true,
             "description": "Resolved lack of real-time status updates and manual notification workflows in doctor/pharmacist back-office systems by introducing Socket.io and Web Push",
+            "techRationale": "Used Socket.IO Room-based event isolation for real-time consultation/dispensing/delivery status sync. Integrated API gateway + Circuit Breaker to prevent external service failure propagation. Enforced duplicate reservation prevention via DB composite unique key.",
+            "contribution": "Directly implemented Socket.IO real-time sync, Web Push notifications, API gateway, and reservation dedup in 2-person BE team.",
             "details": [
               {
                 "problem": "Duplicate appointment bookings causing scheduling conflicts",
@@ -829,6 +854,8 @@
             "period": "2022.11 ~ 2022.12",
             "featured": false,
             "description": "Automated pharmacist's manual prescription entry process using OCR",
+            "techRationale": "Selected Naver Clova OCR for Korean pharmaceutical terminology recognition. Leveraged MFDS public data API instead of building proprietary drug database to minimize maintenance overhead.",
+            "contribution": "Independently implemented over 2 months. Built entire pipeline: image intake → OCR extraction → MFDS API matching → medication guide generation.",
             "details": [
               {
                 "problem": "Manual prescription text entry from images (3-5 min per case)",
@@ -853,6 +880,8 @@
             "period": "2023.03 ~ 2023.05",
             "featured": true,
             "description": "Migrated from Express.js single-file (app.js) structure to NestJS modular architecture",
+            "techRationale": "Adopted NestJS DI/module system to resolve maintainability limits of 3,000-line Express single-file legacy. Minimized risk via 3-phase gradual migration (single file → layered → NestJS). Introduced TDD to prevent regression during migration.",
+            "contribution": "Led independently. Performed all 3 migration phases, JS→TS migration, TDD adoption, and team coding convention establishment.",
             "details": [
               {
                 "problem": "Express.js single-file (app.js) 3,000-line codebase unmaintainable",
@@ -918,6 +947,8 @@
             "period": "2021.07 ~ 2022.03",
             "featured": true,
             "description": "Resolved manual learning management (attendance, completion, progress) causing low operational efficiency and frequent errors at educational institutions",
+            "techRationale": "Selected Java/Spring Boot as enterprise standard for educational institution delivery. Enforced QR attendance dedup via DB composite unique key (date+userID). Used JasperReports for template-based bulk PDF certificate generation.",
+            "contribution": "Directly implemented core features over 10 months: QR attendance, Excel batch registration, PDF certificates, progress tracking. Backend lead in 6-person full-stack team.",
             "details": [
               {
                 "problem": "Manual attendance tracking prone to duplicates and errors",
@@ -949,6 +980,8 @@
             "period": "2022.01 ~ 2022.03",
             "featured": false,
             "description": "Resolved fragmented reservation, monitoring, and SMS systems preventing unified management at industrial complex control center",
+            "techRationale": "Enforced meeting room booking conflict prevention via DB composite unique key (time+location). Used @Async for SMS to resolve API response delay — separate message queue deemed over-engineering for the traffic scale.",
+            "contribution": "Backend lead over 4 months. Directly implemented reservation API, dashboard monitoring API, and async SMS integration.",
             "details": [
               {
                 "problem": "Scheduling conflicts from concurrent facility reservations",
@@ -973,6 +1006,8 @@
             "period": "2021.07 ~ 2022.03",
             "featured": false,
             "description": "Resolved legacy PHP system's extensibility limitations and lack of structured scoring and counseling management",
+            "techRationale": "Embedded independent Spring Boot app via iframe for non-invasive legacy PHP system extension. Used postMessage API for cross-frame communication. Implemented weighted average algorithm for multi-dimensional evaluation scoring.",
+            "contribution": "Backend lead over 10 months. Designed iframe integration, implemented weighted scoring algorithm, postMessage state sync, and counselor back-office.",
             "details": [
               {
                 "problem": "Legacy PHP system could not be extended for new features",
@@ -996,6 +1031,8 @@
             "period": "2021.09 (3 weeks)",
             "featured": false,
             "description": "Resolved lack of unified authentication requiring separate logins across 5 country-specific distributed websites",
+            "techRationale": "Resolved fragmented login across 5-country websites with centralized JWT-based unified auth server. Configured CORS multi-domain handling for cross-origin authentication.",
+            "contribution": "Independently implemented over 3 weeks. Built entire unified auth server.",
             "details": [
               {
                 "problem": "Separate logins required across 5 country-specific websites",

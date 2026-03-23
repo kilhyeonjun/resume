@@ -193,6 +193,7 @@
             "period": "2025.01 ~ 2025.04",
             "featured": false,
             "description": "게임 운영 중 데이터 변경 이력 추적 불가로 인한 밸런스 문제 대응 지연 해결",
+            "techRationale": "TypeORM EntitySubscriberInterface 동작과 제약을 별도 분석 후 채택. Auditable 데코레이터 + Subscriber 조합으로 엔티티 변경을 표준화된 Audit 파이프라인으로 자동 수집하는 AOP 방식 설계.",
             "details": [
               {
                 "problem": "6개 게임 간 데이터 변경 이력 추적 불가",
@@ -232,6 +233,7 @@
             "period": "2025.02 ~ 현재",
             "featured": true,
             "description": "마케팅 전용 DB 분리 기반 위에 Google Ads/Meta/TikTok 캠페인·소재·지표를 단일 시스템에서 관리하는 통합 마케팅 플랫폼",
+            "techRationale": "BigQuery Storage Read API로 비용 82% 절감. GCP Pub/Sub → AWS Lambda/SQS 하이브리드 파이프라인으로 이벤트 기반 처리 전환, Outbox 패턴으로 API 비차단 비동기 발행 설계.",
             "details": [
               {
                 "problem": "3개 광고 플랫폼 캠페인 관리 분산",
@@ -287,6 +289,7 @@
             "period": "2025.06 ~ 2025.08",
             "featured": true,
             "description": "마케팅 지표 60일 → 360일 확장에 따른 배치 작업 한계 해결 및 배치 처리 서버리스 전환",
+            "techRationale": "배치·이벤트성 작업이 서버 본체에 묶여 독립 배포 불가한 제약 해소를 위해 Lambda 선택. SQS로 비동기화하여 트래픽 변동 시 처리 지연과 확장성 한계 해결.",
             "details": [
               {
                 "problem": "전체 서버리스 전환 시 운영 안정성 리스크",
@@ -330,6 +333,7 @@
             "period": "2025.08 ~ 현재",
             "featured": false,
             "description": "환경 간 동적 게임 데이터 불일치 문제를 해결하기 위한 S3 기반 동기화 및 DDL 자동 관리 시스템",
+            "techRationale": "S3 Lifecycle 정책(30일 Glacier IR, 90일 만료)으로 비용 최적화. 이벤트성 실행에서 스케줄링 방식으로 전환하여 동기화 누락 위험 감소.",
             "details": [
               {
                 "problem": "환경 간 동적 게임 데이터 불일치",
@@ -375,6 +379,7 @@
             "period": "2025.07 ~ 현재",
             "featured": true,
             "description": "NestJS 유틸 10개 모듈 + 게임서버 Kit 2개 패키지 개발·운영으로 다중 프로젝트 코드 일관성 달성",
+            "techRationale": "ElastiCache(Redis) 기반 분산 락을 AOP 데코레이터로 구현하여 비즈니스 로직에서 락 코드 분리. Jest 30 VM 격리 대응 시 5가지 옵션 검토 후 poolSize=2 채택.",
             "details": [
               {
                 "problem": "서비스 간 공통 코드 중복 및 유지보수 비용 증가",
@@ -421,6 +426,8 @@
             "period": "2026.02 ~ 현재",
             "featured": false,
             "description": "게임 확률 검증 체계 부재에 따른 규제 리스크 해소를 위한 확률 계산 패키지와 CDK 기반 감사 로그 분석 인프라 개발",
+            "techRationale": "Kinesis → Firehose(Dynamic Partitioning + Parquet) → S3 → Glue → Athena 파이프라인을 CDK로 코드화. Parquet 컬럼형 포맷으로 Athena SQL 분석 비용 최적화, LocalStack Testcontainers로 모킹 기반 테스트 제거.",
+            "contribution": "changmin님 초기 구현체를 패키지 구조화. P0 버그 수정, 테스트 안정화(94%+ 커버리지), CDK 인프라 구축, 12개 프로젝트 적용은 단독 수행.",
             "details": [
               {
                 "problem": "12개 게임 확률 계산 로직 분산 및 규제 대응 부재",
@@ -521,6 +528,8 @@
             "period": "2023.07 ~ 2023.09",
             "featured": false,
             "description": "Cyan(사내 Node.js 프레임워크) 기반 임상시험 전자 동의서 수집 비효율성과 전자서명 규제 준수 요구사항 해결",
+            "techRationale": "동기 서비스 간 결합도 제거를 위해 EDA + 아웃박스 패턴으로 전환. 다양한 입력 방식(텍스트·체크박스·서명) 확장을 위해 플러그인 구조 설계.",
+            "contribution": "EDA 전환 설계, 플러그인 구조 구현, 대상자 일괄 등록 + Signer 테이블 분리 마이그레이션 수행. BE 2명 체제.",
             "details": [
               {
                 "problem": "임상시험 동의서 개별 발송의 비효율",
@@ -546,6 +555,8 @@
             "period": "2023.08 ~ 2023.12",
             "featured": true,
             "description": "임상시험 전자서명 알림에서 발생하는 데이터베이스 Deadlock으로 인한 치명적 알림 누락 해결",
+            "techRationale": "FK child INSERT 시 S-Lock → X-Lock 승격 교착 패턴이 근본 원인. INSERT 전 SELECT FOR UPDATE로 X-Lock 선점하여 교착 순서 자체를 제거.",
+            "contribution": "Deadlock 재현·분석·해결 방안 도출 단독 수행. DBeaver로 교착 시나리오를 SQL로 재현하고 INNODB 잠금 테이블로 확인.",
             "details": [
               {
                 "problem": "운영 환경 Deadlock 발생",
@@ -574,6 +585,8 @@
             "period": "2023.12 ~ 2024.02",
             "featured": false,
             "description": "이메일 발송 시스템의 발송 상태 추적 부족과 데이터 정합성 문제 해결",
+            "techRationale": "AWS SES 비동기 특성상 발송 성공 여부를 동기적으로 수신 불가. 구성세트에 SNS 이벤트 대상을 추가하여 발송/반송/바운스 이벤트를 비동기 구독.",
+            "contribution": "SES 구성세트 → SNS → 이벤트 처리 파이프라인 설계·구현. 기술 블로그 게재 및 사내 세미나 발표 주도.",
             "details": [
               {
                 "problem": "이메일 발송 실패 사후 인지(수시간 지연)",
@@ -593,6 +606,8 @@
             "period": "2024.01 ~ 2024.02",
             "featured": false,
             "description": "기존 1:1 사용자-조직 구조로 인한 사용자 불편과 시스템 확장성 한계 해결",
+            "techRationale": "임상시험 도메인 특성상 연구자가 여러 조직에 동시 참여하는 요구사항 수용을 위해 계정-조직 1:N 재설계. 로그인 후 조직 선택 흐름 추가로 컨텍스트 전환 지원.",
+            "contribution": "스키마 마이그레이션, 인증 흐름 수정, 하위 서비스(Docs/Billing/Mailing) 계정-조직 참조 로직 일괄 수정까지 풀스택 변경.",
             "details": [
               {
                 "problem": "1:1 사용자-조직 구조의 확장성 한계",
@@ -617,6 +632,8 @@
             "period": "2023.06 ~ 2024.08",
             "featured": false,
             "description": "임상시험 필수 문서(TMF) 관리 시스템의 프론트엔드 신규 개발",
+            "techRationale": "3개월 내 출시 일정 제약으로 핵심 기능(문서 업로드·분류·버전 관리·감사 추적)만 MVP 범위로 정의하고 집중 개발.",
+            "contribution": "BE 1명 + FE 2명(본인 포함) 체제에서 FE 담당. Admin/Dashboard 페이지의 문서 업로드·분류·감사 추적 기능 구현.",
             "details": [
               {
                 "problem": "임상시험 필수 문서(TMF) 관리 시스템 부재",
@@ -635,6 +652,8 @@
             "period": "2024.06 ~ 2024.07 (3주)",
             "featured": true,
             "description": "진행 중이던 VDR 프로젝트의 개발 일정 지연과 MVP 출시 압박 상황에서의 긴급 투입",
+            "techRationale": "동기 PDF 변환 시 타임아웃 발생 문제를 구조적으로 해결하기 위해 EDA 기반 비동기 변환 파이프라인(S3 트리거 → Lambda 변환 → SNS/SQS 알림) 설계.",
+            "contribution": "BE 2명 중 1명. EDA 기반 문서 처리 파이프라인 설계·구현, 대용량 PDF 비동기 변환 워커 구현. 3주 긴급 투입으로 MVP 출시 달성.",
             "details": [
               {
                 "problem": "PDF 변환 처리의 동기 방식 병목",
@@ -665,6 +684,8 @@
             "period": "2023.06 ~ 2024.08",
             "featured": false,
             "description": "Maven 전체 서비스의 구독/플랜/라이센스 관리 시스템 개발",
+            "techRationale": "구독 만료 후 비동기 정리 처리를 위해 event queue 도입. 갱신 불가 플랜의 재구독 차단을 bundles.is_renewable 스키마 속성으로 비즈니스 정책을 데이터 레벨에서 강제.",
+            "contribution": "ORG별 커스텀 플랜, event queue 기반 인벤토리 자동 삭제, 갱신 가능 여부 판별 로직 구현. 다수 PR 직접 기여.",
             "details": [
               {
                 "problem": "조직별 맞춤 요금제 제공 불가",
@@ -756,6 +777,8 @@
             "period": "2022.04 (3주)",
             "featured": false,
             "description": "서브도메인 간 세션 충돌 문제를 해결하기 위한 JWT 기반 통합 인증 시스템 신규 개발",
+            "techRationale": "서브도메인 간 쿠키 기반 세션 충돌을 JWT 무상태 토큰으로 구조적 해결. Redis 대신 MySQL 키 관리 — 트래픽 규모 대비 Redis는 오버엔지니어링으로 판단하여 인프라 단순화.",
+            "contribution": "3주간 단독 설계·구현. 웹(의사/약사/관리자 포털) + 모바일 앱 통합 인증 체계 전반.",
             "details": [
               {
                 "problem": "서브도메인 간 세션 충돌로 인한 인증 불안정",
@@ -797,6 +820,8 @@
             "period": "2022.04 ~ 2023.05",
             "featured": true,
             "description": "의사·약사용 백오피스 시스템의 실시간 상태 반영 부재와 수동 알림 체계 문제를 Socket.io 및 Web Push 도입으로 해결",
+            "techRationale": "Socket.IO Room 단위 이벤트 격리로 진료·조제·배달 상태 실시간 동기화. 외부 서비스 장애 전파 방지를 위해 API 게이트웨이 + Circuit Breaker 통합. DB 복합 유니크 키로 중복 예약을 데이터 레벨에서 차단.",
+            "contribution": "BE 2인 체계에서 Socket.IO 실시간 동기화, Web Push 알림, API 게이트웨이, 진료 예약 중복 방지 전 기능 직접 구현.",
             "details": [
               {
                 "problem": "중복 예약 발생",
@@ -829,6 +854,8 @@
             "period": "2022.11 ~ 2022.12",
             "featured": false,
             "description": "약사의 수동 처방전 입력 과정을 OCR 연동으로 자동화",
+            "techRationale": "한국어 의약품 용어 인식률을 고려하여 Naver Clova OCR 선택. 의약품 정보 DB 자체 구축 대신 식약처 공공데이터 API 활용으로 유지보수 부담 제거.",
+            "contribution": "2개월간 단독 구현. 이미지 수신 → OCR 추출 → 식약처 API 매칭 → 복약지도 생성 파이프라인 전 구간.",
             "details": [
               {
                 "problem": "처방전 수동 입력 병목",
@@ -853,6 +880,8 @@
             "period": "2023.03 ~ 2023.05",
             "featured": true,
             "description": "Express.js 단일 파일(app.js) 구조에서 NestJS 모듈 아키텍처로 전환",
+            "techRationale": "Express 단일 app.js 3,000줄 레거시의 유지보수 한계 해결을 위해 NestJS DI·모듈 시스템 도입. 3단계 점진적 전환(단일 파일 → 레이어드 → NestJS)으로 리스크 최소화. TDD 도입으로 전환 중 회귀 방지.",
+            "contribution": "단독 주도. 3단계 전환 전 구간, JS→TS 마이그레이션, TDD 도입, 팀 내 코드 컨벤션 확립 모두 직접 수행.",
             "details": [
               {
                 "problem": "Express.js 단일 파일(app.js) 3,000줄 레거시 유지보수 한계",
@@ -918,6 +947,8 @@
             "period": "2021.07 ~ 2022.03",
             "featured": true,
             "description": "교육 기관의 학습 관리(출석, 수료, 진도율)가 수작업에 의존하여 운영 효율이 낮고 오류가 빈번한 문제 해결",
+            "techRationale": "교육기관 납품 프로젝트로 Java/Spring Boot 표준 선택. QR 출석 중복 방지를 DB 레벨 복합 유니크 키(날짜+사용자ID)로 원천 차단. JasperReports 템플릿 기반 PDF 수료증 대량 발급.",
+            "contribution": "10개월간 핵심 기능 직접 구현. QR 출석, Excel 일괄 등록, PDF 수료증, 진도율 계산 등. 6인 팀 풀스택 체계에서 백엔드 전담.",
             "details": [
               {
                 "problem": "출석 관리 수작업 및 중복 출석 발생",
@@ -949,6 +980,8 @@
             "period": "2022.01 ~ 2022.03",
             "featured": false,
             "description": "산단 관제센터의 회의실 예약·모니터링·SMS 알림이 개별 시스템으로 분산되어 통합 관리가 불가능한 문제 해결",
+            "techRationale": "회의실 예약 충돌을 DB 복합 유니크 키(시간+장소)로 원천 차단. SMS 발송 시 API 응답 지연 해결을 위해 @Async 비동기 처리 — 트래픽 규모 대비 별도 메시지 큐는 오버엔지니어링으로 판단.",
+            "contribution": "4개월간 백엔드 전담. 예약 API, 대시보드 모니터링 API, SMS 비동기 연동 직접 구현.",
             "details": [
               {
                 "problem": "회의실 예약 충돌 발생",
@@ -973,6 +1006,8 @@
             "period": "2021.07 ~ 2022.03",
             "featured": false,
             "description": "기존 PHP 시스템의 확장성 한계로 새로운 기능 추가가 어렵고, 점수 계산과 상담 관리가 체계화되지 않은 문제 해결",
+            "techRationale": "레거시 PHP 시스템 비침습 확장을 위해 독립 Spring Boot 앱을 iframe으로 임베드. postMessage API로 크로스 프레임 통신. 다차원 평가를 단일 점수로 산출하기 위한 가중 평균 알고리즘 구현.",
+            "contribution": "10개월간 백엔드 전담. iframe 통합 구조 설계, 가중 평균 알고리즘, postMessage 상태 동기화, 상담사 백오피스 직접 구현.",
             "details": [
               {
                 "problem": "레거시 PHP 시스템의 확장성 한계",
@@ -996,6 +1031,8 @@
             "period": "2021.09 (3주)",
             "featured": false,
             "description": "5개국 분산 웹사이트에서 국가별 개별 로그인이 필요한 통합 인증 부재 문제 해결",
+            "techRationale": "5개국 분산 웹사이트의 개별 로그인 문제를 JWT 기반 중앙 통합 인증 서버로 해결. CORS 다중 도메인 처리로 각국 도메인에서 동일 서버 호출 허용.",
+            "contribution": "3주간 단독 구현. 통합 인증 서버 전체.",
             "details": [
               {
                 "problem": "5개국 분산 웹사이트의 국가별 개별 로그인 필요",

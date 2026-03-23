@@ -44,12 +44,23 @@ const basePath = getBasePath(lang);
          </a>
        ) : <div></div>}
 
-       <a
-         href={basePath}
-         class="text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-       >
-         {labels.backToResume}
-       </a>
+       <div class="flex items-center gap-3">
+         <a
+           href={basePath}
+           class="text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+         >
+           {labels.backToResume}
+         </a>
+         <a
+           href={`${basePath}/pdf/career-detail-${lang}.pdf`}
+           download
+           type="application/pdf"
+           class="no-print text-sm text-gray-400 transition-colors hover:text-primary-600 dark:text-gray-500 dark:hover:text-primary-400"
+           aria-label={lang === 'ko' ? '경력기술서 PDF 다운로드' : 'Download Career Description PDF'}
+         >
+           PDF ↓
+         </a>
+       </div>
 
        {nextExp ? (
          <a

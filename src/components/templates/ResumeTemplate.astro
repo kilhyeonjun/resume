@@ -53,11 +53,13 @@ const jsonLd = {
     <!-- Header Section -->
     <ResumeHeader data={data} />
 
-    <!-- Quick Actions (top) -->
+    <!-- Quick Actions (top): preview links + PDF download -->
     <div class="no-print mb-4 flex justify-end gap-3 text-sm text-gray-500 dark:text-gray-400">
-      <a href={`${basePath}/pdf/resume-hr-${lang}.pdf`} download type="application/pdf" class="hover:text-primary-600 dark:hover:text-primary-400">{labels.downloadResume}</a>
+      <a href={`${basePath}/resume-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{labels.pdfVersion}</a>
       <span aria-hidden="true">·</span>
-      <a href={`${basePath}/pdf/resume-ats-${lang}.pdf`} download type="application/pdf" class="hover:text-primary-600 dark:hover:text-primary-400">{labels.downloadAts}</a>
+      <a href={`${basePath}/resume-ats`} class="hover:text-primary-600 dark:hover:text-primary-400">{labels.atsOptimized}</a>
+      <span aria-hidden="true">·</span>
+      <a href={`${basePath}/pdf/resume-hr-${lang}.pdf`} download type="application/pdf" class="hover:text-primary-600 dark:hover:text-primary-400">{labels.downloadResume}</a>
     </div>
 
     <!-- Divider -->

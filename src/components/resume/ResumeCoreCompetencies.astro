@@ -20,12 +20,18 @@ const { coreCompetencies, label } = Astro.props;
             {comp.category}
           </h3>
           <ul class="space-y-2">
-            {comp.items.map((item) => (
-              <li class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-                <CheckIcon class="mt-1 h-3.5 w-3.5 flex-shrink-0 text-primary-500" />
-                <span>{item}</span>
-              </li>
-            ))}
+            {comp.items.map((item) => {
+              const parts = item.split(' — ');
+              return (
+                <li class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                  <CheckIcon class="mt-1 h-3.5 w-3.5 flex-shrink-0 text-primary-500" />
+                  {parts.length > 1
+                    ? <span><strong>{parts[0]}</strong> — {parts.slice(1).join(' — ')}</span>
+                    : <span>{item}</span>
+                  }
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))}

@@ -106,7 +106,7 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
       column-gap: 1.5mm;
     }
     .contact-row-text { color: #4b5563; }
-    .contact-row-links a { color: #1d4ed8; text-decoration: none; }
+    .contact-row-links a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 2px; }
 
     /* Section styles */
     section { margin-bottom: 2mm; }
@@ -160,6 +160,12 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
       line-height: 1.4;
     }
 
+    .highlights li em {
+      font-style: normal;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
     .highlight-bullet { color: #1d4ed8; margin-right: 4px; }
 
     /* Two-column grid */
@@ -190,6 +196,7 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
 
 
     /* Core Competencies */
+    .competency-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 6mm; row-gap: 1mm; }
     .competency-group { margin-bottom: 1mm; }
     .competency-category { font-size: 9pt; font-weight: 600; color: #4b5563; margin-bottom: 0.5mm; }
 
@@ -227,29 +234,28 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
 
     .back-link:hover { background: #e5e7eb; }
 
-    /* Korean: tighter spacing to fit 2 pages */
-    body.lang-ko { font-size: 9pt; line-height: 1.35; }
-    body.lang-ko .highlights li { font-size: 8.5pt; line-height: 1.3; }
-    body.lang-ko .summary-text { font-size: 8.5pt; line-height: 1.4; }
-    body.lang-ko .skill-group { font-size: 8.5pt; line-height: 1.3; }
+    /* Korean: optimized for readability within 2 pages */
+    body.lang-ko { font-size: 9.5pt; line-height: 1.4; }
+    body.lang-ko .highlights li { font-size: 9pt; line-height: 1.35; }
+    body.lang-ko .summary-text { font-size: 9pt; line-height: 1.45; }
+    body.lang-ko .skill-group { font-size: 9pt; line-height: 1.35; }
     body.lang-ko .resume { padding: 0 12mm; }
-    body.lang-ko .section-title { font-size: 10.5pt; margin: 0 0 1.2mm; }
-    body.lang-ko .header { margin-bottom: 2mm; padding-bottom: 1.5mm; }
-    body.lang-ko .experience-item { margin-bottom: 1.5mm; }
-    body.lang-ko .competency-group { margin-bottom: 0.5mm; }
-    body.lang-ko section { margin-bottom: 1.5mm; }
-    body.lang-ko .description { font-size: 7.5pt; }
-    body.lang-ko .skill-desc { font-size: 7.5pt; }
+    body.lang-ko .section-title { font-size: 11.5pt; margin: 0 0 1.5mm; }
+    body.lang-ko .header { margin-bottom: 1.5mm; padding-bottom: 1mm; }
+    body.lang-ko .experience-item { margin-bottom: 2.5mm; }
+    body.lang-ko .competency-group { margin-bottom: 0.8mm; }
+    body.lang-ko section { margin-bottom: 2mm; }
+    body.lang-ko .description { font-size: 8.5pt; }
 
-    /* English: tighter spacing to fit 2 pages */
-    body.lang-en { font-size: 8.5pt; line-height: 1.3; }
-    body.lang-en .highlights li { font-size: 8pt; line-height: 1.25; }
-    body.lang-en .summary-text { font-size: 8pt; line-height: 1.3; }
-    body.lang-en .skill-group { font-size: 8pt; line-height: 1.25; }
+    /* English: optimized for readability within 2 pages */
+    body.lang-en { font-size: 9pt; line-height: 1.35; }
+    body.lang-en .highlights li { font-size: 8.5pt; line-height: 1.3; }
+    body.lang-en .summary-text { font-size: 8.5pt; line-height: 1.35; }
+    body.lang-en .skill-group { font-size: 8.5pt; line-height: 1.3; }
     body.lang-en .resume { padding: 0 11mm; }
-    body.lang-en .section-title { font-size: 10pt; margin: 0 0 1mm; }
-    body.lang-en .header { margin-bottom: 2mm; padding-bottom: 1.5mm; }
-    body.lang-en .experience-item { margin-bottom: 1.5mm; }
+    body.lang-en .section-title { font-size: 11pt; margin: 0 0 1.2mm; }
+    body.lang-en .header { margin-bottom: 1.5mm; padding-bottom: 1mm; }
+    body.lang-en .experience-item { margin-bottom: 2mm; }
     body.lang-en .competency-group { margin-bottom: 0.5mm; }
 
     @media print {
@@ -303,16 +309,21 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
     {data.coreCompetencies && data.coreCompetencies.length > 0 && (
       <section>
         <h2 class="section-title">{labels.coreCompetencies}</h2>
-        {data.coreCompetencies.map((comp) => (
-          <div class="competency-group">
-            <p class="competency-category">{comp.category}</p>
-            <ul class="highlights">
-              {comp.items.map((item) => (
-                <li><span class="highlight-bullet">•</span>{item}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <div class="competency-grid">
+          {data.coreCompetencies.map((comp) => (
+            <div class="competency-group">
+              <p class="competency-category">{comp.category}</p>
+              <ul class="highlights">
+                {comp.items.map((item) => {
+                  const parts = item.split(' — ');
+                  return parts.length > 1
+                    ? <li><span class="highlight-bullet">•</span><b>{parts[0]}</b> — {parts.slice(1).join(' — ')}</li>
+                    : <li><span class="highlight-bullet">•</span>{item}</li>;
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
       </section>
     )}
 
@@ -335,7 +346,7 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
             {exp.highlights && exp.highlights.length > 0 && (
               <ul class="highlights">
                 {exp.highlights.map((highlight) => (
-                  <li><span class="highlight-bullet">•</span><b>{highlight.problem}</b> — {highlight.solution}, {highlight.result}</li>
+                  <li><span class="highlight-bullet">•</span><b>{highlight.problem}</b> — {highlight.solution}, <em>{highlight.result}</em></li>
                 ))}
               </ul>
             )}
@@ -359,9 +370,6 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
             <div class="skill-group">
               <span class="skill-category">{skillGroup.category}:</span>{' '}
               <span class="skill-inline">{skillGroup.items.map(s => s.name).join(', ')}</span>
-              {skillGroup.description && (
-                <span class="skill-desc">{skillGroup.description}</span>
-              )}
             </div>
           ))}
         </section>

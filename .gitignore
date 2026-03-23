@@ -48,3 +48,6 @@ IMPROVEMENT_PLAN.md
 capture-screenshots.mjs
 screenshot-puppeteer.js
 screenshot-puppeteer.mjs
+
+# JD customization outputs (regenerable)
+.jd-custom/

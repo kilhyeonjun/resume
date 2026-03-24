@@ -24,14 +24,14 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
 
 const osGrouped = groupOpenSourceByRepo(data.openSource);
 
-/** Bold key metrics: numbers with %, 배, 건, 초, 개 units */
+/** Bold key metrics: numbers with %, 배, 건, 초 units. 개 only when NOT followed by 월 (개월=months ≠ 개=items) */
 function boldMetrics(text: string): string {
   return text
     .replace(/(\d+[\.]?\d*%)/g, '<strong>$1</strong>')
     .replace(/(\d+배)/g, '<strong>$1</strong>')
     .replace(/(\d+건)/g, '<strong>$1</strong>')
-    .replace(/(\d+개)/g, '<strong>$1</strong>')
-    .replace(/(\d+초)/g, '<strong>$1</strong>');
+    .replace(/(\d+개)(?!월)/g, '<strong>$1</strong>')
+    .replace(/(\d+\.?\d*초)/g, '<strong>$1</strong>');
 }
 
 /** Bold key technical terms that should stand out in 7.4s scan */
@@ -39,7 +39,7 @@ const KEY_TERMS = ['Deadlock', 'EDA', 'BigQuery', 'Lambda', 'NestJS', 'TDD', 'gR
 function boldKeyTerms(text: string): string {
   let result = text;
   for (const term of KEY_TERMS) {
-    result = result.replace(new RegExp(`(?<!<[^>]*)\\b${term}\\b`, 'g'), `<strong>${term}</strong>`);
+    result = result.replace(new RegExp(`(?<![<\\w])${term}(?![\\w>])`, 'g'), `<strong>${term}</strong>`);
   }
   return result;
 }
@@ -229,7 +229,7 @@ function processSummary(text: string): string {
     /* Core Competencies */
     .competency-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 6mm; row-gap: 1mm; }
     .competency-group { margin-bottom: 1mm; }
-    .competency-category { font-size: 9pt; font-weight: 600; color: #4b5563; margin-bottom: 0.5mm; }
+    .competency-category { font-size: 9pt; font-weight: 700; color: #1d4ed8; margin-bottom: 0.5mm; }
 
     /* Training Programs */
     .training-item { margin-bottom: 1.5mm; break-inside: avoid; page-break-inside: avoid; }

@@ -2,76 +2,41 @@
   "main": {
     "personalInfo": {
       "name": "Hyeonjun Kil",
-      "title": "AI Native Engineer",
+      "title": "Backend Engineer",
       "email": "kboxstar@gmail.com",
       "location": "Seoul, South Korea",
       "linkedin": "https://www.linkedin.com/in/kilhyeonjun",
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "From backend engineer to AI-native architect — building systems where AI agents ship production code reliably. At GameDuo, operating 12 live services while cutting BigQuery costs by 82%, expanding pipeline capacity 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), one consistent pattern: find the structural bottleneck, design the system that eliminates it, measure the result.",
+    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, operating 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, integrating AI agents into the development workflow to amplify productivity.",
     "coreCompetencies": [
       {
-        "category": "AI Agent Orchestration & Delivery",
+        "category": "DB Optimization & Concurrency Control",
         "items": [
-          "Designed a multi-agent development environment, orchestrating Claude Code, Codex, and Gemini for distinct roles in production software delivery (since late 2024)",
-          "Established an AI-generated code reliability framework with TDD, reinforcing test-driven development culture and strengthening production stability across the team",
-          "Applied context engineering and harness engineering practices — structuring problems, designing architectural guardrails, and building feedback loops for reliable agent output"
+          "From query tuning, index design, and table normalization (97% performance gain) to deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks"
         ]
       },
       {
-        "category": "System Design & Architecture",
+        "category": "Serverless Architecture & Cost Optimization",
         "items": [
-          "Designed Event-Driven Architecture by replacing single-run batch processing with event-based parallel execution, architecting serverless pipelines that dramatically expanded throughput and collection range",
-          "Designed a shared package system for multi-project environments, enhancing code consistency and reusability",
-          "Established a staged modernization strategy; after phased architecture migration with TDD, maintained incident-free deployments during major release windows"
+          "Batch-to-EDA migration expanding throughput 270x, BigQuery pricing model analysis with read-method switch (82% cost reduction), Lambda hybrid pipeline design"
         ]
       },
       {
-        "category": "Cost Optimization & Reliability",
+        "category": "Legacy Modernization & Reliability",
         "items": [
-          "Cloud cost structure analysis and pricing model optimization — significantly reduced costs through read-method migration and architecture redesign",
-          "Diagnosed bulk data processing bottlenecks and optimized queries — bulk operation migration, table normalization, and index tuning for major sync and query performance gains",
-          "Analyzed recurring deadlock root causes at the architecture level and ensured regulatory compliance — outbox pattern, distributed lock-based data consistency design, CDK-based audit log infrastructure as code"
+          "Express monolith to NestJS via 3-stage progressive migration, TDD-driven incident-free deployments during major releases, shared package system unifying 7 projects"
         ]
       },
       {
-        "category": "Technical Leadership & Culture",
+        "category": "AI-Augmented Development Productivity",
         "items": [
-          "Led AI development adoption by sharing Cursor and Claude Code workflows plus context engineering practices in developer meetings, expanding team-level AI usage (Games on AWS 2025 customer session speaker)",
-          "Strengthened knowledge-sharing culture through developer meetings, shared library contribution guides, merge rules, code conventions, and architecture pattern standardization",
-          "Established incident response culture — propagated Deadlock and data consistency root cause analysis methodology across the team, systematizing recurrence prevention"
+          "Integrated Claude Code, Amazon Q, and other AI agents into development workflows, driving team-wide adoption (Games on AWS 2025 speaker)"
         ]
       }
     ],
     "skills": [
-      {
-        "category": "AI Development",
-        "description": "Multi-agent orchestration-based development, context engineering, AI-generated code quality assurance",
-        "items": [
-          {
-            "name": "Claude Code"
-          },
-          {
-            "name": "OpenCode (OMO)"
-          },
-          {
-            "name": "Codex"
-          },
-          {
-            "name": "Kiro"
-          },
-          {
-            "name": "Amazon Q Developer"
-          },
-          {
-            "name": "Cursor"
-          },
-          {
-            "name": "Context Engineering"
-          }
-        ]
-      },
       {
         "category": "Backend",
         "description": "Legacy-to-NestJS progressive migration, shared package system establishment, TDD-driven development, REST API design",
@@ -149,6 +114,24 @@
             "name": "CI/CD"
           }
         ]
+      },
+      {
+        "category": "Development Productivity",
+        "description": "AI agent-augmented development, context engineering, automated code quality",
+        "items": [
+          {
+            "name": "Claude Code"
+          },
+          {
+            "name": "Amazon Q Developer"
+          },
+          {
+            "name": "Cursor"
+          },
+          {
+            "name": "Context Engineering"
+          }
+        ]
       }
     ],
     "experience": [
@@ -159,11 +142,11 @@
         "position": "DEV Team Server Developer",
         "startDate": "2025-01",
         "current": true,
-        "description": "Mobile game development and publishing company. Transitioned to AI agent-based development in late 2024 for backend architecture design and live service feature development",
+        "description": "Mobile game development and publishing company. Backend architecture design, data pipeline engineering, and shared package system operations for 12 live services",
         "highlights": [
           {
-            "problem": "Marketing data query cost surge",
-            "solution": "Adopted BigQuery Storage Read API",
+            "problem": "Marketing data query cost surge (full-scan billing model)",
+            "solution": "Evaluated partitioning but rejected due to Write IOPS increase; adopted gRPC distributed reads (Storage Read API)",
             "result": "Cut costs 82% ($6.25→$1.1 per TB)"
           },
           {

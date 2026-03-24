@@ -2,76 +2,41 @@
   "main": {
     "personalInfo": {
       "name": "길현준",
-      "title": "AI Native Engineer",
+      "title": "Backend Engineer",
       "email": "kboxstar@gmail.com",
       "location": "서울, 대한민국",
       "linkedin": "https://www.linkedin.com/in/kilhyeonjun",
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "백엔드 엔지니어에서 AI Native 아키텍트로 — AI 에이전트가 프로덕션 코드를 안정적으로 배포하는 시스템을 설계합니다. 게임듀오에서 12개 라이브 서비스를 운영하며 BigQuery 비용 82% 절감, 서버리스 전환으로 파이프라인 270배 확장을 이끌고, Games on AWS 2025 고객 세션에서 그 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 20개+ 프로젝트를 수행하며 일관된 패턴을 만들었습니다: 구조적 병목을 찾고, 그것을 제거하는 시스템을 설계하고, 결과를 측정합니다.",
+    "summary": "구조적 병목을 찾아 제거하는 백엔드 엔지니어입니다. 게임듀오에서 12개 라이브 서비스를 운영하며 BigQuery 비용 82% 절감, 서버리스 전환으로 파이프라인 처리량 270배 확장을 이끌고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 AI 에이전트를 개발 워크플로우에 통합하여 생산성을 높이고 있습니다.",
     "coreCompetencies": [
       {
-        "category": "AI 에이전트 오케스트레이션 & 개발 체계",
+        "category": "DB 최적화 & 동시성 제어",
         "items": [
-          "멀티 에이전트 개발 환경 설계 — Claude Code·Codex·Gemini 등 복수 AI 에이전트를 용도별로 오케스트레이션, AI 에이전트 기반 프로덕션 개발 체계 정립 (2024년 말~)",
-          "AI 생성 코드 신뢰성 체계 — TDD 기반 품질 검증 프레임워크 수립, 팀 단위 테스트 기반 개발 문화 정착 및 프로덕션 안정성 강화",
-          "컨텍스트 엔지니어링 & Harness Engineering — AI 에이전트가 효과적으로 동작하도록 문제 구조화·아키텍처 가드레일·피드백 루프 설계"
+          "쿼리 튜닝·인덱스 설계·테이블 정규화(97% 성능 개선)부터 Deadlock 근본 원인 분석·분산 락 설계까지, 데이터 계층 병목 진단 및 해결"
         ]
       },
       {
-        "category": "시스템 설계 & 아키텍처",
+        "category": "서버리스 아키텍처 & 비용 최적화",
         "items": [
-          "Event-Driven Architecture 설계 — 배치 단일 처리에서 이벤트 기반 병렬 처리로 전환하여 처리량과 수집 범위를 대폭 확장하는 서버리스 파이프라인 설계",
-          "멀티 프로젝트 공통 패키지 체계 설계 — 코드 일관성과 재사용성 향상",
-          "레거시 점진적 현대화 전략 수립 — 단계적 아키텍처 전환 + TDD 도입 이후 주요 릴리스 구간 무장애 배포 유지"
+          "배치→EDA 전환으로 처리량 270배 확장, BigQuery 과금 모델 분석 후 읽기 방식 전환(82% 절감), Lambda 하이브리드 파이프라인 설계"
         ]
       },
       {
-        "category": "비용 최적화 & 안정성",
+        "category": "레거시 현대화 & 안정성",
         "items": [
-          "클라우드 비용 구조 분석 및 과금 모델 최적화 — 읽기 방식 전환과 아키텍처 재설계로 대폭 비용 절감",
-          "대량 데이터 처리 병목 진단 및 쿼리 최적화 — 벌크 연산 전환, 테이블 정규화, 인덱스 튜닝으로 동기화·조회 성능 대폭 개선",
-          "장애 근본 원인 분석 + 규제 대응 — Deadlock 패턴 아키텍처 수준 해결, 아웃박스 패턴·분산 락 기반 데이터 정합성 설계, CDK 기반 감사 로그 인프라 코드화"
+          "Express 단일 파일→NestJS 3단계 점진적 전환, TDD 도입 후 주요 릴리스 구간 무장애 배포, 공통 패키지 체계로 7개 프로젝트 코드 일원화"
         ]
       },
       {
-        "category": "기술 리더십 & 문화",
+        "category": "AI 도구 활용 개발 생산성",
         "items": [
-          "AI 개발 도입 주도 — Cursor·Claude Code 활용법과 컨텍스트 엔지니어링 노하우를 개발자 미팅에서 공유하며 팀 단위 AI 활용 확산, Games on AWS 2025 고객 세션 발표",
-          "기술 공유 문화 정착 — 개발자 미팅 기반 공통 라이브러리 기여 가이드·merge 규칙 수립, 코드 컨벤션 확립, 아키텍처 패턴 팀 표준화",
-          "장애 대응 문화 정립 — Deadlock·데이터 정합성 장애의 근본 원인 분석 방법론을 팀에 전파, 재발 방지 체계 수립"
+          "Claude Code·Amazon Q 등 AI 에이전트를 개발 워크플로우에 통합, 팀 단위 활용 확산 주도, Games on AWS 2025 고객 세션 발표"
         ]
       }
     ],
     "skills": [
-      {
-        "category": "AI Development",
-        "description": "멀티 에이전트 오케스트레이션 기반 개발, 컨텍스트 엔지니어링, AI 생성 코드 품질 보장",
-        "items": [
-          {
-            "name": "Claude Code"
-          },
-          {
-            "name": "OpenCode (OMO)"
-          },
-          {
-            "name": "Codex"
-          },
-          {
-            "name": "Kiro"
-          },
-          {
-            "name": "Amazon Q Developer"
-          },
-          {
-            "name": "Cursor"
-          },
-          {
-            "name": "Context Engineering"
-          }
-        ]
-      },
       {
         "category": "Backend",
         "description": "레거시→NestJS 점진적 전환, 공통 패키지 체계 정립, TDD 기반 개발, REST API 설계",
@@ -149,6 +114,24 @@
             "name": "CI/CD"
           }
         ]
+      },
+      {
+        "category": "Development Productivity",
+        "description": "AI 에이전트 활용 개발, 컨텍스트 엔지니어링, 코드 품질 자동화",
+        "items": [
+          {
+            "name": "Claude Code"
+          },
+          {
+            "name": "Amazon Q Developer"
+          },
+          {
+            "name": "Cursor"
+          },
+          {
+            "name": "Context Engineering"
+          }
+        ]
       }
     ],
     "experience": [
@@ -159,11 +142,11 @@
         "position": "DEV팀 Server Developer",
         "startDate": "2025-01",
         "current": true,
-        "description": "모바일 게임 개발 및 퍼블리싱 회사. 2024년 말부터 AI 에이전트 기반 개발로 전환하여 백엔드 아키텍처 설계 및 라이브 서비스 기능 개발",
+        "description": "모바일 게임 개발 및 퍼블리싱 회사. 12개 라이브 서비스의 백엔드 아키텍처 설계, 데이터 파이프라인 구축, 공통 패키지 체계 운영",
         "highlights": [
           {
-            "problem": "마케팅 데이터 조회 비용 급증",
-            "solution": "BigQuery Storage Read API 도입",
+            "problem": "마케팅 데이터 조회 비용 급증(전체 스캔 과금 구조)",
+            "solution": "파티셔닝 튜닝 분석 후 Write IOPS 증가 문제로 기각, gRPC 기반 분산 읽기(Storage Read API) 전환",
             "result": "비용 82% 절감(TB당 $6.25→$1.1)"
           },
           {

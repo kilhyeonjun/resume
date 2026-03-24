@@ -10,7 +10,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) =>
-        !page.includes('/resume-print') && !page.includes('/resume-ats'),
+        !page.includes('/resume-print') && !page.includes('/resume-ats') && !page.includes('/og-image'),
     }),
   ],
   vite: {

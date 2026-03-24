@@ -7,7 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "pdf": "tsx scripts/generate-pdf.ts",
+    "og": "tsx scripts/generate-og.ts",
+    "pdf": "tsx scripts/generate-pdf.ts && tsx scripts/generate-og.ts",
     "pdf:hr": "tsx scripts/generate-pdf.ts --hr",
     "pdf:ats": "tsx scripts/generate-pdf.ts --ats",
     "pdf:full": "node -e \"const{execSync:r}=require('child_process');try{r('lsof -ti:4321',{stdio:'pipe'})}catch{console.log('Starting dev server...');require('child_process').spawn('npx',['astro','dev'],{stdio:'ignore',detached:true}).unref();r('sleep 3')}r('tsx scripts/generate-pdf.ts',{stdio:'inherit'})\""

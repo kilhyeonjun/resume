@@ -23,6 +23,22 @@ const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
 const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' : ''}`;
 
 const osGrouped = groupOpenSourceByRepo(data.openSource);
+
+/** Bold key metrics: numbers with %, 배, 건, 초, 개 units + arrow patterns */
+function boldMetrics(text: string): string {
+  return text
+    .replace(/(\d+[\.]?\d*%)/g, '<strong>$1</strong>')
+    .replace(/(\d+배)/g, '<strong>$1</strong>')
+    .replace(/(\d+건)/g, '<strong>$1</strong>')
+    .replace(/(\d+개)/g, '<strong>$1</strong>')
+    .replace(/(\d+초)/g, '<strong>$1</strong>');
+}
+
+/** Process summary: bold metrics + Games on AWS link */
+function processSummary(text: string): string {
+  return boldMetrics(text)
+    .replace('Games on AWS 2025', '<a href="https://www.youtube.com/watch?v=2jRicD15jXk">Games on AWS 2025</a>');
+}
 ---
 
 <!DOCTYPE html>
@@ -301,7 +317,7 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
     {data.summary && (
       <section>
         <h2 class="section-title">{labels.summary}</h2>
-        <p class="summary-text" set:html={data.summary.replace('Games on AWS 2025', '<a href="https://www.youtube.com/watch?v=2jRicD15jXk">Games on AWS 2025</a>')} />
+        <p class="summary-text" set:html={processSummary(data.summary)} />
       </section>
     )}
 
@@ -317,8 +333,8 @@ const osGrouped = groupOpenSourceByRepo(data.openSource);
                 {comp.items.map((item) => {
                   const parts = item.split(' — ');
                   return parts.length > 1
-                    ? <li><span class="highlight-bullet">•</span><b>{parts[0]}</b> — {parts.slice(1).join(' — ')}</li>
-                    : <li><span class="highlight-bullet">•</span>{item}</li>;
+                    ? <li><span class="highlight-bullet">•</span><span set:html={`<b>${parts[0]}</b> — ${boldMetrics(parts.slice(1).join(' — '))}`} /></li>
+                    : <li><span class="highlight-bullet">•</span><span set:html={boldMetrics(item)} /></li>;
                 })}
               </ul>
             </div>

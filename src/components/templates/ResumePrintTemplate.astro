@@ -24,7 +24,7 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
 
 const osGrouped = groupOpenSourceByRepo(data.openSource);
 
-/** Bold key metrics: numbers with %, 배, 건, 초, 개 units + arrow patterns */
+/** Bold key metrics: numbers with %, 배, 건, 초, 개 units */
 function boldMetrics(text: string): string {
   return text
     .replace(/(\d+[\.]?\d*%)/g, '<strong>$1</strong>')
@@ -34,9 +34,24 @@ function boldMetrics(text: string): string {
     .replace(/(\d+초)/g, '<strong>$1</strong>');
 }
 
-/** Process summary: bold metrics + Games on AWS link */
+/** Bold key technical terms that should stand out in 7.4s scan */
+const KEY_TERMS = ['Deadlock', 'EDA', 'BigQuery', 'Lambda', 'NestJS', 'TDD', 'gRPC', 'MSA'];
+function boldKeyTerms(text: string): string {
+  let result = text;
+  for (const term of KEY_TERMS) {
+    result = result.replace(new RegExp(`(?<!<[^>]*)\\b${term}\\b`, 'g'), `<strong>${term}</strong>`);
+  }
+  return result;
+}
+
+/** Full text enhancement: metrics + key terms */
+function enhance(text: string): string {
+  return boldKeyTerms(boldMetrics(text));
+}
+
+/** Process summary: enhance + Games on AWS link */
 function processSummary(text: string): string {
-  return boldMetrics(text)
+  return enhance(text)
     .replace('Games on AWS 2025', '<a href="https://www.youtube.com/watch?v=2jRicD15jXk">Games on AWS 2025</a>');
 }
 ---
@@ -333,8 +348,8 @@ function processSummary(text: string): string {
                 {comp.items.map((item) => {
                   const parts = item.split(' — ');
                   return parts.length > 1
-                    ? <li><span class="highlight-bullet">•</span><span set:html={`<b>${parts[0]}</b> — ${boldMetrics(parts.slice(1).join(' — '))}`} /></li>
-                    : <li><span class="highlight-bullet">•</span><span set:html={boldMetrics(item)} /></li>;
+                    ? <li><span class="highlight-bullet">•</span><span set:html={`<b>${parts[0]}</b> — ${enhance(parts.slice(1).join(' — '))}`} /></li>
+                    : <li><span class="highlight-bullet">•</span><span set:html={enhance(item)} /></li>;
                 })}
               </ul>
             </div>

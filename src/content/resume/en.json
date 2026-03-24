@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, operating 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, integrating AI agents into the development workflow to amplify productivity.",
+    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, building a shared backend platform for 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, integrating AI agents into the development workflow to amplify productivity.",
     "coreCompetencies": [
       {
         "category": "DB Optimization & Concurrency Control",
@@ -142,7 +142,7 @@
         "position": "DEV Team Server Developer",
         "startDate": "2025-01",
         "current": true,
-        "description": "Mobile game development and publishing company. Backend architecture design, data pipeline engineering, and shared package system operations for 12 live services",
+        "description": "Mobile game development and publishing company. Shared backend platform design for 12 live services, data pipeline engineering, and common package system operations",
         "highlights": [
           {
             "problem": "Marketing data query cost surge (full-scan billing model)",

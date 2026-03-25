@@ -739,7 +739,7 @@
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
           {
-            "problem": "Express.js single-file (app.js) 3,000-line legacy maintainability limits",
+            "problem": "Express.js single-file (app.js) 10,000-line legacy maintainability limits",
             "solution": "3-stage progressive migration (single-file→layered→NestJS) + JS→TS",
             "result": "TDD 80% coverage, zero incidents during major releases"
           },
@@ -863,11 +863,11 @@
             "period": "2023.03 ~ 2023.05",
             "featured": true,
             "description": "Migrated from Express.js single-file (app.js) structure to NestJS modular architecture",
-            "techRationale": "Adopted NestJS DI/module system to resolve maintainability limits of 3,000-line Express single-file legacy. Minimized risk via 3-phase gradual migration (single file → layered → NestJS). Introduced TDD to prevent regression during migration.",
+            "techRationale": "Adopted NestJS DI/module system to resolve maintainability limits of 10,000-line Express single-file legacy. Minimized risk via 3-phase gradual migration (single file → layered → NestJS). Introduced TDD to prevent regression during migration.",
             "contribution": "Led independently. Performed all 3 migration phases, JS→TS migration, TDD adoption, and team coding convention establishment.",
             "details": [
               {
-                "problem": "Express.js single-file (app.js) 3,000-line codebase unmaintainable",
+                "problem": "Express.js single-file (app.js) 10,000-line codebase unmaintainable",
                 "solution": "Executed 3-phase incremental migration: app.js single file → Layered Architecture (Controller/Service/Repository) → NestJS framework adoption",
                 "result": "Achieved modular architecture with clear separation of concerns"
               },

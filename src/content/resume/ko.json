@@ -739,7 +739,7 @@
         "description": "누적 30만 다운로드 비대면 진료 및 약배달 플랫폼 스타트업",
         "highlights": [
           {
-            "problem": "Express.js 단일 파일(app.js) 3,000줄 레거시 유지보수 한계",
+            "problem": "Express.js 단일 파일(app.js) 10,000줄 레거시 유지보수 한계",
             "solution": "3단계 점진적 전환(단일 파일→레이어드→NestJS) + JS→TS 마이그레이션",
             "result": "TDD 80% 달성, 주요 릴리스 구간 장애 0건 유지"
           },
@@ -863,11 +863,11 @@
             "period": "2023.03 ~ 2023.05",
             "featured": true,
             "description": "Express.js 단일 파일(app.js) 구조에서 NestJS 모듈 아키텍처로 전환",
-            "techRationale": "Express 단일 app.js 3,000줄 레거시의 유지보수 한계 해결을 위해 NestJS DI·모듈 시스템 도입. 3단계 점진적 전환(단일 파일 → 레이어드 → NestJS)으로 리스크 최소화. TDD 도입으로 전환 중 회귀 방지.",
+            "techRationale": "Express 단일 app.js 10,000줄 레거시의 유지보수 한계 해결을 위해 NestJS DI·모듈 시스템 도입. 3단계 점진적 전환(단일 파일 → 레이어드 → NestJS)으로 리스크 최소화. TDD 도입으로 전환 중 회귀 방지.",
             "contribution": "단독 주도. 3단계 전환 전 구간, JS→TS 마이그레이션, TDD 도입, 팀 내 코드 컨벤션 확립 모두 직접 수행.",
             "details": [
               {
-                "problem": "Express.js 단일 파일(app.js) 3,000줄 레거시 유지보수 한계",
+                "problem": "Express.js 단일 파일(app.js) 10,000줄 레거시 유지보수 한계",
                 "solution": "3단계 점진적 전환: app.js 단일 파일 → 레이어드 아키텍처(Controller/Service/Repository) → NestJS 프레임워크 도입",
                 "result": "모듈 아키텍처 이관 완료"
               },

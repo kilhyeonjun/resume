@@ -1132,9 +1132,15 @@
     ],
     "openSource": [
       {
-        "name": "kiro-gateway: thinking 태그 주입 스킵 · SSO 토큰 리프레시 등 2건 기여",
-        "date": "2026-01",
-        "url": "https://github.com/jwadow/kiro-gateway/pull/23",
+        "name": "oh-my-openagent: Anthropic 모델 컨텍스트 제한 캐시 수정",
+        "date": "2026-03",
+        "url": "https://github.com/code-yeongyu/oh-my-openagent/pull/2664",
+        "status": "Merged"
+      },
+      {
+        "name": "opencode: macOS sidecar 프로세스 hang 버그 수정",
+        "date": "2026-02",
+        "url": "https://github.com/anomalyco/opencode/pull/15136",
         "status": "Merged"
       },
       {
@@ -1144,7 +1150,13 @@
         "status": "Merged"
       },
       {
-        "name": "atlassian-skills: Jira Cloud API v3 코멘트 ADF 포맷 적용",
+        "name": "kiro-gateway: thinking 태그 주입 스킵 · SSO 토큰 리프레시 등 2건 기여",
+        "date": "2026-01",
+        "url": "https://github.com/jwadow/kiro-gateway/pull/23",
+        "status": "Merged"
+      },
+      {
+        "name": "atlassian-skills: Jira Cloud API v3 코멘트 ADF 포맷 · 검색 엔드포인트 마이그레이션 등 2건 기여",
         "date": "2026-01",
         "url": "https://github.com/langpingxue/atlassian-skills/pull/7",
         "status": "Merged"

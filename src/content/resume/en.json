@@ -1132,9 +1132,15 @@
     ],
     "openSource": [
       {
-        "name": "kiro-gateway: Skip thinking tag injection + SSO token refresh (2 merged PRs)",
-        "date": "2026-01",
-        "url": "https://github.com/jwadow/kiro-gateway/pull/23",
+        "name": "oh-my-openagent: Fix cached model context limits for Anthropic providers",
+        "date": "2026-03",
+        "url": "https://github.com/code-yeongyu/oh-my-openagent/pull/2664",
+        "status": "Merged"
+      },
+      {
+        "name": "opencode: Fix macOS sidecar process hang on desktop app",
+        "date": "2026-02",
+        "url": "https://github.com/anomalyco/opencode/pull/15136",
         "status": "Merged"
       },
       {
@@ -1144,7 +1150,13 @@
         "status": "Merged"
       },
       {
-        "name": "atlassian-skills: Use ADF format for Jira Cloud API v3 comments",
+        "name": "kiro-gateway: Skip thinking tag injection + SSO token refresh (2 merged PRs)",
+        "date": "2026-01",
+        "url": "https://github.com/jwadow/kiro-gateway/pull/23",
+        "status": "Merged"
+      },
+      {
+        "name": "atlassian-skills: ADF comment format + search endpoint migration (2 merged PRs)",
         "date": "2026-01",
         "url": "https://github.com/langpingxue/atlassian-skills/pull/7",
         "status": "Merged"

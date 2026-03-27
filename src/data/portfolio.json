@@ -7,6 +7,8 @@
         "en": "Ledgerly"
       },
       "type": "personal",
+      "featured": true,
+      "printOrder": 2,
       "summary": {
         "ko": "가족·조직 단위 공유 가계부 앱 — Next.js 16 풀스택, Supabase PostgreSQL, 3단계 역할 기반 접근 제어(OWNER/ADMIN/MEMBER), NestJS Cron 정기거래 자동 처리, 99.45% 라인 커버리지 단위 테스트 + 300건 이상 E2E 통합 테스트",
         "en": "Family/organization shared finance management app — Next.js 16 fullstack, Supabase PostgreSQL, 3-tier RBAC (OWNER/ADMIN/MEMBER), NestJS Cron recurring transaction automation, 99.45% line coverage unit tests + 300+ E2E integration tests"
@@ -98,6 +100,8 @@
         "en": "Daesin Logistics Dispatch Bot"
       },
       "type": "personal",
+      "featured": true,
+      "printOrder": 3,
       "summary": {
         "ko": "대신물류 배차현황 데이터를 Cheerio로 크롤링하고 카카오톡 챗봇 스킬서버와 Next.js 모바일웹으로 조회할 수 있는 서비스 — Clean Architecture + TSyringe DI, Express 5, Prisma SQLite, Traefik Blue-Green 무중단 배포",
         "en": "Logistics dispatch data service crawling with Cheerio, queryable via KakaoTalk chatbot skill server and Next.js mobile web — Clean Architecture + TSyringe DI, Express 5, Prisma SQLite, Traefik Blue-Green zero-downtime deployment"
@@ -189,6 +193,7 @@
         "en": "NyamNyam WeDu — Cafeteria Menu Alert Bot"
       },
       "type": "personal",
+      "listed": true,
       "summary": {
         "ko": "판교 이노밸리 구내식당 주간 식단표를 카카오 채널에서 Playwright로 크롤링하여 Slack으로 자동 발송하는 봇 — Clean Architecture + TSyringe DI, Slack Bot API 슬래시 커맨드, 재시도 최대 6회, DeliveryHistory 중복 방지",
         "en": "Bot that crawls weekly cafeteria menus from Kakao Channel via Playwright and auto-delivers to Slack — Clean Architecture + TSyringe DI, Slack Bot API slash command, up to 6 retries, DeliveryHistory duplicate prevention"
@@ -271,6 +276,8 @@
         "en": "Concert Reservation Service"
       },
       "type": "personal",
+      "featured": true,
+      "printOrder": 1,
       "summary": {
         "ko": "1만 동시 요청 환경에서 좌석 선점·결제·포인트 충전의 동시성 문제를 시나리오별 하이브리드 락 전략으로 해결한 콘서트 좌석 예약 서비스 — 낙관적 락 + Redisson 분산 락, Redis 캐싱 TPS 15배 향상, Kafka 이벤트 드리븐 아키텍처, K6 부하 테스트 기반 병목 개선",
         "en": "Concert seat reservation service resolving concurrency across seat locking, payments, and point charging under 10K concurrent requests \u2014 hybrid locking strategy (optimistic + Redisson distributed lock), 15x TPS improvement via Redis caching, Kafka event-driven architecture, K6 load test-driven optimization"
@@ -392,6 +399,7 @@
         "en": "Hospital Job Alert Service"
       },
       "type": "personal",
+      "listed": true,
       "summary": {
         "ko": "4개 대학병원 채용공고를 자동 수집하고 키워드 기반 이메일 알림을 제공하는 서버리스 백엔드 서비스",
         "en": "Serverless backend service that automatically collects job postings from 4 university hospitals and delivers keyword-based email notifications"
@@ -479,6 +487,7 @@
         "en": "StartupPool"
       },
       "type": "team",
+      "listed": true,
       "teamComposition": {
         "ko": "FE(2명) BE(2명) 기획(1명) 디자인(1명) 마케팅(2명) / 본인 BE 담당",
         "en": "FE(2) BE(2) PM(1) Design(1) Marketing(2) / Responsible for BE"
@@ -569,6 +578,7 @@
         "en": "Slack API Clone"
       },
       "type": "personal",
+      "hidden": true,
       "summary": {
         "ko": "NestJS의 모듈 시스템과 DI/IoC 패턴을 학습하기 위해 Slack 백엔드를 클론 코딩한 프로젝트 — Socket.io 기반 실시간 메시징, Passport 세션 인증, TypeORM 관계형 데이터 모델링 구현",
         "en": "Slack backend clone project for learning NestJS module system and DI/IoC patterns — implemented Socket.io real-time messaging, Passport session authentication, and TypeORM relational data modeling"
@@ -654,6 +664,7 @@
         "en": "React Nodebird"
       },
       "type": "personal",
+      "hidden": true,
       "summary": {
         "ko": "Next.js SSR 기반 트위터 유사 SNS 풀스택 클론 프로젝트 — Redux-Saga 비동기 상태 관리, Passport 세션 인증, Sequelize 관계형 모델링, AWS Lambda 이미지 리사이징 파이프라인 구현",
         "en": "Full-stack Twitter-like SNS clone built with Next.js SSR — Redux-Saga async state management, Passport session authentication, Sequelize relational modeling, and AWS Lambda image resizing pipeline"
@@ -755,6 +766,7 @@
         "en": "MultiChat"
       },
       "type": "personal",
+      "hidden": true,
       "summary": {
         "ko": "TCP/IP 소켓 프로그래밍과 멀티스레딩으로 구현한 다중 사용자 실시간 채팅 애플리케이션 — 커스텀 텍스트 프로토콜 설계, 클라이언트별 스레드 관리, tkinter 이벤트 루프와 소켓 스레드 통합",
         "en": "Multi-user real-time chat application built with TCP/IP socket programming and multi-threading — custom text protocol design, per-client thread management, and tkinter event loop integrated with socket threads"
@@ -833,6 +845,7 @@
         "en": "TrollGG"
       },
       "type": "personal",
+      "hidden": true,
       "summary": {
         "ko": "Spring Boot와 Riot Games API를 연동하여 소환사 전적 검색·인게임 정보·챌린저 랭킹을 제공하는 OP.GG 클론 프로젝트 — HttpURLConnection 기반 서버 사이드 API 호출, jQuery AJAX 클라이언트 사이드 데이터 렌더링, MyBatis 기반 소환사 데이터 영속화 구현",
         "en": "OP.GG clone project integrating Spring Boot with Riot Games API for summoner match history, live game info, and Challenger ranking — server-side API calls via HttpURLConnection, client-side data rendering with jQuery AJAX, and MyBatis-based summoner data persistence"

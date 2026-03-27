@@ -57,6 +57,13 @@ const PDF_CONFIGS: PDFConfigSet = {
       format: 'A4',
       printBackground: true,
     },
+    {
+      name: 'Portfolio (Korean)',
+      path: '/portfolio-print',
+      filename: 'portfolio-ko.pdf',
+      format: 'A4',
+      printBackground: true,
+    },
   ],
   en: [
     {

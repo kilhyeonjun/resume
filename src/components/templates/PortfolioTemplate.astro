@@ -27,6 +27,9 @@ const projects = [...rawProjects].sort((a, b) =>
       <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
         {lang === 'ko' ? '개인 및 팀 프로젝트 모음' : 'Collection of personal and team projects'}
       </p>
+      <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
+        <a href={`${basePath}/portfolio-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{lang === 'ko' ? 'PDF 다운로드' : 'Download PDF'}</a>
+      </div>
     </header>
 
     <div class="grid gap-6 sm:grid-cols-2">

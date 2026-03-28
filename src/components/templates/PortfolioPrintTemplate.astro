@@ -219,10 +219,15 @@ function formatPeriod(period: { start: string; end: string }): string {
     .metric-table {
       width: 100%;
       border-collapse: collapse;
+      table-layout: fixed;
       font-size: 8.5pt;
       margin: 1.5mm 0;
       break-inside: avoid;
     }
+
+    .metric-table col:nth-child(1) { width: 40%; }
+    .metric-table col:nth-child(2) { width: 20%; }
+    .metric-table col:nth-child(3) { width: 40%; }
 
     .metric-table th {
       text-align: left;
@@ -411,6 +416,7 @@ function formatPeriod(period: { start: string; end: string }): string {
 
             {project.metrics && project.metrics.length > 0 && (
               <table class="metric-table">
+                <colgroup><col /><col /><col /></colgroup>
                 <thead>
                   <tr>
                     <th>{currentLabels.metrics}</th>

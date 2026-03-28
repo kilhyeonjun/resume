@@ -91,6 +91,37 @@
           "Learned practical criteria for microservice separation and shared DB schema management by operating a separate NestJS backend via Docker to bypass Vercel Cron limitations",
           "Internalized test pyramid strategy by building 397 Vitest unit tests (99.45% coverage) and 300+ Playwright E2E tests with role-based scenarios, establishing a full-stack integration test environment with real backend and local Supabase"
         ]
+      },
+      "architectureDiagram": "/images/portfolio/ledgerly-arch.svg",
+      "scale": {
+        "ko": "가족/조직 단위 멀티테넌시 · 3단계 RBAC · FE+BE 분리 배포",
+        "en": "Family/org multi-tenancy · 3-tier RBAC · FE+BE separate deployment"
+      },
+      "metrics": [
+        {
+          "label": { "ko": "Vitest 단위 테스트", "en": "Vitest unit tests" },
+          "before": "-",
+          "after": "56건 (BE 25 + FE 31)",
+          "improvement": "99.45% 커버리지"
+        },
+        {
+          "label": { "ko": "Playwright E2E", "en": "Playwright E2E" },
+          "before": "-",
+          "after": "24 specs · 5 projects",
+          "improvement": "역할별 시나리오"
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "NestJS Docker 분리: Vercel Hobby 플랜 Cron 제한(1일 1회) 우회, 정기거래 매일 15:00 KST 실행 보장을 위해 Mac mini에서 독립 운영",
+          "Supabase Auth + 앱 레벨 RBAC 이중화: SupabaseAuthGuard(JWT 검증) → MembershipGuard(역할 확인) → SuperAdminGuard(관리자 전용) 3단계 Guard 체인",
+          "Prisma + Supabase PG: Prisma의 타입 안전성과 마이그레이션 도구 활용, Supabase 커넥션 풀러 경유로 서버리스 환경 커넥션 관리"
+        ],
+        "en": [
+          "NestJS Docker separation: bypasses Vercel Hobby Cron limit (1/day), ensures daily 15:00 KST recurring transaction execution on Mac mini",
+          "Supabase Auth + app-level RBAC: 3-tier guard chain — SupabaseAuthGuard (JWT) → MembershipGuard (role) → SuperAdminGuard (admin-only)",
+          "Prisma + Supabase PG: leverages Prisma's type safety and migration tooling, routes through Supabase connection pooler for serverless connection management"
+        ]
       }
     },
     {
@@ -183,6 +214,37 @@
           "Understood chatbot platform request/response protocols and scenario block integration by directly implementing Kakao i Open Builder skill server",
           "Experienced zero-downtime deployment traffic switching, health checking, and rollback strategies by designing Traefik-based Blue-Green deployment with automated deploy scripts",
           "Learned domain modeling techniques preventing primitive type abuse by enforcing domain rules at type level through Value Object pattern (LineCode, SearchDate)"
+        ]
+      },
+      "architectureDiagram": "/images/portfolio/daesin-arch.svg",
+      "scale": {
+        "ko": "월~토 06:00~20:00 매시 크롤링 · Blue-Green 무중단 배포 · SQLite 단일 서버",
+        "en": "Mon-Sat 06:00-20:00 hourly crawl · Blue-Green zero-downtime · SQLite single server"
+      },
+      "metrics": [
+        {
+          "label": { "ko": "크롤링 주기", "en": "Crawl frequency" },
+          "before": "수동 조회",
+          "after": "일 15회 자동",
+          "improvement": "자동화"
+        },
+        {
+          "label": { "ko": "배포 다운타임", "en": "Deploy downtime" },
+          "before": "수동 재시작",
+          "after": "0초",
+          "improvement": "Blue-Green"
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "Clean Architecture + TSyringe DI: 크롤러·카카오 API·DB 등 외부 의존성 교체 가능성을 고려한 계층 분리, DI 토큰으로 인터페이스 바인딩",
+          "SQLite 선택: 단일 서버·읽기 위주 워크로드에서 PostgreSQL 대비 운영 오버헤드 제거, 파일 기반 볼륨 마운트로 Docker 이식성 확보",
+          "Traefik 파일 프로바이더: Docker 소켓 노출 없이 YAML 재작성으로 트래픽 전환, 보안성과 롤백 단순화 동시 달성"
+        ],
+        "en": [
+          "Clean Architecture + TSyringe DI: layer separation for swappable external dependencies (crawler, Kakao API, DB), interface binding via DI tokens",
+          "SQLite: eliminates PostgreSQL operational overhead for single-server read-heavy workload, file-based volume mount ensures Docker portability",
+          "Traefik file provider: traffic switching via YAML rewrite without Docker socket exposure, achieving both security and simple rollback"
         ]
       }
     },
@@ -389,6 +451,45 @@
           "Learned context-driven selection over single solutions through hybrid locking strategy design per scenario",
           "Experienced layered caching strategy maximizing read performance by combining Redis caching with DB index optimization",
           "Learned async communication design eliminating inter-domain coupling through Kafka-based event-driven architecture"
+        ]
+      },
+      "architectureDiagram": "/images/portfolio/concert-reservation-arch.svg",
+      "scale": {
+        "ko": "1만 동시 요청 · K6 3,000 TPS · Kafka 3-broker · Prometheus+Grafana",
+        "en": "10K concurrent · K6 3,000 TPS · Kafka 3-broker · Prometheus+Grafana"
+      },
+      "metrics": [
+        {
+          "label": { "ko": "좌석 예약 응답시간", "en": "Reservation latency" },
+          "before": "1,678ms",
+          "after": "835ms",
+          "improvement": "-50%"
+        },
+        {
+          "label": { "ko": "좌석 조회 TPS", "en": "Seat query TPS" },
+          "before": "100",
+          "after": "1,500",
+          "improvement": "15x"
+        },
+        {
+          "label": { "ko": "DB 쿼리 비율", "en": "DB query ratio" },
+          "before": "100%",
+          "after": "6%",
+          "improvement": "-94%"
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "좌석 선점에 @Version 낙관적 락: 단일 좌석 경합에서 비관적 락 대비 처리량 우위, K6 1만 VU 검증",
+          "결제·충전에 Redisson 분산 락(userWalletLock:{userId}): 잔액 정합성 필수 트랜잭션에서 재시도 기반 낙관적 락의 무한 루프 위험 회피",
+          "Redis Sorted Set 대기열: 스코어=Unix timestamp로 입장 순서+만료 시간 이중 활용, DB 대기열 대비 O(log N)",
+          "Transactional Outbox 패턴: 결제 TX 내 outbox_event 행 삽입 → 스케줄러가 Kafka 발행, 메시지 유실 방지"
+        ],
+        "en": [
+          "@Version optimistic lock for seat reservation: higher throughput than pessimistic lock on single-row contention, validated with K6 10K VU",
+          "Redisson distributed lock (userWalletLock:{userId}) for payments: avoids infinite retry loops of optimistic lock in balance-critical transactions",
+          "Redis Sorted Set queue: score=Unix timestamp serves dual purpose (entry order + expiry), O(log N) vs DB-based queue",
+          "Transactional Outbox pattern: outbox_event row inserted within payment TX → scheduler publishes to Kafka, preventing message loss"
         ]
       }
     },
@@ -949,7 +1050,10 @@
       "description": "프로젝트 설명",
       "features": "담당 기능",
       "lessons": "깨달은 점",
-      "projectImages": "프로젝트 이미지"
+      "projectImages": "프로젝트 이미지",
+      "techDecisions": "기술 선택 근거",
+      "metrics": "성과 지표",
+      "scale": "서비스 규모"
     },
     "en": {
       "portfolio": "Portfolio",
@@ -971,7 +1075,10 @@
       "description": "Project Description",
       "features": "Features",
       "lessons": "Lessons Learned",
-      "projectImages": "Project Images"
+      "projectImages": "Project Images",
+      "techDecisions": "Tech Decisions",
+      "metrics": "Performance Metrics",
+      "scale": "Service Scale"
     }
   }
 }

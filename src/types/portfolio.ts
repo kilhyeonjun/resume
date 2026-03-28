@@ -10,6 +10,18 @@ const blogPostSchema = z.object({
   url: z.string().url(),
 });
 
+const metricSchema = z.object({
+  label: localizedStringSchema,
+  before: z.string(),
+  after: z.string(),
+  improvement: z.string(),
+});
+
+const localizedStringArraySchema = z.object({
+  ko: z.array(z.string()),
+  en: z.array(z.string()),
+});
+
 const portfolioProjectSchema = z.object({
   slug: z.string(),
   name: localizedStringSchema,
@@ -33,6 +45,10 @@ const portfolioProjectSchema = z.object({
   highlights: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }),
   features: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),
   lessons: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),
+  architectureDiagram: z.string().optional(),
+  metrics: z.array(metricSchema).optional(),
+  techDecisions: localizedStringArraySchema.optional(),
+  scale: localizedStringSchema.optional(),
   teamComposition: localizedStringSchema.optional(),
   collaborationTools: z.array(z.string()).optional(),
 });
@@ -46,6 +62,9 @@ const portfolioLabelsSchema = z.object({
   github: z.string(),
   relatedPosts: z.string(),
   relatedLinks: z.string(),
+  techDecisions: z.string(),
+  metrics: z.string(),
+  scale: z.string(),
   teamComposition: z.string(),
   collaborationTools: z.string(),
   backToPortfolio: z.string(),
@@ -68,6 +87,7 @@ export const portfolioDataSchema = z.object({
   }),
 });
 
+export type Metric = z.infer<typeof metricSchema>;
 export type LocalizedString = z.infer<typeof localizedStringSchema>;
 export type BlogPost = z.infer<typeof blogPostSchema>;
 export type PortfolioProject = z.infer<typeof portfolioProjectSchema>;

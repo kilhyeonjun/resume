@@ -191,6 +191,62 @@ function formatPeriod(period: { start: string; end: string }): string {
       line-height: 1.4;
     }
 
+    /* Architecture diagram */
+    .arch-diagram {
+      margin: 2mm 0;
+      break-inside: avoid;
+    }
+
+    .arch-diagram img {
+      width: 100%;
+      border: 0.5pt solid #e5e7eb;
+      border-radius: 2mm;
+    }
+
+    /* Scale badge */
+    .scale-badge {
+      display: inline-block;
+      font-size: 8pt;
+      color: #166534;
+      background: #f0fdf4;
+      border: 0.5pt solid #bbf7d0;
+      padding: 0.5mm 2mm;
+      border-radius: 1.5mm;
+      margin-bottom: 1.5mm;
+    }
+
+    /* Metrics table */
+    .metric-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.5pt;
+      margin: 1.5mm 0;
+      break-inside: avoid;
+    }
+
+    .metric-table th {
+      text-align: left;
+      font-weight: 600;
+      color: #374151;
+      border-bottom: 0.5pt solid #e5e7eb;
+      padding: 0.5mm 1.5mm;
+    }
+
+    .metric-table td {
+      padding: 0.5mm 1.5mm;
+      color: #374151;
+    }
+
+    .metric-table .after-cell {
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    .metric-table .improvement {
+      font-size: 7.5pt;
+      color: #6b7280;
+    }
+
     /* Bullet lists (highlights, features, lessons) */
     .bullet-section-heading {
       font-size: 9pt;
@@ -333,6 +389,10 @@ function formatPeriod(period: { start: string; end: string }): string {
               ))}
             </div>
 
+            {project.scale?.[lang] && (
+              <div class="scale-badge">{project.scale[lang]}</div>
+            )}
+
             <p class="project-summary">{summary}</p>
 
             {project.skills && project.skills.length > 0 && (
@@ -341,6 +401,44 @@ function formatPeriod(period: { start: string; end: string }): string {
                   <span class="tech-badge">{skill}</span>
                 ))}
               </div>
+            )}
+
+            {project.architectureDiagram && (
+              <div class="arch-diagram">
+                <img src={`${import.meta.env.BASE_URL}${project.architectureDiagram}`} alt={`${name} architecture`} />
+              </div>
+            )}
+
+            {project.metrics && project.metrics.length > 0 && (
+              <table class="metric-table">
+                <thead>
+                  <tr>
+                    <th>{currentLabels.metrics}</th>
+                    <th>{lang === 'ko' ? '이전' : 'Before'}</th>
+                    <th>{lang === 'ko' ? '이후' : 'After'}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {project.metrics.map((m) => (
+                    <tr>
+                      <td>{m.label[lang]}</td>
+                      <td>{m.before}</td>
+                      <td class="after-cell">{m.after} <span class="improvement">({m.improvement})</span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+
+            {project.techDecisions?.[lang] && project.techDecisions[lang].length > 0 && (
+              <>
+                <p class="bullet-section-heading">{currentLabels.techDecisions}</p>
+                <ul class="bullet-list">
+                  {project.techDecisions[lang].map((item) => (
+                    <li><span class="bullet">&bull;</span>{item}</li>
+                  ))}
+                </ul>
+              </>
             )}
 
             {highlights && highlights.length > 0 && (
@@ -354,22 +452,11 @@ function formatPeriod(period: { start: string; end: string }): string {
               </>
             )}
 
-            {features && features.length > 0 && (
-              <>
-                <p class="bullet-section-heading">{currentLabels.features}</p>
-                <ul class="bullet-list">
-                  {features.map((item) => (
-                    <li><span class="bullet">&bull;</span>{item}</li>
-                  ))}
-                </ul>
-              </>
-            )}
-
             {lessons && lessons.length > 0 && (
               <>
                 <p class="bullet-section-heading">{currentLabels.lessons}</p>
                 <ul class="bullet-list">
-                  {lessons.map((item) => (
+                  {lessons.slice(0, 2).map((item) => (
                     <li><span class="bullet">&bull;</span>{item}</li>
                   ))}
                 </ul>

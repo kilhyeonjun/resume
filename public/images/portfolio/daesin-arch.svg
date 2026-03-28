@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718 280" width="718" height="280" font-family="Arial, sans-serif">
+
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#9ca3af"/>
+    </marker>
+    <marker id="arrd" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="718" height="280" fill="#f9fafb" rx="8"/>
+
+  <!-- Title -->
+  <text x="359" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="#111827">대신물류 실시간 배송 조회 시스템 아키텍처</text>
+  <text x="359" y="40" text-anchor="middle" font-size="9.5" fill="#6b7280">VPS Docker + Traefik Blue/Green  |  Cheerio 크롤러  |  KakaoTalk Skill  |  Vercel Next.js</text>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       LEFT: External site + Vercel
+       ───────────────────────────────────────────────────────────── -->
+
+  <!-- External logistics site -->
+  <rect x="20" y="56" width="126" height="48" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="83" y="74" text-anchor="middle" font-size="10" font-weight="bold" fill="#111827">대신물류 사이트</text>
+  <text x="83" y="88" text-anchor="middle" font-size="9" fill="#6b7280">logistics.ds3211.co.kr</text>
+  <text x="83" y="100" text-anchor="middle" font-size="9" fill="#6b7280">axios POST / EUC-KR</text>
+
+  <!-- Vercel (bottom left) -->
+  <rect x="20" y="212" width="126" height="52" rx="6" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+  <text x="83" y="230" text-anchor="middle" font-size="10" font-weight="bold" fill="#111827">Vercel</text>
+  <text x="83" y="245" text-anchor="middle" font-size="9" fill="#6b7280">Next.js 16</text>
+  <text x="83" y="259" text-anchor="middle" font-size="9" fill="#6b7280">TanStack Query</text>
+
+  <!-- KakaoTalk (top right outside) -->
+  <rect x="572" y="56" width="126" height="48" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="635" y="74" text-anchor="middle" font-size="10" font-weight="bold" fill="#92400e">KakaoTalk</text>
+  <text x="635" y="89" text-anchor="middle" font-size="9" fill="#92400e">카카오 스킬 서버</text>
+  <text x="635" y="101" text-anchor="middle" font-size="9" fill="#92400e">/kakao/skill</text>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       CENTER: VPS Docker + Traefik wrapper
+       ───────────────────────────────────────────────────────────── -->
+
+  <!-- VPS outer box -->
+  <rect x="170" y="52" width="378" height="218" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <!-- VPS label -->
+  <text x="359" y="70" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1d4ed8">VPS — Docker + Traefik</text>
+
+  <!-- Traefik sub-box -->
+  <rect x="185" y="78" width="346" height="36" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.2"/>
+  <text x="358" y="93" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#1e40af">Traefik :80 — file provider (Docker socket 미사용)</text>
+  <text x="358" y="107" text-anchor="middle" font-size="9" fill="#1d4ed8">app-blue :3000  (active)  /  app-green :3000  (standby)</text>
+
+  <!-- Express core box -->
+  <rect x="185" y="124" width="346" height="134" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="358" y="142" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#111827">Express 5  +  TSyringe DI</text>
+
+  <!-- Feature rows inside Express -->
+  <!-- Crawler -->
+  <rect x="200" y="150" width="150" height="40" rx="4" fill="#f3f4f6"/>
+  <text x="275" y="166" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#374151">Cheerio 크롤러</text>
+  <text x="275" y="180" text-anchor="middle" font-size="8.5" fill="#6b7280">cron: 06:00-20:00 (평일)</text>
+
+  <!-- REST API -->
+  <rect x="200" y="198" width="150" height="40" rx="4" fill="#f3f4f6"/>
+  <text x="275" y="214" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#374151">REST API  /api/*</text>
+  <text x="275" y="228" text-anchor="middle" font-size="8.5" fill="#6b7280">x-api-key  +  JWT 인증</text>
+
+  <!-- SQLite + Cache -->
+  <rect x="366" y="150" width="150" height="40" rx="4" fill="#f3f4f6"/>
+  <text x="441" y="166" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#374151">Prisma + SQLite</text>
+  <text x="441" y="180" text-anchor="middle" font-size="8.5" fill="#6b7280">volume: ./data/</text>
+
+  <!-- InMemory Cache -->
+  <rect x="366" y="198" width="150" height="40" rx="4" fill="#f3f4f6"/>
+  <text x="441" y="214" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#374151">InMemory Cache</text>
+  <text x="441" y="228" text-anchor="middle" font-size="8.5" fill="#6b7280">Map  TTL 3600s</text>
+
+  <!-- Kakao sub-handler label inside -->
+  <text x="275" y="247" text-anchor="middle" font-size="8.5" fill="#6b7280">UtteranceParser → UseCase → KakaoFormatter</text>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       Arrows
+       ───────────────────────────────────────────────────────────── -->
+
+  <!-- External site → Crawler -->
+  <line x1="146" y1="80" x2="200" y2="170" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Crawler → SQLite (right within box) -->
+  <line x1="350" y1="170" x2="366" y2="170" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Vercel → REST API -->
+  <line x1="146" y1="238" x2="200" y2="218" stroke="#374151" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- REST API → SQLite / Cache -->
+  <line x1="350" y1="208" x2="366" y2="202" stroke="#9ca3af" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="350" y1="218" x2="366" y2="218" stroke="#9ca3af" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- KakaoTalk → Express (top right) -->
+  <line x1="572" y1="80" x2="531" y2="160" stroke="#ca8a04" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- deploy.sh note -->
+  <rect x="185" y="272" width="346" height="0" fill="none"/>
+  <text x="358" y="273" text-anchor="middle" font-size="8.5" fill="#6b7280">deploy.sh: build → start inactive slot → health check → rewrite traefik/dynamic.yml → stop old</text>
+
+</svg>

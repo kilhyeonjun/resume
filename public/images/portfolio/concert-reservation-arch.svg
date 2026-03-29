@@ -48,8 +48,8 @@
   <text x="635" y="89" text-anchor="middle" font-size="9" fill="#6b7280">대기큐  score = 입장시간</text>
   <text x="635" y="103" text-anchor="middle" font-size="9" fill="#6b7280">활성큐  score = 만료시간</text>
 
-  <!-- dashed connector: Interceptor ↔ Redis -->
-  <line x1="278" y1="72" x2="570" y2="78" stroke="#2563eb" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <!-- dashed connector: Interceptor ↔ Redis (curved above API Controller) -->
+  <path d="M278,66 C350,38 500,38 570,66" stroke="#2563eb" stroke-width="1" stroke-dasharray="5,3" fill="none" marker-end="url(#arrb)"/>
 
   <!-- ──────────────────────────────────────────────
        ROW 2  (y=130)  :  ConcertFacade  +  WaitingQueueFacade

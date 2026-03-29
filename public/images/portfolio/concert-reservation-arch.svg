@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718 280" width="718" height="280" font-family="Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718 292" width="718" height="292" font-family="Arial, sans-serif">
 
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
@@ -11,7 +11,7 @@
   </defs>
 
   <!-- Background -->
-  <rect width="718" height="280" fill="#f9fafb" rx="8"/>
+  <rect width="718" height="292" fill="#f9fafb" rx="8"/>
 
   <!-- Title -->
   <text x="359" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="#111827">콘서트 예약 시스템 아키텍처</text>

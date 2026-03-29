@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718 280" width="718" height="280" font-family="Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718 296" width="718" height="296" font-family="Arial, sans-serif">
 
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
@@ -11,7 +11,7 @@
   </defs>
 
   <!-- Background -->
-  <rect width="718" height="280" fill="#f9fafb" rx="8"/>
+  <rect width="718" height="296" fill="#f9fafb" rx="8"/>
 
   <!-- Title -->
   <text x="359" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="#111827">대신물류 실시간 배송 조회 시스템 아키텍처</text>
@@ -103,6 +103,6 @@
 
   <!-- deploy.sh note -->
   <rect x="185" y="272" width="346" height="0" fill="none"/>
-  <text x="358" y="273" text-anchor="middle" font-size="8.5" fill="#6b7280">deploy.sh: build → start inactive slot → health check → rewrite traefik/dynamic.yml → stop old</text>
+  <text x="358" y="284" text-anchor="middle" font-size="8.5" fill="#6b7280">deploy.sh: build → start inactive slot → health check → rewrite traefik/dynamic.yml → stop old</text>
 
 </svg>

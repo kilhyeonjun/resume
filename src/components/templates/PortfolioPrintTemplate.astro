@@ -127,8 +127,7 @@ function formatPeriod(period: { start: string; end: string }): string {
     }
 
     .project-item:first-of-type {
-      page-break-inside: avoid;
-      break-inside: avoid;
+      /* Allow first project to break across page 1-2 so header isn't isolated */
     }
 
     .project-separator {

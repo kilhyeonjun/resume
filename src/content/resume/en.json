@@ -386,7 +386,7 @@
               },
               {
                 "problem": "Game server shared code tightly coupled in monolithic package",
-                "solution": "Extracted game-server Kit: moved Sheet+5 submodules to @gameduo/glider-sheet, resolved conflicts via 5-branch divergence analysis",
+                "solution": "Extracted sheet processing module + 5 submodules into independent package, resolved conflicts via 5-branch divergence analysis",
                 "result": "Realized independent package versioning and deployment"
               },
               {
@@ -410,11 +410,11 @@
             "featured": false,
             "description": "Built probability calculation package and CDK-based audit log analytics infrastructure to address regulatory risk from lack of game probability verification",
             "techRationale": "Codified Kinesis → Firehose (Dynamic Partitioning + Parquet) → S3 → Glue → Athena pipeline with CDK. Chose Parquet columnar format for Athena SQL cost optimization. Replaced mock-based tests with LocalStack Testcontainers for integration testing.",
-            "contribution": "Restructured changmin's initial implementation into a package. Independently handled P0 bug fixes, test stabilization (94%+ coverage), CDK infrastructure, and deployment across 12 projects.",
+            "contribution": "Restructured initial implementation into a package. Independently handled P0 bug fixes, test stabilization (94%+ coverage), CDK infrastructure, and deployment across 12 projects.",
             "details": [
               {
                 "problem": "No reusable probability calculation module across game projects",
-                "solution": "Packaged NestJS DynamicModule with 5 functions + Kinesis logging as @gameduo/glider-probability",
+                "solution": "Packaged NestJS DynamicModule with 5 probability functions + Kinesis logging as shared probability package",
                 "result": "Integrated into 12 games with standardized probability calculation"
               },
               {

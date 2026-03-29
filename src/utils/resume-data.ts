@@ -49,8 +49,8 @@ function filterCoreCompetenciesForSurface(coreCompetencies: ResumeData['coreComp
 }
 
 function filterOpenSourceForSurface(openSource: ResumeData['openSource'], surface: ResumeSurface) {
-  if (surface !== 'print') return openSource;
-  // Merged first, then Open — Merged is a stronger hiring signal
+  if (surface === 'web' || surface === 'experience') return openSource;
+  // print + ats: Merged first, then Open — Merged is a stronger hiring signal
   const sorted = [...openSource].sort((a, b) => {
     const order = { Merged: 0, Open: 1, Closed: 2 };
     return (order[a.status ?? 'Closed'] ?? 2) - (order[b.status ?? 'Closed'] ?? 2);
@@ -63,7 +63,7 @@ function filterTechnicalWritingForSurface(technicalWriting: ResumeData['technica
 }
 
 function filterContinuousLearningForSurface(continuousLearning: ResumeData['continuousLearning'], surface: ResumeSurface) {
-  return surface === 'print' ? continuousLearning.slice(0, 3) : continuousLearning;
+  return (surface === 'web' || surface === 'experience') ? continuousLearning : continuousLearning.slice(0, 3);
 }
 
 export function prepareResumeData(

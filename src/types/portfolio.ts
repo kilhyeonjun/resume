@@ -22,6 +22,12 @@ const localizedStringArraySchema = z.object({
   en: z.array(z.string()),
 });
 
+const problemSolvingEntrySchema = z.object({
+  problem: localizedStringSchema,
+  process: localizedStringSchema,
+  result: localizedStringSchema,
+});
+
 const portfolioProjectSchema = z.object({
   slug: z.string(),
   name: localizedStringSchema,
@@ -44,6 +50,7 @@ const portfolioProjectSchema = z.object({
   blogPosts: z.array(blogPostSchema).optional(),
   highlights: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }),
   features: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),
+  problemSolving: z.array(problemSolvingEntrySchema).optional(),
   lessons: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),
   architectureDiagram: z.string().optional(),
   metrics: z.array(metricSchema).optional(),
@@ -75,6 +82,10 @@ const portfolioLabelsSchema = z.object({
   team: z.string(),
   description: z.string(),
   features: z.string(),
+  problemSolving: z.string(),
+  problemSolvingProblem: z.string(),
+  problemSolvingProcess: z.string(),
+  problemSolvingResult: z.string(),
   lessons: z.string(),
   projectImages: z.string(),
 });
@@ -88,6 +99,7 @@ export const portfolioDataSchema = z.object({
 });
 
 export type Metric = z.infer<typeof metricSchema>;
+export type ProblemSolvingEntry = z.infer<typeof problemSolvingEntrySchema>;
 export type LocalizedString = z.infer<typeof localizedStringSchema>;
 export type BlogPost = z.infer<typeof blogPostSchema>;
 export type PortfolioProject = z.infer<typeof portfolioProjectSchema>;

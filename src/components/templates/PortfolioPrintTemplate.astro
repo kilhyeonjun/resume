@@ -252,6 +252,33 @@ function formatPeriod(period: { start: string; end: string }): string {
       color: #6b7280;
     }
 
+    /* Problem Solving */
+    .ps-entry {
+      margin-bottom: 1.5mm;
+      break-inside: avoid;
+    }
+
+    .ps-problem {
+      font-size: 9pt;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 0.3mm;
+    }
+
+    .ps-text {
+      font-size: 8.5pt;
+      color: #374151;
+      padding-left: 3mm;
+      margin-bottom: 0.2mm;
+    }
+
+    .ps-result {
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: #2563eb;
+      padding-left: 3mm;
+    }
+
     /* Bullet lists (highlights, features, lessons) */
     .bullet-section-heading {
       font-size: 9pt;
@@ -434,6 +461,19 @@ function formatPeriod(period: { start: string; end: string }): string {
                   ))}
                 </tbody>
               </table>
+            )}
+
+            {project.problemSolving && project.problemSolving.length > 0 && (
+              <>
+                <p class="bullet-section-heading">{currentLabels.problemSolving}</p>
+                {project.problemSolving.map((entry) => (
+                  <div class="ps-entry">
+                    <div class="ps-problem">{entry.problem[lang]}</div>
+                    <div class="ps-text">{entry.process[lang]}</div>
+                    <div class="ps-result">→ {entry.result[lang]}</div>
+                  </div>
+                ))}
+              </>
             )}
 
             {project.techDecisions?.[lang] && project.techDecisions[lang].length > 0 && (

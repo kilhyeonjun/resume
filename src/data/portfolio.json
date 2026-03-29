@@ -19,26 +19,28 @@
       },
       "coverImage": "/images/portfolio/ledgerly-cover.webp",
       "contentImages": [],
-      "features": {
-        "ko": [
-          "거래 관리 — 수입·지출 CRUD, 카테고리별 분류, 날짜·메모·금액 기반 거래 기록",
-          "예산 관리 — 카테고리별·기간별 예산 설정 및 실시간 사용율 추적",
-          "조직 관리 — 다중 조직 생성·전환, 조직별 독립 데이터 관리",
-          "3단계 역할 기반 접근 제어 — OWNER(전체 권한), ADMIN(멤버·설정 관리), MEMBER(본인 거래 관리)",
-          "정기거래 자동 처리 — NestJS Cron 서비스로 매일 자정(KST) 반복 거래 자동 생성",
-          "재무 분석 대시보드 — Recharts 기반 수입·지출 추이, 카테고리별 비율 시각화",
-          "다국어 지원 — next-intl 기반 한국어·영어 UI 전환"
-        ],
-        "en": [
-          "Transaction management — income/expense CRUD with category classification, date/memo/amount-based recording",
-          "Budget management — per-category and per-period budget setting with real-time usage tracking",
-          "Organization management — multi-org creation and switching with independent data per organization",
-          "3-tier RBAC — OWNER (full access), ADMIN (member/settings management), MEMBER (own transaction management)",
-          "Recurring transaction automation — NestJS Cron service auto-generating scheduled transactions daily at midnight (KST)",
-          "Financial analytics dashboard — Recharts-based income/expense trends and category ratio visualization",
-          "Internationalization — next-intl based Korean/English UI switching"
-        ]
-      },
+      "problemSolving": [
+        {
+          "problem": { "ko": "가족/조직 내 역할별 권한 분리 없이 공유 가계부 운영 시 데이터 보안 위험", "en": "Data security risk in shared finance app without role-based permission separation" },
+          "process": { "ko": "OWNER/ADMIN/MEMBER 3단계 RBAC 설계, SupabaseAuthGuard → MembershipGuard → SuperAdminGuard 3단계 Guard 체인으로 인증+인가 이중화", "en": "Designed 3-tier RBAC, 3-layer Guard chain (SupabaseAuthGuard → MembershipGuard → SuperAdminGuard) for dual auth+authz" },
+          "result": { "ko": "조직별 독립 데이터 관리 + 역할별 세분화된 접근 제어 실현", "en": "Independent per-org data management + granular role-based access control" }
+        },
+        {
+          "problem": { "ko": "Vercel Hobby 플랜 Cron 제한(1일 1회)으로 정기거래 자동 처리 불가", "en": "Vercel Hobby Cron limit (1x/day) preventing recurring transaction automation" },
+          "process": { "ko": "NestJS 기반 별도 백엔드를 Mac mini에서 Docker로 분리 운영, @nestjs/schedule로 매일 15:00 KST 실행", "en": "Separated NestJS backend via Docker on Mac mini, @nestjs/schedule daily 15:00 KST execution" },
+          "result": { "ko": "정기거래 매일 자동 처리 실현, 플랫폼 제한 우회", "en": "Daily recurring transaction automation, platform limitation bypassed" }
+        },
+        {
+          "problem": { "ko": "SSR 환경에서 서버/클라이언트 컴포넌트 간 인증 상태 불일치", "en": "Auth state mismatch between server and client components in SSR" },
+          "process": { "ko": "Next.js 16 App Router + Supabase Auth SSR 조합으로 쿠키 기반 세션 복원 + 인증 컨텍스트 전파 패턴 설계", "en": "Cookie-based session restoration + auth context propagation pattern with Next.js 16 + Supabase Auth SSR" },
+          "result": { "ko": "서버/클라이언트 컴포넌트 간 원활한 인증 상태 동기화", "en": "Seamless auth state sync across server and client components" }
+        },
+        {
+          "problem": { "ko": "복잡한 RBAC + 비동기 로직의 높은 결함 위험을 수동 테스트로 커버 불가", "en": "Manual testing unable to cover defect risk from complex RBAC + async logic" },
+          "process": { "ko": "Vitest 단위 테스트 + Playwright E2E를 역할별(Admin/Member) 시나리오로 구성, 실제 BE + 로컬 Supabase 연동 풀스택 통합 테스트 환경 구축", "en": "Vitest unit + Playwright E2E organized by role scenarios (Admin/Member), full-stack integration env with real BE + local Supabase" },
+          "result": { "ko": "라인 커버리지 99.45%, 역할별 시나리오 자동 검증 체계 구축", "en": "99.45% line coverage, automated role-based scenario verification system" }
+        }
+      ],
       "period": {
         "start": "2025-08-01",
         "end": "present"
@@ -143,24 +145,28 @@
       },
       "coverImage": "/images/portfolio/daesin-cover.webp",
       "contentImages": [],
-      "features": {
-        "ko": [
-          "자동 크롤링 — Cheerio + Axios로 배차현황 데이터 수집, node-cron으로 월~토 06:00~20:00 매시 정각 자동 동기화",
-          "카카오톡 챗봇 스킬서버 — 카카오 i 오픈빌더 연동, 노선코드·차량번호·도착지 검색, 일별 전체 현황 및 통계 조회",
-          "REST API — 노선·차량·날짜별 검색 엔드포인트, 통계 조회 API, 수동 동기화 트리거",
-          "모바일 웹 — Next.js 기반 반응형 모바일 UI, TanStack Query 서버 상태 관리, Recharts 통계 시각화",
-          "Blue-Green 무중단 배포 — Traefik 리버스 프록시, 자동 배포 스크립트(빌드→헬스체크→트래픽 전환→롤백)",
-          "Clean Architecture — 도메인·애플리케이션·인프라 계층 분리, TSyringe DI 컨테이너, Value Object(LineCode, SearchDate) 패턴"
-        ],
-        "en": [
-          "Auto crawling — Cheerio + Axios dispatch data collection, node-cron auto-sync Mon-Sat 06:00-20:00 hourly",
-          "KakaoTalk chatbot skill server — Kakao i Open Builder integration, route code/vehicle number/destination search, daily statistics",
-          "REST API — route/vehicle/date search endpoints, statistics API, manual sync trigger",
-          "Mobile web — Next.js responsive mobile UI, TanStack Query server state management, Recharts statistics visualization",
-          "Blue-Green zero-downtime deployment — Traefik reverse proxy, automated deploy script (build→health check→traffic switch→rollback)",
-          "Clean Architecture — domain/application/infrastructure layer separation, TSyringe DI container, Value Object (LineCode, SearchDate) pattern"
-        ]
-      },
+      "problemSolving": [
+        {
+          "problem": { "ko": "물류 회사 배차현황을 웹사이트에서 수동 확인해야 하는 운영 비효율", "en": "Operational inefficiency from manually checking dispatch status on website" },
+          "process": { "ko": "Cheerio + Axios로 EUC-KR 인코딩 배차 데이터 크롤링, node-cron으로 월~토 06:00~20:00 매시 자동 동기화", "en": "Crawled EUC-KR encoded dispatch data with Cheerio + Axios, node-cron auto-sync Mon-Sat 06:00-20:00 hourly" },
+          "result": { "ko": "수동 조회 → 일 15회 자동 크롤링, 실시간 데이터 제공", "en": "Manual lookup → 15 daily auto-crawls, real-time data availability" }
+        },
+        {
+          "problem": { "ko": "현장 직원이 PC 없이 모바일로 배차 정보를 조회할 수단 부재", "en": "Field workers had no mobile access to dispatch info without PC" },
+          "process": { "ko": "카카오 i 오픈빌더 스킬서버 프로토콜 직접 구현 + Next.js 반응형 모바일 웹 + Recharts 통계 대시보드 병행 제공", "en": "Implemented Kakao i Open Builder skill server + Next.js responsive mobile web + Recharts stats dashboard" },
+          "result": { "ko": "카카오톡 챗봇 + 모바일 웹 이중 채널로 현장 즉시 조회 가능", "en": "Dual-channel (KakaoTalk + mobile web) enabling instant field queries" }
+        },
+        {
+          "problem": { "ko": "크롤러/카카오 API/DB 등 외부 의존성 변경 시 비즈니스 로직까지 수정 필요", "en": "Business logic changes required when external dependencies changed" },
+          "process": { "ko": "Clean Architecture로 도메인/애플리케이션/인프라 계층 분리, TSyringe DI 토큰으로 인터페이스 바인딩, Value Object 패턴으로 도메인 규칙 타입 수준 강제", "en": "Clean Architecture layer separation, TSyringe DI token interface binding, Value Object pattern for type-level domain rule enforcement" },
+          "result": { "ko": "외부 의존성 교체 시 인프라 계층만 수정, 비즈니스 로직 무변경", "en": "Only infra layer changes on dependency swap, zero business logic changes" }
+        },
+        {
+          "problem": { "ko": "수동 재시작 방식의 배포로 서비스 다운타임 발생", "en": "Service downtime from manual restart deployment" },
+          "process": { "ko": "Traefik 파일 프로바이더 기반 Blue-Green 배포 설계, deploy.sh로 빌드 → 헬스체크 → YAML 재작성 → 트래픽 전환 자동화", "en": "Traefik file-provider Blue-Green deployment, deploy.sh automating build → health check → YAML rewrite → traffic switch" },
+          "result": { "ko": "배포 다운타임 0초 달성, Docker 소켓 노출 없이 보안성 확보", "en": "Zero deploy downtime, security without Docker socket exposure" }
+        }
+      ],
       "period": {
         "start": "2026-01-01",
         "end": "present"
@@ -266,24 +272,18 @@
       },
       "coverImage": "/images/portfolio/innovalley-cover.webp",
       "contentImages": [],
-      "features": {
-        "ko": [
-          "자동 발송 — 매주 월요일 09:00(KST) 카카오 채널 크롤링 후 Slack 채널 자동 발송",
-          "Playwright 헤드리스 크롤링 — 카카오 채널 게시물에서 식단표 이미지 URL·제목·게시일 추출",
-          "Slack Bot 슬래시 커맨드 — /식단 입력 시 이번 주 식단표 즉시 조회 (캐시 우선, 없으면 실시간 크롤링)",
-          "재시도 메커니즘 — 발송 실패 시 1시간 간격 최대 6회 자동 재시도",
-          "중복 방지 — DeliveryHistory 테이블로 채널별 발송 이력 관리, 동일 식단표 중복 발송 차단",
-          "Clean Architecture — 도메인·애플리케이션·인프라 계층 분리, TSyringe DI, Result<T, E> 에러 처리 패턴"
-        ],
-        "en": [
-          "Auto delivery — weekly Monday 09:00 (KST) Kakao Channel crawling with Slack channel auto-send",
-          "Playwright headless crawling — extracting menu image URL, title, and publish date from Kakao Channel posts",
-          "Slack Bot slash command — /식단 for instant weekly menu lookup (cache-first, real-time crawling fallback)",
-          "Retry mechanism — up to 6 automatic retries at 1-hour intervals on delivery failure",
-          "Duplicate prevention — DeliveryHistory table managing per-channel delivery records, blocking duplicate sends",
-          "Clean Architecture — domain/application/infrastructure layer separation, TSyringe DI, Result<T, E> error handling pattern"
-        ]
-      },
+      "problemSolving": [
+        {
+          "problem": { "ko": "구내식당 주간 식단표를 카카오 채널에서 직접 확인해야 하는 불편", "en": "Inconvenience of manually checking cafeteria menus on Kakao Channel" },
+          "process": { "ko": "Playwright 헤드리스로 카카오 채널 게시물 크롤링, @slack/bolt Socket Mode + node-cron으로 매주 월요일 09:00 자동 발송", "en": "Playwright headless Kakao Channel crawling, @slack/bolt Socket Mode + node-cron weekly Monday 09:00 auto-delivery" },
+          "result": { "ko": "주간 식단표 Slack 자동 발송, 실패 시 1시간 간격 최대 6회 재시도", "en": "Weekly menu auto-delivered to Slack, up to 6 retries at 1-hour intervals on failure" }
+        },
+        {
+          "problem": { "ko": "동일 식단표가 여러 채널에 중복 발송되는 문제", "en": "Same menu being sent multiple times to channels" },
+          "process": { "ko": "DeliveryHistory 테이블로 채널별 발송 이력 관리, 중복 발송 차단 로직 구현", "en": "DeliveryHistory table for per-channel delivery tracking, duplicate send prevention" },
+          "result": { "ko": "중복 발송 0건, /식단 슬래시 커맨드로 즉시 조회 가능", "en": "Zero duplicate sends, /식단 slash command for instant lookup" }
+        }
+      ],
       "period": {
         "start": "2026-01-01",
         "end": "present"
@@ -329,6 +329,36 @@
           "Learned reliability strategies for external service integration by designing idempotency guarantees via DeliveryHistory table and retry mechanism (up to 6 times at 1-hour intervals)",
           "Internalized how functional error handling improves code predictability and testability by returning explicit error types via Result<T, E> pattern instead of exceptions"
         ]
+      },
+      "scale": {
+        "ko": "Slack Bot + Playwright 크롤러 · 주간 단일 배치",
+        "en": "Slack Bot + Playwright crawler · weekly single batch"
+      },
+      "metrics": [
+        {
+          "label": { "ko": "재시도 횟수", "en": "Retry attempts" },
+          "before": "0",
+          "after": "최대 6회 (1시간 간격)",
+          "improvement": "신뢰성"
+        },
+        {
+          "label": { "ko": "중복 발송", "en": "Duplicate sends" },
+          "before": "-",
+          "after": "0건",
+          "improvement": "DeliveryHistory"
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "Clean Architecture + TSyringe DI: 크롤러·Slack 의존성 분리, 외부 서비스 교체 시 인프라 계층만 수정",
+          "Playwright 선택: 카카오 채널이 JS 렌더링 필요 — Cheerio(정적 HTML 파싱)로는 동적 콘텐츠 수집 불가",
+          "Result<T, E> 패턴: 예외 대신 명시적 에러 타입 반환으로 호출부에서 에러 처리 강제, 코드 예측 가능성 향상"
+        ],
+        "en": [
+          "Clean Architecture + TSyringe DI: decouples crawler/Slack dependencies, only infra layer changes on external service swap",
+          "Playwright over Cheerio: Kakao Channel requires JS rendering — static HTML parsing with Cheerio cannot capture dynamic content",
+          "Result<T, E> pattern: explicit error types instead of exceptions force callers to handle errors, improving code predictability"
+        ]
       }
     },
     {
@@ -350,24 +380,28 @@
       },
       "coverImage": "/images/portfolio/concert-reservation-cover.webp",
       "contentImages": [],
-      "features": {
-        "ko": [
-          "좌석 예약 — 낙관적 락 기반 좌석 선점, 임시 배정 후 5분 내 결제 미완료 시 자동 해제",
-          "포인트 충전·결제 — Redisson 분산 락으로 동시 충전/결제 시 잔액 정합성 보장",
-          "대기열 시스템 — Redis Sorted Set 기반 대기열로 입장 순서 관리, 폴링 기반 순번 조회",
-          "Redis 캐싱 — 콘서트·좌석 조회에 캐시 적용, TPS 100→1,500 (15배 향상), DB 쿼리 94% 감소",
-          "Kafka 이벤트 드리븐 — 예약 완료 이벤트를 Kafka로 발행하여 결제·알림 도메인 간 결합도 제거",
-          "K6 부하 테스트 — 1만 동시 요청 시나리오별 성능 측정, 병목 식별 및 락 전략 비교 검증"
-        ],
-        "en": [
-          "Seat reservation — optimistic lock-based seat preemption, auto-release after 5-min payment timeout",
-          "Point charging & payment — Redisson distributed lock ensuring balance consistency under concurrent operations",
-          "Queue system — Redis Sorted Set-based waiting queue with polling-based position lookup",
-          "Redis caching — cache layer on concert/seat queries, TPS 100→1,500 (15x), 94% DB query reduction",
-          "Kafka event-driven — reservation completion events published via Kafka, eliminating payment/notification domain coupling",
-          "K6 load testing — per-scenario performance measurement under 10K concurrent requests, bottleneck identification and lock strategy comparison"
-        ]
-      },
+      "problemSolving": [
+        {
+          "problem": { "ko": "1만 동시 요청 환경에서 좌석 선점 시 동일 좌석 이중 배정 위험", "en": "Risk of double-booking under 10K concurrent seat reservation requests" },
+          "process": { "ko": "비관적/낙관적/분산 락 3종을 K6로 비교 검증 후, 단일 좌석 경합에 최적인 @Version 낙관적 락 선택", "en": "Compared pessimistic, optimistic, and distributed locks via K6; selected @Version optimistic lock optimal for single-row contention" },
+          "result": { "ko": "좌석 예약 응답시간 50% 개선 (1,678ms → 835ms), 이중 배정 0건", "en": "50% reservation latency improvement (1,678ms → 835ms), zero double-bookings" }
+        },
+        {
+          "problem": { "ko": "포인트 충전과 결제의 동시 실행 시 잔액 정합성 붕괴", "en": "Balance integrity corruption under concurrent point charging and payments" },
+          "process": { "ko": "재시도 기반 낙관적 락의 무한 루프 위험을 분석하고, Redisson 분산 락(userWalletLock:{userId})으로 사용자 단위 직렬화", "en": "Analyzed infinite retry risk of optimistic lock; applied Redisson distributed lock (userWalletLock:{userId}) for per-user serialization" },
+          "result": { "ko": "동시 충전/결제 시나리오에서 잔액 정합성 100% 보장", "en": "100% balance consistency under concurrent charge/payment scenarios" }
+        },
+        {
+          "problem": { "ko": "콘서트/좌석 조회 TPS가 100에 불과하여 예약 오픈 시 DB 병목", "en": "Concert/seat query TPS only 100, causing DB bottleneck at reservation open" },
+          "process": { "ko": "Redis 캐시 레이어 적용 + DB 인덱스 최적화를 병행하여 계층적 캐싱 전략 구현", "en": "Implemented layered caching strategy combining Redis cache with DB index optimization" },
+          "result": { "ko": "TPS 100 → 1,500 (15배 향상), DB 쿼리 94% 감소", "en": "TPS 100 → 1,500 (15x improvement), 94% DB query reduction" }
+        },
+        {
+          "problem": { "ko": "예약 완료 후 결제/알림 처리가 동기 호출로 묶여 도메인 간 강결합", "en": "Payment/notification tightly coupled via synchronous calls after reservation" },
+          "process": { "ko": "Kafka Transactional Outbox 패턴으로 예약 TX 내 outbox_event 삽입 후 스케줄러가 비동기 발행", "en": "Kafka Transactional Outbox: outbox_event inserted within TX, scheduler publishes asynchronously" },
+          "result": { "ko": "도메인 간 결합도 제거, 메시지 유실 방지, 독립 확장 가능", "en": "Eliminated coupling, prevented message loss, enabled independent scaling" }
+        }
+      ],
       "period": {
         "start": "2024-10-05",
         "end": "2024-11-30"
@@ -515,24 +549,18 @@
         "/images/portfolio/medical-recruit-2.webp",
         "/images/portfolio/medical-recruit-3.webp"
       ],
-      "features": {
-        "ko": [
-          "4개 대학병원 채용공고 자동 스크래핑 (매시간 크론 스케줄링)",
-          "병원별 Strategy 패턴 기반 스크래핑 — API 방식(세브란스, 이대, 중앙대) + Puppeteer 브라우저 자동화(중앙대 흑석)",
-          "구독자 키워드 매칭 기반 신규 공고 이메일 알림",
-          "알림 큐 관리 — 비관적 락, 배치 처리(10건), 실패 시 최대 3회 재시도",
-          "외부 ID 기반 중복 공고 필터링",
-          "구독 관리 API (병원별 키워드 등록)"
-        ],
-        "en": [
-          "Automated scraping of 4 university hospital job postings (hourly cron scheduling)",
-          "Strategy pattern per hospital — API-based (Severance, Ewha, Chung-Ang) + Puppeteer browser automation (Chung-Ang Heukseok)",
-          "Email notifications for new postings matching subscriber keywords",
-          "Notification queue management — pessimistic locking, batch processing (10), up to 3 retries on failure",
-          "Duplicate post filtering via external ID",
-          "Subscription management API (keyword registration per hospital)"
-        ]
-      },
+      "problemSolving": [
+        {
+          "problem": { "ko": "4개 대학병원 채용 사이트를 매일 수동 확인해야 하는 구직자 불편", "en": "Job seekers manually checking 4 hospital career sites daily" },
+          "process": { "ko": "병원별 Strategy 패턴 — API 방식(세브란스, 이대, 중앙대) + Puppeteer 자동화(중앙대 흑석), 매시간 자동 스크래핑", "en": "Strategy pattern per hospital — API (Severance, Ewha, Chung-Ang) + Puppeteer (Chung-Ang Heukseok), hourly auto-scraping" },
+          "result": { "ko": "4개 병원 채용공고 자동 수집 + 키워드 매칭 이메일 알림", "en": "Auto-collected from 4 hospitals + keyword-matched email notifications" }
+        },
+        {
+          "problem": { "ko": "이메일 알림 발송 실패 시 공고를 놓칠 위험", "en": "Risk of missing postings when email notification fails" },
+          "process": { "ko": "비관적 락 기반 알림 큐 관리, 배치 처리(10건), 실패 시 최대 3회 재시도", "en": "Pessimistic lock notification queue, batch processing (10), up to 3 retries on failure" },
+          "result": { "ko": "외부 ID 기반 중복 필터링 + 안정적 알림 전달 보장", "en": "External ID dedup + reliable notification delivery guaranteed" }
+        }
+      ],
       "period": {
         "start": "2024-08-02",
         "end": "2024-08-14"
@@ -579,6 +607,34 @@
           "Experienced dual deployment architecture combining EC2 persistent server with Lambda serverless for cost efficiency and reliability",
           "Ensured deployment reliability through GitHub Actions CI/CD pipeline with automated post-deploy health checks"
         ]
+      },
+      "scale": {
+        "ko": "4개 대학병원 자동 스크래핑 · 매시간 배치",
+        "en": "4 university hospitals auto-scraping · hourly batch"
+      },
+      "metrics": [
+        {
+          "label": { "ko": "스크래핑 대상", "en": "Scraping targets" },
+          "before": "수동 확인",
+          "after": "4개 병원 매시간 자동",
+          "improvement": "자동화"
+        },
+        {
+          "label": { "ko": "알림 신뢰성", "en": "Notification reliability" },
+          "before": "단건 발송",
+          "after": "배치 10건 + 3회 재시도",
+          "improvement": "비관적 락"
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "Strategy 패턴: 병원별 상이한 사이트 구조에 대응 — API 방식(세브란스·이대·중앙대)과 Puppeteer 자동화(중앙대 흑석) 분리 구현",
+          "비관적 락 알림 큐: 동시 배치 실행 시 동일 알림 중복 발송 방지, 배치 10건 단위 + 실패 시 최대 3회 재시도로 이메일 발송 신뢰성 보장"
+        ],
+        "en": [
+          "Strategy pattern: handles varying hospital site structures — separates API-based scraping (Severance, Ewha, Chung-Ang) from Puppeteer automation (Chung-Ang Heukseok)",
+          "Pessimistic lock notification queue: prevents duplicate sends under concurrent batch execution, batch size 10 + up to 3 retries on failure for reliable email delivery"
+        ]
       }
     },
     {
@@ -601,24 +657,13 @@
         "ko": "창업 희망자들이 팀 빌딩부터 아이템 검증까지 원스톱으로 진행할 수 있는 창업 버티컬 네트워크 플랫폼의 백엔드를 담당했다. NestJS 기반으로 커뮤니티 서비스의 핵심 API(게시물·댓글·좋아요·북마크·팔로우)를 설계·구현하고, 구글·네이버·카카오·페이스북 4종 소셜 로그인을 통합하여 사용자 온보딩 흐름을 구축했다. 외부 URL의 OpenGraph 메타데이터를 스크래핑하여 링크 프리뷰를 제공하는 기능과 파일 업로드 API를 개발했으며, 콘텐츠 관리를 위한 어드민 백엔드를 별도로 구축했다. 8인 팀에서 프론트엔드 개발자와 API 스펙을 협의하며 2개월간 스프린트 기반으로 개발을 진행했다.",
         "en": "Responsible for the backend of a startup vertical network platform enabling aspiring entrepreneurs to handle team building through item validation in one place. Designed and implemented core community APIs (posts, comments, likes, bookmarks, follows) on NestJS, and built a unified user onboarding flow integrating 4 social login providers (Google, Naver, Kakao, Facebook). Developed OpenGraph metadata scraping for link previews and file upload APIs, along with a separate admin backend for content management. Collaborated with frontend developers on API specifications across 2-month sprint cycles in an 8-member team."
       },
-      "features": {
-        "ko": [
-          "소셜 로그인 4종 통합 (구글, 네이버, 카카오, 페이스북) — OAuth 2.0 기반 인증 플로우 구현",
-          "커뮤니티 백엔드 API 설계·구현 — 게시물·댓글 CRUD, 좋아요·북마크·팔로우 기능",
-          "OpenGraph 메타데이터 스크래핑 — 외부 URL 링크 프리뷰 제공",
-          "파일 업로드 API 개발",
-          "회원 관리 API — 프로필 CRUD, 팔로우/팔로잉 관계 관리",
-          "어드민 백엔드 시스템 구축 — 콘텐츠 및 사용자 관리 기능"
-        ],
-        "en": [
-          "4-provider social login integration (Google, Naver, Kakao, Facebook) — OAuth 2.0 authentication flow",
-          "Community backend API design & implementation — post/comment CRUD, like/bookmark/follow features",
-          "OpenGraph metadata scraping — external URL link preview generation",
-          "File upload API development",
-          "Member management API — profile CRUD, follow/following relationship management",
-          "Admin backend system — content and user management"
-        ]
-      },
+      "problemSolving": [
+        {
+          "problem": { "ko": "스타트업 정보가 분산되어 투자자/구직자가 한눈에 비교할 수 없는 문제", "en": "Startup info scattered, making comparison difficult for investors/job seekers" },
+          "process": { "ko": "NestJS + PostgreSQL 기반 스타트업 데이터 수집·정규화 플랫폼 구축, 카테고리별 필터 + 검색 API 설계", "en": "Built startup data collection/normalization platform with NestJS + PostgreSQL, category filters + search API" },
+          "result": { "ko": "스타트업 정보 통합 조회 + 카테고리별 필터링 플랫폼 제공", "en": "Unified startup info browsing + category-filtered platform" }
+        }
+      ],
       "period": {
         "start": "2023-04-28",
         "end": "2023-06-28"
@@ -669,6 +714,32 @@
           "Strengthened interface-based collaboration and communication skills by negotiating API specs with FE in an 8-member cross-functional team",
           "Gained experience in social feature data modeling and relationship design by solely designing and implementing core community APIs (posts, comments, likes, follows)",
           "Learned separation of concerns between user-facing services and admin systems by independently building a content management admin backend"
+        ]
+      },
+      "scale": {
+        "ko": "8인 크로스펑셔널 팀 프로젝트 · 2개월 스프린트",
+        "en": "8-member cross-functional team project · 2-month sprint"
+      },
+      "metrics": [
+        {
+          "label": { "ko": "소셜 로그인", "en": "Social login providers" },
+          "before": "-",
+          "after": "4종 통합",
+          "improvement": "OAuth 2.0"
+        },
+        {
+          "label": { "ko": "커뮤니티 API", "en": "Community APIs" },
+          "before": "-",
+          "after": "게시물·댓글·좋아요·북마크·팔로우",
+          "improvement": "전담 구현"
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "NestJS + PostgreSQL: 스타트업 정보의 정규화된 관계형 데이터 모델 관리, 카테고리·검색 필터 쿼리 최적화"
+        ],
+        "en": [
+          "NestJS + PostgreSQL: manages normalized relational data model for startup information, optimized category and search filter queries"
         ]
       }
     },
@@ -1049,6 +1120,10 @@
       "team": "팀",
       "description": "프로젝트 설명",
       "features": "담당 기능",
+      "problemSolving": "문제 해결 과정",
+      "problemSolvingProblem": "문제",
+      "problemSolvingProcess": "해결 과정",
+      "problemSolvingResult": "결과",
       "lessons": "깨달은 점",
       "projectImages": "프로젝트 이미지",
       "techDecisions": "기술 선택 근거",
@@ -1074,6 +1149,10 @@
       "team": "Team",
       "description": "Project Description",
       "features": "Features",
+      "problemSolving": "Problem Solving",
+      "problemSolvingProblem": "Problem",
+      "problemSolvingProcess": "Solution Process",
+      "problemSolvingResult": "Result",
       "lessons": "Lessons Learned",
       "projectImages": "Project Images",
       "techDecisions": "Tech Decisions",

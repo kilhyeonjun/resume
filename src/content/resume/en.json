@@ -837,7 +837,7 @@
             "period": "2022.11 ~ 2022.12",
             "featured": false,
             "description": "Automated pharmacist's manual prescription entry process using OCR",
-            "techRationale": "Selected Naver Clova OCR for Korean pharmaceutical terminology recognition. Leveraged MFDS public data API instead of building proprietary drug database to minimize maintenance overhead.",
+            "techRationale": "Selected Naver Clova OCR for Korean pharmaceutical terminology recognition. Integrated MFDS public data API instead of building proprietary drug database to minimize maintenance overhead.",
             "contribution": "Independently implemented over 2 months. Built entire pipeline: image intake → OCR extraction → MFDS API matching → medication guide generation.",
             "details": [
               {

@@ -394,7 +394,6 @@ function formatPeriod(period: { start: string; end: string }): string {
       const name = project.name[lang] || project.name.ko;
       const summary = project.summary[lang] || project.summary.ko;
       const highlights = project.highlights[lang];
-      const features = project.features?.[lang];
       const lessons = project.lessons?.[lang];
       const period = formatPeriod(project.period);
       const typeLabel = project.type === 'personal'

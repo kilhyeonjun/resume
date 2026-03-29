@@ -1,17 +1,15 @@
 ---
 import CertificateIcon from '../icons/CertificateIcon.astro';
-import TrophyIcon from '../icons/TrophyIcon.astro';
-import type { SkillCategory, Education, Certification, Award, Labels } from '../../content.config';
+import type { SkillCategory, Education, Certification, Labels } from '../../content.config';
 
 interface Props {
   skills: SkillCategory[];
   education: Education[];
   certifications: Certification[];
-  awards: Award[];
   labels: Labels;
 }
 
-const { skills, education, certifications, awards, labels } = Astro.props;
+const { skills, education, certifications, labels } = Astro.props;
 ---
 
 <!-- Two Column Layout for Skills & Education -->

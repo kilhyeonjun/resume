@@ -452,7 +452,7 @@ function processSummary(text: string): string {
                 </h3>
                 <p class="tw-meta">{item.type} — {item.date.replace('-', '.')}</p>
                 {item.description && (
-                  <p class="tw-desc">{item.description}</p>
+                  <p class="tw-desc">{item.url ? <a href={item.url}>{item.description}</a> : item.description}</p>
                 )}
               </div>
             );
@@ -493,7 +493,7 @@ function processSummary(text: string): string {
                   return (
                     <li>
                       <span class="highlight-bullet">•</span>
-                      {desc}{item.url && <>{' '}<a href={item.url}>{linkLabel}</a></>} — <span class="os-date">{item.date}</span>
+                      {desc}{item.url && <>{' '}<a href={item.url}>{linkLabel}</a></>}<span class="os-date"> — {item.date}</span>
                     </li>
                   );
                 })}

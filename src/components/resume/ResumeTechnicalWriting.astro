@@ -20,24 +20,16 @@ const { technicalWriting, label } = Astro.props;
         <div class="flex items-start gap-3">
           <div class="flex-1">
             <h3 class="font-semibold text-gray-900 dark:text-white">
-              {item.title}
-              {item.url && (
+              {item.url ? (
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex align-middle ml-1 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                  aria-label={item.title + ' 링크'}
+                  class="text-gray-900 hover:text-primary-600 dark:text-white dark:hover:text-primary-400 underline underline-offset-2"
                 >
-                  {item.url.includes('youtube.com') || item.url.includes('youtu.be') ? (
-                    <YouTubeIcon class="h-4 w-4" />
-                  ) : item.url.includes('jnp.tech') || item.url.includes('blog') || item.url.includes('tistory') || item.url.includes('github.io') ? (
-                    <BlogIcon class="h-4 w-4" />
-                  ) : (
-                    <ExternalLinkIcon class="h-4 w-4" />
-                  )}
+                  {item.title}
                 </a>
-              )}
+              ) : item.title}
               {item.videoUrl && (
                 <a
                   href={item.videoUrl}

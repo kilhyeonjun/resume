@@ -446,8 +446,7 @@ function processSummary(text: string): string {
             return (
               <div class="tw-item">
                 <h3 class="tw-title">
-                  {item.title}
-                  {item.url && <>{' '}<a href={item.url}>[{lang === 'ko' ? '링크' : 'Link'}]</a></>}
+                  {item.url ? <a href={item.url}>{item.title}</a> : item.title}
                   {item.videoUrl && <>{' '}<a href={item.videoUrl}>[{lang === 'ko' ? '영상' : 'Video'}]</a></>}
                   {item.reviewUrl && <>{' '}<a href={item.reviewUrl}>[{lang === 'ko' ? '후기' : 'Review'}]</a></>}
                 </h3>

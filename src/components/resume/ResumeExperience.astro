@@ -34,12 +34,17 @@ const { experience, labels, basePath } = Astro.props;
           )}
           {exp.highlights && exp.highlights.length > 0 && (
             <ul class="mt-4 space-y-2.5">
-               {exp.highlights.map((highlight) => (
-                 <li class="flex items-start gap-2.5 text-gray-700 dark:text-gray-300">
-                   <CheckIcon class="mt-1.5 h-4 w-4 flex-shrink-0 text-primary-500" />
-                   <span class="leading-7"><strong class="text-gray-900 dark:text-gray-100">{highlight.problem}</strong> — {highlight.solution}, <em class="text-primary-600 dark:text-primary-400">{highlight.result}</em></span>
-                 </li>
-               ))}
+               {exp.highlights.map((highlight) => {
+                 const resultHtml = highlight.result
+                   .replace('(기술 블로그 게재)', '(<a href="https://jnp.tech/posts/2024-03-aws-ses-event-log" class="underline hover:text-primary-700 dark:hover:text-primary-300" target="_blank" rel="noopener noreferrer">기술 블로그 게재</a>)')
+                   .replace('(published tech blog)', '(<a href="https://jnp.tech/posts/2024-03-aws-ses-event-log" class="underline hover:text-primary-700 dark:hover:text-primary-300" target="_blank" rel="noopener noreferrer">published tech blog</a>)');
+                 return (
+                   <li class="flex items-start gap-2.5 text-gray-700 dark:text-gray-300">
+                     <CheckIcon class="mt-1.5 h-4 w-4 flex-shrink-0 text-primary-500" />
+                     <span class="leading-7"><strong class="text-gray-900 dark:text-gray-100">{highlight.problem}</strong> — {highlight.solution}, <em class="text-primary-600 dark:text-primary-400" set:html={resultHtml} /></span>
+                   </li>
+                 );
+               })}
             </ul>
           )}
           {exp.projects && exp.projects.length > 0 && (

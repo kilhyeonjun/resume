@@ -44,15 +44,19 @@ function boldKeyTerms(text: string): string {
   return result;
 }
 
-/** Full text enhancement: metrics + key terms */
+/** Full text enhancement: metrics + key terms + known links */
 function enhance(text: string): string {
-  return boldKeyTerms(boldMetrics(text));
+  let result = boldKeyTerms(boldMetrics(text));
+  // Known inline links
+  result = result.replace('Games on AWS 2025', '<a href="https://www.youtube.com/watch?v=2jRicD15jXk">Games on AWS 2025</a>');
+  result = result.replace('기술 블로그 게재', '<a href="https://jnp.tech/posts/2024-03-aws-ses-event-log">기술 블로그 게재</a>');
+  result = result.replace('published tech blog', '<a href="https://jnp.tech/posts/2024-03-aws-ses-event-log">published tech blog</a>');
+  return result;
 }
 
-/** Process summary: enhance + Games on AWS link */
+/** Process summary: enhance (links already included) */
 function processSummary(text: string): string {
-  return enhance(text)
-    .replace('Games on AWS 2025', '<a href="https://www.youtube.com/watch?v=2jRicD15jXk">Games on AWS 2025</a>');
+  return enhance(text);
 }
 ---
 
@@ -248,9 +252,10 @@ function processSummary(text: string): string {
     /* Technical Writing */
     .tw-item { margin-bottom: 1mm; }
     .tw-title { font-size: 9pt; font-weight: 600; color: #111827; }
-    .tw-title a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 2px; font-weight: 400; font-size: 8pt; }
+    .tw-title a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 2px; }
     .tw-meta { font-size: 8pt; color: #6b7280; }
     .tw-desc { font-size: 8pt; color: #374151; margin-top: 1pt; }
+    .tw-desc a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 2px; }
 
     /* Back button (web only) */
     .back-link {
@@ -377,7 +382,7 @@ function processSummary(text: string): string {
             {exp.highlights && exp.highlights.length > 0 && (
               <ul class="highlights">
                 {exp.highlights.map((highlight) => (
-                  <li><span class="highlight-bullet">•</span><b>{highlight.problem}</b> — {highlight.solution}, <em>{highlight.result}</em></li>
+                  <li><span class="highlight-bullet">•</span><b>{highlight.problem}</b> — {highlight.solution}, <em set:html={enhance(highlight.result)} /></li>
                 ))}
               </ul>
             )}
@@ -443,16 +448,23 @@ function processSummary(text: string): string {
         <section>
           <h2 class="section-title">{labels.technicalWriting}</h2>
           {data.technicalWriting.map((item) => {
+            const primaryUrl = item.url || item.videoUrl || item.reviewUrl;
             return (
               <div class="tw-item">
                 <h3 class="tw-title">
-                  {item.url ? <a href={item.url}>{item.title}</a> : item.title}
-                  {item.videoUrl && <>{' '}<a href={item.videoUrl}>[{lang === 'ko' ? '영상' : 'Video'}]</a></>}
-                  {item.reviewUrl && <>{' '}<a href={item.reviewUrl}>[{lang === 'ko' ? '후기' : 'Review'}]</a></>}
+                  {primaryUrl
+                    ? <a href={primaryUrl}>{item.title}</a>
+                    : item.title}
+                  {item.videoUrl && item.url && <>{' '}<a href={item.videoUrl}>[{lang === 'ko' ? '영상' : 'Video'}]</a></>}
+                  {item.reviewUrl && (item.url || item.videoUrl) && <>{' '}<a href={item.reviewUrl}>[{lang === 'ko' ? '후기' : 'Review'}]</a></>}
                 </h3>
                 <p class="tw-meta">{item.type} — {item.date.replace('-', '.')}</p>
                 {item.description && (
-                  <p class="tw-desc">{item.url ? <a href={item.url}>{item.description}</a> : item.description}</p>
+                  <h3 class="tw-title">
+                    {primaryUrl
+                      ? <a href={primaryUrl}>{item.description}</a>
+                      : item.description}
+                  </h3>
                 )}
               </div>
             );

@@ -103,13 +103,13 @@
         {
           "label": { "ko": "Vitest 단위 테스트", "en": "Vitest unit tests" },
           "before": "-",
-          "after": "56건 (BE 25 + FE 31)",
+          "after": "397건 (BE 25 + FE 31 suites)",
           "improvement": "99.45% 커버리지"
         },
         {
           "label": { "ko": "Playwright E2E", "en": "Playwright E2E" },
           "before": "-",
-          "after": "24 specs · 5 projects",
+          "after": "300건+ (24 specs · 5 projects)",
           "improvement": "역할별 시나리오"
         }
       ],

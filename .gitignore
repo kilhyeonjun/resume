@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# MCP server config (contains OAuth secrets)
+.mcp.json
+
 # macOS-specific files
 .DS_Store
 

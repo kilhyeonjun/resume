@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, building a shared backend platform for 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, integrating AI agents into the development workflow to amplify productivity.",
+    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, building a shared backend platform for 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have shifted to AI agent-based development — orchestrating multiple AI agents by role to design and ship production software, achieving roughly 70% faster development speed with Claude Code.",
     "coreCompetencies": [
       {
         "category": "DB Optimization & Concurrency Control",
@@ -32,7 +32,8 @@
       {
         "category": "AI-Augmented Development Productivity",
         "items": [
-          "Integrated Claude Code, Amazon Q, and other AI agents into development workflows, driving team-wide adoption (Games on AWS 2025 speaker)"
+          "Integrated Claude Code, Amazon Q, and other AI agents into development workflows, driving team-wide adoption (Games on AWS 2025 speaker)",
+          "Established team-wide TDD foundation to ensure AI-generated code reliability — built a quality governance layer for AI-assisted development"
         ]
       }
     ],
@@ -117,7 +118,7 @@
       },
       {
         "category": "Development Productivity",
-        "description": "AI agent-augmented development, context engineering, automated code quality",
+        "description": "AI agent-augmented development, AGENTS.md-based context engineering, multi-agent orchestration, automated code quality",
         "items": [
           {
             "name": "Claude Code"
@@ -130,6 +131,12 @@
           },
           {
             "name": "Context Engineering"
+          },
+          {
+            "name": "Multi-Agent Orchestration"
+          },
+          {
+            "name": "AGENTS.md"
           }
         ]
       }
@@ -247,6 +254,16 @@
                 "problem": "Marketing query latency (18s) from 100+ column denormalized table",
                 "solution": "Normalized table into main/time-series/prediction, tuned indexes + cursor pagination",
                 "result": "Performance improved 97% (18s→0.5s)"
+              },
+              {
+                "problem": "The Asset table view suffered severe jank — 30 rows × 13 columns (390 cells) re-rendering on every dropdown open or row selection, combined with an infinite useEffect render loop",
+                "solution": "Applied React.memo with custom comparator to TableRow, extracted per-row cells with isolated hook subscriptions, reduced columns useMemo dependencies from 12 to 2, and guarded controlled-mode useEffect to break the loop",
+                "result": "Eliminated unnecessary re-renders and resolved the infinite render loop; shared Table component propagated the fix to 36 downstream tables"
+              },
+              {
+                "problem": "Marketing RCP data was only viewable in spreadsheets, and the existing BigQuery aggregation table combined multiple sources — creating data source divergence that blocked unified console queries",
+                "solution": "Switched the BigQuery source table from the multi-source aggregate to a single-source table, introduced Criteria-Result pattern field-metadata/filter-options APIs, and implemented a FE multi-select filter with a TOTAL row aggregation",
+                "result": "Structurally resolved data source divergence via single-source migration, embedded unified RCP queries into the console, and replaced hardcoded currency/decimal display with BE metadata-driven formatting"
               }
             ],
             "techStack": [
@@ -402,6 +419,37 @@
               "Slack API",
               "TypeORM",
               "TypeScript"
+            ]
+          },
+          {
+            "name": "Glider In-Game Multi-Language Translation System",
+            "period": "2026.02 ~ Present",
+            "featured": true,
+            "description": "Redesigned the in-game notification translation domain model — decoupling AI translation from library-based conversion into a 3-stage pipeline",
+            "techRationale": "Materialized the responsibility boundary between AI translation and library-based derived conversion inside the code structure. Split the Detection → Processing (AI) → Conversion (library) pipeline into independent modules and secured concurrent request integrity with a 2-stage race guard plus pessimistic write lock",
+            "details": [
+              {
+                "problem": "Simplified Chinese was modeled inside the AI translation settings domain despite not being AI-supported, and settings storage/retrieval depended on the Traditional Chinese AI translation state — making independent toggling impossible without a breaking change",
+                "solution": "Extracted the derived-conversion module from the AI translation module into 9 use cases with dedicated entity/repository/scheduler, and applied the global-inheritance pattern for effective settings",
+                "result": "Clarified domain boundaries and enabled independent toggling of derived conversion rules"
+              },
+              {
+                "problem": "Decoupling required a breaking API change",
+                "solution": "Simultaneously deployed FE/BE/Gateway with role permission migration for zero-downtime transition",
+                "result": "Completed the breaking API change without incident and cut effective-settings DB queries by 50% (4→2)"
+              },
+              {
+                "problem": "The detect cron lacked version priority, delaying translation of the latest version; 30-second interval further slowed response",
+                "solution": "Added version ID-based priority ordering to detect SQL, shortened the processing interval from 30s to 10s, and raised batch limit from 100 to 200",
+                "result": "Eliminated latest-version translation lag; progress UI plus total-count caching improved user visibility"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "MySQL",
+              "opencc"
             ]
           },
           {

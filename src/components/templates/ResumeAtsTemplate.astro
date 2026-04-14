@@ -236,12 +236,24 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
         <div class="item">
           <div class="item-header">
             <h3>
-              <span class="company">{exp.company}</span> — <span class="position">{exp.position}</span>
+              <span class="company">{exp.company}</span> — <span class="position">{exp.positions ? exp.positions[0].title : exp.position}</span>
             </h3>
             <p class="date">{exp.startDate.replace('-', '.')} - {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</p>
           </div>
           {exp.description && <p>{exp.description}</p>}
-          {exp.highlights && exp.highlights.length > 0 && (
+          {exp.positions && exp.positions.length > 1 && exp.positions.map((pos) => (
+            <div>
+              <p><strong>{pos.title}</strong> ({pos.startDate.replace('-', '.')} - {pos.current ? labels.current : pos.endDate?.replace('-', '.')})</p>
+              {pos.highlights && pos.highlights.length > 0 && (
+                <ul>
+                  {pos.highlights.map((highlight) => (
+                    <li>{highlight.problem}. {highlight.solution}. {highlight.result}.</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+          {!exp.positions && exp.highlights && exp.highlights.length > 0 && (
             <ul>
               {exp.highlights.map((highlight) => (
                 <li>{highlight.problem}. {highlight.solution}. {highlight.result}.</li>

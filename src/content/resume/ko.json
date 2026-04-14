@@ -146,37 +146,50 @@
         "slug": "gameduo",
         "company": "게임듀오",
         "companyUrl": "https://www.gameduo.net/ko",
-        "position": "DEV팀 Server Developer",
         "startDate": "2025-01",
         "current": true,
         "description": "모바일 게임 개발 및 퍼블리싱 회사. 12개 라이브 서비스 공통 백엔드 플랫폼 설계, 데이터 파이프라인 구축, 공통 패키지 체계 운영",
-        "highlights": [
+        "positions": [
           {
-            "problem": "마케팅 데이터 조회 비용 급증(전체 스캔 과금 구조)",
-            "solution": "파티셔닝 튜닝 분석 후 Write IOPS 증가 문제로 기각, gRPC 기반 분산 읽기(Storage Read API) 전환",
-            "result": "비용 82% 절감(TB당 $6.25→$1.1)"
+            "title": "Platform Part 파트장",
+            "startDate": "2026-04",
+            "current": true,
+            "highlights": []
           },
           {
-            "problem": "배치 처리의 수집 기간 한계(60일)",
-            "solution": "서버리스 아키텍처 전환",
-            "result": "수집 범위 6배 확장(60일→360일), 처리 시간 2시간→5분 단축"
-          },
-          {
-            "problem": "7개 프로젝트 간 코드 중복과 컨벤션 불일치",
-            "solution": "공통 패키지 체계 설계(NestJS 유틸 10모듈 + 게임서버 Kit 2패키지)",
-            "result": "업그레이드 자동화로 배포 시간 3시간→15분 단축"
-          },
-          {
-            "problem": "3개 광고 플랫폼 데이터 분산에 따른 마케팅 조회 지연(18초)",
-            "solution": "테이블 정규화 및 인덱스 튜닝",
-            "result": "조회 성능 97% 개선(18초→0.5초)"
-          },
-          {
-            "problem": "게임 확률 공시 의무화 규제 리스크",
-            "solution": "DynamicModule 기반 확률 패키지를 다중 게임에 통합 + CDK 기반 감사 로그 파이프라인",
-            "result": "통합 테스트 커버리지 94%+ 확보(12 suites, 115 tests)"
+            "title": "DEV팀 Server Developer",
+            "startDate": "2025-01",
+            "endDate": "2026-03",
+            "highlights": [
+              {
+                "problem": "마케팅 데이터 조회 비용 급증(전체 스캔 과금 구조)",
+                "solution": "파티셔닝 튜닝 분석 후 Write IOPS 증가 문제로 기각, gRPC 기반 분산 읽기(Storage Read API) 전환",
+                "result": "비용 82% 절감(TB당 $6.25→$1.1)"
+              },
+              {
+                "problem": "배치 처리의 수집 기간 한계(60일)",
+                "solution": "서버리스 아키텍처 전환",
+                "result": "수집 범위 6배 확장(60일→360일), 처리 시간 2시간→5분 단축"
+              },
+              {
+                "problem": "7개 프로젝트 간 코드 중복과 컨벤션 불일치",
+                "solution": "공통 패키지 체계 설계(NestJS 유틸 10모듈 + 게임서버 Kit 2패키지)",
+                "result": "업그레이드 자동화로 배포 시간 3시간→15분 단축"
+              },
+              {
+                "problem": "3개 광고 플랫폼 데이터 분산에 따른 마케팅 조회 지연(18초)",
+                "solution": "테이블 정규화 및 인덱스 튜닝",
+                "result": "조회 성능 97% 개선(18초→0.5초)"
+              },
+              {
+                "problem": "게임 확률 공시 의무화 규제 리스크",
+                "solution": "DynamicModule 기반 확률 패키지를 다중 게임에 통합 + CDK 기반 감사 로그 파이프라인",
+                "result": "통합 테스트 커버리지 94%+ 확보(12 suites, 115 tests)"
+              }
+            ]
           }
         ],
+        "highlights": [],
         "projects": [
           {
             "name": "Glider Sheet Audit Log 시스템",

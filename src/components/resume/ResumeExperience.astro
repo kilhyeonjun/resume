@@ -10,58 +10,87 @@ interface Props {
 }
 
 const { experience, labels, basePath } = Astro.props;
+
+function getResultHtml(result: string) {
+  return result
+    .replace('(기술 블로그 게재)', '(<a href="https://jnp.tech/posts/2024-03-aws-ses-event-log" class="underline hover:text-primary-700 dark:hover:text-primary-300" target="_blank" rel="noopener noreferrer">기술 블로그 게재</a>)')
+    .replace('(published tech blog)', '(<a href="https://jnp.tech/posts/2024-03-aws-ses-event-log" class="underline hover:text-primary-700 dark:hover:text-primary-300" target="_blank" rel="noopener noreferrer">published tech blog</a>)');
+}
 ---
 
 {experience && experience.length > 0 && (
   <section class="mb-10">
     <h2 class="section-title">{labels.experience}</h2>
     <div class="mt-6 space-y-10">
-      {experience.map((exp) => (
-        <div class="experience-item relative rounded-2xl border border-gray-200/80 bg-white/90 p-5 pl-6 shadow-sm before:absolute before:left-0 before:top-7 before:h-2.5 before:w-2.5 before:rounded-full before:bg-primary-500 dark:border-gray-800 dark:bg-gray-900/70 sm:p-6 sm:pl-7">
+      {experience.map((exp) => {
+        const currentPosition = exp.positions ? exp.positions[0] : null;
+        const displayTitle = currentPosition ? currentPosition.title : exp.position;
+        return (
+          <div class="experience-item relative rounded-2xl border border-gray-200/80 bg-white/90 p-5 pl-6 shadow-sm before:absolute before:left-0 before:top-7 before:h-2.5 before:w-2.5 before:rounded-full before:bg-primary-500 dark:border-gray-800 dark:bg-gray-900/70 sm:p-6 sm:pl-7">
             <div class="flex flex-col md:flex-row md:items-baseline md:justify-between">
-            <div>
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white">
-                {exp.position}
-              </h3>
-              <p class="text-base font-semibold text-primary-600 dark:text-primary-400 sm:text-lg">{exp.company}</p>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                  {displayTitle}
+                </h3>
+                <p class="text-base font-semibold text-primary-600 dark:text-primary-400 sm:text-lg">{exp.company}</p>
+              </div>
+              <p class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-300 sm:mt-0">
+                {exp.startDate.replace('-', '.')} — {exp.current ? labels.current : exp.endDate?.replace('-', '.')}
+              </p>
             </div>
-            <p class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-300 sm:mt-0">
-              {exp.startDate.replace('-', '.')} — {exp.current ? labels.current : exp.endDate?.replace('-', '.')}
-            </p>
+            {exp.description && (
+              <p class="mt-3 text-gray-600 dark:text-gray-300">{exp.description}</p>
+            )}
+            {exp.positions && exp.positions.length > 1 && (
+              <div class="mt-4 space-y-4">
+                {exp.positions.map((pos) => (
+                  <div>
+                    <div class="flex items-baseline justify-between">
+                      <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">{pos.title}</span>
+                      <span class="text-xs text-gray-400 dark:text-gray-500">
+                        {pos.startDate.replace('-', '.')} — {pos.current ? labels.current : pos.endDate?.replace('-', '.')}
+                      </span>
+                    </div>
+                    {pos.highlights && pos.highlights.length > 0 && (
+                      <ul class="mt-2 space-y-2.5">
+                        {pos.highlights.map((highlight) => (
+                          <li class="flex items-start gap-2.5 text-gray-700 dark:text-gray-300">
+                            <CheckIcon class="mt-1.5 h-4 w-4 flex-shrink-0 text-primary-500" />
+                            <span class="leading-7"><strong class="text-gray-900 dark:text-gray-100">{highlight.problem}</strong> — {highlight.solution}, <em class="text-primary-600 dark:text-primary-400" set:html={getResultHtml(highlight.result)} /></span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+            {!exp.positions && exp.highlights && exp.highlights.length > 0 && (
+              <ul class="mt-4 space-y-2.5">
+                {exp.highlights.map((highlight) => (
+                  <li class="flex items-start gap-2.5 text-gray-700 dark:text-gray-300">
+                    <CheckIcon class="mt-1.5 h-4 w-4 flex-shrink-0 text-primary-500" />
+                    <span class="leading-7"><strong class="text-gray-900 dark:text-gray-100">{highlight.problem}</strong> — {highlight.solution}, <em class="text-primary-600 dark:text-primary-400" set:html={getResultHtml(highlight.result)} /></span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {exp.projects && exp.projects.length > 0 && (
+              <p class="mt-4 rounded-xl bg-gray-50 px-3 py-2 text-sm leading-6 text-gray-600 dark:bg-gray-800/80 dark:text-gray-300">
+                <span class="font-semibold text-gray-700 dark:text-gray-100">{labels.projects}:</span>{' '}
+                {exp.projects.map((project) => project.name).join(', ')}
+              </p>
+            )}
+            <a
+              href={`${basePath}/experience/${exp.slug}`}
+              class="group -ml-2 mt-4 inline-flex items-center gap-1 rounded-md px-2 py-1 text-sm font-semibold text-primary-600 transition-colors hover:bg-primary-50 hover:text-primary-700 dark:text-primary-400 dark:hover:bg-primary-900/30 dark:hover:text-primary-300"
+            >
+              {labels.viewDetails}
+              <ArrowRightIcon class="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </a>
           </div>
-          {exp.description && (
-            <p class="mt-3 text-gray-600 dark:text-gray-300">{exp.description}</p>
-          )}
-          {exp.highlights && exp.highlights.length > 0 && (
-            <ul class="mt-4 space-y-2.5">
-               {exp.highlights.map((highlight) => {
-                 const resultHtml = highlight.result
-                   .replace('(기술 블로그 게재)', '(<a href="https://jnp.tech/posts/2024-03-aws-ses-event-log" class="underline hover:text-primary-700 dark:hover:text-primary-300" target="_blank" rel="noopener noreferrer">기술 블로그 게재</a>)')
-                   .replace('(published tech blog)', '(<a href="https://jnp.tech/posts/2024-03-aws-ses-event-log" class="underline hover:text-primary-700 dark:hover:text-primary-300" target="_blank" rel="noopener noreferrer">published tech blog</a>)');
-                 return (
-                   <li class="flex items-start gap-2.5 text-gray-700 dark:text-gray-300">
-                     <CheckIcon class="mt-1.5 h-4 w-4 flex-shrink-0 text-primary-500" />
-                     <span class="leading-7"><strong class="text-gray-900 dark:text-gray-100">{highlight.problem}</strong> — {highlight.solution}, <em class="text-primary-600 dark:text-primary-400" set:html={resultHtml} /></span>
-                   </li>
-                 );
-               })}
-            </ul>
-          )}
-          {exp.projects && exp.projects.length > 0 && (
-            <p class="mt-4 rounded-xl bg-gray-50 px-3 py-2 text-sm leading-6 text-gray-600 dark:bg-gray-800/80 dark:text-gray-300">
-              <span class="font-semibold text-gray-700 dark:text-gray-100">{labels.projects}:</span>{' '}
-              {exp.projects.map((project) => project.name).join(', ')}
-            </p>
-          )}
-           <a 
-             href={`${basePath}/experience/${exp.slug}`}
-             class="group -ml-2 mt-4 inline-flex items-center gap-1 rounded-md px-2 py-1 text-sm font-semibold text-primary-600 transition-colors hover:bg-primary-50 hover:text-primary-700 dark:text-primary-400 dark:hover:bg-primary-900/30 dark:hover:text-primary-300"
-           >
-             {labels.viewDetails}
-             <ArrowRightIcon class="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-           </a>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </section>
 )}

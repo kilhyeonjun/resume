@@ -367,31 +367,48 @@ function processSummary(text: string): string {
     {data.experience && data.experience.length > 0 && (
       <section>
         <h2 class="section-title">{labels.experience}</h2>
-        {data.experience.map((exp) => (
-          <div class="experience-item">
-            <div class="experience-header">
-              <span class="position">{exp.position}</span>
-              <span class="date">{exp.startDate.replace('-', '.')} — {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</span>
+        {data.experience.map((exp) => {
+          const currentTitle = exp.positions ? exp.positions[0].title : exp.position;
+          return (
+            <div class="experience-item">
+              <div class="experience-header">
+                <span class="position">{currentTitle}</span>
+                <span class="date">{exp.startDate.replace('-', '.')} — {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</span>
+              </div>
+              <p class="company">
+                {exp.company} <a href={`${resumeUrl}/experience/${exp.slug}`}>[{lang === 'ko' ? '상세' : 'Detail'}]</a>
+              </p>
+              {exp.description && (
+                <p class="description">{exp.description}</p>
+              )}
+              {exp.positions && exp.positions.length > 1 && exp.positions.map((pos) => (
+                <div>
+                  <div class="experience-header" style="margin-top:2mm; margin-bottom:1mm;">
+                    <span class="position" style="font-size:9pt; font-weight:600; color:#374151;">{pos.title}</span>
+                    <span class="date">{pos.startDate.replace('-', '.')} — {pos.current ? labels.current : pos.endDate?.replace('-', '.')}</span>
+                  </div>
+                  {pos.highlights && pos.highlights.length > 0 && (
+                    <ul class="highlights">
+                      {pos.highlights.map((highlight) => (
+                        <li><span class="highlight-bullet">•</span><b>{highlight.problem}</b> — {highlight.solution}, <em set:html={enhance(highlight.result)} /></li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+              {!exp.positions && exp.highlights && exp.highlights.length > 0 && (
+                <ul class="highlights">
+                  {exp.highlights.map((highlight) => (
+                    <li><span class="highlight-bullet">•</span><b>{highlight.problem}</b> — {highlight.solution}, <em set:html={enhance(highlight.result)} /></li>
+                  ))}
+                </ul>
+              )}
+              {exp.projects && exp.projects.length > 0 && (
+                <p class="description project-line">{labels.projects}: {exp.projects.map((project) => project.name).join(', ')}</p>
+              )}
             </div>
-            <p class="company">
-              {exp.company} <a href={`${resumeUrl}/experience/${exp.slug}`}>[{lang === 'ko' ? '상세' : 'Detail'}]</a>
-            </p>
-            {exp.description && (
-              <p class="description">{exp.description}</p>
-            )}
-            {exp.highlights && exp.highlights.length > 0 && (
-              <ul class="highlights">
-                {exp.highlights.map((highlight) => (
-                  <li><span class="highlight-bullet">•</span><b>{highlight.problem}</b> — {highlight.solution}, <em set:html={enhance(highlight.result)} /></li>
-                ))}
-              </ul>
-            )}
-            {exp.projects && exp.projects.length > 0 && (
-              <p class="description project-line">{labels.projects}: {exp.projects.map((project) => project.name).join(', ')}</p>
-            )}
-
-          </div>
-        ))}
+          );
+        })}
       </section>
     )}
 

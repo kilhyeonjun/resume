@@ -29,7 +29,7 @@ const period = experience.current
 const basePath = getBasePath(lang);
 ---
 
-<Layout title={`${experience.company} | ${experience.position}`} description={experience.description} lang={lang}>
+<Layout title={`${experience.company} | ${experience.positions ? experience.positions[0].title : experience.position}`} description={experience.description} lang={lang}>
   <article class="mx-auto max-w-4xl">
      <!-- Top Navigation: Prev / Back / Next -->
      <nav class="mb-8 flex items-center justify-between">
@@ -82,9 +82,22 @@ const basePath = getBasePath(lang);
                experience.company
              )}
            </h1>
-          <p class="mt-2 text-xl font-medium text-primary-600 dark:text-primary-400">
-            {experience.position}
-          </p>
+          {experience.positions ? (
+            <div class="mt-2 space-y-0.5">
+              {experience.positions.map((pos) => (
+                <p class="text-base font-medium text-primary-600 dark:text-primary-400">
+                  {pos.title}
+                  <span class="ml-2 text-sm font-normal text-gray-400 dark:text-gray-500">
+                    {pos.startDate.replace('-', '.')} — {pos.current ? labels.current : pos.endDate?.replace('-', '.')}
+                  </span>
+                </p>
+              ))}
+            </div>
+          ) : (
+            <p class="mt-2 text-xl font-medium text-primary-600 dark:text-primary-400">
+              {experience.position}
+            </p>
+          )}
         </div>
          <p class="text-sm font-medium text-gray-500 dark:text-gray-300 md:text-base">
            {period}
@@ -96,7 +109,25 @@ const basePath = getBasePath(lang);
      </header>
 
      <!-- Highlights -->
-     {experience.highlights && experience.highlights.length > 0 && (
+     {experience.positions && experience.positions.some((p) => p.highlights && p.highlights.length > 0) && (
+       <section class="mb-10">
+         <h2 class="section-title mb-6">{labels.highlights}</h2>
+         {experience.positions.map((pos) => pos.highlights && pos.highlights.length > 0 && (
+           <div class="mb-6">
+             <h3 class="mb-3 text-base font-semibold text-gray-700 dark:text-gray-200">{pos.title}</h3>
+             <ul class="space-y-3">
+               {pos.highlights.map((highlight) => (
+                 <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+                   <CheckIcon class="mt-1 h-5 w-5 flex-shrink-0 text-primary-500" />
+                   <span class="text-lg"><strong>{highlight.problem}</strong> — {highlight.solution}, <em class="text-primary-600 dark:text-primary-400">{highlight.result}</em></span>
+                 </li>
+               ))}
+             </ul>
+           </div>
+         ))}
+       </section>
+     )}
+     {!experience.positions && experience.highlights && experience.highlights.length > 0 && (
        <section class="mb-10">
          <h2 class="section-title mb-6">{labels.highlights}</h2>
          <ul class="space-y-3">

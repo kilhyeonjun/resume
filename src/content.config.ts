@@ -59,11 +59,20 @@ const highlightSchema = z.object({
   result: z.string(),
 });
 
+const positionEntrySchema = z.object({
+  title: z.string(),
+  startDate: dateString,
+  endDate: dateString.optional(),
+  current: z.boolean().optional(),
+  highlights: z.array(highlightSchema).default([]),
+});
+
 const experienceSchema = z.object({
   slug: z.string(),
   company: z.string(),
   companyUrl: safeUrl.optional(),
-  position: z.string(),
+  position: z.string().optional(),
+  positions: z.array(positionEntrySchema).optional(),
   startDate: dateString,
   endDate: dateString.optional(),
   current: z.boolean().optional(),
@@ -72,7 +81,10 @@ const experienceSchema = z.object({
   projects: z.array(projectSchema).default([]),
   techStack: z.array(z.string()).default([]),
   activities: z.array(activitySchema).default([]),
-});
+}).refine(
+  (data) => data.position || (data.positions && data.positions.length > 0),
+  { message: 'Either position or positions must be provided' },
+);
 
 const educationSchema = z.object({
   institution: z.string(),
@@ -229,3 +241,4 @@ export type Activity = z.infer<typeof activitySchema>;
 export type TrainingProgram = z.infer<typeof trainingProgramSchema>;
 export type ProjectDetail = z.infer<typeof projectDetailSchema>;
 export type Highlight = z.infer<typeof highlightSchema>;
+export type PositionEntry = z.infer<typeof positionEntrySchema>;

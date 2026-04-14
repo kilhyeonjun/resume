@@ -146,37 +146,50 @@
         "slug": "gameduo",
         "company": "GameDuo",
         "companyUrl": "https://www.gameduo.net/ko",
-        "position": "DEV Team Server Developer",
         "startDate": "2025-01",
         "current": true,
         "description": "Mobile game development and publishing company. Shared backend platform design for 12 live services, data pipeline engineering, and common package system operations",
-        "highlights": [
+        "positions": [
           {
-            "problem": "Marketing data query cost surge (full-scan billing model)",
-            "solution": "Evaluated partitioning but rejected due to Write IOPS increase; adopted gRPC distributed reads (Storage Read API)",
-            "result": "Cut costs 82% ($6.25→$1.1 per TB)"
+            "title": "Platform Part Lead",
+            "startDate": "2026-04",
+            "current": true,
+            "highlights": []
           },
           {
-            "problem": "Batch processing collection limits (60 days)",
-            "solution": "Migrated to serverless architecture (SQS+Lambda+EventBridge)",
-            "result": "Expanded metrics range 6x (60→360 days), processing time 2h→5min"
-          },
-          {
-            "problem": "Code duplication and convention inconsistency across 7 projects",
-            "solution": "Established shared package system (NestJS utility 10 modules + Game Server Kit 2 packages)",
-            "result": "Automated upgrades cutting deployment time 3hrs→15min"
-          },
-          {
-            "problem": "Marketing query latency (18s) from fragmented ad platform data (Google Ads/Meta/TikTok)",
-            "solution": "Table normalization and index tuning",
-            "result": "Performance improved 97% (18s→0.5s)"
-          },
-          {
-            "problem": "Regulatory risk from game probability disclosure requirements",
-            "solution": "Integrated DynamicModule-based probability package across multi-game projects + CDK-based audit log pipeline",
-            "result": "Achieved 94%+ integration test coverage (12 suites, 115 tests)"
+            "title": "DEV Team Server Developer",
+            "startDate": "2025-01",
+            "endDate": "2026-03",
+            "highlights": [
+              {
+                "problem": "Marketing data query cost surge (full-scan billing model)",
+                "solution": "Evaluated partitioning but rejected due to Write IOPS increase; adopted gRPC distributed reads (Storage Read API)",
+                "result": "Cut costs 82% ($6.25→$1.1 per TB)"
+              },
+              {
+                "problem": "Batch processing collection limits (60 days)",
+                "solution": "Migrated to serverless architecture (SQS+Lambda+EventBridge)",
+                "result": "Expanded metrics range 6x (60→360 days), processing time 2h→5min"
+              },
+              {
+                "problem": "Code duplication and convention inconsistency across 7 projects",
+                "solution": "Established shared package system (NestJS utility 10 modules + Game Server Kit 2 packages)",
+                "result": "Automated upgrades cutting deployment time 3hrs→15min"
+              },
+              {
+                "problem": "Marketing query latency (18s) from fragmented ad platform data (Google Ads/Meta/TikTok)",
+                "solution": "Table normalization and index tuning",
+                "result": "Performance improved 97% (18s→0.5s)"
+              },
+              {
+                "problem": "Regulatory risk from game probability disclosure requirements",
+                "solution": "Integrated DynamicModule-based probability package across multi-game projects + CDK-based audit log pipeline",
+                "result": "Achieved 94%+ integration test coverage (12 suites, 115 tests)"
+              }
+            ]
           }
         ],
+        "highlights": [],
         "projects": [
           {
             "name": "Glider Sheet Audit Log System",

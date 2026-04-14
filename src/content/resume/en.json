@@ -21,13 +21,15 @@
       {
         "category": "Serverless Architecture & Cost Optimization",
         "items": [
-          "Batch-to-EDA migration expanding throughput 270x, BigQuery pricing model analysis with read-method switch (82% cost reduction), Lambda hybrid pipeline design"
+          "Batch-to-EDA migration expanding throughput 270x, Lambda hybrid pipeline design",
+          "BigQuery pricing model analysis with read-method switch — 82% cost reduction"
         ]
       },
       {
         "category": "Legacy Modernization & Reliability",
         "items": [
-          "Express monolith to NestJS via 3-stage progressive migration, TDD-driven incident-free deployments during major releases, shared package system unifying 7 projects"
+          "Express monolith to NestJS via 3-stage progressive migration, TDD-driven incident-free deployments during major releases",
+          "Shared package system unifying 7 projects, cutting deployment from 3h to 15min"
         ]
       },
       {
@@ -191,7 +193,7 @@
               },
               {
                 "problem": "Code duplication and convention inconsistency across 7 projects",
-                "solution": "Established shared package system (NestJS utility 10 modules + Game Server Kit 2 packages)",
+                "solution": "Established shared NestJS package system (10 utility modules + Game Server Kit)",
                 "result": "Automated upgrades cutting deployment time 3hrs→15min"
               },
               {

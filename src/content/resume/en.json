@@ -40,7 +40,7 @@
     "skills": [
       {
         "category": "Backend",
-        "description": "Legacy-to-NestJS progressive migration, shared package system establishment, TDD-driven development, REST API design",
+        "description": "Legacy-to-NestJS progressive migration, shared package system establishment, TDD-driven development, REST API / gRPC design",
         "items": [
           {
             "name": "Node.js"
@@ -74,6 +74,12 @@
           },
           {
             "name": "REST API"
+          },
+          {
+            "name": "gRPC"
+          },
+          {
+            "name": "Testcontainers"
           }
         ]
       },
@@ -154,7 +160,18 @@
             "title": "DEV Team Platform Part Leader",
             "startDate": "2026-04",
             "current": true,
-            "highlights": []
+            "highlights": [
+              {
+                "problem": "Newly formed platform team lacked task tracking and sizing framework",
+                "solution": "Designed 7-stage workflow (BACKLOG→SIZE REVIEW→DONE), handling rules for 4 task types, transition validators, and ticket template library",
+                "result": "Standardized team operations and decision-making framework established"
+              },
+              {
+                "problem": "Existing sizing criteria did not reflect AI-assisted development time reduction with Claude Code",
+                "solution": "Established 5-dimension scoring framework and per-domain Claude Code time-discount rules (test writing ~80%, pattern replication ~70%)",
+                "result": "Fair performance measurement system reflecting AI tool utilization established"
+              }
+            ]
           },
           {
             "title": "DEV Team Server Developer",

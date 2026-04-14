@@ -40,7 +40,7 @@
     "skills": [
       {
         "category": "Backend",
-        "description": "레거시→NestJS 점진적 전환, 공통 패키지 체계 정립, TDD 기반 개발, REST API 설계",
+        "description": "레거시→NestJS 점진적 전환, 공통 패키지 체계 정립, TDD 기반 개발, REST API / gRPC 설계",
         "items": [
           {
             "name": "Node.js"
@@ -74,6 +74,12 @@
           },
           {
             "name": "REST API"
+          },
+          {
+            "name": "gRPC"
+          },
+          {
+            "name": "Testcontainers"
           }
         ]
       },
@@ -154,7 +160,18 @@
             "title": "DEV팀 Platform Part Leader",
             "startDate": "2026-04",
             "current": true,
-            "highlights": []
+            "highlights": [
+              {
+                "problem": "Platform Part 신설로 작업 추적·점수 측정 기준 부재",
+                "solution": "7단계 워크플로우(BACKLOG→SIZE REVIEW→DONE), 4가지 작업 유형별 처리 방식, 상태 전환 검증 로직 및 티켓 템플릿 라이브러리 설계",
+                "result": "파트 운영 표준화 및 의사결정 체계 수립"
+              },
+              {
+                "problem": "Claude Code 활용으로 개발 소요 시간이 단축되었으나 기존 점수 기준이 AI 활용도 미반영",
+                "solution": "범위·복잡도·불확실성·협업·검증 5기준 사이즈 체계 + Claude Code 영역별 시간 차감 기준(테스트 ~80%, 패턴 복제 ~70%) 수립",
+                "result": "AI 생산성 변화를 반영한 공정한 성과 측정 체계 구축"
+              }
+            ]
           },
           {
             "title": "DEV팀 Server Developer",

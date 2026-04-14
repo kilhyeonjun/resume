@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "구조적 병목을 찾아 제거하는 백엔드 엔지니어입니다. 게임듀오에서 12개 라이브 서비스 기반의 공통 백엔드 플랫폼을 구축하며 BigQuery 비용 82% 절감, 서버리스 전환으로 파이프라인 처리량 270배 확장을 이끌고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 AI 에이전트 기반 개발로 전환하여 복수 AI 에이전트를 목적별로 오케스트레이션하며 프로덕션 소프트웨어를 설계·구축하고 있습니다.",
+    "summary": "구조적 병목을 찾아 제거하는 백엔드 엔지니어입니다. 게임듀오에서 12개 라이브 서비스 기반의 공통 백엔드 플랫폼을 구축하며 BigQuery 비용 82% 절감, 서버리스 전환으로 파이프라인 처리량 270배 확장을 이끌고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 이 구조적 접근을 개발 방식 자체에 적용하며, 복수 AI 에이전트를 목적별로 오케스트레이션하여 프로덕션 소프트웨어를 설계·구축하고 있습니다.",
     "coreCompetencies": [
       {
         "category": "DB 최적화 & 동시성 제어",
@@ -103,7 +103,7 @@
       },
       {
         "category": "Cloud & Infra",
-        "description": "배치→서버리스 전환, BigQuery 비용 최적화, CDK 기반 분석 인프라 코드화, CI/CD 파이프라인 설계",
+        "description": "배치→서버리스 전환, EventBridge·Kinesis 기반 이벤트 파이프라인, BigQuery 비용 최적화, CDK 기반 인프라 코드화, CI/CD 파이프라인 설계",
         "items": [
           {
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
@@ -164,12 +164,12 @@
               {
                 "problem": "Platform Part 신설로 작업 추적·점수 측정 기준 부재",
                 "solution": "7단계 워크플로우(BACKLOG→SIZE REVIEW→DONE), 4가지 작업 유형별 처리 방식, 상태 전환 검증 로직 및 티켓 템플릿 라이브러리 설계",
-                "result": "파트 운영 표준화 및 의사결정 체계 수립"
+                "result": "파트 신설 직후 즉시 가동 가능한 운영 체계 확립 — 작업 유형별 처리 기준·의사결정 체계 동시 수립"
               },
               {
                 "problem": "Claude Code 활용으로 개발 소요 시간이 단축되었으나 기존 점수 기준이 AI 활용도 미반영",
                 "solution": "범위·복잡도·불확실성·협업·검증 5기준 사이즈 체계 + Claude Code 영역별 시간 차감 기준(테스트 ~80%, 패턴 복제 ~70%) 수립",
-                "result": "AI 생산성 변화를 반영한 공정한 성과 측정 체계 구축"
+                "result": "팀 합의 기반 AI 시간 차감 기준 수립으로 Claude Code 도입 전·후 공정한 성과 측정 체계 확립"
               }
             ]
           },
@@ -209,7 +209,7 @@
         "highlights": [],
         "projects": [
           {
-            "name": "Glider Sheet Audit Log 시스템",
+            "name": "마케팅 플랫폼 Audit Log 시스템",
             "period": "2025.01 ~ 2025.04",
             "featured": false,
             "description": "게임 운영 중 데이터 변경 이력 추적 불가로 인한 밸런스 문제 대응 지연 해결",
@@ -452,7 +452,7 @@
             ]
           },
           {
-            "name": "Glider 게임 인앱 다국어 번역 시스템",
+            "name": "게임 인앱 다국어 번역 시스템",
             "period": "2026.02 ~ 현재",
             "featured": true,
             "description": "게임 내 알림/공지 다국어 번역 체계의 도메인 모델 재설계 — AI 번역과 라이브러리 기반 변환을 3단계 파이프라인으로 분리",
@@ -483,7 +483,7 @@
             ]
           },
           {
-            "name": "확률 계산 및 감사 로그 분석 파이프라인 (Glider Probability)",
+            "name": "확률 계산 및 감사 로그 분석 파이프라인",
             "period": "2026.02 ~ 현재",
             "featured": false,
             "description": "게임 확률 검증 체계 부재에 따른 규제 리스크 해소를 위한 확률 계산 패키지와 CDK 기반 감사 로그 분석 인프라 개발",

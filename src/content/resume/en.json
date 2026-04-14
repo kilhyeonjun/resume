@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, building a shared backend platform for 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have shifted to AI agent-based development — orchestrating multiple AI agents by role to design and ship production software.",
+    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, building a shared backend platform for 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software.",
     "coreCompetencies": [
       {
         "category": "DB Optimization & Concurrency Control",
@@ -103,7 +103,7 @@
       },
       {
         "category": "Cloud & Infra",
-        "description": "Batch-to-serverless migration, BigQuery cost optimization, CDK-based analytics infrastructure as code, CI/CD pipeline",
+        "description": "Batch-to-serverless migration, EventBridge/Kinesis event pipeline design, BigQuery cost optimization, CDK-based infrastructure as code, CI/CD pipeline",
         "items": [
           {
             "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
@@ -164,12 +164,12 @@
               {
                 "problem": "Newly formed platform team lacked task tracking and sizing framework",
                 "solution": "Designed 7-stage workflow (BACKLOG→SIZE REVIEW→DONE), handling rules for 4 task types, transition validators, and ticket template library",
-                "result": "Standardized team operations and decision-making framework established"
+                "result": "Standard operating framework deployed immediately upon team formation — task-type handling rules and decision criteria established simultaneously"
               },
               {
                 "problem": "Existing sizing criteria did not reflect AI-assisted development time reduction with Claude Code",
                 "solution": "Established 5-dimension scoring framework and per-domain Claude Code time-discount rules (test writing ~80%, pattern replication ~70%)",
-                "result": "Fair performance measurement system reflecting AI tool utilization established"
+                "result": "Team-consensus AI time-discount rules established, ensuring equitable performance measurement before and after Claude Code adoption"
               }
             ]
           },
@@ -209,7 +209,7 @@
         "highlights": [],
         "projects": [
           {
-            "name": "Glider Sheet Audit Log System",
+            "name": "Marketing Platform Audit Log System",
             "period": "2025.01 ~ 2025.04",
             "featured": false,
             "description": "Resolved delayed balance issue response caused by inability to track data change history during game operations",
@@ -452,7 +452,7 @@
             ]
           },
           {
-            "name": "Glider In-Game Multi-Language Translation System",
+            "name": "In-Game Multi-Language Translation System",
             "period": "2026.02 ~ Present",
             "featured": true,
             "description": "Redesigned the in-game notification translation domain model — decoupling AI translation from library-based conversion into a 3-stage pipeline",
@@ -483,7 +483,7 @@
             ]
           },
           {
-            "name": "Probability Calculation & Audit Log Analytics Pipeline (Glider Probability)",
+            "name": "Probability Calculation & Audit Log Analytics Pipeline",
             "period": "2026.02 ~ Present",
             "featured": false,
             "description": "Built probability calculation package and CDK-based audit log analytics infrastructure to address regulatory risk from lack of game probability verification",
@@ -880,7 +880,7 @@
             "name": "Doctor/Pharmacist Web Service Enhancement",
             "period": "2022.04 ~ 2023.05",
             "featured": true,
-            "description": "Resolved lack of real-time status updates and manual notification workflows in doctor/pharmacist back-office systems by introducing Socket.io and Web Push",
+            "description": "Eliminated manual notification workflows and lack of real-time status updates in doctor/pharmacist back-office systems by introducing Socket.io and Web Push",
             "techRationale": "Used Socket.IO Room-based event isolation for real-time consultation/dispensing/delivery status sync. Integrated API gateway + Circuit Breaker to prevent external service failure propagation. Enforced duplicate reservation prevention via DB composite unique key.",
             "contribution": "Directly implemented Socket.IO real-time sync, Web Push notifications, API gateway, and reservation dedup in 2-person BE team.",
             "details": [

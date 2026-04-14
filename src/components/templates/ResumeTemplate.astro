@@ -76,6 +76,12 @@ const jsonLd = {
     <!-- Experience -->
     <ResumeExperience experience={data.experience} labels={labels} basePath={basePath} />
 
+    <!-- Social Proof: Technical Writing + Open Source (after experience for visibility) -->
+    <div class="mb-10 grid gap-10 md:grid-cols-2">
+      <ResumeTechnicalWriting technicalWriting={data.technicalWriting} label={labels.technicalWriting} />
+      <ResumeOpenSource openSource={data.openSource} label={labels.openSource} />
+    </div>
+
     <!-- Skills, Education, Certifications, Awards -->
     <ResumeSkills
       skills={data.skills}
@@ -83,13 +89,10 @@ const jsonLd = {
       certifications={data.certifications}
       labels={labels}
     />
-    <!-- Activities: 2-column grid with row-aligned sections -->
+
+    <!-- Activities: Training + Learning -->
     <div class="mb-10 grid gap-10 md:grid-cols-2">
-      <!-- Row 1: Technical Writing (left) + Training Programs (right) -->
-      <ResumeTechnicalWriting technicalWriting={data.technicalWriting} label={labels.technicalWriting} />
       <ResumeTrainingPrograms trainingPrograms={data.trainingPrograms} label={labels.trainingPrograms} />
-      <!-- Row 2: Open Source (left) + Continuous Learning (right) -->
-      <ResumeOpenSource openSource={data.openSource} label={labels.openSource} />
       <ResumeLearning continuousLearning={data.continuousLearning} label={labels.continuousLearning} />
     </div>
 

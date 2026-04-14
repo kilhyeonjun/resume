@@ -188,17 +188,17 @@
               },
               {
                 "problem": "Batch processing collection limits (60 days)",
-                "solution": "Migrated to serverless architecture (SQS+Lambda+EventBridge)",
+                "solution": "Migrated from batch processing to EDA-based on-demand pipeline — distributing peak load and enabling throughput scaling",
                 "result": "Expanded metrics range 6x (60→360 days), processing time 2h→5min"
               },
               {
                 "problem": "Code duplication and convention inconsistency across 7 projects",
-                "solution": "Established shared NestJS package system (10 utility modules + Game Server Kit)",
+                "solution": "Replaced manual code sync with shared NestJS package system (10 utility modules + Game Server Kit, auto-deploy)",
                 "result": "Automated upgrades cutting deployment time 3hrs→15min"
               },
               {
                 "problem": "Marketing query latency (18s) from fragmented ad platform data (Google Ads/Meta/TikTok)",
-                "solution": "Table normalization and index tuning",
+                "solution": "Normalized read path + index tuning to avoid full-scan on 100-column table",
                 "result": "Performance improved 97% (18s→0.5s)"
               },
               {

@@ -14,7 +14,8 @@
       {
         "category": "DB Optimization & Concurrency Control",
         "items": [
-          "From query tuning, index design, and table normalization (97% performance gain) to deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks"
+          "Query tuning, index design, and table normalization delivering 97% performance gain",
+          "Deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks"
         ]
       },
       {

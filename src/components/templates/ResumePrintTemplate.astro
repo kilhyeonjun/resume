@@ -44,19 +44,30 @@ function boldKeyTerms(text: string): string {
   return result;
 }
 
+/** Strip excess <strong> tags, keeping only the first `max` in document order */
+function capBolds(html: string, max: number): string {
+  if (max < 0 || max === Infinity) return html;
+  let count = 0;
+  return html.replace(/<strong>(.*?)<\/strong>/g, (match, inner) => {
+    count++;
+    return count <= max ? match : inner;
+  });
+}
+
 /** Full text enhancement: metrics + key terms + known links */
-function enhance(text: string): string {
+function enhance(text: string, maxBolds: number = 2): string {
   let result = boldKeyTerms(boldMetrics(text));
   // Known inline links
   result = result.replace('Games on AWS 2025', '<a href="https://www.youtube.com/watch?v=2jRicD15jXk">Games on AWS 2025</a>');
   result = result.replace('기술 블로그 게재', '<a href="https://jnp.tech/posts/2024-03-aws-ses-event-log">기술 블로그 게재</a>');
   result = result.replace('published tech blog', '<a href="https://jnp.tech/posts/2024-03-aws-ses-event-log">published tech blog</a>');
+  result = capBolds(result, maxBolds);
   return result;
 }
 
-/** Process summary: enhance (links already included) */
+/** Process summary: enhance with higher bold cap for narrative readability */
 function processSummary(text: string): string {
-  return enhance(text);
+  return enhance(text, 5);
 }
 ---
 

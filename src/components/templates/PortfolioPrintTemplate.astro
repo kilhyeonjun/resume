@@ -1,4 +1,6 @@
 ---
+import { getEntry } from 'astro:content';
+import { prepareResumeData } from '../../utils/resume-data';
 import rawPortfolioData from '../../data/portfolio.json';
 import { portfolioDataSchema } from '../../types/portfolio';
 
@@ -7,6 +9,13 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+
+const entry = await getEntry(`resume-${lang}`, 'main');
+if (!entry) {
+  throw new Error(`Resume data not found for lang: ${lang}`);
+}
+const resumeData = entry.data;
+const { data } = prepareResumeData(resumeData, lang, 'print');
 
 const portfolioData = portfolioDataSchema.parse(rawPortfolioData);
 const { projects, labels } = portfolioData;
@@ -19,11 +28,6 @@ const listedProjects = projects.filter((p) => p.listed && !p.hidden);
 
 const baseUrl = 'https://kilhyeonjun.github.io/resume';
 
-const personalInfo = {
-  ko: { name: '길현준', title: 'Node.js Developer' },
-  en: { name: 'Hyeonjun Kil', title: 'Node.js Developer' },
-};
-const info = personalInfo[lang];
 const email = 'kboxstar@gmail.com';
 
 const pageTitle = lang === 'ko' ? '포트폴리오' : 'Portfolio';
@@ -40,7 +44,7 @@ function formatPeriod(period: { start: string; end: string }): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{info.name} - {pageTitle}</title>
+  <title>{data.name} - {pageTitle}</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <style>
@@ -378,8 +382,8 @@ function formatPeriod(period: { start: string; end: string }): string {
   <div class="document">
     <!-- Header -->
     <header class="doc-header">
-      <div class="doc-name">{info.name}</div>
-      <div class="doc-title">{info.title}</div>
+      <div class="doc-name">{data.name}</div>
+      <div class="doc-title">{data.title}</div>
       <div class="doc-contact">
         <span>{email}</span>
         <a href="https://github.com/kilhyeonjun" target="_blank" rel="noopener noreferrer">GitHub ↗</a>

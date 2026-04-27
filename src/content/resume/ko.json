@@ -448,6 +448,11 @@
                 "problem": "CI 테스트 실행 시간 과다(15m47s)",
                 "solution": "ts-jest isolatedModules+Entity 타입 명시 적용",
                 "result": "CI 61% 단축(15m47s→6m06s), 81 suites 978 tests 통과"
+              },
+              {
+                "problem": "한 게임의 sheet 모듈 17개가 외부 패키지와 2년 이상 diverged되어 업데이트 격차 누적",
+                "solution": "610 파일/310+ import 일괄 마이그레이션 후 config 주입·인터페이스 누락 등 9건 후속 hotfix 무사고 안정화",
+                "result": "패키지 첫 게임 적용 완료, 이후 sheet 업데이트는 npm 버전 bump만으로 자동 통합"
               }
             ],
             "techStack": [
@@ -480,6 +485,11 @@
                 "problem": "detect 크론의 버전 우선순위 부재로 최신 버전 변환 지연 + 30초 주기 응답 지연",
                 "solution": "detect SQL에 버전 ID 기반 우선순위 정렬 추가, 처리 주기 30초→10초, 배치 limit 100→200 최적화",
                 "result": "최신 버전 변환 지연 해소, 진행률 UI와 총 건수 캐시로 사용자 가시성 확보"
+              },
+              {
+                "problem": "detect 스케줄러가 159개 버전을 한 번에 스캔(3.27M rows full scan) → RDS IOPS 포화로 사용자 로그인 60초 장애",
+                "solution": "동일 코드베이스의 AI detect 패턴(per-version loop) 이식 + 분산락 timeout/recovery + NOT EXISTS staged lookup·정렬 인덱스",
+                "result": "쿼리 39ms/버전(260× 단축), driving full scan·filesort 제거, 사용자 로그인 정상화"
               }
             ],
             "techStack": [

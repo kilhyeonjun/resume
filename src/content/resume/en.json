@@ -448,6 +448,11 @@
                 "problem": "Slow CI pipeline (15m47s) due to test infrastructure inefficiency",
                 "solution": "Switched ts-jest isolatedModules and explicit Entity types",
                 "result": "Cut CI time 61% (15m47s→6m06s); passed 81 suites/978 tests"
+              },
+              {
+                "problem": "One game's 17 internal sheet modules were 2+ years diverged from the published package, blocking updates",
+                "solution": "Migrated 610 files and 310+ imports to the package, then stabilized via 9 follow-up hotfixes (config injection, missing interface methods) with zero incidents",
+                "result": "First-game adoption completed — sheet updates now flow through npm version bumps automatically"
               }
             ],
             "techStack": [
@@ -480,6 +485,11 @@
                 "problem": "The detect cron lacked version priority, delaying translation of the latest version; 30-second interval further slowed response",
                 "solution": "Added version ID-based priority ordering to detect SQL, shortened the processing interval from 30s to 10s, and raised batch limit from 100 to 200",
                 "result": "Eliminated latest-version translation lag; progress UI plus total-count caching improved user visibility"
+              },
+              {
+                "problem": "Detect scheduler scanned 159 versions in one shot (3.27M-row full scan) — 60s login outages from RDS IOPS saturation",
+                "solution": "Ported the AI detect pattern (per-version loop) from the same codebase, added distributed-lock timeout/recovery, and replaced NOT EXISTS with a staged lookup plus sort index",
+                "result": "Cut query time to 39ms/version (260x), removed driving full scan and filesort, restored login latency"
               }
             ],
             "techStack": [

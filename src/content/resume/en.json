@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, building a shared backend platform for 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software.",
+    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, building a shared backend platform for 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. From April 2026, as the leader of the newly formed Platform Part, I designed and shipped GameDuo Platform Harness — a shared AI context infrastructure that turns individual AI know-how into a team asset accumulated automatically.",
     "coreCompetencies": [
       {
         "category": "DB Optimization & Concurrency Control",
@@ -173,6 +173,11 @@
                 "problem": "Existing sizing criteria did not reflect AI-assisted development time reduction with Claude Code",
                 "solution": "Established 5-dimension scoring framework and per-domain Claude Code time-discount rules (test writing ~80%, pattern replication ~70%)",
                 "result": "Team-consensus AI time-discount rules established, ensuring equitable performance measurement before and after Claude Code adoption"
+              },
+              {
+                "problem": "Significant variance in AI agent productivity across team — context and learnings discovered by individuals did not propagate, causing repeated trial-and-error",
+                "solution": "Rejected individual best-practice documentation in favor of shared-config-as-code (direct AI runtime integration for automatic application) — designed GameDuo Platform Harness unifying team principles, coding standards, domain knowledge, specialized agents, and automation hooks into a single git repo",
+                "result": "Established team-wide standardized AI context via git pull — converted individual learnings into team assets and eliminated AI productivity gap (397 domain knowledge files accumulated within ~2 weeks)"
               }
             ]
           },

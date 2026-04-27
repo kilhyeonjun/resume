@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, building a shared backend platform for 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. From April 2026, as the leader of the newly formed Platform Part, I designed and shipped GameDuo Platform Harness — a shared AI context infrastructure that turns individual AI know-how into a team asset accumulated automatically.",
+    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, building a shared backend platform for 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. From April 2026, as the leader of the newly formed Platform Part, I designed and shipped GameDuo Platform Harness — a shared AI context infrastructure that converts individual learnings into reusable team assets.",
     "coreCompetencies": [
       {
         "category": "DB Optimization & Concurrency Control",
@@ -176,7 +176,7 @@
               },
               {
                 "problem": "Significant variance in AI agent productivity across team — context and learnings discovered by individuals did not propagate, causing repeated trial-and-error",
-                "solution": "Rejected individual best-practice documentation in favor of shared-config-as-code (direct AI runtime integration for automatic application) — designed GameDuo Platform Harness unifying team principles, coding standards, domain knowledge, specialized agents, and automation hooks into a single git repo",
+                "solution": "Chose shared-config-as-code over individual docs (direct AI runtime integration) — built GameDuo Platform Harness unifying principles, coding standards, domain knowledge, agents, and hooks in one git repo",
                 "result": "Established team-wide standardized AI context via git pull — converted individual learnings into team assets and eliminated AI productivity gap (397 domain knowledge files accumulated within ~2 weeks)"
               }
             ]

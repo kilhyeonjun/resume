@@ -488,7 +488,7 @@
               },
               {
                 "problem": "Detect scheduler scanned 159 versions in one shot (3.27M-row full scan) — 60s login outages from RDS IOPS saturation",
-                "solution": "Ported the AI detect pattern (per-version loop) from the same codebase, added distributed-lock timeout/recovery, and replaced NOT EXISTS with a staged lookup plus sort index",
+                "solution": "Ported the per-version loop from the AI detect module, added distributed-lock timeout/recovery, and replaced the NOT EXISTS full scan with an indexed staged lookup",
                 "result": "Cut query time to 39ms/version (260x), removed driving full scan and filesort, restored login latency"
               }
             ],

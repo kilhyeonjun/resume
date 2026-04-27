@@ -488,7 +488,7 @@
               },
               {
                 "problem": "detect 스케줄러가 159개 버전을 한 번에 스캔(3.27M rows full scan) → RDS IOPS 포화로 사용자 로그인 60초 장애",
-                "solution": "동일 코드베이스의 AI detect 패턴(per-version loop) 이식 + 분산락 timeout/recovery + NOT EXISTS staged lookup·정렬 인덱스",
+                "solution": "AI detect 모듈의 per-version loop 이식 + 분산락 timeout/recovery + NOT EXISTS full scan을 인덱스 staged lookup으로 대체",
                 "result": "쿼리 39ms/버전(260× 단축), driving full scan·filesort 제거, 사용자 로그인 정상화"
               }
             ],

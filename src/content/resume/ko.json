@@ -302,9 +302,9 @@
                 "result": "불필요 리렌더 사실상 제로, 무한 렌더 루프 해소. 공유 Table 컴포넌트로 36개 테이블 동시 수혜"
               },
               {
-                "problem": "마케팅 RCP 데이터가 엑셀로만 조회 가능하고, 기존 BigQuery 통합 테이블이 복수 소스 조합 구조라 데이터 소스 불일치로 콘솔 통합 조회 불가",
-                "solution": "BigQuery 소스 테이블을 복수 소스 통합 → 단일 소스 테이블로 전환, Criteria-Result 패턴의 field-metadata·filter-options API 신설, FE 멀티셀렉트 필터와 TOTAL 행 집계 구현",
-                "result": "데이터 소스 불일치를 단일 소스 전환으로 구조적 해결, 콘솔 내 RCP 통합 조회 내장, 하드코딩 currency/소수점 표시를 BE metadata 기반으로 대체"
+                "problem": "마케팅 RCP 데이터 엑셀 전용 + BigQuery 통합 테이블이 복수 소스 조합 구조라 콘솔 통합 조회 불가",
+                "solution": "BigQuery를 단일 소스 테이블로 전환 + Criteria-Result 패턴 field-metadata API 신설, FE 멀티셀렉트 필터·TOTAL 집계",
+                "result": "콘솔 내 RCP 통합 조회 내장, 하드코딩 currency/소수점 표시를 BE metadata 기반으로 대체"
               }
             ],
             "techStack": [
@@ -443,19 +443,14 @@
                 "result": "업그레이드 배포 시간 3h→15m 단축"
               },
               {
-                "problem": "게임서버 공통 코드 5개 브랜치 분산 관리",
-                "solution": "시트 처리 모듈+5개 서브모듈을 독립 패키지로 분리, 5개 브랜치 차이 분석·충돌 해결",
-                "result": "게임서버 Kit 패키지 분리 완료"
-              },
-              {
                 "problem": "CI 테스트 실행 시간 과다(15m47s)",
                 "solution": "ts-jest isolatedModules+Entity 타입 명시 적용",
                 "result": "CI 61% 단축(15m47s→6m06s), 81 suites 978 tests 통과"
               },
               {
-                "problem": "한 게임의 sheet 모듈 17개가 외부 패키지와 2년 이상 diverged되어 업데이트 격차 누적",
-                "solution": "610 파일/310+ import 일괄 마이그레이션 + config 주입·인터페이스 누락 등 9건 후속 hotfix",
-                "result": "9건 hotfix 무사고 안정화, 패키지 첫 게임 적용 완료 — 이후 sheet 업데이트는 npm 버전 bump 1건으로 자동 통합(수동 마이그레이션 610 파일→0)"
+                "problem": "게임서버 공통 코드가 5개 브랜치로 분산 + 한 게임은 sheet 모듈 17개가 외부 패키지와 2년+ diverged",
+                "solution": "시트+5개 서브모듈을 독립 패키지로 추출 후, 한 게임에 610 파일/310+ import 일괄 마이그레이션 + config 주입·인터페이스 누락 등 9건 hotfix",
+                "result": "패키지 체계 확립 및 첫 게임 적용 — 9건 hotfix 무사고, 이후 sheet 업데이트는 npm 버전 bump 1건으로 자동 통합(수동 마이그레이션 610 파일→0)"
               }
             ],
             "techStack": [

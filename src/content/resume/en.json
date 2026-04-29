@@ -302,9 +302,9 @@
                 "result": "Eliminated unnecessary re-renders and resolved the infinite render loop; shared Table component propagated the fix to 36 downstream tables"
               },
               {
-                "problem": "Marketing RCP data was only viewable in spreadsheets, and the existing BigQuery aggregation table combined multiple sources — creating data source divergence that blocked unified console queries",
-                "solution": "Switched the BigQuery source table from the multi-source aggregate to a single-source table, introduced Criteria-Result pattern field-metadata/filter-options APIs, and implemented a FE multi-select filter with a TOTAL row aggregation",
-                "result": "Structurally resolved data source divergence via single-source migration, embedded unified RCP queries into the console, and replaced hardcoded currency/decimal display with BE metadata-driven formatting"
+                "problem": "Marketing RCP data was spreadsheet-only, and the BigQuery aggregation table combined multiple sources — blocking unified console queries",
+                "solution": "Switched BigQuery to a single-source table, added Criteria-Result pattern field-metadata APIs, and built FE multi-select filters + TOTAL row aggregation",
+                "result": "Embedded unified RCP queries into the console and replaced hardcoded currency/decimal display with BE metadata-driven formatting"
               }
             ],
             "techStack": [
@@ -443,19 +443,14 @@
                 "result": "Reduced 7-project upgrade runtime 3h→15min"
               },
               {
-                "problem": "Game server shared code tightly coupled in monolithic package",
-                "solution": "Extracted sheet processing module + 5 submodules into independent package, resolved conflicts via 5-branch divergence analysis",
-                "result": "Realized independent package versioning and deployment"
-              },
-              {
                 "problem": "Slow CI pipeline (15m47s) due to test infrastructure inefficiency",
                 "solution": "Switched ts-jest isolatedModules and explicit Entity types",
                 "result": "Cut CI time 61% (15m47s→6m06s); passed 81 suites/978 tests"
               },
               {
-                "problem": "One game's 17 internal sheet modules were 2+ years diverged from the published package, blocking updates",
-                "solution": "Migrated 610 files and 310+ imports to the package, then shipped 9 follow-up hotfixes (config injection, missing interface methods)",
-                "result": "Stabilized 9 hotfixes with zero incidents and completed first-game adoption — sheet updates now flow through a single npm version bump (manual migration of 610 files → 0)"
+                "problem": "Game-server shared code split across 5 branches + one game's 17 sheet modules were 2+ years diverged from the published package",
+                "solution": "Extracted sheet + 5 submodules into a standalone package, then migrated 610 files / 310+ imports in one game and shipped 9 follow-up hotfixes (config injection, missing interface methods)",
+                "result": "Package system established with first-game adoption — 9 hotfixes shipped with zero incidents; sheet updates now flow through a single npm version bump (manual migration of 610 files → 0)"
               }
             ],
             "techStack": [

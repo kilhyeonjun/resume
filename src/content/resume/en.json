@@ -272,11 +272,6 @@
                 "result": "Consolidated multi-platform campaign management into one system"
               },
               {
-                "problem": "NAS-S3 sync reliability and restore failures",
-                "solution": "Separated SQS server-worker flow, automated outbox events, tracked asset_nas_sync state",
-                "result": "Secured restore reliability with state-tracked sync pipeline"
-              },
-              {
                 "problem": "Meta asset sync performance bottleneck",
                 "solution": "Converted ORM single-row saves to bulk processing",
                 "result": "Image sync reduced 72% (25.7s→7.1s), DB transactions reduced 95% (10~16s→0.3~0.5s)"
@@ -295,11 +290,6 @@
                 "problem": "Marketing query latency (18s) from 100+ column denormalized table",
                 "solution": "Normalized table into main/time-series/prediction, tuned indexes + cursor pagination",
                 "result": "Performance improved 97% (18s→0.5s)"
-              },
-              {
-                "problem": "The Asset table view suffered severe jank — 30 rows × 13 columns (390 cells) re-rendering on every dropdown open or row selection, combined with an infinite useEffect render loop",
-                "solution": "Applied React.memo with custom comparator to TableRow, extracted per-row cells with isolated hook subscriptions, reduced columns useMemo dependencies from 12 to 2, and guarded controlled-mode useEffect to break the loop",
-                "result": "Eliminated unnecessary re-renders and resolved the infinite render loop; shared Table component propagated the fix to 36 downstream tables"
               },
               {
                 "problem": "Marketing RCP data was spreadsheet-only, and the BigQuery aggregation table combined multiple sources — blocking unified console queries",

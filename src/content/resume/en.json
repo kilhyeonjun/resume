@@ -83,6 +83,9 @@
           },
           {
             "name": "Testcontainers"
+          },
+          {
+            "name": "Integration Test"
           }
         ]
       },
@@ -451,8 +454,8 @@
               },
               {
                 "problem": "One game's 17 internal sheet modules were 2+ years diverged from the published package, blocking updates",
-                "solution": "Migrated 610 files and 310+ imports to the package, then stabilized via 9 follow-up hotfixes (config injection, missing interface methods) with zero incidents",
-                "result": "First-game adoption completed — sheet updates now flow through npm version bumps automatically"
+                "solution": "Migrated 610 files and 310+ imports to the package, then shipped 9 follow-up hotfixes (config injection, missing interface methods)",
+                "result": "Stabilized 9 hotfixes with zero incidents and completed first-game adoption — sheet updates now flow through a single npm version bump (manual migration of 610 files → 0)"
               }
             ],
             "techStack": [
@@ -489,7 +492,7 @@
               {
                 "problem": "Detect scheduler scanned 159 versions in one shot (3.27M-row full scan) — 60s login outages from RDS IOPS saturation",
                 "solution": "Ported the per-version loop from the AI detect module, added distributed-lock timeout/recovery, and replaced the NOT EXISTS full scan with an indexed staged lookup",
-                "result": "Cut query time to 39ms/version (260x), removed driving full scan and filesort, restored login latency"
+                "result": "Cut query time 260x (full scan → 39ms indexed lookup), removed driving filesort, restored login latency"
               }
             ],
             "techStack": [

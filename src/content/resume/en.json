@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer designing and operating a shared backend platform across 12 live services, and leading the newly formed Platform Part to build team-wide AI development infrastructure. At GameDuo, drove an 82% reduction in BigQuery cost and a 270x expansion of pipeline throughput via serverless migration, and presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivered DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. Right after the new Part launched, I designed and shipped GameDuo Platform Harness — a shared AI context infrastructure that converts individual learnings into reusable team assets.",
+    "summary": "Backend engineer designing and operating a shared backend platform across 12 live game environments, and leading the newly formed Platform Part to build team-wide AI development infrastructure. At GameDuo, drove an 82% reduction in BigQuery cost and a 270x expansion of pipeline throughput via serverless migration, and presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivered DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. Right after the new Part launched, I designed and shipped GameDuo Platform Harness — a shared AI context infrastructure that converts individual learnings into reusable team assets.",
     "coreCompetencies": [
       {
         "category": "DB Optimization & Concurrency Control",
@@ -160,7 +160,7 @@
         "companyUrl": "https://www.gameduo.net/ko",
         "startDate": "2025-01",
         "current": true,
-        "description": "Mobile game development and publishing company. Shared backend platform design for 12 live services, data pipeline engineering, and common package system operations",
+        "description": "Mobile game development and publishing company. Shared backend platform design for 12 live game environments, data pipeline engineering, and common package system operations",
         "positions": [
           {
             "title": "DEV Team Platform Part Leader",
@@ -497,9 +497,9 @@
             "contribution": "Restructured initial implementation into a package. Independently handled P0 bug fixes, test stabilization (94%+ coverage), CDK infrastructure, and deployment across 12 projects.",
             "details": [
               {
-                "problem": "No reusable probability calculation module across game projects",
+                "problem": "No reusable probability calculation module across 12 live game environments",
                 "solution": "Packaged NestJS DynamicModule with 5 probability functions + Kinesis logging as shared probability package",
-                "result": "Integrated into 12 games with standardized probability calculation"
+                "result": "Integrated into 12 live game environments via cherry-pick (main + 11 branches)"
               },
               {
                 "problem": "No audit log analytics infrastructure for probability verification",

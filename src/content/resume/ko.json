@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "12개 라이브 서비스 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 팀 AI 개발 인프라를 이끄는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery 비용 82% 절감, 서버리스 이관으로 파이프라인 처리량 270배 확장을 주도하고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 이 구조적 접근을 개발 방식 자체에 적용하여, 복수 AI 에이전트를 목적별로 오케스트레이션해 프로덕션 소프트웨어를 설계·완성하고 있습니다. 신설 Platform Part 가동 직후 팀 공유 AI 컨텍스트 인프라(GameDuo Platform Harness)를 0→1 정립하여, 개인의 AI 노하우가 팀 자산으로 축적되는 체계를 정착시켰습니다.",
+    "summary": "12개 라이브 게임 환경의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 팀 AI 개발 인프라를 이끄는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery 비용 82% 절감, 서버리스 이관으로 파이프라인 처리량 270배 확장을 주도하고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 이 구조적 접근을 개발 방식 자체에 적용하여, 복수 AI 에이전트를 목적별로 오케스트레이션해 프로덕션 소프트웨어를 설계·완성하고 있습니다. 신설 Platform Part 가동 직후 팀 공유 AI 컨텍스트 인프라(GameDuo Platform Harness)를 0→1 정립하여, 개인의 AI 노하우가 팀 자산으로 축적되는 체계를 정착시켰습니다.",
     "coreCompetencies": [
       {
         "category": "DB 최적화 & 동시성 제어",
@@ -160,7 +160,7 @@
         "companyUrl": "https://www.gameduo.net/ko",
         "startDate": "2025-01",
         "current": true,
-        "description": "모바일 게임 개발 및 퍼블리싱 회사. 12개 라이브 서비스 공통 백엔드 플랫폼 설계, 데이터 파이프라인 구축, 공통 패키지 체계 운영",
+        "description": "모바일 게임 개발 및 퍼블리싱 회사. 12개 라이브 게임 환경 공통 백엔드 플랫폼 설계, 데이터 파이프라인 구축, 공통 패키지 체계 운영",
         "positions": [
           {
             "title": "DEV팀 Platform Part Leader",
@@ -497,9 +497,9 @@
             "contribution": "초기 구현체를 패키지 구조로 재설계. P0 버그 수정, 테스트 안정화(94%+ 커버리지), CDK 인프라 구축, 12개 프로젝트 적용은 단독 수행.",
             "details": [
               {
-                "problem": "12개 게임 확률 계산 로직 분산 및 규제 대응 부재",
+                "problem": "12개 라이브 게임 환경 확률 계산 로직 분산 및 규제 대응 부재",
                 "solution": "NestJS DynamicModule 기반 5개 확률 함수+Kinesis 로깅을 확률 계산 공통 패키지로 분리",
-                "result": "12개 게임 확률 패키지 통합"
+                "result": "12개 라이브 게임 환경 확률 패키지 통합 (cherry-pick main + 11 branches)"
               },
               {
                 "problem": "확률 감사 로그 분석 인프라 부재",

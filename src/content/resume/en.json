@@ -494,7 +494,7 @@
             "featured": false,
             "description": "Built probability calculation package and CDK-based audit log analytics infrastructure to address regulatory risk from lack of game probability verification",
             "techRationale": "Codified Kinesis → Firehose (Dynamic Partitioning + Parquet) → S3 → Glue → Athena pipeline with CDK. Chose Parquet columnar format for Athena SQL cost optimization. Replaced mock-based tests with LocalStack Testcontainers for integration testing.",
-            "contribution": "Restructured initial implementation into a package. Independently handled P0 bug fixes, test stabilization (94%+ coverage), CDK infrastructure, and deployment across 12 projects.",
+            "contribution": "Restructured initial implementation into a package. Independently handled P0 bug fixes, test stabilization (94%+ coverage), CDK infrastructure, and deployment across 12 live game environments.",
             "details": [
               {
                 "problem": "No reusable probability calculation module across 12 live game environments",

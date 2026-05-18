@@ -494,7 +494,7 @@
             "featured": false,
             "description": "게임 확률 검증 체계 부재에 따른 규제 리스크 해소를 위한 확률 계산 패키지와 CDK 기반 감사 로그 분석 인프라 개발",
             "techRationale": "Kinesis → Firehose(Dynamic Partitioning + Parquet) → S3 → Glue → Athena 파이프라인을 CDK로 코드화. Parquet 컬럼형 포맷으로 Athena SQL 분석 비용 최적화, LocalStack Testcontainers로 모킹 기반 테스트 제거.",
-            "contribution": "초기 구현체를 패키지 구조로 재설계. P0 버그 수정, 테스트 안정화(94%+ 커버리지), CDK 인프라 구축, 12개 프로젝트 적용은 단독 수행.",
+            "contribution": "초기 구현체를 패키지 구조로 재설계. P0 버그 수정, 테스트 안정화(94%+ 커버리지), CDK 인프라 구축, 12개 라이브 게임 환경 적용은 단독 수행.",
             "details": [
               {
                 "problem": "12개 라이브 게임 환경 확률 계산 로직 분산 및 규제 대응 부재",

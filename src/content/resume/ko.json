@@ -2,14 +2,14 @@
   "main": {
     "personalInfo": {
       "name": "길현준",
-      "title": "Backend Engineer",
+      "title": "Backend Engineer / Platform Part Leader",
       "email": "kboxstar@gmail.com",
       "location": "서울, 대한민국",
       "linkedin": "https://www.linkedin.com/in/kilhyeonjun",
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "구조적 병목을 찾아 제거하는 백엔드 엔지니어입니다. 게임듀오에서 12개 라이브 서비스 기반의 공통 백엔드 플랫폼을 구축하며 BigQuery 비용 82% 절감, 서버리스 전환으로 파이프라인 처리량 270배 확장을 이끌고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 이 구조적 접근을 개발 방식 자체에 적용하며, 복수 AI 에이전트를 목적별로 오케스트레이션하여 프로덕션 소프트웨어를 설계·구축하고 있습니다. 2026년 4월부터는 신설 Platform Part 리더로서 팀 공유 AI 컨텍스트 인프라(GameDuo Platform Harness)를 0→1 구축하여, 개인의 AI 노하우가 팀 자산으로 축적되는 체계를 정착시켰습니다.",
+    "summary": "12개 라이브 서비스 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 팀 AI 개발 인프라를 이끄는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery 비용 82% 절감, 서버리스 이관으로 파이프라인 처리량 270배 확장을 주도하고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 이 구조적 접근을 개발 방식 자체에 적용하여, 복수 AI 에이전트를 목적별로 오케스트레이션해 프로덕션 소프트웨어를 설계·완성하고 있습니다. 신설 Platform Part 가동 직후 팀 공유 AI 컨텍스트 인프라(GameDuo Platform Harness)를 0→1 정립하여, 개인의 AI 노하우가 팀 자산으로 축적되는 체계를 정착시켰습니다.",
     "coreCompetencies": [
       {
         "category": "DB 최적화 & 동시성 제어",
@@ -234,7 +234,7 @@
               {
                 "problem": "엔티티 변경 기록의 수동 관리 부담",
                 "solution": "Auditable 데코레이터 + TypeORM Subscriber 패턴으로 이벤트 소싱 기반 변경 자동 기록 파이프라인 설계",
-                "result": "엔티티 변경 이력 자동 추적 체계 구축"
+                "result": "엔티티 변경 자동 추적 파이프라인 정립"
               },
               {
                 "problem": "다중 환경 간 엔티티 충돌 감지 및 병합 부재",
@@ -268,8 +268,8 @@
             "details": [
               {
                 "problem": "3개 광고 플랫폼 캠페인 관리 분산",
-                "solution": "Google Ads/Meta/TikTok 캠페인 생성·배포·수정과 리텐션 지표 관리를 단일 플랫폼에서 처리하는 API 개발",
-                "result": "통합 캠페인 자동화 체계 마련"
+                "solution": "Google Ads/Meta/TikTok 캠페인 생성·배포·수정과 리텐션 지표 관리를 단일 플랫폼에서 처리하는 API 정립",
+                "result": "3개 광고 플랫폼 통합 캠페인 자동화로 마케터 콘솔 전환 작업 제거"
               },
               {
                 "problem": "Meta 에셋 동기화 성능 병목",
@@ -323,9 +323,9 @@
             "techRationale": "배치·이벤트성 작업이 서버 본체에 묶여 독립 배포 불가한 제약 해소를 위해 Lambda 선택. SQS로 비동기화하여 트래픽 변동 시 처리 지연과 확장성 한계 해결.",
             "details": [
               {
-                "problem": "전체 서버리스 전환 시 운영 안정성 리스크",
+                "problem": "전체 서버리스 이관 시 운영 안정성 리스크",
                 "solution": "API 서버(EC2)는 유지하고 배치/Job 처리만 Lambda로 분리하는 하이브리드 아키텍처 설계",
-                "result": "워크로드별 최적 리소스 활용 달성"
+                "result": "API 가용성 무영향 보장, 배치 워크로드만 격리 이관해 운영 리스크 차단"
               },
               {
                 "problem": "배치 처리의 수집 기간 한계(60일) 및 처리 시간 2시간",
@@ -424,8 +424,8 @@
               },
               {
                 "problem": "멀티 인스턴스 환경의 동시성 제어 부재",
-                "solution": "ElastiCache (Redis) 기반 분산 락 데코레이터 설계",
-                "result": "멀티 인스턴스 환경 동시성 제어 체계 구축"
+                "solution": "ElastiCache (Redis) 기반 분산 락을 AOP 데코레이터로 추상화하여 비즈니스 로직과 분리",
+                "result": "분산 락 데코레이터로 멀티 인스턴스 동시성 제어 일관 적용"
               },
               {
                 "problem": "7개 프로젝트 패키지 업그레이드 수작업(3시간)",
@@ -462,7 +462,7 @@
               {
                 "problem": "간체는 AI 지원 언어가 아님에도 AI 번역 설정 도메인 내부 옵션으로 모델링되어 도메인 의미 왜곡, 설정 저장·조회가 번체 AI 번역 상태에 의존하여 breaking change 없이 독립 on/off 불가",
                 "solution": "파생 변환 모듈을 AI 번역 모듈에서 독립 분리(9개 use case + 전용 entity/repository/scheduler), effective 설정 글로벌 상속 패턴 적용",
-                "result": "도메인 경계 명확화 및 파생 변환 규칙 독립 on/off 가능"
+                "result": "9개 use case 분리로 도메인 경계 명확화, 파생 변환 규칙 독립 토글 지원"
               },
               {
                 "problem": "설정 decoupling 과정에서 breaking API change 필요",
@@ -595,7 +595,7 @@
             "period": "2023.07 ~ 2023.09",
             "featured": false,
             "description": "Cyan(사내 Node.js 프레임워크) 기반 임상시험 전자 동의서 수집 비효율성과 전자서명 규제 준수 요구사항 해결",
-            "techRationale": "동기 서비스 간 결합도 제거를 위해 EDA + 아웃박스 패턴으로 전환. 다양한 입력 방식(텍스트·체크박스·서명) 확장을 위해 플러그인 구조 설계.",
+            "techRationale": "동기 서비스 간 결합도 제거를 위해 EDA + 아웃박스 패턴으로 전환. 텍스트·체크박스·서명 등 입력 방식 확장을 위해 플러그인 구조 설계.",
             "contribution": "EDA 전환 설계, 플러그인 구조 구현, 대상자 일괄 등록 + Signer 테이블 분리 마이그레이션 수행. BE 2명 체제.",
             "details": [
               {
@@ -626,9 +626,9 @@
             "contribution": "Deadlock 재현·분석·해결 방안 도출 단독 수행. DBeaver로 교착 시나리오를 SQL로 재현하고 INNODB 잠금 테이블로 확인.",
             "details": [
               {
-                "problem": "운영 환경 Deadlock 발생",
-                "solution": "외래키 생성 시 공유락→배타락 전환 타이밍 이슈 근본 원인 분석",
-                "result": "Deadlock 근본 원인 규명 및 재발 방지"
+                "problem": "월 5건+ 발생하던 운영 환경 Deadlock으로 전자서명 알림 누락",
+                "solution": "외래키 생성 시 공유락→배타락 승격 타이밍 이슈를 INNODB 잠금 테이블로 규명, SELECT FOR UPDATE 선점 적용",
+                "result": "전자서명 처리 실패 0건 해소, 락 교착 패턴 근본 원인 제거"
               },
               {
                 "problem": "동기 처리 방식의 알림 병목 및 장애 전파",
@@ -723,19 +723,19 @@
             "contribution": "BE 2명 중 1명. EDA 기반 문서 처리 파이프라인 설계·구현, 대용량 PDF 비동기 변환 워커 구현. 3주 긴급 투입으로 MVP 출시 달성.",
             "details": [
               {
-                "problem": "PDF 변환 처리의 동기 방식 병목",
-                "solution": "S3 업로드 트리거 → Lambda 경량화 변환 → SNS/SQS 알림 Event-Driven 체계 설계",
-                "result": "비동기 PDF 변환 파이프라인 구축"
+                "problem": "대용량 PDF 변환 동기 처리로 타임아웃 발생",
+                "solution": "S3 업로드 트리거 → Lambda 경량 변환 → SNS/SQS 알림 EDA 파이프라인 설계",
+                "result": "동기 변환 타임아웃 해소, 대용량 문서도 비동기 처리로 안정화"
               },
               {
                 "problem": "의료진별 문서 접근 권한 체계 부재",
-                "solution": "역할 기반 문서 접근 및 승인 권한 관리 워크플로우 제작",
-                "result": "권한 기반 문서 관리 체계 구축"
+                "solution": "역할 기반 문서 접근 및 승인 권한 관리 워크플로우 정의",
+                "result": "역할별 문서 접근·승인 워크플로우 정립"
               },
               {
                 "problem": "VDR 프로젝트 일정 지연 및 MVP 출시 압박",
                 "solution": "3주 긴급 투입, 핵심 기능 우선순위 선정 및 집중 개발",
-                "result": "일정 내 MVP 출시 달성"
+                "result": "3주 내 MVP 출시 달성 (BE 2명 + FE 1명 체제)"
               }
             ],
             "techStack": [
@@ -850,7 +850,7 @@
               {
                 "problem": "서브도메인 간 세션 충돌로 인한 인증 불안정",
                 "solution": "NestJS + JWT 기반 토큰 인증 시스템 설계 및 구현",
-                "result": "통합 인증 시스템 구축"
+                "result": "웹(의사/약사/관리자) + 모바일 앱 통합 인증 정립"
               },
               {
                 "problem": "세션 방식의 서브도메인 간 사용자 전환 불가",
@@ -952,8 +952,8 @@
             "details": [
               {
                 "problem": "Express.js 단일 파일(app.js) 10,000줄 레거시 유지보수 한계",
-                "solution": "3단계 점진적 전환: app.js 단일 파일 → 레이어드 아키텍처(Controller/Service/Repository) → NestJS 프레임워크 도입",
-                "result": "모듈 아키텍처 이관 완료"
+                "solution": "3단계 점진적 이관: app.js 단일 파일 → 레이어드 아키텍처(Controller/Service/Repository) → NestJS 프레임워크 도입",
+                "result": "10,000줄 단일 파일을 NestJS 모듈로 무장애 이관, 주요 릴리스 구간 장애 0건 유지"
               },
               {
                 "problem": "JavaScript 기반 코드의 타입 안정성 부족",
@@ -1103,8 +1103,8 @@
             "details": [
               {
                 "problem": "5개국 분산 웹사이트의 국가별 개별 로그인 필요",
-                "solution": "Spring Security + JWT 기반 중앙화된 통합 인증 서버 개발",
-                "result": "5개국 통합 인증 체계 구축"
+                "solution": "Spring Security + JWT 기반 중앙화된 통합 인증 서버 정립",
+                "result": "5개국 분산 도메인에 단일 인증 적용 완료"
               }
             ],
             "techStack": [

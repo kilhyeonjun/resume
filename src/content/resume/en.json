@@ -2,14 +2,14 @@
   "main": {
     "personalInfo": {
       "name": "Hyeonjun Kil",
-      "title": "Backend Engineer",
+      "title": "Backend Engineer / Platform Part Leader",
       "email": "kboxstar@gmail.com",
       "location": "Seoul, South Korea",
       "linkedin": "https://www.linkedin.com/in/kilhyeonjun",
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer who finds and eliminates structural bottlenecks. At GameDuo, building a shared backend platform for 12 live services while cutting BigQuery costs by 82%, expanding pipeline throughput 270x via serverless migration, and presenting the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivering DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. From April 2026, as the leader of the newly formed Platform Part, I designed and shipped GameDuo Platform Harness — a shared AI context infrastructure that converts individual learnings into reusable team assets.",
+    "summary": "Backend engineer designing and operating a shared backend platform across 12 live services, and leading the newly formed Platform Part to build team-wide AI development infrastructure. At GameDuo, drove an 82% reduction in BigQuery cost and a 270x expansion of pipeline throughput via serverless migration, and presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivered DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. Right after the new Part launched, I designed and shipped GameDuo Platform Harness — a shared AI context infrastructure that converts individual learnings into reusable team assets.",
     "coreCompetencies": [
       {
         "category": "DB Optimization & Concurrency Control",
@@ -234,7 +234,7 @@
               {
                 "problem": "Manual entity change recording prone to omission",
                 "solution": "Applied Event Sourcing-based change tracking with Auditable decorator + TypeORM Subscriber pattern",
-                "result": "Automated entity change recording pipeline"
+                "result": "Standardized automated entity change tracking pipeline"
               },
               {
                 "problem": "Multi-environment version conflicts during data merge",
@@ -269,7 +269,7 @@
               {
                 "problem": "Fragmented ad platform management across Google Ads/Meta/TikTok",
                 "solution": "Delivered unified campaign automation API for creation, deployment, modification, and retention metrics in a single platform",
-                "result": "Consolidated multi-platform campaign management into one system"
+                "result": "Eliminated marketer console switching across 3 ad platforms via unified campaign automation"
               },
               {
                 "problem": "Meta asset sync performance bottleneck",
@@ -325,7 +325,7 @@
               {
                 "problem": "Full serverless migration risked operational stability",
                 "solution": "Designed hybrid architecture keeping API server on EC2 while separating batch/job processing to Lambda",
-                "result": "Attained workload-optimized resource usage without disrupting live services"
+                "result": "Preserved API availability with zero impact, isolating only batch workloads to contain operational risk"
               },
               {
                 "problem": "Batch processing limited to 60-day collection range with 2-hour runtime",
@@ -424,8 +424,8 @@
               },
               {
                 "problem": "Concurrency conflicts in multi-instance environments",
-                "solution": "Engineered distributed lock module with ElastiCache (Redis)-based distributed lock decorator",
-                "result": "Enabled safe concurrency control across multi-instance deployments"
+                "solution": "Abstracted ElastiCache (Redis) distributed locking into an AOP decorator, isolating lock logic from business code",
+                "result": "Applied distributed lock decorator consistently for multi-instance concurrency control"
               },
               {
                 "problem": "Manual library upgrades taking 3 hours across 7 projects",
@@ -462,7 +462,7 @@
               {
                 "problem": "Simplified Chinese was modeled inside the AI translation settings domain despite not being AI-supported, and settings storage/retrieval depended on the Traditional Chinese AI translation state — making independent toggling impossible without a breaking change",
                 "solution": "Extracted the derived-conversion module from the AI translation module into 9 use cases with dedicated entity/repository/scheduler, and applied the global-inheritance pattern for effective settings",
-                "result": "Clarified domain boundaries and enabled independent toggling of derived conversion rules"
+                "result": "Clarified domain boundaries by extracting 9 use cases and enabled independent toggling of derived conversion rules"
               },
               {
                 "problem": "Decoupling required a breaking API change",
@@ -626,9 +626,9 @@
             "contribution": "Independently performed deadlock reproduction, analysis, and resolution. Reproduced deadlock scenario with SQL in DBeaver and verified via INNODB lock tables.",
             "details": [
               {
-                "problem": "Production Deadlock incidents in clinical trial e-signature notifications",
-                "solution": "Analyzed shared-to-exclusive lock timing during foreign key constraint enforcement",
-                "result": "Identified root cause and prevented Deadlock recurrence"
+                "problem": "5+ monthly Deadlock incidents causing e-signature notification loss in production",
+                "solution": "Reproduced shared-to-exclusive lock escalation via INNODB lock tables, applied SELECT FOR UPDATE preemption",
+                "result": "Reduced e-signature failures from 5+/month to zero, eliminating the lock contention root cause"
               },
               {
                 "problem": "Synchronous notification processing causing cascading failures",
@@ -723,19 +723,19 @@
             "contribution": "1 of 2 BE developers. Designed and implemented EDA document processing pipeline and large-scale async PDF conversion worker. Delivered MVP within 3-week emergency sprint.",
             "details": [
               {
-                "problem": "Synchronous PDF conversion blocking document upload flow",
+                "problem": "Synchronous PDF conversion causing timeouts on large documents",
                 "solution": "Designed Event-Driven PDF conversion triggered by S3 upload → Lambda lightweight conversion → SNS/SQS notification",
-                "result": "Delivered non-blocking document processing pipeline"
+                "result": "Eliminated synchronous timeouts; large documents now flow through async pipeline reliably"
               },
               {
                 "problem": "No role-based document access control for medical workflows",
                 "solution": "Engineered permission-based workflow managing document access and approval by medical role",
-                "result": "Secured compliant document access control"
+                "result": "Defined per-role document access and approval workflow"
               },
               {
                 "problem": "VDR project schedule delay under MVP launch pressure",
                 "solution": "Executed 3-week emergency sprint prioritizing core features",
-                "result": "Delivered MVP on schedule meeting launch deadline"
+                "result": "Delivered MVP within 3-week timeline (BE 2 + FE 1 team)"
               }
             ],
             "techStack": [
@@ -850,7 +850,7 @@
               {
                 "problem": "No unified authentication system for multi-subdomain architecture",
                 "solution": "Designed and implemented NestJS + JWT token authentication system",
-                "result": "Established centralized auth infrastructure"
+                "result": "Unified auth across web (doctor/pharmacist/admin) + mobile app"
               },
               {
                 "problem": "Session-based auth causing subdomain transition failures",
@@ -953,7 +953,7 @@
               {
                 "problem": "Express.js single-file (app.js) 10,000-line codebase unmaintainable",
                 "solution": "Executed 3-phase incremental migration: app.js single file → Layered Architecture (Controller/Service/Repository) → NestJS framework adoption",
-                "result": "Achieved modular architecture with clear separation of concerns"
+                "result": "Migrated 10,000-line monolith to NestJS modules with zero production incidents during major releases"
               },
               {
                 "problem": "JavaScript lacking type safety causing runtime errors",

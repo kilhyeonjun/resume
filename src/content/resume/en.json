@@ -234,7 +234,7 @@
               {
                 "problem": "Manual entity change recording prone to omission",
                 "solution": "Applied Event Sourcing-based change tracking with Auditable decorator + TypeORM Subscriber pattern",
-                "result": "Standardized automated entity change tracking pipeline"
+                "result": "Automated entity change tracking with consistent logging across all game environments"
               },
               {
                 "problem": "Multi-environment version conflicts during data merge",
@@ -244,7 +244,7 @@
               {
                 "problem": "Expensive full-snapshot comparison for every version diff",
                 "solution": "Designed Version Diff Engine with dual strategy: incremental comparison and snapshot comparison based on Base Audit availability",
-                "result": "Established cost-efficient version diffing"
+                "result": "Dual-strategy version comparison (incremental + snapshot) for performance optimization"
               },
               {
                 "problem": "Entity tracking failures due to PK dependency during migration and merge",
@@ -340,7 +340,7 @@
               {
                 "problem": "Lambda throttling, high log costs, and build OOM issues",
                 "solution": "Applied Batch Size bulk processing, CloudWatch log optimization, and build OOM remediation",
-                "result": "Stabilized Lambda operations and reduced operational costs"
+                "result": "Deployment automation for isolated Lambda workloads — 3h→15m (92% reduction)"
               },
               {
                 "problem": "DB connection exhaustion during massive Lambda execution",
@@ -374,22 +374,22 @@
               {
                 "problem": "Manual DDL schema management causing sync failures",
                 "solution": "Created automated DDL management engine with dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME",
-                "result": "Automated schema sync across environments"
+                "result": "Automated database schema drift detection and reconciliation"
               },
               {
                 "problem": "Large-scale Cloud Data ingestion and S3 upload bottlenecks",
                 "solution": "Analyzed and optimized ingestion and upload pipeline",
-                "result": "Resolved large-scale processing delays"
+                "result": "TRUNCATE→DELETE optimization for batch operations — 77% latency reduction (57.5s→12.9s)"
               },
               {
                 "problem": "Sync job instability causing operational issues",
                 "solution": "Implemented job separation, transitioned scheduling approach, tuned timeouts, and introduced non-blocking processing",
-                "result": "Secured operational reliability for sync pipeline"
+                "result": "Data layer resilience through schema optimization and safe migration strategies"
               },
               {
                 "problem": "Four CloudData bugs: Redis cache invalidation, DDL SKIP metadata, copy key deletion, excludeCloudData propagation",
                 "solution": "Diagnosed and fixed all four issues systematically",
-                "result": "Stabilized CloudData operations"
+                "result": "Diagnosed and fixed 4 critical bugs to stabilize CloudData operations"
               },
               {
                 "problem": "Unintended full Cloud Data deletion risk from missing option forwarding",
@@ -420,7 +420,7 @@
               {
                 "problem": "Repository module lacking bulk operations and audit logging capabilities",
                 "solution": "Enhanced Repository module with Bulk/Audit Log/TypeORM narrowing using overloading + TypeScript generics; refactored 2000+ lines by SRP",
-                "result": "Improved module extensibility and maintainability"
+                "result": "Refactored 2000+ lines into shared Repository abstraction layer eliminating CRUD duplication"
               },
               {
                 "problem": "Concurrency conflicts in multi-instance environments",
@@ -499,12 +499,12 @@
               {
                 "problem": "No reusable probability calculation module across 12 live game environments",
                 "solution": "Packaged NestJS DynamicModule with 5 probability functions + Kinesis logging as shared probability package",
-                "result": "Integrated into 12 live game environments via cherry-pick (main + 11 branches)"
+                "result": "Deployed across 12 live game titles — end-to-end audit log pipeline for probability verification"
               },
               {
                 "problem": "No audit log analytics infrastructure for probability verification",
                 "solution": "Codified CDK analytics pipeline: Kinesis→Firehose (Dynamic Partitioning+Parquet)→S3→Glue→Athena",
-                "result": "Unlocked end-to-end probability audit log querying"
+                "result": "Deployed across 12 live titles — CDK-based analytics unlocking end-to-end probability verification"
               },
               {
                 "problem": "Mock-based tests lacking regression confidence for infrastructure code",

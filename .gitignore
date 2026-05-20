@@ -57,3 +57,11 @@ screenshot-puppeteer.mjs
 
 # JD pipeline benchmark workspace (regenerable)
 jd-pipeline-workspace/
+
+# RAG index artifacts
+.rag/index.db
+.rag/queue
+.rag/logs/
+.rag/.debounce/
+.rag/.worker.lockdir/
+.rag/.venv/

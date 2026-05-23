@@ -52,10 +52,9 @@ capture-screenshots.mjs
 screenshot-puppeteer.js
 screenshot-puppeteer.mjs
 
-# JD customization outputs (regenerable)
-.jd-custom/*
-# Exception: applications.json is manually maintained application log, not regenerable
-!.jd-custom/applications.json
+# JD customization outputs (regenerable) — all sub-directories ignored, applications.json manually tracked (use `git add -f ./.jd-custom/applications.json`)
+.jd-custom/*/
+.jd-custom/*.bak
 
 # JD pipeline benchmark workspace (regenerable)
 jd-pipeline-workspace/

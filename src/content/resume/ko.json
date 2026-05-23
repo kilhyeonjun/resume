@@ -1174,7 +1174,7 @@
     "continuousLearning": [
       {
         "name": "시스템 디자인 스터디",
-        "period": "2025.08 ~ 현재",
+        "period": "2025.08 ~ 2026.04",
         "description": "가상 면접 사례로 배우는 대규모 시스템 설계 기초 1·2권",
         "url": "https://github.com/seungwontech/system-design-study2"
       },
@@ -1188,7 +1188,7 @@
     "trainingPrograms": [
       {
         "name": "항해 플러스 백엔드 6기",
-        "period": "2024.09 ~ 2024.12",
+        "period": "2024.09 ~ 2024.11",
         "description": "TDD 및 클린 아키텍처, 동시성 제어, Redis 활용",
         "url": "https://github.com/hhpb-code",
         "organization": "항해99",

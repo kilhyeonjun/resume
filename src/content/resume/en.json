@@ -1174,7 +1174,7 @@
     "continuousLearning": [
       {
         "name": "System Design Interview Study",
-        "period": "2025.08 ~ Present",
+        "period": "2025.08 ~ 2026.04",
         "description": "System Design Interview: An Insider's Guide Vol. 1 & 2",
         "url": "https://github.com/seungwontech/system-design-study2"
       },
@@ -1188,7 +1188,7 @@
     "trainingPrograms": [
       {
         "name": "Hanghae Plus Backend 6th",
-        "period": "2024.09 ~ 2024.12",
+        "period": "2024.09 ~ 2024.11",
         "description": "TDD and Clean Architecture, Concurrency Control, Redis",
         "url": "https://github.com/hhpb-code",
         "organization": "Hanghae99",

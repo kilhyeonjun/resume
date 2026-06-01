@@ -24,18 +24,19 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
 
 const osGrouped = groupOpenSourceByRepo(data.openSource);
 
-/** Bold key metrics: numbers with %, 배, 건, 초 units. 개 only when NOT followed by 월 (개월=months ≠ 개=items) */
+/** Bold key metrics: numbers with %, 배, 건, 초, ms units. 개 only when NOT followed by 월 (개월=months ≠ 개=items) */
 function boldMetrics(text: string): string {
   return text
     .replace(/(\d+[\.]?\d*%)/g, '<strong>$1</strong>')
     .replace(/(\d+배)/g, '<strong>$1</strong>')
     .replace(/(\d+건)/g, '<strong>$1</strong>')
     .replace(/(\d+개)(?!월)/g, '<strong>$1</strong>')
-    .replace(/(\d+\.?\d*초)/g, '<strong>$1</strong>');
+    .replace(/(\d+\.?\d*초)/g, '<strong>$1</strong>')
+    .replace(/(\d+\.?\d*ms)/g, '<strong>$1</strong>');
 }
 
-/** Bold key technical terms that should stand out in 7.4s scan */
-const KEY_TERMS = ['Deadlock', 'EDA', 'BigQuery', 'Lambda', 'NestJS', 'TDD', 'gRPC', 'MSA'];
+/** Bold key technical terms that should stand out in 7.4s scan. Extend when curation surfaces new flagship tech (see resume-curate highlighting re-review). */
+const KEY_TERMS = ['Deadlock', 'EDA', 'BigQuery', 'Lambda', 'NestJS', 'TDD', 'gRPC', 'MSA', 'Redis Streams', 'Valkey', 'WAL', 'ClickHouse', 'ARM64', 'DynamoDB', 'Terraform'];
 function boldKeyTerms(text: string): string {
   let result = text;
   for (const term of KEY_TERMS) {
@@ -371,8 +372,8 @@ function processSummary(text: string): string {
                 {comp.items.map((item) => {
                   const parts = item.split(' — ');
                   return parts.length > 1
-                    ? <li><span class="highlight-bullet">•</span><span set:html={`<b>${parts[0]}</b> — ${enhance(parts.slice(1).join(' — '))}`} /></li>
-                    : <li><span class="highlight-bullet">•</span><span set:html={enhance(item)} /></li>;
+                    ? <li><span class="highlight-bullet">•</span><span set:html={`<b>${parts[0]}</b> — ${enhance(parts.slice(1).join(' — '), 3)}`} /></li>
+                    : <li><span class="highlight-bullet">•</span><span set:html={enhance(item, 3)} /></li>;
                 })}
               </ul>
             </div>

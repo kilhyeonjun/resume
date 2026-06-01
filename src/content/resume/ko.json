@@ -316,6 +316,40 @@
             ]
           },
           {
+            "name": "마케팅 데이터 아카이빙 & 커스텀 대시보드",
+            "period": "2026.04 ~ 현재",
+            "featured": false,
+            "description": "마케팅 지표의 일별 스냅샷 아카이빙(불변성 보장), 4천 행 규모 커스텀 대시보드, 알림 관측성을 구축",
+            "techRationale": "아카이브는 조회 시점이 아닌 reference-date cutoff 기준의 불변 스냅샷이어야 하므로 stale-writer guard와 tombstone 상태로 무결성을 강제. 대용량 그리드는 전량 로딩 대신 가시 영역 lazy fetch + chunk 캐싱으로 처리.",
+            "details": [
+              {
+                "problem": "4천 행 규모 마케팅 메트릭을 단일 대시보드에 표시 시 스크롤 성능 저하·셀 동기화 버그",
+                "solution": "BE는 Raw SQL DISTINCT JOIN(ORM hydration 회피)+in-memory 캐시, FE는 가시 행 lazy fetch+200행 chunk+pair별 캐싱으로 분리 — 전량 로딩은 응답 크기·렌더 비용으로 기각",
+                "result": "4,458행 중 3,341행 매핑 표시, 응답 cold 573ms/warm 221ms로 안정화"
+              },
+              {
+                "problem": "동기화 경로가 reference-date cutoff 대신 최신 스냅샷을 사용해 아카이브 불변성 위반(데이터 오염)",
+                "solution": "cutoff semantics를 준수하도록 usecase·repository를 재설계하고 stale-writer guard를 트랜잭션 처리, 동기화 상태에 tombstone을 도입",
+                "result": "live 15,333개 아카이브 재구축(오염 0), 287,020개 archive-date 검증 통과"
+              },
+              {
+                "problem": "로그 쿼리 스택(Loki) 일시 장애 시 마케팅 알림 16건이 동시 발화해 운영 채널 도배",
+                "solution": "장애 RCA 후 알림 16건을 단일 분석 DB(ClickHouse) 쿼리로 전환하고 대시보드 API로 재작성, 레거시 로그 스택 폐기 정책 수립",
+                "result": "알림 16/16 마이그레이션(25분), 로그 스택 장애 시 알림 도배 재발 방지"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "React",
+              "AWS Lambda",
+              "BigQuery",
+              "ClickHouse",
+              "Grafana",
+              "MySQL"
+            ]
+          },
+          {
             "name": "AWS Lambda 마이그레이션 & Event-Driven Architecture",
             "period": "2025.06 ~ 2025.08",
             "featured": false,
@@ -397,6 +431,48 @@
               "ARM64 (Graviton)",
               "NLB",
               "Terraform",
+              "k6",
+              "Grafana"
+            ]
+          },
+          {
+            "name": "CS 상담 채팅 서버",
+            "period": "2026.04 ~ 현재",
+            "featured": false,
+            "description": "게임 운영 고객 상담(CS)용 채팅 서버를 공유 배포 환경에서 ECS로 완전 분리하고, 인증·보안·부하 한계를 검증",
+            "techRationale": "공유 배포 환경의 자원 경합·배포 결합을 끊기 위해 ECS로 독립 분리(Terraform IaC + GitHub Actions OIDC)하고, 게임별 분산 토큰 검증 대신 중앙집중 game token 검증 경로를 채택. rate limit은 다중 인스턴스 정합을 위해 Redis 저장소 기반 throttler로 구현.",
+            "details": [
+              {
+                "problem": "고객 상담(CS) 채팅이 공유 배포 환경에 묶여 자원 경합·배포 결합 발생",
+                "solution": "ECS Fargate로 서비스를 완전 분리하고 Terraform IaC(S3 state)·GitHub Actions OIDC·관측 sidecar로 배포 자동화 — 게임별 분산 토큰 검증 대신 중앙집중 game token 검증 경로 채택",
+                "result": "독립 서비스 cutover 및 Terraform 모듈화, Grafana 11-panel 대시보드·8 알림 구성"
+              },
+              {
+                "problem": "신규 CS 채팅 도메인의 계층 결합·토큰 수명 관리 부재",
+                "solution": "Clean Architecture 4계층으로 책임 분리하고 OAuth2 access(5분)/refresh(1시간) 토큰과 ETag/304 폴링을 도입 — 매 폴링마다 전량 응답하는 대신 변경분만 전송",
+                "result": "12 스위트 39 테스트 통과, IaC plan +10 리소스 무사고 적용"
+              },
+              {
+                "problem": "1.0 vCPU 한계·cold start 40~90초·이미지 비대로 스파이크 트래픽 대응 불가",
+                "solution": "task 자원·ALB RPS 오토스케일 정책을 재설계하고 ARM64 native 빌드 + Dockerfile 경량화·마이그레이션 분리로 cold start 단축",
+                "result": "이미지 381→254MB(-127MB)·빌드 5→2분, cold start fix 후 k6 500 VU 스파이크 0% 실패"
+              },
+              {
+                "problem": "프로젝트 간 데이터 격리·요청 rate 제한·첨부 접근 제어 부재",
+                "solution": "cross-project 격리(삼중 검증 헬퍼)와 Redis 저장소 기반 rate limit(인증 5·refresh 10·메시지 30/분), 첨부 FK 정합 마이그레이션을 도입 — 인메모리 throttler는 다중 인스턴스 우회 가능성으로 기각",
+                "result": "보안 통합 머지, 타입 검사 0 에러, cross-org/project 격리 spec 정립"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "OAuth2",
+              "AWS ECS Fargate",
+              "ARM64 (Graviton)",
+              "Terraform",
+              "GitHub Actions OIDC",
+              "Redis",
               "k6",
               "Grafana"
             ]

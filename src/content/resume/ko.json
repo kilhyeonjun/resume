@@ -277,11 +277,6 @@
                 "result": "Image 동기화 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)"
               },
               {
-                "problem": "소재 처리 Lambda 비용 부담",
-                "solution": "Graviton2 ARM64 아키텍처 전환",
-                "result": "소재 처리 Lambda 비용 20% 절감"
-              },
-              {
                 "problem": "마케팅 데이터 조회 비용 급증",
                 "solution": "BigQuery Storage Read API 도입으로 gRPC 스트리밍 기반 고성능 데이터 읽기 전환",
                 "result": "BigQuery 비용 82% 절감(TB당 $6.25→$1.1)"
@@ -290,6 +285,11 @@
                 "problem": "100+ 컬럼 테이블 조회 성능 저하(18초)",
                 "solution": "테이블 3개(메인/시계열/예측) 정규화, 인덱스+커서 페이지네이션 적용",
                 "result": "조회 성능 97% 개선(18s→0.5s)"
+              },
+              {
+                "problem": "마케팅 지표 아카이브 대용량 백필 중 Lambda 실행 63초·RDS CPU 99.8% 포화로 처리 ETA 15시간",
+                "solution": "근본 원인을 N+1 쿼리와 비SARGable 날짜 조건(DATE() 인덱스 미스)으로 규명 후 제거 — 행별 조회가 RDS를 포화시키므로 30일치를 단일 배치 쿼리로 모아 in-memory에서 최신 버전만 dedup",
+                "result": "처리량 26배 개선(9.3→247건/분), Lambda 실행 63s→1.36s, RDS CPU 99.8%→5~7%"
               },
               {
                 "problem": "마케팅 RCP 데이터 엑셀 전용 + BigQuery 통합 테이블이 복수 소스 조합 구조라 콘솔 통합 조회 불가",
@@ -318,7 +318,7 @@
           {
             "name": "AWS Lambda 마이그레이션 & Event-Driven Architecture",
             "period": "2025.06 ~ 2025.08",
-            "featured": true,
+            "featured": false,
             "description": "마케팅 지표 60일 → 360일 확장에 따른 배치 작업 한계 해결 및 배치 처리 서버리스 전환",
             "techRationale": "배치·이벤트성 작업이 서버 본체에 묶여 독립 배포 불가한 제약 해소를 위해 Lambda 선택. SQS로 비동기화하여 트래픽 변동 시 처리 지연과 확장성 한계 해결.",
             "details": [
@@ -357,6 +357,48 @@
               "EventBridge",
               "RDS Proxy",
               "AWS CDK"
+            ]
+          },
+          {
+            "name": "실시간 게임 채팅 서버 (멀티테넌트)",
+            "period": "2026.04 ~ 현재",
+            "featured": true,
+            "description": "여러 라이브 게임이 공유하는 멀티테넌트 실시간 채팅 서버를 설계하고, 6,000 동시접속·18,000 RPS 목표 용량을 부하 측정으로 검증",
+            "techRationale": "메시지 순서 보장을 위해 Redis Streams 기반 WAL(Write-Ahead Log)을 채택하고, 단일 노드 수직 확장 대신 4-shard Valkey 클러스터로 분산 — 싱글스레드 Redis는 코어 증설로 쓰기 병목을 해소할 수 없기 때문. ECS Fargate ARM64 전환은 동일 부하 자원 효율 비교 측정으로 검증 후 채택.",
+            "details": [
+              {
+                "problem": "여러 라이브 게임이 공유하는 채팅 인프라의 목표 용량(동시접속·초당 요청) 기준 부재",
+                "solution": "상용 게임 채팅 솔루션의 rate limit·동시접속 기준을 분석해 멀티테넌트 통합 서버 1대 frame 기준 용량 산정식 수립",
+                "result": "6,000 동시접속(sustained)·18,000 RPS·버스트 90,000 RPS 목표 확정 및 분기 OKR 반영"
+              },
+              {
+                "problem": "Redis Streams 기반 WAL이 6K msg/s 부하에서 싱글스레드 쓰기 병목(EngineCPU 99.9%, ack p95 767ms)",
+                "solution": "WAL 스트림을 4-shard 클러스터로 분산하고 엔트리를 native field로 compact(Lua 직렬화 제거) — 싱글스레드 Redis는 수직 확장으로 병목 해소 불가하므로 샤딩 채택",
+                "result": "처리량 4,786→5,912 msg/s, 메시지 수용률 99.39→99.99%, ack p95 767ms→6.6ms"
+              },
+              {
+                "problem": "다중 테넌트 동시 부하 시 지연·에러율 SLO 충족 여부 미검증",
+                "solution": "5개 테넌트 동시 부하 측정 환경을 구성하고 hot-path 로그 제거·메시지 스코프 키 도입으로 reject 제거",
+                "result": "5분간 29.9만 메시지 sustained에서 ack p95 42ms(목표 <100ms)·에러율 0.04%(목표 <0.1%) 달성"
+              },
+              {
+                "problem": "x86 Fargate 운영의 자원 효율·비용 개선 여지 미확인",
+                "solution": "멀티플랫폼 이미지 빌드로 ARM64(Graviton) 전환 후 6,000 동시접속 부하에서 x86 대비 자원 효율을 비교 측정",
+                "result": "동일 부하에서 CPU 사용률 15%·메모리 54% 감소, 단가 동등 — 운영 비용 절감 근거 확보"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "Redis Streams",
+              "Valkey (Cluster)",
+              "DynamoDB",
+              "AWS ECS Fargate",
+              "ARM64 (Graviton)",
+              "NLB",
+              "Terraform",
+              "k6",
+              "Grafana"
             ]
           },
           {
@@ -441,6 +483,11 @@
                 "problem": "게임서버 공통 코드가 5개 브랜치로 분산 + 한 게임은 sheet 모듈 17개가 외부 패키지와 2년+ diverged",
                 "solution": "시트+5개 서브모듈을 독립 패키지로 추출 후, 한 게임에 610 파일/310+ import 일괄 마이그레이션 + config 주입·인터페이스 누락 등 9건 hotfix",
                 "result": "패키지 체계 확립 및 첫 게임 적용 — 9건 hotfix 무사고, 이후 sheet 업데이트는 npm 버전 bump 1건으로 자동 통합(수동 마이그레이션 610 파일→0)"
+              },
+              {
+                "problem": "게임 서버 공통 캐시 로직이 프로젝트마다 중복 구현되어 정합성·유지보수 부담",
+                "solution": "로컬 LRU(핫패스 지연 최소화)와 분산 캐시(인스턴스 간 일관성)를 결합한 Hybrid 전략을 데코레이터 기반 AOP 라이브러리로 패키지화 — 순수 분산은 네트워크 왕복, 순수 로컬은 인스턴스 간 불일치 문제로 결합형 채택. SRP에 따라 태그 인덱스·single-flight를 별도 모듈로 분리",
+                "result": "캐시 라이브러리 v0.5.0 릴리스 — 28 스위트 262 테스트 통과, 코드 표준 100% 준수"
               }
             ],
             "techStack": [
@@ -455,7 +502,7 @@
           {
             "name": "게임 인앱 다국어 번역 시스템",
             "period": "2026.02 ~ 현재",
-            "featured": true,
+            "featured": false,
             "description": "게임 내 알림/공지 다국어 번역 체계의 도메인 모델 재설계 — AI 번역과 라이브러리 기반 변환을 3단계 파이프라인으로 분리",
             "techRationale": "AI 번역 도메인과 라이브러리 기반 파생 변환의 책임 경계를 코드 구조에 실체화. Detection→Processing(AI)→Conversion(라이브러리) 3단계 파이프라인을 독립 모듈로 분리하고, 2단계 race guard와 pessimistic write lock으로 동시 요청 정합성 확보",
             "details": [
@@ -1151,6 +1198,82 @@
           "JWT",
           "GitHub Pages"
         ]
+      },
+      {
+        "slug": "personal",
+        "company": "개인 프로젝트 (사이드)",
+        "companyUrl": "https://github.com/kilhyeonjun",
+        "position": "플랫폼 · 툴링 엔지니어링",
+        "startDate": "2026-04",
+        "current": true,
+        "description": "직무 외 자기주도 플랫폼/툴링 엔지니어링 — AI 코딩 워크플로우 자동화 프레임워크 및 사이드 프로젝트",
+        "highlights": [],
+        "projects": [
+          {
+            "name": "개인 AI 코딩 하네스 프레임워크",
+            "period": "2026.04 ~ 현재",
+            "featured": true,
+            "description": "AI 코딩 에이전트의 컨텍스트·비용·규칙을 자동 관리하는 개인 워크플로우 프레임워크를 설계하고 3개 머신/인스턴스에 배포·운영",
+            "techRationale": "문서 전용 규칙은 에이전트가 필요 시점에 읽지 않으므로 Git 훅 기반으로 강제(hook-first)하고, 다중 인스턴스 중복 관리·버전 드리프트를 막기 위해 런처를 독립 패키지로 추출해 패키지 매니저로 배포.",
+            "details": [
+              {
+                "problem": "마크다운 지식 베이스가 커지며 에이전트가 관련 컨텍스트를 수동 탐색하는 비효율",
+                "solution": "로컬 임베딩(BGE-M3) 기반 벡터 RAG를 도입하고 마크다운 변경 시 인덱스를 자동 최신화, MCP로 에이전트가 직접 검색하도록 통합",
+                "result": "[REDACTED_PRIVATE_INVENTORY]·[REDACTED_PRIVATE_INVENTORY] 인덱싱, warm 쿼리 0.7초, 골드 쿼리 5건 모두 top-2/3 내 적중"
+              },
+              {
+                "problem": "AI 에이전트 토큰 비용의 95%가 시스템 프롬프트·서브에이전트 등 숨은 영역에서 발생해 추적 불가",
+                "solution": "세션 트랜스크립트를 8개 카테고리로 분해하는 비용 분석기를 구현하고 다중 머신·다중 도구 사용량을 단일 프로파일로 통합",
+                "result": "숨은 비용 95%를 카테고리별로 가시화, 다중 인스턴스 사용량 집계 누락 버그 발견·수정"
+              },
+              {
+                "problem": "문서 전용 규칙은 필요 시점에 적용되지 않고, 인스턴스가 늘며 startup 컨텍스트가 비대",
+                "solution": "규칙을 Git 훅 기반으로 강제(hook-first)하고 3개 인스턴스 간 core/agent 구성을 정합화해 startup 컨텍스트 감축",
+                "result": "규칙 파일 20→7개·1,174→163줄 감축, 3개 인스턴스 startup 컨텍스트 336 토큰으로 정합"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "Python",
+              "Bash",
+              "MCP",
+              "Ollama (BGE-M3)",
+              "Vector RAG",
+              "Git Hooks",
+              "Homebrew"
+            ]
+          },
+          {
+            "name": "채용 정보 자동 수집 플랫폼",
+            "period": "2026.04 ~ 현재",
+            "featured": false,
+            "description": "채용 공고를 자동 수집·정제하는 사이드 프로젝트의 배포·스케줄링 인프라 구성",
+            "details": [
+              {
+                "problem": "무료 호스팅의 cron 미지원과 관리형 DB 무료 티어의 비활성 일시정지로 정기 작업 불가",
+                "solution": "호스팅 cron 대신 자체 Mac mini의 워크플로우 자동화(n8n) 스케줄러를 채택하고 warm-up 엔드포인트와 시크릿을 표준화",
+                "result": "DB 일 1회 자동 warm-up으로 무료 티어 유지, manifest 기반 동기화 재구성"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "Supabase",
+              "n8n",
+              "Vercel"
+            ]
+          }
+        ],
+        "techStack": [
+          "TypeScript",
+          "Python",
+          "Vector RAG (Ollama)",
+          "MCP",
+          "Git Hooks",
+          "Homebrew",
+          "Supabase",
+          "n8n"
+        ],
+        "activities": []
       }
     ],
     "education": [

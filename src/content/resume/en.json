@@ -277,11 +277,6 @@
                 "result": "Image sync reduced 72% (25.7s→7.1s), DB transactions reduced 95% (10~16s→0.3~0.5s)"
               },
               {
-                "problem": "High creative processing Lambda costs on x86 architecture",
-                "solution": "Migrated Lambda to ARM64 Graviton2 architecture",
-                "result": "Reduced creative processing Lambda costs by 20%"
-              },
-              {
                 "problem": "High BigQuery query costs for marketing data reads",
                 "solution": "Adopted BigQuery Storage Read API with gRPC streaming-based high-performance data reading",
                 "result": "Reduced BigQuery costs by 82% ($6.25→$1.1 per TB)"
@@ -290,6 +285,11 @@
                 "problem": "Marketing query latency (18s) from 100+ column denormalized table",
                 "solution": "Normalized table into main/time-series/prediction, tuned indexes + cursor pagination",
                 "result": "Performance improved 97% (18s→0.5s)"
+              },
+              {
+                "problem": "Large marketing-metrics archive backfill stalled at 63s Lambda runtime and 99.8% RDS CPU, ETA 15 hours",
+                "solution": "Diagnosed the root cause as N+1 queries and a non-SARGable DATE() predicate (index miss) and removed both — chose a single 30-day batch fetch with in-memory latest-version dedup over per-row reads that were saturating RDS",
+                "result": "Improved throughput 26x (9.3→247/min), Lambda runtime 63s→1.36s, RDS CPU 99.8%→5~7%"
               },
               {
                 "problem": "Marketing RCP data was spreadsheet-only, and the BigQuery aggregation table combined multiple sources — blocking unified console queries",
@@ -318,7 +318,7 @@
           {
             "name": "AWS Lambda Migration & Event-Driven Architecture",
             "period": "2025.06 ~ 2025.08",
-            "featured": true,
+            "featured": false,
             "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
             "techRationale": "Chose Lambda to decouple batch/event workloads bound to the monolith server, enabling independent deployment. Adopted SQS for async processing to resolve scaling limitations under traffic fluctuation.",
             "details": [
@@ -357,6 +357,48 @@
               "EventBridge",
               "RDS Proxy",
               "AWS CDK"
+            ]
+          },
+          {
+            "name": "Real-Time Game Chat Server (Multi-Tenant)",
+            "period": "2026.04 ~ Present",
+            "featured": true,
+            "description": "Designed a multi-tenant real-time chat server shared across live games, validating a 6,000 CCU / 18,000 RPS capacity target through load testing",
+            "techRationale": "Adopted a Redis Streams-based WAL (Write-Ahead Log) for message ordering, and distributed it across a 4-shard Valkey cluster instead of vertical scaling — a single-threaded Redis cannot resolve write bottlenecks by adding cores. ECS Fargate ARM64 migration was adopted only after validating resource efficiency under identical load.",
+            "details": [
+              {
+                "problem": "No capacity baseline (concurrent connections, requests/sec) for chat infrastructure shared across live games",
+                "solution": "Analyzed commercial game chat solutions' rate limits and concurrency to define a capacity model for a single multi-tenant server frame",
+                "result": "Set 6,000 CCU (sustained) / 18,000 RPS / 90,000 RPS burst targets, adopted into quarterly OKRs"
+              },
+              {
+                "problem": "Redis Streams WAL hit a single-threaded write bottleneck at 6K msg/s (EngineCPU 99.9%, ack p95 767ms)",
+                "solution": "Distributed the WAL stream across a 4-shard cluster and compacted entries into native fields (removing Lua serialization) — chose sharding because single-threaded Redis cannot scale writes vertically",
+                "result": "Throughput 4,786→5,912 msg/s, message accept rate 99.39→99.99%, ack p95 767ms→6.6ms"
+              },
+              {
+                "problem": "Latency and error-rate SLOs unverified under concurrent multi-tenant load",
+                "solution": "Built a 5-tenant concurrent load-test environment and removed rejects via hot-path log removal and message scope keys",
+                "result": "Achieved ack p95 42ms (target <100ms) and 0.04% error rate (target <0.1%) at 299K messages sustained over 5 minutes"
+              },
+              {
+                "problem": "Unverified resource-efficiency and cost upside of x86 Fargate operation",
+                "solution": "Migrated to ARM64 (Graviton) via multi-platform image builds and compared resource efficiency against x86 under 6,000 CCU load",
+                "result": "Reduced CPU utilization 15% and memory 54% at identical load with neutral unit pricing — established operational cost-saving basis"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "Redis Streams",
+              "Valkey (Cluster)",
+              "DynamoDB",
+              "AWS ECS Fargate",
+              "ARM64 (Graviton)",
+              "NLB",
+              "Terraform",
+              "k6",
+              "Grafana"
             ]
           },
           {
@@ -441,6 +483,11 @@
                 "problem": "Game-server shared code split across 5 branches + one game's 17 sheet modules were 2+ years diverged from the published package",
                 "solution": "Extracted sheet + 5 submodules into a standalone package, then migrated 610 files / 310+ imports in one game and shipped 9 follow-up hotfixes (config injection, missing interface methods)",
                 "result": "Package system established with first-game adoption — 9 hotfixes shipped with zero incidents; sheet updates now flow through a single npm version bump (manual migration of 610 files → 0)"
+              },
+              {
+                "problem": "Game-server cache logic was duplicated per project, increasing consistency and maintenance burden",
+                "solution": "Packaged a hybrid strategy combining local LRU (hot-path latency) and distributed cache (cross-instance consistency) as a decorator-based AOP library — chose hybrid over pure-distributed (network round-trips) and pure-local (cross-instance inconsistency), splitting tag index and single-flight into separate modules per SRP",
+                "result": "Released cache library v0.5.0 — 262 tests across 28 suites passing, 100% code-standard compliance"
               }
             ],
             "techStack": [
@@ -455,7 +502,7 @@
           {
             "name": "In-Game Multi-Language Translation System",
             "period": "2026.02 ~ Present",
-            "featured": true,
+            "featured": false,
             "description": "Redesigned the in-game notification translation domain model — decoupling AI translation from library-based conversion into a 3-stage pipeline",
             "techRationale": "Materialized the responsibility boundary between AI translation and library-based derived conversion inside the code structure. Split the Detection → Processing (AI) → Conversion (library) pipeline into independent modules and secured concurrent request integrity with a 2-stage race guard plus pessimistic write lock",
             "details": [
@@ -1151,6 +1198,82 @@
           "JWT",
           "GitHub Pages"
         ]
+      },
+      {
+        "slug": "personal",
+        "company": "Personal Projects (Side)",
+        "companyUrl": "https://github.com/kilhyeonjun",
+        "position": "Platform / Tooling Engineering",
+        "startDate": "2026-04",
+        "current": true,
+        "description": "Self-directed platform/tooling engineering beyond day-job scope — an AI coding workflow automation framework and side projects",
+        "highlights": [],
+        "projects": [
+          {
+            "name": "Personal AI Coding Harness Framework",
+            "period": "2026.04 ~ Present",
+            "featured": true,
+            "description": "Designed a personal workflow framework that automatically manages AI coding agents' context, cost, and rules, deployed across 3 machines/instances",
+            "techRationale": "Doc-only rules are not read by agents when needed, so enforced them via Git hooks (hook-first); extracted the launcher into a standalone package distributed via a package manager to prevent multi-instance duplication and version drift.",
+            "details": [
+              {
+                "problem": "Growing markdown knowledge base made manual context discovery by agents inefficient",
+                "solution": "Introduced a local-embedding (BGE-M3) vector RAG that auto-reindexes on markdown changes and integrated direct search by agents via MCP",
+                "result": "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY], 0.7s warm query, all 5 gold test queries hit within top-2/3"
+              },
+              {
+                "problem": "95% of AI agent token cost came from hidden areas (system prompt, subagents), making it untrackable",
+                "solution": "Built a cost analyzer that decomposes session transcripts into 8 categories and consolidated multi-machine, multi-tool usage into a single profile",
+                "result": "Made 95% hidden cost visible by category; found and fixed a multi-instance usage-aggregation bug"
+              },
+              {
+                "problem": "Doc-only rules were not applied when needed, and startup context bloated as instances grew",
+                "solution": "Enforced rules via Git hooks (hook-first) and aligned core/agent configuration across 3 instances to reduce startup context",
+                "result": "Cut rule files 20→7 / 1,174→163 lines, aligned startup context to 336 tokens across 3 instances"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "Python",
+              "Bash",
+              "MCP",
+              "Ollama (BGE-M3)",
+              "Vector RAG",
+              "Git Hooks",
+              "Homebrew"
+            ]
+          },
+          {
+            "name": "Job Posting Aggregation Platform",
+            "period": "2026.04 ~ Present",
+            "featured": false,
+            "description": "Built the deployment and scheduling infrastructure for a side project that auto-collects and normalizes job postings",
+            "details": [
+              {
+                "problem": "Free-tier hosting lacked cron support and the managed DB's free tier auto-paused, blocking scheduled jobs",
+                "solution": "Adopted a self-hosted Mac mini workflow-automation (n8n) scheduler instead of hosting cron, and standardized warm-up endpoints and secrets",
+                "result": "Kept the free tier alive via daily DB warm-up and restructured manifest-based sync"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "Supabase",
+              "n8n",
+              "Vercel"
+            ]
+          }
+        ],
+        "techStack": [
+          "TypeScript",
+          "Python",
+          "Vector RAG (Ollama)",
+          "MCP",
+          "Git Hooks",
+          "Homebrew",
+          "Supabase",
+          "n8n"
+        ],
+        "activities": []
       }
     ],
     "education": [

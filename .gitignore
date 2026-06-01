@@ -60,7 +60,7 @@ screenshot-puppeteer.mjs
 jd-pipeline-workspace/
 
 # RAG index artifacts
-.rag/index.db
+.rag/index.db*
 .rag/queue
 .rag/logs/
 .rag/.debounce/

@@ -87,6 +87,9 @@
           },
           {
             "name": "Integration Test"
+          },
+          {
+            "name": "OAuth2"
           }
         ]
       },
@@ -105,6 +108,15 @@
           },
           {
             "name": "Redis"
+          },
+          {
+            "name": "Redis Streams"
+          },
+          {
+            "name": "Valkey"
+          },
+          {
+            "name": "ClickHouse"
           }
         ]
       },
@@ -113,7 +125,7 @@
         "description": "Batch-to-serverless migration, EventBridge/Kinesis event pipeline design, BigQuery cost optimization, CDK-based infrastructure as code, CI/CD pipeline",
         "items": [
           {
-            "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
+            "name": "AWS (Lambda, ECS/Fargate, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
           },
           {
             "name": "GCP (BigQuery, Pub/Sub)"
@@ -126,6 +138,12 @@
           },
           {
             "name": "CI/CD"
+          },
+          {
+            "name": "Terraform"
+          },
+          {
+            "name": "ARM64 (Graviton)"
           }
         ]
       },

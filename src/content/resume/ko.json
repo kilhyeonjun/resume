@@ -87,6 +87,9 @@
           },
           {
             "name": "Integration Test"
+          },
+          {
+            "name": "OAuth2"
           }
         ]
       },
@@ -105,6 +108,15 @@
           },
           {
             "name": "Redis"
+          },
+          {
+            "name": "Redis Streams"
+          },
+          {
+            "name": "Valkey"
+          },
+          {
+            "name": "ClickHouse"
           }
         ]
       },
@@ -113,7 +125,7 @@
         "description": "배치→서버리스 전환, EventBridge·Kinesis 기반 이벤트 파이프라인, BigQuery 비용 최적화, CDK 기반 인프라 코드화, CI/CD 파이프라인 설계",
         "items": [
           {
-            "name": "AWS (Lambda, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
+            "name": "AWS (Lambda, ECS/Fargate, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
           },
           {
             "name": "GCP (BigQuery, Pub/Sub)"
@@ -126,6 +138,12 @@
           },
           {
             "name": "CI/CD"
+          },
+          {
+            "name": "Terraform"
+          },
+          {
+            "name": "ARM64 (Graviton)"
           }
         ]
       },

@@ -1318,17 +1318,17 @@
             "details": [
               {
                 "problem": "Growing markdown knowledge base made manual context discovery by agents inefficient",
-                "solution": "Introduced a local-embedding (BGE-M3) vector RAG that auto-reindexes on markdown changes and integrated direct search by agents via MCP",
+                "solution": "Adopted a local-embedding (BGE-M3) vector RAG over cloud vector DBs (e.g., Pinecone) — chose local to auto-reindex immediately on markdown changes and avoid sync latency/cost; combined sqlite-vec with FTS5 (RRF fusion) for accuracy, exposed via MCP for direct agent search",
                 "result": "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY], 0.7s warm query, all 5 gold test queries hit within top-2/3"
               },
               {
                 "problem": "95% of AI agent token cost came from hidden areas (system prompt, subagents), making it untrackable",
-                "solution": "Built a cost analyzer that decomposes session transcripts into 8 categories and consolidated multi-machine, multi-tool usage into a single profile",
+                "solution": "Built a cost analyzer that decomposes session transcripts into 8 categories instead of simple session/model aggregation, which could not trace hidden costs — added residual tracking to consolidate multi-machine, multi-tool usage into a single profile",
                 "result": "Made 95% hidden cost visible by category; found and fixed a multi-instance usage-aggregation bug"
               },
               {
                 "problem": "Doc-only rules were not applied when needed, and startup context bloated as instances grew",
-                "solution": "Enforced rules via Git hooks (hook-first) and aligned core/agent configuration across 3 instances to reduce startup context",
+                "solution": "Switched from doc-only rules — not applied at the right moment — to Git hook enforcement (hook-first), and aligned core/agent configuration across 3 instances to reduce startup context",
                 "result": "Cut rule files 20→7 / 1,174→163 lines, aligned startup context to 336 tokens across 3 instances"
               }
             ],

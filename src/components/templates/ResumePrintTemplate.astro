@@ -24,7 +24,7 @@ const resumeUrl = `https://kilhyeonjun.github.io/resume${lang === 'en' ? '/en' :
 
 const osGrouped = groupOpenSourceByRepo(data.openSource);
 
-/** Bold key metrics: numbers with %, 배, 건, 초, ms units. 개 only when NOT followed by 월 (개월=months ≠ 개=items) */
+/** Bold key metrics: numbers with %, 배, 건, 초, ms units + scale units (동시접속/CCU/RPS/msg/s/TPS, incl. comma-grouped). 개 only when NOT followed by 월 (개월=months ≠ 개=items) */
 function boldMetrics(text: string): string {
   return text
     .replace(/(\d+[\.]?\d*%)/g, '<strong>$1</strong>')
@@ -32,7 +32,8 @@ function boldMetrics(text: string): string {
     .replace(/(\d+건)/g, '<strong>$1</strong>')
     .replace(/(\d+개)(?!월)/g, '<strong>$1</strong>')
     .replace(/(\d+\.?\d*초)/g, '<strong>$1</strong>')
-    .replace(/(\d+\.?\d*ms)/g, '<strong>$1</strong>');
+    .replace(/(\d+\.?\d*ms)/g, '<strong>$1</strong>')
+    .replace(/(\d{1,3}(?:,\d{3})+\s*(?:동시접속|CCU|RPS|msg\/s|TPS))/g, '<strong>$1</strong>');
 }
 
 /** Bold key technical terms that should stand out in 7.4s scan. Extend when curation surfaces new flagship tech (see resume-curate highlighting re-review). */

@@ -246,22 +246,22 @@
             "techRationale": "Adopted a Redis Streams-based WAL (Write-Ahead Log) for message ordering, and distributed it across a 4-shard Valkey cluster instead of vertical scaling — a single-threaded Redis cannot resolve write bottlenecks by adding cores. ECS Fargate ARM64 migration was adopted only after validating resource efficiency under identical load.",
             "details": [
               {
-                "problem": "No capacity baseline (concurrent connections, requests/sec) for chat infrastructure shared across live games",
+                "problem": "No capacity model for chat infrastructure shared across games, blocking server sizing and SLO targets",
                 "solution": "Analyzed commercial game chat solutions' rate limits and concurrency to define a capacity model for a single multi-tenant server frame",
                 "result": "Set 6,000 CCU (sustained) / 18,000 RPS / 90,000 RPS burst targets, adopted into quarterly OKRs"
               },
               {
                 "problem": "Redis Streams WAL hit a single-threaded write bottleneck at 6K msg/s (EngineCPU 99.9%, ack p95 767ms)",
                 "solution": "Distributed the WAL stream across a 4-shard cluster and compacted entries into native fields (removing Lua serialization) — chose sharding because single-threaded Redis cannot scale writes vertically",
-                "result": "Throughput 4,786→5,912 msg/s, message accept rate 99.39→99.99%, ack p95 767ms→6.6ms"
+                "result": "ack p95 767ms→6.6ms (~116x), WAL backlog 80,000→2,838 cleared, 99.99% accept rate at scale"
               },
               {
-                "problem": "Latency and error-rate SLOs unverified under concurrent multi-tenant load",
+                "problem": "Messages were 100% rejected under concurrent multi-tenant load due to a missing scope key",
                 "solution": "Built a 5-tenant concurrent load-test environment and removed rejects via hot-path log removal and message scope keys",
                 "result": "Achieved ack p95 42ms (target <100ms) and 0.04% error rate (target <0.1%) at 299K messages sustained over 5 minutes"
               },
               {
-                "problem": "Unverified resource-efficiency and cost upside of x86 Fargate operation",
+                "problem": "High CPU/memory utilization on x86 Fargate under 6,000 CCU load drove up operating cost",
                 "solution": "Migrated to ARM64 (Graviton) via multi-platform image builds and compared resource efficiency against x86 under 6,000 CCU load",
                 "result": "Reduced CPU utilization 15% and memory 54% at identical load with neutral unit pricing — established operational cost-saving basis"
               }
@@ -401,7 +401,7 @@
                 "result": "Completed independent service cutover with modularized Terraform, an 11-panel Grafana dashboard, and 8 alerts"
               },
               {
-                "problem": "Layer coupling and token-lifetime management absent in the new CS chat domain",
+                "problem": "Layer coupling and ad-hoc token lifetimes in the new CS chat domain posed security and maintenance risks",
                 "solution": "Separated responsibilities into a 4-layer Clean Architecture and introduced OAuth2 access (5min)/refresh (1h) tokens with ETag/304 polling — sending only deltas instead of full payloads per poll",
                 "result": "Passed 39 tests across 12 suites; applied IaC plan (+10 resources) with zero incidents"
               },

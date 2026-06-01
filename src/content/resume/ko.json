@@ -246,22 +246,22 @@
             "techRationale": "메시지 순서 보장을 위해 Redis Streams 기반 WAL(Write-Ahead Log)을 채택하고, 단일 노드 수직 확장 대신 4-shard Valkey 클러스터로 분산 — 싱글스레드 Redis는 코어 증설로 쓰기 병목을 해소할 수 없기 때문. ECS Fargate ARM64 전환은 동일 부하 자원 효율 비교 측정으로 검증 후 채택.",
             "details": [
               {
-                "problem": "여러 라이브 게임이 공유하는 채팅 인프라의 목표 용량(동시접속·초당 요청) 기준 부재",
+                "problem": "여러 게임이 공유하는 채팅 인프라의 용량 산정 기준이 없어 서버 사이징·SLO 목표를 정할 수 없음",
                 "solution": "상용 게임 채팅 솔루션의 rate limit·동시접속 기준을 분석해 멀티테넌트 통합 서버 1대 frame 기준 용량 산정식 수립",
                 "result": "6,000 동시접속(sustained)·18,000 RPS·버스트 90,000 RPS 목표 확정 및 분기 OKR 반영"
               },
               {
                 "problem": "Redis Streams 기반 WAL이 6K msg/s 부하에서 싱글스레드 쓰기 병목(EngineCPU 99.9%, ack p95 767ms)",
                 "solution": "WAL 스트림을 4-shard 클러스터로 분산하고 엔트리를 native field로 compact(Lua 직렬화 제거) — 싱글스레드 Redis는 수직 확장으로 병목 해소 불가하므로 샤딩 채택",
-                "result": "처리량 4,786→5,912 msg/s, 메시지 수용률 99.39→99.99%, ack p95 767ms→6.6ms"
+                "result": "ack p95 767ms→6.6ms(약 116배 단축), WAL 적체 80,000→2,838건 해소, 수용률 99.99% 달성"
               },
               {
-                "problem": "다중 테넌트 동시 부하 시 지연·에러율 SLO 충족 여부 미검증",
+                "problem": "다중 테넌트 동시 부하에서 스코프 키 누락으로 메시지가 100% reject됨",
                 "solution": "5개 테넌트 동시 부하 측정 환경을 구성하고 hot-path 로그 제거·메시지 스코프 키 도입으로 reject 제거",
                 "result": "5분간 29.9만 메시지 sustained에서 ack p95 42ms(목표 <100ms)·에러율 0.04%(목표 <0.1%) 달성"
               },
               {
-                "problem": "x86 Fargate 운영의 자원 효율·비용 개선 여지 미확인",
+                "problem": "x86 Fargate가 6,000 동시접속 부하에서 CPU·메모리 사용률이 높아 운영 비용 부담",
                 "solution": "멀티플랫폼 이미지 빌드로 ARM64(Graviton) 전환 후 6,000 동시접속 부하에서 x86 대비 자원 효율을 비교 측정",
                 "result": "동일 부하에서 CPU 사용률 15%·메모리 54% 감소, 단가 동등 — 운영 비용 절감 근거 확보"
               }
@@ -401,7 +401,7 @@
                 "result": "독립 서비스 cutover 및 Terraform 모듈화, Grafana 11-panel 대시보드·8 알림 구성"
               },
               {
-                "problem": "신규 CS 채팅 도메인의 계층 결합·토큰 수명 관리 부재",
+                "problem": "신규 CS 채팅 도메인이 계층 결합·임의 토큰 수명으로 보안·유지보수 리스크",
                 "solution": "Clean Architecture 4계층으로 책임 분리하고 OAuth2 access(5분)/refresh(1시간) 토큰과 ETag/304 폴링을 도입 — 매 폴링마다 전량 응답하는 대신 변경분만 전송",
                 "result": "12 스위트 39 테스트 통과, IaC plan +10 리소스 무사고 적용"
               },

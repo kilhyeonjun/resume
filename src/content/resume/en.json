@@ -239,43 +239,45 @@
         "highlights": [],
         "projects": [
           {
-            "name": "Marketing Platform Audit Log System",
-            "period": "2025.01 ~ 2025.04",
-            "featured": false,
-            "description": "Resolved delayed balance issue response caused by inability to track data change history during game operations",
-            "techRationale": "Adopted TypeORM EntitySubscriberInterface after dedicated analysis of subscriber behavior and constraints. Designed AOP-based approach combining Auditable decorator + Subscriber to automatically collect entity changes into a standardized audit pipeline.",
+            "name": "Real-Time Game Chat Server (Multi-Tenant)",
+            "period": "2026.04 ~ Present",
+            "featured": true,
+            "description": "Designed a multi-tenant real-time chat server shared across live games, validating a 6,000 CCU / 18,000 RPS capacity target through load testing",
+            "techRationale": "Adopted a Redis Streams-based WAL (Write-Ahead Log) for message ordering, and distributed it across a 4-shard Valkey cluster instead of vertical scaling — a single-threaded Redis cannot resolve write bottlenecks by adding cores. ECS Fargate ARM64 migration was adopted only after validating resource efficiency under identical load.",
             "details": [
               {
-                "problem": "Inability to track data change history across environments and projects",
-                "solution": "Designed Git-like version control system with UUID-based cross-environment/project entity tracking",
-                "result": "Ensured data consistency across 6 games"
+                "problem": "No capacity baseline (concurrent connections, requests/sec) for chat infrastructure shared across live games",
+                "solution": "Analyzed commercial game chat solutions' rate limits and concurrency to define a capacity model for a single multi-tenant server frame",
+                "result": "Set 6,000 CCU (sustained) / 18,000 RPS / 90,000 RPS burst targets, adopted into quarterly OKRs"
               },
               {
-                "problem": "Manual entity change recording prone to omission",
-                "solution": "Applied Event Sourcing-based change tracking with Auditable decorator + TypeORM Subscriber pattern",
-                "result": "Automated entity change tracking with consistent logging across all game environments"
+                "problem": "Redis Streams WAL hit a single-threaded write bottleneck at 6K msg/s (EngineCPU 99.9%, ack p95 767ms)",
+                "solution": "Distributed the WAL stream across a 4-shard cluster and compacted entries into native fields (removing Lua serialization) — chose sharding because single-threaded Redis cannot scale writes vertically",
+                "result": "Throughput 4,786→5,912 msg/s, message accept rate 99.39→99.99%, ack p95 767ms→6.6ms"
               },
               {
-                "problem": "Multi-environment version conflicts during data merge",
-                "solution": "Developed 3-Way Merge Engine with parent/child entity conflict detection and unique constraint handling",
-                "result": "Enabled reliable version merging across 6 games"
+                "problem": "Latency and error-rate SLOs unverified under concurrent multi-tenant load",
+                "solution": "Built a 5-tenant concurrent load-test environment and removed rejects via hot-path log removal and message scope keys",
+                "result": "Achieved ack p95 42ms (target <100ms) and 0.04% error rate (target <0.1%) at 299K messages sustained over 5 minutes"
               },
               {
-                "problem": "Expensive full-snapshot comparison for every version diff",
-                "solution": "Designed Version Diff Engine with dual strategy: incremental comparison and snapshot comparison based on Base Audit availability",
-                "result": "Dual-strategy version comparison (incremental + snapshot) for performance optimization"
-              },
-              {
-                "problem": "Entity tracking failures due to PK dependency during migration and merge",
-                "solution": "Introduced shared identifier-based entity tracking decoupled from PK dependency",
-                "result": "Ensured accurate entity tracking during migration, comparison, and merge"
+                "problem": "Unverified resource-efficiency and cost upside of x86 Fargate operation",
+                "solution": "Migrated to ARM64 (Graviton) via multi-platform image builds and compared resource efficiency against x86 under 6,000 CCU load",
+                "result": "Reduced CPU utilization 15% and memory 54% at identical load with neutral unit pricing — established operational cost-saving basis"
               }
             ],
             "techStack": [
               "TypeScript",
               "NestJS",
-              "TypeORM",
-              "MySQL"
+              "Redis Streams",
+              "Valkey (Cluster)",
+              "DynamoDB",
+              "AWS ECS Fargate",
+              "ARM64 (Graviton)",
+              "NLB",
+              "Terraform",
+              "k6",
+              "Grafana"
             ]
           },
           {
@@ -335,214 +337,6 @@
             ]
           },
           {
-            "name": "Marketing Data Archiving & Custom Dashboard",
-            "period": "2026.04 ~ Present",
-            "featured": false,
-            "description": "Built daily-snapshot archiving of marketing metrics (with immutability), a 4K-row custom dashboard, and alert observability",
-            "techRationale": "Archives must be immutable snapshots keyed by a reference-date cutoff rather than read-time state, so integrity was enforced with a stale-writer guard and tombstone states. The large grid uses visible-range lazy fetch with chunk caching instead of full loading.",
-            "details": [
-              {
-                "problem": "Displaying 4K-row marketing metrics in one dashboard caused scroll lag and cell-sync bugs",
-                "solution": "Split BE (Raw SQL DISTINCT JOIN avoiding ORM hydration + in-memory cache) and FE (visible-row lazy fetch + 200-row chunks + per-pair caching) — rejected full loading due to response size and render cost",
-                "result": "Displayed 3,341 of 4,458 rows mapped, stabilized response at 573ms cold / 221ms warm"
-              },
-              {
-                "problem": "Sync paths used the latest snapshot instead of the reference-date cutoff, violating archive immutability (data contamination)",
-                "solution": "Redesigned the usecase/repository to honor cutoff semantics, made the stale-writer guard transactional, and introduced tombstone states for sync",
-                "result": "Rebuilt 15,333 live archives (zero contamination), validated 287,020 archive-date records"
-              },
-              {
-                "problem": "A transient log-query stack (Loki) outage fired 16 marketing alerts at once, flooding ops channels",
-                "solution": "After RCA, migrated all 16 alerts to a single analytics DB (ClickHouse) query, rewrote them via the dashboard API, and set a legacy log-stack decommission policy",
-                "result": "Migrated 16/16 alerts (25 min), preventing alert-flood recurrence during log-stack outages"
-              }
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "React",
-              "AWS Lambda",
-              "BigQuery",
-              "ClickHouse",
-              "Grafana",
-              "MySQL"
-            ]
-          },
-          {
-            "name": "AWS Lambda Migration & Event-Driven Architecture",
-            "period": "2025.06 ~ 2025.08",
-            "featured": false,
-            "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
-            "techRationale": "Chose Lambda to decouple batch/event workloads bound to the monolith server, enabling independent deployment. Adopted SQS for async processing to resolve scaling limitations under traffic fluctuation.",
-            "details": [
-              {
-                "problem": "Full serverless migration risked operational stability",
-                "solution": "Designed hybrid architecture keeping API server on EC2 while separating batch/job processing to Lambda",
-                "result": "Preserved API availability with zero impact, isolating only batch workloads to contain operational risk"
-              },
-              {
-                "problem": "Batch processing limited to 60-day collection range with 2-hour runtime",
-                "solution": "Established Event-Driven flow with SQS+Lambda+EventBridge",
-                "result": "Reduced batch time 2h→5min, expanded collection 6x (60→360 days)"
-              },
-              {
-                "problem": "Data consistency risk during event publishing",
-                "solution": "Adopted Transactional Outbox Pattern for scheduled and delayed event publishing",
-                "result": "Ensured data consistency across distributed event processing"
-              },
-              {
-                "problem": "Lambda throttling, high log costs, and build OOM issues",
-                "solution": "Applied Batch Size bulk processing, CloudWatch log optimization, and build OOM remediation",
-                "result": "Deployment automation for isolated Lambda workloads — 3h→15m (92% reduction)"
-              },
-              {
-                "problem": "DB connection exhaustion during massive Lambda execution",
-                "solution": "Introduced RDS Proxy connection pooling",
-                "result": "Resolved connection exhaustion and stabilized database access"
-              }
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "AWS Lambda",
-              "SQS",
-              "SNS",
-              "EventBridge",
-              "RDS Proxy",
-              "AWS CDK"
-            ]
-          },
-          {
-            "name": "Real-Time Game Chat Server (Multi-Tenant)",
-            "period": "2026.04 ~ Present",
-            "featured": true,
-            "description": "Designed a multi-tenant real-time chat server shared across live games, validating a 6,000 CCU / 18,000 RPS capacity target through load testing",
-            "techRationale": "Adopted a Redis Streams-based WAL (Write-Ahead Log) for message ordering, and distributed it across a 4-shard Valkey cluster instead of vertical scaling — a single-threaded Redis cannot resolve write bottlenecks by adding cores. ECS Fargate ARM64 migration was adopted only after validating resource efficiency under identical load.",
-            "details": [
-              {
-                "problem": "No capacity baseline (concurrent connections, requests/sec) for chat infrastructure shared across live games",
-                "solution": "Analyzed commercial game chat solutions' rate limits and concurrency to define a capacity model for a single multi-tenant server frame",
-                "result": "Set 6,000 CCU (sustained) / 18,000 RPS / 90,000 RPS burst targets, adopted into quarterly OKRs"
-              },
-              {
-                "problem": "Redis Streams WAL hit a single-threaded write bottleneck at 6K msg/s (EngineCPU 99.9%, ack p95 767ms)",
-                "solution": "Distributed the WAL stream across a 4-shard cluster and compacted entries into native fields (removing Lua serialization) — chose sharding because single-threaded Redis cannot scale writes vertically",
-                "result": "Throughput 4,786→5,912 msg/s, message accept rate 99.39→99.99%, ack p95 767ms→6.6ms"
-              },
-              {
-                "problem": "Latency and error-rate SLOs unverified under concurrent multi-tenant load",
-                "solution": "Built a 5-tenant concurrent load-test environment and removed rejects via hot-path log removal and message scope keys",
-                "result": "Achieved ack p95 42ms (target <100ms) and 0.04% error rate (target <0.1%) at 299K messages sustained over 5 minutes"
-              },
-              {
-                "problem": "Unverified resource-efficiency and cost upside of x86 Fargate operation",
-                "solution": "Migrated to ARM64 (Graviton) via multi-platform image builds and compared resource efficiency against x86 under 6,000 CCU load",
-                "result": "Reduced CPU utilization 15% and memory 54% at identical load with neutral unit pricing — established operational cost-saving basis"
-              }
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "Redis Streams",
-              "Valkey (Cluster)",
-              "DynamoDB",
-              "AWS ECS Fargate",
-              "ARM64 (Graviton)",
-              "NLB",
-              "Terraform",
-              "k6",
-              "Grafana"
-            ]
-          },
-          {
-            "name": "CS Support Chat Server",
-            "period": "2026.04 ~ Present",
-            "featured": false,
-            "description": "Fully isolated the customer-support (CS) chat server onto ECS from a shared deployment, and validated authentication, security, and load ceilings",
-            "techRationale": "Isolated the service onto ECS (Terraform IaC + GitHub Actions OIDC) to break resource contention and deployment coupling, and adopted a centralized game-token verification path over per-game distributed checks. Rate limiting was implemented with a Redis-backed throttler for multi-instance consistency.",
-            "details": [
-              {
-                "problem": "CS chat was coupled to a shared deployment, causing resource contention and deployment coupling",
-                "solution": "Fully isolated the service onto ECS Fargate and automated deployment via Terraform IaC (S3 state), GitHub Actions OIDC, and an observability sidecar — adopted a centralized game-token verification path over per-game distributed checks",
-                "result": "Completed independent service cutover with modularized Terraform, an 11-panel Grafana dashboard, and 8 alerts"
-              },
-              {
-                "problem": "Layer coupling and token-lifetime management absent in the new CS chat domain",
-                "solution": "Separated responsibilities into a 4-layer Clean Architecture and introduced OAuth2 access (5min)/refresh (1h) tokens with ETag/304 polling — sending only deltas instead of full payloads per poll",
-                "result": "Passed 39 tests across 12 suites; applied IaC plan (+10 resources) with zero incidents"
-              },
-              {
-                "problem": "1.0 vCPU ceiling, 40~90s cold start, and bloated images blocked spike-traffic handling",
-                "solution": "Redesigned task resources and ALB RPS autoscaling, and cut cold start via native ARM64 builds and Dockerfile slimming with migration separation",
-                "result": "Reduced image 381→254MB (-127MB) / build 5→2min; 0% failure on a k6 500-VU spike after the cold-start fix"
-              },
-              {
-                "problem": "No cross-project data isolation, request rate limiting, or attachment access control",
-                "solution": "Introduced cross-project isolation (triple-validation helper), Redis-backed rate limiting (auth 5 / refresh 10 / message 30 per min), and an attachment FK integrity migration — rejected in-memory throttling for its multi-instance bypass risk",
-                "result": "Merged the security integration with zero type errors and established cross-org/project isolation specs"
-              }
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "TypeORM",
-              "OAuth2",
-              "AWS ECS Fargate",
-              "ARM64 (Graviton)",
-              "Terraform",
-              "GitHub Actions OIDC",
-              "Redis",
-              "k6",
-              "Grafana"
-            ]
-          },
-          {
-            "name": "Cloud Data Sync System",
-            "period": "2025.08 ~ Present",
-            "featured": false,
-            "description": "Built S3-based sync and automated DDL management system to resolve dynamic game data inconsistency across environments",
-            "techRationale": "Applied S3 Lifecycle policies (30d Glacier IR, 90d expiry) for cost optimization. Switched from event-triggered to scheduled execution to reduce sync miss risk.",
-            "details": [
-              {
-                "problem": "Dynamic game data inconsistency across environments",
-                "solution": "Built S3-based cross-environment data synchronization across development/staging/production",
-                "result": "Unified game data state across all environments"
-              },
-              {
-                "problem": "Manual DDL schema management causing sync failures",
-                "solution": "Created automated DDL management engine with dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME",
-                "result": "Automated database schema drift detection and reconciliation"
-              },
-              {
-                "problem": "Large-scale Cloud Data ingestion and S3 upload bottlenecks",
-                "solution": "Analyzed and optimized ingestion and upload pipeline",
-                "result": "TRUNCATE→DELETE optimization for batch operations — 77% latency reduction (57.5s→12.9s)"
-              },
-              {
-                "problem": "Sync job instability causing operational issues",
-                "solution": "Implemented job separation, transitioned scheduling approach, tuned timeouts, and introduced non-blocking processing",
-                "result": "Data layer resilience through schema optimization and safe migration strategies"
-              },
-              {
-                "problem": "Four CloudData bugs: Redis cache invalidation, DDL SKIP metadata, copy key deletion, excludeCloudData propagation",
-                "solution": "Diagnosed and fixed all four issues systematically",
-                "result": "Diagnosed and fixed 4 critical bugs to stabilize CloudData operations"
-              },
-              {
-                "problem": "Unintended full Cloud Data deletion risk from missing option forwarding",
-                "solution": "Added excludeCloudData option forwarding to four POST migration paths",
-                "result": "Blocked unintended data deletion risk"
-              }
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "TypeORM",
-              "MySQL",
-              "S3"
-            ]
-          },
-          {
             "name": "Internal Common Library System",
             "period": "2025.07 ~ Present",
             "featured": true,
@@ -595,6 +389,92 @@
             ]
           },
           {
+            "name": "CS Support Chat Server",
+            "period": "2026.04 ~ Present",
+            "featured": false,
+            "description": "Fully isolated the customer-support (CS) chat server onto ECS from a shared deployment, and validated authentication, security, and load ceilings",
+            "techRationale": "Isolated the service onto ECS (Terraform IaC + GitHub Actions OIDC) to break resource contention and deployment coupling, and adopted a centralized game-token verification path over per-game distributed checks. Rate limiting was implemented with a Redis-backed throttler for multi-instance consistency.",
+            "details": [
+              {
+                "problem": "CS chat was coupled to a shared deployment, causing resource contention and deployment coupling",
+                "solution": "Fully isolated the service onto ECS Fargate and automated deployment via Terraform IaC (S3 state), GitHub Actions OIDC, and an observability sidecar — adopted a centralized game-token verification path over per-game distributed checks",
+                "result": "Completed independent service cutover with modularized Terraform, an 11-panel Grafana dashboard, and 8 alerts"
+              },
+              {
+                "problem": "Layer coupling and token-lifetime management absent in the new CS chat domain",
+                "solution": "Separated responsibilities into a 4-layer Clean Architecture and introduced OAuth2 access (5min)/refresh (1h) tokens with ETag/304 polling — sending only deltas instead of full payloads per poll",
+                "result": "Passed 39 tests across 12 suites; applied IaC plan (+10 resources) with zero incidents"
+              },
+              {
+                "problem": "1.0 vCPU ceiling, 40~90s cold start, and bloated images blocked spike-traffic handling",
+                "solution": "Redesigned task resources and ALB RPS autoscaling, and cut cold start via native ARM64 builds and Dockerfile slimming with migration separation",
+                "result": "Reduced image 381→254MB (-127MB) / build 5→2min / cold start by 30%; 0% failure on a k6 500-VU spike"
+              },
+              {
+                "problem": "No cross-project data isolation, request rate limiting, or attachment access control",
+                "solution": "Introduced cross-project isolation (triple-validation helper), Redis-backed rate limiting (auth 5/min, refresh 10/min, message 30/min), and an attachment FK integrity migration — rejected in-memory throttling for its multi-instance bypass risk",
+                "result": "Merged the security integration with zero type errors and established cross-org/project isolation specs"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "OAuth2",
+              "AWS ECS Fargate",
+              "ARM64 (Graviton)",
+              "Terraform",
+              "GitHub Actions OIDC",
+              "Redis",
+              "k6",
+              "Grafana"
+            ]
+          },
+          {
+            "name": "AWS Lambda Migration & Event-Driven Architecture",
+            "period": "2025.06 ~ 2025.08",
+            "featured": false,
+            "description": "Resolved batch job limitations from marketing metrics 60-day → 360-day expansion and serverless transition for batch processing",
+            "techRationale": "Chose Lambda to decouple batch/event workloads bound to the monolith server, enabling independent deployment. Adopted SQS for async processing to resolve scaling limitations under traffic fluctuation.",
+            "details": [
+              {
+                "problem": "Full serverless migration risked operational stability",
+                "solution": "Designed hybrid architecture keeping API server on EC2 while separating batch/job processing to Lambda",
+                "result": "Preserved API availability with zero impact, isolating only batch workloads to contain operational risk"
+              },
+              {
+                "problem": "Batch processing limited to 60-day collection range with 2-hour runtime",
+                "solution": "Established Event-Driven flow with SQS+Lambda+EventBridge",
+                "result": "Reduced batch time 2h→5min, expanded collection 6x (60→360 days)"
+              },
+              {
+                "problem": "Data consistency risk during event publishing",
+                "solution": "Adopted Transactional Outbox Pattern for scheduled and delayed event publishing",
+                "result": "Ensured data consistency across distributed event processing"
+              },
+              {
+                "problem": "Lambda throttling, high log costs, and build OOM issues",
+                "solution": "Applied Batch Size bulk processing, CloudWatch log optimization, and build OOM remediation",
+                "result": "Deployment automation for isolated Lambda workloads — 3h→15m (92% reduction)"
+              },
+              {
+                "problem": "DB connection exhaustion during massive Lambda execution",
+                "solution": "Introduced RDS Proxy connection pooling",
+                "result": "Resolved connection exhaustion and stabilized database access"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "AWS Lambda",
+              "SQS",
+              "SNS",
+              "EventBridge",
+              "RDS Proxy",
+              "AWS CDK"
+            ]
+          },
+          {
             "name": "In-Game Multi-Language Translation System",
             "period": "2026.02 ~ Present",
             "featured": false,
@@ -628,6 +508,92 @@
               "TypeORM",
               "MySQL",
               "opencc"
+            ]
+          },
+          {
+            "name": "Marketing Platform Audit Log System",
+            "period": "2025.01 ~ 2025.04",
+            "featured": false,
+            "description": "Resolved delayed balance issue response caused by inability to track data change history during game operations",
+            "techRationale": "Adopted TypeORM EntitySubscriberInterface after dedicated analysis of subscriber behavior and constraints. Designed AOP-based approach combining Auditable decorator + Subscriber to automatically collect entity changes into a standardized audit pipeline.",
+            "details": [
+              {
+                "problem": "Inability to track data change history across environments and projects",
+                "solution": "Designed Git-like version control system with UUID-based cross-environment/project entity tracking",
+                "result": "Ensured data consistency across 6 games"
+              },
+              {
+                "problem": "Manual entity change recording prone to omission",
+                "solution": "Applied Event Sourcing-based change tracking with Auditable decorator + TypeORM Subscriber pattern",
+                "result": "Automated entity change tracking with consistent logging across all game environments"
+              },
+              {
+                "problem": "Multi-environment version conflicts during data merge",
+                "solution": "Developed 3-Way Merge Engine with parent/child entity conflict detection and unique constraint handling",
+                "result": "Enabled reliable version merging across 6 games"
+              },
+              {
+                "problem": "Expensive full-snapshot comparison for every version diff",
+                "solution": "Designed Version Diff Engine with dual strategy: incremental comparison and snapshot comparison based on Base Audit availability",
+                "result": "Dual-strategy version comparison (incremental + snapshot) for performance optimization"
+              },
+              {
+                "problem": "Entity tracking failures due to PK dependency during migration and merge",
+                "solution": "Introduced shared identifier-based entity tracking decoupled from PK dependency",
+                "result": "Ensured accurate entity tracking during migration, comparison, and merge"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "MySQL"
+            ]
+          },
+          {
+            "name": "Cloud Data Sync System",
+            "period": "2025.08 ~ Present",
+            "featured": false,
+            "description": "Built S3-based sync and automated DDL management system to resolve dynamic game data inconsistency across environments",
+            "techRationale": "Applied S3 Lifecycle policies (30d Glacier IR, 90d expiry) for cost optimization. Switched from event-triggered to scheduled execution to reduce sync miss risk.",
+            "details": [
+              {
+                "problem": "Dynamic game data inconsistency across environments",
+                "solution": "Built S3-based cross-environment data synchronization across development/staging/production",
+                "result": "Unified game data state across all environments"
+              },
+              {
+                "problem": "Manual DDL schema management causing sync failures",
+                "solution": "Created automated DDL management engine with dynamic PK column type resolution, column type mismatch detection with MODIFY, and automatic index creation/RENAME",
+                "result": "Automated database schema drift detection and reconciliation"
+              },
+              {
+                "problem": "Large-scale Cloud Data ingestion and S3 upload bottlenecks",
+                "solution": "Analyzed and optimized ingestion and upload pipeline",
+                "result": "TRUNCATE→DELETE optimization for batch operations — 77% latency reduction (57.5s→12.9s)"
+              },
+              {
+                "problem": "Sync job instability causing operational issues",
+                "solution": "Implemented job separation, transitioned scheduling approach, tuned timeouts, and introduced non-blocking processing",
+                "result": "Data layer resilience through schema optimization and safe migration strategies"
+              },
+              {
+                "problem": "Four CloudData bugs: Redis cache invalidation, DDL SKIP metadata, copy key deletion, excludeCloudData propagation",
+                "solution": "Diagnosed and fixed all four issues systematically",
+                "result": "Diagnosed and fixed 4 critical bugs to stabilize CloudData operations"
+              },
+              {
+                "problem": "Unintended full Cloud Data deletion risk from missing option forwarding",
+                "solution": "Added excludeCloudData option forwarding to four POST migration paths",
+                "result": "Blocked unintended data deletion risk"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "MySQL",
+              "S3"
             ]
           },
           {
@@ -666,6 +632,40 @@
               "Parquet",
               "LocalStack",
               "Testcontainers"
+            ]
+          },
+          {
+            "name": "Marketing Data Archiving & Custom Dashboard",
+            "period": "2026.04 ~ Present",
+            "featured": false,
+            "description": "Built daily-snapshot archiving of marketing metrics (with immutability), a 4K-row custom dashboard, and alert observability",
+            "techRationale": "Archives must be immutable snapshots keyed by a reference-date cutoff rather than read-time state, so integrity was enforced with a stale-writer guard and tombstone states. The large grid uses visible-range lazy fetch with chunk caching instead of full loading.",
+            "details": [
+              {
+                "problem": "Displaying 4K-row marketing metrics in one dashboard caused scroll lag and cell-sync bugs",
+                "solution": "Split BE (Raw SQL DISTINCT JOIN avoiding ORM hydration + in-memory cache) and FE (visible-row lazy fetch + 200-row chunks balancing network round-trips and render latency + per-pair caching) — rejected full loading due to response size and render cost",
+                "result": "Displayed 3,341 of 4,458 rows mapped, stabilized response at 573ms cold / 221ms warm"
+              },
+              {
+                "problem": "Sync paths used the latest snapshot instead of the reference-date cutoff, violating archive immutability (data contamination)",
+                "solution": "Redesigned the usecase/repository to honor cutoff semantics, made the stale-writer guard transactional, and introduced tombstone states for sync",
+                "result": "Rebuilt 15,333 live archives (zero contamination), validated 287,020 archive-date records"
+              },
+              {
+                "problem": "A transient log-query stack (Loki) outage fired 16 marketing alerts at once, flooding ops channels",
+                "solution": "After diagnosing the root cause, migrated all 16 alerts to a single analytics DB (ClickHouse) query, rewrote them via the dashboard API, and set a legacy log-stack decommission policy",
+                "result": "Migrated 16/16 alerts (25 min), preventing alert-flood recurrence during log-stack outages"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "React",
+              "AWS Lambda",
+              "BigQuery",
+              "ClickHouse",
+              "Grafana",
+              "MySQL"
             ]
           }
         ],

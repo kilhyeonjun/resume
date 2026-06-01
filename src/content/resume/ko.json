@@ -239,43 +239,45 @@
         "highlights": [],
         "projects": [
           {
-            "name": "마케팅 플랫폼 Audit Log 시스템",
-            "period": "2025.01 ~ 2025.04",
-            "featured": false,
-            "description": "게임 운영 중 데이터 변경 이력 추적 불가로 인한 밸런스 문제 대응 지연 해결",
-            "techRationale": "TypeORM EntitySubscriberInterface 동작과 제약을 별도 분석 후 채택. Auditable 데코레이터 + Subscriber 조합으로 엔티티 변경을 표준화된 Audit 파이프라인으로 자동 수집하는 AOP 방식 설계.",
+            "name": "실시간 게임 채팅 서버 (멀티테넌트)",
+            "period": "2026.04 ~ 현재",
+            "featured": true,
+            "description": "여러 라이브 게임이 공유하는 멀티테넌트 실시간 채팅 서버를 설계하고, 6,000 동시접속·18,000 RPS 목표 용량을 부하 측정으로 검증",
+            "techRationale": "메시지 순서 보장을 위해 Redis Streams 기반 WAL(Write-Ahead Log)을 채택하고, 단일 노드 수직 확장 대신 4-shard Valkey 클러스터로 분산 — 싱글스레드 Redis는 코어 증설로 쓰기 병목을 해소할 수 없기 때문. ECS Fargate ARM64 전환은 동일 부하 자원 효율 비교 측정으로 검증 후 채택.",
             "details": [
               {
-                "problem": "6개 게임 간 데이터 변경 이력 추적 불가",
-                "solution": "UUID 기반 크로스 환경/프로젝트 엔티티 추적 Git-like 버전 관리 시스템 정립",
-                "result": "6개 게임 간 데이터 일관성 보장"
+                "problem": "여러 라이브 게임이 공유하는 채팅 인프라의 목표 용량(동시접속·초당 요청) 기준 부재",
+                "solution": "상용 게임 채팅 솔루션의 rate limit·동시접속 기준을 분석해 멀티테넌트 통합 서버 1대 frame 기준 용량 산정식 수립",
+                "result": "6,000 동시접속(sustained)·18,000 RPS·버스트 90,000 RPS 목표 확정 및 분기 OKR 반영"
               },
               {
-                "problem": "엔티티 변경 기록의 수동 관리 부담",
-                "solution": "Auditable 데코레이터 + TypeORM Subscriber 패턴으로 이벤트 소싱 기반 변경 자동 기록 파이프라인 설계",
-                "result": "엔티티 변경 이력을 자동 추적하고 모든 게임 환경에서 데이터 변경을 일관되게 기록"
+                "problem": "Redis Streams 기반 WAL이 6K msg/s 부하에서 싱글스레드 쓰기 병목(EngineCPU 99.9%, ack p95 767ms)",
+                "solution": "WAL 스트림을 4-shard 클러스터로 분산하고 엔트리를 native field로 compact(Lua 직렬화 제거) — 싱글스레드 Redis는 수직 확장으로 병목 해소 불가하므로 샤딩 채택",
+                "result": "처리량 4,786→5,912 msg/s, 메시지 수용률 99.39→99.99%, ack p95 767ms→6.6ms"
               },
               {
-                "problem": "다중 환경 간 엔티티 충돌 감지 및 병합 부재",
-                "solution": "상위/하위 엔티티 충돌 감지와 유니크 제약조건을 고려한 3-Way Merge 엔진 구현",
-                "result": "6개 게임 다중 환경 간 버전 병합 자동화"
+                "problem": "다중 테넌트 동시 부하 시 지연·에러율 SLO 충족 여부 미검증",
+                "solution": "5개 테넌트 동시 부하 측정 환경을 구성하고 hot-path 로그 제거·메시지 스코프 키 도입으로 reject 제거",
+                "result": "5분간 29.9만 메시지 sustained에서 ack p95 42ms(목표 <100ms)·에러율 0.04%(목표 <0.1%) 달성"
               },
               {
-                "problem": "버전 간 변경 사항 비교 비효율",
-                "solution": "Base Audit 유무에 따른 증분 비교와 스냅샷 비교의 이중 전략 Diff 엔진 설계",
-                "result": "증분 및 스냅샷 이중 전략으로 버전 비교 성능 최적화"
-              },
-              {
-                "problem": "PK 의존 엔티티 추적의 환경 간 불일치",
-                "solution": "공유 식별자 기반 크로스 환경 엔티티 추적 체계 설계로 PK 의존 탈피",
-                "result": "마이그레이션/비교/병합 시 정확한 엔티티 추적 보장"
+                "problem": "x86 Fargate 운영의 자원 효율·비용 개선 여지 미확인",
+                "solution": "멀티플랫폼 이미지 빌드로 ARM64(Graviton) 전환 후 6,000 동시접속 부하에서 x86 대비 자원 효율을 비교 측정",
+                "result": "동일 부하에서 CPU 사용률 15%·메모리 54% 감소, 단가 동등 — 운영 비용 절감 근거 확보"
               }
             ],
             "techStack": [
               "TypeScript",
               "NestJS",
-              "TypeORM",
-              "MySQL"
+              "Redis Streams",
+              "Valkey (Cluster)",
+              "DynamoDB",
+              "AWS ECS Fargate",
+              "ARM64 (Graviton)",
+              "NLB",
+              "Terraform",
+              "k6",
+              "Grafana"
             ]
           },
           {
@@ -335,214 +337,6 @@
             ]
           },
           {
-            "name": "마케팅 데이터 아카이빙 & 커스텀 대시보드",
-            "period": "2026.04 ~ 현재",
-            "featured": false,
-            "description": "마케팅 지표의 일별 스냅샷 아카이빙(불변성 보장), 4천 행 규모 커스텀 대시보드, 알림 관측성을 구축",
-            "techRationale": "아카이브는 조회 시점이 아닌 reference-date cutoff 기준의 불변 스냅샷이어야 하므로 stale-writer guard와 tombstone 상태로 무결성을 강제. 대용량 그리드는 전량 로딩 대신 가시 영역 lazy fetch + chunk 캐싱으로 처리.",
-            "details": [
-              {
-                "problem": "4천 행 규모 마케팅 메트릭을 단일 대시보드에 표시 시 스크롤 성능 저하·셀 동기화 버그",
-                "solution": "BE는 Raw SQL DISTINCT JOIN(ORM hydration 회피)+in-memory 캐시, FE는 가시 행 lazy fetch+200행 chunk+pair별 캐싱으로 분리 — 전량 로딩은 응답 크기·렌더 비용으로 기각",
-                "result": "4,458행 중 3,341행 매핑 표시, 응답 cold 573ms/warm 221ms로 안정화"
-              },
-              {
-                "problem": "동기화 경로가 reference-date cutoff 대신 최신 스냅샷을 사용해 아카이브 불변성 위반(데이터 오염)",
-                "solution": "cutoff semantics를 준수하도록 usecase·repository를 재설계하고 stale-writer guard를 트랜잭션 처리, 동기화 상태에 tombstone을 도입",
-                "result": "live 15,333개 아카이브 재구축(오염 0), 287,020개 archive-date 검증 통과"
-              },
-              {
-                "problem": "로그 쿼리 스택(Loki) 일시 장애 시 마케팅 알림 16건이 동시 발화해 운영 채널 도배",
-                "solution": "장애 RCA 후 알림 16건을 단일 분석 DB(ClickHouse) 쿼리로 전환하고 대시보드 API로 재작성, 레거시 로그 스택 폐기 정책 수립",
-                "result": "알림 16/16 마이그레이션(25분), 로그 스택 장애 시 알림 도배 재발 방지"
-              }
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "React",
-              "AWS Lambda",
-              "BigQuery",
-              "ClickHouse",
-              "Grafana",
-              "MySQL"
-            ]
-          },
-          {
-            "name": "AWS Lambda 마이그레이션 & Event-Driven Architecture",
-            "period": "2025.06 ~ 2025.08",
-            "featured": false,
-            "description": "마케팅 지표 60일 → 360일 확장에 따른 배치 작업 한계 해결 및 배치 처리 서버리스 전환",
-            "techRationale": "배치·이벤트성 작업이 서버 본체에 묶여 독립 배포 불가한 제약 해소를 위해 Lambda 선택. SQS로 비동기화하여 트래픽 변동 시 처리 지연과 확장성 한계 해결.",
-            "details": [
-              {
-                "problem": "전체 서버리스 이관 시 운영 안정성 리스크",
-                "solution": "API 서버(EC2)는 유지하고 배치/Job 처리만 Lambda로 분리하는 하이브리드 아키텍처 설계",
-                "result": "API 가용성 무영향 보장, 배치 워크로드만 격리 이관해 운영 리스크 차단"
-              },
-              {
-                "problem": "배치 처리의 수집 기간 한계(60일) 및 처리 시간 2시간",
-                "solution": "SQS+Lambda+EventBridge 기반 Event-Driven 비동기 처리 전환",
-                "result": "처리 시간 2h→5m 단축, 수집 범위 6배 확장(60일→360일)"
-              },
-              {
-                "problem": "비동기 전환 시 데이터 정합성 보장 필요",
-                "solution": "예약·지연 발행 기반 트랜잭션 아웃박스 패턴 적용",
-                "result": "이벤트 기반 아키텍처에서 데이터 정합성 보장"
-              },
-              {
-                "problem": "Lambda 스로틀링, CloudWatch 비용 증가, 빌드 OOM 발생",
-                "solution": "Batch Size 벌크 처리, CloudWatch 로그 경량화, 빌드 OOM 조치",
-                "result": "격리된 Lambda 워크로드 자동화로 배포 시간 3시간→15분 단축"
-              },
-              {
-                "problem": "Lambda 대량 실행 시 DB 커넥션 고갈",
-                "solution": "RDS Proxy 풀링 기반 커넥션 관리 도입",
-                "result": "DB 커넥션 고갈 문제 해결"
-              }
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "AWS Lambda",
-              "SQS",
-              "SNS",
-              "EventBridge",
-              "RDS Proxy",
-              "AWS CDK"
-            ]
-          },
-          {
-            "name": "실시간 게임 채팅 서버 (멀티테넌트)",
-            "period": "2026.04 ~ 현재",
-            "featured": true,
-            "description": "여러 라이브 게임이 공유하는 멀티테넌트 실시간 채팅 서버를 설계하고, 6,000 동시접속·18,000 RPS 목표 용량을 부하 측정으로 검증",
-            "techRationale": "메시지 순서 보장을 위해 Redis Streams 기반 WAL(Write-Ahead Log)을 채택하고, 단일 노드 수직 확장 대신 4-shard Valkey 클러스터로 분산 — 싱글스레드 Redis는 코어 증설로 쓰기 병목을 해소할 수 없기 때문. ECS Fargate ARM64 전환은 동일 부하 자원 효율 비교 측정으로 검증 후 채택.",
-            "details": [
-              {
-                "problem": "여러 라이브 게임이 공유하는 채팅 인프라의 목표 용량(동시접속·초당 요청) 기준 부재",
-                "solution": "상용 게임 채팅 솔루션의 rate limit·동시접속 기준을 분석해 멀티테넌트 통합 서버 1대 frame 기준 용량 산정식 수립",
-                "result": "6,000 동시접속(sustained)·18,000 RPS·버스트 90,000 RPS 목표 확정 및 분기 OKR 반영"
-              },
-              {
-                "problem": "Redis Streams 기반 WAL이 6K msg/s 부하에서 싱글스레드 쓰기 병목(EngineCPU 99.9%, ack p95 767ms)",
-                "solution": "WAL 스트림을 4-shard 클러스터로 분산하고 엔트리를 native field로 compact(Lua 직렬화 제거) — 싱글스레드 Redis는 수직 확장으로 병목 해소 불가하므로 샤딩 채택",
-                "result": "처리량 4,786→5,912 msg/s, 메시지 수용률 99.39→99.99%, ack p95 767ms→6.6ms"
-              },
-              {
-                "problem": "다중 테넌트 동시 부하 시 지연·에러율 SLO 충족 여부 미검증",
-                "solution": "5개 테넌트 동시 부하 측정 환경을 구성하고 hot-path 로그 제거·메시지 스코프 키 도입으로 reject 제거",
-                "result": "5분간 29.9만 메시지 sustained에서 ack p95 42ms(목표 <100ms)·에러율 0.04%(목표 <0.1%) 달성"
-              },
-              {
-                "problem": "x86 Fargate 운영의 자원 효율·비용 개선 여지 미확인",
-                "solution": "멀티플랫폼 이미지 빌드로 ARM64(Graviton) 전환 후 6,000 동시접속 부하에서 x86 대비 자원 효율을 비교 측정",
-                "result": "동일 부하에서 CPU 사용률 15%·메모리 54% 감소, 단가 동등 — 운영 비용 절감 근거 확보"
-              }
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "Redis Streams",
-              "Valkey (Cluster)",
-              "DynamoDB",
-              "AWS ECS Fargate",
-              "ARM64 (Graviton)",
-              "NLB",
-              "Terraform",
-              "k6",
-              "Grafana"
-            ]
-          },
-          {
-            "name": "CS 상담 채팅 서버",
-            "period": "2026.04 ~ 현재",
-            "featured": false,
-            "description": "게임 운영 고객 상담(CS)용 채팅 서버를 공유 배포 환경에서 ECS로 완전 분리하고, 인증·보안·부하 한계를 검증",
-            "techRationale": "공유 배포 환경의 자원 경합·배포 결합을 끊기 위해 ECS로 독립 분리(Terraform IaC + GitHub Actions OIDC)하고, 게임별 분산 토큰 검증 대신 중앙집중 game token 검증 경로를 채택. rate limit은 다중 인스턴스 정합을 위해 Redis 저장소 기반 throttler로 구현.",
-            "details": [
-              {
-                "problem": "고객 상담(CS) 채팅이 공유 배포 환경에 묶여 자원 경합·배포 결합 발생",
-                "solution": "ECS Fargate로 서비스를 완전 분리하고 Terraform IaC(S3 state)·GitHub Actions OIDC·관측 sidecar로 배포 자동화 — 게임별 분산 토큰 검증 대신 중앙집중 game token 검증 경로 채택",
-                "result": "독립 서비스 cutover 및 Terraform 모듈화, Grafana 11-panel 대시보드·8 알림 구성"
-              },
-              {
-                "problem": "신규 CS 채팅 도메인의 계층 결합·토큰 수명 관리 부재",
-                "solution": "Clean Architecture 4계층으로 책임 분리하고 OAuth2 access(5분)/refresh(1시간) 토큰과 ETag/304 폴링을 도입 — 매 폴링마다 전량 응답하는 대신 변경분만 전송",
-                "result": "12 스위트 39 테스트 통과, IaC plan +10 리소스 무사고 적용"
-              },
-              {
-                "problem": "1.0 vCPU 한계·cold start 40~90초·이미지 비대로 스파이크 트래픽 대응 불가",
-                "solution": "task 자원·ALB RPS 오토스케일 정책을 재설계하고 ARM64 native 빌드 + Dockerfile 경량화·마이그레이션 분리로 cold start 단축",
-                "result": "이미지 381→254MB(-127MB)·빌드 5→2분, cold start fix 후 k6 500 VU 스파이크 0% 실패"
-              },
-              {
-                "problem": "프로젝트 간 데이터 격리·요청 rate 제한·첨부 접근 제어 부재",
-                "solution": "cross-project 격리(삼중 검증 헬퍼)와 Redis 저장소 기반 rate limit(인증 5·refresh 10·메시지 30/분), 첨부 FK 정합 마이그레이션을 도입 — 인메모리 throttler는 다중 인스턴스 우회 가능성으로 기각",
-                "result": "보안 통합 머지, 타입 검사 0 에러, cross-org/project 격리 spec 정립"
-              }
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "TypeORM",
-              "OAuth2",
-              "AWS ECS Fargate",
-              "ARM64 (Graviton)",
-              "Terraform",
-              "GitHub Actions OIDC",
-              "Redis",
-              "k6",
-              "Grafana"
-            ]
-          },
-          {
-            "name": "Cloud Data 동기화 시스템",
-            "period": "2025.08 ~ 현재",
-            "featured": false,
-            "description": "환경 간 동적 게임 데이터 불일치 문제를 해결하기 위한 S3 기반 동기화 및 DDL 자동 관리 시스템",
-            "techRationale": "S3 Lifecycle 정책(30일 Glacier IR, 90일 만료)으로 비용 최적화. 이벤트성 실행에서 스케줄링 방식으로 전환하여 동기화 누락 위험 감소.",
-            "details": [
-              {
-                "problem": "환경 간 동적 게임 데이터 불일치",
-                "solution": "S3 기반 개발/스테이징/프로덕션 환경 간 동기화 시스템 구축",
-                "result": "환경 간 데이터 일관성 보장"
-              },
-              {
-                "problem": "환경 간 스키마 불일치 수동 관리 부담",
-                "solution": "PK 컬럼 타입 동적 결정, 컬럼 타입 불일치 감지·MODIFY, 인덱스 자동 생성·RENAME DDL 자동 관리 엔진 구현",
-                "result": "데이터베이스 스키마 변경사항 자동 추적 및 동기화"
-              },
-              {
-                "problem": "Cloud Data 적재 및 S3 업로드 성능 병목",
-                "solution": "병목 구간 분석 및 저장/업로드 최적화",
-                "result": "TRUNCATE→DELETE 전환으로 대용량 데이터 처리 시간 77% 단축(57.5초→12.9초)"
-              },
-              {
-                "problem": "동기화 작업 불안정(타임아웃, 스케줄링 충돌)",
-                "solution": "job 분리, 스케줄링 방식 전환, timeout 조정, non-blocking 처리 적용",
-                "result": "마이그레이션 및 스키마 최적화로 데이터 계층 안정성 강화"
-              },
-              {
-                "problem": "CloudData 운영 장애 4건(캐시, 메타데이터, 키, 옵션 누락)",
-                "solution": "Redis 캐시 무효화, DDL SKIP 메타데이터, 복사 키 삭제, excludeCloudData 전달 누락 수정",
-                "result": "4건 장애 원인 분석 및 수정으로 CloudData 서비스 안정성 확보"
-              },
-              {
-                "problem": "시트 마이그레이션 시 excludeCloudData 옵션 미전파로 전체 삭제 리스크",
-                "solution": "POST 경로 4곳에 excludeCloudData 옵션 전달 보강",
-                "result": "Cloud Data 전체 삭제 리스크 차단"
-              }
-            ],
-            "techStack": [
-              "TypeScript",
-              "NestJS",
-              "TypeORM",
-              "MySQL",
-              "S3"
-            ]
-          },
-          {
             "name": "사내 공통 라이브러리 체계",
             "period": "2025.07 ~ 현재",
             "featured": true,
@@ -595,6 +389,92 @@
             ]
           },
           {
+            "name": "CS 상담 채팅 서버",
+            "period": "2026.04 ~ 현재",
+            "featured": false,
+            "description": "게임 운영 고객 상담(CS)용 채팅 서버를 공유 배포 환경에서 ECS로 완전 분리하고, 인증·보안·부하 한계를 검증",
+            "techRationale": "공유 배포 환경의 자원 경합·배포 결합을 끊기 위해 ECS로 독립 분리(Terraform IaC + GitHub Actions OIDC)하고, 게임별 분산 토큰 검증 대신 중앙집중 game token 검증 경로를 채택. rate limit은 다중 인스턴스 정합을 위해 Redis 저장소 기반 throttler로 구현.",
+            "details": [
+              {
+                "problem": "고객 상담(CS) 채팅이 공유 배포 환경에 묶여 자원 경합·배포 결합 발생",
+                "solution": "ECS Fargate로 서비스를 완전 분리하고 Terraform IaC(S3 state)·GitHub Actions OIDC·관측 sidecar로 배포 자동화 — 게임별 분산 토큰 검증 대신 중앙집중 game token 검증 경로 채택",
+                "result": "독립 서비스 cutover 및 Terraform 모듈화, Grafana 11-panel 대시보드·8 알림 구성"
+              },
+              {
+                "problem": "신규 CS 채팅 도메인의 계층 결합·토큰 수명 관리 부재",
+                "solution": "Clean Architecture 4계층으로 책임 분리하고 OAuth2 access(5분)/refresh(1시간) 토큰과 ETag/304 폴링을 도입 — 매 폴링마다 전량 응답하는 대신 변경분만 전송",
+                "result": "12 스위트 39 테스트 통과, IaC plan +10 리소스 무사고 적용"
+              },
+              {
+                "problem": "1.0 vCPU 한계·cold start 40~90초·이미지 비대로 스파이크 트래픽 대응 불가",
+                "solution": "task 자원·ALB RPS 오토스케일 정책을 재설계하고 ARM64 native 빌드 + Dockerfile 경량화·마이그레이션 분리로 cold start 단축",
+                "result": "이미지 381→254MB(-127MB)·빌드 5→2분·cold start 30% 단축, k6 500 VU 스파이크 0% 실패"
+              },
+              {
+                "problem": "프로젝트 간 데이터 격리·요청 rate 제한·첨부 접근 제어 부재",
+                "solution": "cross-project 격리(삼중 검증 헬퍼)와 Redis 저장소 기반 rate limit(인증 5/분·refresh 10/분·메시지 30/분), 첨부 FK 정합 마이그레이션을 도입 — 인메모리 throttler는 다중 인스턴스 우회 가능성으로 기각",
+                "result": "보안 통합 머지, 타입 검사 0 에러, cross-org/project 격리 spec 정립"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "OAuth2",
+              "AWS ECS Fargate",
+              "ARM64 (Graviton)",
+              "Terraform",
+              "GitHub Actions OIDC",
+              "Redis",
+              "k6",
+              "Grafana"
+            ]
+          },
+          {
+            "name": "AWS Lambda 마이그레이션 & Event-Driven Architecture",
+            "period": "2025.06 ~ 2025.08",
+            "featured": false,
+            "description": "마케팅 지표 60일 → 360일 확장에 따른 배치 작업 한계 해결 및 배치 처리 서버리스 전환",
+            "techRationale": "배치·이벤트성 작업이 서버 본체에 묶여 독립 배포 불가한 제약 해소를 위해 Lambda 선택. SQS로 비동기화하여 트래픽 변동 시 처리 지연과 확장성 한계 해결.",
+            "details": [
+              {
+                "problem": "전체 서버리스 이관 시 운영 안정성 리스크",
+                "solution": "API 서버(EC2)는 유지하고 배치/Job 처리만 Lambda로 분리하는 하이브리드 아키텍처 설계",
+                "result": "API 가용성 무영향 보장, 배치 워크로드만 격리 이관해 운영 리스크 차단"
+              },
+              {
+                "problem": "배치 처리의 수집 기간 한계(60일) 및 처리 시간 2시간",
+                "solution": "SQS+Lambda+EventBridge 기반 Event-Driven 비동기 처리 전환",
+                "result": "처리 시간 2h→5m 단축, 수집 범위 6배 확장(60일→360일)"
+              },
+              {
+                "problem": "비동기 전환 시 데이터 정합성 보장 필요",
+                "solution": "예약·지연 발행 기반 트랜잭션 아웃박스 패턴 적용",
+                "result": "이벤트 기반 아키텍처에서 데이터 정합성 보장"
+              },
+              {
+                "problem": "Lambda 스로틀링, CloudWatch 비용 증가, 빌드 OOM 발생",
+                "solution": "Batch Size 벌크 처리, CloudWatch 로그 경량화, 빌드 OOM 조치",
+                "result": "격리된 Lambda 워크로드 자동화로 배포 시간 3시간→15분 단축"
+              },
+              {
+                "problem": "Lambda 대량 실행 시 DB 커넥션 고갈",
+                "solution": "RDS Proxy 풀링 기반 커넥션 관리 도입",
+                "result": "DB 커넥션 고갈 문제 해결"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "AWS Lambda",
+              "SQS",
+              "SNS",
+              "EventBridge",
+              "RDS Proxy",
+              "AWS CDK"
+            ]
+          },
+          {
             "name": "게임 인앱 다국어 번역 시스템",
             "period": "2026.02 ~ 현재",
             "featured": false,
@@ -628,6 +508,92 @@
               "TypeORM",
               "MySQL",
               "opencc"
+            ]
+          },
+          {
+            "name": "마케팅 플랫폼 Audit Log 시스템",
+            "period": "2025.01 ~ 2025.04",
+            "featured": false,
+            "description": "게임 운영 중 데이터 변경 이력 추적 불가로 인한 밸런스 문제 대응 지연 해결",
+            "techRationale": "TypeORM EntitySubscriberInterface 동작과 제약을 별도 분석 후 채택. Auditable 데코레이터 + Subscriber 조합으로 엔티티 변경을 표준화된 Audit 파이프라인으로 자동 수집하는 AOP 방식 설계.",
+            "details": [
+              {
+                "problem": "6개 게임 간 데이터 변경 이력 추적 불가",
+                "solution": "UUID 기반 크로스 환경/프로젝트 엔티티 추적 Git-like 버전 관리 시스템 정립",
+                "result": "6개 게임 간 데이터 일관성 보장"
+              },
+              {
+                "problem": "엔티티 변경 기록의 수동 관리 부담",
+                "solution": "Auditable 데코레이터 + TypeORM Subscriber 패턴으로 이벤트 소싱 기반 변경 자동 기록 파이프라인 설계",
+                "result": "엔티티 변경 이력을 자동 추적하고 모든 게임 환경에서 데이터 변경을 일관되게 기록"
+              },
+              {
+                "problem": "다중 환경 간 엔티티 충돌 감지 및 병합 부재",
+                "solution": "상위/하위 엔티티 충돌 감지와 유니크 제약조건을 고려한 3-Way Merge 엔진 구현",
+                "result": "6개 게임 다중 환경 간 버전 병합 자동화"
+              },
+              {
+                "problem": "버전 간 변경 사항 비교 비효율",
+                "solution": "Base Audit 유무에 따른 증분 비교와 스냅샷 비교의 이중 전략 Diff 엔진 설계",
+                "result": "증분 및 스냅샷 이중 전략으로 버전 비교 성능 최적화"
+              },
+              {
+                "problem": "PK 의존 엔티티 추적의 환경 간 불일치",
+                "solution": "공유 식별자 기반 크로스 환경 엔티티 추적 체계 설계로 PK 의존 탈피",
+                "result": "마이그레이션/비교/병합 시 정확한 엔티티 추적 보장"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "MySQL"
+            ]
+          },
+          {
+            "name": "Cloud Data 동기화 시스템",
+            "period": "2025.08 ~ 현재",
+            "featured": false,
+            "description": "환경 간 동적 게임 데이터 불일치 문제를 해결하기 위한 S3 기반 동기화 및 DDL 자동 관리 시스템",
+            "techRationale": "S3 Lifecycle 정책(30일 Glacier IR, 90일 만료)으로 비용 최적화. 이벤트성 실행에서 스케줄링 방식으로 전환하여 동기화 누락 위험 감소.",
+            "details": [
+              {
+                "problem": "환경 간 동적 게임 데이터 불일치",
+                "solution": "S3 기반 개발/스테이징/프로덕션 환경 간 동기화 시스템 구축",
+                "result": "환경 간 데이터 일관성 보장"
+              },
+              {
+                "problem": "환경 간 스키마 불일치 수동 관리 부담",
+                "solution": "PK 컬럼 타입 동적 결정, 컬럼 타입 불일치 감지·MODIFY, 인덱스 자동 생성·RENAME DDL 자동 관리 엔진 구현",
+                "result": "데이터베이스 스키마 변경사항 자동 추적 및 동기화"
+              },
+              {
+                "problem": "Cloud Data 적재 및 S3 업로드 성능 병목",
+                "solution": "병목 구간 분석 및 저장/업로드 최적화",
+                "result": "TRUNCATE→DELETE 전환으로 대용량 데이터 처리 시간 77% 단축(57.5초→12.9초)"
+              },
+              {
+                "problem": "동기화 작업 불안정(타임아웃, 스케줄링 충돌)",
+                "solution": "job 분리, 스케줄링 방식 전환, timeout 조정, non-blocking 처리 적용",
+                "result": "마이그레이션 및 스키마 최적화로 데이터 계층 안정성 강화"
+              },
+              {
+                "problem": "CloudData 운영 장애 4건(캐시, 메타데이터, 키, 옵션 누락)",
+                "solution": "Redis 캐시 무효화, DDL SKIP 메타데이터, 복사 키 삭제, excludeCloudData 전달 누락 수정",
+                "result": "4건 장애 원인 분석 및 수정으로 CloudData 서비스 안정성 확보"
+              },
+              {
+                "problem": "시트 마이그레이션 시 excludeCloudData 옵션 미전파로 전체 삭제 리스크",
+                "solution": "POST 경로 4곳에 excludeCloudData 옵션 전달 보강",
+                "result": "Cloud Data 전체 삭제 리스크 차단"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "TypeORM",
+              "MySQL",
+              "S3"
             ]
           },
           {
@@ -666,6 +632,40 @@
               "Parquet",
               "LocalStack",
               "Testcontainers"
+            ]
+          },
+          {
+            "name": "마케팅 데이터 아카이빙 & 커스텀 대시보드",
+            "period": "2026.04 ~ 현재",
+            "featured": false,
+            "description": "마케팅 지표의 일별 스냅샷 아카이빙(불변성 보장), 4천 행 규모 커스텀 대시보드, 알림 관측성을 구축",
+            "techRationale": "아카이브는 조회 시점이 아닌 reference-date cutoff 기준의 불변 스냅샷이어야 하므로 stale-writer guard와 tombstone 상태로 무결성을 강제. 대용량 그리드는 전량 로딩 대신 가시 영역 lazy fetch + chunk 캐싱으로 처리.",
+            "details": [
+              {
+                "problem": "4천 행 규모 마케팅 메트릭을 단일 대시보드에 표시 시 스크롤 성능 저하·셀 동기화 버그",
+                "solution": "BE는 Raw SQL DISTINCT JOIN(ORM hydration 회피)+in-memory 캐시, FE는 가시 행 lazy fetch+200행 단위 청킹(네트워크 왕복과 렌더 지연의 균형점)+pair별 캐싱으로 분리 — 전량 로딩은 응답 크기·렌더 비용으로 기각",
+                "result": "4,458행 중 3,341행 매핑 표시, 응답 cold 573ms/warm 221ms로 안정화"
+              },
+              {
+                "problem": "동기화 경로가 reference-date cutoff 대신 최신 스냅샷을 사용해 아카이브 불변성 위반(데이터 오염)",
+                "solution": "cutoff semantics를 준수하도록 usecase·repository를 재설계하고 stale-writer guard를 트랜잭션 처리, 동기화 상태에 tombstone을 도입",
+                "result": "live 15,333개 아카이브 재구축(오염 0), 287,020개 archive-date 검증 통과"
+              },
+              {
+                "problem": "로그 쿼리 스택(Loki) 일시 장애 시 마케팅 알림 16건이 동시 발화해 운영 채널 도배",
+                "solution": "장애 원인을 규명한 뒤 알림 16건을 단일 분석 DB(ClickHouse) 쿼리로 전환하고 대시보드 API로 재작성, 레거시 로그 스택 폐기 정책 수립",
+                "result": "알림 16/16 마이그레이션(25분), 로그 스택 장애 시 알림 도배 재발 방지"
+              }
+            ],
+            "techStack": [
+              "TypeScript",
+              "NestJS",
+              "React",
+              "AWS Lambda",
+              "BigQuery",
+              "ClickHouse",
+              "Grafana",
+              "MySQL"
             ]
           }
         ],

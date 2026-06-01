@@ -247,12 +247,12 @@
             "details": [
               {
                 "problem": "여러 게임이 공유하는 채팅 인프라의 용량 산정 기준이 없어 서버 사이징·SLO 목표를 정할 수 없음",
-                "solution": "상용 게임 채팅 솔루션의 rate limit·동시접속 기준을 분석해 멀티테넌트 통합 서버 1대 frame 기준 용량 산정식 수립",
+                "solution": "추측 기반 산정 대신 상용 게임 채팅 솔루션의 공식 rate limit·PCU 기준을 채택해 멀티테넌트 통합 서버 1대 frame 용량 산정식 수립",
                 "result": "6,000 동시접속(sustained)·18,000 RPS·버스트 90,000 RPS 목표 확정 및 분기 OKR 반영"
               },
               {
                 "problem": "Redis Streams 기반 WAL이 6K msg/s 부하에서 싱글스레드 쓰기 병목(EngineCPU 99.9%, ack p95 767ms)",
-                "solution": "WAL 스트림을 4-shard 클러스터로 분산하고 엔트리를 native field로 compact(Lua 직렬화 제거) — 싱글스레드 Redis는 수직 확장으로 병목 해소 불가하므로 샤딩 채택",
+                "solution": "WAL 스트림을 4-shard 클러스터로 분산하고 엔트리를 native field로 compact(Lua 직렬화 제거) — 싱글스레드 Redis는 쓰기를 순차 처리해 수직 확장으로 병목 해소 불가, 수직 확장 대신 샤딩 채택",
                 "result": "ack p95 767ms→6.6ms(약 116배 단축), WAL 적체 80,000→2,838건 해소, 수용률 99.99% 달성"
               },
               {
@@ -262,7 +262,7 @@
               },
               {
                 "problem": "x86 Fargate가 6,000 동시접속 부하에서 CPU·메모리 사용률이 높아 운영 비용 부담",
-                "solution": "멀티플랫폼 이미지 빌드로 ARM64(Graviton) 전환 후 6,000 동시접속 부하에서 x86 대비 자원 효율을 비교 측정",
+                "solution": "아키텍처 가정 대신 6,000 동시접속 실부하에서 x86 대비 자원 효율을 실측 비교한 근거로 ARM64(Graviton) 전환 — 멀티플랫폼 이미지(x86/ARM64) 빌드로 양 플랫폼 동시 지원",
                 "result": "동일 부하에서 CPU 사용률 15%·메모리 54% 감소, 단가 동등 — 운영 비용 절감 근거 확보"
               }
             ],
@@ -294,7 +294,7 @@
               },
               {
                 "problem": "Meta 에셋 동기화 성능 병목",
-                "solution": "ORM 단건 저장을 벌크 처리로 전환",
+                "solution": "행별 ORM 단건 저장이 트랜잭션 오버헤드를 유발해, 단건 저장 대신 벌크 INSERT·일괄 삭제로 전환",
                 "result": "Image 동기화 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)"
               },
               {
@@ -309,12 +309,12 @@
               },
               {
                 "problem": "마케팅 지표 아카이브 대용량 백필 중 Lambda 실행 63초·RDS CPU 99.8% 포화로 처리 ETA 15시간",
-                "solution": "근본 원인을 N+1 쿼리와 비SARGable 날짜 조건(DATE() 인덱스 미스)으로 규명 후 제거 — 행별 조회가 RDS를 포화시키므로 30일치를 단일 배치 쿼리로 모아 in-memory에서 최신 버전만 dedup",
+                "solution": "근본 원인을 N+1 쿼리와 비SARGable 날짜 조건(DATE() 인덱스 미스)으로 규명 후 제거 — 행별 조회가 RDS를 포화시켜, 행별 조회 대신 30일치를 단일 배치 쿼리로 모아 in-memory에서 최신 버전만 dedup",
                 "result": "처리량 26배 개선(9.3→247건/분), Lambda 실행 63s→1.36s, RDS CPU 99.8%→5~7%"
               },
               {
                 "problem": "마케팅 RCP 데이터 엑셀 전용 + BigQuery 통합 테이블이 복수 소스 조합 구조라 콘솔 통합 조회 불가",
-                "solution": "BigQuery를 단일 소스 테이블로 전환 + Criteria-Result 패턴 field-metadata API 신설, FE 멀티셀렉트 필터·TOTAL 집계",
+                "solution": "엑셀 수작업·복수 소스 통합 테이블의 값 불일치 문제로, 복수 소스 결합 대신 단일 정규화 소스 테이블로 전환 + Criteria-Result 패턴 metadata API 신설로 표시 형식 하드코딩 제거",
                 "result": "콘솔 내 RCP 통합 조회 내장, 하드코딩 currency/소수점 표시를 BE metadata 기반으로 대체"
               }
             ],
@@ -350,7 +350,7 @@
               },
               {
                 "problem": "Repository 계층 코드 비대화(2000+줄) 및 타입 안전성 부족",
-                "solution": "Bulk·Audit Log·TypeORM 타입 좁히기 지원, 함수 오버로딩+TypeScript 제네릭 적용, SRP 분리",
+                "solution": "read-then-write 방식이 동시 쓰기에서 경쟁 상태(중복 키 충돌)를 유발해, read-then-write 대신 atomic upsert + 감사 로그 자동 분기 구현 — 함수 오버로딩·제네릭으로 타입 좁히기 지원, SRP에 따라 비대한 Repository를 목적별 모듈로 분리",
                 "result": "2000+줄 코드 정리 후 공용 Repository 계층 도입으로 CRUD 중복 제거 및 데이터 접근 표준화"
               },
               {
@@ -365,7 +365,7 @@
               },
               {
                 "problem": "CI 테스트 실행 시간 과다(15m47s)",
-                "solution": "ts-jest isolatedModules+Entity 타입 명시 적용",
+                "solution": "@swc/jest는 decorator 메타데이터 호환성이 낮아 @swc/jest 대신 tsc 네이티브 transpiler 기반 ts-jest isolatedModules + Entity 타입 명시 채택",
                 "result": "CI 61% 단축(15m47s→6m06s), 81 suites 978 tests 통과"
               },
               {

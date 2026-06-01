@@ -247,12 +247,12 @@
             "details": [
               {
                 "problem": "No capacity model for chat infrastructure shared across games, blocking server sizing and SLO targets",
-                "solution": "Analyzed commercial game chat solutions' rate limits and concurrency to define a capacity model for a single multi-tenant server frame",
+                "solution": "Based the capacity model on commercial chat solutions' published rate-limit/PCU specs instead of internal guesswork, defining a sizing formula for a single multi-tenant server frame",
                 "result": "Set 6,000 CCU (sustained) / 18,000 RPS / 90,000 RPS burst targets, adopted into quarterly OKRs"
               },
               {
                 "problem": "Redis Streams WAL hit a single-threaded write bottleneck at 6K msg/s (EngineCPU 99.9%, ack p95 767ms)",
-                "solution": "Distributed the WAL stream across a 4-shard cluster and compacted entries into native fields (removing Lua serialization) — chose sharding because single-threaded Redis cannot scale writes vertically",
+                "solution": "Distributed the WAL stream across a 4-shard cluster and compacted entries into native fields (removing Lua serialization) — chose horizontal sharding over vertical scaling, since single-threaded Redis serializes writes and cannot scale them vertically",
                 "result": "ack p95 767ms→6.6ms (~116x), WAL backlog 80,000→2,838 cleared, 99.99% accept rate at scale"
               },
               {
@@ -262,7 +262,7 @@
               },
               {
                 "problem": "High CPU/memory utilization on x86 Fargate under 6,000 CCU load drove up operating cost",
-                "solution": "Migrated to ARM64 (Graviton) via multi-platform image builds and compared resource efficiency against x86 under 6,000 CCU load",
+                "solution": "Migrated to ARM64 (Graviton) on measured evidence rather than assumption — compared resource efficiency against x86 under identical 6,000 CCU load, using multi-platform image builds to support both architectures",
                 "result": "Reduced CPU utilization 15% and memory 54% at identical load with neutral unit pricing — established operational cost-saving basis"
               }
             ],
@@ -294,7 +294,7 @@
               },
               {
                 "problem": "Meta asset sync performance bottleneck",
-                "solution": "Converted ORM single-row saves to bulk processing",
+                "solution": "Replaced per-row ORM saves — which incurred heavy transaction overhead — with bulk INSERT and batch deletes",
                 "result": "Image sync reduced 72% (25.7s→7.1s), DB transactions reduced 95% (10~16s→0.3~0.5s)"
               },
               {
@@ -314,7 +314,7 @@
               },
               {
                 "problem": "Marketing RCP data was spreadsheet-only, and the BigQuery aggregation table combined multiple sources — blocking unified console queries",
-                "solution": "Switched BigQuery to a single-source table, added Criteria-Result pattern field-metadata APIs, and built FE multi-select filters + TOTAL row aggregation",
+                "solution": "Switched to a single normalized BigQuery source table over combining multiple sources — which had produced value mismatches against the manual Excel flow — and added Criteria-Result metadata APIs to remove hardcoded display formatting",
                 "result": "Embedded unified RCP queries into the console and replaced hardcoded currency/decimal display with BE metadata-driven formatting"
               }
             ],
@@ -350,7 +350,7 @@
               },
               {
                 "problem": "Repository module lacking bulk operations and audit logging capabilities",
-                "solution": "Enhanced Repository module with Bulk/Audit Log/TypeORM narrowing using overloading + TypeScript generics; refactored 2000+ lines by SRP",
+                "solution": "Replaced a read-then-write pattern that caused write-race duplicate-key conflicts with an atomic upsert plus automatic audit-log branching; added type narrowing via overloading and generics, and split the oversized Repository into purpose-scoped modules per SRP",
                 "result": "Refactored 2000+ lines into shared Repository abstraction layer eliminating CRUD duplication"
               },
               {
@@ -365,7 +365,7 @@
               },
               {
                 "problem": "Slow CI pipeline (15m47s) due to test infrastructure inefficiency",
-                "solution": "Switched ts-jest isolatedModules and explicit Entity types",
+                "solution": "Chose tsc-native ts-jest isolatedModules with explicit Entity types over @swc/jest, which had weaker decorator-metadata compatibility",
                 "result": "Cut CI time 61% (15m47s→6m06s); passed 81 suites/978 tests"
               },
               {

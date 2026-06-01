@@ -9,13 +9,14 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer designing and operating a shared backend platform across 6 live game environments (12 branches), and leading the newly formed Platform Part to build team-wide AI development infrastructure. At GameDuo, drove an 82% reduction in BigQuery cost and a 270x expansion of pipeline throughput via serverless migration, and presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivered DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. Right after the new Part launched, I designed and shipped GameDuo Platform Harness — a shared AI context infrastructure that converts individual learnings into reusable team assets.",
+    "summary": "Backend engineer designing and operating a shared backend platform across 6 live game environments (12 branches), and leading the newly formed Platform Part to build team-wide AI development infrastructure. At GameDuo, drove an 82% BigQuery cost reduction, a 270x throughput expansion via serverless migration, and a WAL-sharded real-time game chat server (6,000 CCU target); presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivered DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. Right after the new Part launched, I designed and shipped GameDuo Platform Harness — a shared AI context infrastructure that converts individual learnings into reusable team assets.",
     "coreCompetencies": [
       {
-        "category": "DB Optimization & Concurrency Control",
+        "category": "DB Optimization, Concurrency & Distributed Systems",
         "items": [
           "Query tuning, index design, and table normalization delivering 97% performance gain",
-          "Deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks"
+          "Deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks",
+          "Sharded a Redis Streams WAL across a 4-shard cluster for real-time chat message ordering and horizontal scaling (accept rate 99.39→99.99%, ack p95 767ms→6.6ms)"
         ]
       },
       {
@@ -655,24 +656,29 @@
           "TypeScript",
           "NestJS",
           "TypeORM",
+          "gRPC",
+          "OAuth2",
           "MySQL",
           "ElastiCache (Redis)",
+          "Redis Streams",
+          "Valkey (Cluster)",
           "BigQuery",
+          "ClickHouse",
           "Apache Arrow",
-          "gRPC",
+          "Athena",
           "AWS Lambda",
           "SQS",
           "SNS",
           "EventBridge",
+          "Kinesis / Firehose",
           "S3",
           "RDS Proxy",
           "AWS CDK",
+          "ARM64 (Graviton)",
           "GCP Pub/Sub",
           "Ad Platform APIs (Google, Meta, TikTok)",
           "Slack API",
           "GitHub NPM",
-          "Kinesis / Firehose",
-          "Athena",
           "Datadog"
         ],
         "activities": [

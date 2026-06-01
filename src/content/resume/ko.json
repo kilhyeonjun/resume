@@ -9,13 +9,14 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "6개 라이브 게임 환경 (12 브랜치 운영)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 팀 AI 개발 인프라를 이끄는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery 비용 82% 절감, 서버리스 이관으로 파이프라인 처리량 270배 확장을 주도하고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 이 구조적 접근을 개발 방식 자체에 적용하여, 복수 AI 에이전트를 목적별로 오케스트레이션해 프로덕션 소프트웨어를 설계·완성하고 있습니다. 신설 Platform Part 가동 직후 팀 공유 AI 컨텍스트 인프라(GameDuo Platform Harness)를 0→1 정립하여, 개인의 AI 노하우가 팀 자산으로 축적되는 체계를 정착시켰습니다.",
+    "summary": "6개 라이브 게임 환경 (12 브랜치 운영)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 팀 AI 개발 인프라를 이끄는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery 비용 82% 절감, 서버리스 이관으로 파이프라인 처리량 270배 확장, 6,000 동시접속 목표의 실시간 게임 채팅 서버 구축을 주도하고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 이 구조적 접근을 개발 방식 자체에 적용하여, 복수 AI 에이전트를 목적별로 오케스트레이션해 프로덕션 소프트웨어를 설계·완성하고 있습니다. 신설 Platform Part 가동 직후 팀 공유 AI 컨텍스트 인프라(GameDuo Platform Harness)를 0→1 정립하여, 개인의 AI 노하우가 팀 자산으로 축적되는 체계를 정착시켰습니다.",
     "coreCompetencies": [
       {
-        "category": "DB 최적화 & 동시성 제어",
+        "category": "DB 최적화·동시성 제어·분산 시스템",
         "items": [
           "쿼리 튜닝·인덱스 모델링·테이블 정규화로 97% 성능 개선",
-          "Deadlock 근본 원인 분석·분산 락 정립으로 데이터 계층 병목 해결"
+          "Deadlock 근본 원인 분석·분산 락 정립으로 데이터 계층 병목 해결",
+          "Redis Streams 기반 WAL을 4-shard 클러스터로 분산해 실시간 채팅 메시지 순서 보장·수평 확장 (수용률 99.39→99.99%, ack p95 767ms→6.6ms)"
         ]
       },
       {
@@ -655,24 +656,29 @@
           "TypeScript",
           "NestJS",
           "TypeORM",
+          "gRPC",
+          "OAuth2",
           "MySQL",
           "ElastiCache (Redis)",
+          "Redis Streams",
+          "Valkey (Cluster)",
           "BigQuery",
+          "ClickHouse",
           "Apache Arrow",
-          "gRPC",
+          "Athena",
           "AWS Lambda",
           "SQS",
           "SNS",
           "EventBridge",
+          "Kinesis / Firehose",
           "S3",
           "RDS Proxy",
           "AWS CDK",
+          "ARM64 (Graviton)",
           "GCP Pub/Sub",
           "Ad Platform APIs (Google, Meta, TikTok)",
           "Slack API",
           "GitHub NPM",
-          "Kinesis / Firehose",
-          "Athena",
           "Datadog"
         ],
         "activities": [

@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer designing and operating a shared backend platform across 6 live game environments (12 branches), and leading the newly formed Platform Part to build team-wide AI development infrastructure. At GameDuo, drove an 82% BigQuery cost reduction, a 270x throughput expansion via serverless migration, and a WAL-sharded real-time game chat server (6,000 CCU target); presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivered DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. Right after the new Part launched, I designed and shipped GameDuo Platform Harness — a shared AI context infrastructure that converts individual learnings into reusable team assets.",
+    "summary": "Backend engineer designing and operating a shared backend platform across 6 live game environments (12 branches), and leading the newly formed Platform Part to build team-wide AI development infrastructure. At GameDuo, drove an 82% BigQuery cost reduction, a 270x throughput expansion via serverless migration, and a WAL-sharded real-time game chat server (6,000 CCU target); presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivered DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. Right after the new Part launched, I designed and shipped a team-wide shared AI development context infrastructure (git-repo-based) that converts individual learnings into reusable team assets.",
     "coreCompetencies": [
       {
         "category": "DB Optimization, Concurrency & Distributed Systems",
@@ -198,7 +198,7 @@
               },
               {
                 "problem": "Significant variance in AI agent productivity across team — context and learnings discovered by individuals did not propagate, causing repeated trial-and-error",
-                "solution": "Chose shared-config-as-code over individual docs (direct AI runtime integration) — built GameDuo Platform Harness unifying principles, coding standards, domain knowledge, agents, and hooks in one git repo",
+                "solution": "Chose Git-based config-as-code over individual documentation — docs must be re-read by humans, but codified config integrates directly into the AI runtime and applies automatically. Built a team-wide AI development context platform unifying principles, coding standards, domain knowledge, agents, and hooks in one git repo",
                 "result": "Established team-wide standardized AI context via git pull — converted individual learnings into team assets and eliminated AI productivity gap (397 domain knowledge files accumulated within ~2 weeks)"
               }
             ]
@@ -369,9 +369,9 @@
                 "result": "Cut CI time 61% (15m47s→6m06s); passed 81 suites/978 tests"
               },
               {
-                "problem": "Game-server shared code split across 5 branches + one game's 17 sheet modules were 2+ years diverged from the published package",
-                "solution": "Extracted sheet + 5 submodules into a standalone package, then migrated 610 files / 310+ imports in one game and shipped 9 follow-up hotfixes (config injection, missing interface methods)",
-                "result": "Package system established with first-game adoption — 9 hotfixes shipped with zero incidents; sheet updates now flow through a single npm version bump (manual migration of 610 files → 0)"
+                "problem": "Game-server shared code split across 5 branches + one game's 17 game-data definition modules were 2+ years diverged from the published package",
+                "solution": "Extracted the game-data definition modules + 5 submodules into a standalone package, then migrated 610 files / 310+ imports in one game and shipped 9 follow-up hotfixes (config injection, missing interface methods)",
+                "result": "Package system established with first-game adoption — 9 hotfixes shipped with zero incidents; game-data module updates now flow through a single npm version bump (manual migration of 610 files → 0)"
               },
               {
                 "problem": "Game-server cache logic was duplicated per project, increasing consistency and maintenance burden",
@@ -578,14 +578,14 @@
                 "result": "Data layer resilience through schema optimization and safe migration strategies"
               },
               {
-                "problem": "Four CloudData bugs: Redis cache invalidation, DDL SKIP metadata, copy key deletion, excludeCloudData propagation",
+                "problem": "Four data-sync service bugs: Redis cache invalidation, DDL-SKIP metadata, copy-key deletion, and data-protection option propagation",
                 "solution": "Diagnosed and fixed all four issues systematically",
-                "result": "Diagnosed and fixed 4 critical bugs to stabilize CloudData operations"
+                "result": "Diagnosed and fixed 4 critical bugs to stabilize data-sync operations"
               },
               {
-                "problem": "Unintended full Cloud Data deletion risk from missing option forwarding",
-                "solution": "Added excludeCloudData option forwarding to four POST migration paths",
-                "result": "Blocked unintended data deletion risk"
+                "problem": "Risk of unintended full data deletion when a protection option was not forwarded on some migration paths",
+                "solution": "Forwarded the data-protection option across the four POST migration paths that were missing it",
+                "result": "Blocked unintended full data deletion risk"
               }
             ],
             "techStack": [
@@ -850,9 +850,9 @@
             "contribution": "FE developer in 1 BE + 2 FE team. Implemented Admin/Dashboard document upload, classification, and audit trail features.",
             "details": [
               {
-                "problem": "No document management interface for clinical Trial Master File system",
-                "solution": "Implemented document upload, classification, version management, and Audit Trail functionality for Admin/Dashboard",
-                "result": "Delivered complete TMF management frontend"
+                "problem": "No systematic Trial Master File (TMF) management system — inefficient regulatory compliance and document tracking",
+                "solution": "Mobilized as an emergency developer in a 1 BE + 2 FE team; defined MVP scope and built document upload, classification, version control, and Audit Trail on the Admin/Dashboard",
+                "result": "Delivered the TMF management frontend MVP in 3 months, establishing systematic management of clinical-trial essential documents"
               }
             ],
             "techStack": [

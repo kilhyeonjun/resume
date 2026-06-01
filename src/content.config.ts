@@ -193,6 +193,8 @@ const labelsSchema = z.object({
 const resumeSchema = z.object({
   personalInfo: personalInfoSchema,
   summary: z.string(),
+  // Optional JD-aware bold override for HR PDF auto-bold (resume-jd sets this from JD keywords; base leaves it unset → default KEY_TERMS).
+  boldTerms: z.array(z.string()).optional(),
   coreCompetencies: z.array(coreCompetencySchema),
   skills: z.array(skillCategorySchema),
   experience: z.array(experienceSchema),

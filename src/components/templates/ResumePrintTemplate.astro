@@ -36,8 +36,10 @@ function boldMetrics(text: string): string {
     .replace(/(\d{1,3}(?:,\d{3})+\s*(?:동시접속|CCU|RPS|msg\/s|TPS))/g, '<strong>$1</strong>');
 }
 
-/** Bold key technical terms that should stand out in 7.4s scan. Extend when curation surfaces new flagship tech (see resume-curate highlighting re-review). */
-const KEY_TERMS = ['Deadlock', 'EDA', 'BigQuery', 'Lambda', 'NestJS', 'TDD', 'gRPC', 'MSA', 'Redis Streams', 'Valkey', 'WAL', 'ClickHouse', 'ARM64', 'DynamoDB', 'Terraform'];
+/** Bold key technical terms that should stand out in 7.4s scan. Extend when curation surfaces new flagship tech (see resume-curate highlighting re-review).
+ *  JD-aware: when resumeData.boldTerms is set (resume-jd populates it from the JD's stack), it OVERRIDES the default — so a Java/Spring JD bolds Java/Spring/React and NOT the candidate's non-JD framework (e.g. NestJS). Base leaves boldTerms unset → default. */
+const DEFAULT_KEY_TERMS = ['Deadlock', 'EDA', 'BigQuery', 'Lambda', 'NestJS', 'TDD', 'gRPC', 'MSA', 'Redis Streams', 'Valkey', 'WAL', 'ClickHouse', 'ARM64', 'DynamoDB', 'Terraform'];
+const KEY_TERMS = (resumeData.boldTerms && resumeData.boldTerms.length > 0) ? resumeData.boldTerms : DEFAULT_KEY_TERMS;
 function boldKeyTerms(text: string): string {
   let result = text;
   for (const term of KEY_TERMS) {

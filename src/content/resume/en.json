@@ -243,7 +243,7 @@
             "period": "2026.04 ~ Present",
             "featured": true,
             "description": "Designed a multi-tenant real-time chat server shared across live games, validating a 6,000 CCU / 18,000 RPS capacity target through load testing",
-            "techRationale": "Adopted a Redis Streams-based WAL (Write-Ahead Log) for message ordering, and distributed it across a 4-shard Valkey cluster instead of vertical scaling — a single-threaded Redis cannot resolve write bottlenecks by adding cores. ECS Fargate ARM64 migration was adopted only after validating resource efficiency under identical load.",
+            "techRationale": "Adopted a Redis Streams Consumer Group-based WAL (Write-Ahead Log) for message ordering, and distributed it across a 4-shard Valkey cluster instead of vertical scaling — a single-threaded Redis cannot resolve write bottlenecks by adding cores. ECS Fargate ARM64 migration was adopted only after validating resource efficiency under identical load.",
             "details": [
               {
                 "problem": "No capacity model for chat infrastructure shared across games, blocking server sizing and SLO targets",

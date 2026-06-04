@@ -243,7 +243,7 @@
             "period": "2026.04 ~ 현재",
             "featured": true,
             "description": "여러 라이브 게임이 공유하는 멀티테넌트 실시간 채팅 서버를 설계하고, 6,000 동시접속·18,000 RPS 목표 용량을 부하 측정으로 검증",
-            "techRationale": "메시지 순서 보장을 위해 Redis Streams 기반 WAL(Write-Ahead Log)을 채택하고, 단일 노드 수직 확장 대신 4-shard Valkey 클러스터로 분산 — 싱글스레드 Redis는 코어 증설로 쓰기 병목을 해소할 수 없기 때문. ECS Fargate ARM64 전환은 동일 부하 자원 효율 비교 측정으로 검증 후 채택.",
+            "techRationale": "메시지 순서 보장을 위해 Redis Streams Consumer Group 기반 WAL(Write-Ahead Log)을 채택하고, 단일 노드 수직 확장 대신 4-shard Valkey 클러스터로 분산 — 싱글스레드 Redis는 코어 증설로 쓰기 병목을 해소할 수 없기 때문. ECS Fargate ARM64 전환은 동일 부하 자원 효율 비교 측정으로 검증 후 채택.",
             "details": [
               {
                 "problem": "여러 게임이 공유하는 채팅 인프라의 용량 산정 기준이 없어 서버 사이징·SLO 목표를 정할 수 없음",

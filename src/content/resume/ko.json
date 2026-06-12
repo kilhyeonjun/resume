@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "6개 라이브 게임 환경 (12 브랜치 운영)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 팀 AI 개발 인프라를 이끄는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery 비용 82% 절감, 서버리스 이관으로 파이프라인 처리량 270배 확장, 6,000 동시접속 목표의 실시간 게임 채팅 서버 구축을 주도하고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 이 구조적 접근을 개발 방식 자체에 적용하여, 복수 AI 에이전트를 목적별로 오케스트레이션해 프로덕션 소프트웨어를 설계·완성하고 있습니다. 신설 Platform Part 가동 직후 팀 공유 AI 개발 컨텍스트 인프라를 0→1 정립하여, 개인의 AI 노하우가 팀 자산으로 축적되는 체계를 정착시켰습니다.",
+    "summary": "6개 라이브 게임 환경 (12 브랜치 운영)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 팀 AI 개발 인프라를 이끄는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery 비용 82% 절감, 서버리스 이관으로 파이프라인 처리량 270배 확장, 6,000 동시접속 목표의 실시간 게임 채팅 서버 구축을 주도하고, Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 이벤트 기반 아키텍처 설계를 일관되게 수행해 왔습니다. 2024년 말부터는 이 구조적 접근을 개발 방식 자체에 적용하여, 복수 AI 에이전트를 목적별로 오케스트레이션해 프로덕션 소프트웨어를 설계·완성하고 있습니다. 신설 Platform Part 가동 직후 Git 기반 팀 공유 AI 개발 컨텍스트 인프라를 0→1 정립하고, 개인 하네스에서는 로컬 RAG·MCP·훅 기반 거버넌스로 AI 작업의 근거 검색과 품질 관리를 자동화했습니다.",
     "coreCompetencies": [
       {
         "category": "DB 최적화·동시성 제어·분산 시스템",
@@ -37,6 +37,7 @@
         "category": "AI 도구 활용 개발 생산성",
         "items": [
           "Claude Code·Amazon Q 등 AI 에이전트를 개발 워크플로우에 통합, 팀 단위 활용 확산 주도, Games on AWS 2025 고객 세션 발표",
+          "로컬 RAG·MCP·Git 훅 기반 하네스로 AI 세션 컨텍스트 검색·규칙 강제·비용 관측성 자동화",
           "AI 생성 코드의 신뢰성 확보를 위해 팀 전체 TDD 기반 도입 — AI 코드 품질 거버넌스 체계 수립"
         ]
       }
@@ -149,7 +150,7 @@
       },
       {
         "category": "Development Productivity",
-        "description": "AI 에이전트 활용 개발, AGENTS.md 기반 컨텍스트 엔지니어링, 멀티 에이전트 오케스트레이션, 코드 품질 자동화",
+        "description": "AI 에이전트 활용 개발, AGENTS.md 기반 컨텍스트 엔지니어링, 멀티 에이전트 오케스트레이션, RAG/MCP 기반 코드 품질 자동화",
         "items": [
           {
             "name": "Claude Code"
@@ -168,6 +169,15 @@
           },
           {
             "name": "AGENTS.md"
+          },
+          {
+            "name": "MCP"
+          },
+          {
+            "name": "Vector RAG"
+          },
+          {
+            "name": "Git Hooks"
           }
         ]
       }
@@ -1313,8 +1323,8 @@
             "name": "개인 AI 코딩 하네스 프레임워크",
             "period": "2026.04 ~ 현재",
             "featured": true,
-            "description": "AI 코딩 에이전트의 컨텍스트·비용·규칙을 자동 관리하는 개인 워크플로우 프레임워크를 설계하고 3개 머신/인스턴스에 배포·운영",
-            "techRationale": "문서 전용 규칙은 에이전트가 필요 시점에 읽지 않으므로 Git 훅 기반으로 강제(hook-first)하고, 다중 인스턴스 중복 관리·버전 드리프트를 막기 위해 런처를 독립 패키지로 추출해 패키지 매니저로 배포.",
+            "description": "AI 코딩 에이전트의 컨텍스트·비용·규칙·RAG·브라우저 런타임을 자동 관리하는 개인 워크플로우 프레임워크를 설계하고 3개 하네스에 배포·운영",
+            "techRationale": "문서 전용 규칙은 에이전트가 필요 시점에 읽지 않으므로 Git 훅 기반으로 강제(hook-first)하고, 다중 인스턴스 중복 관리·버전 드리프트를 막기 위해 런타임 서피스 컴파일러와 런처 패키지로 Claude/Codex 설정을 생성·검증.",
             "details": [
               {
                 "problem": "마크다운 지식 베이스가 커지며 에이전트가 관련 컨텍스트를 수동 탐색하는 비효율",
@@ -1322,14 +1332,24 @@
                 "result": "[REDACTED_PRIVATE_INVENTORY]·[REDACTED_PRIVATE_INVENTORY] 인덱싱, warm 쿼리 0.7초, 골드 쿼리 5건 모두 top-2/3 내 적중"
               },
               {
+                "problem": "RAG가 opt-in 참고 도구라 조사·검토 프롬프트에서 근거 검색이 누락",
+                "solution": "UserPromptSubmit 기본 트리거로 전환하고 프롬프트 12자 이상이면 private_search_tool가 자동 호출되도록 3개 하네스에 포팅",
+                "result": "3개 하네스 15/15 default-on 테스트 통과, 실 프롬프트 smoke test에서 1회차 검색 적중"
+              },
+              {
+                "problem": "이력서·포트폴리오 JSON이 RAG 검색 범위 밖이라 JD 커스터마이징 시 근거 검색 누락",
+                "solution": "portfolio/resume JSON chunker, target=resume 색인 경로, path-based auto-reindex, federation 검색 구현",
+                "result": "resume corpus [REDACTED_PRIVATE_INVENTORY] 색인, 32개 테스트 통과, 4개 DB 통합 검색 동작 확인"
+              },
+              {
                 "problem": "AI 에이전트 토큰 비용의 95%가 시스템 프롬프트·서브에이전트 등 숨은 영역에서 발생해 추적 불가",
                 "solution": "단순 session/model 집계로는 숨은 비용을 추적 못 해, 단순 집계 대신 세션 트랜스크립트를 8개 카테고리로 분해하는 비용 분석기 구현 — residual 추적으로 다중 머신·다중 도구 사용량을 단일 프로파일로 통합",
                 "result": "숨은 비용 95%를 카테고리별로 가시화, 다중 인스턴스 사용량 집계 누락 버그 발견·수정"
               },
               {
-                "problem": "문서 전용 규칙은 필요 시점에 적용되지 않고, 인스턴스가 늘며 startup 컨텍스트가 비대",
-                "solution": "문서 전용 규칙은 적시에 적용되지 않아, 문서 규칙 대신 Git 훅 기반 강제(hook-first)로 전환하고 3개 인스턴스 간 core/agent 구성을 정합화해 startup 컨텍스트 감축",
-                "result": "규칙 파일 20→7개·1,174→163줄 감축, 3개 인스턴스 startup 컨텍스트 336 토큰으로 정합"
+                "problem": "Codex Browser와 node_repl 런타임의 신뢰 경계·fallback 순서가 불명확해 브라우저 자동화가 세션별로 불안정",
+                "solution": "node_repl MCP 신뢰 경계와 environment-native Browser/Codex/Chrome fallback 순서를 문서화하고, 런처 생성기에 Chrome 플러그인 활성화 경로 반영",
+                "result": "private profiles 3개 하네스에 node_repl 등록, browser runtime 신뢰 경계 및 fallback 순서 정립"
               }
             ],
             "techStack": [

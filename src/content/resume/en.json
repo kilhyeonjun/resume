@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer designing and operating a shared backend platform across 6 live game environments (12 branches), and leading the newly formed Platform Part to build team-wide AI development infrastructure. At GameDuo, drove an 82% BigQuery cost reduction, a 270x throughput expansion via serverless migration, and a WAL-sharded real-time game chat server (6,000 CCU target); presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivered DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. Right after the new Part launched, I designed and shipped a team-wide shared AI development context infrastructure (git-repo-based) that converts individual learnings into reusable team assets.",
+    "summary": "Backend engineer designing and operating a shared backend platform across 6 live game environments (12 branches), and leading the newly formed Platform Part to build team-wide AI development infrastructure. At GameDuo, drove an 82% BigQuery cost reduction, a 270x throughput expansion via serverless migration, and a WAL-sharded real-time game chat server (6,000 CCU target); presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivered DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. Right after the new Part launched, I established Git-based team-wide AI development context infrastructure from scratch; in my personal harness, I automated evidence search and quality governance through local RAG, MCP, and hook-based enforcement.",
     "coreCompetencies": [
       {
         "category": "DB Optimization, Concurrency & Distributed Systems",
@@ -37,6 +37,7 @@
         "category": "AI-Augmented Development Productivity",
         "items": [
           "Integrated Claude Code, Amazon Q, and other AI agents into development workflows, driving team-wide adoption (Games on AWS 2025 speaker)",
+          "Automated AI-session context search, rule enforcement, and cost observability through a local RAG/MCP/Git-hook harness",
           "Established team-wide TDD foundation to ensure AI-generated code reliability — built a quality governance layer for AI-assisted development"
         ]
       }
@@ -149,7 +150,7 @@
       },
       {
         "category": "Development Productivity",
-        "description": "AI agent-augmented development, AGENTS.md-based context engineering, multi-agent orchestration, automated code quality",
+        "description": "AI agent-augmented development, AGENTS.md-based context engineering, multi-agent orchestration, RAG/MCP-based code quality automation",
         "items": [
           {
             "name": "Claude Code"
@@ -168,6 +169,15 @@
           },
           {
             "name": "AGENTS.md"
+          },
+          {
+            "name": "MCP"
+          },
+          {
+            "name": "Vector RAG"
+          },
+          {
+            "name": "Git Hooks"
           }
         ]
       }
@@ -1313,8 +1323,8 @@
             "name": "Personal AI Coding Harness Framework",
             "period": "2026.04 ~ Present",
             "featured": true,
-            "description": "Designed a personal workflow framework that automatically manages AI coding agents' context, cost, and rules, deployed across 3 machines/instances",
-            "techRationale": "Doc-only rules are not read by agents when needed, so enforced them via Git hooks (hook-first); extracted the launcher into a standalone package distributed via a package manager to prevent multi-instance duplication and version drift.",
+            "description": "Designed a personal workflow framework that automatically manages AI coding agents' context, cost, rules, RAG, and browser runtime, deployed across 3 harnesses",
+            "techRationale": "Doc-only rules are not read by agents when needed, so enforced them via Git hooks (hook-first); used a runtime surface compiler and launcher package to generate and verify Claude/Codex settings, preventing multi-instance duplication and version drift.",
             "details": [
               {
                 "problem": "Growing markdown knowledge base made manual context discovery by agents inefficient",
@@ -1322,14 +1332,24 @@
                 "result": "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY], 0.7s warm query, all 5 gold test queries hit within top-2/3"
               },
               {
+                "problem": "RAG was an opt-in reference tool, so evidence search was missed during investigation and review prompts",
+                "solution": "Moved to a default UserPromptSubmit trigger and ported it across 3 harnesses so prompts of 12+ characters call private_search_tool automatically",
+                "result": "Passed 15/15 default-on tests across 3 harnesses and hit the target on the first search in a real-prompt smoke test"
+              },
+              {
+                "problem": "Resume and portfolio JSON were outside the RAG search scope, leaving JD customization without evidence search over those surfaces",
+                "solution": "Implemented portfolio/resume JSON chunkers, target=resume indexing, path-based auto-reindexing, and federated search",
+                "result": "Indexed 109 resume-corpus chunks, passed 32 tests, and verified federated search across 4 DBs"
+              },
+              {
                 "problem": "95% of AI agent token cost came from hidden areas (system prompt, subagents), making it untrackable",
                 "solution": "Built a cost analyzer that decomposes session transcripts into 8 categories instead of simple session/model aggregation, which could not trace hidden costs — added residual tracking to consolidate multi-machine, multi-tool usage into a single profile",
                 "result": "Made 95% hidden cost visible by category; found and fixed a multi-instance usage-aggregation bug"
               },
               {
-                "problem": "Doc-only rules were not applied when needed, and startup context bloated as instances grew",
-                "solution": "Switched from doc-only rules — not applied at the right moment — to Git hook enforcement (hook-first), and aligned core/agent configuration across 3 instances to reduce startup context",
-                "result": "Cut rule files 20→7 / 1,174→163 lines, aligned startup context to 336 tokens across 3 instances"
+                "problem": "Codex Browser and node_repl runtime trust boundaries and fallback order were unclear, making browser automation unstable across sessions",
+                "solution": "Documented node_repl MCP trust boundaries and environment-native Browser/Codex/Chrome fallback order, then reflected Chrome plugin activation in the launcher generator",
+                "result": "Registered node_repl across private profiles harnesses and established browser runtime trust-boundary plus fallback policy"
               }
             ],
             "techStack": [

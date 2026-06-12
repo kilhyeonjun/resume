@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">AI Coding Harness Architecture</title>
+  <desc id="desc">Architecture diagram showing canonical harness source flowing to runtime surfaces, hooks, RAG, MCP, and verification.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+      .blue { fill: #eff6ff; stroke: #60a5fa; }
+      .green { fill: #ecfdf5; stroke: #34d399; }
+      .orange { fill: #fff7ed; stroke: #fb923c; }
+      .slate { fill: #f8fafc; stroke: #94a3b8; }
+      .title { font: 700 20px Arial, sans-serif; fill: #0f172a; }
+      .label { font: 600 15px Arial, sans-serif; fill: #1e293b; }
+      .small { font: 13px Arial, sans-serif; fill: #475569; }
+      .edge { fill: none; stroke: #2563eb; stroke-width: 3; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="#f8fafc"/>
+  <text x="60" y="58" class="title">AI Coding Harness Architecture</text>
+  <text x="60" y="86" class="small">Canonical source generates runtime surfaces, enforces rules, and injects searchable evidence into agent work.</text>
+
+  <rect x="60" y="135" width="240" height="135" rx="16" class="blue"/>
+  <text x="90" y="172" class="label">Canonical Source</text>
+  <text x="90" y="202" class="small">rules · skills · agents</text>
+  <text x="90" y="225" class="small">domain knowledge</text>
+  <text x="90" y="248" class="small">runtime source config</text>
+
+  <rect x="465" y="120" width="270" height="165" rx="18" class="green"/>
+  <text x="500" y="158" class="label">Runtime Surface Compiler</text>
+  <text x="500" y="190" class="small">CLAUDE.md / AGENTS.md</text>
+  <text x="500" y="213" class="small">Codex home preparation</text>
+  <text x="500" y="236" class="small">cross-harness verification</text>
+  <text x="500" y="259" class="small">XML runtime contracts</text>
+
+  <rect x="880" y="135" width="260" height="135" rx="16" class="blue"/>
+  <text x="912" y="172" class="label">Agent Runtimes</text>
+  <text x="912" y="202" class="small">Claude Code</text>
+  <text x="912" y="225" class="small">Native Codex</text>
+  <text x="912" y="248" class="small">Amazon Q / Browser tools</text>
+
+  <rect x="60" y="395" width="260" height="170" rx="16" class="orange"/>
+  <text x="92" y="432" class="label">Hook-First Governance</text>
+  <text x="92" y="464" class="small">pre-edit context</text>
+  <text x="92" y="487" class="small">prompt default-on RAG</text>
+  <text x="92" y="510" class="small">commit context</text>
+  <text x="92" y="533" class="small">forbidden-pattern guards</text>
+
+  <rect x="465" y="375" width="270" height="210" rx="18" class="green"/>
+  <text x="500" y="412" class="label">Local RAG + MCP</text>
+  <text x="500" y="444" class="small">BGE-M3 via Ollama</text>
+  <text x="500" y="467" class="small">sqlite-vec + FTS5</text>
+  <text x="500" y="490" class="small">RRF hybrid search</text>
+  <text x="500" y="513" class="small">resume / portfolio corpus</text>
+  <text x="500" y="536" class="small">usage logging + watchdog</text>
+
+  <rect x="880" y="395" width="260" height="170" rx="16" class="slate"/>
+  <text x="912" y="432" class="label">Verification + Observability</text>
+  <text x="912" y="464" class="small">Python / shell test suites</text>
+  <text x="912" y="487" class="small">cost analyzer</text>
+  <text x="912" y="510" class="small">browser trust boundary</text>
+  <text x="912" y="533" class="small">fallback policy docs</text>
+
+  <path d="M300 202 H465" class="edge"/>
+  <path d="M735 202 H880" class="edge"/>
+  <path d="M600 285 V375" class="edge"/>
+  <path d="M320 480 H465" class="edge"/>
+  <path d="M735 480 H880" class="edge"/>
+  <path d="M190 395 V270" class="edge"/>
+  <path d="M1010 395 V270" class="edge"/>
+
+  <rect x="380" y="620" width="440" height="54" rx="14" fill="#dbeafe" stroke="#93c5fd"/>
+  <text x="420" y="653" class="label">Result: repeatable AI-agent workflow with evidence, policy, and runtime parity</text>
+</svg>

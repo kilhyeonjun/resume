@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">AI Coding Harness Framework cover</title>
+  <desc id="desc">System dashboard style cover for an AI coding harness with runtime surfaces, RAG, MCP, hooks, and cost analysis.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102a43"/>
+      <stop offset="0.55" stop-color="#0f4c5c"/>
+      <stop offset="1" stop-color="#1f7a5c"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc" stop-opacity="0.98"/>
+      <stop offset="1" stop-color="#dbeafe" stop-opacity="0.92"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#03131d" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <path d="M0 520 C210 430 330 610 560 510 C780 414 945 454 1200 338 L1200 675 L0 675 Z" fill="#064e3b" opacity="0.36"/>
+  <path d="M120 116 H1080" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1"/>
+  <path d="M120 560 H1080" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1"/>
+
+  <g transform="translate(110 92)" fill="#e0f2fe">
+    <text x="0" y="0" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">AI Coding Harness Framework</text>
+    <text x="0" y="36" font-family="Inter, Arial, sans-serif" font-size="15" fill="#bfdbfe">Context · RAG · MCP · Hooks · Cost Observability</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="120" y="160" width="960" height="360" rx="22" fill="url(#panel)"/>
+    <rect x="154" y="198" width="250" height="96" rx="14" fill="#0f172a"/>
+    <rect x="154" y="320" width="250" height="134" rx="14" fill="#ecfeff" stroke="#67e8f9"/>
+    <rect x="475" y="198" width="250" height="256" rx="18" fill="#f0fdf4" stroke="#86efac"/>
+    <rect x="796" y="198" width="250" height="96" rx="14" fill="#fff7ed" stroke="#fdba74"/>
+    <rect x="796" y="320" width="250" height="134" rx="14" fill="#f8fafc" stroke="#cbd5e1"/>
+  </g>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="184" y="230" fill="#93c5fd" font-size="14" font-weight="700">Runtime Surfaces</text>
+    <text x="184" y="258" fill="#f8fafc" font-size="26" font-weight="800">Claude + Codex</text>
+    <text x="184" y="278" fill="#cbd5e1" font-size="13">generated from canonical source</text>
+
+    <text x="184" y="354" fill="#0f766e" font-size="14" font-weight="700">Hook-First Governance</text>
+    <text x="184" y="386" fill="#0f172a" font-size="18" font-weight="800">rules enforced at runtime</text>
+    <text x="184" y="417" fill="#334155" font-size="13">pre-edit · commit · prompt · session</text>
+
+    <text x="515" y="234" fill="#15803d" font-size="14" font-weight="700">Local Hybrid RAG</text>
+    <text x="515" y="274" fill="#0f172a" font-size="44" font-weight="900">548</text>
+    <text x="615" y="274" fill="#334155" font-size="18" font-weight="700">files</text>
+    <text x="515" y="316" fill="#0f172a" font-size="32" font-weight="900">[REDACTED_PRIVATE_INVENTORY]</text>
+    <text x="515" y="352" fill="#334155" font-size="15">BGE-M3 · sqlite-vec · FTS5 · MCP</text>
+    <text x="515" y="394" fill="#166534" font-size="15" font-weight="700">default-on private_search_tool</text>
+    <text x="515" y="424" fill="#334155" font-size="13">context injected where work happens</text>
+
+    <text x="826" y="230" fill="#c2410c" font-size="14" font-weight="700">Resume Corpus</text>
+    <text x="826" y="260" fill="#0f172a" font-size="24" font-weight="900">[REDACTED_PRIVATE_INVENTORY]</text>
+    <text x="826" y="281" fill="#334155" font-size="13">portfolio + resume JSON indexed</text>
+
+    <text x="826" y="354" fill="#475569" font-size="14" font-weight="700">Observability</text>
+    <text x="826" y="386" fill="#0f172a" font-size="22" font-weight="900">8 cost categories</text>
+    <text x="826" y="417" fill="#334155" font-size="13">hidden token spend made visible</text>
+  </g>
+
+  <g fill="none" stroke="#0f172a" stroke-opacity="0.28" stroke-width="3">
+    <path d="M404 246 H475"/>
+    <path d="M725 246 H796"/>
+    <path d="M404 386 H475"/>
+    <path d="M725 386 H796"/>
+  </g>
+
+  <g transform="translate(120 560)" font-family="Inter, Arial, sans-serif">
+    <rect width="960" height="54" rx="14" fill="#ffffff" opacity="0.12"/>
+    <text x="28" y="34" fill="#dbeafe" font-size="16" font-weight="700">3 harnesses</text>
+    <text x="210" y="34" fill="#d1fae5" font-size="16" font-weight="700">15/15 default-on tests</text>
+    <text x="485" y="34" fill="#fed7aa" font-size="16" font-weight="700">31/31 RAG tests</text>
+    <text x="715" y="34" fill="#e0f2fe" font-size="16" font-weight="700">32 resume-corpus tests</text>
+  </g>
+</svg>

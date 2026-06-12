@@ -1,6 +1,135 @@
 {
   "projects": [
     {
+      "slug": "ai-coding-harness",
+      "name": {
+        "ko": "AI 코딩 하네스 프레임워크",
+        "en": "AI Coding Harness Framework"
+      },
+      "type": "personal",
+      "featured": true,
+      "printOrder": 1,
+      "summary": {
+        "ko": "Claude Code·Codex·Amazon Q 등 AI 코딩 에이전트의 컨텍스트, 규칙, RAG, 비용, 브라우저 런타임을 Git 기반 운영 인프라로 통합한 개인 개발 프레임워크 — 로컬 BGE-M3 벡터 RAG, MCP, 훅 기반 거버넌스, 런타임 서피스 컴파일러, 비용 분석기 구축",
+        "en": "Personal development framework integrating AI coding agents such as Claude Code, Codex, and Amazon Q into Git-based operating infrastructure for context, rules, RAG, cost, and browser runtime — built local BGE-M3 vector RAG, MCP, hook-based governance, runtime surface compiler, and cost analyzer"
+      },
+      "description": {
+        "ko": "AI 코딩 에이전트를 단발성 도구가 아니라 반복 가능한 개발 인프라로 운영하기 위해 만든 개인 하네스다. Claude/Codex 런타임 서피스를 소스 설정에서 자동 생성하고, 마크다운 지식 베이스를 로컬 임베딩 기반 RAG로 색인해 세션 시작·프롬프트 제출·편집·커밋 시점에 자동 주입한다. 문서만으로는 지켜지지 않는 규칙은 Git 훅과 테스트로 강제하고, 비용 분석기는 세션 트랜스크립트를 8개 범주로 분해해 숨은 토큰 비용을 추적한다. 이후 portfolio/resume JSON 코퍼스까지 RAG 대상으로 확장해 이력서 커스터마이징과 포트폴리오 검색에도 같은 증거 검색 경로를 적용했다.",
+        "en": "A personal harness built to operate AI coding agents as repeatable development infrastructure rather than one-off tools. It generates Claude/Codex runtime surfaces from source configuration, indexes the markdown knowledge base through local-embedding RAG, and injects relevant context at session start, prompt submission, edit, and commit time. Rules that documentation alone cannot enforce are backed by Git hooks and tests, while the cost analyzer decomposes session transcripts into 8 categories to track hidden token spend. The system later expanded the RAG target to portfolio/resume JSON, applying the same evidence-search path to resume customization and portfolio retrieval."
+      },
+      "coverImage": "/images/portfolio/ai-coding-harness-cover.svg",
+      "problemSolving": [
+        {
+          "problem": { "ko": "AI 에이전트별 컨텍스트와 규칙이 문서·설정·로컬 홈에 흩어져 런타임마다 드리프트 발생", "en": "AI-agent context and rules drifted across docs, config, and local runtime homes" },
+          "process": { "ko": "하네스 소스를 canonical source로 두고 Claude/Codex 런타임 서피스를 자동 생성, XML runtime contract와 cross-harness diff 검증 추가", "en": "Made harness source the canonical source and generated Claude/Codex runtime surfaces automatically, adding XML runtime contracts and cross-harness diff verification" },
+          "result": { "ko": "private profiles 3개 하네스의 생성 CLAUDE.md 및 런타임 컨트랙트 정합성 확보", "en": "Aligned generated CLAUDE.md files and runtime contracts across private profiles harnesses" }
+        },
+        {
+          "problem": { "ko": "마크다운 지식 베이스가 커져 에이전트가 관련 컨텍스트를 매번 수동 탐색", "en": "Growing markdown knowledge base forced agents to search context manually each time" },
+          "process": { "ko": "sqlite-vec + FTS5 하이브리드 RAG, BGE-M3 로컬 임베딩, RRF fusion, MCP 검색 서버, 마크다운 변경 후 자동 재색인 구현", "en": "Implemented sqlite-vec + FTS5 hybrid RAG, local BGE-M3 embeddings, RRF fusion, MCP search server, and automatic reindexing after markdown changes" },
+          "result": { "ko": "[REDACTED_PRIVATE_INVENTORY]·[REDACTED_PRIVATE_INVENTORY]·20.7 MB 인덱스, warm 쿼리 0.7초, 골드 쿼리 5건 top-2/3 적중", "en": "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] / 20.7 MB, reached 0.7s warm queries, and hit top-2/3 on all 5 gold queries" }
+        },
+        {
+          "problem": { "ko": "RAG가 opt-in 참고 도구라 실제 조사·검토 프롬프트에서 누락", "en": "RAG was an opt-in reference tool and was missed during real investigation/review prompts" },
+          "process": { "ko": "UserPromptSubmit 기본 트리거로 전환하고 프롬프트 12자 이상이면 private_search_tool가 자동 호출되도록 gp/gd까지 포팅", "en": "Moved to a default UserPromptSubmit trigger, calling private_search_tool automatically for prompts of 12+ characters and porting it to gp/gd" },
+          "result": { "ko": "3개 하네스에서 15/15 default-on 테스트 통과, 실 프롬프트 smoke test 적중", "en": "Passed 15/15 default-on tests across 3 harnesses and hit the target in a real-prompt smoke test" }
+        },
+        {
+          "problem": { "ko": "이력서·포트폴리오 JSON이 RAG 검색 범위 밖이라 JD 커스터마이징 시 근거 검색 누락", "en": "Resume and portfolio JSON were outside the RAG scope, leaving JD customization without evidence search over those surfaces" },
+          "process": { "ko": "portfolio/resume JSON chunker와 target=resume 색인 경로, path-based auto-reindex, federation 검색을 구현", "en": "Implemented portfolio/resume JSON chunkers, target=resume indexing, path-based auto-reindexing, and federated search" },
+          "result": { "ko": "resume corpus [REDACTED_PRIVATE_INVENTORY] 색인, 32개 테스트 통과, 4개 DB 통합 검색 동작 확인", "en": "Indexed 109 resume-corpus chunks, passed 32 tests, and verified federated search across 4 DBs" }
+        }
+      ],
+      "period": {
+        "start": "2026-04-01",
+        "end": "present"
+      },
+      "skills": [
+        "TypeScript",
+        "Python",
+        "Bash",
+        "MCP",
+        "sqlite-vec",
+        "FTS5",
+        "Ollama",
+        "BGE-M3",
+        "Vector RAG",
+        "Git Hooks",
+        "Claude Code",
+        "Codex"
+      ],
+      "github": "https://github.com/kilhyeonjun/private-harness",
+      "highlights": {
+        "ko": [
+          "Claude/Codex 런타임 서피스 자동 생성 + XML runtime contract로 3개 하네스 정합성 확보",
+          "로컬 BGE-M3 RAG로 [REDACTED_PRIVATE_INVENTORY]·[REDACTED_PRIVATE_INVENTORY] 색인, warm 쿼리 0.7초 달성",
+          "RAG default-on 전환으로 프롬프트 12자 이상 private_search_tool 자동 호출, 3개 하네스 15/15 테스트 통과",
+          "resume/portfolio JSON을 RAG 코퍼스로 통합, [REDACTED_PRIVATE_INVENTORY] 색인 + 32개 테스트 통과",
+          "Codex Browser + node_repl IAB 신뢰 경계와 fallback 순서 문서화, 3개 하네스 런타임 설정 반영"
+        ],
+        "en": [
+          "Aligned 3 harnesses through automatic Claude/Codex runtime-surface generation plus XML runtime contracts",
+          "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] with local BGE-M3 RAG and reached 0.7s warm queries",
+          "Moved RAG to default-on private_search_tool calls for prompts of 12+ characters, passing 15/15 tests across 3 harnesses",
+          "Integrated resume/portfolio JSON into the RAG corpus, indexing [REDACTED_PRIVATE_INVENTORY] and passing 32 tests",
+          "Documented Codex Browser + node_repl IAB trust boundaries and fallback order, then reflected runtime settings across 3 harnesses"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "AI 개발 생산성은 프롬프트 품질만으로 유지되지 않고, 런타임 컨텍스트·규칙 강제·증거 검색·비용 관측성을 같은 운영 경로로 묶어야 재현 가능하다는 점을 체득",
+          "문서 규칙은 필요 시점에 읽히지 않으면 정책이 아니라 참고 자료에 머물기 때문에, 중요한 규칙은 훅·테스트·컴파일러 출력으로 강제해야 한다는 기준 정립",
+          "RAG는 검색 품질뿐 아니라 자동 호출 위치, 색인 최신성, 사용 로그, fallback 경로까지 포함해야 실제 에이전트 워크플로우에 편입된다는 점 확인",
+          "Claude/Codex처럼 런타임별 기능과 신뢰 경계가 다른 도구는 canonical source와 생성기 기반으로 관리해야 장기 운영에서 드리프트를 줄일 수 있다는 점 학습"
+        ],
+        "en": [
+          "Learned that AI development productivity is reproducible only when runtime context, rule enforcement, evidence search, and cost observability share one operating path",
+          "Established that document-only rules remain reference material unless read at the moment of need, so critical rules should be enforced through hooks, tests, and compiler output",
+          "Confirmed that RAG must include trigger placement, index freshness, usage logging, and fallback paths, not just retrieval quality, to become part of an agent workflow",
+          "Learned that tools with different runtime features and trust boundaries, such as Claude and Codex, need canonical source plus generation to reduce drift over long-term operation"
+        ]
+      },
+      "architectureDiagram": "/images/portfolio/ai-coding-harness-arch.svg",
+      "scale": {
+        "ko": "3개 하네스 · RAG MVP · [REDACTED_PRIVATE_INVENTORY]",
+        "en": "3 harnesses · RAG MVP · [REDACTED_PRIVATE_INVENTORY]"
+      },
+      "metrics": [
+        {
+          "label": { "ko": "RAG MVP 인덱스", "en": "RAG MVP Index" },
+          "before": "manual context search",
+          "after": "[REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] / 20.7 MB",
+          "improvement": "0.7s warm query"
+        },
+        {
+          "label": { "ko": "RAG default-on 검증", "en": "RAG Default-On Verification" },
+          "before": "opt-in trigger",
+          "after": "15/15 tests across 3 harnesses",
+          "improvement": "prompt >=12 chars auto-search"
+        },
+        {
+          "label": { "ko": "Resume RAG 코퍼스", "en": "Resume RAG Corpus" },
+          "before": "0 indexed chunks",
+          "after": "[REDACTED_PRIVATE_INVENTORY]",
+          "improvement": "32 tests passed"
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "클라우드 벡터 DB 대신 로컬 BGE-M3 + sqlite-vec 선택: 마크다운 변경 직후 자동 재색인과 비용 통제를 우선",
+          "문서 규칙 대신 hook-first 강제 선택: 에이전트가 필요 시점에 문서를 읽지 않는 문제를 런타임 차단으로 보완",
+          "Claude/Codex별 수동 설정 대신 runtime surface compiler 선택: 생성물 드리프트를 줄이고 3개 하네스 정합성 검증을 자동화",
+          "검색 opt-in 대신 default-on 선택: 조사·리뷰·편집 같은 실제 프롬프트에서 근거 검색 누락을 줄이기 위해 UserPromptSubmit에 연결"
+        ],
+        "en": [
+          "Chose local BGE-M3 + sqlite-vec over cloud vector DBs to prioritize immediate reindexing after markdown changes and cost control",
+          "Chose hook-first enforcement over doc-only rules to compensate for agents not reading policy documents at the moment of need",
+          "Chose a runtime surface compiler over manual Claude/Codex settings to reduce generated-surface drift and automate 3-harness verification",
+          "Chose default-on search over opt-in retrieval to reduce missed evidence during real investigation, review, and edit prompts"
+        ]
+      }
+    },
+    {
       "slug": "ledgerly",
       "name": {
         "ko": "Ledgerly",
@@ -8,7 +137,7 @@
       },
       "type": "personal",
       "featured": true,
-      "printOrder": 2,
+      "printOrder": 3,
       "summary": {
         "ko": "가족·조직 단위 공유 가계부 앱 — Next.js 16 풀스택, Supabase PostgreSQL, 3단계 역할 기반 접근 제어(OWNER/ADMIN/MEMBER), NestJS Cron 정기거래 자동 처리, 99.45% 라인 커버리지 단위 테스트 + 300건 이상 E2E 통합 테스트",
         "en": "Family/organization shared finance management app — Next.js 16 fullstack, Supabase PostgreSQL, 3-tier RBAC (OWNER/ADMIN/MEMBER), NestJS Cron recurring transaction automation, 99.45% line coverage unit tests + 300+ E2E integration tests"
@@ -134,7 +263,7 @@
       },
       "type": "personal",
       "featured": true,
-      "printOrder": 3,
+      "printOrder": 4,
       "summary": {
         "ko": "대신물류 배차현황 데이터를 Cheerio로 크롤링하고 카카오톡 챗봇 스킬서버와 Next.js 모바일웹으로 조회할 수 있는 서비스 — Clean Architecture + TSyringe DI, Express 5, Prisma SQLite, Traefik Blue-Green 무중단 배포",
         "en": "Logistics dispatch data service crawling with Cheerio, queryable via KakaoTalk chatbot skill server and Next.js mobile web — Clean Architecture + TSyringe DI, Express 5, Prisma SQLite, Traefik Blue-Green zero-downtime deployment"
@@ -369,7 +498,7 @@
       },
       "type": "personal",
       "featured": true,
-      "printOrder": 1,
+      "printOrder": 2,
       "summary": {
         "ko": "1만 동시 요청 환경에서 좌석 선점·결제·포인트 충전의 동시성 문제를 시나리오별 하이브리드 락 전략으로 해결한 콘서트 좌석 예약 서비스 — 낙관적 락 + Redisson 분산 락, Redis 캐싱 TPS 15배 향상, Kafka 이벤트 드리븐 아키텍처, K6 부하 테스트 기반 병목 개선",
         "en": "Concert seat reservation service resolving concurrency across seat locking, payments, and point charging under 10K concurrent requests \u2014 hybrid locking strategy (optimistic + Redisson distributed lock), 15x TPS improvement via Redis caching, Kafka event-driven architecture, K6 load test-driven optimization"

@@ -442,6 +442,13 @@ function processSummary(text: string): string {
           <h2 class="section-title">{labels.technicalWriting}</h2>
           {data.technicalWriting.map((item) => {
             const primaryUrl = item.url || item.videoUrl || item.reviewUrl;
+            const normalizedTitle = item.title.replace(/\s+/g, '').toLowerCase();
+            const normalizedDescription = item.description?.replace(/\s+/g, '').toLowerCase() ?? '';
+            const showDescription = Boolean(
+              item.description
+              && !normalizedTitle.includes(normalizedDescription)
+              && !normalizedDescription.includes(normalizedTitle)
+            );
             return (
               <div class="tw-item">
                 <h3 class="tw-title">
@@ -452,12 +459,8 @@ function processSummary(text: string): string {
                   {item.reviewUrl && (item.url || item.videoUrl) && <>{' '}<a href={item.reviewUrl}>[{lang === 'ko' ? '후기' : 'Review'}]</a></>}
                 </h3>
                 <p class="tw-meta">{item.type} — {item.date.replace('-', '.')}</p>
-                {item.description && (
-                  <h3 class="tw-title">
-                    {primaryUrl
-                      ? <a href={primaryUrl}>{item.description}</a>
-                      : item.description}
-                  </h3>
+                {showDescription && (
+                  <p class="tw-meta">{item.description}</p>
                 )}
               </div>
             );

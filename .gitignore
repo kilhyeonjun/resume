@@ -37,6 +37,10 @@ pnpm-debug.log*
 # test artifacts
 test-results/
 
+# private/local sidecars (not part of public resume site)
+ops/
+.rag/
+
 # skill eval workspaces (large, regenerable)
 .claude/skills/*-workspace/
 
@@ -45,8 +49,26 @@ test-results/
 !public/og-image.png
 
 # temporary work files
+.ai-detection-review.md
+.ats-pdf-review*.md
+.code-quality-review.md
+.gameduo-review*.md
+.hr-deep-review.md
+.jnpmedi-review*.md
+.medgo-review*.md
+.portfolio-review.md
+.position-fit-review.md
+.print-pdf-review*.md
+.resume-review-skill-*.md
+.simplehan-review*.md
+.ui-ux-review.md
+.web-review*.md
 .all-reviews-fixes.md
 .web-review-v5-fixes.md
+FULL_REVIEW.md
+REVIEW.md
+REVIEW_FINAL*.md
+UIUX_REVIEW.md
 IMPROVEMENT_PLAN.md
 capture-screenshots.mjs
 screenshot-puppeteer.js

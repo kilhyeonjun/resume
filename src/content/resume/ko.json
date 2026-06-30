@@ -16,7 +16,7 @@
         "items": [
           "쿼리 튜닝·인덱스 모델링·테이블 정규화로 97% 성능 개선",
           "Deadlock 근본 원인 분석·분산 락 정립으로 데이터 계층 병목 해결",
-          "Redis Streams 기반 WAL을 4-shard 클러스터로 분산해 실시간 채팅 메시지 순서 보장·수평 확장 (수용률 99.39→99.99%, ack p95 767ms→6.6ms)"
+          "Redis Streams 기반 WAL을 4-shard Valkey 클러스터와 serverless fanout 계측으로 고도화해 실시간 채팅 메시지 순서 보장·수평 확장 (수용률 99.39→99.99%, ack p95 767ms→6.6ms)"
         ]
       },
       {
@@ -189,7 +189,7 @@
         "companyUrl": "https://www.gameduo.net/ko",
         "startDate": "2025-01",
         "current": true,
-        "description": "모바일 게임 개발 및 퍼블리싱 회사. 6개 라이브 게임 환경 (12 브랜치 운영) 공통 백엔드 플랫폼 설계, 데이터 파이프라인 구축, 공통 패키지 체계 운영",
+        "description": "모바일 게임 개발 및 퍼블리싱 회사. 6개 라이브 게임 환경(총 12 브랜치 운영) 공통 백엔드 플랫폼 설계, 데이터 파이프라인 구축, 공통 패키지 체계 운영",
         "positions": [
           {
             "title": "DEV팀 Platform Part Leader",
@@ -252,7 +252,7 @@
             "name": "실시간 게임 채팅 서버 (멀티테넌트)",
             "period": "2026.04 ~ 현재",
             "featured": true,
-            "description": "여러 라이브 게임이 공유하는 멀티테넌트 실시간 채팅 서버를 설계하고, 6,000 동시접속·18,000 RPS 목표 용량을 부하 측정으로 검증",
+            "description": "여러 라이브 게임이 공유하는 멀티테넌트 실시간 채팅 서버를 설계하고, 6,000 동시접속·18,000 RPS 목표 용량과 Valkey fanout 병목을 부하 측정으로 검증",
             "techRationale": "메시지 순서 보장을 위해 Redis Streams Consumer Group 기반 WAL(Write-Ahead Log)을 채택하고, 단일 노드 수직 확장 대신 4-shard Valkey 클러스터로 분산 — 싱글스레드 Redis는 코어 증설로 쓰기 병목을 해소할 수 없기 때문. ECS Fargate ARM64 전환은 동일 부하 자원 효율 비교 측정으로 검증 후 채택.",
             "details": [
               {
@@ -274,6 +274,11 @@
                 "problem": "x86 Fargate가 6,000 동시접속 부하에서 CPU·메모리 사용률이 높아 운영 비용 부담",
                 "solution": "아키텍처 가정 대신 6,000 동시접속 실부하에서 x86 대비 자원 효율을 실측 비교한 근거로 ARM64(Graviton) 전환 — 멀티플랫폼 이미지(x86/ARM64) 빌드로 양 플랫폼 동시 지원",
                 "result": "동일 부하에서 CPU 사용률 15%·메모리 54% 감소, 단가 동등 — 운영 비용 절감 근거 확보"
+              },
+              {
+                "problem": "hot-channel fanout 전환 후 병목이 Redis 서버 Lua, gateway event-loop, 단일 command queue, topology 중 어디인지 분리되지 않음",
+                "solution": "변경 전 attribution 계측을 먼저 추가하고 Valkey serverless SSUBSCRIBE, 채널별 구독, logicalChannelId sticky connection pool을 단계적으로 검증",
+                "result": "sandbox verify 19/0/0 통과, command queue 5,940→716 감소, 878,205 메시지 처리 중 유실 0건 확인"
               }
             ],
             "techStack": [
@@ -281,6 +286,7 @@
               "NestJS",
               "Redis Streams",
               "Valkey (Cluster)",
+              "Valkey Serverless",
               "DynamoDB",
               "AWS ECS Fargate",
               "ARM64 (Graviton)",
@@ -326,6 +332,16 @@
                 "problem": "마케팅 RCP 데이터 엑셀 전용 + BigQuery 통합 테이블이 복수 소스 조합 구조라 콘솔 통합 조회 불가",
                 "solution": "엑셀 수작업·복수 소스 통합 테이블의 값 불일치 문제로, 복수 소스 결합 대신 단일 정규화 소스 테이블로 전환 + Criteria-Result 패턴 metadata API 신설로 표시 형식 하드코딩 제거",
                 "result": "콘솔 내 RCP 통합 조회 내장, 하드코딩 currency/소수점 표시를 BE metadata 기반으로 대체"
+              },
+              {
+                "problem": "국가·스토어별 플랫폼 그룹 분리로 동일 캠페인 운영에서 광고계정 선택·검증 흐름이 복잡하고 QA 데이터 복호화 실패가 코드 회귀와 섞임",
+                "solution": "BNID/BNKR/BNTW를 단일 플랫폼 그룹으로 병합하고 계정 라벨링 API·계정 선택 UX·sandbox-safe 토큰 재암호화 검증을 분리 수행",
+                "result": "566개 캠페인 기준 Meta 3개·Google 2개·TikTok 2개 계정 매핑 검증, legacy 그룹 잔여 계정 0개 확인"
+              },
+              {
+                "problem": "TikTok 배포가 외부 API 부분 성공 후 내부 저장 전에 실패하면 재시도 시 고아 campaign/adgroup/ad가 누적되거나 배포 가드에 막힘",
+                "solution": "Smart+ V2는 campaign/adgroup/ad 레벨별 get-or-create와 즉시 영속화, v1은 campaign-level 재사용, regular는 ad-level 플래그로 경로별 멱등성 통일",
+                "result": "부분 실패 재시도 경로 단위 테스트 31건 통과, 기존 고아 campaign 2개·adgroup 2개 재발 방지 정책 적용"
               }
             ],
             "techStack": [
@@ -343,7 +359,9 @@
               "TikTok API",
               "TypeORM",
               "TypeScript",
-              "gRPC"
+              "gRPC",
+              "TikTok Smart+",
+              "Idempotency"
             ]
           },
           {
@@ -424,6 +442,11 @@
                 "problem": "프로젝트 간 데이터 격리·요청 rate 제한·첨부 접근 제어 부재",
                 "solution": "cross-project 격리(삼중 검증 헬퍼)와 Redis 저장소 기반 rate limit(인증 5/분·refresh 10/분·메시지 30/분), 첨부 FK 정합 마이그레이션을 도입 — 인메모리 throttler는 다중 인스턴스 우회 가능성으로 기각",
                 "result": "보안 통합 머지, 타입 검사 0 에러, cross-org/project 격리 spec 정립"
+              },
+              {
+                "problem": "CS 채팅방 하나에 여러 문의가 섞여 문의별 건수·처리시간 집계가 어렵고, 버그 문의 동영상 첨부도 지원하지 않음",
+                "solution": "메시지 불변성을 유지하는 답변 링크 테이블, 유저 단위 채팅 리스트, 동영상 업로드 전용 MIME/크기/TTL/일일 제한 경로를 additive API로 설계",
+                "result": "메시지 단위 답변·대상 변경, 유저 단위 리스트, 동영상 문의 열람, 문의 건수·처리시간 집계 기반 구축(20MB·10건/일·15분 TTL)"
               }
             ],
             "techStack": [
@@ -437,7 +460,9 @@
               "GitHub Actions OIDC",
               "Redis",
               "k6",
-              "Grafana"
+              "Grafana",
+              "Presigned URL",
+              "Redis Rate Limit"
             ]
           },
           {

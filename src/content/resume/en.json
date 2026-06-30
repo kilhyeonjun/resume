@@ -16,7 +16,7 @@
         "items": [
           "Query tuning, index design, and table normalization delivering 97% performance gain",
           "Deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks",
-          "Sharded a Redis Streams WAL across a 4-shard cluster for real-time chat message ordering and horizontal scaling (accept rate 99.39→99.99%, ack p95 767ms→6.6ms)"
+          "Advanced Redis Streams WAL with a 4-shard Valkey cluster and serverless fanout instrumentation to preserve real-time chat ordering and horizontal scale (accept rate 99.39→99.99%, ack p95 767ms→6.6ms)"
         ]
       },
       {
@@ -189,7 +189,7 @@
         "companyUrl": "https://www.gameduo.net/ko",
         "startDate": "2025-01",
         "current": true,
-        "description": "Mobile game development and publishing company. Shared backend platform design for 6 live game environments (12 branches), data pipeline engineering, and common package system operations",
+        "description": "Mobile game development and publishing company. Shared backend platform design for 6 live game environments (12 operating branches), data pipeline engineering, and common package system operations",
         "positions": [
           {
             "title": "DEV Team Platform Part Leader",
@@ -252,7 +252,7 @@
             "name": "Real-Time Game Chat Server (Multi-Tenant)",
             "period": "2026.04 ~ Present",
             "featured": true,
-            "description": "Designed a multi-tenant real-time chat server shared across live games, validating a 6,000 CCU / 18,000 RPS capacity target through load testing",
+            "description": "Designed a multi-tenant real-time chat server shared across live games, validating the 6,000 CCU / 18,000 RPS capacity target and Valkey fanout bottlenecks through load testing",
             "techRationale": "Adopted a Redis Streams Consumer Group-based WAL (Write-Ahead Log) for message ordering, and distributed it across a 4-shard Valkey cluster instead of vertical scaling — a single-threaded Redis cannot resolve write bottlenecks by adding cores. ECS Fargate ARM64 migration was adopted only after validating resource efficiency under identical load.",
             "details": [
               {
@@ -274,6 +274,11 @@
                 "problem": "High CPU/memory utilization on x86 Fargate under 6,000 CCU load drove up operating cost",
                 "solution": "Migrated to ARM64 (Graviton) on measured evidence rather than assumption — compared resource efficiency against x86 under identical 6,000 CCU load, using multi-platform image builds to support both architectures",
                 "result": "Reduced CPU utilization 15% and memory 54% at identical load with neutral unit pricing — established operational cost-saving basis"
+              },
+              {
+                "problem": "After hot-channel fanout migration, the bottleneck was not isolated between Redis server Lua, gateway event loop, a single command queue, and topology",
+                "solution": "Added attribution instrumentation before changing architecture, then validated Valkey serverless SSUBSCRIBE, per-channel subscriptions, and logicalChannelId-sticky connection pools step by step",
+                "result": "Passed sandbox verify 19/0/0, reduced command queue 5,940→716, and processed 878,205 messages with zero loss"
               }
             ],
             "techStack": [
@@ -281,6 +286,7 @@
               "NestJS",
               "Redis Streams",
               "Valkey (Cluster)",
+              "Valkey Serverless",
               "DynamoDB",
               "AWS ECS Fargate",
               "ARM64 (Graviton)",
@@ -326,6 +332,16 @@
                 "problem": "Marketing RCP data was spreadsheet-only, and the BigQuery aggregation table combined multiple sources — blocking unified console queries",
                 "solution": "Switched to a single normalized BigQuery source table over combining multiple sources — which had produced value mismatches against the manual Excel flow — and added Criteria-Result metadata APIs to remove hardcoded display formatting",
                 "result": "Embedded unified RCP queries into the console and replaced hardcoded currency/decimal display with BE metadata-driven formatting"
+              },
+              {
+                "problem": "Country/store-level platform groups made account selection and validation complex for the same campaign workflow, while QA token decryption failures blurred data setup issues with code regressions",
+                "solution": "Merged BNID/BNKR/BNTW into one platform group and separated account-labeling APIs, account-selection UX, and sandbox-safe token re-encryption verification",
+                "result": "Validated mappings for 566 campaigns across 3 Meta, 2 Google, and 2 TikTok accounts, with 0 remaining legacy-group accounts"
+              },
+              {
+                "problem": "TikTok deployments created orphan campaign/adgroup/ad resources when an external API partially succeeded before internal persistence, or retries were blocked by deployment guards",
+                "solution": "Unified idempotency per deployment path: Smart+ V2 level-by-level get-or-create with immediate persistence, v1 campaign-level reuse, and regular ad-level flags",
+                "result": "Passed 31 unit tests for partial-failure retries and applied a policy to prevent recurrence of 2 orphan campaigns and 2 orphan ad groups"
               }
             ],
             "techStack": [
@@ -343,7 +359,9 @@
               "TikTok API",
               "TypeORM",
               "TypeScript",
-              "gRPC"
+              "gRPC",
+              "TikTok Smart+",
+              "Idempotency"
             ]
           },
           {
@@ -424,6 +442,11 @@
                 "problem": "No cross-project data isolation, request rate limiting, or attachment access control",
                 "solution": "Introduced cross-project isolation (triple-validation helper), Redis-backed rate limiting (auth 5/min, refresh 10/min, message 30/min), and an attachment FK integrity migration — rejected in-memory throttling for its multi-instance bypass risk",
                 "result": "Merged the security integration with zero type errors and established cross-org/project isolation specs"
+              },
+              {
+                "problem": "Multiple inquiries were mixed inside one CS chat room, making per-inquiry counts and handling-time metrics difficult, while video attachments for bug reports were unsupported",
+                "solution": "Designed additive APIs for immutable message-reply links, user-level chat lists, and a dedicated video-upload path with MIME, size, TTL, and daily limits",
+                "result": "Established message-level reply/target changes, user-level lists, video inquiry playback, and inquiry-count/handling-time aggregation (20MB, 10 uploads/day, 15min TTL)"
               }
             ],
             "techStack": [
@@ -437,7 +460,9 @@
               "GitHub Actions OIDC",
               "Redis",
               "k6",
-              "Grafana"
+              "Grafana",
+              "Presigned URL",
+              "Redis Rate Limit"
             ]
           },
           {

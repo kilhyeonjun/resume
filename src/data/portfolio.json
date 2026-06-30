@@ -20,24 +20,74 @@
       "coverImage": "/images/portfolio/ai-coding-harness-cover.svg",
       "problemSolving": [
         {
-          "problem": { "ko": "AI 에이전트별 컨텍스트와 규칙이 문서·설정·로컬 홈에 흩어져 런타임마다 드리프트 발생", "en": "AI-agent context and rules drifted across docs, config, and local runtime homes" },
-          "process": { "ko": "하네스 소스를 canonical source로 두고 Claude/Codex 런타임 서피스를 자동 생성, XML runtime contract와 cross-harness diff 검증 추가", "en": "Made harness source the canonical source and generated Claude/Codex runtime surfaces automatically, adding XML runtime contracts and cross-harness diff verification" },
-          "result": { "ko": "private profiles 3개 하네스의 생성 CLAUDE.md 및 런타임 컨트랙트 정합성 확보", "en": "Aligned generated CLAUDE.md files and runtime contracts across private profiles harnesses" }
+          "problem": {
+            "ko": "AI 에이전트별 컨텍스트와 규칙이 문서·설정·로컬 홈에 흩어져 런타임마다 드리프트 발생",
+            "en": "AI-agent context and rules drifted across docs, config, and local runtime homes"
+          },
+          "process": {
+            "ko": "하네스 소스를 canonical source로 두고 Claude/Codex 런타임 서피스를 자동 생성, XML runtime contract와 cross-harness diff 검증 추가",
+            "en": "Made harness source the canonical source and generated Claude/Codex runtime surfaces automatically, adding XML runtime contracts and cross-harness diff verification"
+          },
+          "result": {
+            "ko": "private profiles 3개 하네스의 생성 CLAUDE.md 및 런타임 컨트랙트 정합성 확보",
+            "en": "Aligned generated CLAUDE.md files and runtime contracts across private profiles harnesses"
+          }
         },
         {
-          "problem": { "ko": "마크다운 지식 베이스가 커져 에이전트가 관련 컨텍스트를 매번 수동 탐색", "en": "Growing markdown knowledge base forced agents to search context manually each time" },
-          "process": { "ko": "sqlite-vec + FTS5 하이브리드 RAG, BGE-M3 로컬 임베딩, RRF fusion, MCP 검색 서버, 마크다운 변경 후 자동 재색인 구현", "en": "Implemented sqlite-vec + FTS5 hybrid RAG, local BGE-M3 embeddings, RRF fusion, MCP search server, and automatic reindexing after markdown changes" },
-          "result": { "ko": "[REDACTED_PRIVATE_INVENTORY]·[REDACTED_PRIVATE_INVENTORY]·20.7 MB 인덱스, warm 쿼리 0.7초, 골드 쿼리 5건 top-2/3 적중", "en": "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] / 20.7 MB, reached 0.7s warm queries, and hit top-2/3 on all 5 gold queries" }
+          "problem": {
+            "ko": "마크다운 지식 베이스가 커져 에이전트가 관련 컨텍스트를 매번 수동 탐색",
+            "en": "Growing markdown knowledge base forced agents to search context manually each time"
+          },
+          "process": {
+            "ko": "sqlite-vec + FTS5 하이브리드 RAG, BGE-M3 로컬 임베딩, RRF fusion, MCP 검색 서버, 마크다운 변경 후 자동 재색인 구현",
+            "en": "Implemented sqlite-vec + FTS5 hybrid RAG, local BGE-M3 embeddings, RRF fusion, MCP search server, and automatic reindexing after markdown changes"
+          },
+          "result": {
+            "ko": "[REDACTED_PRIVATE_INVENTORY]·[REDACTED_PRIVATE_INVENTORY]·20.7 MB 인덱스, warm 쿼리 0.7초, 골드 쿼리 5건 top-2/3 적중",
+            "en": "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] / 20.7 MB, reached 0.7s warm queries, and hit top-2/3 on all 5 gold queries"
+          }
         },
         {
-          "problem": { "ko": "RAG가 opt-in 참고 도구라 실제 조사·검토 프롬프트에서 누락", "en": "RAG was an opt-in reference tool and was missed during real investigation/review prompts" },
-          "process": { "ko": "UserPromptSubmit 기본 트리거로 전환하고 프롬프트 12자 이상이면 private_search_tool가 자동 호출되도록 gp/gd까지 포팅", "en": "Moved to a default UserPromptSubmit trigger, calling private_search_tool automatically for prompts of 12+ characters and porting it to gp/gd" },
-          "result": { "ko": "3개 하네스에서 15/15 default-on 테스트 통과, 실 프롬프트 smoke test 적중", "en": "Passed 15/15 default-on tests across 3 harnesses and hit the target in a real-prompt smoke test" }
+          "problem": {
+            "ko": "RAG가 opt-in 참고 도구라 실제 조사·검토 프롬프트에서 누락",
+            "en": "RAG was an opt-in reference tool and was missed during real investigation/review prompts"
+          },
+          "process": {
+            "ko": "UserPromptSubmit 기본 트리거로 전환하고 프롬프트 12자 이상이면 private_search_tool가 자동 호출되도록 gp/gd까지 포팅",
+            "en": "Moved to a default UserPromptSubmit trigger, calling private_search_tool automatically for prompts of 12+ characters and porting it to gp/gd"
+          },
+          "result": {
+            "ko": "3개 하네스에서 15/15 default-on 테스트 통과, 실 프롬프트 smoke test 적중",
+            "en": "Passed 15/15 default-on tests across 3 harnesses and hit the target in a real-prompt smoke test"
+          }
         },
         {
-          "problem": { "ko": "이력서·포트폴리오 JSON이 RAG 검색 범위 밖이라 JD 커스터마이징 시 근거 검색 누락", "en": "Resume and portfolio JSON were outside the RAG scope, leaving JD customization without evidence search over those surfaces" },
-          "process": { "ko": "portfolio/resume JSON chunker와 target=resume 색인 경로, path-based auto-reindex, federation 검색을 구현", "en": "Implemented portfolio/resume JSON chunkers, target=resume indexing, path-based auto-reindexing, and federated search" },
-          "result": { "ko": "resume corpus [REDACTED_PRIVATE_INVENTORY] 색인, 32개 테스트 통과, 4개 DB 통합 검색 동작 확인", "en": "Indexed 109 resume-corpus chunks, passed 32 tests, and verified federated search across 4 DBs" }
+          "problem": {
+            "ko": "이력서·포트폴리오 JSON이 RAG 검색 범위 밖이라 JD 커스터마이징 시 근거 검색 누락",
+            "en": "Resume and portfolio JSON were outside the RAG scope, leaving JD customization without evidence search over those surfaces"
+          },
+          "process": {
+            "ko": "portfolio/resume JSON chunker와 target=resume 색인 경로, path-based auto-reindex, federation 검색을 구현",
+            "en": "Implemented portfolio/resume JSON chunkers, target=resume indexing, path-based auto-reindexing, and federated search"
+          },
+          "result": {
+            "ko": "resume corpus [REDACTED_PRIVATE_INVENTORY] 색인, 32개 테스트 통과, 4개 DB 통합 검색 동작 확인",
+            "en": "Indexed 109 resume-corpus chunks, passed 32 tests, and verified federated search across 4 DBs"
+          }
+        },
+        {
+          "problem": {
+            "ko": "이력서·JD 커스터마이징 근거가 세션 로그와 작업 기록에 흩어져 최신 성과 선별과 정량화가 매번 수작업으로 반복됨",
+            "en": "Resume and JD customization evidence was scattered across session logs and work records, forcing manual re-selection and quantification of recent impact each time"
+          },
+          "process": {
+            "ko": "private work-data 아카이브를 schema v1.2로 정리하고 outcome_metrics 필드를 도입, Jira·세션 evidence를 resumeProject 단위로 분류해 resume/portfolio/RAG 큐레이션 경로에 연결",
+            "en": "Standardized the private work-data archive on schema v1.2 with outcome_metrics, classified Jira/session evidence by resumeProject, and connected it into the resume/portfolio/RAG curation path"
+          },
+          "result": {
+            "ko": "279개 작업 항목 증분 수집, 메트릭 보유율 44%→50% 개선, work-data→이력서 후보 선별→검증 루프 정착",
+            "en": "Incrementally collected 279 work items, improved metric coverage 44%→50%, and established the work-data → resume-candidate selection → verification loop"
+          }
         }
       ],
       "period": {
@@ -65,14 +115,16 @@
           "로컬 BGE-M3 RAG로 [REDACTED_PRIVATE_INVENTORY]·[REDACTED_PRIVATE_INVENTORY] 색인, warm 쿼리 0.7초 달성",
           "RAG default-on 전환으로 프롬프트 12자 이상 private_search_tool 자동 호출, 3개 하네스 15/15 테스트 통과",
           "resume/portfolio JSON을 RAG 코퍼스로 통합, [REDACTED_PRIVATE_INVENTORY] 색인 + 32개 테스트 통과",
-          "Codex Browser + node_repl IAB 신뢰 경계와 fallback 순서 문서화, 3개 하네스 런타임 설정 반영"
+          "Codex Browser + node_repl IAB 신뢰 경계와 fallback 순서 문서화, 3개 하네스 런타임 설정 반영",
+          "work-data schema v1.2와 outcome_metrics 기반 증거 큐레이션으로 279개 작업 항목 증분 수집·메트릭 보유율 44%→50% 개선"
         ],
         "en": [
           "Aligned 3 harnesses through automatic Claude/Codex runtime-surface generation plus XML runtime contracts",
           "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] with local BGE-M3 RAG and reached 0.7s warm queries",
           "Moved RAG to default-on private_search_tool calls for prompts of 12+ characters, passing 15/15 tests across 3 harnesses",
           "Integrated resume/portfolio JSON into the RAG corpus, indexing [REDACTED_PRIVATE_INVENTORY] and passing 32 tests",
-          "Documented Codex Browser + node_repl IAB trust boundaries and fallback order, then reflected runtime settings across 3 harnesses"
+          "Documented Codex Browser + node_repl IAB trust boundaries and fallback order, then reflected runtime settings across 3 harnesses",
+          "Added schema v1.2 + outcome_metrics evidence curation, incrementally collecting 279 work items and improving metric coverage 44%→50%"
         ]
       },
       "lessons": {
@@ -80,13 +132,15 @@
           "AI 개발 생산성은 프롬프트 품질만으로 유지되지 않고, 런타임 컨텍스트·규칙 강제·증거 검색·비용 관측성을 같은 운영 경로로 묶어야 재현 가능하다는 점을 체득",
           "문서 규칙은 필요 시점에 읽히지 않으면 정책이 아니라 참고 자료에 머물기 때문에, 중요한 규칙은 훅·테스트·컴파일러 출력으로 강제해야 한다는 기준 정립",
           "RAG는 검색 품질뿐 아니라 자동 호출 위치, 색인 최신성, 사용 로그, fallback 경로까지 포함해야 실제 에이전트 워크플로우에 편입된다는 점 확인",
-          "Claude/Codex처럼 런타임별 기능과 신뢰 경계가 다른 도구는 canonical source와 생성기 기반으로 관리해야 장기 운영에서 드리프트를 줄일 수 있다는 점 학습"
+          "Claude/Codex처럼 런타임별 기능과 신뢰 경계가 다른 도구는 canonical source와 생성기 기반으로 관리해야 장기 운영에서 드리프트를 줄일 수 있다는 점 학습",
+          "work-data를 단순 기록 저장소가 아니라 이력서·JD·포트폴리오 큐레이션의 증거 계층으로 분리해 두면, 공개 copy를 안전하게 재가공하면서도 내부 세부정보를 노출하지 않을 수 있다는 점 확인"
         ],
         "en": [
           "Learned that AI development productivity is reproducible only when runtime context, rule enforcement, evidence search, and cost observability share one operating path",
           "Established that document-only rules remain reference material unless read at the moment of need, so critical rules should be enforced through hooks, tests, and compiler output",
           "Confirmed that RAG must include trigger placement, index freshness, usage logging, and fallback paths, not just retrieval quality, to become part of an agent workflow",
-          "Learned that tools with different runtime features and trust boundaries, such as Claude and Codex, need canonical source plus generation to reduce drift over long-term operation"
+          "Learned that tools with different runtime features and trust boundaries, such as Claude and Codex, need canonical source plus generation to reduce drift over long-term operation",
+          "Confirmed that separating work-data as an evidence layer for resume/JD/portfolio curation enables public-copy rewriting without exposing internal details"
         ]
       },
       "architectureDiagram": "/images/portfolio/ai-coding-harness-arch.svg",
@@ -96,22 +150,40 @@
       },
       "metrics": [
         {
-          "label": { "ko": "RAG MVP 인덱스", "en": "RAG MVP Index" },
+          "label": {
+            "ko": "RAG MVP 인덱스",
+            "en": "RAG MVP Index"
+          },
           "before": "manual context search",
           "after": "[REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] / 20.7 MB",
           "improvement": "0.7s warm query"
         },
         {
-          "label": { "ko": "RAG default-on 검증", "en": "RAG Default-On Verification" },
+          "label": {
+            "ko": "RAG default-on 검증",
+            "en": "RAG Default-On Verification"
+          },
           "before": "opt-in trigger",
           "after": "15/15 tests across 3 harnesses",
           "improvement": "prompt >=12 chars auto-search"
         },
         {
-          "label": { "ko": "Resume RAG 코퍼스", "en": "Resume RAG Corpus" },
+          "label": {
+            "ko": "Resume RAG 코퍼스",
+            "en": "Resume RAG Corpus"
+          },
           "before": "0 indexed chunks",
           "after": "[REDACTED_PRIVATE_INVENTORY]",
           "improvement": "32 tests passed"
+        },
+        {
+          "label": {
+            "ko": "Work-data 증거 아카이브",
+            "en": "Work-data Evidence Archive"
+          },
+          "before": "manual evidence curation / 44% metric coverage",
+          "after": "279 incremental work items / schema v1.2",
+          "improvement": "50% metric coverage"
         }
       ],
       "techDecisions": {
@@ -150,24 +222,60 @@
       "contentImages": [],
       "problemSolving": [
         {
-          "problem": { "ko": "가족/조직 내 역할별 권한 분리 없이 공유 가계부 운영 시 데이터 보안 위험", "en": "Data security risk in shared finance app without role-based permission separation" },
-          "process": { "ko": "OWNER/ADMIN/MEMBER 3단계 RBAC 설계, SupabaseAuthGuard → MembershipGuard → SuperAdminGuard 3단계 Guard 체인으로 인증+인가 이중화", "en": "Designed 3-tier RBAC, 3-layer Guard chain (SupabaseAuthGuard → MembershipGuard → SuperAdminGuard) for dual auth+authz" },
-          "result": { "ko": "조직별 독립 데이터 관리 + 역할별 세분화된 접근 제어 실현", "en": "Independent per-org data management + granular role-based access control" }
+          "problem": {
+            "ko": "가족/조직 내 역할별 권한 분리 없이 공유 가계부 운영 시 데이터 보안 위험",
+            "en": "Data security risk in shared finance app without role-based permission separation"
+          },
+          "process": {
+            "ko": "OWNER/ADMIN/MEMBER 3단계 RBAC 설계, SupabaseAuthGuard → MembershipGuard → SuperAdminGuard 3단계 Guard 체인으로 인증+인가 이중화",
+            "en": "Designed 3-tier RBAC, 3-layer Guard chain (SupabaseAuthGuard → MembershipGuard → SuperAdminGuard) for dual auth+authz"
+          },
+          "result": {
+            "ko": "조직별 독립 데이터 관리 + 역할별 세분화된 접근 제어 실현",
+            "en": "Independent per-org data management + granular role-based access control"
+          }
         },
         {
-          "problem": { "ko": "Vercel Hobby 플랜 Cron 제한(1일 1회)으로 정기거래 자동 처리 불가", "en": "Vercel Hobby Cron limit (1x/day) preventing recurring transaction automation" },
-          "process": { "ko": "NestJS 기반 별도 백엔드를 Mac mini에서 Docker로 분리 운영, @nestjs/schedule로 매일 15:00 KST 실행", "en": "Separated NestJS backend via Docker on Mac mini, @nestjs/schedule daily 15:00 KST execution" },
-          "result": { "ko": "정기거래 매일 자동 처리 실현, 플랫폼 제한 우회", "en": "Daily recurring transaction automation, platform limitation bypassed" }
+          "problem": {
+            "ko": "Vercel Hobby 플랜 Cron 제한(1일 1회)으로 정기거래 자동 처리 불가",
+            "en": "Vercel Hobby Cron limit (1x/day) preventing recurring transaction automation"
+          },
+          "process": {
+            "ko": "NestJS 기반 별도 백엔드를 Mac mini에서 Docker로 분리 운영, @nestjs/schedule로 매일 15:00 KST 실행",
+            "en": "Separated NestJS backend via Docker on Mac mini, @nestjs/schedule daily 15:00 KST execution"
+          },
+          "result": {
+            "ko": "정기거래 매일 자동 처리 실현, 플랫폼 제한 우회",
+            "en": "Daily recurring transaction automation, platform limitation bypassed"
+          }
         },
         {
-          "problem": { "ko": "SSR 환경에서 서버/클라이언트 컴포넌트 간 인증 상태 불일치", "en": "Auth state mismatch between server and client components in SSR" },
-          "process": { "ko": "Next.js 16 App Router + Supabase Auth SSR 조합으로 쿠키 기반 세션 복원 + 인증 컨텍스트 전파 패턴 설계", "en": "Cookie-based session restoration + auth context propagation pattern with Next.js 16 + Supabase Auth SSR" },
-          "result": { "ko": "서버/클라이언트 컴포넌트 간 원활한 인증 상태 동기화", "en": "Seamless auth state sync across server and client components" }
+          "problem": {
+            "ko": "SSR 환경에서 서버/클라이언트 컴포넌트 간 인증 상태 불일치",
+            "en": "Auth state mismatch between server and client components in SSR"
+          },
+          "process": {
+            "ko": "Next.js 16 App Router + Supabase Auth SSR 조합으로 쿠키 기반 세션 복원 + 인증 컨텍스트 전파 패턴 설계",
+            "en": "Cookie-based session restoration + auth context propagation pattern with Next.js 16 + Supabase Auth SSR"
+          },
+          "result": {
+            "ko": "서버/클라이언트 컴포넌트 간 원활한 인증 상태 동기화",
+            "en": "Seamless auth state sync across server and client components"
+          }
         },
         {
-          "problem": { "ko": "복잡한 RBAC + 비동기 로직의 높은 결함 위험을 수동 테스트로 커버 불가", "en": "Manual testing unable to cover defect risk from complex RBAC + async logic" },
-          "process": { "ko": "Vitest 단위 테스트 + Playwright E2E를 역할별(Admin/Member) 시나리오로 구성, 실제 BE + 로컬 Supabase 연동 풀스택 통합 테스트 환경 구축", "en": "Vitest unit + Playwright E2E organized by role scenarios (Admin/Member), full-stack integration env with real BE + local Supabase" },
-          "result": { "ko": "라인 커버리지 99.45%, 역할별 시나리오 자동 검증 체계 구축", "en": "99.45% line coverage, automated role-based scenario verification system" }
+          "problem": {
+            "ko": "복잡한 RBAC + 비동기 로직의 높은 결함 위험을 수동 테스트로 커버 불가",
+            "en": "Manual testing unable to cover defect risk from complex RBAC + async logic"
+          },
+          "process": {
+            "ko": "Vitest 단위 테스트 + Playwright E2E를 역할별(Admin/Member) 시나리오로 구성, 실제 BE + 로컬 Supabase 연동 풀스택 통합 테스트 환경 구축",
+            "en": "Vitest unit + Playwright E2E organized by role scenarios (Admin/Member), full-stack integration env with real BE + local Supabase"
+          },
+          "result": {
+            "ko": "라인 커버리지 99.45%, 역할별 시나리오 자동 검증 체계 구축",
+            "en": "99.45% line coverage, automated role-based scenario verification system"
+          }
         }
       ],
       "period": {
@@ -230,13 +338,19 @@
       },
       "metrics": [
         {
-          "label": { "ko": "Vitest 단위 테스트", "en": "Vitest unit tests" },
+          "label": {
+            "ko": "Vitest 단위 테스트",
+            "en": "Vitest unit tests"
+          },
           "before": "-",
           "after": "397건 (BE 25 + FE 31 suites)",
           "improvement": "99.45% 커버리지"
         },
         {
-          "label": { "ko": "Playwright E2E", "en": "Playwright E2E" },
+          "label": {
+            "ko": "Playwright E2E",
+            "en": "Playwright E2E"
+          },
           "before": "-",
           "after": "300건+ (24 specs · 5 projects)",
           "improvement": "역할별 시나리오"
@@ -276,24 +390,60 @@
       "contentImages": [],
       "problemSolving": [
         {
-          "problem": { "ko": "물류 회사 배차현황을 웹사이트에서 수동 확인해야 하는 운영 비효율", "en": "Operational inefficiency from manually checking dispatch status on website" },
-          "process": { "ko": "Cheerio + Axios로 EUC-KR 인코딩 배차 데이터 크롤링, node-cron으로 월~토 06:00~20:00 매시 자동 동기화", "en": "Crawled EUC-KR encoded dispatch data with Cheerio + Axios, node-cron auto-sync Mon-Sat 06:00-20:00 hourly" },
-          "result": { "ko": "수동 조회 → 일 15회 자동 크롤링, 실시간 데이터 제공", "en": "Manual lookup → 15 daily auto-crawls, real-time data availability" }
+          "problem": {
+            "ko": "물류 회사 배차현황을 웹사이트에서 수동 확인해야 하는 운영 비효율",
+            "en": "Operational inefficiency from manually checking dispatch status on website"
+          },
+          "process": {
+            "ko": "Cheerio + Axios로 EUC-KR 인코딩 배차 데이터 크롤링, node-cron으로 월~토 06:00~20:00 매시 자동 동기화",
+            "en": "Crawled EUC-KR encoded dispatch data with Cheerio + Axios, node-cron auto-sync Mon-Sat 06:00-20:00 hourly"
+          },
+          "result": {
+            "ko": "수동 조회 → 일 15회 자동 크롤링, 실시간 데이터 제공",
+            "en": "Manual lookup → 15 daily auto-crawls, real-time data availability"
+          }
         },
         {
-          "problem": { "ko": "현장 직원이 PC 없이 모바일로 배차 정보를 조회할 수단 부재", "en": "Field workers had no mobile access to dispatch info without PC" },
-          "process": { "ko": "카카오 i 오픈빌더 스킬서버 프로토콜 직접 구현 + Next.js 반응형 모바일 웹 + Recharts 통계 대시보드 병행 제공", "en": "Implemented Kakao i Open Builder skill server + Next.js responsive mobile web + Recharts stats dashboard" },
-          "result": { "ko": "카카오톡 챗봇 + 모바일 웹 이중 채널로 현장 즉시 조회 가능", "en": "Dual-channel (KakaoTalk + mobile web) enabling instant field queries" }
+          "problem": {
+            "ko": "현장 직원이 PC 없이 모바일로 배차 정보를 조회할 수단 부재",
+            "en": "Field workers had no mobile access to dispatch info without PC"
+          },
+          "process": {
+            "ko": "카카오 i 오픈빌더 스킬서버 프로토콜 직접 구현 + Next.js 반응형 모바일 웹 + Recharts 통계 대시보드 병행 제공",
+            "en": "Implemented Kakao i Open Builder skill server + Next.js responsive mobile web + Recharts stats dashboard"
+          },
+          "result": {
+            "ko": "카카오톡 챗봇 + 모바일 웹 이중 채널로 현장 즉시 조회 가능",
+            "en": "Dual-channel (KakaoTalk + mobile web) enabling instant field queries"
+          }
         },
         {
-          "problem": { "ko": "크롤러/카카오 API/DB 등 외부 의존성 변경 시 비즈니스 로직까지 수정 필요", "en": "Business logic changes required when external dependencies changed" },
-          "process": { "ko": "Clean Architecture로 도메인/애플리케이션/인프라 계층 분리, TSyringe DI 토큰으로 인터페이스 바인딩, Value Object 패턴으로 도메인 규칙 타입 수준 강제", "en": "Clean Architecture layer separation, TSyringe DI token interface binding, Value Object pattern for type-level domain rule enforcement" },
-          "result": { "ko": "외부 의존성 교체 시 인프라 계층만 수정, 비즈니스 로직 무변경", "en": "Only infra layer changes on dependency swap, zero business logic changes" }
+          "problem": {
+            "ko": "크롤러/카카오 API/DB 등 외부 의존성 변경 시 비즈니스 로직까지 수정 필요",
+            "en": "Business logic changes required when external dependencies changed"
+          },
+          "process": {
+            "ko": "Clean Architecture로 도메인/애플리케이션/인프라 계층 분리, TSyringe DI 토큰으로 인터페이스 바인딩, Value Object 패턴으로 도메인 규칙 타입 수준 강제",
+            "en": "Clean Architecture layer separation, TSyringe DI token interface binding, Value Object pattern for type-level domain rule enforcement"
+          },
+          "result": {
+            "ko": "외부 의존성 교체 시 인프라 계층만 수정, 비즈니스 로직 무변경",
+            "en": "Only infra layer changes on dependency swap, zero business logic changes"
+          }
         },
         {
-          "problem": { "ko": "수동 재시작 방식의 배포로 서비스 다운타임 발생", "en": "Service downtime from manual restart deployment" },
-          "process": { "ko": "Traefik 파일 프로바이더 기반 Blue-Green 배포 설계, deploy.sh로 빌드 → 헬스체크 → YAML 재작성 → 트래픽 전환 자동화", "en": "Traefik file-provider Blue-Green deployment, deploy.sh automating build → health check → YAML rewrite → traffic switch" },
-          "result": { "ko": "배포 다운타임 0초 달성, Docker 소켓 노출 없이 보안성 확보", "en": "Zero deploy downtime, security without Docker socket exposure" }
+          "problem": {
+            "ko": "수동 재시작 방식의 배포로 서비스 다운타임 발생",
+            "en": "Service downtime from manual restart deployment"
+          },
+          "process": {
+            "ko": "Traefik 파일 프로바이더 기반 Blue-Green 배포 설계, deploy.sh로 빌드 → 헬스체크 → YAML 재작성 → 트래픽 전환 자동화",
+            "en": "Traefik file-provider Blue-Green deployment, deploy.sh automating build → health check → YAML rewrite → traffic switch"
+          },
+          "result": {
+            "ko": "배포 다운타임 0초 달성, Docker 소켓 노출 없이 보안성 확보",
+            "en": "Zero deploy downtime, security without Docker socket exposure"
+          }
         }
       ],
       "period": {
@@ -358,13 +508,19 @@
       },
       "metrics": [
         {
-          "label": { "ko": "크롤링 주기", "en": "Crawl frequency" },
+          "label": {
+            "ko": "크롤링 주기",
+            "en": "Crawl frequency"
+          },
           "before": "수동 조회",
           "after": "일 15회 자동",
           "improvement": "자동화"
         },
         {
-          "label": { "ko": "배포 다운타임", "en": "Deploy downtime" },
+          "label": {
+            "ko": "배포 다운타임",
+            "en": "Deploy downtime"
+          },
           "before": "수동 재시작",
           "after": "0초",
           "improvement": "Blue-Green"
@@ -403,14 +559,32 @@
       "contentImages": [],
       "problemSolving": [
         {
-          "problem": { "ko": "구내식당 주간 식단표를 카카오 채널에서 직접 확인해야 하는 불편", "en": "Inconvenience of manually checking cafeteria menus on Kakao Channel" },
-          "process": { "ko": "Playwright 헤드리스로 카카오 채널 게시물 크롤링, @slack/bolt Socket Mode + node-cron으로 매주 월요일 09:00 자동 발송", "en": "Playwright headless Kakao Channel crawling, @slack/bolt Socket Mode + node-cron weekly Monday 09:00 auto-delivery" },
-          "result": { "ko": "주간 식단표 Slack 자동 발송, 실패 시 1시간 간격 최대 6회 재시도", "en": "Weekly menu auto-delivered to Slack, up to 6 retries at 1-hour intervals on failure" }
+          "problem": {
+            "ko": "구내식당 주간 식단표를 카카오 채널에서 직접 확인해야 하는 불편",
+            "en": "Inconvenience of manually checking cafeteria menus on Kakao Channel"
+          },
+          "process": {
+            "ko": "Playwright 헤드리스로 카카오 채널 게시물 크롤링, @slack/bolt Socket Mode + node-cron으로 매주 월요일 09:00 자동 발송",
+            "en": "Playwright headless Kakao Channel crawling, @slack/bolt Socket Mode + node-cron weekly Monday 09:00 auto-delivery"
+          },
+          "result": {
+            "ko": "주간 식단표 Slack 자동 발송, 실패 시 1시간 간격 최대 6회 재시도",
+            "en": "Weekly menu auto-delivered to Slack, up to 6 retries at 1-hour intervals on failure"
+          }
         },
         {
-          "problem": { "ko": "동일 식단표가 여러 채널에 중복 발송되는 문제", "en": "Same menu being sent multiple times to channels" },
-          "process": { "ko": "DeliveryHistory 테이블로 채널별 발송 이력 관리, 중복 발송 차단 로직 구현", "en": "DeliveryHistory table for per-channel delivery tracking, duplicate send prevention" },
-          "result": { "ko": "중복 발송 0건, /식단 슬래시 커맨드로 즉시 조회 가능", "en": "Zero duplicate sends, /식단 slash command for instant lookup" }
+          "problem": {
+            "ko": "동일 식단표가 여러 채널에 중복 발송되는 문제",
+            "en": "Same menu being sent multiple times to channels"
+          },
+          "process": {
+            "ko": "DeliveryHistory 테이블로 채널별 발송 이력 관리, 중복 발송 차단 로직 구현",
+            "en": "DeliveryHistory table for per-channel delivery tracking, duplicate send prevention"
+          },
+          "result": {
+            "ko": "중복 발송 0건, /식단 슬래시 커맨드로 즉시 조회 가능",
+            "en": "Zero duplicate sends, /식단 slash command for instant lookup"
+          }
         }
       ],
       "period": {
@@ -465,13 +639,19 @@
       },
       "metrics": [
         {
-          "label": { "ko": "재시도 횟수", "en": "Retry attempts" },
+          "label": {
+            "ko": "재시도 횟수",
+            "en": "Retry attempts"
+          },
           "before": "0",
           "after": "최대 6회 (1시간 간격)",
           "improvement": "신뢰성"
         },
         {
-          "label": { "ko": "중복 발송", "en": "Duplicate sends" },
+          "label": {
+            "ko": "중복 발송",
+            "en": "Duplicate sends"
+          },
           "before": "-",
           "after": "0건",
           "improvement": "DeliveryHistory"
@@ -501,7 +681,7 @@
       "printOrder": 2,
       "summary": {
         "ko": "1만 동시 요청 환경에서 좌석 선점·결제·포인트 충전의 동시성 문제를 시나리오별 하이브리드 락 전략으로 해결한 콘서트 좌석 예약 서비스 — 낙관적 락 + Redisson 분산 락, Redis 캐싱 TPS 15배 향상, Kafka 이벤트 드리븐 아키텍처, K6 부하 테스트 기반 병목 개선",
-        "en": "Concert seat reservation service resolving concurrency across seat locking, payments, and point charging under 10K concurrent requests \u2014 hybrid locking strategy (optimistic + Redisson distributed lock), 15x TPS improvement via Redis caching, Kafka event-driven architecture, K6 load test-driven optimization"
+        "en": "Concert seat reservation service resolving concurrency across seat locking, payments, and point charging under 10K concurrent requests — hybrid locking strategy (optimistic + Redisson distributed lock), 15x TPS improvement via Redis caching, Kafka event-driven architecture, K6 load test-driven optimization"
       },
       "description": {
         "ko": "대규모 트래픽 환경에서의 동시성 문제를 다양한 락 전략(비관적 락, 낙관적 락, Redis 분산 락)으로 해결하고, 시나리오별 최적의 동시성 제어 방식을 선정한 프로젝트이다. 좌석 선점에는 낙관적 락, 포인트 충전과 결제에는 Redisson 기반 분산 락을 적용하는 하이브리드 전략을 설계했으며, Redis 캐싱과 DB 인덱싱으로 조회 성능을 최적화하고 Kafka를 활용한 이벤트 기반 아키텍처로 시스템 간 결합도를 낮췄다. K6 부하 테스트를 통해 성능 병목을 식별하고 개선하는 전 과정을 경험했다.",
@@ -511,24 +691,60 @@
       "contentImages": [],
       "problemSolving": [
         {
-          "problem": { "ko": "1만 동시 요청 환경에서 좌석 선점 시 동일 좌석 이중 배정 위험", "en": "Risk of double-booking under 10K concurrent seat reservation requests" },
-          "process": { "ko": "비관적/낙관적/분산 락 3종을 K6로 비교 검증 후, 단일 좌석 경합에 최적인 @Version 낙관적 락 선택", "en": "Compared pessimistic, optimistic, and distributed locks via K6; selected @Version optimistic lock optimal for single-row contention" },
-          "result": { "ko": "좌석 예약 응답시간 50% 개선 (1,678ms → 835ms), 이중 배정 0건", "en": "50% reservation latency improvement (1,678ms → 835ms), zero double-bookings" }
+          "problem": {
+            "ko": "1만 동시 요청 환경에서 좌석 선점 시 동일 좌석 이중 배정 위험",
+            "en": "Risk of double-booking under 10K concurrent seat reservation requests"
+          },
+          "process": {
+            "ko": "비관적/낙관적/분산 락 3종을 K6로 비교 검증 후, 단일 좌석 경합에 최적인 @Version 낙관적 락 선택",
+            "en": "Compared pessimistic, optimistic, and distributed locks via K6; selected @Version optimistic lock optimal for single-row contention"
+          },
+          "result": {
+            "ko": "좌석 예약 응답시간 50% 개선 (1,678ms → 835ms), 이중 배정 0건",
+            "en": "50% reservation latency improvement (1,678ms → 835ms), zero double-bookings"
+          }
         },
         {
-          "problem": { "ko": "포인트 충전과 결제의 동시 실행 시 잔액 정합성 붕괴", "en": "Balance integrity corruption under concurrent point charging and payments" },
-          "process": { "ko": "재시도 기반 낙관적 락의 무한 루프 위험을 분석하고, Redisson 분산 락(userWalletLock:{userId})으로 사용자 단위 직렬화", "en": "Analyzed infinite retry risk of optimistic lock; applied Redisson distributed lock (userWalletLock:{userId}) for per-user serialization" },
-          "result": { "ko": "동시 충전/결제 시나리오에서 잔액 정합성 100% 보장", "en": "100% balance consistency under concurrent charge/payment scenarios" }
+          "problem": {
+            "ko": "포인트 충전과 결제의 동시 실행 시 잔액 정합성 붕괴",
+            "en": "Balance integrity corruption under concurrent point charging and payments"
+          },
+          "process": {
+            "ko": "재시도 기반 낙관적 락의 무한 루프 위험을 분석하고, Redisson 분산 락(userWalletLock:{userId})으로 사용자 단위 직렬화",
+            "en": "Analyzed infinite retry risk of optimistic lock; applied Redisson distributed lock (userWalletLock:{userId}) for per-user serialization"
+          },
+          "result": {
+            "ko": "동시 충전/결제 시나리오에서 잔액 정합성 100% 보장",
+            "en": "100% balance consistency under concurrent charge/payment scenarios"
+          }
         },
         {
-          "problem": { "ko": "콘서트/좌석 조회 TPS가 100에 불과하여 예약 오픈 시 DB 병목", "en": "Concert/seat query TPS only 100, causing DB bottleneck at reservation open" },
-          "process": { "ko": "Redis 캐시 레이어 적용 + DB 인덱스 최적화를 병행하여 계층적 캐싱 전략 구현", "en": "Implemented layered caching strategy combining Redis cache with DB index optimization" },
-          "result": { "ko": "TPS 100 → 1,500 (15배 향상), DB 쿼리 94% 감소", "en": "TPS 100 → 1,500 (15x improvement), 94% DB query reduction" }
+          "problem": {
+            "ko": "콘서트/좌석 조회 TPS가 100에 불과하여 예약 오픈 시 DB 병목",
+            "en": "Concert/seat query TPS only 100, causing DB bottleneck at reservation open"
+          },
+          "process": {
+            "ko": "Redis 캐시 레이어 적용 + DB 인덱스 최적화를 병행하여 계층적 캐싱 전략 구현",
+            "en": "Implemented layered caching strategy combining Redis cache with DB index optimization"
+          },
+          "result": {
+            "ko": "TPS 100 → 1,500 (15배 향상), DB 쿼리 94% 감소",
+            "en": "TPS 100 → 1,500 (15x improvement), 94% DB query reduction"
+          }
         },
         {
-          "problem": { "ko": "예약 완료 후 결제/알림 처리가 동기 호출로 묶여 도메인 간 강결합", "en": "Payment/notification tightly coupled via synchronous calls after reservation" },
-          "process": { "ko": "Kafka Transactional Outbox 패턴으로 예약 TX 내 outbox_event 삽입 후 스케줄러가 비동기 발행", "en": "Kafka Transactional Outbox: outbox_event inserted within TX, scheduler publishes asynchronously" },
-          "result": { "ko": "도메인 간 결합도 제거, 메시지 유실 방지, 독립 확장 가능", "en": "Eliminated coupling, prevented message loss, enabled independent scaling" }
+          "problem": {
+            "ko": "예약 완료 후 결제/알림 처리가 동기 호출로 묶여 도메인 간 강결합",
+            "en": "Payment/notification tightly coupled via synchronous calls after reservation"
+          },
+          "process": {
+            "ko": "Kafka Transactional Outbox 패턴으로 예약 TX 내 outbox_event 삽입 후 스케줄러가 비동기 발행",
+            "en": "Kafka Transactional Outbox: outbox_event inserted within TX, scheduler publishes asynchronously"
+          },
+          "result": {
+            "ko": "도메인 간 결합도 제거, 메시지 유실 방지, 독립 확장 가능",
+            "en": "Eliminated coupling, prevented message loss, enabled independent scaling"
+          }
         }
       ],
       "period": {
@@ -623,19 +839,28 @@
       },
       "metrics": [
         {
-          "label": { "ko": "좌석 예약 응답시간", "en": "Reservation latency" },
+          "label": {
+            "ko": "좌석 예약 응답시간",
+            "en": "Reservation latency"
+          },
           "before": "1,678ms",
           "after": "835ms",
           "improvement": "-50%"
         },
         {
-          "label": { "ko": "좌석 조회 TPS", "en": "Seat query TPS" },
+          "label": {
+            "ko": "좌석 조회 TPS",
+            "en": "Seat query TPS"
+          },
           "before": "100",
           "after": "1,500",
           "improvement": "15x"
         },
         {
-          "label": { "ko": "DB 쿼리 비율", "en": "DB query ratio" },
+          "label": {
+            "ko": "DB 쿼리 비율",
+            "en": "DB query ratio"
+          },
           "before": "100%",
           "after": "6%",
           "improvement": "-94%"
@@ -680,14 +905,32 @@
       ],
       "problemSolving": [
         {
-          "problem": { "ko": "4개 대학병원 채용 사이트를 매일 수동 확인해야 하는 구직자 불편", "en": "Job seekers manually checking 4 hospital career sites daily" },
-          "process": { "ko": "병원별 Strategy 패턴 — API 방식(세브란스, 이대, 중앙대) + Puppeteer 자동화(중앙대 흑석), 매시간 자동 스크래핑", "en": "Strategy pattern per hospital — API (Severance, Ewha, Chung-Ang) + Puppeteer (Chung-Ang Heukseok), hourly auto-scraping" },
-          "result": { "ko": "4개 병원 채용공고 자동 수집 + 키워드 매칭 이메일 알림", "en": "Auto-collected from 4 hospitals + keyword-matched email notifications" }
+          "problem": {
+            "ko": "4개 대학병원 채용 사이트를 매일 수동 확인해야 하는 구직자 불편",
+            "en": "Job seekers manually checking 4 hospital career sites daily"
+          },
+          "process": {
+            "ko": "병원별 Strategy 패턴 — API 방식(세브란스, 이대, 중앙대) + Puppeteer 자동화(중앙대 흑석), 매시간 자동 스크래핑",
+            "en": "Strategy pattern per hospital — API (Severance, Ewha, Chung-Ang) + Puppeteer (Chung-Ang Heukseok), hourly auto-scraping"
+          },
+          "result": {
+            "ko": "4개 병원 채용공고 자동 수집 + 키워드 매칭 이메일 알림",
+            "en": "Auto-collected from 4 hospitals + keyword-matched email notifications"
+          }
         },
         {
-          "problem": { "ko": "이메일 알림 발송 실패 시 공고를 놓칠 위험", "en": "Risk of missing postings when email notification fails" },
-          "process": { "ko": "비관적 락 기반 알림 큐 관리, 배치 처리(10건), 실패 시 최대 3회 재시도", "en": "Pessimistic lock notification queue, batch processing (10), up to 3 retries on failure" },
-          "result": { "ko": "외부 ID 기반 중복 필터링 + 안정적 알림 전달 보장", "en": "External ID dedup + reliable notification delivery guaranteed" }
+          "problem": {
+            "ko": "이메일 알림 발송 실패 시 공고를 놓칠 위험",
+            "en": "Risk of missing postings when email notification fails"
+          },
+          "process": {
+            "ko": "비관적 락 기반 알림 큐 관리, 배치 처리(10건), 실패 시 최대 3회 재시도",
+            "en": "Pessimistic lock notification queue, batch processing (10), up to 3 retries on failure"
+          },
+          "result": {
+            "ko": "외부 ID 기반 중복 필터링 + 안정적 알림 전달 보장",
+            "en": "External ID dedup + reliable notification delivery guaranteed"
+          }
         }
       ],
       "period": {
@@ -743,13 +986,19 @@
       },
       "metrics": [
         {
-          "label": { "ko": "스크래핑 대상", "en": "Scraping targets" },
+          "label": {
+            "ko": "스크래핑 대상",
+            "en": "Scraping targets"
+          },
           "before": "수동 확인",
           "after": "4개 병원 매시간 자동",
           "improvement": "자동화"
         },
         {
-          "label": { "ko": "알림 신뢰성", "en": "Notification reliability" },
+          "label": {
+            "ko": "알림 신뢰성",
+            "en": "Notification reliability"
+          },
           "before": "단건 발송",
           "after": "배치 10건 + 3회 재시도",
           "improvement": "비관적 락"
@@ -788,9 +1037,18 @@
       },
       "problemSolving": [
         {
-          "problem": { "ko": "스타트업 정보가 분산되어 투자자/구직자가 한눈에 비교할 수 없는 문제", "en": "Startup info scattered, making comparison difficult for investors/job seekers" },
-          "process": { "ko": "NestJS + PostgreSQL 기반 스타트업 데이터 수집·정규화 플랫폼 구축, 카테고리별 필터 + 검색 API 설계", "en": "Built startup data collection/normalization platform with NestJS + PostgreSQL, category filters + search API" },
-          "result": { "ko": "스타트업 정보 통합 조회 + 카테고리별 필터링 플랫폼 제공", "en": "Unified startup info browsing + category-filtered platform" }
+          "problem": {
+            "ko": "스타트업 정보가 분산되어 투자자/구직자가 한눈에 비교할 수 없는 문제",
+            "en": "Startup info scattered, making comparison difficult for investors/job seekers"
+          },
+          "process": {
+            "ko": "NestJS + PostgreSQL 기반 스타트업 데이터 수집·정규화 플랫폼 구축, 카테고리별 필터 + 검색 API 설계",
+            "en": "Built startup data collection/normalization platform with NestJS + PostgreSQL, category filters + search API"
+          },
+          "result": {
+            "ko": "스타트업 정보 통합 조회 + 카테고리별 필터링 플랫폼 제공",
+            "en": "Unified startup info browsing + category-filtered platform"
+          }
         }
       ],
       "period": {
@@ -851,13 +1109,19 @@
       },
       "metrics": [
         {
-          "label": { "ko": "소셜 로그인", "en": "Social login providers" },
+          "label": {
+            "ko": "소셜 로그인",
+            "en": "Social login providers"
+          },
           "before": "-",
           "after": "4종 통합",
           "improvement": "OAuth 2.0"
         },
         {
-          "label": { "ko": "커뮤니티 API", "en": "Community APIs" },
+          "label": {
+            "ko": "커뮤니티 API",
+            "en": "Community APIs"
+          },
           "before": "-",
           "after": "게시물·댓글·좋아요·북마크·팔로우",
           "improvement": "전담 구현"

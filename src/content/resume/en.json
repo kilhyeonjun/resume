@@ -198,8 +198,8 @@
                 "result": "Established the basis for evaluating deliverables by tests and reviews regardless of AI-tool usage"
               },
               {
-                "problem": "Significant variance in AI agent productivity across team — context and learnings discovered by individuals did not propagate, causing repeated trial-and-error",
-                "solution": "Chose Git-based config-as-code over individual documentation — docs must be re-read by humans, but codified config integrates directly into the AI runtime and applies automatically. Built a team-wide AI development context platform unifying principles, coding standards, domain knowledge, agents, and hooks in one git repo",
+                "problem": "Development-automation productivity varied significantly by team member, while individually discovered context and practices did not propagate, causing repeated trial-and-error",
+                "solution": "Chose Git-based config-as-code over individual documentation — docs must be re-read by humans, but codified config integrates directly into the runtime and applies automatically. Built a shared team development-context platform unifying principles, coding standards, domain knowledge, specialist agents, and hooks in one git repo",
                 "result": "Enabled all team members to start with the same AI session context via git pull — converting shared rules, domain knowledge, and specialist agents into searchable team assets"
               }
             ]
@@ -1332,15 +1332,15 @@
         "position": "Platform / Tooling Engineering",
         "startDate": "2026-04",
         "current": true,
-        "description": "Self-directed platform/tooling engineering beyond day-job scope — an AI coding workflow automation framework and side projects",
+        "description": "Self-directed platform/tooling engineering outside work — development workflow automation framework and side projects",
         "highlights": [],
         "projects": [
           {
-            "name": "Personal AI Coding Harness Framework",
+            "name": "Personal Development Operations Harness Framework",
             "period": "2026.04 ~ Present",
             "featured": true,
-            "description": "Designed a personal workflow framework that automatically manages AI coding agents' context, cost, rules, RAG, and browser runtime, deployed across 3 harnesses",
-            "techRationale": "Doc-only rules are not read by agents when needed, so enforced them via Git hooks (hook-first); used a runtime surface compiler and launcher package to generate and verify Claude/Codex settings, preventing multi-instance duplication and version drift.",
+            "description": "Designed and operated a personal workflow framework that automatically manages development-session context, cost, rules, RAG, and browser runtimes across 3 harnesses",
+            "techRationale": "Chose hook-first enforcement because document-only rules are not always read at the moment of need; generated and verified runtime settings through a runtime-surface compiler and launcher package to prevent multi-instance drift.",
             "details": [
               {
                 "problem": "Growing markdown knowledge base made manual context discovery by agents inefficient",
@@ -1363,9 +1363,9 @@
                 "result": "Made 95% hidden cost visible by category; found and fixed a multi-instance usage-aggregation bug"
               },
               {
-                "problem": "Codex Browser and node_repl runtime trust boundaries and fallback order were unclear, making browser automation unstable across sessions",
-                "solution": "Documented node_repl MCP trust boundaries and environment-native Browser/Codex/Chrome fallback order, then reflected Chrome plugin activation in the launcher generator",
-                "result": "Registered node_repl across private profiles harnesses and established browser runtime trust-boundary plus fallback policy"
+                "problem": "Browser and REPL runtime trust boundaries and fallback order were unclear, making automation unstable across sessions",
+                "solution": "Documented runtime trust boundaries and environment-native Browser/Chrome fallback order, then reflected Chrome plugin activation paths in the launcher generator",
+                "result": "Registered runtimes across private profiles harnesses and standardized browser runtime trust boundaries and fallback order"
               }
             ],
             "techStack": [

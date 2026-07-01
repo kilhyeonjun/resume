@@ -198,8 +198,8 @@
                 "result": "AI 활용 여부와 무관하게 결과물을 테스트·리뷰 기준으로 평가하는 팀 개발 거버넌스 기반 마련"
               },
               {
-                "problem": "Claude Code 등 AI 에이전트 활용도 팀원별 격차 + 개인이 발견한 컨텍스트·노하우가 팀 전체에 전파되지 않아 동일한 시행착오 반복",
-                "solution": "개인 노하우 문서화 대신 Git 기반 공유 설정 자동화(config-as-code)를 채택 — 문서는 사람이 다시 읽어야 하지만 코드화된 설정은 AI 런타임에 직접 연동돼 자동 적용되기 때문. 팀 원칙·코딩 표준·도메인 지식·전문 에이전트·자동화 훅을 단일 git repo로 통합한 팀 공통 AI 개발 인프라 설계",
+                "problem": "팀원별 개발 자동화 활용도 격차와 개인별 컨텍스트·노하우 단절로 동일한 시행착오 반복",
+                "solution": "개인 노하우 문서화 대신 Git 기반 공유 설정 자동화(config-as-code)를 채택 — 문서는 사람이 다시 읽어야 하지만 코드화된 설정은 런타임에 직접 연동돼 자동 적용되기 때문. 팀 원칙·코딩 표준·도메인 지식·전문 에이전트·자동화 훅을 단일 git repo로 통합한 팀 공통 개발 컨텍스트 인프라 설계",
                 "result": "git pull만으로 팀원 전원이 동일한 AI 세션 컨텍스트로 시작 — 공통 규칙·도메인 지식·전문 에이전트를 검색 가능한 팀 자산으로 전환"
               }
             ]
@@ -1332,15 +1332,15 @@
         "position": "플랫폼 · 툴링 엔지니어링",
         "startDate": "2026-04",
         "current": true,
-        "description": "직무 외 자기주도 플랫폼/툴링 엔지니어링 — AI 코딩 워크플로우 자동화 프레임워크 및 사이드 프로젝트",
+        "description": "직무 외 자기주도 플랫폼/툴링 엔지니어링 — 개발 워크플로우 자동화 프레임워크 및 사이드 프로젝트",
         "highlights": [],
         "projects": [
           {
-            "name": "개인 AI 코딩 하네스 프레임워크",
+            "name": "개인 개발 운영 하네스 프레임워크",
             "period": "2026.04 ~ 현재",
             "featured": true,
-            "description": "AI 코딩 에이전트의 컨텍스트·비용·규칙·RAG·브라우저 런타임을 자동 관리하는 개인 워크플로우 프레임워크를 설계하고 3개 하네스에 배포·운영",
-            "techRationale": "문서 전용 규칙은 에이전트가 필요 시점에 읽지 않으므로 Git 훅 기반으로 강제(hook-first)하고, 다중 인스턴스 중복 관리·버전 드리프트를 막기 위해 런타임 서피스 컴파일러와 런처 패키지로 Claude/Codex 설정을 생성·검증.",
+            "description": "개발 세션의 컨텍스트·비용·규칙·RAG·브라우저 런타임을 자동 관리하는 개인 워크플로우 프레임워크를 설계하고 3개 하네스에 배포·운영",
+            "techRationale": "문서 전용 규칙은 에이전트가 필요 시점에 읽지 않으므로 Git 훅 기반으로 강제(hook-first)하고, 다중 인스턴스 중복 관리·버전 드리프트를 막기 위해 런타임 서피스 컴파일러와 런처 패키지로 설정을 생성·검증.",
             "details": [
               {
                 "problem": "마크다운 지식 베이스가 커지며 에이전트가 관련 컨텍스트를 수동 탐색하는 비효율",
@@ -1363,9 +1363,9 @@
                 "result": "숨은 비용 95%를 카테고리별로 가시화, 다중 인스턴스 사용량 집계 누락 버그 발견·수정"
               },
               {
-                "problem": "Codex Browser와 node_repl 런타임의 신뢰 경계·fallback 순서가 불명확해 브라우저 자동화가 세션별로 불안정",
-                "solution": "node_repl MCP 신뢰 경계와 environment-native Browser/Codex/Chrome fallback 순서를 문서화하고, 런처 생성기에 Chrome 플러그인 활성화 경로 반영",
-                "result": "private profiles 3개 하네스에 node_repl 등록, browser runtime 신뢰 경계 및 fallback 순서 정립"
+                "problem": "브라우저와 REPL 런타임의 신뢰 경계·fallback 순서가 불명확해 자동화가 세션별로 불안정",
+                "solution": "런타임 신뢰 경계와 environment-native Browser/Chrome fallback 순서를 문서화하고, 런처 생성기에 Chrome 플러그인 활성화 경로 반영",
+                "result": "private profiles 3개 하네스에 런타임 등록, browser runtime 신뢰 경계 및 fallback 순서 정립"
               }
             ],
             "techStack": [

@@ -40,6 +40,7 @@ test-results/
 # private/local sidecars (not part of public resume site)
 ops/
 .rag/
+.external-reviews/
 
 # skill eval workspaces (large, regenerable)
 .claude/skills/*-workspace/

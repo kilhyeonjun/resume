@@ -9,12 +9,12 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://kilhyeonjun.github.io"
     },
-    "summary": "Backend engineer designing and operating a shared backend platform across 6 live game environments (12 branches), and leading the newly formed Platform Part to build team-wide AI development infrastructure. At GameDuo, drove an 82% BigQuery cost reduction, a 270x throughput expansion via serverless migration, and a WAL-sharded real-time game chat server (6,000 CCU target); presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across four domains (Education, Healthcare, Clinical Trials, Gaming), consistently delivered DB optimization, concurrency control, and event-driven architecture design. Since late 2024, I have applied this same structural thinking to the development process itself — orchestrating multiple AI agents by role to design and ship production software. Right after the new Part launched, I established Git-based team-wide AI development context infrastructure from scratch; in my personal harness, I automated evidence search and quality governance through local RAG, MCP, and hook-based enforcement.",
+    "summary": "Backend engineer designing and operating shared backend platforms across 6 live game environments (12 branches), currently leading the Platform Part across real-time game chat, marketing data pipelines, and common package systems. At GameDuo, reduced BigQuery read cost per TB by 82% via Storage Read API migration, expanded pipeline coverage from 60 to 360 days through serverless migration, validated capacity for a real-time chat server targeting 6,000 CCU, and presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across education, healthcare, clinical trials, and gaming, I have consistently delivered DB optimization, concurrency control, and event-driven architecture. Recently I have applied the same engineering discipline to the development process itself: building shared AI development context, local RAG, MCP, and Git-hook quality gates so AI-assisted output is governed by tests and evidence retrieval rather than tool usage alone.",
     "coreCompetencies": [
       {
         "category": "DB Optimization, Concurrency & Distributed Systems",
         "items": [
-          "Query tuning, index design, and table normalization delivering 97% performance gain",
+          "Normalized and indexed a 100+ column marketing table, reducing query latency from 18s to 0.5s",
           "Deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks",
           "Advanced Redis Streams WAL with a 4-shard Valkey cluster and serverless fanout instrumentation to preserve real-time chat ordering and horizontal scale (accept rate 99.39→99.99%, ack p95 767ms→6.6ms)"
         ]
@@ -34,11 +34,11 @@
         ]
       },
       {
-        "category": "AI-Augmented Development Productivity",
+        "category": "Engineering Productivity & Quality Governance",
         "items": [
-          "Integrated Claude Code, Amazon Q, and other AI agents into development workflows, driving team-wide adoption (Games on AWS 2025 speaker)",
-          "Automated AI-session context search, rule enforcement, and cost observability through a local RAG/MCP/Git-hook harness",
-          "Established team-wide TDD foundation to ensure AI-generated code reliability — built a quality governance layer for AI-assisted development"
+          "Established team quality gates that verify AI-assisted development through TDD, integration tests, and Git hooks",
+          "Automated team domain-knowledge retrieval and rule enforcement through Git-based shared context plus local RAG/MCP search",
+          "Presented an Amazon Q Developer-based data pipeline scaling case at Games on AWS 2025"
         ]
       }
     ],
@@ -149,26 +149,14 @@
         ]
       },
       {
-        "category": "Development Productivity",
-        "description": "AI agent-augmented development, AGENTS.md-based context engineering, multi-agent orchestration, RAG/MCP-based code quality automation",
+        "category": "Engineering Productivity",
+        "description": "AI-assisted development verification, context/RAG retrieval, Git-hook quality gates, and cost/rule observability",
         "items": [
           {
-            "name": "Claude Code"
+            "name": "AI-assisted Development"
           },
           {
-            "name": "Amazon Q Developer"
-          },
-          {
-            "name": "Cursor"
-          },
-          {
-            "name": "Context Engineering"
-          },
-          {
-            "name": "Multi-Agent Orchestration"
-          },
-          {
-            "name": "AGENTS.md"
+            "name": "TDD Governance"
           },
           {
             "name": "MCP"
@@ -178,6 +166,9 @@
           },
           {
             "name": "Git Hooks"
+          },
+          {
+            "name": "Cost Observability"
           }
         ]
       }
@@ -197,19 +188,19 @@
             "current": true,
             "highlights": [
               {
-                "problem": "Newly formed platform team lacked task tracking and sizing framework",
-                "solution": "Designed 7-stage workflow (BACKLOG→SIZE REVIEW→DONE), handling rules for 4 task types, transition validators, and ticket template library",
-                "result": "Standard operating framework deployed immediately upon team formation — task-type handling rules and decision criteria established simultaneously"
+                "problem": "After the Platform Part was formed, prioritization and verification criteria for shared backend work were fragmented across games",
+                "solution": "Standardized platform work from backlog to verification to completion with task-type criteria, review gates, and templates",
+                "result": "Established an initial operating system for tracking shared infrastructure, package, and chat-server work under the same criteria"
               },
               {
-                "problem": "Existing sizing criteria did not reflect AI-assisted development time reduction with Claude Code",
-                "solution": "Established 5-dimension scoring framework and per-domain Claude Code time-discount rules (test writing ~80%, pattern replication ~70%)",
-                "result": "Team-consensus AI time-discount rules established, ensuring equitable performance measurement before and after Claude Code adoption"
+                "problem": "After AI-assisted development adoption, output quality and verification responsibility depended on each engineer's usage style",
+                "solution": "Defined a five-dimension sizing framework with TDD/review-based verification principles across scope, complexity, uncertainty, collaboration, and validation",
+                "result": "Established the basis for evaluating deliverables by tests and reviews regardless of AI-tool usage"
               },
               {
                 "problem": "Significant variance in AI agent productivity across team — context and learnings discovered by individuals did not propagate, causing repeated trial-and-error",
                 "solution": "Chose Git-based config-as-code over individual documentation — docs must be re-read by humans, but codified config integrates directly into the AI runtime and applies automatically. Built a team-wide AI development context platform unifying principles, coding standards, domain knowledge, agents, and hooks in one git repo",
-                "result": "Established team-wide standardized AI context via git pull — converted individual learnings into team assets and eliminated AI productivity gap (397 domain knowledge files accumulated within ~2 weeks)"
+                "result": "Enabled all team members to start with the same AI session context via git pull — converting shared rules, domain knowledge, and specialist agents into searchable team assets"
               }
             ]
           },
@@ -221,7 +212,7 @@
               {
                 "problem": "Marketing data query cost surge (full-scan billing model)",
                 "solution": "Evaluated partitioning but rejected due to Write IOPS increase; adopted gRPC distributed reads (Storage Read API)",
-                "result": "Cut costs 82% ($6.25→$1.1 per TB)"
+                "result": "Reduced BigQuery read cost per TB by 82% ($6.25→$1.1)"
               },
               {
                 "problem": "Batch processing collection limits (60 days)",
@@ -758,7 +749,7 @@
           {
             "problem": "5+ monthly e-signature processing failures (clinical trial Deadlock)",
             "solution": "Reproduced and identified FK shared lock deadlock pattern",
-            "result": "Failures reduced to 0, Deadlock root cause eliminated"
+            "result": "Prevented recurrence of the same lock-contention pattern and resolved e-signature processing failures"
           },
           {
             "problem": "VDR project schedule delay under MVP launch pressure",
@@ -1005,7 +996,7 @@
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
           {
-            "problem": "Express.js single-file (app.js) 10,000-line legacy maintainability limits",
+            "problem": "Regression risk increased as auth, appointment, and notification changes accumulated around an Express.js single-file app.js structure",
             "solution": "3-stage progressive migration (single-file→layered→NestJS) + JS→TS",
             "result": "TDD 80% coverage, zero incidents during major releases"
           },
@@ -1185,9 +1176,9 @@
             "result": "Digitized operations for 300+ students per semester"
           },
           {
-            "problem": "Legacy PHP system extensibility limits",
-            "solution": "Embedded Spring Boot app via iframe + weighted-average matching algorithm",
-            "result": "JOB Agent service launched"
+            "problem": "New matching and counseling features had to be added to a legacy PHP system, while direct changes carried high regression risk",
+            "solution": "Integrated an independent Spring Boot app through a constrained iframe/postMessage boundary and implemented a weighted-average matching algorithm",
+            "result": "Launched the JOB Agent service while isolating the legacy-system impact surface"
           }
         ],
         "projects": [
@@ -1427,16 +1418,14 @@
         "degree": "Bachelor's (Advanced Major Program, Concurrent Employment)",
         "field": "Computer Information Engineering",
         "startDate": "2022-02",
-        "endDate": "2023-02",
-        "gpa": "4.10/4.5"
+        "endDate": "2023-02"
       },
       {
         "institution": "Inha Technical College",
         "degree": "Associate (Concurrent Employment)",
         "field": "Computer Information",
         "startDate": "2017-02",
-        "endDate": "2022-02",
-        "gpa": "4.16/4.5"
+        "endDate": "2022-02"
       }
     ],
     "continuousLearning": [

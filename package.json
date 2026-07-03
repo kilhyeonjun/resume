@@ -13,8 +13,9 @@
     "pdf:ats": "tsx scripts/generate-pdf.ts --ats",
     "pdf:full": "node -e \"const{execSync:r}=require('child_process');try{r('lsof -ti:4321',{stdio:'pipe'})}catch{console.log('Starting dev server...');require('child_process').spawn('npx',['astro','dev'],{stdio:'ignore',detached:true}).unref();r('sleep 3')}r('tsx scripts/generate-pdf.ts',{stdio:'inherit'})\"",
     "jd:init": "node scripts/jd-custom/init-jd-custom.mjs",
+    "jd:pdf": "node scripts/jd-custom/generate-jd-pdf.mjs",
     "jd:verify": "python3 scripts/jd-custom/verify-jd-custom.py",
-    "jd:test": "bash scripts/jd-custom/test-init-jd-custom.sh && bash scripts/jd-custom/test-verify-jd-custom.sh"
+    "jd:test": "bash scripts/jd-custom/test-init-jd-custom.sh && bash scripts/jd-custom/test-verify-jd-custom.sh && bash scripts/jd-custom/test-generate-jd-pdf.sh && bash scripts/jd-custom/test-zighang-recruitment-loop.sh"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",

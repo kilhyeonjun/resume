@@ -27,6 +27,7 @@ interface PDFConfig {
   filename: string;
   format?: 'A4' | 'Letter';
   printBackground: boolean;
+  pageRanges?: string;
 }
 
 interface PDFConfigSet {
@@ -42,6 +43,7 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-hr-ko.pdf',
       format: 'A4',
       printBackground: true,
+      pageRanges: '1-2',
     },
     {
       name: 'ATS Version (Korean)',
@@ -72,6 +74,7 @@ const PDF_CONFIGS: PDFConfigSet = {
       filename: 'resume-hr-en.pdf',
       format: 'A4',
       printBackground: true,
+      pageRanges: '1-2',
     },
     {
       name: 'ATS Version (English)',
@@ -151,6 +154,7 @@ async function generatePDF(
       path: outputPath,
       format: config.format || 'A4',
       printBackground: config.printBackground,
+      pageRanges: config.pageRanges,
     });
 
     console.log(`     ✅ Saved to: ${outputPath}`);

@@ -10,8 +10,8 @@
       "featured": true,
       "printOrder": 1,
       "summary": {
-        "ko": "개발 운영과 이력서/JD 큐레이션을 재현 가능하게 만든 Git 기반 개인 하네스 — 로컬 BGE-M3 RAG, MCP 검색, Git 훅 품질 게이트, JD-custom PDF 생성, 직행/Zighang 외부 피드백 루프, 비용 분석기를 통합",
-        "en": "Git-based personal harness for reproducible development operations and resume/JD curation — integrating local BGE-M3 RAG, MCP search, Git-hook quality gates, JD-custom PDF generation, Zighang external feedback loops, and cost analysis"
+        "ko": "개발 운영과 이력서/JD 큐레이션을 재현 가능하게 만든 Git 기반 개인 하네스 — 로컬 BGE-M3 RAG, MCP 검색, Git 훅 품질 게이트, JD-custom PDF 생성, 직행/Zighang 외부 피드백 루프와 안전한 T1/T2/T3 반영 체계를 통합",
+        "en": "Git-based personal harness for reproducible development operations and resume/JD curation — integrating local BGE-M3 RAG, MCP search, Git-hook quality gates, JD-custom PDF generation, Zighang external feedback loops, and safe T1/T2/T3 application gates"
       },
       "description": {
         "ko": "AI 지원 개발을 단발성 도구 사용이 아니라 재현 가능한 운영 체계로 만들기 위해 설계한 개인 하네스다. 런타임별 설정은 소스에서 생성해 드리프트를 줄이고, 마크다운·이력서·포트폴리오 JSON은 로컬 임베딩 RAG로 색인해 세션 시작·프롬프트 제출·편집·커밋 시점에 근거 검색을 자동 연결한다. 문서만으로는 지켜지지 않는 규칙은 Git 훅과 테스트로 강제하고, JD-custom PDF 생성과 직행/Zighang 외부 피드백 루프를 통해 채용 공고별 이력서 개선도 raw feedback→T1/T2/T3 triage→검증→커밋 흐름으로 운영한다.",
@@ -71,8 +71,8 @@
             "en": "Connected resume/portfolio JSON chunkers, JD-custom PDF generation, Zighang recruitment-roast capture, and T1/T2/T3 triage templates"
           },
           "result": {
-            "ko": "[REDACTED_TARGET_COMPANY] NestJS JD에서 92%→88% [REDACTED_FIT_ASSESSMENT] 피드백 루프를 완료하고, [REDACTED_TARGET_COMPANY] 정산 JD는 35% [REDACTED_FIT_ASSESSMENT]으로 분류해 과최적화 방지",
-            "en": "Completed a pass-range loop for the [REDACTED_TARGET_COMPANY] NestJS JD (92%→88%) and classified the [REDACTED_TARGET_COMPANY] settlement JD as [REDACTED_FIT_ASSESSMENT] at 35% to avoid overfitting"
+            "ko": "[REDACTED_TARGET_COMPANY] NestJS JD [REDACTED_FIT_ASSESSMENT], [REDACTED_TARGET_COMPANY] 정산 JD 35% [REDACTED_FIT_ASSESSMENT], [REDACTED_TARGET_COMPANY] [REDACTED_FIT_ASSESSMENT]% 보완-[REDACTED_FIT_ASSESSMENT] 피드백을 각각 raw feedback→T1/T2/T3 triage→검증 루프로 분류",
+            "en": "Classified [REDACTED_TARGET_COMPANY] NestJS as pass-range, [REDACTED_TARGET_COMPANY] settlement as 35% [REDACTED_FIT_ASSESSMENT], and [REDACTED_TARGET_COMPANY] AI Backend as 82% improve-to-pass through raw feedback → T1/T2/T3 triage → verification loops"
           }
         },
         {
@@ -117,7 +117,8 @@
           "resume/portfolio JSON을 RAG 코퍼스로 통합, [REDACTED_PRIVATE_INVENTORY] 색인 + 32개 테스트 통과",
           "브라우저·REPL 런타임 신뢰 경계와 fallback 순서 문서화, 3개 하네스 설정 반영",
           "work-data schema v1.2와 outcome_metrics 기반 증거 큐레이션으로 279개 작업 항목 증분 수집·메트릭 보유율 44%→50% 개선",
-          "JD-custom PDF + 직행/Zighang 피드백 루프 구축, [REDACTED_TARGET_COMPANY] 92%→88% [REDACTED_FIT_ASSESSMENT]·[REDACTED_TARGET_COMPANY] 35% [REDACTED_FIT_ASSESSMENT] 분류로 과최적화 방지"
+          "JD-custom PDF + 직행/Zighang 피드백 루프 구축, [REDACTED_TARGET_COMPANY] 92%→88% [REDACTED_FIT_ASSESSMENT]·[REDACTED_TARGET_COMPANY] 35% [REDACTED_FIT_ASSESSMENT] 분류로 과최적화 방지",
+          "직행/Zighang recruitment-roast 헬퍼를 main-scope 결과 저장·Puppeteer 실제 click·upload-form guard로 보강해 sidebar 과거 결과 오탐 방지"
         ],
         "en": [
           "Aligned 3 harnesses through automatic runtime-surface generation plus XML runtime contracts",
@@ -126,7 +127,8 @@
           "Integrated resume/portfolio JSON into the RAG corpus, indexing [REDACTED_PRIVATE_INVENTORY] and passing 32 tests",
           "Documented browser/REPL runtime trust boundaries and fallback order, then reflected settings across 3 harnesses",
           "Added schema v1.2 + outcome_metrics evidence curation, incrementally collecting 279 work items and improving metric coverage 44%→50%",
-          "Built JD-custom PDF + Zighang feedback loop; kept [REDACTED_TARGET_COMPANY] in pass range (92%→88%) and classified [REDACTED_TARGET_COMPANY] as 35% [REDACTED_FIT_ASSESSMENT] to avoid overfitting"
+          "Built JD-custom PDF + Zighang feedback loop; kept [REDACTED_TARGET_COMPANY] in pass range (92%→88%) and classified [REDACTED_TARGET_COMPANY] as 35% [REDACTED_FIT_ASSESSMENT] to avoid overfitting",
+          "Hardened the Zighang recruitment-roast helper with main-scope result capture, Puppeteer element clicks, and upload-form guards to avoid sidebar-history false positives"
         ]
       },
       "lessons": {
@@ -193,8 +195,8 @@
             "en": "JD Feedback Loop"
           },
           "before": "manual JD feedback capture",
-          "after": "JD PDF + Zighang recruitment-roast + T1/T2/T3 triage",
-          "improvement": "[REDACTED_TARGET_COMPANY] pass range / [REDACTED_TARGET_COMPANY] [REDACTED_FIT_ASSESSMENT] classified"
+          "after": "JD PDF + Zighang recruitment-roast + T1/T2/T3 triage + form-start guard",
+          "improvement": "[REDACTED_TARGET_COMPANY] pass range / [REDACTED_TARGET_COMPANY] [REDACTED_FIT_ASSESSMENT] / Hanwha 82% improve-to-pass"
         }
       ],
       "techDecisions": {

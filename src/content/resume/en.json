@@ -270,6 +270,16 @@
                 "problem": "After hot-channel fanout migration, the bottleneck was not isolated between Redis server Lua, gateway event loop, a single command queue, and topology",
                 "solution": "Added attribution instrumentation before changing architecture, then validated Valkey serverless SSUBSCRIBE, per-channel subscriptions, and logicalChannelId-sticky connection pools step by step",
                 "result": "Passed sandbox verify 19/0/0, reduced command queue 5,940→716, and processed 878,205 messages with zero loss"
+              },
+              {
+                "problem": "Offline DMs, unread counts, joined-room lists, and group fanout lacked durable per-user state, risking mixed ownership between chat and game domains",
+                "solution": "Converged R2/R3/R4 requirements onto a per-user room index, keeping the chat server responsible only for mechanics/characterId while game servers owned profile hydration and group-domain actions",
+                "result": "Completed server-side DM, unread-count, joined-room, and group-fanout capabilities under one index model, with server/sandbox QA completed before Unity handoff"
+              },
+              {
+                "problem": "Gateway tasks were repeatedly OOM-killed after performance changes, while outbound queues, observability retention, and heap caps remained competing root-cause hypotheses",
+                "solution": "Pre-registered and rejected the egress-budget hypothesis, then isolated retained-heap growth and heap-cap alignment through heap snapshots, diagnostic logs, and A/B measurements",
+                "result": "Reduced post-fix OOM events to zero and confirmed zero targeted-plan drift after removing observability-stack retained-heap accumulation"
               }
             ],
             "techStack": [
@@ -333,6 +343,16 @@
                 "problem": "TikTok deployments created orphan campaign/adgroup/ad resources when an external API partially succeeded before internal persistence, or retries were blocked by deployment guards",
                 "solution": "Unified idempotency per deployment path: Smart+ V2 level-by-level get-or-create with immediate persistence, v1 campaign-level reuse, and regular ad-level flags",
                 "result": "Passed 31 unit tests for partial-failure retries and applied a policy to prevent recurrence of 2 orphan campaigns and 2 orphan ad groups"
+              },
+              {
+                "problem": "As external ad-API coverage expanded, manual types and runtime validation were mixed across campaign/adgroup/ad/creative callers, increasing type-drift and live-call failure risk",
+                "solution": "Standardized official Swagger-based Orval+Zod codegen as the default path, supplemented missing-spec APIs with manual specs, and migrated Smart+, standard deployment, file, OAuth, and creative/playable flows to SDK calls",
+                "result": "Completed conversion across 24 endpoint groups and standardized external-API typing, validation, and preflight guardrails"
+              },
+              {
+                "problem": "A 26.37M-row / 27GB audit-log table lacked an index for parent-based lookups, causing page queries to trigger large full scans and prolonged IO saturation",
+                "solution": "Declared the index at the entity layer to prevent drift, pre-created the online DDL during a low-load window, and hardened the migration with duplicate-index no-op handling plus real DDL integration tests",
+                "result": "Confirmed the live index and EXPLAIN rows=3, eliminating audit-log full scans on the lookup path"
               }
             ],
             "techStack": [
@@ -352,7 +372,9 @@
               "TypeScript",
               "gRPC",
               "TikTok Smart+",
-              "Idempotency"
+              "Idempotency",
+              "Orval",
+              "Zod"
             ]
           },
           {
@@ -479,9 +501,9 @@
                 "result": "Ensured data consistency across distributed event processing"
               },
               {
-                "problem": "Lambda throttling, high log costs, and build OOM issues",
-                "solution": "Applied Batch Size bulk processing, CloudWatch log optimization, and build OOM remediation",
-                "result": "Deployment automation for isolated Lambda workloads — 3h→15m (92% reduction)"
+                "problem": "After cache disk-full recovery in the CDK deploy workflow, Lambda handler webpack builds reproduced V8 OOM, combining slower deployments with no regression guard",
+                "solution": "Separated runtime-transform dependencies into generated artifacts, raised the default handler batch, and retried only failed batches through an adaptive 8→4→2→1 split sequence",
+                "result": "Removed the Lambda handler build-OOM root cause, added CI regression guardrails, and validated the deployment path through 3 passing CI runs"
               },
               {
                 "problem": "DB connection exhaustion during massive Lambda execution",

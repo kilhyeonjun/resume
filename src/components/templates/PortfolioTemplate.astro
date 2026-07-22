@@ -14,13 +14,17 @@ interface Props {
 const { lang, projects: rawProjects, labels } = Astro.props;
 const basePath = getBasePath(lang);
 const projects = [...rawProjects].sort((a, b) =>
-  new Date(b.period.start).getTime() - new Date(a.period.start).getTime()
+  (a.printOrder ?? Number.MAX_SAFE_INTEGER) - (b.printOrder ?? Number.MAX_SAFE_INTEGER)
+  || new Date(b.period.start).getTime() - new Date(a.period.start).getTime()
 );
+const featuredProjects = projects.filter((project) => project.featured).slice(0, 3);
+const archiveProjects = projects.filter((project) => !featuredProjects.some((featured) => featured.slug === project.slug));
 ---
 
 <Layout title={`${labels.portfolio} | Portfolio`} description={lang === 'ko' ? '개인 프로젝트 포트폴리오' : 'Personal Project Portfolio'} lang={lang}>
-  <div class="mx-auto max-w-4xl">
-    <header class="mb-10 text-center">
+  <div class="portfolio-index">
+    <header class="portfolio-hero">
+      <span class="dossier-label">SELECTED ENGINEERING WORK</span>
       <h1 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl md:text-4xl lg:text-5xl">
         {labels.portfolio}
       </h1>
@@ -32,14 +36,14 @@ const projects = [...rawProjects].sort((a, b) =>
       </div>
     </header>
 
-    <div class="grid gap-6 sm:grid-cols-2">
-      {projects.map((project, index) => {
+    <div class="portfolio-grid">
+      {featuredProjects.map((project, index) => {
         const projectName = project.name[lang] || project.name.ko;
         const projectSummary = project.summary[lang] || project.summary.ko;
         const period = `${project.period.start} — ${project.period.end}`;
         
         return (
-          <article class:list={["group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-gray-700 dark:bg-gray-800", index === projects.length - 1 && projects.length % 2 === 1 && "sm:col-span-2 sm:max-w-md sm:mx-auto"]}>
+          <article class:list={["portfolio-case group", index === 0 && "portfolio-case-featured"]}>
             {/* Cover Image */}
             {project.coverImage ? (
               <a href={`${basePath}/portfolio/${project.slug}`} class="block aspect-video overflow-hidden">
@@ -56,12 +60,7 @@ const projects = [...rawProjects].sort((a, b) =>
             ) : (
               <a
                 href={`${basePath}/portfolio/${project.slug}`}
-                class:list={[
-                  'flex aspect-video items-center justify-center overflow-hidden transition-opacity duration-300 group-hover:opacity-90',
-                  project.type === 'team'
-                    ? 'bg-gradient-to-br from-blue-400 to-blue-600 dark:from-blue-600 dark:to-blue-800'
-                    : 'bg-gradient-to-br from-green-400 to-green-600 dark:from-green-600 dark:to-green-800',
-                ]}
+                class="portfolio-cover flex aspect-video items-center justify-center overflow-hidden"
               >
                 <span class="px-4 text-center text-lg font-bold text-white/90 drop-shadow-sm">
                   {projectName}
@@ -123,7 +122,7 @@ const projects = [...rawProjects].sort((a, b) =>
               </div>
               <a 
                 href={`${basePath}/portfolio/${project.slug}`}
-                class="-mr-2 inline-flex items-center gap-1 rounded-md px-2 py-1 text-sm font-semibold text-primary-600 transition-colors hover:bg-primary-50 hover:text-primary-700 dark:text-primary-400 dark:hover:bg-primary-900/30 dark:hover:text-primary-300"
+                class="touch-target inline-flex items-center gap-1 text-sm font-semibold text-primary-600 dark:text-primary-400"
               >
                 {labels.viewDetails}
                 <ExternalLinkIcon class="h-3.5 w-3.5" />
@@ -134,5 +133,26 @@ const projects = [...rawProjects].sort((a, b) =>
         );
       })}
     </div>
+
+    {archiveProjects.length > 0 && (
+      <section class="portfolio-archive" aria-labelledby="archive-title">
+        <span class="dossier-label">PROJECT ARCHIVE</span>
+        <h2 id="archive-title">{lang === 'ko' ? '프로젝트 아카이브' : 'Project archive'}</h2>
+        <div>
+          {archiveProjects.map((project) => {
+            const projectName = project.name[lang] || project.name.ko;
+            const projectSummary = project.summary[lang] || project.summary.ko;
+            return (
+              <a class="portfolio-archive-row" href={`${basePath}/portfolio/${project.slug}`}>
+                <span>{project.period.start}</span>
+                <strong>{projectName}</strong>
+                <span>{projectSummary}</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
   </div>
 </Layout>

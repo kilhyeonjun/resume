@@ -45,27 +45,41 @@ const jsonLd = {
     ...(data.github && { sameAs: [data.github, data.linkedin].filter(Boolean) }),
   },
 };
+const outcomeProofs = data.experience
+  .flatMap((exp) => exp.positions?.flatMap((position) => position.highlights ?? []) ?? exp.highlights ?? [])
+  .filter((proof) => /\d/.test(proof.result))
+  .slice(0, 3);
 ---
 
 <Layout title={`${data.name} — ${data.title}`} description="Professional resume and work experience" lang={lang}>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-  <article class="resume-container mx-auto max-w-4xl px-4 py-8">
+  <article class="resume-dossier resume-container">
     <!-- Header Section -->
     <ResumeHeader data={data} />
 
+    <aside class="outcome-board" aria-label={lang === 'ko' ? '주요 성과' : 'Selected outcomes'}>
+      <span class="dossier-label">EVIDENCE BOARD</span>
+      {outcomeProofs.map((proof) => (
+        <div class="outcome-row">
+          <strong>{proof.result}</strong>
+          <span>{proof.problem}</span>
+        </div>
+      ))}
+    </aside>
+
     <!-- Quick Actions (top): preview links + PDF download -->
-    <div class="no-print mb-4 flex justify-end gap-3 text-sm text-gray-500 dark:text-gray-400">
-      <a href={`${basePath}/resume-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{labels.pdfVersion}</a>
+    <div class="resume-actions no-print mb-4 flex gap-3 text-sm">
+      <a href={`${basePath}/resume-print`} class="primary touch-target">{labels.pdfVersion}</a>
       <span aria-hidden="true">·</span>
-      <a href={`${basePath}/resume-ats`} class="hover:text-primary-600 dark:hover:text-primary-400">{labels.atsOptimized}</a>
+      <a href={`${basePath}/resume-ats`} class="touch-target">{labels.atsOptimized}</a>
       <span aria-hidden="true">·</span>
-      <a href={`${basePath}/experience-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{lang === 'ko' ? '경력기술서' : 'Career Detail'}</a>
+      <a href={`${basePath}/experience-print`} class="touch-target">{lang === 'ko' ? '경력기술서' : 'Career Detail'}</a>
       <span aria-hidden="true">·</span>
-      <a href={`${basePath}/portfolio-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{lang === 'ko' ? '포트폴리오' : 'Portfolio'}</a>
+      <a href={`${basePath}/portfolio-print`} class="touch-target">{lang === 'ko' ? '포트폴리오' : 'Portfolio'}</a>
     </div>
 
     <!-- Divider -->
-    <div class="mx-auto mb-10 h-px w-24 bg-gradient-to-r from-transparent via-primary-500 to-transparent" aria-hidden="true"></div>
+    <div class="resume-divider" aria-hidden="true"></div>
 
     <!-- Summary -->
     <ResumeSummary summary={data.summary} label={labels.summary} />

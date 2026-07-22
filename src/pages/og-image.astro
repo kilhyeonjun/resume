@@ -10,18 +10,14 @@ const categories = data.coreCompetencies.map((c: { category: string }) => c.cate
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-  <link
-    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-    rel="stylesheet"
-  />
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       width: 1200px;
       height: 630px;
       overflow: hidden;
-      font-family: 'Pretendard Variable', sans-serif;
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     }
     .container {
       width: 1200px;
@@ -69,7 +65,7 @@ const categories = data.coreCompetencies.map((c: { category: string }) => c.cate
 </head>
 <body>
   <div class="container">
-    <div class="name">{name}</div>
+    <h1 class="name">{name}</h1>
     <div class="title">{title}</div>
     <div class="divider"></div>
     <div class="categories">{categories.join(' · ')}</div>

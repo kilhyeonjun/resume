@@ -20,7 +20,8 @@ interface Props {
 const { data } = Astro.props;
 ---
 
-<header class="resume-header mb-10 text-center">
+<header class="resume-header">
+  <span class="dossier-label">{data.title}</span>
   <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-3xl md:text-4xl lg:text-5xl">
     {data.name}
   </h1>

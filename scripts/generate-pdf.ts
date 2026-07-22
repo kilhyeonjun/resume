@@ -90,6 +90,13 @@ const PDF_CONFIGS: PDFConfigSet = {
       format: 'A4',
       printBackground: true,
     },
+    {
+      name: 'Portfolio (English)',
+      path: '/en/portfolio-print',
+      filename: 'portfolio-en.pdf',
+      format: 'A4',
+      printBackground: true,
+    },
   ],
 };
 
@@ -124,9 +131,10 @@ async function generatePDF(
 
     // Navigate to page with retry
     const maxRetries = 3;
+    let response;
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        await page.goto(url, {
+        response = await page.goto(url, {
           waitUntil: 'networkidle0',
           timeout: 30000,
         });
@@ -139,8 +147,20 @@ async function generatePDF(
       }
     }
 
+    if (!response?.ok()) {
+      throw new Error(`Refusing to generate PDF from HTTP ${response?.status() ?? 'no response'}: ${url}`);
+    }
+
     // Wait for full page load
     await waitForPageLoad(page);
+
+    const contract = await page.evaluate(() => ({
+      h1: document.querySelector('main h1')?.textContent?.trim(),
+      download: Boolean(document.querySelector('a[download][href*="/pdf/"]')),
+    }));
+    if (!contract.h1 || !contract.download) {
+      throw new Error(`Refusing to generate PDF from a non-Resume page: ${url}`);
+    }
 
     // Ensure output directory exists
     if (!existsSync(outputDir)) {

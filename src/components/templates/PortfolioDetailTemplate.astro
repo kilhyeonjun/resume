@@ -39,12 +39,12 @@ const projectProblemSolving = project.problemSolving ?? null;
 ---
 
 <Layout title={`${projectName} | Portfolio`} description={projectSummary} lang={lang}>
-  <article class="mx-auto max-w-4xl">
+  <article class="detail-dossier portfolio-detail">
     <!-- Back to Portfolio -->
     <nav class="mb-8">
       <a 
         href={`${basePath}/portfolio`}
-        class="group inline-flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+        class="touch-target group inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
       >
         <ArrowLeftIcon class="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
         {labels.backToPortfolio}
@@ -89,6 +89,12 @@ const projectProblemSolving = project.problemSolving ?? null;
           </a>
         )}
       </div>
+      <nav class="evidence-index" aria-label={lang === 'ko' ? '프로젝트 근거 목차' : 'Project evidence index'}>
+        {projectProblemSolving && projectProblemSolving.length > 0 && <a href="#problems"><span>01</span>{labels.problemSolving}</a>}
+        {project.metrics && project.metrics.length > 0 && <a href="#outcomes"><span>02</span>{labels.metrics}</a>}
+        {projectTechDecisions && projectTechDecisions.length > 0 && <a href="#decisions"><span>03</span>{labels.techDecisions}</a>}
+        {project.skills && project.skills.length > 0 && <a href="#stack"><span>04</span>{labels.skills}</a>}
+      </nav>
     </header>
 
     {/* Cover Image */}
@@ -125,7 +131,7 @@ const projectProblemSolving = project.problemSolving ?? null;
 
     {/* Problem Solving */}
     {projectProblemSolving && projectProblemSolving.length > 0 && (
-      <section class="mb-10">
+      <section id="problems" class="mb-10">
         <h2 class="section-title mb-6">{labels.problemSolving}</h2>
         <div class="space-y-6">
           {projectProblemSolving.map((entry, idx) => (
@@ -209,7 +215,7 @@ const projectProblemSolving = project.problemSolving ?? null;
 
     {/* Metrics */}
     {project.metrics && project.metrics.length > 0 && (
-      <section class="mb-10">
+      <section id="outcomes" class="mb-10">
         <h2 class="section-title mb-6">{labels.metrics}</h2>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-sm">
@@ -238,7 +244,7 @@ const projectProblemSolving = project.problemSolving ?? null;
 
     {/* Tech Decisions */}
     {projectTechDecisions && projectTechDecisions.length > 0 && (
-      <section class="mb-10">
+      <section id="decisions" class="mb-10">
         <h2 class="section-title mb-6">{labels.techDecisions}</h2>
         <ul class="space-y-3">
           {projectTechDecisions.map((decision: string) => (
@@ -283,7 +289,7 @@ const projectProblemSolving = project.problemSolving ?? null;
 
     <!-- Tech Stack -->
     {project.skills && project.skills.length > 0 && (
-      <section class="mb-10">
+      <section id="stack" class="mb-10">
         <h2 class="section-title mb-6">{labels.skills}</h2>
         <div class="flex flex-wrap gap-2">
            {project.skills.map((tech: string) => (

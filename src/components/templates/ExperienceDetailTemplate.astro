@@ -30,7 +30,7 @@ const basePath = getBasePath(lang);
 ---
 
 <Layout title={`${experience.company} | ${experience.positions ? experience.positions[0].title : experience.position}`} description={experience.description} lang={lang}>
-  <article class="mx-auto max-w-4xl">
+  <article class="detail-dossier experience-detail">
      <!-- Top Navigation: Prev / Back / Next -->
      <nav class="mb-8 flex items-center justify-between">
        {prevExp ? (
@@ -106,11 +106,17 @@ const basePath = getBasePath(lang);
        {experience.description && (
          <p class="mt-4 text-gray-600 dark:text-gray-300">{experience.description}</p>
        )}
+       <nav class="evidence-index" aria-label={lang === 'ko' ? '경력 근거 목차' : 'Experience evidence index'}>
+         {((experience.positions && experience.positions.some((p) => p.highlights?.length)) || (!experience.positions && experience.highlights?.length)) && <a href="#outcomes"><span>01</span>{labels.highlights}</a>}
+         {experience.projects && experience.projects.length > 0 && <a href="#projects"><span>02</span>{labels.projects}</a>}
+         {experience.activities && experience.activities.length > 0 && labels.activities && <a href="#activities"><span>03</span>{labels.activities}</a>}
+         {experience.techStack && experience.techStack.length > 0 && <a href="#stack"><span>04</span>{labels.skills}</a>}
+       </nav>
      </header>
 
      <!-- Highlights -->
      {experience.positions && experience.positions.some((p) => p.highlights && p.highlights.length > 0) && (
-       <section class="mb-10">
+       <section id="outcomes" class="mb-10">
          <h2 class="section-title mb-6">{labels.highlights}</h2>
          {experience.positions.map((pos) => pos.highlights && pos.highlights.length > 0 && (
            <div class="mb-6">
@@ -128,7 +134,7 @@ const basePath = getBasePath(lang);
        </section>
      )}
      {!experience.positions && experience.highlights && experience.highlights.length > 0 && (
-       <section class="mb-10">
+       <section id="outcomes" class="mb-10">
          <h2 class="section-title mb-6">{labels.highlights}</h2>
          <ul class="space-y-3">
             {experience.highlights.map((highlight) => (
@@ -143,7 +149,7 @@ const basePath = getBasePath(lang);
 
      <!-- Projects -->
      {experience.projects && experience.projects.length > 0 && (
-       <section class="mb-10">
+       <section id="projects" class="mb-10">
          <h2 class="section-title mb-6">{labels.projects}</h2>
          <div class="space-y-8">
            {experience.projects.map((project) => (
@@ -198,7 +204,7 @@ const basePath = getBasePath(lang);
 
      <!-- Activities -->
      {experience.activities && experience.activities.length > 0 && labels.activities && (
-       <section class="mb-10">
+       <section id="activities" class="mb-10">
          <h2 class="section-title mb-6">{labels.activities}</h2>
          <div class="space-y-8">
            {experience.activities.map((activity) => (
@@ -271,7 +277,7 @@ const basePath = getBasePath(lang);
 
     <!-- Tech Stack -->
     {experience.techStack && experience.techStack.length > 0 && (
-      <section class="mb-10">
+      <section id="stack" class="mb-10">
         <h2 class="section-title mb-6">{labels.skills}</h2>
         <div class="flex flex-wrap gap-2">
           {experience.techStack.map((tech) => (

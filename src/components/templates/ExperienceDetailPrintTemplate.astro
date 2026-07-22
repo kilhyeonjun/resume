@@ -20,10 +20,10 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
 <html lang={lang}>
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`}>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{data.name} - {pageTitle}</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <style>
     @page { margin: 10mm; size: A4; }
 
@@ -307,12 +307,13 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
   </style>
 </head>
 <body>
+<main>
   <a href={basePath} class="back-link no-print">&larr; {labels.backToResume}</a>
   <div class="no-print" style="position:fixed;bottom:24px;right:24px;display:flex;gap:8px;z-index:100;">
     <button onclick="window.print()" style="padding:10px 20px;background:#6b7280;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
       {lang === 'ko' ? '인쇄' : 'Print'}
     </button>
-    <a href={`${basePath}/pdf/career-detail-${lang}.pdf`} download type="application/pdf" style="padding:10px 20px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);text-decoration:none;display:inline-block;">
+    <a href={`${import.meta.env.BASE_URL}/pdf/career-detail-${lang}.pdf`} download type="application/pdf" style="padding:10px 20px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);text-decoration:none;display:inline-block;">
       {lang === 'ko' ? '다운로드' : 'Download'}
     </a>
   </div>
@@ -412,5 +413,6 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
       );
     })}
   </div>
+</main>
 </body>
 </html>

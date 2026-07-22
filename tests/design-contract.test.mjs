@@ -29,6 +29,9 @@ test('shared layout exposes the approved dossier design hooks and 44px controls'
   assert.match(layout, /withBasePath\('favicon\.svg'\)/);
   assert.match(layout, /href=\{enHref\}/);
   assert.match(layout, /href=\{koHref\}/);
+  assert.match(layout, /new URL\(withBasePath\(hrefRelativePath\), Astro\.site\)/);
+  assert.match(layout, /new URL\(withBasePath\(`en\$\{hrefRelativePath\}`\), Astro\.site\)/);
+  assert.match(layout, /new URL\(withBasePath\('og-image\.png'\), Astro\.site\)/);
   assert.match(layout, /href=\{homePath\}/);
   assert.match(layout, /startsWith\(`\$\{localePrefix\}\/experience`\)/);
   assert.match(css, /--dossier-ink:\s*#0b1220/i);

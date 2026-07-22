@@ -27,9 +27,9 @@ const isResume = !isPortfolio && (
 
 // Compute hreflang alternate URLs
 const hrefRelativePath = currentPath.slice(localePrefix.length) || '/';
-const koHref = new URL(hrefRelativePath, Astro.site).toString();
-const enHref = new URL(`/en${hrefRelativePath}`, Astro.site).toString();
-const ogImage = new URL('/og-image.png', Astro.site).toString();
+const koHref = new URL(withBasePath(hrefRelativePath), Astro.site).toString();
+const enHref = new URL(withBasePath(`en${hrefRelativePath}`), Astro.site).toString();
+const ogImage = new URL(withBasePath('og-image.png'), Astro.site).toString();
 ---
 
 <!doctype html>

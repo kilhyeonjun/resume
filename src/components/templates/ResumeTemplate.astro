@@ -1,7 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { getBasePath } from '../../utils/paths';
+import { getLocalePrefix } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
 
 import ResumeHeader from '../resume/ResumeHeader.astro';
@@ -29,7 +29,7 @@ const resumeData = entry.data;
 
 const { data, labels } = prepareResumeData(resumeData, lang, 'web');
 
-const basePath = getBasePath(lang);
+const localePrefix = getLocalePrefix(lang);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const jsonLd = {
@@ -69,13 +69,13 @@ const outcomeProofs = data.experience
 
     <!-- Quick Actions (top): preview links + PDF download -->
     <div class="resume-actions no-print mb-4 flex gap-3 text-sm">
-      <a href={`${basePath}/resume-print`} class="primary touch-target">{labels.pdfVersion}</a>
+      <a href={`${localePrefix}/resume-print`} class="primary touch-target">{labels.pdfVersion}</a>
       <span aria-hidden="true">·</span>
-      <a href={`${basePath}/resume-ats`} class="touch-target">{labels.atsOptimized}</a>
+      <a href={`${localePrefix}/resume-ats`} class="touch-target">{labels.atsOptimized}</a>
       <span aria-hidden="true">·</span>
-      <a href={`${basePath}/experience-print`} class="touch-target">{lang === 'ko' ? '경력기술서' : 'Career Detail'}</a>
+      <a href={`${localePrefix}/experience-print`} class="touch-target">{lang === 'ko' ? '경력기술서' : 'Career Detail'}</a>
       <span aria-hidden="true">·</span>
-      <a href={`${basePath}/portfolio-print`} class="touch-target">{lang === 'ko' ? '포트폴리오' : 'Portfolio'}</a>
+      <a href={`${localePrefix}/portfolio-print`} class="touch-target">{lang === 'ko' ? '포트폴리오' : 'Portfolio'}</a>
     </div>
 
     <!-- Divider -->
@@ -88,7 +88,7 @@ const outcomeProofs = data.experience
     <ResumeCoreCompetencies coreCompetencies={data.coreCompetencies} label={labels.coreCompetencies} />
 
     <!-- Experience -->
-    <ResumeExperience experience={data.experience} labels={labels} basePath={basePath} />
+    <ResumeExperience experience={data.experience} labels={labels} basePath={localePrefix} />
 
     <!-- Social Proof: Technical Writing + Open Source (after experience for visibility) -->
     <div class="mb-10 grid gap-10 md:grid-cols-2">

@@ -39,6 +39,9 @@ jobs:
       - name: Build with Astro
         run: npm run build
 
+      - name: Test generated release contracts
+        run: npm test
+
       - name: Install Korean fonts for PDF generation
         run: |
           sudo apt-get update -qq

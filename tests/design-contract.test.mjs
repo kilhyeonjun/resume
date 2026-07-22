@@ -29,7 +29,8 @@ test('shared layout exposes the approved dossier design hooks and 44px controls'
   assert.match(layout, /withBasePath\('favicon\.svg'\)/);
   assert.match(layout, /href=\{enHref\}/);
   assert.match(layout, /href=\{koHref\}/);
-  assert.match(layout, /startsWith\(`\$\{basePath\}\/experience`\)/);
+  assert.match(layout, /href=\{homePath\}/);
+  assert.match(layout, /startsWith\(`\$\{localePrefix\}\/experience`\)/);
   assert.match(css, /--dossier-ink:\s*#0b1220/i);
   assert.match(css, /\.touch-target[^}]*min-height:\s*44px/s);
   assert.match(config, /site:\s*'https:\/\/career\.kilpenguin\.com'/);
@@ -91,6 +92,9 @@ test('fonts are local/system-only and every standalone output has a semantic h1'
       assert.doesNotMatch(source, /(?:basePath|baseUrl)}\/pdf\//, path);
     }
   }
+  const resumePrint = await read('src/components/templates/ResumePrintTemplate.astro');
+  assert.match(resumePrint, /new URL\(getHomePath\(lang\), Astro\.site\)/);
+  assert.doesNotMatch(resumePrint, /https:\/\/career\.kilpenguin\.com\$\{lang/);
 });
 
 test('production build includes the English portfolio print route', async (t) => {
@@ -104,8 +108,24 @@ test('production build includes the English portfolio print route', async (t) =>
     assert.match(html, /<h1(?:\s|>)/, file);
     assert.doesNotMatch(html, /blog\.kilpenguin\.com\/resume|(?:href|src)="\/resume\//, file);
     assert.doesNotMatch(html, /(?:href|src)="\/\//, file);
+    assert.doesNotMatch(html, /career\.kilpenguin\.com\/(?:[^"?#]*\/)\/(?:portfolio|experience)/, file);
   }
-  assert.match(await readFile(join(rootPath, 'dist/index.html'), 'utf8'), /https:\/\/career\.kilpenguin\.com\/?"/);
+  const koIndex = await readFile(join(rootPath, 'dist/index.html'), 'utf8');
+  const enPortfolioPrint = await readFile(join(rootPath, 'dist/en/portfolio-print/index.html'), 'utf8');
+  assert.match(koIndex, /https:\/\/career\.kilpenguin\.com\/?"/);
+  assert.match(enPortfolioPrint, /href="https:\/\/career\.kilpenguin\.com\/en\/portfolio"/);
+  assert.doesNotMatch(enPortfolioPrint, /href="https:\/\/career\.kilpenguin\.com\/portfolio(?:\/|\")/);
+});
+
+test('every rendered anchor has a non-empty destination', async (t) => {
+  let files;
+  try { files = await htmlFiles(join(rootPath, 'dist')); }
+  catch { return t.skip('run after npm run build'); }
+  for (const file of files) {
+    const html = await readFile(file, 'utf8');
+    assert.doesNotMatch(html, /<a\s+href(?:\s|>)/, file);
+    assert.doesNotMatch(html, /<a\s+[^>]*href=(?:""|'')/, file);
+  }
 });
 
 test('local generation and deployment use the same IPv4 dev-server origin', async () => {
@@ -115,6 +135,8 @@ test('local generation and deployment use the same IPv4 dev-server origin', asyn
   assert.match(await read('scripts/generate-og.ts'), expected);
   assert.match(workflow, expected);
   assert.doesNotMatch(workflow, /name: Start dev server/);
+  assert.ok(workflow.indexOf('run: npm run build') < workflow.indexOf('run: npm test'));
+  assert.ok(workflow.indexOf('run: npm test') < workflow.indexOf('name: Generate release PDFs and OG'));
   assert.match(workflow, /name: Generate release PDFs and OG[\s\S]*\.\/node_modules\/\.bin\/astro dev --host 127\.0\.0\.1 --port 4321[\s\S]*trap '[^']*kill[\s\S]*kill -0 "\$server_pid"[\s\S]*npm run pdf/);
 });
 

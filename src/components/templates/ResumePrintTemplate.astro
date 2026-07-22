@@ -1,6 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
-import { getBasePath, withBasePath } from '../../utils/paths';
+import { getHomePath, withBasePath } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
 import { groupOpenSourceByRepo, parseOpenSourceName } from '../../utils/open-source';
 
@@ -18,9 +18,9 @@ const resumeData = entry.data;
 
 const { data, labels } = prepareResumeData(resumeData, lang, 'print');
 
-const basePath = getBasePath(lang);
+const homePath = getHomePath(lang);
 const pageTitle = lang === 'ko' ? '이력서' : 'Resume';
-const resumeUrl = `https://career.kilpenguin.com${lang === 'en' ? '/en' : ''}`;
+const resumeUrl = new URL(getHomePath(lang), Astro.site).toString().replace(/\/$/, '');
 
 const osGrouped = groupOpenSourceByRepo(data.openSource);
 
@@ -324,7 +324,7 @@ function processSummary(text: string): string {
 </head>
 <body class={lang === 'en' ? 'lang-en' : 'lang-ko'}>
 <main>
-  <a href={basePath} class="back-link no-print">← {labels.backToResume}</a>
+  <a href={homePath} class="back-link no-print">← {labels.backToResume}</a>
   <div class="no-print" style="position:fixed;bottom:24px;right:24px;display:flex;gap:8px;z-index:100;">
     <button onclick="window.print()" style="padding:10px 20px;background:#6b7280;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
       {lang === 'ko' ? '인쇄' : 'Print'}

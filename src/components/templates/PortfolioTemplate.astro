@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
 import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
 import type { PortfolioProject, PortfolioLabels } from '../../types/portfolio';
-import { getBasePath, withBasePath } from '../../utils/paths';
+import { getLocalePrefix, withBasePath } from '../../utils/paths';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { lang, projects: rawProjects, labels } = Astro.props;
-const basePath = getBasePath(lang);
+const localePrefix = getLocalePrefix(lang);
 const projects = [...rawProjects].sort((a, b) =>
   (a.printOrder ?? Number.MAX_SAFE_INTEGER) - (b.printOrder ?? Number.MAX_SAFE_INTEGER)
   || new Date(b.period.start).getTime() - new Date(a.period.start).getTime()
@@ -32,7 +32,7 @@ const archiveProjects = projects.filter((project) => !featuredProjects.some((fea
         {lang === 'ko' ? '개인 및 팀 프로젝트 모음' : 'Collection of personal and team projects'}
       </p>
       <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
-        <a href={`${basePath}/portfolio-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{lang === 'ko' ? 'PDF 다운로드' : 'Download PDF'}</a>
+        <a href={`${localePrefix}/portfolio-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{lang === 'ko' ? 'PDF 다운로드' : 'Download PDF'}</a>
       </div>
     </header>
 
@@ -46,7 +46,7 @@ const archiveProjects = projects.filter((project) => !featuredProjects.some((fea
           <article class:list={["portfolio-case group", index === 0 && "portfolio-case-featured"]}>
             {/* Cover Image */}
             {project.coverImage ? (
-              <a href={`${basePath}/portfolio/${project.slug}`} class="block aspect-video overflow-hidden">
+              <a href={`${localePrefix}/portfolio/${project.slug}`} class="block aspect-video overflow-hidden">
                 <img 
                   src={withBasePath(project.coverImage)}
                   alt={`${projectName} ${labels.portfolio} cover`}
@@ -59,7 +59,7 @@ const archiveProjects = projects.filter((project) => !featuredProjects.some((fea
               </a>
             ) : (
               <a
-                href={`${basePath}/portfolio/${project.slug}`}
+                href={`${localePrefix}/portfolio/${project.slug}`}
                 class="portfolio-cover flex aspect-video items-center justify-center overflow-hidden"
               >
                 <span class="px-4 text-center text-lg font-bold text-white/90 drop-shadow-sm">
@@ -80,7 +80,7 @@ const archiveProjects = projects.filter((project) => !featuredProjects.some((fea
 
             <h2 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">
               <a 
-                href={`${basePath}/portfolio/${project.slug}`}
+                href={`${localePrefix}/portfolio/${project.slug}`}
                 class="transition-colors hover:text-primary-600 dark:hover:text-primary-400"
               >
                 {projectName}
@@ -121,7 +121,7 @@ const archiveProjects = projects.filter((project) => !featuredProjects.some((fea
                 )}
               </div>
               <a 
-                href={`${basePath}/portfolio/${project.slug}`}
+                href={`${localePrefix}/portfolio/${project.slug}`}
                 class="touch-target inline-flex items-center gap-1 text-sm font-semibold text-primary-600 dark:text-primary-400"
               >
                 {labels.viewDetails}
@@ -143,7 +143,7 @@ const archiveProjects = projects.filter((project) => !featuredProjects.some((fea
             const projectName = project.name[lang] || project.name.ko;
             const projectSummary = project.summary[lang] || project.summary.ko;
             return (
-              <a class="portfolio-archive-row" href={`${basePath}/portfolio/${project.slug}`}>
+              <a class="portfolio-archive-row" href={`${localePrefix}/portfolio/${project.slug}`}>
                 <span>{project.period.start}</span>
                 <strong>{projectName}</strong>
                 <span>{projectSummary}</span>

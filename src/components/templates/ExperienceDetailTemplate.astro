@@ -7,7 +7,7 @@ import CheckIcon from '../icons/CheckIcon.astro';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon.astro';
 import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
 import type { Experience, Labels } from '../../content.config';
-import { getBasePath } from '../../utils/paths';
+import { getHomePath, getLocalePrefix } from '../../utils/paths';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -26,7 +26,8 @@ const period = experience.current
   ? `${experience.startDate.replace('-', '.')} — ${labels.current}`
   : `${experience.startDate.replace('-', '.')} — ${experience.endDate?.replace('-', '.')}`;
 
-const basePath = getBasePath(lang);
+const localePrefix = getLocalePrefix(lang);
+const homePath = getHomePath(lang);
 ---
 
 <Layout title={`${experience.company} | ${experience.positions ? experience.positions[0].title : experience.position}`} description={experience.description} lang={lang}>
@@ -35,7 +36,7 @@ const basePath = getBasePath(lang);
      <nav class="mb-8 flex items-center justify-between">
        {prevExp ? (
          <a
-           href={`${basePath}/experience/${prevExp.slug}`}
+           href={`${localePrefix}/experience/${prevExp.slug}`}
            class="group inline-flex items-center gap-1.5 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
          >
            <ArrowLeftIcon class="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
@@ -45,7 +46,7 @@ const basePath = getBasePath(lang);
        ) : <div></div>}
 
        <a
-         href={basePath}
+         href={homePath}
          class="text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
        >
          {labels.backToResume}
@@ -53,7 +54,7 @@ const basePath = getBasePath(lang);
 
        {nextExp ? (
          <a
-           href={`${basePath}/experience/${nextExp.slug}`}
+           href={`${localePrefix}/experience/${nextExp.slug}`}
            class="group inline-flex items-center gap-1.5 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
          >
            <span class="hidden sm:inline">{nextExp.company}</span>
@@ -294,7 +295,7 @@ const basePath = getBasePath(lang);
       <div class="flex items-center justify-between">
          {prevExp ? (
            <a 
-             href={`${basePath}/experience/${prevExp.slug}`}
+             href={`${localePrefix}/experience/${prevExp.slug}`}
              class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
            >
              <ArrowLeftIcon class="h-5 w-5 transition-transform group-hover:-translate-x-1" />
@@ -308,7 +309,7 @@ const basePath = getBasePath(lang);
          )}
         
         <a 
-          href={basePath}
+          href={homePath}
           class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
         >
           {labels.backToResume}
@@ -316,7 +317,7 @@ const basePath = getBasePath(lang);
         
          {nextExp ? (
            <a 
-             href={`${basePath}/experience/${nextExp.slug}`}
+             href={`${localePrefix}/experience/${nextExp.slug}`}
              class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
            >
              <div class="text-right">

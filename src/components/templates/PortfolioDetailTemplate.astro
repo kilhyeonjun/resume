@@ -8,7 +8,7 @@ import ArrowLeftIcon from '../icons/ArrowLeftIcon.astro';
 import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
 import type { PortfolioProject, PortfolioLabels, BlogPost } from '../../types/portfolio';
-import { getBasePath, withBasePath } from '../../utils/paths';
+import { getLocalePrefix, withBasePath } from '../../utils/paths';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -24,7 +24,7 @@ const prevProject = index > 0 ? allProjects[index - 1] : null;
 const nextProject = index < total - 1 ? allProjects[index + 1] : null;
 
 const period = `${project.period.start} — ${project.period.end}`;
-const basePath = getBasePath(lang);
+const localePrefix = getLocalePrefix(lang);
 
 const projectName = project.name[lang] || project.name.ko;
 const projectSummary = project.summary[lang] || project.summary.ko;
@@ -43,7 +43,7 @@ const projectProblemSolving = project.problemSolving ?? null;
     <!-- Back to Portfolio -->
     <nav class="mb-8">
       <a 
-        href={`${basePath}/portfolio`}
+        href={`${localePrefix}/portfolio`}
         class="touch-target group inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
       >
         <ArrowLeftIcon class="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
@@ -385,7 +385,7 @@ const projectProblemSolving = project.problemSolving ?? null;
       <div class="flex items-center justify-between">
         {prevProject ? (
           <a 
-            href={`${basePath}/portfolio/${prevProject.slug}`}
+            href={`${localePrefix}/portfolio/${prevProject.slug}`}
             class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
             <ArrowLeftIcon class="h-5 w-5 transition-transform group-hover:-translate-x-1" />
@@ -399,7 +399,7 @@ const projectProblemSolving = project.problemSolving ?? null;
         )}
         
         <a 
-          href={`${basePath}/portfolio`}
+          href={`${localePrefix}/portfolio`}
           class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
         >
           {labels.backToPortfolio}
@@ -407,7 +407,7 @@ const projectProblemSolving = project.problemSolving ?? null;
         
         {nextProject ? (
           <a 
-            href={`${basePath}/portfolio/${nextProject.slug}`}
+            href={`${localePrefix}/portfolio/${nextProject.slug}`}
             class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
             <div class="text-right">

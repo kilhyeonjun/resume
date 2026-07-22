@@ -1,7 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
 import { prepareResumeData } from '../../utils/resume-data';
-import { withBasePath } from '../../utils/paths';
+import { getLocalePrefix, withBasePath } from '../../utils/paths';
 import rawPortfolioData from '../../data/portfolio.json';
 import { portfolioDataSchema } from '../../types/portfolio';
 
@@ -27,7 +27,8 @@ const featuredProjects = projects
   .sort((a, b) => (a.printOrder ?? 99) - (b.printOrder ?? 99));
 const listedProjects = projects.filter((p) => p.listed && !p.hidden);
 
-const baseUrl = 'https://career.kilpenguin.com';
+const localePrefix = getLocalePrefix(lang);
+const portfolioUrl = new URL(`${localePrefix}/portfolio`, Astro.site).toString();
 
 const email = 'kboxstar@gmail.com';
 
@@ -371,7 +372,7 @@ function formatPeriod(period: { start: string; end: string }): string {
 </head>
 <body>
 <main>
-  <a href={`${baseUrl}/portfolio`} class="back-link no-print">&larr; {lang === 'ko' ? '포트폴리오로 돌아가기' : 'Back to Portfolio'}</a>
+  <a href={portfolioUrl} class="back-link no-print">&larr; {lang === 'ko' ? '포트폴리오로 돌아가기' : 'Back to Portfolio'}</a>
   <div class="no-print" style="position:fixed;bottom:24px;right:24px;display:flex;gap:8px;z-index:100;">
     <button onclick="window.print()" style="padding:10px 20px;background:#6b7280;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
       {lang === 'ko' ? '인쇄' : 'Print'}
@@ -390,7 +391,7 @@ function formatPeriod(period: { start: string; end: string }): string {
         <span>{email}</span>
         <a href="https://github.com/kilhyeonjun" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         <a href="https://www.linkedin.com/in/kilhyeonjun" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-        <a href={`${baseUrl}/portfolio`} target="_blank" rel="noopener noreferrer">{lang === 'ko' ? '웹 포트폴리오' : 'Web Portfolio'} ↗</a>
+        <a href={portfolioUrl} target="_blank" rel="noopener noreferrer">{lang === 'ko' ? '웹 포트폴리오' : 'Web Portfolio'} ↗</a>
       </div>
     </header>
 
@@ -404,7 +405,7 @@ function formatPeriod(period: { start: string; end: string }): string {
       const typeLabel = project.type === 'personal'
         ? (lang === 'ko' ? '개인' : 'Personal')
         : (lang === 'ko' ? '팀' : 'Team');
-      const detailUrl = `${baseUrl}/portfolio/${project.slug}`;
+      const detailUrl = new URL(`${localePrefix}/portfolio/${project.slug}`, Astro.site).toString();
 
       return (
         <>
@@ -527,7 +528,7 @@ function formatPeriod(period: { start: string; end: string }): string {
             ? (lang === 'ko' ? '개인' : 'Personal')
             : (lang === 'ko' ? '팀' : 'Team');
           const topSkills = project.skills.slice(0, 4).join(', ');
-          const detailUrl = `${baseUrl}/portfolio/${project.slug}`;
+          const detailUrl = new URL(`${localePrefix}/portfolio/${project.slug}`, Astro.site).toString();
 
           return (
             <div class="listed-project-row">

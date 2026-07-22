@@ -1,6 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
-import { getBasePath, withBasePath } from '../../utils/paths';
+import { getHomePath, withBasePath } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
 
 interface Props {
@@ -17,7 +17,7 @@ const resumeData = entry.data;
 
 const { data, labels } = prepareResumeData(resumeData, lang, 'ats');
 
-const basePath = getBasePath(lang);
+const homePath = getHomePath(lang);
 const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `${data.name} - Resume (ATS Optimized)`;
 ---
 
@@ -190,7 +190,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
 </head>
 <body data-lang={lang}>
 <main>
-  <a href={basePath} class="back-link no-print">&larr; {labels.backToResume}</a>
+  <a href={homePath} class="back-link no-print">&larr; {labels.backToResume}</a>
 
   <header>
     <h1>{data.name}</h1>

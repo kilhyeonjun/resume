@@ -4,7 +4,7 @@
 
 ## Live
 
-https://kilhyeonjun.github.io/resume/
+https://blog.kilpenguin.com/resume/
 
 ## Features
 

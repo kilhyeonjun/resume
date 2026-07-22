@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kilhyeonjun.github.io',
+  site: 'https://blog.kilpenguin.com',
   base: '/resume',
   integrations: [
     sitemap({

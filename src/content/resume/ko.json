@@ -7,7 +7,7 @@
       "location": "서울, 대한민국",
       "linkedin": "https://www.linkedin.com/in/kilhyeonjun",
       "github": "https://github.com/kilhyeonjun",
-      "blog": "https://kilhyeonjun.github.io"
+      "blog": "https://blog.kilpenguin.com"
     },
     "summary": "6개 라이브 게임 환경(12 브랜치 운영)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 실시간 게임 채팅·마케팅 데이터 파이프라인·공통 패키지 체계를 주도하는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery Storage Read API 전환으로 TB당 조회 비용 82% 절감, 서버리스 이관으로 처리 범위 60→360일 확장, 6,000 동시접속 목표의 실시간 채팅 서버 용량 검증을 수행하고 Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 레거시 현대화, 이벤트 기반 아키텍처를 일관되게 수행했습니다. 최근에는 AI 도구를 단순 코드 생성기가 아니라 TDD·통합 테스트·리뷰·근거 검색으로 산출물을 검증하는 개발 품질 체계에 통합하고 있습니다.",
     "coreCompetencies": [

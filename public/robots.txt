@@ -4,4 +4,4 @@ Disallow: /resume/resume-print
 Disallow: /resume/resume-ats
 Disallow: /resume/en/resume-print
 Disallow: /resume/en/resume-ats
-Sitemap: https://kilhyeonjun.github.io/resume/sitemap-index.xml
+Sitemap: https://blog.kilpenguin.com/resume/sitemap-index.xml

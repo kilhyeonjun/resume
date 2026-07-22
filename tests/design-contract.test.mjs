@@ -20,7 +20,9 @@ async function htmlFiles(dir) {
 }
 
 test('shared layout exposes the approved dossier design hooks and 44px controls', async () => {
-  const [layout, css] = await Promise.all([read('src/layouts/Layout.astro'), read('src/styles/global.css')]);
+  const [layout, css, config, robots] = await Promise.all([
+    read('src/layouts/Layout.astro'), read('src/styles/global.css'), read('astro.config.mjs'), read('public/robots.txt'),
+  ]);
   assert.match(layout, /KILPENGUIN \/ RESUME/);
   assert.match(layout, /class="site-shell/);
   assert.match(layout, /BASE_URL}\/favicon\.svg/);
@@ -29,6 +31,8 @@ test('shared layout exposes the approved dossier design hooks and 44px controls'
   assert.match(layout, /startsWith\(`\$\{basePath\}\/experience`\)/);
   assert.match(css, /--dossier-ink:\s*#0b1220/i);
   assert.match(css, /\.touch-target[^}]*min-height:\s*44px/s);
+  assert.match(config, /site:\s*'https:\/\/blog\.kilpenguin\.com'/);
+  assert.match(robots, /Sitemap: https:\/\/blog\.kilpenguin\.com\/resume\/sitemap-index\.xml/);
 });
 
 test('interactive route families expose their shared design hooks', async () => {

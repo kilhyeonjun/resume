@@ -7,7 +7,7 @@
       "location": "Seoul, South Korea",
       "linkedin": "https://www.linkedin.com/in/kilhyeonjun",
       "github": "https://github.com/kilhyeonjun",
-      "blog": "https://kilhyeonjun.github.io"
+      "blog": "https://blog.kilpenguin.com"
     },
     "summary": "Backend engineer designing and operating shared backend platforms across 6 live game environments (12 branches), currently leading the Platform Part across real-time game chat, marketing data pipelines, and common package systems. At GameDuo, reduced BigQuery read cost per TB by 82% via Storage Read API migration, expanded pipeline coverage from 60 to 360 days through serverless migration, validated capacity for a real-time chat server targeting 6,000 CCU, and presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across education, healthcare, clinical trials, and gaming, I have consistently delivered DB optimization, concurrency control, legacy modernization, and event-driven architecture. Recently I have integrated AI tools into an engineering quality system that verifies outputs through TDD, integration tests, review gates, and evidence search rather than unchecked code generation.",
     "coreCompetencies": [

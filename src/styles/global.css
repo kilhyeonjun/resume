@@ -464,3 +464,560 @@ body {
   .detail-dossier > section, .detail-dossier > nav:last-child { padding: 2.75rem 0; }
   .detail-dossier > header h1 { font-size: 2.25rem; }
 }
+
+/* Convention-preserving polish · P1 */
+@media screen {
+  .site-shell {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .site-header {
+    background: var(--dossier-surface);
+    border-color: var(--dossier-line);
+  }
+
+  .site-nav {
+    min-height: 68px;
+  }
+
+  .site-brand {
+    line-height: 1.25;
+  }
+
+  .site-shell :is(a, button) {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 0.08em;
+  }
+
+  .site-shell :is(a, button):focus-visible {
+    outline: 3px solid var(--dossier-blue);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .site-nav a[aria-current="page"] {
+    box-shadow: inset 0 -2px 0 var(--dossier-blue);
+  }
+
+  .dossier-label {
+    line-height: 1.5;
+    letter-spacing: 0.12em;
+  }
+
+  .tech-badge {
+    border: 1px solid color-mix(in srgb, var(--dossier-blue) 22%, transparent);
+    background: color-mix(in srgb, var(--dossier-blue) 9%, transparent);
+    color: var(--dossier-blue);
+    line-height: 1.35;
+  }
+
+  /* Resume: retain the editorial split while improving scan rhythm. */
+  .resume-dossier {
+    column-gap: clamp(2.75rem, 5vw, 4rem);
+    padding-top: 4.5rem;
+  }
+
+  .resume-dossier > .resume-header {
+    align-self: start;
+  }
+
+  .resume-header h1 {
+    max-width: 10ch;
+    margin-top: 0.8rem;
+    line-height: 0.98 !important;
+    text-wrap: balance;
+  }
+
+  .resume-header > p {
+    max-width: 28rem;
+    margin-top: 1rem;
+    line-height: 1.35;
+  }
+
+  .resume-header > div {
+    row-gap: 0.35rem;
+  }
+
+  .resume-header a,
+  .resume-actions a {
+    font-weight: 600;
+  }
+
+  .resume-header .no-print {
+    gap: 0.5rem;
+  }
+
+  .resume-header .no-print a {
+    border: 1px solid transparent;
+  }
+
+  .outcome-board {
+    padding: 1.6rem 1.75rem;
+    border-color: var(--dossier-line);
+    box-shadow: 0 10px 28px rgb(15 23 42 / 0.045);
+  }
+
+  .outcome-row {
+    grid-template-columns: minmax(8.5rem, 0.85fr) 1.15fr;
+    gap: 1.25rem;
+    padding: 1.3rem 0;
+  }
+
+  .outcome-row strong {
+    font-size: clamp(1.15rem, 1.75vw, 1.35rem);
+    line-height: 1.28;
+    letter-spacing: -0.018em;
+  }
+
+  .outcome-row span {
+    line-height: 1.55;
+  }
+
+  .resume-actions {
+    gap: 0.5rem;
+    margin-top: 1.35rem;
+  }
+
+  .resume-actions a {
+    min-height: 44px;
+    padding-inline: 0.8rem;
+  }
+
+  .resume-divider {
+    height: 4rem;
+  }
+
+  .resume-dossier > section,
+  .resume-dossier > div.mb-10.grid {
+    margin-bottom: 3.75rem;
+  }
+
+  .resume-dossier .section-title {
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--dossier-line);
+    font-size: clamp(1.3rem, 2vw, 1.5rem);
+    line-height: 1.25;
+  }
+
+  .resume-dossier > section > .section-title + p {
+    max-width: 74ch;
+    margin-top: 1.25rem;
+    line-height: 1.72;
+  }
+
+  .resume-dossier .experience-item {
+    padding: 1.75rem 0 0.35rem;
+    border-color: var(--dossier-line);
+  }
+
+  .resume-dossier .experience-item + .experience-item {
+    margin-top: 2.75rem;
+  }
+
+  .resume-dossier .experience-item h3 {
+    line-height: 1.3;
+    letter-spacing: -0.012em;
+  }
+
+  .resume-dossier .experience-item li {
+    line-height: 1.68;
+  }
+
+  .resume-dossier .experience-item em,
+  .experience-detail em {
+    font-style: normal;
+    font-weight: 650;
+  }
+
+  .resume-dossier .experience-item > p.rounded-xl {
+    border: 1px solid color-mix(in srgb, var(--dossier-line) 82%, transparent);
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--dossier-blue) 6%, transparent);
+  }
+
+  .resume-dossier .skill-row {
+    column-gap: 0.3rem;
+    line-height: 1.7;
+  }
+
+  .resume-dossier .skill-desc {
+    color: var(--dossier-muted);
+  }
+
+  /* Portfolio index: keep case grammar, lower repeated-container emphasis. */
+  .portfolio-index {
+    padding-top: 4.25rem;
+  }
+
+  .portfolio-hero {
+    margin-bottom: 2.75rem;
+  }
+
+  .portfolio-hero h1 {
+    margin-top: 0.8rem;
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+
+  .portfolio-hero p {
+    line-height: 1.65;
+  }
+
+  .portfolio-grid {
+    gap: 1.25rem;
+  }
+
+  .portfolio-case {
+    border-color: var(--dossier-line);
+    box-shadow: none;
+  }
+
+  .portfolio-case:not(.portfolio-case-featured) {
+    background: transparent;
+  }
+
+  .portfolio-case h2 {
+    line-height: 1.3;
+    letter-spacing: -0.014em;
+  }
+
+  .portfolio-case p {
+    line-height: 1.65;
+  }
+
+  .portfolio-case-featured {
+    border-color: color-mix(in srgb, var(--dossier-line) 72%, #0f172a);
+  }
+
+  .portfolio-archive {
+    margin-top: 4rem;
+  }
+
+  .portfolio-archive-row {
+    grid-template-columns: 7rem minmax(10rem, 1fr) minmax(0, 2fr) 2rem;
+    min-height: 76px;
+    padding-block: 0.65rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .portfolio-archive-row strong {
+    line-height: 1.4;
+  }
+
+  .portfolio-archive-row > span:nth-child(3) {
+    line-height: 1.55;
+  }
+
+  /* Detail pages: preserve sticky rail and evidence order, flatten repetition. */
+  .detail-dossier {
+    grid-template-columns: 285px minmax(0, 1fr);
+    column-gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .detail-dossier > nav:first-child {
+    margin-block: 1.15rem;
+  }
+
+  .detail-dossier > header {
+    padding-top: 2.65rem;
+    padding-right: 1.75rem;
+  }
+
+  .detail-dossier > header h1 {
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  .detail-dossier > header > p,
+  .detail-dossier > header > .flex > p {
+    line-height: 1.65;
+  }
+
+  .evidence-index {
+    margin-top: 1.75rem;
+  }
+
+  .evidence-index a {
+    padding-block: 0.45rem;
+    line-height: 1.35;
+  }
+
+  .detail-dossier > section,
+  .detail-dossier > nav:last-child {
+    padding-block: 3.25rem;
+  }
+
+  .detail-dossier .section-title {
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.65rem, 2.8vw, 1.9rem);
+    line-height: 1.2;
+  }
+
+  .detail-dossier > section > p {
+    max-width: 74ch;
+    line-height: 1.75;
+  }
+
+  .detail-dossier :is(ul, ol) li {
+    line-height: 1.68;
+  }
+
+  .portfolio-detail #problems > .space-y-6 > .rounded-lg,
+  .experience-detail :is(#projects, #activities) > .space-y-8 > .rounded-xl {
+    padding: 1.5rem 0;
+    border-width: 1px 0 0;
+    border-radius: 0;
+    border-color: var(--dossier-line);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .portfolio-detail #problems > .space-y-6 > .rounded-lg:last-child,
+  .experience-detail :is(#projects, #activities) > .space-y-8 > .rounded-xl:last-child {
+    border-bottom-width: 1px;
+  }
+
+  .experience-detail #projects .rounded-lg {
+    border-left: 2px solid var(--dossier-blue);
+    border-radius: 0;
+    background: color-mix(in srgb, var(--dossier-blue) 7%, transparent);
+  }
+
+  .detail-dossier table {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .detail-dossier tbody tr:last-child {
+    border-bottom-color: var(--dossier-line);
+  }
+
+  .detail-dossier > nav:last-child a {
+    line-height: 1.35;
+  }
+}
+
+@media screen and (hover: hover) and (pointer: fine) {
+  .site-shell :is(a, button),
+  .portfolio-case,
+  .portfolio-archive-row,
+  .evidence-index a {
+    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+  }
+
+  .site-brand:hover,
+  .resume-header a:hover {
+    color: var(--dossier-blue);
+  }
+
+  .resume-header .no-print a:hover,
+  .resume-actions a:not(.primary):hover {
+    border-color: color-mix(in srgb, var(--dossier-blue) 45%, var(--dossier-line));
+    background: color-mix(in srgb, var(--dossier-blue) 7%, transparent);
+  }
+
+  .resume-actions a.primary:hover {
+    background: #1e40af;
+    border-color: #1e40af;
+  }
+
+  .portfolio-case:hover {
+    border-color: color-mix(in srgb, var(--dossier-blue) 48%, var(--dossier-line));
+  }
+
+  .portfolio-archive-row:hover,
+  .evidence-index a:hover {
+    background: color-mix(in srgb, var(--dossier-blue) 6%, transparent);
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .site-width,
+  .site-nav,
+  .site-main {
+    width: min(100% - 40px, 640px);
+  }
+
+  .site-nav {
+    min-height: 64px;
+  }
+
+  .site-brand {
+    max-width: 7rem;
+    font-size: 0.67rem;
+    letter-spacing: 0.07em;
+  }
+
+  .site-main {
+    padding-bottom: 3.5rem;
+  }
+
+  .resume-dossier {
+    gap: 1.5rem;
+    padding-top: 2.5rem;
+  }
+
+  .resume-header h1 {
+    max-width: none;
+    font-size: clamp(2.6rem, 13vw, 3rem) !important;
+  }
+
+  .resume-header > p {
+    font-size: 1.15rem;
+  }
+
+  .resume-actions {
+    gap: 0.5rem;
+  }
+
+  .resume-actions a {
+    padding-inline: 0.55rem;
+    text-align: center;
+  }
+
+  .outcome-board {
+    padding: 1.25rem;
+    box-shadow: none;
+  }
+
+  .outcome-row {
+    gap: 0.35rem;
+    padding-block: 1rem;
+  }
+
+  .resume-dossier > section,
+  .resume-dossier > div.mb-10.grid {
+    margin-bottom: 3rem;
+  }
+
+  .resume-dossier > div.mb-10.grid {
+    gap: 3rem;
+  }
+
+  .resume-dossier .section-title {
+    padding-bottom: 0.55rem;
+  }
+
+  .resume-dossier .experience-item {
+    padding-top: 1.5rem;
+  }
+
+  .resume-dossier .experience-item + .experience-item {
+    margin-top: 2.25rem;
+  }
+
+  .portfolio-index {
+    padding-top: 2.65rem;
+  }
+
+  .portfolio-hero {
+    margin-bottom: 2.25rem;
+  }
+
+  .portfolio-hero h1 {
+    font-size: clamp(2.7rem, 13vw, 3.35rem);
+  }
+
+  .portfolio-grid {
+    gap: 1rem;
+  }
+
+  .portfolio-case > div {
+    padding: 1.25rem;
+  }
+
+  .portfolio-archive {
+    margin-top: 3.25rem;
+  }
+
+  .portfolio-archive-row {
+    grid-template-columns: 6.1rem minmax(0, 1fr) 1.5rem;
+    gap: 0.65rem;
+    min-height: 68px;
+    padding-block: 0.7rem;
+  }
+
+  .portfolio-archive-row > span:first-child {
+    white-space: nowrap;
+  }
+
+  .detail-dossier {
+    display: block;
+  }
+
+  .detail-dossier > header {
+    padding: 1.5rem 0 2.25rem;
+  }
+
+  .detail-dossier > header h1 {
+    font-size: clamp(2rem, 10vw, 2.35rem);
+  }
+
+  .evidence-index {
+    margin-top: 1.5rem;
+  }
+
+  .evidence-index a {
+    padding: 0.55rem 0.45rem;
+  }
+
+  .detail-dossier > section,
+  .detail-dossier > nav:last-child {
+    padding-block: 2.25rem;
+  }
+
+  .detail-dossier .section-title {
+    margin-bottom: 1.25rem;
+    font-size: 1.55rem;
+  }
+
+  .portfolio-detail #problems > .space-y-6 > .rounded-lg,
+  .experience-detail :is(#projects, #activities) > .space-y-8 > .rounded-xl {
+    padding-block: 1.25rem;
+  }
+
+  .detail-dossier > nav:last-child > div {
+    gap: 0.5rem;
+  }
+
+  .detail-dossier > nav:last-child a {
+    max-width: 42%;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .site-brand {
+    max-width: 6.25rem;
+    font-size: 0.625rem;
+  }
+
+  .site-nav > div {
+    gap: 0;
+  }
+
+  .site-nav > div > a {
+    padding-inline: 0.4rem;
+  }
+
+  .resume-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .portfolio-case h2 {
+    font-size: 1.1rem;
+  }
+
+  .detail-dossier > nav:last-child a {
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .site-shell *,
+  .site-shell *:hover {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    scroll-behavior: auto !important;
+  }
+}

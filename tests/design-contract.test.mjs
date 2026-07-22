@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
@@ -34,6 +35,17 @@ test('shared layout exposes the approved dossier design hooks and 44px controls'
   assert.match(config, /site:\s*'https:\/\/career\.kilpenguin\.com'/);
   assert.match(config, /base:\s*'\/'/);
   assert.match(robots, /Sitemap: https:\/\/career\.kilpenguin\.com\/sitemap-index\.xml/);
+});
+
+test('approved convention-preserving polish is screen-only and keeps content visible', async () => {
+  const css = await read('src/styles/global.css');
+  const prefix = '/* Convention-preserving polish · P1 */\n';
+  assert.equal(css.split(prefix).length, 2, 'approved polish layer must appear exactly once');
+  const polish = css.split(prefix, 2)[1];
+  assert.equal(
+    createHash('sha256').update(polish).digest('hex'),
+    '723cb13fe47d2e0a5039dbcb8f0c8ad9da061c6c6fc453f707fe2a941885f42c',
+  );
 });
 
 test('interactive route families expose their shared design hooks', async () => {

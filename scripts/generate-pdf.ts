@@ -195,7 +195,7 @@ async function main(): Promise<void> {
   const generateEn = args.includes('--en') || (!args.includes('--ko'));
   
   const baseUrlIndex = args.indexOf('--base-url');
-  const baseUrl = baseUrlIndex !== -1 ? args[baseUrlIndex + 1] : 'http://localhost:4321/resume';
+  const baseUrl = baseUrlIndex !== -1 ? args[baseUrlIndex + 1] : 'http://127.0.0.1:4321';
 
   try { new URL(baseUrl); } catch { throw new Error(`Invalid base URL: ${baseUrl}`); }
   

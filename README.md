@@ -4,7 +4,7 @@
 
 ## Live
 
-https://blog.kilpenguin.com/resume/
+https://career.kilpenguin.com/
 
 ## Features
 

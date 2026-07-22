@@ -1545,8 +1545,8 @@
       }
     ],
     "links": {
-      "portfolio": "/resume/portfolio/",
-      "careerDetails": "/resume/en/experience/gameduo"
+      "portfolio": "/portfolio/",
+      "careerDetails": "/en/experience/gameduo"
     },
     "labels": {
       "summary": "Professional Summary",

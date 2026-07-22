@@ -1,7 +1,7 @@
 User-agent: *
-Allow: /resume/
-Disallow: /resume/resume-print
-Disallow: /resume/resume-ats
-Disallow: /resume/en/resume-print
-Disallow: /resume/en/resume-ats
-Sitemap: https://blog.kilpenguin.com/resume/sitemap-index.xml
+Allow: /
+Disallow: /resume-print
+Disallow: /resume-ats
+Disallow: /en/resume-print
+Disallow: /en/resume-ats
+Sitemap: https://career.kilpenguin.com/sitemap-index.xml

@@ -1,6 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
-import { getBasePath } from '../../utils/paths';
+import { getBasePath, withBasePath } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
 
 interface Props {
@@ -25,7 +25,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
 <html lang={lang}>
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`}>
+  <link rel="icon" type="image/svg+xml" href={withBasePath('favicon.svg')}>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{pageTitle}</title>
   <style>
@@ -382,7 +382,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     <button onclick="window.print()" style="padding:12px 24px;background:#6b7280;color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
       {lang === 'ko' ? '인쇄' : 'Print'}
     </button>
-    <a href={`${import.meta.env.BASE_URL}/pdf/resume-ats-${lang}.pdf`} download type="application/pdf" style="padding:12px 24px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;box-shadow:0 2px 8px rgba(0,0,0,0.15);text-decoration:none;display:inline-block;">
+    <a href={withBasePath(`pdf/resume-ats-${lang}.pdf`)} download type="application/pdf" style="padding:12px 24px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;box-shadow:0 2px 8px rgba(0,0,0,0.15);text-decoration:none;display:inline-block;">
       {lang === 'ko' ? '다운로드' : 'Download'}
     </a>
   </div>

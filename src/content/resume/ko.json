@@ -1545,8 +1545,8 @@
       }
     ],
     "links": {
-      "portfolio": "/resume/portfolio/",
-      "careerDetails": "/resume/experience/gameduo"
+      "portfolio": "/portfolio/",
+      "careerDetails": "/experience/gameduo"
     },
     "labels": {
       "summary": "소개",

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
 import { join } from 'node:path';
@@ -25,14 +25,15 @@ test('shared layout exposes the approved dossier design hooks and 44px controls'
   ]);
   assert.match(layout, /KILPENGUIN \/ RESUME/);
   assert.match(layout, /class="site-shell/);
-  assert.match(layout, /BASE_URL}\/favicon\.svg/);
+  assert.match(layout, /withBasePath\('favicon\.svg'\)/);
   assert.match(layout, /href=\{enHref\}/);
   assert.match(layout, /href=\{koHref\}/);
   assert.match(layout, /startsWith\(`\$\{basePath\}\/experience`\)/);
   assert.match(css, /--dossier-ink:\s*#0b1220/i);
   assert.match(css, /\.touch-target[^}]*min-height:\s*44px/s);
-  assert.match(config, /site:\s*'https:\/\/blog\.kilpenguin\.com'/);
-  assert.match(robots, /Sitemap: https:\/\/blog\.kilpenguin\.com\/resume\/sitemap-index\.xml/);
+  assert.match(config, /site:\s*'https:\/\/career\.kilpenguin\.com'/);
+  assert.match(config, /base:\s*'\/'/);
+  assert.match(robots, /Sitemap: https:\/\/career\.kilpenguin\.com\/sitemap-index\.xml/);
 });
 
 test('interactive route families expose their shared design hooks', async () => {
@@ -74,7 +75,7 @@ test('fonts are local/system-only and every standalone output has a semantic h1'
       assert.match(source, /<main(?:\s|>)/, path);
     }
     if (path.includes('PrintTemplate') || path.includes('AtsTemplate')) {
-      assert.match(source, /BASE_URL}\/pdf\//, path);
+      assert.match(source, /withBasePath\(`pdf\//, path);
       assert.doesNotMatch(source, /(?:basePath|baseUrl)}\/pdf\//, path);
     }
   }
@@ -86,7 +87,20 @@ test('production build includes the English portfolio print route', async (t) =>
   try { files = await htmlFiles(join(rootPath, 'dist')); }
   catch { return t.skip('run after npm run build'); }
   assert.equal(files.length, 45);
-  for (const file of files) assert.match(await readFile(file, 'utf8'), /<h1(?:\s|>)/, file);
+  for (const file of files) {
+    const html = await readFile(file, 'utf8');
+    assert.match(html, /<h1(?:\s|>)/, file);
+    assert.doesNotMatch(html, /blog\.kilpenguin\.com\/resume|(?:href|src)="\/resume\//, file);
+    assert.doesNotMatch(html, /(?:href|src)="\/\//, file);
+  }
+  assert.match(await readFile(join(rootPath, 'dist/index.html'), 'utf8'), /https:\/\/career\.kilpenguin\.com\/?"/);
+});
+
+test('local generation and deployment use the same IPv4 dev-server origin', async () => {
+  const expected = /http:\/\/127\.0\.0\.1:4321/;
+  assert.match(await read('scripts/generate-pdf.ts'), expected);
+  assert.match(await read('scripts/generate-og.ts'), expected);
+  assert.match(await read('.github/workflows/deploy.yml'), expected);
 });
 
 test('PDF generator rejects HTTP error pages before writing output', { timeout: 30000 }, async () => {
@@ -101,7 +115,7 @@ test('PDF generator rejects HTTP error pages before writing output', { timeout: 
   try {
     const result = await new Promise((resolve) => {
       const child = spawn(join(rootPath, 'node_modules/.bin/tsx'), [
-        'scripts/generate-pdf.ts', '--ko', '--hr', '--base-url', `http://127.0.0.1:${port}/resume`, '--output', output,
+        'scripts/generate-pdf.ts', '--ko', '--hr', '--base-url', `http://127.0.0.1:${port}`, '--output', output,
       ], { cwd: rootPath });
       let text = '';
       child.stdout.on('data', (chunk) => { text += chunk; });
@@ -114,5 +128,35 @@ test('PDF generator rejects HTTP error pages before writing output', { timeout: 
   } finally {
     server.close();
     await rm(output, { recursive: true, force: true });
+  }
+});
+
+test('OG generator rejects HTTP error pages before overwriting output', { timeout: 30000 }, async () => {
+  const server = createServer((_request, response) => {
+    response.writeHead(404, { 'content-type': 'text/html' });
+    response.end('<main><h1>Error response</h1></main>');
+  });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  const { port } = server.address();
+  const outputDir = await mkdtemp(join(tmpdir(), 'resume-og-reject-'));
+  const output = join(outputDir, 'og-image.png');
+  await writeFile(output, 'sentinel');
+
+  try {
+    const result = await new Promise((resolve) => {
+      const child = spawn(join(rootPath, 'node_modules/.bin/tsx'), [
+        'scripts/generate-og.ts', '--base-url', `http://127.0.0.1:${port}`, '--output', output,
+      ], { cwd: rootPath });
+      let text = '';
+      child.stdout.on('data', (chunk) => { text += chunk; });
+      child.stderr.on('data', (chunk) => { text += chunk; });
+      child.on('close', (code) => resolve({ code, text }));
+    });
+    assert.notEqual(result.code, 0);
+    assert.match(result.text, /Refusing to generate OG image from HTTP 404/);
+    assert.equal(await readFile(output, 'utf8'), 'sentinel');
+  } finally {
+    server.close();
+    await rm(outputDir, { recursive: true, force: true });
   }
 });

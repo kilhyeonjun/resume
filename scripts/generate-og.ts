@@ -20,11 +20,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   const baseUrlIndex = args.indexOf('--base-url');
-  const baseUrl = baseUrlIndex !== -1 ? args[baseUrlIndex + 1] : 'http://localhost:4321/resume';
-  const outputPath = resolve(__dirname, '..', 'public', 'og-image.png');
+  const baseUrl = (baseUrlIndex !== -1 ? args[baseUrlIndex + 1] : 'http://127.0.0.1:4321').replace(/\/+$/, '');
+  const outputIndex = args.indexOf('--output');
+  const outputPath = outputIndex !== -1 ? resolve(args[outputIndex + 1]) : resolve(__dirname, '..', 'public', 'og-image.png');
+  const ogUrl = `${baseUrl}/og-image`;
 
   console.log('\n🖼️  OG Image Generator\n');
-  console.log(`   URL: ${baseUrl}/og-image`);
+  console.log(`   URL: ${ogUrl}`);
   console.log(`   Output: ${outputPath}\n`);
 
   let browser = null;
@@ -48,10 +50,17 @@ async function main(): Promise<void> {
       deviceScaleFactor: 2,
     });
 
-    await page.goto(`${baseUrl}/og-image`, {
+    const response = await page.goto(ogUrl, {
       waitUntil: 'networkidle0',
       timeout: 30000,
     });
+    if (!response?.ok()) {
+      throw new Error(`Refusing to generate OG image from HTTP ${response?.status() ?? 'unknown'}: ${ogUrl}`);
+    }
+    const validPage = await page.$('.container h1.name');
+    if (!validPage) {
+      throw new Error(`Refusing to generate OG image from an unexpected page: ${ogUrl}`);
+    }
 
     // Wait for fonts and rendering
     await page.waitForFunction(

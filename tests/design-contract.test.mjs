@@ -98,9 +98,12 @@ test('production build includes the English portfolio print route', async (t) =>
 
 test('local generation and deployment use the same IPv4 dev-server origin', async () => {
   const expected = /http:\/\/127\.0\.0\.1:4321/;
+  const workflow = await read('.github/workflows/deploy.yml');
   assert.match(await read('scripts/generate-pdf.ts'), expected);
   assert.match(await read('scripts/generate-og.ts'), expected);
-  assert.match(await read('.github/workflows/deploy.yml'), expected);
+  assert.match(workflow, expected);
+  assert.doesNotMatch(workflow, /name: Start dev server/);
+  assert.match(workflow, /name: Generate release PDFs and OG[\s\S]*\.\/node_modules\/\.bin\/astro dev --host 127\.0\.0\.1 --port 4321[\s\S]*trap '[^']*kill[\s\S]*kill -0 "\$server_pid"[\s\S]*npm run pdf/);
 });
 
 test('PDF generator rejects HTTP error pages before writing output', { timeout: 30000 }, async () => {

@@ -1358,47 +1358,35 @@
         "highlights": [],
         "projects": [
           {
-            "name": "개인 개발 운영 하네스 프레임워크",
+            "name": "공개 AI CLI 런타임 런처",
             "period": "2026.04 ~ 현재",
             "featured": true,
-            "description": "개발 세션의 컨텍스트·비용·규칙·RAG·브라우저 런타임을 자동 관리하는 개인 워크플로우 프레임워크를 설계하고 3개 하네스에 배포·운영",
-            "techRationale": "문서 전용 규칙은 에이전트가 필요 시점에 읽지 않으므로 Git 훅 기반으로 강제(hook-first)하고, 다중 인스턴스 중복 관리·버전 드리프트를 막기 위해 런타임 서피스 컴파일러와 런처 패키지로 설정을 생성·검증.",
+            "description": "Claude Code·Codex·Kiro의 전역 상태를 등록 프로젝트별 런타임으로 분리하고, 잘못된 작업 경계와 설정 드리프트를 시작 전에 차단하는 공개 런처",
+            "techRationale": "저장소 이름 추정 대신 정규화된 경로 소유권을 신뢰 경계로 사용하고, 런타임 홈은 프로젝트 설정에서 다시 생성 가능한 결과물로 관리. 공개 contract demo와 CI로 경계·원문 해시·실패 동작을 로그인 없이 검증.",
             "details": [
               {
-                "problem": "마크다운 지식 베이스가 커지며 에이전트가 관련 컨텍스트를 수동 탐색하는 비효율",
-                "solution": "클라우드 벡터 DB(Pinecone 등)의 동기화 지연·비용 대신 로컬 임베딩(BGE-M3) 벡터 RAG를 도입해 마크다운 변경 시 즉시 자동 인덱싱 — sqlite-vec+FTS5 하이브리드(RRF fusion)로 정확도 확보, MCP로 에이전트가 직접 검색",
-                "result": "[REDACTED_PRIVATE_INVENTORY]·[REDACTED_PRIVATE_INVENTORY] 인덱싱, warm 쿼리 0.7초, 골드 쿼리 5건 모두 top-2/3 내 적중"
+                "problem": "여러 프로젝트가 AI CLI 전역 홈을 공유해 세션·도구·규칙이 섞일 위험",
+                "solution": "등록 프로젝트별 Codex·Kiro 런타임 홈을 생성하고 프로필 명령과 harness-exec를 동일 정책 경로로 통합",
+                "result": "프로젝트별 런타임 상태 분리와 설치·프로필·런타임 동작을 공개 테스트로 검증"
               },
               {
-                "problem": "RAG가 opt-in 참고 도구라 조사·검토 프롬프트에서 근거 검색이 누락",
-                "solution": "UserPromptSubmit 기본 트리거로 전환하고 프롬프트 12자 이상이면 private_search_tool가 자동 호출되도록 3개 하네스에 포팅",
-                "result": "3개 하네스 15/15 default-on 테스트 통과, 실 프롬프트 smoke test에서 1회차 검색 적중"
+                "problem": "워크트리 실행기가 이름이나 원격 저장소로 프로필을 추정하면 잘못된 경계에서 시작할 위험",
+                "solution": "harness-auto가 정규화된 현재 경로에서 가장 구체적인 단일 등록 경계만 선택하도록 구현",
+                "result": "경계 밖·심볼릭 링크 이탈·모호한 중복 등록은 AI CLI 시작 전에 중단"
               },
               {
-                "problem": "이력서·포트폴리오 JSON이 RAG 검색 범위 밖이라 JD 커스터마이징 시 근거 검색 누락",
-                "solution": "portfolio/resume JSON chunker, target=resume 색인 경로, path-based auto-reindex, federation 검색 구현",
-                "result": "resume corpus [REDACTED_PRIVATE_INVENTORY] 색인, 32개 테스트 통과, 4개 DB 통합 검색 동작 확인"
-              },
-              {
-                "problem": "AI 에이전트 토큰 비용의 95%가 시스템 프롬프트·서브에이전트 등 숨은 영역에서 발생해 추적 불가",
-                "solution": "단순 session/model 집계로는 숨은 비용을 추적 못 해, 단순 집계 대신 세션 트랜스크립트를 8개 카테고리로 분해하는 비용 분석기 구현 — residual 추적으로 다중 머신·다중 도구 사용량을 단일 프로파일로 통합",
-                "result": "숨은 비용 95%를 카테고리별로 가시화, 다중 인스턴스 사용량 집계 누락 버그 발견·수정"
-              },
-              {
-                "problem": "브라우저와 REPL 런타임의 신뢰 경계·fallback 순서가 불명확해 자동화가 세션별로 불안정",
-                "solution": "런타임 신뢰 경계와 environment-native Browser/Chrome fallback 순서를 문서화하고, 런처 생성기에 Chrome 플러그인 활성화 경로 반영",
-                "result": "private profiles 3개 하네스에 런타임 등록, browser runtime 신뢰 경계 및 fallback 순서 정립"
+                "problem": "비공개 운영 환경 설명만으로는 방문자가 핵심 계약을 독립 검증할 수 없음",
+                "solution": "공개 launcher 저장소·v0.20.0 Release·CI와 별도 public contract demo 연결",
+                "result": "프로필 고유성, 경로 이탈, 원문 SHA-256 드리프트, 관계 무결성을 로그인 없이 재현"
               }
             ],
             "techStack": [
-              "TypeScript",
-              "Python",
+              "Zsh",
               "Bash",
-              "MCP",
-              "Ollama (BGE-M3)",
-              "Vector RAG",
-              "Git Hooks",
-              "Homebrew"
+              "Python",
+              "Homebrew",
+              "GitHub Actions",
+              "MCP"
             ]
           },
           {
@@ -1422,12 +1410,12 @@
           }
         ],
         "techStack": [
-          "TypeScript",
+          "Zsh",
+          "Bash",
           "Python",
-          "Vector RAG (Ollama)",
-          "MCP",
-          "Git Hooks",
           "Homebrew",
+          "GitHub Actions",
+          "MCP",
           "Supabase",
           "n8n"
         ],

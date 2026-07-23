@@ -123,16 +123,15 @@ test('AI harness case study keeps public evidence current and recruiter-first', 
   assert.equal(project.problemSolving.length, 3);
   assert.equal(project.glossary.length, 8);
   assert.equal(project.github, 'https://github.com/kilhyeonjun/harness-launcher');
-  assert.equal(project.links['v0.19.4 Release'], 'https://github.com/kilhyeonjun/harness-launcher/releases/tag/v0.19.4');
+  assert.equal(project.links.Demo, 'https://github.com/kilhyeonjun/harness-launcher-demo');
+  assert.equal(project.links['v0.20.0 Release'], 'https://github.com/kilhyeonjun/harness-launcher/releases/tag/v0.20.0');
   assert.equal(project.links.CI, 'https://github.com/kilhyeonjun/harness-launcher/actions');
   const publicCopy = JSON.stringify(project);
-  for (const staleOrPrivate of ['[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]', 'RAG default-on', 'private profiles', 'Zighang', 'T1/T2/T3']) {
+  for (const staleOrPrivate of ['[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]', 'RAG default-on', 'private profiles', 'Zighang', 'T1/T2/T3', '[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]']) {
     assert.doesNotMatch(publicCopy, new RegExp(staleOrPrivate.replaceAll('/', '\\/'), 'i'));
   }
-  assert.match(publicCopy, /[REDACTED_PRIVATE_INVENTORY]/);
-  assert.match(publicCopy, /[REDACTED_PRIVATE_INVENTORY]/);
-  assert.match(publicCopy, /reported [REDACTED_PRIVATE_INVENTORY]/i);
-  assert.match(publicCopy, /2026-07-23/);
+  assert.match(publicCopy, /runtime state stays project-scoped/i);
+  assert.match(publicCopy, /public contract demo/i);
   const diagrams = await Promise.all([
     read('public/images/portfolio/ai-coding-harness-boundary-ko.svg'),
     read('public/images/portfolio/ai-coding-harness-boundary-en.svg'),

@@ -75,17 +75,12 @@ capture-screenshots.mjs
 screenshot-puppeteer.js
 screenshot-puppeteer.mjs
 
-# JD customization outputs (regenerable) — all sub-directories ignored, applications.json manually tracked (use `git add -f ./.jd-custom/applications.json`)
-.jd-custom/*/
-.jd-custom/*.bak
+# Private operating data and agent workspaces — never publish
+.jd-custom/
+.claude/
+.rag/
+docs/plans/
+docs/superpowers/
 
 # JD pipeline benchmark workspace (regenerable)
 jd-pipeline-workspace/
-
-# RAG index artifacts
-.rag/index.db*
-.rag/queue
-.rag/logs/
-.rag/.debounce/
-.rag/.worker.lockdir/
-.rag/.venv/

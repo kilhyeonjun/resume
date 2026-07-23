@@ -3,65 +3,61 @@
     {
       "slug": "ai-coding-harness",
       "name": {
-        "ko": "AI 개발 환경 3개를 섞지 않고, 같은 품질 기준으로 반복 실행하는 운영 플랫폼",
-        "en": "Three Separate AI Development Environments, One Quality Standard"
+        "ko": "프로젝트별 AI CLI 런타임을 분리하고 검증하는 공개 런처",
+        "en": "A Public Launcher for Isolated, Verified AI CLI Runtimes"
       },
       "type": "personal",
       "featured": true,
       "printOrder": 1,
       "summary": {
-        "ko": "개인·업무·플랫폼을 서로 다른 실행 환경으로 분리하고, Claude Code·Codex·Kiro가 같은 원본·검색·검증 규칙을 사용하도록 만든 AI 개발 운영 체계입니다.",
-        "en": "An AI development operating framework that isolates Personal, Work, and Platform environments while giving Claude Code, Codex, and Kiro the same source, retrieval, and verification rules."
+        "ko": "Claude Code·Codex·Kiro의 전역 상태를 프로젝트별 실행 경계로 분리하고, 잘못된 작업 경계와 설정 드리프트를 시작 전에 차단하는 공개 런처입니다.",
+        "en": "A public launcher that isolates global Claude Code, Codex, and Kiro state into project-scoped boundaries and blocks invalid workspaces or configuration drift before startup."
       },
       "description": {
-        "ko": "AI 코딩 도구를 단발성으로 사용하는 대신, 작업 영역별 컨텍스트를 분리하고 근거 검색과 원문 검증, 실행 게이트를 하나의 운영 경로로 연결했다. 프로필별 런타임 홈·스킬·MCP·정책을 준비하고, RAG와 KG는 관련 근거 후보를 찾는 데 사용한다. 후보는 원래 파일이나 live source에서 다시 확인한 뒤 hook·test·audit를 통과시킨다.",
-        "en": "Instead of using AI coding tools ad hoc, this system separates context by work domain and connects evidence retrieval, source verification, and execution gates into one operating path. Each profile prepares its own runtime home, skills, MCP tools, and policies. RAG and KG discover evidence candidates, which are then verified against the original file or live source before hook, test, and audit gates run."
-      },
-      "coverImage": {
-        "ko": "images/portfolio/ai-coding-harness-sequence-ko.svg",
-        "en": "images/portfolio/ai-coding-harness-sequence-en.svg"
+        "ko": "harness-launcher는 등록한 프로젝트 디렉터리를 신뢰 경계로 사용해 런타임 홈·스킬·MCP·정책을 분리합니다. harness-auto는 현재 작업 경로를 정규화해 하나의 경계만 선택하고, 경계 밖·심볼릭 링크 이탈·모호한 중복 등록에서는 실행하지 않습니다. 별도 공개 contract demo는 프로필 등록과 후보→원문 경로→SHA-256 재검증 흐름을 재현하며, 비공개 문서·회사 데이터·운영 인덱스는 포함하지 않습니다.",
+        "en": "harness-launcher uses each registered project directory as a trust boundary for runtime homes, skills, MCP tools, and policy. harness-auto canonicalizes the current workspace, selects exactly one boundary, and refuses to launch outside a boundary, through a symlink escape, or across ambiguous registrations. A separate public contract demo reproduces profile registration and candidate-to-source SHA-256 verification without private documents, company data, or production indexes."
       },
       "problemSolving": [
         {
           "problem": {
-            "ko": "전역 AI CLI 설정은 개인·업무·플랫폼의 세션·도구·규칙을 같은 실행 환경에 섞을 수 있었다.",
-            "en": "Global AI CLI settings could mix sessions, tools, and rules across Personal, Work, and Platform contexts."
+            "ko": "AI CLI의 전역 홈을 여러 프로젝트가 공유하면 세션·도구·규칙이 다른 작업 경계로 섞일 수 있었습니다.",
+            "en": "Sharing one global AI CLI home across projects could mix sessions, tools, and rules across trust boundaries."
           },
           "process": {
-            "ko": "profile-aware launcher가 선택한 프로필의 runtime home, skills, MCP, 정책을 준비하도록 구성했다.",
-            "en": "Built a profile-aware launcher that prepares the selected profile’s runtime home, skills, MCP tools, and policies."
+            "ko": "등록한 프로젝트마다 Codex·Kiro 런타임 홈을 생성하고, 프로필 명령과 harness-exec가 같은 실행 정책을 사용하도록 통합했습니다.",
+            "en": "Generated Codex and Kiro runtime homes per registered project and routed profile commands and harness-exec through the same execution policy."
           },
           "result": {
-            "ko": "Personal / Work / Platform 3개 프로필의 실행 환경을 분리했다.",
-            "en": "Separated the execution environments for three Personal, Work, and Platform profiles."
+            "ko": "프로젝트별 런타임 상태를 분리하고, 공개 저장소의 설치·프로필·런타임 테스트로 동작을 검증합니다.",
+            "en": "Runtime state stays project-scoped, with installation, profile, and runtime behavior verified in the public repository suite."
           }
         },
         {
           "problem": {
-            "ko": "문서와 규칙이 늘면서 필요한 근거를 매번 수동으로 찾는 방식만으로는 관련 문맥을 놓치기 쉬웠다.",
-            "en": "As documents and rules grew, manual search alone made it easy to miss relevant context."
+            "ko": "워크트리 실행기가 프로필을 이름이나 원격 저장소로 추정하면 잘못된 권한·도구 경계에서 에이전트를 시작할 수 있었습니다.",
+            "en": "A workspace manager that guessed profiles from names or remotes could start an agent with the wrong tools and permissions."
           },
           "process": {
-            "ko": "RAG로 의미·키워드 후보를 찾고 KG로 연결 관계를 탐색한 다음, 원문 경로와 내용을 다시 확인하는 운영 규칙을 연결했다.",
-            "en": "Used RAG for semantic and keyword candidates, KG for related connections, and an operating rule that reads the original path and content before relying on a result."
+            "ko": "harness-auto가 현재 경로를 정규화하고 가장 구체적인 단일 등록 경계만 선택하도록 했습니다. 경계 밖·심볼릭 링크 이탈·동일 우선순위 중복은 거부합니다.",
+            "en": "Made harness-auto canonicalize the current path and select only the single most-specific registered boundary, rejecting outside paths, symlink escapes, and equally specific duplicates."
           },
           "result": {
-            "ko": "[REDACTED_PRIVATE_INVENTORY]에서 2026-07-23에 측정한 신고 스냅샷은 RAG [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY]와 KG [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY]다.",
-            "en": "A reported [REDACTED_PRIVATE_INVENTORY] measured on 2026-07-23 contains RAG [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] and KG [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY]."
+            "ko": "프로필 추정 대신 경로 소유권을 사용하며, 선택이 확정되지 않으면 AI CLI를 실행하지 않습니다.",
+            "en": "Profile selection is based on path ownership rather than inference, and no AI CLI starts when ownership is unresolved."
           }
         },
         {
           "problem": {
-            "ko": "생성된 런타임 설정이 원본과 달라지거나 필수 등록이 빠지면 잘못된 규칙으로 에이전트가 시작될 수 있었습니다.",
-            "en": "Generated runtime configuration could drift from its source, or required registration could be missing before an agent starts."
+            "ko": "비공개 운영 환경만으로 설명하면 방문자가 프로필 분리와 근거 재확인 계약을 독립적으로 검증할 수 없었습니다.",
+            "en": "A private operating environment alone did not let visitors independently verify profile isolation and source-verification contracts."
           },
           "process": {
-            "ko": "원본 fingerprint가 바뀌면 surface를 다시 생성하고, 바뀌지 않으면 재생성을 건너뜁니다. 이어 verify와 startup scan으로 필수 경로·등록·생성물을 확인했습니다.",
-            "en": "A changed source fingerprint regenerates runtime surfaces; an unchanged fingerprint skips rebuilding. Verification and startup scans then check required paths, registration, and generated outputs."
+            "ko": "공개 harness-launcher 구현·테스트와 별도 public contract demo를 연결했습니다. 데모는 프로필 고유성, 경로 이탈, 원문 SHA-256 드리프트, 관계 무결성을 표준 라이브러리 테스트로 확인합니다.",
+            "en": "Linked the public harness-launcher implementation and tests to a separate public contract demo. The demo checks profile uniqueness, path escape, source SHA-256 drift, and relationship integrity with the standard library."
           },
           "result": {
-            "ko": "누락·잘못된 등록은 에이전트 시작 전에 non-zero 오류로 중단되며, 개인·업무·플랫폼 실행 환경의 검증과 startup scan을 2026-07-23에 다시 통과했습니다.",
-            "en": "Missing or invalid registration stops with a non-zero error before agent startup; Personal, Work, and Platform runtime verification and startup scans passed again on 2026-07-23."
+            "ko": "로그인 없이 README·소스·CI에서 핵심 경계와 실패 동작을 재현할 수 있으며, 비공개 회사 데이터와 운영 인덱스는 공개 근거에서 제외했습니다.",
+            "en": "The core boundaries and failure behavior are reproducible from README, source, and CI without login, while private company data and production indexes remain outside public evidence."
           }
         }
       ],
@@ -70,44 +66,40 @@
         "end": "present"
       },
       "skills": [
-        "TypeScript",
-        "Python",
+        "Zsh",
         "Bash",
+        "Python",
+        "Homebrew",
+        "GitHub Actions",
         "MCP",
-        "sqlite-vec",
-        "FTS5",
-        "Ollama",
-        "BGE-M3",
-        "Vector RAG",
-        "Git Hooks",
-        "Runtime Surface Compiler",
-        "Quality Gates"
+        "Runtime Isolation",
+        "Fail-closed Validation"
       ],
       "github": "https://github.com/kilhyeonjun/harness-launcher",
       "highlights": {
         "ko": [
-          "프로필 선택 → 격리 runtime 준비 → 근거 후보 검색 → 원문 확인 → hook·test·audit 게이트의 실행 흐름 구축",
-          "RAG는 후보 발견에, KG는 문서·코드·규칙의 연결 관계 탐색에 사용하고 원래 파일 또는 live source에서 사실 재검증",
-          "프로필별 생성 runtime surface를 verify와 startup scan으로 점검",
-          "공개 harness-launcher v0.19.4·Release·CI로 익명 접근 가능한 구현 근거 제공"
+          "프로젝트 등록 → 경계 확인 → 격리 런타임 생성 → 검증 → AI CLI 시작 흐름",
+          "harness-auto가 정규화된 현재 경로에서 단일 소유 경계만 선택하고 모호하거나 경계 밖이면 실행 전 중단",
+          "공개 launcher 저장소·Release·CI와 public contract demo로 로그인 없는 재현 근거 제공",
+          "비공개 문서·회사 데이터·운영 인덱스를 공개 저장소와 포트폴리오 근거에서 제외"
         ],
         "en": [
-          "Built a profile selection → isolated runtime preparation → evidence candidate retrieval → source verification → hook/test/audit gate flow",
-          "Uses RAG for candidate discovery and KG for document/code/rule connections, then re-verifies facts against the original file or live source",
-          "Checks generated runtime surfaces per profile with verification and startup scans",
-          "Provides anonymously accessible implementation evidence through the public harness-launcher v0.19.4 repository, release, and CI"
+          "Project registration → boundary resolution → isolated runtime preparation → verification → AI CLI startup",
+          "harness-auto selects one owning boundary from the canonical workspace and stops before launch when outside or ambiguous",
+          "Public launcher repository, release, CI, and contract demo provide evidence reproducible without login",
+          "Private documents, company data, and production indexes are excluded from public repositories and portfolio evidence"
         ]
       },
       "lessons": {
         "ko": [
-          "검색 결과는 답이 아니라 후보이므로 원래 파일이나 live source의 재확인이 필요하다.",
-          "컨텍스트와 권한이 다른 작업 영역은 전역 설정이 아니라 프로필별 실행 환경으로 분리해야 한다.",
-          "문서 규칙은 필요한 순간에 읽히지 않을 수 있어 hook·test·audit 같은 실행 게이트가 필요하다."
+          "프로필은 이름 추정이 아니라 정규화된 경로 소유권으로 선택해야 한다.",
+          "생성 런타임은 원본이 아니라 폐기 가능한 결과물이어야 하며, 시작 전에 다시 검증해야 한다.",
+          "공개 사례의 근거는 로그인 없이 재현 가능해야 하고 비공개 운영 수치로 대체할 수 없다."
         ],
         "en": [
-          "Retrieval results are candidates rather than answers, so the original file or live source must be read again.",
-          "Work domains with different context and permissions need profile-specific runtime boundaries rather than global settings.",
-          "Documented rules may not be read at the moment of need, so execution gates such as hooks, tests, and audits are necessary."
+          "Profiles should be selected by canonical path ownership, not name inference.",
+          "Generated runtimes are disposable outputs rather than source and must be revalidated before startup.",
+          "Public case-study evidence must be reproducible without login and cannot be replaced by private operating metrics."
         ]
       },
       "architectureDiagram": {
@@ -115,75 +107,75 @@
         "en": "images/portfolio/ai-coding-harness-boundary-en.svg"
       },
       "scale": {
-        "ko": "3개 프로필 · Personal RAG/KG · 공개 런처",
-        "en": "3 profiles · Personal RAG/KG · public launcher"
+        "ko": "공개 런처 · AI CLI 3종 · contract demo",
+        "en": "Public launcher · 3 AI CLIs · contract demo"
       },
       "metrics": [
         {
           "label": {
-            "ko": "컨텍스트 격리",
-            "en": "Context isolation"
+            "ko": "런타임 격리",
+            "en": "Runtime isolation"
           },
           "before": {
-            "ko": "전역 설정에 작업 영역이 섞일 위험",
-            "en": "Global settings could mix work contexts"
+            "ko": "프로젝트가 전역 CLI 상태를 공유",
+            "en": "Projects shared global CLI state"
           },
           "after": {
-            "ko": "개인·업무·플랫폼 3개 실행 경계",
-            "en": "Three isolated Personal, Work, and Platform runtimes"
+            "ko": "등록 프로젝트별 런타임 홈",
+            "en": "Runtime homes per registered project"
           },
           "improvement": {
-            "ko": "도구·규칙·세션을 작업별로 분리",
-            "en": "Tools, rules, and sessions stay task-scoped"
+            "ko": "세션·스킬·MCP·정책을 작업 경계별로 분리",
+            "en": "Sessions, skills, MCP tools, and policy stay boundary-scoped"
           }
         },
         {
           "label": {
-            "ko": "근거 탐색",
-            "en": "Evidence retrieval"
+            "ko": "경계 선택",
+            "en": "Boundary resolution"
           },
           "before": {
-            "ko": "문서·규칙을 매번 수동 탐색",
-            "en": "Repeated manual search across documents and rules"
+            "ko": "이름·원격 저장소 기반 프로필 추정 위험",
+            "en": "Risk of profile inference from names or remotes"
           },
           "after": {
-            "ko": "RAG 후보 + KG 관계 → 원문 재확인",
-            "en": "RAG candidates + KG relationships → source verification"
+            "ko": "정규화 경로의 단일 소유 경계 선택",
+            "en": "One owning boundary from the canonical path"
           },
           "improvement": {
-            "ko": "[REDACTED_PRIVATE_INVENTORY] 신고 스냅샷: RAG 873개 파일·6,212개 청크, KG 6,809개 노드·6,720개 엣지 (2026-07-23)",
-            "en": "Reported [REDACTED_PRIVATE_INVENTORY]: RAG [REDACTED_PRIVATE_INVENTORY]/[REDACTED_PRIVATE_INVENTORY]; KG [REDACTED_PRIVATE_INVENTORY]/[REDACTED_PRIVATE_INVENTORY] (2026-07-23)"
+            "ko": "경계 밖·이탈·모호함은 AI CLI 시작 전 중단",
+            "en": "Outside, escaped, or ambiguous paths stop before AI CLI startup"
           }
         },
         {
           "label": {
-            "ko": "실패 시 중단 검증",
-            "en": "Fail-closed verification"
+            "ko": "공개 검증",
+            "en": "Public verification"
           },
           "before": {
-            "ko": "런타임 설정 수동 복제와 드리프트",
-            "en": "Manual runtime copies and configuration drift"
+            "ko": "비공개 환경 설명에 의존",
+            "en": "Evidence depended on a private environment"
           },
           "after": {
-            "ko": "단일 원본 → 생성 surface → startup scan",
-            "en": "Canonical source → generated surfaces → startup scan"
+            "ko": "공개 launcher + contract demo + CI",
+            "en": "Public launcher + contract demo + CI"
           },
           "improvement": {
-            "ko": "누락·잘못된 등록은 에이전트 시작 전 오류로 중단",
-            "en": "Missing or invalid registration stops before the agent starts"
+            "ko": "로그인 없이 핵심 계약과 실패 동작 재현",
+            "en": "Core contracts and failure behavior reproduce without login"
           }
         }
       ],
       "techDecisions": {
         "ko": [
-          "Prompt RAG 자동 검색은 현재 opt-in: 모든 프롬프트에 컨텍스트를 주입하지 않고 근거 검색이 필요한 작업에서 명시적으로 활성화한다.",
-          "KG는 실시간 변경이 아니라 source fingerprint로 변경을 감지하고 변경 시 deterministic full refresh, 무변경 시 rebuild skip을 수행한다.",
-          "수동 설정 복사 대신 단일 원본에서 runtime surface를 생성했습니다. 변경된 fingerprint는 재생성을 유도하고, 누락·잘못된 등록은 fail-closed 검증으로 에이전트 시작 전에 중단합니다."
+          "저장소 이름이나 원격 URL을 추정하지 않고 정규화된 프로젝트 경로를 신뢰 경계로 사용합니다. 가장 구체적인 단일 경계가 아니면 실행하지 않습니다.",
+          "런타임 홈은 직접 편집하는 원본이 아니라 프로젝트 설정에서 생성하는 폐기 가능한 결과물입니다. 재실행 시 원본과 검증 규칙으로 수렴시킵니다.",
+          "휴대용 shell installer의 TOCTOU 쓰기 경계를 안전하게 해결할 수 없어 source install을 비활성화하고 Homebrew 설치만 지원합니다."
         ],
         "en": [
-          "Prompt RAG auto-search is currently opt-in: evidence retrieval is explicitly enabled for tasks that need it instead of injecting context into every prompt.",
-          "The KG is not mutated in real time; source fingerprints detect changes, triggering a deterministic full refresh, while unchanged sources skip rebuilding.",
-          "Generated runtime surfaces from one canonical source instead of copying configuration manually. A changed fingerprint triggers regeneration, while missing or invalid registration fails closed before agent startup."
+          "Uses the canonical project path as the trust boundary instead of inferring from repository names or remotes. Launch is refused unless one most-specific boundary owns the workspace.",
+          "Treats runtime homes as disposable generated outputs rather than editable source. Re-running preparation converges them from project configuration and verification rules.",
+          "Disables source installation and supports Homebrew only because the portable shell installer could not safely eliminate its TOCTOU write boundary."
         ]
       },
       "role": {
@@ -191,7 +183,8 @@
         "en": "Sole designer, implementer, and operator"
       },
       "links": {
-        "v0.19.4 Release": "https://github.com/kilhyeonjun/harness-launcher/releases/tag/v0.19.4",
+        "Demo": "https://github.com/kilhyeonjun/harness-launcher-demo",
+        "v0.20.0 Release": "https://github.com/kilhyeonjun/harness-launcher/releases/tag/v0.20.0",
         "CI": "https://github.com/kilhyeonjun/harness-launcher/actions"
       },
       "glossary": [
@@ -201,8 +194,8 @@
             "en": "Harness"
           },
           "definition": {
-            "ko": "AI 코딩 도구가 프로젝트 규칙·검색·검증을 빠뜨리지 않도록 실행 환경을 묶은 운영 체계.",
-            "en": "An operating framework that packages source, tools, rules, and verification for repeatable AI development work."
+            "ko": "AI CLI의 실행 환경·도구·정책·검증을 반복 가능한 경로로 묶는 운영 계층.",
+            "en": "An operating layer that packages AI CLI runtime, tools, policy, and verification into a repeatable path."
           }
         },
         {
@@ -211,28 +204,38 @@
             "en": "Profile"
           },
           "definition": {
-            "ko": "개인·업무처럼 데이터와 권한을 분리해야 하는 작업 영역별 실행 환경.",
-            "en": "A work-domain runtime that separates context, data, and permissions."
+            "ko": "한 등록 프로젝트와 그 프로젝트가 소유하는 실행 경계.",
+            "en": "One registered project and the execution boundary it owns."
           }
         },
         {
           "term": {
-            "ko": "RAG",
-            "en": "RAG"
+            "ko": "런타임 홈",
+            "en": "Runtime home"
           },
           "definition": {
-            "ko": "답하기 전에 관련 원문 후보를 의미와 키워드로 검색하는 방식.",
-            "en": "A method that retrieves relevant source candidates by meaning and keywords before answering."
+            "ko": "CLI별 설정·세션·스킬을 보관하는 프로젝트 범위 생성 디렉터리.",
+            "en": "A generated project-scoped directory for CLI configuration, sessions, and skills."
           }
         },
         {
           "term": {
-            "ko": "KG",
-            "en": "KG"
+            "ko": "경계 확인",
+            "en": "Boundary resolution"
           },
           "definition": {
-            "ko": "문서·코드·규칙 사이의 연결 관계를 그래프로 탐색하는 방식.",
-            "en": "A graph used to explore connections among documents, code, and rules."
+            "ko": "정규화된 현재 경로를 소유하는 단일 등록 프로젝트를 찾는 절차.",
+            "en": "Resolving the one registered project that owns the canonical current path."
+          }
+        },
+        {
+          "term": {
+            "ko": "Fail-closed",
+            "en": "Fail-closed"
+          },
+          "definition": {
+            "ko": "경계나 설정을 확정할 수 없으면 대체 경로로 진행하지 않고 실행을 중단하는 방식.",
+            "en": "Stopping instead of falling back when a boundary or configuration cannot be proven."
           }
         },
         {
@@ -241,38 +244,28 @@
             "en": "MCP"
           },
           "definition": {
-            "ko": "AI 에이전트가 검색기와 업무 도구를 표준 방식으로 호출하게 하는 연결 규약.",
-            "en": "A protocol that lets AI agents call retrieval and operational tools through a standard interface."
+            "ko": "AI CLI가 프로젝트 도구를 표준 방식으로 호출하게 하는 연결 규약.",
+            "en": "A protocol that lets an AI CLI call project tools through a standard interface."
           }
         },
         {
           "term": {
-            "ko": "Hook",
-            "en": "Hook"
+            "ko": "Contract demo",
+            "en": "Contract demo"
           },
           "definition": {
-            "ko": "프롬프트·편집·커밋 같은 시점에 자동 검사나 차단을 실행하는 장치.",
-            "en": "A trigger that runs checks or blocks actions at prompt, edit, or commit time."
+            "ko": "운영 데이터 없이 경계·검증·실패 조건만 재현하는 공개 예제.",
+            "en": "A public example that reproduces boundaries, verification, and failure conditions without production data."
           }
         },
         {
           "term": {
-            "ko": "단일 원본",
-            "en": "Canonical source"
+            "ko": "CI",
+            "en": "CI"
           },
           "definition": {
-            "ko": "여러 런타임 설정을 손으로 중복 관리하지 않고 생성하는 기준 원본.",
-            "en": "The authoritative source used to generate runtime-specific settings without manual duplication."
-          }
-        },
-        {
-          "term": {
-            "ko": "런타임 표면",
-            "en": "Runtime surface"
-          },
-          "definition": {
-            "ko": "각 AI CLI가 실제 실행 시 읽는 지침·스킬·도구 설정.",
-            "en": "The instructions, skills, and tool settings consumed by an AI CLI at runtime."
+            "ko": "공개 저장소 변경마다 테스트를 자동 실행하는 검증 파이프라인.",
+            "en": "A verification pipeline that runs tests for every public repository change."
           }
         }
       ]

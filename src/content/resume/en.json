@@ -1358,47 +1358,35 @@
         "highlights": [],
         "projects": [
           {
-            "name": "Personal Development Operations Harness Framework",
+            "name": "Public AI CLI Runtime Launcher",
             "period": "2026.04 ~ Present",
             "featured": true,
-            "description": "Designed and operated a personal workflow framework that automatically manages development-session context, cost, rules, RAG, and browser runtimes across 3 harnesses",
-            "techRationale": "Chose hook-first enforcement because document-only rules are not always read at the moment of need; generated and verified runtime settings through a runtime-surface compiler and launcher package to prevent multi-instance drift.",
+            "description": "A public launcher that isolates global Claude Code, Codex, and Kiro state into registered project runtimes and blocks invalid workspaces or configuration drift before startup",
+            "techRationale": "Uses canonical path ownership rather than repository-name inference as the trust boundary, and treats runtime homes as reproducible outputs of project configuration. A public contract demo and CI verify boundaries, source digests, and failure behavior without login.",
             "details": [
               {
-                "problem": "Growing markdown knowledge base made manual context discovery by agents inefficient",
-                "solution": "Adopted a local-embedding (BGE-M3) vector RAG over cloud vector DBs (e.g., Pinecone) — chose local to auto-reindex immediately on markdown changes and avoid sync latency/cost; combined sqlite-vec with FTS5 (RRF fusion) for accuracy, exposed via MCP for direct agent search",
-                "result": "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY], 0.7s warm query, all 5 gold test queries hit within top-2/3"
+                "problem": "Projects sharing one global AI CLI home could mix sessions, tools, and rules across boundaries",
+                "solution": "Generated Codex and Kiro runtime homes per registered project and routed profile commands and harness-exec through one policy path",
+                "result": "Public tests verify project-scoped runtime state plus installation, profile, and runtime behavior"
               },
               {
-                "problem": "RAG was an opt-in reference tool, so evidence search was missed during investigation and review prompts",
-                "solution": "Moved to a default UserPromptSubmit trigger and ported it across 3 harnesses so prompts of 12+ characters call private_search_tool automatically",
-                "result": "Passed 15/15 default-on tests across 3 harnesses and hit the target on the first search in a real-prompt smoke test"
+                "problem": "A workspace manager inferring profiles from names or remotes could start in the wrong boundary",
+                "solution": "Implemented harness-auto to select only the single most-specific registered boundary from the canonical current path",
+                "result": "Outside paths, symlink escapes, and ambiguous duplicate registrations stop before AI CLI startup"
               },
               {
-                "problem": "Resume and portfolio JSON were outside the RAG search scope, leaving JD customization without evidence search over those surfaces",
-                "solution": "Implemented portfolio/resume JSON chunkers, target=resume indexing, path-based auto-reindexing, and federated search",
-                "result": "Indexed 109 resume-corpus chunks, passed 32 tests, and verified federated search across 4 DBs"
-              },
-              {
-                "problem": "95% of AI agent token cost came from hidden areas (system prompt, subagents), making it untrackable",
-                "solution": "Built a cost analyzer that decomposes session transcripts into 8 categories instead of simple session/model aggregation, which could not trace hidden costs — added residual tracking to consolidate multi-machine, multi-tool usage into a single profile",
-                "result": "Made 95% hidden cost visible by category; found and fixed a multi-instance usage-aggregation bug"
-              },
-              {
-                "problem": "Browser and REPL runtime trust boundaries and fallback order were unclear, making automation unstable across sessions",
-                "solution": "Documented runtime trust boundaries and environment-native Browser/Chrome fallback order, then reflected Chrome plugin activation paths in the launcher generator",
-                "result": "Registered runtimes across private profiles harnesses and standardized browser runtime trust boundaries and fallback order"
+                "problem": "A private operating environment alone did not let visitors independently verify the core contracts",
+                "solution": "Linked the public launcher repository, v0.20.0 release, CI, and a separate public contract demo",
+                "result": "Profile uniqueness, path escape, source SHA-256 drift, and relationship integrity reproduce without login"
               }
             ],
             "techStack": [
-              "TypeScript",
-              "Python",
+              "Zsh",
               "Bash",
-              "MCP",
-              "Ollama (BGE-M3)",
-              "Vector RAG",
-              "Git Hooks",
-              "Homebrew"
+              "Python",
+              "Homebrew",
+              "GitHub Actions",
+              "MCP"
             ]
           },
           {
@@ -1422,12 +1410,12 @@
           }
         ],
         "techStack": [
-          "TypeScript",
+          "Zsh",
+          "Bash",
           "Python",
-          "Vector RAG (Ollama)",
-          "MCP",
-          "Git Hooks",
           "Homebrew",
+          "GitHub Actions",
+          "MCP",
           "Supabase",
           "n8n"
         ],

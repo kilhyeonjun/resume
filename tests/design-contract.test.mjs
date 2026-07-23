@@ -279,7 +279,11 @@ test('local generation and deployment use the same IPv4 dev-server origin', asyn
   assert.ok(buildStart >= 0 && deployStart > buildStart);
   const buildJob = workflow.slice(buildStart, deployStart);
   assert.doesNotMatch(buildJob, /^    permissions:/m);
-  assert.match(workflow, /^  deploy:\n[\s\S]*?^    permissions:\n      pages: write\n      id-token: write/m);
+  const afterDeploy = workflow.slice(deployStart + 1);
+  const nextJobOffset = afterDeploy.search(/^  [\w-]+:\n/m);
+  const deployEnd = nextJobOffset < 0 ? workflow.length : deployStart + 1 + nextJobOffset;
+  const deployJob = workflow.slice(deployStart, deployEnd);
+  assert.match(deployJob, /^    permissions:\n      pages: write\n      id-token: write/m);
   for (const action of [
     'actions/checkout@v7',
     'actions/setup-node@v7',

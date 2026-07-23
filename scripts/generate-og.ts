@@ -68,6 +68,7 @@ async function main(): Promise<void> {
       { timeout: 15000 },
     );
     await new Promise((r) => setTimeout(r, 500));
+    await page.evaluate(() => document.querySelector('astro-dev-toolbar')?.remove());
 
     await page.screenshot({
       path: outputPath,

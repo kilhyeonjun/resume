@@ -1,4 +1,4 @@
-import { z } from 'astro:content';
+import { z } from 'astro/zod';
 
 const localizedStringSchema = z.object({
   ko: z.string(),
@@ -7,7 +7,7 @@ const localizedStringSchema = z.object({
 
 const blogPostSchema = z.object({
   title: localizedStringSchema,
-  url: z.string().url(),
+  url: z.url(),
 });
 
 const localizedValueSchema = z.union([z.string(), localizedStringSchema]);
@@ -54,7 +54,7 @@ const portfolioProjectSchema = z.object({
     end: z.string(),
   }),
   skills: z.array(z.string()),
-  github: z.string().url().optional(),
+  github: z.url().optional(),
   links: z.record(z.string(), z.string()).optional(),
   blogPosts: z.array(blogPostSchema).optional(),
   highlights: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }),

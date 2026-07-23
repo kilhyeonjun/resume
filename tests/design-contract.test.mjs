@@ -172,6 +172,8 @@ test('AI harness case study keeps public evidence current and recruiter-first', 
   }
   const pkg = JSON.parse(packageJson);
   const mermaid = JSON.parse(mermaidConfig);
+  assert.match(pkg.dependencies.astro, /^\^7\./);
+  assert.equal(pkg.engines.node, '>=22.12.0');
   assert.equal(pkg.devDependencies['@mermaid-js/mermaid-cli'], '^11.16.0');
   assert.equal(pkg.overrides['basic-ftp'], '5.3.1');
   assert.equal(pkg.scripts.diagrams, 'bash scripts/generate-ai-harness-diagrams.sh');
@@ -262,17 +264,46 @@ test('every rendered anchor has a non-empty destination', async (t) => {
 test('local generation and deployment use the same IPv4 dev-server origin', async () => {
   const expected = /http:\/\/127\.0\.0\.1:4321/;
   const workflow = await read('.github/workflows/deploy.yml');
+  const packageJson = JSON.parse(await read('package.json'));
+  const ogGenerator = await read('scripts/generate-og.ts');
   assert.match(await read('scripts/generate-pdf.ts'), expected);
-  assert.match(await read('scripts/generate-og.ts'), expected);
+  assert.match(ogGenerator, expected);
   assert.match(workflow, expected);
+  assert.equal(packageJson.scripts.pdf, 'tsx scripts/generate-pdf.ts && tsx scripts/generate-og.ts --output dist/og-image.png');
+  assert.match(ogGenerator, /querySelector\('astro-dev-toolbar'\)\?\.remove\(\)/);
   assert.match(workflow, /pull_request:\s*\n\s+branches: \[main\]/);
   assert.match(workflow, /workflow_dispatch:\s*\n\s+inputs:\s*\n\s+deploy:/);
+  assert.match(workflow, /^permissions:\n  contents: read\n\nconcurrency:/m);
+  const buildStart = workflow.search(/^  build:/m);
+  const deployStart = workflow.search(/^  deploy:/m);
+  assert.ok(buildStart >= 0 && deployStart > buildStart);
+  const buildJob = workflow.slice(buildStart, deployStart);
+  assert.doesNotMatch(buildJob, /^    permissions:/m);
+  assert.match(workflow, /^  deploy:\n[\s\S]*?^    permissions:\n      pages: write\n      id-token: write/m);
+  for (const action of [
+    'actions/checkout@v7',
+    'actions/setup-node@v7',
+    'actions/configure-pages@v6',
+    'actions/upload-pages-artifact@v5',
+    'actions/deploy-pages@v5',
+  ]) assert.match(workflow, new RegExp(`uses: ${action.replace('/', '\\/')}`));
+  assert.match(workflow, /node-version: "24"/);
+  assert.match(workflow, /name: Type Check\s*\n\s+run: npm run check/);
+  assert.doesNotMatch(workflow, /npx astro check/);
   assert.equal((workflow.match(/if: github\.event_name == 'push' \|\| \(github\.event_name == 'workflow_dispatch' && inputs\.deploy\)/g) ?? []).length, 2);
   assert.match(workflow, /diagram-source-contract\.mjs verify[\s\S]*sha256sum[\s\S]*git restore -- public\/images\/portfolio\/ai-coding-harness-/);
   assert.doesNotMatch(workflow, /name: Start dev server/);
   assert.ok(workflow.indexOf('run: npm run build') < workflow.indexOf('run: npm test'));
   assert.ok(workflow.indexOf('run: npm test') < workflow.indexOf('name: Generate release PDFs and OG'));
   assert.match(workflow, /name: Generate release PDFs and OG[\s\S]*\.\/node_modules\/\.bin\/astro dev --host 127\.0\.0\.1 --port 4321[\s\S]*trap '[^']*kill[\s\S]*kill -0 "\$server_pid"[\s\S]*npm run pdf/);
+});
+
+test('Astro schemas use the supported Zod export', async () => {
+  for (const path of ['src/content.config.ts', 'src/types/portfolio.ts']) {
+    const source = await read(path);
+    assert.match(source, /import \{ z \} from 'astro\/zod';/);
+    assert.doesNotMatch(source, /import \{[^}]*\bz\b[^}]*\} from 'astro:content';/);
+  }
 });
 
 test('PDF generator rejects HTTP error pages before writing output', { timeout: 30000 }, async () => {

@@ -48,7 +48,7 @@ test('approved convention-preserving polish is screen-only and keeps content vis
   const polish = css.split(prefix, 2)[1];
   assert.equal(
     createHash('sha256').update(polish).digest('hex'),
-    '723cb13fe47d2e0a5039dbcb8f0c8ad9da061c6c6fc453f707fe2a941885f42c',
+    '1fb9b4f6b035e020665eea842adda653b98f77fca0ac35be811d0e07aa81d1bc',
   );
 });
 
@@ -73,6 +73,19 @@ test('interactive route families expose their shared design hooks', async () => 
   }
   assert.match(await read('src/styles/global.css'), /\.resume-actions\s*\{[^}]*grid-row:\s*2/s);
   assert.match(await read('src/styles/global.css'), /\.portfolio-detail > #outcomes\s*\{[^}]*order:\s*-2/s);
+});
+
+test('portfolio polish keeps featured proof and detail evidence in recruiter-first flow', async () => {
+  const [template, css] = await Promise.all([
+    read('src/components/templates/PortfolioTemplate.astro'),
+    read('src/styles/global.css'),
+  ]);
+  assert.match(template, /index === 0 && project\.metrics/);
+  assert.match(template, /project\.metrics\.slice\(0, 2\)/);
+  assert.match(template, /class="portfolio-proof-strip"/);
+  assert.match(css, /\.portfolio-detail > header\s*\{[^}]*grid-row:\s*2\s*\/\s*span\s*20/s);
+  assert.match(css, /\.portfolio-detail > #outcomes\s*\{[^}]*grid-row:\s*2/s);
+  assert.match(css, /@media screen and \(max-width: 760px\)[\s\S]*\.portfolio-detail\s*\{[^}]*display:\s*flex[^}]*flex-direction:\s*column/s);
 });
 
 test('fonts are local/system-only and every standalone output has a semantic h1', async () => {

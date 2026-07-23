@@ -91,6 +91,17 @@ const archiveProjects = projects.filter((project) => !featuredProjects.some((fea
               {projectSummary}
             </p>
 
+            {index === 0 && project.metrics && project.metrics.length > 0 && (
+              <div class="portfolio-proof-strip" aria-label={lang === 'ko' ? '대표 성과' : 'Key outcomes'}>
+                {project.metrics.slice(0, 2).map((metric) => (
+                  <div>
+                    <span>{metric.label[lang] || metric.label.ko}</span>
+                    <strong>{metric.after}</strong>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Skills */}
             <div class="mb-4 flex flex-wrap gap-1.5">
               {project.skills.slice(0, 4).map((skill: string) => (

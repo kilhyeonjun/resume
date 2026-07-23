@@ -647,11 +647,11 @@ body {
 
   /* Portfolio index: keep case grammar, lower repeated-container emphasis. */
   .portfolio-index {
-    padding-top: 4.25rem;
+    padding-top: 3.625rem;
   }
 
   .portfolio-hero {
-    margin-bottom: 2.75rem;
+    margin-bottom: 1.375rem;
   }
 
   .portfolio-hero h1 {
@@ -690,6 +690,35 @@ body {
     border-color: color-mix(in srgb, var(--dossier-line) 72%, #0f172a);
   }
 
+  .portfolio-proof-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin: -0.25rem 0 1rem;
+    padding: 1rem 0;
+    border-block: 1px solid rgb(255 255 255 / 0.12);
+  }
+
+  .portfolio-proof-strip div {
+    min-width: 0;
+  }
+
+  .portfolio-proof-strip span {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: #8fa0b8;
+    font: 700 0.65rem/1.35 var(--dossier-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-proof-strip strong {
+    display: block;
+    color: white;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
   .portfolio-archive {
     margin-top: 4rem;
   }
@@ -711,8 +740,8 @@ body {
 
   /* Detail pages: preserve sticky rail and evidence order, flatten repetition. */
   .detail-dossier {
-    grid-template-columns: 285px minmax(0, 1fr);
-    column-gap: clamp(2.5rem, 5vw, 4.5rem);
+    grid-template-columns: 320px minmax(0, 1fr);
+    column-gap: clamp(2.5rem, 4vw, 4rem);
   }
 
   .detail-dossier > nav:first-child {
@@ -724,9 +753,23 @@ body {
     padding-right: 1.75rem;
   }
 
+  .portfolio-detail > header {
+    grid-row: 2 / span 20;
+  }
+
+  .portfolio-detail > #outcomes {
+    grid-row: 2;
+  }
+
+  .portfolio-detail > #problems {
+    grid-row: 3;
+  }
+
   .detail-dossier > header h1 {
     line-height: 1.08;
+    overflow-wrap: normal;
     text-wrap: balance;
+    word-break: keep-all;
   }
 
   .detail-dossier > header > p,
@@ -745,7 +788,7 @@ body {
 
   .detail-dossier > section,
   .detail-dossier > nav:last-child {
-    padding-block: 3.25rem;
+    padding-block: 2.65rem;
   }
 
   .detail-dossier .section-title {
@@ -911,7 +954,7 @@ body {
   }
 
   .portfolio-hero {
-    margin-bottom: 2.25rem;
+    margin-bottom: 1.25rem;
   }
 
   .portfolio-hero h1 {
@@ -924,6 +967,19 @@ body {
 
   .portfolio-case > div {
     padding: 1.25rem;
+  }
+
+  .portfolio-case-featured > a {
+    max-height: 11rem;
+  }
+
+  .portfolio-proof-strip {
+    grid-template-columns: 1fr;
+    padding-block: 0.85rem;
+  }
+
+  .portfolio-proof-strip > div:nth-child(2) {
+    display: none;
   }
 
   .portfolio-archive {
@@ -943,6 +999,11 @@ body {
 
   .detail-dossier {
     display: block;
+  }
+
+  .portfolio-detail {
+    display: flex;
+    flex-direction: column;
   }
 
   .detail-dossier > header {

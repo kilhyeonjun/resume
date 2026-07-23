@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 700" role="img" aria-labelledby="title desc">
+  <title id="title">설치와 실패 시 중단하는 검증 흐름</title><desc id="desc">프로필 선택, 단일 원본 확인, 런타임 생성, 근거 확인, 실행 게이트를 순서대로 거치는 흐름</desc>
+  <style>.t{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#0f172a}.n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;fill:#1d4ed8;font-weight:800}.box{fill:#fff;stroke:#cbd5e1;stroke-width:2}.flow{stroke:#1d4ed8;stroke-width:4;fill:none;marker-end:url(#a)}</style>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#1d4ed8"/></marker></defs>
+  <rect width="720" height="700" rx="24" fill="#f8fafc"/>
+  <g><rect x="70" y="35" width="580" height="92" rx="16" class="box"/><text x="105" y="88" class="n" font-size="28">01</text><text x="170" y="88" class="t" font-size="28" font-weight="700">실행 환경 선택</text></g>
+  <path d="M360 137 V165" class="flow"/>
+  <g><rect x="70" y="180" width="580" height="92" rx="16" class="box"/><text x="105" y="233" class="n" font-size="28">02</text><text x="170" y="233" class="t" font-size="28" font-weight="700">단일 원본·fingerprint 확인</text></g>
+  <path d="M360 282 V310" class="flow"/>
+  <g><rect x="70" y="325" width="580" height="92" rx="16" class="box"/><text x="105" y="378" class="n" font-size="28">03</text><text x="170" y="378" class="t" font-size="28" font-weight="700">격리된 runtime surface 생성</text></g>
+  <path d="M360 427 V455" class="flow"/>
+  <g><rect x="70" y="470" width="580" height="92" rx="16" class="box"/><text x="105" y="523" class="n" font-size="28">04</text><text x="170" y="523" class="t" font-size="28" font-weight="700">근거 후보를 원문과 대조</text></g>
+  <path d="M360 572 V600" class="flow"/>
+  <g><rect x="70" y="615" width="580" height="60" rx="16" fill="#eff6ff" stroke="#1d4ed8" stroke-width="3"/><text x="105" y="655" class="n" font-size="26">05</text><text x="170" y="655" class="t" font-size="26" font-weight="800">게이트 실패 시 시작 전 중단</text></g>
+</svg>

@@ -48,7 +48,7 @@ test('approved convention-preserving polish is screen-only and keeps content vis
   const polish = css.split(prefix, 2)[1];
   assert.equal(
     createHash('sha256').update(polish).digest('hex'),
-    'adde1c3be1bc61e55ee84b23d1aa15a5e469f7ac4ed94d369d35d51184dec861',
+    '7eea120a201880cf8e07bc4d788a277a590e989ab94ae21f2753dbd4b2bbddf7',
   );
 });
 
@@ -111,6 +111,47 @@ test('portfolio polish keeps featured proof and detail evidence in recruiter-fir
   assert.match(css, /\.portfolio-detail > header\s*\{[^}]*grid-row:\s*2\s*\/\s*span\s*20/s);
   assert.match(css, /\.portfolio-detail > #outcomes\s*\{[^}]*grid-row:\s*2/s);
   assert.match(css, /@media screen and \(max-width: 760px\)[\s\S]*\.portfolio-detail\s*\{[^}]*display:\s*flex[^}]*flex-direction:\s*column/s);
+});
+
+test('AI harness case study keeps public evidence current and recruiter-first', async () => {
+  const portfolio = JSON.parse(await read('src/data/portfolio.json'));
+  const project = portfolio.projects.find((item) => item.slug === 'ai-coding-harness');
+  assert.ok(project);
+  assert.equal(project.role.ko, '개인 설계·구현·운영');
+  assert.equal(project.role.en, 'Sole designer, implementer, and operator');
+  assert.equal(project.metrics.length, 3);
+  assert.equal(project.problemSolving.length, 3);
+  assert.equal(project.glossary.length, 8);
+  assert.equal(project.github, 'https://github.com/kilhyeonjun/harness-launcher');
+  assert.equal(project.links['v0.19.4 Release'], 'https://github.com/kilhyeonjun/harness-launcher/releases/tag/v0.19.4');
+  assert.equal(project.links.CI, 'https://github.com/kilhyeonjun/harness-launcher/actions');
+  const publicCopy = JSON.stringify(project);
+  for (const staleOrPrivate of ['[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]', 'RAG default-on', 'private profiles', 'Zighang', 'T1/T2/T3']) {
+    assert.doesNotMatch(publicCopy, new RegExp(staleOrPrivate.replaceAll('/', '\\/'), 'i'));
+  }
+  assert.match(publicCopy, /[REDACTED_PRIVATE_INVENTORY]/);
+  assert.match(publicCopy, /[REDACTED_PRIVATE_INVENTORY]/);
+  assert.match(publicCopy, /reported [REDACTED_PRIVATE_INVENTORY]/i);
+  assert.match(publicCopy, /2026-07-23/);
+  const diagrams = await Promise.all([
+    read('public/images/portfolio/ai-coding-harness-boundary-ko.svg'),
+    read('public/images/portfolio/ai-coding-harness-boundary-en.svg'),
+    read('public/images/portfolio/ai-coding-harness-sequence-ko.svg'),
+    read('public/images/portfolio/ai-coding-harness-sequence-en.svg'),
+  ]);
+  for (const diagram of diagrams) {
+    assert.doesNotMatch(diagram, /default-on|[REDACTED_PRIVATE_INVENTORY]|[REDACTED_PRIVATE_INVENTORY]/i);
+    assert.match(diagram, /font-size="2[6-8]"/);
+  }
+  const detail = await read('src/components/templates/PortfolioDetailTemplate.astro');
+  assert.match(detail, /class="outcome-register"/);
+  assert.ok(detail.indexOf('id="outcomes"') < detail.indexOf('id="boundary"'));
+  assert.ok(detail.indexOf('id="boundary"') < detail.indexOf('id="problems"'));
+  assert.ok(detail.indexOf('id="problems"') < detail.indexOf('id="sequence"'));
+  await assert.rejects(read('public/images/portfolio/ai-coding-harness-cover.svg'), (error) => error.code === 'ENOENT');
+  await assert.rejects(read('public/images/portfolio/ai-coding-harness-arch.svg'), (error) => error.code === 'ENOENT');
+  await assert.rejects(read('public/images/portfolio/ai-coding-harness-boundary.svg'), (error) => error.code === 'ENOENT');
+  await assert.rejects(read('public/images/portfolio/ai-coding-harness-sequence.svg'), (error) => error.code === 'ENOENT');
 });
 
 test('fonts are local/system-only and every standalone output has a semantic h1', async () => {

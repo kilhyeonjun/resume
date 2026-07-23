@@ -40,15 +40,16 @@ const archiveProjects = projects.filter((project) => !featuredProjects.some((fea
       {featuredProjects.map((project, index) => {
         const projectName = project.name[lang] || project.name.ko;
         const projectSummary = project.summary[lang] || project.summary.ko;
+        const coverImage = typeof project.coverImage === 'string' ? project.coverImage : project.coverImage?.[lang];
         const period = `${project.period.start} — ${project.period.end}`;
         
         return (
           <article class:list={["portfolio-case group", index === 0 && "portfolio-case-featured"]}>
             {/* Cover Image */}
-            {project.coverImage ? (
+            {coverImage ? (
               <a href={`${localePrefix}/portfolio/${project.slug}`} class="block aspect-video overflow-hidden">
                 <img 
-                  src={withBasePath(project.coverImage)}
+                  src={withBasePath(coverImage)}
                   alt={`${projectName} ${labels.portfolio} cover`}
                   width={800}
                   height={450}

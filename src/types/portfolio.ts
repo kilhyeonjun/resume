@@ -10,11 +10,13 @@ const blogPostSchema = z.object({
   url: z.string().url(),
 });
 
+const localizedValueSchema = z.union([z.string(), localizedStringSchema]);
+
 const metricSchema = z.object({
   label: localizedStringSchema,
-  before: z.string(),
-  after: z.string(),
-  improvement: z.string(),
+  before: localizedValueSchema,
+  after: localizedValueSchema,
+  improvement: localizedValueSchema,
 });
 
 const localizedStringArraySchema = z.object({
@@ -28,6 +30,11 @@ const problemSolvingEntrySchema = z.object({
   result: localizedStringSchema,
 });
 
+const glossaryEntrySchema = z.object({
+  term: localizedStringSchema,
+  definition: localizedStringSchema,
+});
+
 const portfolioProjectSchema = z.object({
   slug: z.string(),
   name: localizedStringSchema,
@@ -38,7 +45,9 @@ const portfolioProjectSchema = z.object({
   printOrder: z.number().optional(),
   summary: localizedStringSchema,
   description: localizedStringSchema.optional(),
-  coverImage: z.string().optional(),
+  role: localizedStringSchema.optional(),
+  glossary: z.array(glossaryEntrySchema).optional(),
+  coverImage: localizedValueSchema.optional(),
   contentImages: z.array(z.string()).optional(),
   period: z.object({
     start: z.string(),
@@ -52,7 +61,7 @@ const portfolioProjectSchema = z.object({
   features: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),
   problemSolving: z.array(problemSolvingEntrySchema).optional(),
   lessons: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),
-  architectureDiagram: z.string().optional(),
+  architectureDiagram: localizedValueSchema.optional(),
   metrics: z.array(metricSchema).optional(),
   techDecisions: localizedStringArraySchema.optional(),
   scale: localizedStringSchema.optional(),

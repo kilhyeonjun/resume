@@ -33,6 +33,7 @@ const portfolioUrl = new URL(`${localePrefix}/portfolio`, Astro.site).toString()
 const email = 'kboxstar@gmail.com';
 
 const pageTitle = lang === 'ko' ? '포트폴리오' : 'Portfolio';
+const localize = (value: string | { ko: string; en: string }) => typeof value === 'string' ? value : (value[lang] || value.ko);
 
 function formatPeriod(period: { start: string; end: string }): string {
   const fmt = (d: string) => d.replace(/-/g, '.').substring(0, 7);
@@ -208,6 +209,31 @@ function formatPeriod(period: { start: string; end: string }): string {
       border-radius: 2mm;
     }
 
+    .evidence-register-print .arch-diagram {
+      text-align: center;
+    }
+
+    .evidence-register-print .arch-diagram img {
+      width: 130mm;
+      max-width: 100%;
+    }
+
+    .evidence-register-print .project-summary {
+      margin-bottom: 1mm;
+    }
+
+    .evidence-register-print .ps-entry {
+      margin-bottom: 1mm;
+    }
+
+    .evidence-register-print .problem-solving-print {
+      break-before: page;
+    }
+
+    .evidence-register-print {
+      break-after: page;
+    }
+
     /* Scale badge */
     .scale-badge {
       display: inline-block;
@@ -290,6 +316,11 @@ function formatPeriod(period: { start: string; end: string }): string {
       font-weight: 600;
       color: #374151;
       margin: 1.5mm 0 0.5mm;
+      break-after: avoid-page;
+    }
+
+    .bullet-section-heading + .bullet-list {
+      break-before: avoid-page;
     }
 
     .bullet-list {
@@ -405,21 +436,27 @@ function formatPeriod(period: { start: string; end: string }): string {
       const typeLabel = project.type === 'personal'
         ? (lang === 'ko' ? '개인' : 'Personal')
         : (lang === 'ko' ? '팀' : 'Team');
+      const role = project.role?.[lang] || project.role?.ko;
+      const isEvidenceRegister = project.slug === 'ai-coding-harness';
+      const architectureDiagram = project.architectureDiagram ? localize(project.architectureDiagram) : null;
       const detailUrl = new URL(`${localePrefix}/portfolio/${project.slug}`, Astro.site).toString();
 
       return (
         <>
           {idx > 0 && <hr class="project-separator" />}
-          <div class="project-item">
+          <div class:list={['project-item', isEvidenceRegister && 'evidence-register-print']}>
             <div class="project-header">
               <span class="project-name">{name}</span>
-              <span class="project-meta">{period} · {typeLabel}</span>
+              <span class="project-meta">{period} · {role ? `${role} · ` : ''}{typeLabel}</span>
             </div>
 
             <div class="project-links">
               {project.github && (
                 <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
               )}
+              {isEvidenceRegister && project.links && Object.entries(project.links).map(([key, url]) => (
+                typeof url === 'string' && <a href={url} target="_blank" rel="noopener noreferrer">{key} ↗</a>
+              ))}
               <a href={detailUrl} target="_blank" rel="noopener noreferrer">{lang === 'ko' ? '상세 ↗' : 'Detail ↗'}</a>
               {project.blogPosts && project.blogPosts.map((post) => (
                 <a href={post.url} target="_blank" rel="noopener noreferrer">{post.title[lang] || post.title.ko} ↗</a>
@@ -432,7 +469,7 @@ function formatPeriod(period: { start: string; end: string }): string {
 
             <p class="project-summary">{summary}</p>
 
-            {project.skills && project.skills.length > 0 && (
+            {!isEvidenceRegister && project.skills && project.skills.length > 0 && (
               <div class="tech-stack">
                 {project.skills.map((skill) => (
                   <span class="tech-badge">{skill}</span>
@@ -440,9 +477,9 @@ function formatPeriod(period: { start: string; end: string }): string {
               </div>
             )}
 
-            {project.architectureDiagram && (
+            {architectureDiagram && (
               <div class="arch-diagram">
-                <img src={withBasePath(project.architectureDiagram)} alt={`${name} architecture`} />
+                <img src={withBasePath(architectureDiagram)} alt={`${name} architecture`} />
               </div>
             )}
 
@@ -460,8 +497,8 @@ function formatPeriod(period: { start: string; end: string }): string {
                   {project.metrics.map((m) => (
                     <tr>
                       <td>{m.label[lang]}</td>
-                      <td>{m.before}</td>
-                      <td class="after-cell">{m.after} <span class="improvement">({m.improvement})</span></td>
+                      <td>{localize(m.before)}</td>
+                      <td class="after-cell">{localize(m.after)} <span class="improvement">({localize(m.improvement)})</span></td>
                     </tr>
                   ))}
                 </tbody>
@@ -469,7 +506,7 @@ function formatPeriod(period: { start: string; end: string }): string {
             )}
 
             {project.problemSolving && project.problemSolving.length > 0 && (
-              <>
+              <section class="problem-solving-print">
                 <p class="bullet-section-heading">{currentLabels.problemSolving}</p>
                 {project.problemSolving.map((entry) => (
                   <div class="ps-entry">
@@ -478,7 +515,7 @@ function formatPeriod(period: { start: string; end: string }): string {
                     <div class="ps-result">→ {entry.result[lang]}</div>
                   </div>
                 ))}
-              </>
+              </section>
             )}
 
             {project.techDecisions?.[lang] && project.techDecisions[lang].length > 0 && (
@@ -492,7 +529,7 @@ function formatPeriod(period: { start: string; end: string }): string {
               </>
             )}
 
-            {highlights && highlights.length > 0 && (
+            {!isEvidenceRegister && highlights && highlights.length > 0 && (
               <>
                 <p class="bullet-section-heading">{currentLabels.highlights}</p>
                 <ul class="bullet-list">
@@ -503,7 +540,7 @@ function formatPeriod(period: { start: string; end: string }): string {
               </>
             )}
 
-            {lessons && lessons.length > 0 && (
+            {!isEvidenceRegister && lessons && lessons.length > 0 && (
               <>
                 <p class="bullet-section-heading">{currentLabels.lessons}</p>
                 <ul class="bullet-list">

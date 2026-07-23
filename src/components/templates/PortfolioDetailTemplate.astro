@@ -26,6 +26,7 @@ const nextProject = index < total - 1 ? allProjects[index + 1] : null;
 const period = `${project.period.start} — ${project.period.end}`;
 const localePrefix = getLocalePrefix(lang);
 
+const localize = (value: string | { ko: string; en: string }) => typeof value === 'string' ? value : (value[lang] || value.ko);
 const projectName = project.name[lang] || project.name.ko;
 const projectSummary = project.summary[lang] || project.summary.ko;
 const projectHighlights = project.highlights[lang] || project.highlights.ko;
@@ -35,11 +36,16 @@ const projectFeatures = project.features ? (project.features[lang] || project.fe
 const projectLessons = project.lessons ? (project.lessons[lang] || project.lessons.ko) : null;
 const projectTechDecisions = project.techDecisions ? (project.techDecisions[lang] || project.techDecisions.ko) : null;
 const projectScale = project.scale ? (project.scale[lang] || project.scale.ko) : null;
+const projectRole = project.role ? (project.role[lang] || project.role.ko) : null;
+const projectGlossary = project.glossary ?? null;
 const projectProblemSolving = project.problemSolving ?? null;
+const projectCoverImage = project.coverImage ? localize(project.coverImage) : null;
+const projectArchitectureDiagram = project.architectureDiagram ? localize(project.architectureDiagram) : null;
+const isEvidenceRegister = project.slug === 'ai-coding-harness';
 ---
 
 <Layout title={`${projectName} | Portfolio`} description={projectSummary} lang={lang}>
-  <article class="detail-dossier portfolio-detail">
+  <article class:list={['detail-dossier portfolio-detail', isEvidenceRegister && 'case-study-evidence-register']}>
     <!-- Back to Portfolio -->
     <nav class="mb-8">
       <a 
@@ -53,7 +59,7 @@ const projectProblemSolving = project.problemSolving ?? null;
 
     <!-- Project Header -->
     <header class="mb-10">
-      <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div class="project-heading mb-6 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <div class="mb-2 flex items-center gap-2">
             <span class={`inline-block rounded-full px-3 py-1 text-xs font-medium ${project.type === 'team' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'}`}>
@@ -68,41 +74,97 @@ const projectProblemSolving = project.problemSolving ?? null;
           <h1 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl">
             {projectName}
           </h1>
+          {projectRole && (
+            <p class="project-role mt-3 text-sm font-semibold text-primary-700 dark:text-primary-300">
+              {projectRole}
+            </p>
+          )}
         </div>
         <p class="text-sm font-medium text-gray-500 dark:text-gray-300 md:text-base">
           {period}
         </p>
       </div>
-      <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">{projectSummary}</p>
+      <p class="project-summary mt-4 text-lg text-gray-600 dark:text-gray-300">{projectSummary}</p>
       
       {/* GitHub & Links */}
-      <div class="mt-6 flex flex-wrap gap-3">
+      <div class="project-proof-links mt-6 flex flex-wrap gap-3">
         {project.github && (
           <a 
             href={project.github} 
             target="_blank" 
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300"
+            class="inline-flex min-h-11 items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300"
           >
             <GitHubIcon class="h-4 w-4" />
             {labels.github}
           </a>
         )}
+        {isEvidenceRegister && project.links && Object.entries(project.links).map(([key, url]) => (
+          typeof url === 'string' && (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex min-h-11 items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:border-primary-400 hover:bg-primary-50 dark:border-gray-600 dark:bg-gray-900 dark:text-primary-300 dark:hover:border-primary-500"
+            >
+              {key}
+              <ExternalLinkIcon class="h-4 w-4" />
+            </a>
+          )
+        ))}
       </div>
       <nav class="evidence-index" aria-label={lang === 'ko' ? '프로젝트 근거 목차' : 'Project evidence index'}>
-        {projectProblemSolving && projectProblemSolving.length > 0 && <a href="#problems"><span>01</span>{labels.problemSolving}</a>}
-        {project.metrics && project.metrics.length > 0 && <a href="#outcomes"><span>02</span>{labels.metrics}</a>}
-        {projectTechDecisions && projectTechDecisions.length > 0 && <a href="#decisions"><span>03</span>{labels.techDecisions}</a>}
-        {project.skills && project.skills.length > 0 && <a href="#stack"><span>04</span>{labels.skills}</a>}
+        {project.metrics && project.metrics.length > 0 && <a href="#outcomes"><span>01</span>{labels.metrics}</a>}
+        {isEvidenceRegister && projectArchitectureDiagram && <a href="#boundary"><span>02</span>{lang === 'ko' ? '프로필 경계' : 'Profile boundary'}</a>}
+        {projectProblemSolving && projectProblemSolving.length > 0 && <a href="#problems"><span>{isEvidenceRegister ? '03' : '02'}</span>{labels.problemSolving}</a>}
+        {projectTechDecisions && projectTechDecisions.length > 0 && <a href="#decisions"><span>{isEvidenceRegister ? '04' : '03'}</span>{labels.techDecisions}</a>}
+        {projectGlossary && projectGlossary.length > 0
+          ? <a href="#glossary"><span>05</span>{lang === 'ko' ? '용어 풀이' : 'Glossary'}</a>
+          : project.skills && project.skills.length > 0 && <a href="#stack"><span>04</span>{labels.skills}</a>}
       </nav>
     </header>
 
+    {isEvidenceRegister && project.metrics && project.metrics.length > 0 && (
+      <section id="outcomes" class="mb-10 case-outcomes" aria-labelledby="outcomes-title">
+        <h2 id="outcomes-title" class="section-title mb-6">{lang === 'ko' ? '검증된 변화' : 'Verified changes'}</h2>
+        <div class="outcome-register">
+          {project.metrics.map((metric) => (
+            <article class="outcome-register-entry">
+              <p class="outcome-register-label">{metric.label[lang]}</p>
+              <h3>{localize(metric.after)}</h3>
+              <p class="outcome-register-impact">{localize(metric.improvement)}</p>
+              <p class="outcome-register-before"><strong>{lang === 'ko' ? '이전' : 'Before'}:</strong> {localize(metric.before)}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {isEvidenceRegister && projectArchitectureDiagram && (
+      <section id="boundary" class="mb-10 case-boundary">
+        <h2 class="section-title mb-3">{lang === 'ko' ? '프로필 경계와 근거 검증' : 'Profile boundaries and evidence verification'}</h2>
+        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">
+          {lang === 'ko'
+            ? '검색 결과는 답이 아니라 후보입니다. 선택한 프로필 안에서 후보를 찾고 원문을 다시 확인합니다.'
+            : 'Retrieval results are candidates, not answers. Candidates stay inside the selected profile and are checked against the original source.'}
+        </p>
+        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+          <img
+            src={withBasePath(projectArchitectureDiagram)}
+            alt={lang === 'ko' ? '개발자, 프로필 기반 실행기, 개인 업무 플랫폼 경계, AI 런타임, RAG KG, 원문 검증과 실행 게이트 관계도' : 'Context diagram connecting developer, profile-aware launcher, Personal Work Platform boundaries, AI runtimes, RAG KG, source verification, and execution gates'}
+            class="w-full"
+            loading="eager"
+          />
+        </div>
+      </section>
+    )}
+
     {/* Cover Image */}
-    {project.coverImage && (
+    {!isEvidenceRegister && projectCoverImage && (
       <section class="mb-10">
         <div class="overflow-hidden rounded-xl">
           <img 
-            src={withBasePath(project.coverImage)}
+            src={withBasePath(projectCoverImage)}
             alt={`${projectName} project cover image`}
             width={1200}
             height={630}
@@ -115,12 +177,12 @@ const projectProblemSolving = project.problemSolving ?? null;
     )}
 
     {/* Architecture Diagram */}
-    {project.architectureDiagram && (
+    {!isEvidenceRegister && projectArchitectureDiagram && (
       <section class="mb-10">
         <h2 class="section-title mb-6">{labels.techDecisions ? (lang === 'ko' ? '시스템 아키텍처' : 'System Architecture') : 'Architecture'}</h2>
         <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
           <img
-            src={withBasePath(project.architectureDiagram)}
+            src={withBasePath(projectArchitectureDiagram)}
             alt={`${projectName} architecture diagram`}
             class="w-full"
             loading="lazy"
@@ -164,6 +226,25 @@ const projectProblemSolving = project.problemSolving ?? null;
               </div>
             </div>
           ))}
+        </div>
+      </section>
+    )}
+
+    {isEvidenceRegister && projectCoverImage && (
+      <section id="sequence" class="mb-10 case-sequence">
+        <h2 class="section-title mb-3">{lang === 'ko' ? '설치와 검증 흐름' : 'Install and verification flow'}</h2>
+        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">
+          {lang === 'ko'
+            ? '프로필 선택부터 원문 확인과 실패 시 중단하는 실행 게이트까지 이어지는 대표 흐름입니다.'
+            : 'A representative flow from profile selection through source verification to fail-closed execution gates.'}
+        </p>
+        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+          <img
+            src={withBasePath(projectCoverImage)}
+            alt={lang === 'ko' ? '프로필 선택, 격리 런타임 준비, 근거 후보 검색, 원문 확인, 실패 시 중단하는 실행 게이트 순서도' : 'Sequence from profile selection to isolated runtime, evidence retrieval, source verification, and fail-closed execution gates'}
+            class="w-full"
+            loading="lazy"
+          />
         </div>
       </section>
     )}
@@ -214,7 +295,7 @@ const projectProblemSolving = project.problemSolving ?? null;
     )}
 
     {/* Metrics */}
-    {project.metrics && project.metrics.length > 0 && (
+    {!isEvidenceRegister && project.metrics && project.metrics.length > 0 && (
       <section id="outcomes" class="mb-10">
         <h2 class="section-title mb-6">{labels.metrics}</h2>
         <div class="overflow-x-auto">
@@ -230,9 +311,9 @@ const projectProblemSolving = project.problemSolving ?? null;
               {project.metrics.map((m) => (
                 <tr class="border-b border-gray-100 dark:border-gray-800">
                   <td class="py-3 pr-4 text-gray-700 dark:text-gray-300">{m.label[lang]}</td>
-                  <td class="py-3 pr-4 text-gray-500 dark:text-gray-400">{m.before}</td>
+                  <td class="py-3 pr-4 text-gray-500 dark:text-gray-400">{localize(m.before)}</td>
                   <td class="py-3 font-semibold text-primary-600 dark:text-primary-400">
-                    {m.after} <span class="text-xs font-normal text-gray-500 dark:text-gray-400">({m.improvement})</span>
+                    {localize(m.after)} <span class="text-xs font-normal text-gray-500 dark:text-gray-400">({localize(m.improvement)})</span>
                   </td>
                 </tr>
               ))}
@@ -287,6 +368,26 @@ const projectProblemSolving = project.problemSolving ?? null;
       </section>
     )}
 
+    {/* Glossary */}
+    {projectGlossary && projectGlossary.length > 0 && (
+      <section id="glossary" class="mb-10">
+        <h2 class="section-title mb-3">{lang === 'ko' ? '용어 풀이' : 'Glossary'}</h2>
+        <p class="mb-6 text-gray-600 dark:text-gray-300">
+          {lang === 'ko'
+            ? '비전문가도 시스템의 역할을 이해할 수 있도록 핵심 용어를 먼저 설명합니다.'
+            : 'Core terms are explained before the technical stack so non-specialists can follow the system.'}
+        </p>
+        <dl class="case-glossary">
+          {projectGlossary.map((entry) => (
+            <div class="case-glossary-entry">
+              <dt>{entry.term[lang] || entry.term.ko}</dt>
+              <dd>{entry.definition[lang] || entry.definition.ko}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    )}
+
     <!-- Tech Stack -->
     {project.skills && project.skills.length > 0 && (
       <section id="stack" class="mb-10">
@@ -334,7 +435,7 @@ const projectProblemSolving = project.problemSolving ?? null;
     )}
 
     <!-- Related Links -->
-    {project.links && Object.keys(project.links).length > 0 && (
+    {!isEvidenceRegister && project.links && Object.keys(project.links).length > 0 && (
       <section class="mb-10">
         <h2 class="section-title mb-6">{labels.relatedLinks}</h2>
         <ul class="space-y-3">

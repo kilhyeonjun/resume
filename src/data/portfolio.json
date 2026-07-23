@@ -3,90 +3,65 @@
     {
       "slug": "ai-coding-harness",
       "name": {
-        "ko": "개발 운영 하네스 프레임워크",
-        "en": "Development Operations Harness Framework"
+        "ko": "AI 개발 환경 3개를 섞지 않고, 같은 품질 기준으로 반복 실행하는 운영 플랫폼",
+        "en": "Three Separate AI Development Environments, One Quality Standard"
       },
       "type": "personal",
       "featured": true,
       "printOrder": 1,
       "summary": {
-        "ko": "개발 운영과 이력서/JD 큐레이션을 재현 가능하게 만든 Git 기반 개인 하네스 — 로컬 BGE-M3 RAG, MCP 검색, Git 훅 품질 게이트, JD-custom PDF 생성, 직행/Zighang 외부 피드백 루프와 안전한 T1/T2/T3 반영 체계를 통합",
-        "en": "Git-based personal harness for reproducible development operations and resume/JD curation — integrating local BGE-M3 RAG, MCP search, Git-hook quality gates, JD-custom PDF generation, Zighang external feedback loops, and safe T1/T2/T3 application gates"
+        "ko": "개인·업무·플랫폼을 서로 다른 실행 환경으로 분리하고, Claude Code·Codex·Kiro가 같은 원본·검색·검증 규칙을 사용하도록 만든 AI 개발 운영 체계입니다.",
+        "en": "An AI development operating framework that isolates Personal, Work, and Platform environments while giving Claude Code, Codex, and Kiro the same source, retrieval, and verification rules."
       },
       "description": {
-        "ko": "AI 지원 개발을 단발성 도구 사용이 아니라 재현 가능한 운영 체계로 만들기 위해 설계한 개인 하네스다. 런타임별 설정은 소스에서 생성해 드리프트를 줄이고, 마크다운·이력서·포트폴리오 JSON은 로컬 임베딩 RAG로 색인해 세션 시작·프롬프트 제출·편집·커밋 시점에 근거 검색을 자동 연결한다. 문서만으로는 지켜지지 않는 규칙은 Git 훅과 테스트로 강제하고, JD-custom PDF 생성과 직행/Zighang 외부 피드백 루프를 통해 채용 공고별 이력서 개선도 raw feedback→T1/T2/T3 triage→검증→커밋 흐름으로 운영한다.",
-        "en": "A personal harness designed to turn AI-assisted development from ad-hoc tool usage into a reproducible operating system. Runtime-specific settings are generated from source to reduce drift, while markdown, resume, and portfolio JSON are indexed through local-embedding RAG so evidence retrieval is attached to session start, prompt submission, edit, and commit events. Rules that documentation alone cannot enforce are backed by Git hooks and tests, and JD-custom PDF generation plus Zighang external feedback loops turn job-specific resume improvement into a raw feedback → T1/T2/T3 triage → verification → commit workflow."
+        "ko": "AI 코딩 도구를 단발성으로 사용하는 대신, 작업 영역별 컨텍스트를 분리하고 근거 검색과 원문 검증, 실행 게이트를 하나의 운영 경로로 연결했다. 프로필별 런타임 홈·스킬·MCP·정책을 준비하고, RAG와 KG는 관련 근거 후보를 찾는 데 사용한다. 후보는 원래 파일이나 live source에서 다시 확인한 뒤 hook·test·audit를 통과시킨다.",
+        "en": "Instead of using AI coding tools ad hoc, this system separates context by work domain and connects evidence retrieval, source verification, and execution gates into one operating path. Each profile prepares its own runtime home, skills, MCP tools, and policies. RAG and KG discover evidence candidates, which are then verified against the original file or live source before hook, test, and audit gates run."
       },
-      "coverImage": "/images/portfolio/ai-coding-harness-cover.svg",
+      "coverImage": {
+        "ko": "images/portfolio/ai-coding-harness-sequence-ko.svg",
+        "en": "images/portfolio/ai-coding-harness-sequence-en.svg"
+      },
       "problemSolving": [
         {
           "problem": {
-            "ko": "개발 런타임별 컨텍스트와 규칙이 문서·설정·로컬 홈에 흩어져 실행 환경마다 드리프트 발생",
-            "en": "Development-runtime context and rules drifted across docs, config, and local runtime homes"
+            "ko": "전역 AI CLI 설정은 개인·업무·플랫폼의 세션·도구·규칙을 같은 실행 환경에 섞을 수 있었다.",
+            "en": "Global AI CLI settings could mix sessions, tools, and rules across Personal, Work, and Platform contexts."
           },
           "process": {
-            "ko": "하네스 소스를 canonical source로 두고 런타임 서피스를 자동 생성, XML runtime contract와 cross-harness diff 검증 추가",
-            "en": "Made harness source the canonical source and generated runtime surfaces automatically, adding XML runtime contracts and cross-harness diff verification"
+            "ko": "profile-aware launcher가 선택한 프로필의 runtime home, skills, MCP, 정책을 준비하도록 구성했다.",
+            "en": "Built a profile-aware launcher that prepares the selected profile’s runtime home, skills, MCP tools, and policies."
           },
           "result": {
-            "ko": "private profiles 3개 하네스의 생성 문서 및 런타임 컨트랙트 정합성 확보",
-            "en": "Aligned generated docs and runtime contracts across private profiles harnesses"
+            "ko": "Personal / Work / Platform 3개 프로필의 실행 환경을 분리했다.",
+            "en": "Separated the execution environments for three Personal, Work, and Platform profiles."
           }
         },
         {
           "problem": {
-            "ko": "마크다운 지식 베이스가 커져 에이전트가 관련 컨텍스트를 매번 수동 탐색",
-            "en": "Growing markdown knowledge base forced agents to search context manually each time"
+            "ko": "문서와 규칙이 늘면서 필요한 근거를 매번 수동으로 찾는 방식만으로는 관련 문맥을 놓치기 쉬웠다.",
+            "en": "As documents and rules grew, manual search alone made it easy to miss relevant context."
           },
           "process": {
-            "ko": "sqlite-vec + FTS5 하이브리드 RAG, BGE-M3 로컬 임베딩, RRF fusion, MCP 검색 서버, 마크다운 변경 후 자동 재색인 구현",
-            "en": "Implemented sqlite-vec + FTS5 hybrid RAG, local BGE-M3 embeddings, RRF fusion, MCP search server, and automatic reindexing after markdown changes"
+            "ko": "RAG로 의미·키워드 후보를 찾고 KG로 연결 관계를 탐색한 다음, 원문 경로와 내용을 다시 확인하는 운영 규칙을 연결했다.",
+            "en": "Used RAG for semantic and keyword candidates, KG for related connections, and an operating rule that reads the original path and content before relying on a result."
           },
           "result": {
-            "ko": "[REDACTED_PRIVATE_INVENTORY]·[REDACTED_PRIVATE_INVENTORY]·20.7 MB 인덱스, warm 쿼리 0.7초, 골드 쿼리 5건 top-2/3 적중",
-            "en": "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] / 20.7 MB, reached 0.7s warm queries, and hit top-2/3 on all 5 gold queries"
+            "ko": "[REDACTED_PRIVATE_INVENTORY]에서 2026-07-23에 측정한 신고 스냅샷은 RAG [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY]와 KG [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY]다.",
+            "en": "A reported [REDACTED_PRIVATE_INVENTORY] measured on 2026-07-23 contains RAG [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] and KG [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY]."
           }
         },
         {
           "problem": {
-            "ko": "RAG가 opt-in 참고 도구라 실제 조사·검토 프롬프트에서 누락",
-            "en": "RAG was an opt-in reference tool and was missed during real investigation/review prompts"
+            "ko": "생성된 런타임 설정이 원본과 달라지거나 필수 등록이 빠지면 잘못된 규칙으로 에이전트가 시작될 수 있었습니다.",
+            "en": "Generated runtime configuration could drift from its source, or required registration could be missing before an agent starts."
           },
           "process": {
-            "ko": "UserPromptSubmit 기본 트리거로 전환하고 프롬프트 12자 이상이면 private_search_tool가 자동 호출되도록 gp/gd까지 포팅",
-            "en": "Moved to a default UserPromptSubmit trigger, calling private_search_tool automatically for prompts of 12+ characters and porting it to gp/gd"
+            "ko": "원본 fingerprint가 바뀌면 surface를 다시 생성하고, 바뀌지 않으면 재생성을 건너뜁니다. 이어 verify와 startup scan으로 필수 경로·등록·생성물을 확인했습니다.",
+            "en": "A changed source fingerprint regenerates runtime surfaces; an unchanged fingerprint skips rebuilding. Verification and startup scans then check required paths, registration, and generated outputs."
           },
           "result": {
-            "ko": "3개 하네스에서 15/15 default-on 테스트 통과, 실 프롬프트 smoke test 적중",
-            "en": "Passed 15/15 default-on tests across 3 harnesses and hit the target in a real-prompt smoke test"
-          }
-        },
-        {
-          "problem": {
-            "ko": "이력서·포트폴리오 JSON과 JD별 외부 피드백이 서로 분리되어, 공고별 개선이 raw feedback에 의존",
-            "en": "Resume/portfolio JSON and JD-specific external feedback were disconnected, leaving job-specific improvement dependent on raw feedback alone"
-          },
-          "process": {
-            "ko": "resume/portfolio JSON chunker, JD-custom PDF 생성기, 직행/Zighang recruitment-roast 수집기, T1/T2/T3 triage 템플릿을 연결",
-            "en": "Connected resume/portfolio JSON chunkers, JD-custom PDF generation, Zighang recruitment-roast capture, and T1/T2/T3 triage templates"
-          },
-          "result": {
-            "ko": "[REDACTED_TARGET_COMPANY] NestJS JD [REDACTED_FIT_ASSESSMENT], [REDACTED_TARGET_COMPANY] 정산 JD 35% [REDACTED_FIT_ASSESSMENT], [REDACTED_TARGET_COMPANY] [REDACTED_FIT_ASSESSMENT]% 보완-[REDACTED_FIT_ASSESSMENT] 피드백을 각각 raw feedback→T1/T2/T3 triage→검증 루프로 분류",
-            "en": "Classified [REDACTED_TARGET_COMPANY] NestJS as pass-range, [REDACTED_TARGET_COMPANY] settlement as 35% [REDACTED_FIT_ASSESSMENT], and [REDACTED_TARGET_COMPANY] AI Backend as 82% improve-to-pass through raw feedback → T1/T2/T3 triage → verification loops"
-          }
-        },
-        {
-          "problem": {
-            "ko": "이력서·JD 커스터마이징 근거가 세션 로그와 작업 기록에 흩어져 최신 성과 선별과 정량화가 매번 수작업으로 반복됨",
-            "en": "Resume and JD customization evidence was scattered across session logs and work records, forcing manual re-selection and quantification of recent impact each time"
-          },
-          "process": {
-            "ko": "private work-data 아카이브를 schema v1.2로 정리하고 outcome_metrics 필드를 도입, Jira·세션 evidence를 resumeProject 단위로 분류해 resume/portfolio/RAG 큐레이션 경로에 연결",
-            "en": "Standardized the private work-data archive on schema v1.2 with outcome_metrics, classified Jira/session evidence by resumeProject, and connected it into the resume/portfolio/RAG curation path"
-          },
-          "result": {
-            "ko": "279개 작업 항목 증분 수집, 메트릭 보유율 44%→50% 개선, work-data→이력서 후보 선별→검증 루프 정착",
-            "en": "Incrementally collected 279 work items, improved metric coverage 44%→50%, and established the work-data → resume-candidate selection → verification loop"
+            "ko": "누락·잘못된 등록은 에이전트 시작 전에 non-zero 오류로 중단되며, 개인·업무·플랫폼 실행 환경의 검증과 startup scan을 2026-07-23에 다시 통과했습니다.",
+            "en": "Missing or invalid registration stops with a non-zero error before agent startup; Personal, Work, and Platform runtime verification and startup scans passed again on 2026-07-23."
           }
         }
       ],
@@ -108,111 +83,199 @@
         "Runtime Surface Compiler",
         "Quality Gates"
       ],
-      "github": "https://github.com/kilhyeonjun/private-harness",
+      "github": "https://github.com/kilhyeonjun/harness-launcher",
       "highlights": {
         "ko": [
-          "런타임 서피스 자동 생성 + XML runtime contract로 3개 하네스 정합성 확보",
-          "로컬 BGE-M3 RAG로 [REDACTED_PRIVATE_INVENTORY]·[REDACTED_PRIVATE_INVENTORY] 색인, warm 쿼리 0.7초 달성",
-          "RAG default-on 전환으로 프롬프트 12자 이상 private_search_tool 자동 호출, 3개 하네스 15/15 테스트 통과",
-          "resume/portfolio JSON을 RAG 코퍼스로 통합, [REDACTED_PRIVATE_INVENTORY] 색인 + 32개 테스트 통과",
-          "브라우저·REPL 런타임 신뢰 경계와 fallback 순서 문서화, 3개 하네스 설정 반영",
-          "work-data schema v1.2와 outcome_metrics 기반 증거 큐레이션으로 279개 작업 항목 증분 수집·메트릭 보유율 44%→50% 개선",
-          "JD-custom PDF + 직행/Zighang 피드백 루프 구축, [REDACTED_TARGET_COMPANY] 92%→88% [REDACTED_FIT_ASSESSMENT]·[REDACTED_TARGET_COMPANY] 35% [REDACTED_FIT_ASSESSMENT] 분류로 과최적화 방지",
-          "직행/Zighang recruitment-roast 헬퍼를 main-scope 결과 저장·Puppeteer 실제 click·upload-form guard로 보강해 sidebar 과거 결과 오탐 방지"
+          "프로필 선택 → 격리 runtime 준비 → 근거 후보 검색 → 원문 확인 → hook·test·audit 게이트의 실행 흐름 구축",
+          "RAG는 후보 발견에, KG는 문서·코드·규칙의 연결 관계 탐색에 사용하고 원래 파일 또는 live source에서 사실 재검증",
+          "프로필별 생성 runtime surface를 verify와 startup scan으로 점검",
+          "공개 harness-launcher v0.19.4·Release·CI로 익명 접근 가능한 구현 근거 제공"
         ],
         "en": [
-          "Aligned 3 harnesses through automatic runtime-surface generation plus XML runtime contracts",
-          "Indexed [REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] with local BGE-M3 RAG and reached 0.7s warm queries",
-          "Moved RAG to default-on private_search_tool calls for prompts of 12+ characters, passing 15/15 tests across 3 harnesses",
-          "Integrated resume/portfolio JSON into the RAG corpus, indexing [REDACTED_PRIVATE_INVENTORY] and passing 32 tests",
-          "Documented browser/REPL runtime trust boundaries and fallback order, then reflected settings across 3 harnesses",
-          "Added schema v1.2 + outcome_metrics evidence curation, incrementally collecting 279 work items and improving metric coverage 44%→50%",
-          "Built JD-custom PDF + Zighang feedback loop; kept [REDACTED_TARGET_COMPANY] in pass range (92%→88%) and classified [REDACTED_TARGET_COMPANY] as 35% [REDACTED_FIT_ASSESSMENT] to avoid overfitting",
-          "Hardened the Zighang recruitment-roast helper with main-scope result capture, Puppeteer element clicks, and upload-form guards to avoid sidebar-history false positives"
+          "Built a profile selection → isolated runtime preparation → evidence candidate retrieval → source verification → hook/test/audit gate flow",
+          "Uses RAG for candidate discovery and KG for document/code/rule connections, then re-verifies facts against the original file or live source",
+          "Checks generated runtime surfaces per profile with verification and startup scans",
+          "Provides anonymously accessible implementation evidence through the public harness-launcher v0.19.4 repository, release, and CI"
         ]
       },
       "lessons": {
         "ko": [
-          "AI 지원 개발 생산성은 프롬프트 품질만으로 유지되지 않고, 런타임 컨텍스트·규칙 강제·증거 검색·비용 관측성을 같은 운영 경로로 묶어야 재현 가능하다는 점을 체득",
-          "문서 규칙은 필요 시점에 읽히지 않으면 정책이 아니라 참고 자료에 머물기 때문에, 중요한 규칙은 훅·테스트·컴파일러 출력으로 강제해야 한다는 기준 정립",
-          "RAG는 검색 품질뿐 아니라 자동 호출 위치, 색인 최신성, 사용 로그, fallback 경로까지 포함해야 실제 에이전트 워크플로우에 편입된다는 점 확인",
-          "런타임별 기능과 신뢰 경계가 다른 도구는 canonical source와 생성기 기반으로 관리해야 장기 운영에서 드리프트를 줄일 수 있다는 점 학습",
-          "work-data를 단순 기록 저장소가 아니라 이력서·JD·포트폴리오 큐레이션의 증거 계층으로 분리해 두면, 공개 copy를 안전하게 재가공하면서도 내부 세부정보를 노출하지 않을 수 있다는 점 확인"
+          "검색 결과는 답이 아니라 후보이므로 원래 파일이나 live source의 재확인이 필요하다.",
+          "컨텍스트와 권한이 다른 작업 영역은 전역 설정이 아니라 프로필별 실행 환경으로 분리해야 한다.",
+          "문서 규칙은 필요한 순간에 읽히지 않을 수 있어 hook·test·audit 같은 실행 게이트가 필요하다."
         ],
         "en": [
-          "Learned that AI-assisted development productivity is reproducible only when runtime context, rule enforcement, evidence search, and cost observability share one operating path",
-          "Established that document-only rules remain reference material unless read at the moment of need, so critical rules should be enforced through hooks, tests, and compiler output",
-          "Confirmed that RAG must include trigger placement, index freshness, usage logging, and fallback paths, not just retrieval quality, to become part of an agent workflow",
-          "Learned that tools with different runtime features and trust boundaries need canonical source plus generation to reduce drift over long-term operation",
-          "Confirmed that separating work-data as an evidence layer for resume/JD/portfolio curation enables public-copy rewriting without exposing internal details"
+          "Retrieval results are candidates rather than answers, so the original file or live source must be read again.",
+          "Work domains with different context and permissions need profile-specific runtime boundaries rather than global settings.",
+          "Documented rules may not be read at the moment of need, so execution gates such as hooks, tests, and audits are necessary."
         ]
       },
-      "architectureDiagram": "/images/portfolio/ai-coding-harness-arch.svg",
+      "architectureDiagram": {
+        "ko": "images/portfolio/ai-coding-harness-boundary-ko.svg",
+        "en": "images/portfolio/ai-coding-harness-boundary-en.svg"
+      },
       "scale": {
-        "ko": "3개 하네스 · RAG MVP · JD feedback loop",
-        "en": "3 harnesses · RAG MVP · JD feedback loop"
+        "ko": "3개 프로필 · Personal RAG/KG · 공개 런처",
+        "en": "3 profiles · Personal RAG/KG · public launcher"
       },
       "metrics": [
         {
           "label": {
-            "ko": "RAG MVP 인덱스",
-            "en": "RAG MVP Index"
+            "ko": "컨텍스트 격리",
+            "en": "Context isolation"
           },
-          "before": "manual context search",
-          "after": "[REDACTED_PRIVATE_INVENTORY] / [REDACTED_PRIVATE_INVENTORY] / 20.7 MB",
-          "improvement": "0.7s warm query"
+          "before": {
+            "ko": "전역 설정에 작업 영역이 섞일 위험",
+            "en": "Global settings could mix work contexts"
+          },
+          "after": {
+            "ko": "개인·업무·플랫폼 3개 실행 경계",
+            "en": "Three isolated Personal, Work, and Platform runtimes"
+          },
+          "improvement": {
+            "ko": "도구·규칙·세션을 작업별로 분리",
+            "en": "Tools, rules, and sessions stay task-scoped"
+          }
         },
         {
           "label": {
-            "ko": "RAG default-on 검증",
-            "en": "RAG Default-On Verification"
+            "ko": "근거 탐색",
+            "en": "Evidence retrieval"
           },
-          "before": "opt-in trigger",
-          "after": "15/15 tests across 3 harnesses",
-          "improvement": "prompt >=12 chars auto-search"
+          "before": {
+            "ko": "문서·규칙을 매번 수동 탐색",
+            "en": "Repeated manual search across documents and rules"
+          },
+          "after": {
+            "ko": "RAG 후보 + KG 관계 → 원문 재확인",
+            "en": "RAG candidates + KG relationships → source verification"
+          },
+          "improvement": {
+            "ko": "[REDACTED_PRIVATE_INVENTORY] 신고 스냅샷: RAG 873개 파일·6,212개 청크, KG 6,809개 노드·6,720개 엣지 (2026-07-23)",
+            "en": "Reported [REDACTED_PRIVATE_INVENTORY]: RAG [REDACTED_PRIVATE_INVENTORY]/[REDACTED_PRIVATE_INVENTORY]; KG [REDACTED_PRIVATE_INVENTORY]/[REDACTED_PRIVATE_INVENTORY] (2026-07-23)"
+          }
         },
         {
           "label": {
-            "ko": "Resume RAG 코퍼스",
-            "en": "Resume RAG Corpus"
+            "ko": "실패 시 중단 검증",
+            "en": "Fail-closed verification"
           },
-          "before": "0 indexed chunks",
-          "after": "[REDACTED_PRIVATE_INVENTORY]",
-          "improvement": "32 tests passed"
-        },
-        {
-          "label": {
-            "ko": "Work-data 증거 아카이브",
-            "en": "Work-data Evidence Archive"
+          "before": {
+            "ko": "런타임 설정 수동 복제와 드리프트",
+            "en": "Manual runtime copies and configuration drift"
           },
-          "before": "manual evidence curation / 44% metric coverage",
-          "after": "279 incremental work items / schema v1.2",
-          "improvement": "50% metric coverage"
-        },
-        {
-          "label": {
-            "ko": "JD 피드백 루프",
-            "en": "JD Feedback Loop"
+          "after": {
+            "ko": "단일 원본 → 생성 surface → startup scan",
+            "en": "Canonical source → generated surfaces → startup scan"
           },
-          "before": "manual JD feedback capture",
-          "after": "JD PDF + Zighang recruitment-roast + T1/T2/T3 triage + form-start guard",
-          "improvement": "[REDACTED_TARGET_COMPANY] pass range / [REDACTED_TARGET_COMPANY] [REDACTED_FIT_ASSESSMENT] / Hanwha 82% improve-to-pass"
+          "improvement": {
+            "ko": "누락·잘못된 등록은 에이전트 시작 전 오류로 중단",
+            "en": "Missing or invalid registration stops before the agent starts"
+          }
         }
       ],
       "techDecisions": {
         "ko": [
-          "클라우드 벡터 DB 대신 로컬 BGE-M3 + sqlite-vec 선택: 마크다운 변경 직후 자동 재색인과 비용 통제를 우선",
-          "문서 규칙 대신 hook-first 강제 선택: 에이전트가 필요 시점에 문서를 읽지 않는 문제를 런타임 차단으로 보완",
-          "런타임별 수동 설정 대신 runtime surface compiler 선택: 생성물 드리프트를 줄이고 3개 하네스 정합성 검증을 자동화",
-          "검색 opt-in 대신 default-on 선택: 조사·리뷰·편집 같은 실제 프롬프트에서 근거 검색 누락을 줄이기 위해 UserPromptSubmit에 연결"
+          "Prompt RAG 자동 검색은 현재 opt-in: 모든 프롬프트에 컨텍스트를 주입하지 않고 근거 검색이 필요한 작업에서 명시적으로 활성화한다.",
+          "KG는 실시간 변경이 아니라 source fingerprint로 변경을 감지하고 변경 시 deterministic full refresh, 무변경 시 rebuild skip을 수행한다.",
+          "수동 설정 복사 대신 단일 원본에서 runtime surface를 생성했습니다. 변경된 fingerprint는 재생성을 유도하고, 누락·잘못된 등록은 fail-closed 검증으로 에이전트 시작 전에 중단합니다."
         ],
         "en": [
-          "Chose local BGE-M3 + sqlite-vec over cloud vector DBs to prioritize immediate reindexing after markdown changes and cost control",
-          "Chose hook-first enforcement over doc-only rules to compensate for agents not reading policy documents at the moment of need",
-          "Chose a runtime surface compiler over manual runtime settings to reduce generated-surface drift and automate 3-harness verification",
-          "Chose default-on search over opt-in retrieval to reduce missed evidence during real investigation, review, and edit prompts"
+          "Prompt RAG auto-search is currently opt-in: evidence retrieval is explicitly enabled for tasks that need it instead of injecting context into every prompt.",
+          "The KG is not mutated in real time; source fingerprints detect changes, triggering a deterministic full refresh, while unchanged sources skip rebuilding.",
+          "Generated runtime surfaces from one canonical source instead of copying configuration manually. A changed fingerprint triggers regeneration, while missing or invalid registration fails closed before agent startup."
         ]
-      }
+      },
+      "role": {
+        "ko": "개인 설계·구현·운영",
+        "en": "Sole designer, implementer, and operator"
+      },
+      "links": {
+        "v0.19.4 Release": "https://github.com/kilhyeonjun/harness-launcher/releases/tag/v0.19.4",
+        "CI": "https://github.com/kilhyeonjun/harness-launcher/actions"
+      },
+      "glossary": [
+        {
+          "term": {
+            "ko": "하네스",
+            "en": "Harness"
+          },
+          "definition": {
+            "ko": "AI 코딩 도구가 프로젝트 규칙·검색·검증을 빠뜨리지 않도록 실행 환경을 묶은 운영 체계.",
+            "en": "An operating framework that packages source, tools, rules, and verification for repeatable AI development work."
+          }
+        },
+        {
+          "term": {
+            "ko": "프로필",
+            "en": "Profile"
+          },
+          "definition": {
+            "ko": "개인·업무처럼 데이터와 권한을 분리해야 하는 작업 영역별 실행 환경.",
+            "en": "A work-domain runtime that separates context, data, and permissions."
+          }
+        },
+        {
+          "term": {
+            "ko": "RAG",
+            "en": "RAG"
+          },
+          "definition": {
+            "ko": "답하기 전에 관련 원문 후보를 의미와 키워드로 검색하는 방식.",
+            "en": "A method that retrieves relevant source candidates by meaning and keywords before answering."
+          }
+        },
+        {
+          "term": {
+            "ko": "KG",
+            "en": "KG"
+          },
+          "definition": {
+            "ko": "문서·코드·규칙 사이의 연결 관계를 그래프로 탐색하는 방식.",
+            "en": "A graph used to explore connections among documents, code, and rules."
+          }
+        },
+        {
+          "term": {
+            "ko": "MCP",
+            "en": "MCP"
+          },
+          "definition": {
+            "ko": "AI 에이전트가 검색기와 업무 도구를 표준 방식으로 호출하게 하는 연결 규약.",
+            "en": "A protocol that lets AI agents call retrieval and operational tools through a standard interface."
+          }
+        },
+        {
+          "term": {
+            "ko": "Hook",
+            "en": "Hook"
+          },
+          "definition": {
+            "ko": "프롬프트·편집·커밋 같은 시점에 자동 검사나 차단을 실행하는 장치.",
+            "en": "A trigger that runs checks or blocks actions at prompt, edit, or commit time."
+          }
+        },
+        {
+          "term": {
+            "ko": "단일 원본",
+            "en": "Canonical source"
+          },
+          "definition": {
+            "ko": "여러 런타임 설정을 손으로 중복 관리하지 않고 생성하는 기준 원본.",
+            "en": "The authoritative source used to generate runtime-specific settings without manual duplication."
+          }
+        },
+        {
+          "term": {
+            "ko": "런타임 표면",
+            "en": "Runtime surface"
+          },
+          "definition": {
+            "ko": "각 AI CLI가 실제 실행 시 읽는 지침·스킬·도구 설정.",
+            "en": "The instructions, skills, and tool settings consumed by an AI CLI at runtime."
+          }
+        }
+      ]
     },
     {
       "slug": "ledgerly",

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" role="img" aria-labelledby="title desc">
+  <title id="title">프로필 경계와 근거 검증</title><desc id="desc">개발자가 개인, 업무, 플랫폼 중 하나의 격리된 실행 환경을 선택하고 검색 후보를 원문으로 검증한 뒤 실행 게이트를 통과하는 구조</desc>
+  <style>.t{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#0f172a}.m{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;fill:#1d4ed8;font-weight:700}.box{fill:#fff;stroke:#cbd5e1;stroke-width:2}.flow{stroke:#1d4ed8;stroke-width:4;fill:none;marker-end:url(#a)}</style>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#1d4ed8"/></marker></defs>
+  <rect width="720" height="620" rx="24" fill="#f8fafc"/>
+  <text x="40" y="55" class="m" font-size="28">01 · 실행 환경 선택</text>
+  <rect x="40" y="85" width="190" height="110" rx="16" class="box"/><rect x="265" y="85" width="190" height="110" rx="16" class="box"/><rect x="490" y="85" width="190" height="110" rx="16" class="box"/>
+  <text x="135" y="135" text-anchor="middle" class="t" font-size="28" font-weight="700">개인</text><text x="135" y="170" text-anchor="middle" class="t" font-size="24">전용 도구·규칙</text>
+  <text x="360" y="135" text-anchor="middle" class="t" font-size="28" font-weight="700">업무</text><text x="360" y="170" text-anchor="middle" class="t" font-size="24">전용 도구·규칙</text>
+  <text x="585" y="135" text-anchor="middle" class="t" font-size="28" font-weight="700">플랫폼</text><text x="585" y="170" text-anchor="middle" class="t" font-size="24">전용 도구·규칙</text>
+  <path d="M360 210 V255" class="flow"/><rect x="90" y="270" width="540" height="95" rx="16" class="box"/>
+  <text x="360" y="310" text-anchor="middle" class="m" font-size="26">02 · 근거 후보 찾기</text><text x="360" y="342" text-anchor="middle" class="t" font-size="24">RAG 검색 · KG 관계 탐색</text>
+  <path d="M360 375 V420" class="flow"/><rect x="90" y="435" width="540" height="95" rx="16" class="box"/>
+  <text x="360" y="475" text-anchor="middle" class="m" font-size="26">03 · 원문 재확인</text><text x="360" y="507" text-anchor="middle" class="t" font-size="24">후보를 답으로 쓰지 않고 원본과 대조</text>
+  <path d="M360 540 V575" class="flow"/><text x="360" y="605" text-anchor="middle" class="t" font-size="26" font-weight="700">검증 통과 후에만 실행</text>
+</svg>

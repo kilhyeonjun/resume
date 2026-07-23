@@ -49,6 +49,9 @@ const outcomeProofs = data.experience
   .flatMap((exp) => exp.positions?.flatMap((position) => position.highlights ?? []) ?? exp.highlights ?? [])
   .filter((proof) => /\d/.test(proof.result))
   .slice(0, 3);
+const outcomeKickers = lang === 'ko'
+  ? ['BigQuery 조회 단가 기준', '수집 범위', '업그레이드 자동화로']
+  : ['BigQuery unit cost', 'Collection range', 'Upgrade automation'];
 ---
 
 <Layout title={`${data.name} — ${data.title}`} description="Professional resume and work experience" lang={lang}>
@@ -57,14 +60,26 @@ const outcomeProofs = data.experience
     <!-- Header Section -->
     <ResumeHeader data={data} />
 
-    <aside class="outcome-board" aria-label={lang === 'ko' ? '주요 성과' : 'Selected outcomes'}>
-      <span class="dossier-label">EVIDENCE BOARD</span>
-      {outcomeProofs.map((proof) => (
-        <div class="outcome-row">
-          <strong>{proof.result}</strong>
-          <span>{proof.problem}</span>
-        </div>
-      ))}
+    <aside class="outcome-board" aria-labelledby="evidence-board-heading">
+      <h2 id="evidence-board-heading" class="dossier-label board-heading">EVIDENCE BOARD</h2>
+      {outcomeProofs.map((proof, index) => {
+        const kicker = outcomeKickers[index];
+        const [metricText, ...tailParts] = proof.result.split(/,\s*/);
+        const metric = metricText.startsWith(kicker)
+          ? metricText.slice(kicker.length).trim()
+          : metricText;
+        const tail = tailParts.join(', ');
+        return (
+          <section class="outcome-row">
+            <p class="outcome-result">
+              <span class="result-kicker">{outcomeKickers[index]}</span>
+              <strong class="result-metric">{metric}</strong>
+              {tail && <span class="result-tail">{tail}</span>}
+            </p>
+            <p class="outcome-problem">{proof.problem}</p>
+          </section>
+        );
+      })}
     </aside>
 
     <!-- Quick Actions (top): preview links + PDF download -->

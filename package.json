@@ -11,27 +11,30 @@
     "preview": "astro preview",
     "astro": "astro",
     "og": "tsx scripts/generate-og.ts",
-    "pdf": "tsx scripts/generate-pdf.ts && tsx scripts/generate-og.ts",
+    "pdf": "tsx scripts/generate-pdf.ts && tsx scripts/generate-og.ts --output dist/og-image.png",
     "pdf:hr": "tsx scripts/generate-pdf.ts --hr",
     "pdf:ats": "tsx scripts/generate-pdf.ts --ats",
     "pdf:full": "node -e \"const{execSync:r}=require('child_process');try{r('lsof -ti:4321',{stdio:'pipe'})}catch{console.log('Starting dev server...');require('child_process').spawn('npx',['astro','dev'],{stdio:'ignore',detached:true}).unref();r('sleep 3')}r('tsx scripts/generate-pdf.ts',{stdio:'inherit'})\""
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.0",
-    "@fontsource-variable/jetbrains-mono": "^5.2.8",
-    "@tailwindcss/typography": "^0.5.19",
-    "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.17.1",
-    "tailwindcss": "^4.1.18"
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.1.3",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8",
+    "@astrojs/check": "^0.9.9",
     "@mermaid-js/mermaid-cli": "^11.16.0",
-    "puppeteer": "^24.10.0",
-    "tsx": "^4.19.4",
+    "puppeteer": "24.36.1",
+    "tsx": "^4.23.1",
     "typescript": "^5.9.3"
   },
   "overrides": {
     "basic-ftp": "5.3.1"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

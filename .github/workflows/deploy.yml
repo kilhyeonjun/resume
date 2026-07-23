@@ -15,8 +15,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
@@ -27,22 +25,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "npm"
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Install dependencies
         run: npm ci
 
       - name: Type Check
-        run: npx astro check
+        run: npm run check
 
       - name: Generate and verify diagrams
         run: |
@@ -90,11 +88,14 @@ jobs:
 
       - name: Upload artifact
         if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy)
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./dist
 
   deploy:
+    permissions:
+      pages: write
+      id-token: write
     if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy)
     environment:
       name: github-pages
@@ -104,4 +105,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

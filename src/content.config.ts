@@ -1,10 +1,11 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { file } from 'astro/loaders';
 
 const dateString = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Date must be YYYY-MM format');
 const dateStringLoose = z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, 'Date must be YYYY or YYYY-MM format');
 
-const safeUrl = z.string().url().refine(
+const safeUrl = z.url().refine(
   (url) => url.startsWith('http://') || url.startsWith('https://'),
   'URL must use http or https protocol',
 );
@@ -146,7 +147,7 @@ const certificationSchema = z.object({
 const personalInfoSchema = z.object({
   name: z.string(),
   title: z.string(),
-  email: z.string().email(),
+  email: z.email(),
   location: z.string().optional(),
   linkedin: safeUrl.optional(),
   github: safeUrl.optional(),

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Public resume curation guard.
 
-Checks that work-data curation did not leak internal evidence IDs or known
+Checks that private evidence curation did not leak internal IDs or known
 forbidden patterns into public resume/portfolio JSON. Also emits non-blocking
 warnings for AI/tool-heavy public positioning that should be reviewed by a human.
 """
@@ -106,7 +106,7 @@ def scan(path: Path) -> tuple[list[str], list[str]]:
 
     checks = [
         ('cryptic parenthetical', FORBIDDEN_PAREN),
-        ('work-data ID leak', WORKDATA_ID),
+        ('private evidence ID leak', WORKDATA_ID),
         ('internal ticket key leak', INTERNAL_KEYS),
         ('Korean AI-slop wording', AI_SLOP_KO),
         ('12 live-games regression (KO)', TWELVE_LIVE_KO),

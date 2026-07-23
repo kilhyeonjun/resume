@@ -3,7 +3,15 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy the generated artifact to GitHub Pages
+        required: false
+        default: true
+        type: boolean
 
 permissions:
   contents: read
@@ -35,6 +43,16 @@ jobs:
 
       - name: Type Check
         run: npx astro check
+
+      - name: Generate and verify diagrams
+        run: |
+          node scripts/diagram-source-contract.mjs verify
+          npm run diagrams
+          first_hashes="$(sha256sum public/images/portfolio/ai-coding-harness-*.svg)"
+          npm run diagrams
+          second_hashes="$(sha256sum public/images/portfolio/ai-coding-harness-*.svg)"
+          test "$first_hashes" = "$second_hashes"
+          git restore -- public/images/portfolio/ai-coding-harness-*.svg
 
       - name: Build with Astro
         run: npm run build
@@ -71,11 +89,13 @@ jobs:
           npm run pdf
 
       - name: Upload artifact
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy)
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy)
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

@@ -1,0 +1,28 @@
+sequenceDiagram
+  actor D as 개발자
+  participant L as 런처
+  participant S as 작업 경계
+  participant R as 런타임
+  participant G as 검증 게이트
+
+  D->>L: 프로필 선택
+  L->>S: 정규화 경계 확인
+  alt 경계 밖·동률·심볼릭 링크 이탈
+    S-->>L: 단일 소유 경계 없음
+    L-->>D: 시작 전 중단
+  else 단일 소유 경계
+    S-->>L: 최장 일치 소유자 확정
+    L->>R: 런타임 준비
+    alt fingerprint 변경
+      R->>S: 원본에서 재생성
+      S-->>R: 새 설정
+    else 변경 없음
+      R-->>L: 기존 런타임 재사용
+    end
+    L->>G: 설정·원문 검증
+    alt 검증 통과
+      G-->>D: AI CLI 시작
+    else 검증 실패
+      G-->>D: 시작 전 중단
+    end
+  end

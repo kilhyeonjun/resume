@@ -79,8 +79,14 @@ screenshot-puppeteer.mjs
 .jd-custom/
 .claude/
 .rag/
+.superpowers/
+CLAUDE.md
 docs/plans/
 docs/superpowers/
+scripts/jd-custom/
+scripts/external-review/
+templates/jd-custom-triage.md
+templates/external-review-triage.md
 
 # JD pipeline benchmark workspace (regenerable)
 jd-pipeline-workspace/

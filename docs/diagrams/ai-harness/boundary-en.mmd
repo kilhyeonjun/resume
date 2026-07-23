@@ -1,0 +1,23 @@
+%%{init: {"flowchart": {"htmlLabels": false}}}%%
+flowchart TB
+  subgraph RESOLVE["Boundary resolution"]
+    direction LR
+    U[User] --> C[Canonicalize path] --> R[Scan profile registry] --> O[Longest matching owner]
+  end
+  subgraph LAUNCH["Owned runtime"]
+    direction LR
+    H[Runtime home] --> G[Verify config and source] -->|pass| A[Start CLI]
+  end
+  O --> H
+  C -->|symlink escape| X[Abort before launch]
+  R -->|none or tie| X
+  G -->|fail| X
+
+  classDef primary fill:#eff6ff,stroke:#2563eb,color:#0f172a,stroke-width:2px;
+  classDef boundary fill:#f8fafc,stroke:#64748b,color:#0f172a,stroke-width:2px;
+  classDef pass fill:#f0fdf4,stroke:#16a34a,color:#0f172a,stroke-width:2px;
+  classDef fail fill:#fff1f2,stroke:#e11d48,color:#0f172a,stroke-width:2px;
+  class U,C,R primary;
+  class O,H boundary;
+  class G,A pass;
+  class X fail;

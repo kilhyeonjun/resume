@@ -1,0 +1,28 @@
+sequenceDiagram
+  actor D as Developer
+  participant L as Launcher
+  participant S as Boundary
+  participant R as Runtime
+  participant G as Verification gate
+
+  D->>L: Select profile
+  L->>S: Resolve canonical boundary
+  alt outside, tied, or symlink escape
+    S-->>L: No single owning boundary
+    L-->>D: Abort before launch
+  else one owning boundary
+    S-->>L: Longest matching owner resolved
+    L->>R: Prepare runtime
+    alt fingerprint changed
+      R->>S: Regenerate from source
+      S-->>R: Fresh configuration
+    else unchanged
+      R-->>L: Reuse runtime
+    end
+    L->>G: Verify configuration and source
+    alt pass
+      G-->>D: Start AI CLI
+    else fail
+      G-->>D: Abort before launch
+    end
+  end

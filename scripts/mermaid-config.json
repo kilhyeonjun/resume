@@ -1,0 +1,36 @@
+{
+  "theme": "base",
+  "deterministicIds": true,
+  "deterministicIDSeed": "ai-harness-v1",
+  "fontFamily": "Arial, Noto Sans KR, sans-serif",
+  "themeVariables": {
+    "fontSize": "18px",
+    "primaryTextColor": "#0f172a",
+    "lineColor": "#475569",
+    "actorTextColor": "#0f172a",
+    "actorBorder": "#64748b",
+    "actorBkg": "#f8fafc",
+    "signalColor": "#334155",
+    "signalTextColor": "#0f172a",
+    "labelBoxBkgColor": "#f8fafc",
+    "labelBoxBorderColor": "#94a3b8",
+    "labelTextColor": "#0f172a",
+    "noteBkgColor": "#eff6ff",
+    "noteBorderColor": "#2563eb",
+    "noteTextColor": "#0f172a"
+  },
+  "flowchart": {
+    "htmlLabels": false,
+    "curve": "linear",
+    "nodeSpacing": 36,
+    "rankSpacing": 42
+  },
+  "sequence": {
+    "useMaxWidth": false,
+    "wrap": true,
+    "diagramMarginX": 24,
+    "diagramMarginY": 16,
+    "actorMargin": 44,
+    "messageMargin": 30
+  }
+}

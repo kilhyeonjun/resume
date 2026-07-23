@@ -268,7 +268,11 @@
             "en": "A verification pipeline that runs tests for every public repository change."
           }
         }
-      ]
+      ],
+      "sequenceDiagram": {
+        "ko": "/images/portfolio/ai-coding-harness-sequence-ko.svg",
+        "en": "/images/portfolio/ai-coding-harness-sequence-en.svg"
+      }
     },
     {
       "slug": "ledgerly",

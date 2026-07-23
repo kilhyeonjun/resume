@@ -1,0 +1,23 @@
+%%{init: {"flowchart": {"htmlLabels": false}}}%%
+flowchart TB
+  subgraph RESOLVE["경계 판정"]
+    direction LR
+    U[사용자] --> C[경로 정규화] --> R[프로필 레지스트리 탐색] --> O[최장 일치 소유자]
+  end
+  subgraph LAUNCH["소유 런타임"]
+    direction LR
+    H[런타임 홈] --> G[설정·원문 검증] -->|통과| A[CLI 시작]
+  end
+  O --> H
+  C -->|심볼릭 링크 이탈| X[시작 전 중단]
+  R -->|경계 없음·동률| X
+  G -->|실패| X
+
+  classDef primary fill:#eff6ff,stroke:#2563eb,color:#0f172a,stroke-width:2px;
+  classDef boundary fill:#f8fafc,stroke:#64748b,color:#0f172a,stroke-width:2px;
+  classDef pass fill:#f0fdf4,stroke:#16a34a,color:#0f172a,stroke-width:2px;
+  classDef fail fill:#fff1f2,stroke:#e11d48,color:#0f172a,stroke-width:2px;
+  class U,C,R primary;
+  class O,H boundary;
+  class G,A pass;
+  class X fail;

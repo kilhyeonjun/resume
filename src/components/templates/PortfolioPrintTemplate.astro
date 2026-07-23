@@ -148,6 +148,11 @@ function formatPeriod(period: { start: string; end: string }): string {
       justify-content: space-between;
       align-items: baseline;
       margin-bottom: 1mm;
+      break-after: avoid-page;
+    }
+
+    .project-header + .project-links {
+      break-before: avoid-page;
     }
 
     .project-name {
@@ -171,12 +176,14 @@ function formatPeriod(period: { start: string; end: string }): string {
       display: flex;
       flex-wrap: wrap;
       gap: 3mm;
+      break-after: avoid-page;
     }
 
     .project-summary {
       font-size: 9pt;
       color: #374151;
       margin-bottom: 2mm;
+      break-before: avoid-page;
     }
 
     /* Tech stack badges */
@@ -226,10 +233,6 @@ function formatPeriod(period: { start: string; end: string }): string {
       margin-bottom: 1mm;
     }
 
-    .evidence-register-print .problem-solving-print {
-      break-before: page;
-    }
-
     .evidence-register-print {
       break-after: page;
     }
@@ -244,6 +247,7 @@ function formatPeriod(period: { start: string; end: string }): string {
       padding: 0.5mm 2mm;
       border-radius: 1.5mm;
       margin-bottom: 1.5mm;
+      break-after: avoid-page;
     }
 
     /* Metrics table */
@@ -345,27 +349,29 @@ function formatPeriod(period: { start: string; end: string }): string {
 
     /* Listed projects box */
     .listed-box {
-      background: #f8fafc;
-      border: 0.5pt solid #e2e8f0;
-      border-radius: 2mm;
-      padding: 3mm 4mm;
-      margin-top: 4mm;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 1mm 3mm;
+      border-top: 0.5pt solid #e2e8f0;
+      padding-top: 2mm;
+      margin-top: 2mm;
+      break-inside: avoid;
     }
 
     .listed-box-title {
-      font-size: 10pt;
+      font-size: 8.5pt;
       font-weight: 700;
       color: #374151;
-      margin-bottom: 2mm;
     }
 
     .listed-project-row {
-      font-size: 8.5pt;
+      font-size: 8pt;
       color: #4b5563;
-      margin-bottom: 1mm;
-      display: flex;
-      gap: 2mm;
+      display: inline-flex;
+      gap: 1mm;
       align-items: baseline;
+      white-space: nowrap;
     }
 
     .listed-project-name {
@@ -378,8 +384,7 @@ function formatPeriod(period: { start: string; end: string }): string {
     }
 
     .listed-project-skills {
-      color: #6b7280;
-      flex: 1;
+      display: none;
     }
 
     /* Back button (web only) */

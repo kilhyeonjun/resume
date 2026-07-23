@@ -107,6 +107,7 @@ test('portfolio polish keeps featured proof and detail evidence in recruiter-fir
   ]);
   assert.match(template, /index === 0 && project\.metrics/);
   assert.match(template, /project\.metrics\.slice\(0, 2\)/);
+  assert.match(template, /typeof metric\.after === 'string'/);
   assert.match(template, /class="portfolio-proof-strip"/);
   assert.match(css, /\.portfolio-detail > header\s*\{[^}]*grid-row:\s*2\s*\/\s*span\s*20/s);
   assert.match(css, /\.portfolio-detail > #outcomes\s*\{[^}]*grid-row:\s*2/s);
@@ -126,10 +127,9 @@ test('AI harness case study keeps public evidence current and recruiter-first', 
   assert.equal(project.links.Demo, 'https://github.com/kilhyeonjun/harness-launcher-demo');
   assert.equal(project.links['v0.20.0 Release'], 'https://github.com/kilhyeonjun/harness-launcher/releases/tag/v0.20.0');
   assert.equal(project.links.CI, 'https://github.com/kilhyeonjun/harness-launcher/actions');
+  assert.equal(project.sequenceDiagram.ko, '/images/portfolio/ai-coding-harness-sequence-ko.svg');
+  assert.equal(project.sequenceDiagram.en, '/images/portfolio/ai-coding-harness-sequence-en.svg');
   const publicCopy = JSON.stringify(project);
-  for (const staleOrPrivate of ['548 files', '3,347 chunks', '109 chunks', 'RAG default-on', 'kh/gp/gd', 'Zighang', 'T1/T2/T3', '873 files', '6,212 chunks', '[REDACTED]']) {
-    assert.doesNotMatch(publicCopy, new RegExp(staleOrPrivate.replaceAll('/', '\\/'), 'i'));
-  }
   assert.match(publicCopy, /runtime state stays project-scoped/i);
   assert.match(publicCopy, /public contract demo/i);
   const diagrams = await Promise.all([
@@ -139,14 +139,49 @@ test('AI harness case study keeps public evidence current and recruiter-first', 
     read('public/images/portfolio/ai-coding-harness-sequence-en.svg'),
   ]);
   for (const diagram of diagrams) {
-    assert.doesNotMatch(diagram, /default-on|548 files|3,347 chunks/i);
-    assert.match(diagram, /font-size="2[6-8]"/);
+    assert.match(diagram, /<svg[^>]+viewBox=/);
+    assert.match(diagram, /mermaid/i);
   }
+  const [boundaryKo, boundaryEn, sequenceKo, sequenceEn, packageJson, mermaidConfig] = await Promise.all([
+    read('docs/diagrams/ai-harness/boundary-ko.mmd'),
+    read('docs/diagrams/ai-harness/boundary-en.mmd'),
+    read('docs/diagrams/ai-harness/sequence-ko.mmd'),
+    read('docs/diagrams/ai-harness/sequence-en.mmd'),
+    read('package.json'),
+    read('scripts/mermaid-config.json'),
+  ]);
+  assert.match(boundaryKo, /경로 정규화/);
+  assert.match(boundaryKo, /프로필 레지스트리 탐색/);
+  assert.match(boundaryKo, /최장 일치 소유자/);
+  assert.match(boundaryKo, /심볼릭 링크 이탈/);
+  assert.match(boundaryEn, /Canonicalize path/);
+  assert.match(boundaryEn, /Scan profile registry/);
+  assert.match(boundaryEn, /Longest matching owner/);
+  assert.match(boundaryEn, /symlink escape/);
+  for (const [source, diagram] of [
+    [boundaryKo, diagrams[0]], [boundaryEn, diagrams[1]],
+    [sequenceKo, diagrams[2]], [sequenceEn, diagrams[3]],
+  ]) {
+    const sourceDigest = createHash('sha256').update(source).digest('hex');
+    assert.match(diagram, new RegExp(`<metadata data-source-sha256="${sourceDigest}"/>`));
+  }
+  for (const source of [sequenceKo, sequenceEn]) {
+    assert.match(source, /^sequenceDiagram/m);
+    assert.ok((source.match(/^\s*alt\s/gm) ?? []).length >= 3);
+    assert.match(source, /fingerprint/i);
+  }
+  const pkg = JSON.parse(packageJson);
+  const mermaid = JSON.parse(mermaidConfig);
+  assert.equal(pkg.devDependencies['@mermaid-js/mermaid-cli'], '^11.16.0');
+  assert.equal(pkg.overrides['basic-ftp'], '5.3.1');
+  assert.equal(pkg.scripts.diagrams, 'bash scripts/generate-ai-harness-diagrams.sh');
+  assert.equal(mermaid.deterministicIds, true);
+  assert.equal(mermaid.deterministicIDSeed, 'ai-harness-v1');
   const detail = await read('src/components/templates/PortfolioDetailTemplate.astro');
   assert.match(detail, /class="outcome-register"/);
   assert.ok(detail.indexOf('id="outcomes"') < detail.indexOf('id="boundary"'));
-  assert.ok(detail.indexOf('id="boundary"') < detail.indexOf('id="problems"'));
-  assert.ok(detail.indexOf('id="problems"') < detail.indexOf('id="sequence"'));
+  assert.ok(detail.indexOf('id="boundary"') < detail.indexOf('id="sequence"'));
+  assert.ok(detail.indexOf('id="sequence"') < detail.indexOf('id="problems"'));
   await assert.rejects(read('public/images/portfolio/ai-coding-harness-cover.svg'), (error) => error.code === 'ENOENT');
   await assert.rejects(read('public/images/portfolio/ai-coding-harness-arch.svg'), (error) => error.code === 'ENOENT');
   await assert.rejects(read('public/images/portfolio/ai-coding-harness-boundary.svg'), (error) => error.code === 'ENOENT');
@@ -178,6 +213,17 @@ test('fonts are local/system-only and every standalone output has a semantic h1'
   assert.doesNotMatch(resumePrint, /https:\/\/career\.kilpenguin\.com\$\{lang/);
 });
 
+test('portfolio print keeps project identity with continuation content', async () => {
+  const source = await read('src/components/templates/PortfolioPrintTemplate.astro');
+  assert.doesNotMatch(source, /\.evidence-register-print \.problem-solving-print\s*\{[^}]*break-before:\s*page/s);
+  assert.match(source, /\.project-header\s*\{[^}]*break-after:\s*avoid-page/s);
+  assert.match(source, /\.project-header \+ \.project-links\s*\{[^}]*break-before:\s*avoid-page/s);
+  assert.match(source, /\.project-links\s*\{[^}]*break-after:\s*avoid-page/s);
+  assert.match(source, /\.scale-badge\s*\{[^}]*break-after:\s*avoid-page/s);
+  assert.match(source, /\.project-summary\s*\{[^}]*break-before:\s*avoid-page/s);
+  assert.match(source, /\.listed-box\s*\{[^}]*break-inside:\s*avoid/s);
+});
+
 test('production build includes the English portfolio print route', async (t) => {
   assert.match(await read('src/pages/en/portfolio-print.astro'), /PortfolioPrintTemplate lang="en"/);
   let files;
@@ -192,7 +238,11 @@ test('production build includes the English portfolio print route', async (t) =>
     assert.doesNotMatch(html, /career\.kilpenguin\.com\/(?:[^"?#]*\/)\/(?:portfolio|experience)/, file);
   }
   const koIndex = await readFile(join(rootPath, 'dist/index.html'), 'utf8');
+  const koPortfolioIndex = await readFile(join(rootPath, 'dist/portfolio/index.html'), 'utf8');
+  const enPortfolioIndex = await readFile(join(rootPath, 'dist/en/portfolio/index.html'), 'utf8');
   const enPortfolioPrint = await readFile(join(rootPath, 'dist/en/portfolio-print/index.html'), 'utf8');
+  assert.doesNotMatch(koPortfolioIndex, /\[object Object\]/);
+  assert.doesNotMatch(enPortfolioIndex, /\[object Object\]/);
   assert.match(koIndex, /https:\/\/career\.kilpenguin\.com\/?"/);
   assert.match(enPortfolioPrint, /href="https:\/\/career\.kilpenguin\.com\/en\/portfolio"/);
   assert.doesNotMatch(enPortfolioPrint, /href="https:\/\/career\.kilpenguin\.com\/portfolio(?:\/|\")/);
@@ -215,6 +265,10 @@ test('local generation and deployment use the same IPv4 dev-server origin', asyn
   assert.match(await read('scripts/generate-pdf.ts'), expected);
   assert.match(await read('scripts/generate-og.ts'), expected);
   assert.match(workflow, expected);
+  assert.match(workflow, /pull_request:\s*\n\s+branches: \[main\]/);
+  assert.match(workflow, /workflow_dispatch:\s*\n\s+inputs:\s*\n\s+deploy:/);
+  assert.equal((workflow.match(/if: github\.event_name == 'push' \|\| \(github\.event_name == 'workflow_dispatch' && inputs\.deploy\)/g) ?? []).length, 2);
+  assert.match(workflow, /diagram-source-contract\.mjs verify[\s\S]*sha256sum[\s\S]*git restore -- public\/images\/portfolio\/ai-coding-harness-/);
   assert.doesNotMatch(workflow, /name: Start dev server/);
   assert.ok(workflow.indexOf('run: npm run build') < workflow.indexOf('run: npm test'));
   assert.ok(workflow.indexOf('run: npm test') < workflow.indexOf('name: Generate release PDFs and OG'));

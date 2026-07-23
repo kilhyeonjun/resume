@@ -62,6 +62,7 @@ const portfolioProjectSchema = z.object({
   problemSolving: z.array(problemSolvingEntrySchema).optional(),
   lessons: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),
   architectureDiagram: localizedValueSchema.optional(),
+  sequenceDiagram: localizedValueSchema.optional(),
   metrics: z.array(metricSchema).optional(),
   techDecisions: localizedStringArraySchema.optional(),
   scale: localizedStringSchema.optional(),

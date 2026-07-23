@@ -41,6 +41,7 @@ const projectGlossary = project.glossary ?? null;
 const projectProblemSolving = project.problemSolving ?? null;
 const projectCoverImage = project.coverImage ? localize(project.coverImage) : null;
 const projectArchitectureDiagram = project.architectureDiagram ? localize(project.architectureDiagram) : null;
+const projectSequenceDiagram = project.sequenceDiagram ? localize(project.sequenceDiagram) : null;
 const isEvidenceRegister = project.slug === 'ai-coding-harness';
 ---
 
@@ -116,10 +117,11 @@ const isEvidenceRegister = project.slug === 'ai-coding-harness';
       <nav class="evidence-index" aria-label={lang === 'ko' ? '프로젝트 근거 목차' : 'Project evidence index'}>
         {project.metrics && project.metrics.length > 0 && <a href="#outcomes"><span>01</span>{labels.metrics}</a>}
         {isEvidenceRegister && projectArchitectureDiagram && <a href="#boundary"><span>02</span>{lang === 'ko' ? '프로필 경계' : 'Profile boundary'}</a>}
-        {projectProblemSolving && projectProblemSolving.length > 0 && <a href="#problems"><span>{isEvidenceRegister ? '03' : '02'}</span>{labels.problemSolving}</a>}
-        {projectTechDecisions && projectTechDecisions.length > 0 && <a href="#decisions"><span>{isEvidenceRegister ? '04' : '03'}</span>{labels.techDecisions}</a>}
+        {isEvidenceRegister && projectSequenceDiagram && <a href="#sequence"><span>03</span>{lang === 'ko' ? '실행 흐름' : 'Launch flow'}</a>}
+        {projectProblemSolving && projectProblemSolving.length > 0 && <a href="#problems"><span>{isEvidenceRegister ? '04' : '02'}</span>{labels.problemSolving}</a>}
+        {projectTechDecisions && projectTechDecisions.length > 0 && <a href="#decisions"><span>{isEvidenceRegister ? '05' : '03'}</span>{labels.techDecisions}</a>}
         {projectGlossary && projectGlossary.length > 0
-          ? <a href="#glossary"><span>05</span>{lang === 'ko' ? '용어 풀이' : 'Glossary'}</a>
+          ? <a href="#glossary"><span>{isEvidenceRegister ? '06' : '05'}</span>{lang === 'ko' ? '용어 풀이' : 'Glossary'}</a>
           : project.skills && project.skills.length > 0 && <a href="#stack"><span>04</span>{labels.skills}</a>}
       </nav>
     </header>
@@ -142,18 +144,43 @@ const isEvidenceRegister = project.slug === 'ai-coding-harness';
 
     {isEvidenceRegister && projectArchitectureDiagram && (
       <section id="boundary" class="mb-10 case-boundary">
-        <h2 class="section-title mb-3">{lang === 'ko' ? '프로필 경계와 근거 검증' : 'Profile boundaries and evidence verification'}</h2>
+        <h2 class="section-title mb-3">{lang === 'ko' ? '프로필 경계와 실행 검증' : 'Profile boundaries and launch verification'}</h2>
         <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">
           {lang === 'ko'
-            ? '검색 결과는 답이 아니라 후보입니다. 선택한 프로필 안에서 후보를 찾고 원문을 다시 확인합니다.'
-            : 'Retrieval results are candidates, not answers. Candidates stay inside the selected profile and are checked against the original source.'}
+            ? '런처가 작업 경로를 정규화한 뒤 프로필 레지스트리에서 가장 긴 일치 경계를 고릅니다. 경계 없음·동률·심볼릭 링크 이탈은 시작 전에 중단합니다.'
+            : 'The launcher canonicalizes the workspace, scans the profile registry, and selects the longest matching boundary. No match, a tie, or a symlink escape aborts before launch.'}
         </p>
-        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+        <p class="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400 lg:hidden">
+          {lang === 'ko' ? '← 좌우로 스크롤해 전체 흐름 보기 →' : '← Scroll horizontally to view the full flow →'}
+        </p>
+        <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white dark:border-gray-700">
           <img
             src={withBasePath(projectArchitectureDiagram)}
-            alt={lang === 'ko' ? '개발자, 프로필 기반 실행기, 개인 업무 플랫폼 경계, AI 런타임, RAG KG, 원문 검증과 실행 게이트 관계도' : 'Context diagram connecting developer, profile-aware launcher, Personal Work Platform boundaries, AI runtimes, RAG KG, source verification, and execution gates'}
-            class="w-full"
+            alt={lang === 'ko' ? '사용자 요청의 경로를 정규화하고 프로필 레지스트리에서 최장 일치 소유자를 선택한 뒤 소유 런타임과 실행 검증으로 연결하며 경계 없음, 동률, 심볼릭 링크 이탈, 검증 실패를 시작 전에 중단하는 아키텍처' : 'Architecture that canonicalizes the requested workspace, selects the longest matching owner from the profile registry, connects its runtime to launch verification, and aborts before launch on no match, tie, symlink escape, or verification failure'}
+            class="min-w-[920px] w-full lg:min-w-0"
             loading="eager"
+          />
+        </div>
+      </section>
+    )}
+
+    {isEvidenceRegister && projectSequenceDiagram && (
+      <section id="sequence" class="mb-10 case-sequence">
+        <h2 class="section-title mb-3">{lang === 'ko' ? '실행과 실패 차단 흐름' : 'Launch and failure-blocking flow'}</h2>
+        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">
+          {lang === 'ko'
+            ? '경계 판정, fingerprint 기반 재생성, 설정·원문 검증의 각 실패 경로는 AI CLI가 시작되기 전에 종료됩니다.'
+            : 'Boundary resolution, fingerprint-based regeneration, and configuration/source verification all terminate before the AI CLI starts when a gate fails.'}
+        </p>
+        <p class="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400 lg:hidden">
+          {lang === 'ko' ? '← 좌우로 스크롤해 전체 흐름 보기 →' : '← Scroll horizontally to view the full flow →'}
+        </p>
+        <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white dark:border-gray-700">
+          <img
+            src={withBasePath(projectSequenceDiagram)}
+            alt={lang === 'ko' ? '프로필 선택 후 경계를 판정하고 fingerprint 변경 여부에 따라 런타임을 재생성한 뒤 검증 통과 시 시작하고 실패 시 중단하는 시퀀스' : 'Sequence that resolves the boundary, regenerates the runtime when its fingerprint changed, starts after verification passes, and aborts on failure'}
+            class="min-w-[900px] w-full lg:min-w-0"
+            loading="lazy"
           />
         </div>
       </section>
@@ -230,24 +257,6 @@ const isEvidenceRegister = project.slug === 'ai-coding-harness';
       </section>
     )}
 
-    {isEvidenceRegister && projectCoverImage && (
-      <section id="sequence" class="mb-10 case-sequence">
-        <h2 class="section-title mb-3">{lang === 'ko' ? '설치와 검증 흐름' : 'Install and verification flow'}</h2>
-        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">
-          {lang === 'ko'
-            ? '프로필 선택부터 원문 확인과 실패 시 중단하는 실행 게이트까지 이어지는 대표 흐름입니다.'
-            : 'A representative flow from profile selection through source verification to fail-closed execution gates.'}
-        </p>
-        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
-          <img
-            src={withBasePath(projectCoverImage)}
-            alt={lang === 'ko' ? '프로필 선택, 격리 런타임 준비, 근거 후보 검색, 원문 확인, 실패 시 중단하는 실행 게이트 순서도' : 'Sequence from profile selection to isolated runtime, evidence retrieval, source verification, and fail-closed execution gates'}
-            class="w-full"
-            loading="lazy"
-          />
-        </div>
-      </section>
-    )}
 
     {/* Description */}
     {projectDescription && (

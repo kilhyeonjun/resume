@@ -127,7 +127,7 @@ test('AI harness case study keeps public evidence current and recruiter-first', 
   assert.equal(project.links['v0.20.0 Release'], 'https://github.com/kilhyeonjun/harness-launcher/releases/tag/v0.20.0');
   assert.equal(project.links.CI, 'https://github.com/kilhyeonjun/harness-launcher/actions');
   const publicCopy = JSON.stringify(project);
-  for (const staleOrPrivate of ['[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]', 'RAG default-on', 'private profiles', 'Zighang', 'T1/T2/T3', '[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]', '[REDACTED_PRIVATE_INVENTORY]']) {
+  for (const staleOrPrivate of ['548 files', '3,347 chunks', '109 chunks', 'RAG default-on', 'kh/gp/gd', 'Zighang', 'T1/T2/T3', '873 files', '6,212 chunks', '[REDACTED]']) {
     assert.doesNotMatch(publicCopy, new RegExp(staleOrPrivate.replaceAll('/', '\\/'), 'i'));
   }
   assert.match(publicCopy, /runtime state stays project-scoped/i);
@@ -139,7 +139,7 @@ test('AI harness case study keeps public evidence current and recruiter-first', 
     read('public/images/portfolio/ai-coding-harness-sequence-en.svg'),
   ]);
   for (const diagram of diagrams) {
-    assert.doesNotMatch(diagram, /default-on|[REDACTED_PRIVATE_INVENTORY]|[REDACTED_PRIVATE_INVENTORY]/i);
+    assert.doesNotMatch(diagram, /default-on|548 files|3,347 chunks/i);
     assert.match(diagram, /font-size="2[6-8]"/);
   }
   const detail = await read('src/components/templates/PortfolioDetailTemplate.astro');

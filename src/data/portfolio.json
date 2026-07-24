@@ -452,32 +452,79 @@
       "featured": true,
       "printOrder": 4,
       "summary": {
-        "ko": "외부 배차 데이터를 정해진 시간에 수집하고 웹에서 조회하는 FE+BE 운영 원장 — replica별 중복 실행을 singleton KST scheduler로 분리해 과거 30/day를 15/day로 복구",
-        "en": "A frontend-and-backend web ledger that collects external dispatch data on schedule and serves read queries — moved duplicated per-replica jobs to a singleton KST scheduler, restoring the historical 30/day run count to 15/day"
+        "ko": "외부 배차 정보를 오늘 날짜로 수집해 노선·차량 검색과 통계를 제공하고, 수집 중복과 브라우저 데이터 경계를 분리한 운영 원장",
+        "en": "A current-day dispatch ledger for route, vehicle, and statistics views, with singleton collection ownership and a fixed browser data boundary"
       },
       "description": {
-        "ko": "외부 배차 사이트의 EUC-KR 데이터를 Cheerio와 Axios로 수집해 Prisma SQLite에 저장하고, Next.js 웹에서 Vercel read-only proxy와 Express API를 거쳐 조회한다. 수집 작업은 웹 replica에서 분리한 singleton KST scheduler가 월~토 06:00–20:00에 실행한다. 배포는 비활성 slot의 health check를 통과한 뒤 Traefik active slot을 전환하며, 이상 시 운영자가 수동으로 롤백한다. 2026-07-23 관측값은 485일·280,925 rows이며 데이터 최신성의 근거로 사용하지 않았다. BE hardening은 성과 수치와 분리해 공개 조회 경계·인증·배포 회귀 검증으로 확인했다.",
-        "en": "The service collects EUC-KR data from an external dispatch site with Cheerio and Axios, stores it in Prisma SQLite, and serves web queries from Next.js through a Vercel read-only proxy and Express API. A singleton KST scheduler separated from web replicas runs Mon–Sat 06:00–20:00. Deployment switches Traefik to an inactive slot only after its health check passes; an operator performs rollback manually when needed. The 2026-07-23 observation was 485 days and 280,925 rows and is not used as evidence of data freshness. Backend hardening is reported separately from outcome counts and was verified through public read boundary, authentication, and deployment regression checks."
+        "ko": "외부 배차 사이트의 EUC-KR 데이터를 Cheerio와 Axios로 수집해 Prisma SQLite에 저장하고 Next.js 웹에서 조회한다. 웹 replica와 분리한 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 오늘 날짜를 재조회하므로 오전 데이터와 늦게 공개된 변경분을 이후 실행에서 반영할 수 있다. Next.js proxy의 public route DTO branch는 필수 핵심 필드와 허용된 원천 URL을 검증해 운영 화면에 필요한 필드만 projection하고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외하며, 인증·migration 경로는 별도로 전달한다. 배포는 비활성 slot의 health check 후 Traefik active slot을 전환하며 이상 시 운영자가 수동 롤백한다.",
+        "en": "The service collects EUC-KR data from an external dispatch site with Cheerio and Axios, stores it in Prisma SQLite, and serves it through a Next.js web app. A singleton KST scheduler separated from web replicas rechecks the current date in 15 scheduled hourly slots from Mon–Sat 06:00–20:00, so subsequent runs can capture morning data and later source changes. The public route DTO branch inside the Next.js proxy validates required core fields and allowlisted source URLs, projects only fields needed by the operational UI, and excludes internal IDs, unknown fields, and the credential-bearing tracking URL; authenticated migration routes pass through separately. Deployment switches Traefik to an inactive slot only after its health check passes, and rollback is manual."
       },
       "role": {
         "ko": "기획·FE·BE·배포·운영 단독",
         "en": "Sole owner of planning, frontend, backend, deployment, and operations"
       },
-      "coverImage": "/images/portfolio/daesin-cover.webp",
+      "coverImage": {
+        "ko": "/images/portfolio/daesin-scenario-journey.svg",
+        "en": "/images/portfolio/daesin-scenario-journey-en.svg"
+      },
       "contentImages": [],
+      "scenarioEvidence": [
+        {
+          "image": {
+            "ko": "/images/portfolio/daesin-scenario-freshness.svg",
+            "en": "/images/portfolio/daesin-scenario-freshness-en.svg"
+          },
+          "title": {
+            "ko": "오전 누락을 막는 오늘 날짜 재조회",
+            "en": "Current-date recheck prevents morning gaps"
+          },
+          "caption": {
+            "ko": "14시 이전 전일 선택 규칙을 제거하고 월~토 06:00–20:00의 정각 15개 cron slot에서 오늘 날짜를 독립 재조회한다. 실패는 기록하며 즉시 retry/backoff 없이 다음 스케줄이 다시 확인한다.",
+            "en": "Removes the pre-14:00 previous-day rule and independently rechecks the current date in 15 scheduled hourly slots from Mon–Sat 06:00–20:00. Failures are logged; the next scheduled run checks again without immediate retry or backoff."
+          }
+        },
+        {
+          "image": {
+            "ko": "/images/portfolio/daesin-scenario-singleton.svg",
+            "en": "/images/portfolio/daesin-scenario-singleton-en.svg"
+          },
+          "title": {
+            "ko": "replica별 중복 수집을 singleton 책임으로 분리",
+            "en": "Move per-replica collection into one singleton owner"
+          },
+          "caption": {
+            "ko": "각 web replica가 15개 cron slot을 등록하던 구조에서 수집 책임을 별도 singleton KST scheduler 하나로 이동했다.",
+            "en": "Moves 15 scheduled slots registered by every web replica into one separate singleton KST scheduler."
+          }
+        },
+        {
+          "image": {
+            "ko": "/images/portfolio/daesin-scenario-boundary.svg",
+            "en": "/images/portfolio/daesin-scenario-boundary-en.svg"
+          },
+          "title": {
+            "ko": "공개 route 응답과 인증 경로의 분리",
+            "en": "Separate public route responses from authenticated routes"
+          },
+          "caption": {
+            "ko": "Next.js proxy 전체가 아니라 public route 응답에만 allowlist projection을 적용한다. exact method/path·schema·payload limit·redirect 차단을 거치며 인증 경로는 별도로 전달한다.",
+            "en": "Applies allowlist projection only to public route responses, not the whole Next.js proxy. It enforces exact method and path, schema, payload limits, and redirect rejection while forwarding authenticated routes separately."
+          }
+        }
+      ],
       "problemSolving": [
         {
           "problem": {
-            "ko": "Why — 외부 사이트를 매번 열어 배차 데이터를 수동 확인해야 했다",
-            "en": "Why — dispatch data had to be checked manually on the external site"
+            "ko": "Why — 오전에도 원천에 오늘 데이터가 있었지만 14시 이전에는 전일을 선택하는 규칙 때문에 누락됐다",
+            "en": "Why — current-day source data was already available in the morning, but a pre-14:00 previous-day rule skipped it"
           },
           "process": {
-            "ko": "How — Cheerio + Axios로 EUC-KR 응답을 수집하고 singleton KST scheduler에서 월~토 06:00–20:00에 실행해 SQLite에 적재했다",
-            "en": "How — collected EUC-KR responses with Cheerio + Axios and loaded SQLite from a singleton KST scheduler running Mon–Sat 06:00–20:00"
+            "ko": "How — 기본 수집일을 오늘 날짜로 고정하고 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 재조회하도록 변경했다",
+            "en": "How — fixed the default collection date to the current date and made the singleton KST scheduler recheck it in 15 scheduled hourly slots from Mon–Sat 06:00–20:00"
           },
           "result": {
-            "ko": "Result — 수동 확인에 의존하던 수집을 운영 시간대 15/day 일정으로 전환",
-            "en": "Result — replaced collection dependent on manual checks with a 15/day operating schedule"
+            "ko": "Result — 오전 데이터와 늦게 공개된 변경분을 정적 날짜·건수 문구 없이 후속 실행에서 반영할 수 있도록 변경",
+            "en": "Result — subsequent runs can capture morning data and later source changes without maintaining static date or row-count claims"
           }
         },
         {
@@ -490,22 +537,22 @@
             "en": "How — moved collection responsibility out of web processes into one singleton KST scheduler"
           },
           "result": {
-            "ko": "Result — 과거 중복 30/day를 의도한 15/day로 복구",
-            "en": "Result — restored the historical duplicated 30/day count to the intended 15/day"
+            "ko": "Result — replica별 15개 cron slot 구성에서 singleton의 15개 slot으로 축소(프로세스 시작 시 1회 동기화 제외)",
+            "en": "Result — reduced per-replica 15-slot schedules to one singleton's 15 slots, excluding the one startup sync"
           }
         },
         {
           "problem": {
-            "ko": "Why — 공개 조회 경로와 배포 전환의 운영 경계를 분명히 해야 했다",
-            "en": "Why — the public read path and deployment switching boundary needed to be explicit"
+            "ko": "Why — 운영 화면에 필요한 원천 필드는 제공하면서 내부·credential 필드는 차단해야 했다",
+            "en": "Why — source fields needed by the operational UI had to remain useful while internal and credential-bearing fields stayed blocked"
           },
           "process": {
-            "ko": "How — Next.js → Vercel read-only proxy → Traefik → Express active slot → SQLite로 조회 경로를 제한하고 비활성 slot health check 뒤 전환하도록 구성했다",
-            "en": "How — constrained reads to Next.js → Vercel read-only proxy → Traefik → Express active slot → SQLite, switching only after the inactive slot passes its health check"
+            "ko": "How — method/path allowlist, 필수 필드 검증, 고정 출력 projection과 원천 URL contract로 운영 화면 필드만 통과시키고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외했다",
+            "en": "How — used a method/path allowlist, required-field validation, a fixed output projection, and source-URL contracts to pass only operational UI fields while excluding internal IDs, unknown fields, and the credential-bearing tracking URL"
           },
           "result": {
-            "ko": "Result — health-gated switch와 manual rollback 책임을 운영 절차로 명시",
-            "en": "Result — made the health-gated switch and manual rollback responsibilities explicit in operations"
+            "ko": "Result — 고정 출력 projection과 원천 URL allowlist를 인증·redirect·payload·배포 회귀 경계와 함께 검증",
+            "en": "Result — verified the fixed output projection and source-URL allowlist together with authentication, redirect, payload, and deployment regression boundaries"
           }
         }
       ],
@@ -530,59 +577,110 @@
       ],
       "github": "https://github.com/kilhyeonjun/daesin-logistics-bot-be",
       "links": {
-        "Live": "https://daesin.kilpenguin.com",
         "FE": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe",
         "BE": "https://github.com/kilhyeonjun/daesin-logistics-bot-be"
       },
       "highlights": {
         "ko": [
-          "FE+BE 웹의 기획·구현·배포·운영을 단독 수행",
-          "수집 작업을 singleton KST scheduler로 분리",
-          "Vercel read-only proxy와 Traefik active slot으로 조회 경계 구성"
+          "오늘 날짜를 운영 시간대 정각 15개 cron slot에서 재조회해 오전·지연 공개 데이터를 반영",
+          "수집 작업을 singleton KST scheduler로 분리해 replica 중복을 제거",
+          "public route DTO의 고정 projection과 원천 URL allowlist로 내부 ID·credential tracking URL 차단"
         ],
         "en": [
-          "Sole ownership of planning, implementation, deployment, and operations for the frontend-and-backend web product",
-          "Separated collection into a singleton KST scheduler",
-          "Bound reads through a Vercel read-only proxy and Traefik active slot"
+          "Rechecks the current date in 15 scheduled hourly slots to capture morning and later source updates",
+          "Separates collection into a singleton KST scheduler to remove per-replica duplication",
+          "Uses a fixed public route DTO projection and source-URL allowlist while blocking internal IDs and the credential-bearing tracking URL"
         ]
       },
       "lessons": {
         "ko": [
+          "원천 공개 시각을 정적으로 가정하기보다 오늘 날짜를 주기적으로 재조회해야 오전·지연 변경분을 놓치지 않는다",
           "replica와 scheduled side effect의 lifecycle을 분리하지 않으면 upsert가 있어도 외부 요청과 쓰기가 중복될 수 있다",
-          "관측 행 수와 관측 날짜는 운영 규모 근거일 뿐 데이터 최신성 근거가 아니다",
-          "health check 통과와 운영자 rollback 절차를 트래픽 전환 책임과 함께 명시해야 한다"
+          "외부 원천은 public route DTO allowlist로 사용자 필드와 내부·credential 필드를 분리해야 한다"
         ],
         "en": [
+          "Rechecking the current date is safer than assuming a fixed source publication time when morning or later updates can occur",
           "If replica lifecycle and scheduled side effects are not separated, external requests and writes can duplicate even when upserts hide the symptom",
-          "Observed row count and observation date evidence operating scale, not data freshness",
-          "Traffic-switch responsibility must state both the health gate and the operator rollback procedure"
+          "An external source still needs a public route DTO allowlist separating user-facing fields from internal and credential-bearing fields"
         ]
       },
       "architectureDiagram": {
         "ko": "/images/portfolio/daesin-arch.svg",
         "en": "/images/portfolio/daesin-arch-en.svg"
       },
+      "printScenarioImage": {
+        "ko": "/images/portfolio/daesin-scenario-journey-print.svg",
+        "en": "/images/portfolio/daesin-scenario-journey-print-en.svg"
+      },
+      "printArchitectureDiagram": {
+        "ko": "/images/portfolio/daesin-arch-print.svg",
+        "en": "/images/portfolio/daesin-arch-print-en.svg"
+      },
+      "operationalLimits": {
+        "ko": [
+          "수집 실패는 기록하고 다음 정각 실행에서 다시 확인한다. 즉시 retry/backoff는 없다.",
+          "SQLite는 현재 read-heavy 운영에 맞지만 수평 쓰기 확장에는 한계가 있다.",
+          "비활성 slot health check 후 전환하며 문제 발생 시 운영자가 이전 slot으로 되돌린다."
+        ],
+        "en": [
+          "Collection failures are logged and checked again on the next scheduled run; there is no immediate retry or backoff.",
+          "SQLite fits the current read-heavy operation but has a ceiling on horizontal write scaling.",
+          "The inactive slot must pass health checks before switching; an operator restores the previous slot on failure."
+        ]
+      },
+      "publicEvidence": [
+        {
+          "claim": { "ko": "오늘 날짜 기본값", "en": "Current-date default" },
+          "question": { "ko": "오전에도 오늘 날짜를 선택하는가?", "en": "Does morning collection select the current date?" },
+          "label": "SearchDate.ts",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/main/src/domain/value-objects/SearchDate.ts",
+          "testLabel": "search-date.test.ts",
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/main/tests/search-date.test.ts"
+        },
+        {
+          "claim": { "ko": "KST singleton schedule", "en": "KST singleton schedule" },
+          "question": { "ko": "언제, 어느 timezone에서 실행되는가?", "en": "When and in which timezone does it run?" },
+          "label": "scheduleRouteSync.ts",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/main/src/scheduling/scheduleRouteSync.ts",
+          "testLabel": "scheduler.test.ts",
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/main/tests/scheduler.test.ts"
+        },
+        {
+          "claim": { "ko": "public route DTO 경계", "en": "Public route DTO boundary" },
+          "question": { "ko": "무엇을 허용·차단하는가?", "en": "Which fields and routes are allowed or blocked?" },
+          "label": "proxy route",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe/blob/main/src/app/api/proxy/%5B...path%5D/route.ts",
+          "testLabel": "proxy-route.test.ts",
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe/blob/main/src/__tests__/app/proxy-route.test.ts"
+        },
+        {
+          "claim": { "ko": "clean runner 검증", "en": "Clean-runner verification" },
+          "question": { "ko": "재생성된 저장소에서 검증됐는가?", "en": "Did verification pass in the recreated repository?" },
+          "label": "GitHub Actions",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/actions/runs/30065170941"
+        }
+      ],
       "scale": {
-        "ko": "FE+BE 웹 · singleton KST 월~토 06:00–20:00 · 2026-07-23 관측 485일·280,925 rows",
-        "en": "Frontend + backend web · singleton KST Mon–Sat 06:00–20:00 · observed 2026-07-23: 485 days, 280,925 rows"
+        "ko": "FE+BE 웹 · 오늘 날짜 정각 15개 slot 재조회 · singleton KST · 고정 DTO projection",
+        "en": "Frontend + backend web · 15 scheduled current-date slots · singleton KST · fixed DTO projection"
       },
       "metrics": [
         {
           "label": {
-            "ko": "수집 일정",
-            "en": "Collection schedule"
+            "ko": "오늘 데이터 수집",
+            "en": "Current-day collection"
           },
           "before": {
-            "ko": "수동 확인 의존",
-            "en": "Dependent on manual checks"
+            "ko": "14시 이전 전일 선택",
+            "en": "Previous day before 14:00"
           },
           "after": {
-            "ko": "singleton KST · 월~토 06:00–20:00 · 일 15회",
-            "en": "singleton KST · Mon–Sat 06:00–20:00 · 15/day"
+            "ko": "오늘 날짜 · 월~토 06:00–20:00 · 정각 15개 slot",
+            "en": "Current date · Mon–Sat 06:00–20:00 · 15 scheduled slots"
           },
           "improvement": {
-            "ko": "운영 시간대 수집",
-            "en": "Scheduled collection window"
+            "ko": "오전·지연 공개 재수집",
+            "en": "Morning and later updates rechecked"
           }
         },
         {
@@ -591,12 +689,12 @@
             "en": "Replica duplication"
           },
           "before": {
-            "ko": "기존 일 30회",
-            "en": "Historical 30/day"
+            "ko": "replica별 15개 slot",
+            "en": "15 slots per replica"
           },
           "after": {
-            "ko": "일 15회",
-            "en": "15/day"
+            "ko": "singleton 15개 slot",
+            "en": "15 singleton slots"
           },
           "improvement": {
             "ko": "singleton 복구",
@@ -605,20 +703,20 @@
         },
         {
           "label": {
-            "ko": "관측 규모",
-            "en": "Observed scale"
+            "ko": "브라우저 데이터 경계",
+            "en": "Browser data boundary"
           },
           "before": {
-            "ko": "관측일 미표기",
-            "en": "No observation date"
+            "ko": "원천·내부 필드 구분 불명확",
+            "en": "Source and internal fields not separated"
           },
           "after": {
-            "ko": "2026-07-23 · 485일 · 280,925건",
-            "en": "2026-07-23 · 485 days · 280,925 rows"
+            "ko": "차량정보 공개 · 내부 ID·credential URL 제외",
+            "en": "Vehicle details public · internal IDs and credential URL excluded"
           },
           "improvement": {
-            "ko": "관측일 명시",
-            "en": "Observation date stated"
+            "ko": "고정 public route DTO",
+            "en": "Fixed public route DTO"
           }
         }
       ],

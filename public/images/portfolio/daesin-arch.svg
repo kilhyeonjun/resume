@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" role="img" aria-labelledby="title desc" font-family="Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="560" viewBox="0 0 1080 560" role="img" aria-labelledby="title desc" font-family="Arial, sans-serif">
   <title>대신물류 배차 운영 원장 수집·조회 아키텍처</title>
-  <desc>수집 흐름은 외부 배차 사이트에서 singleton KST scheduler와 crawler를 거쳐 SQLite로 이어진다. 조회 흐름은 Next.js에서 Vercel read-only proxy, Traefik, Express active slot을 거쳐 SQLite를 읽는다. 비활성 slot은 health check 통과 뒤 전환하고 운영자가 manual rollback한다.</desc>
+  <desc>수집 흐름은 외부 공개 배차 사이트에서 오늘 날짜를 매시간 독립 재조회하는 singleton KST scheduler와 crawler를 거쳐 SQLite로 이어진다. 조회 흐름은 Next.js proxy의 public route DTO branch, Traefik, Express active slot을 거쳐 SQLite를 읽으며 차량정보는 제공하고 내부 ID와 credential-bearing tracking URL은 제외한다. 인증 경로는 별도로 전달하고, 비활성 slot은 health check 통과 뒤 전환하며 운영자가 manual rollback한다.</desc>
   <defs>
     <marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
       <path d="M0 0 9 3.5 0 7Z" fill="#64748b"/>
@@ -21,8 +21,8 @@
   <text class="sub" x="143" y="166" text-anchor="middle">External dispatch site</text>
   <rect class="node" x="286" y="108" width="224" height="86" rx="9"/>
   <text class="label" x="398" y="136" text-anchor="middle">singleton KST scheduler</text>
-  <text class="sub" x="398" y="159" text-anchor="middle">Mon–Sat 06:00–20:00</text>
-  <text class="sub" x="398" y="179" text-anchor="middle">15/day</text>
+  <text class="sub" x="398" y="159" text-anchor="middle">월–토 06:00–20:00 · 정각 15개 slot</text>
+  <text class="sub" x="398" y="179" text-anchor="middle">current date · hourly recheck</text>
   <rect class="node" x="558" y="108" width="208" height="86" rx="9"/>
   <text class="label" x="662" y="142" text-anchor="middle">Crawler</text>
   <text class="sub" x="662" y="166" text-anchor="middle">Cheerio + Axios · EUC-KR</text>
@@ -37,8 +37,8 @@
   <text class="label" x="128" y="338" text-anchor="middle">Next.js Web</text>
   <text class="sub" x="128" y="362" text-anchor="middle">browser query</text>
   <rect class="node" x="246" y="304" width="206" height="84" rx="9"/>
-  <text class="label" x="349" y="337" text-anchor="middle">Vercel read-only proxy</text>
-  <text class="sub" x="349" y="361" text-anchor="middle">read boundary</text>
+  <text class="label" x="349" y="337" text-anchor="middle">Next.js proxy</text>
+  <text class="sub" x="349" y="361" text-anchor="middle">public route DTO branch</text>
   <rect class="node" x="490" y="304" width="150" height="84" rx="9"/>
   <text class="label" x="565" y="338" text-anchor="middle">Traefik</text>
   <text class="sub" x="565" y="362" text-anchor="middle">route switch</text>

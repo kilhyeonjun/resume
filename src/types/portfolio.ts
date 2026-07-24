@@ -30,6 +30,21 @@ const problemSolvingEntrySchema = z.object({
   result: localizedStringSchema,
 });
 
+const scenarioEvidenceSchema = z.object({
+  image: localizedStringSchema,
+  title: localizedStringSchema,
+  caption: localizedStringSchema,
+});
+
+const publicEvidenceSchema = z.object({
+  claim: localizedStringSchema,
+  question: localizedStringSchema,
+  label: z.string(),
+  url: z.url(),
+  testLabel: z.string().optional(),
+  testUrl: z.url().optional(),
+});
+
 const glossaryEntrySchema = z.object({
   term: localizedStringSchema,
   definition: localizedStringSchema,
@@ -60,8 +75,13 @@ const portfolioProjectSchema = z.object({
   highlights: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }),
   features: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),
   problemSolving: z.array(problemSolvingEntrySchema).optional(),
+  scenarioEvidence: z.array(scenarioEvidenceSchema).optional(),
+  publicEvidence: z.array(publicEvidenceSchema).optional(),
+  operationalLimits: localizedStringArraySchema.optional(),
   lessons: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),
   architectureDiagram: localizedValueSchema.optional(),
+  printScenarioImage: localizedValueSchema.optional(),
+  printArchitectureDiagram: localizedValueSchema.optional(),
   sequenceDiagram: localizedValueSchema.optional(),
   metrics: z.array(metricSchema).optional(),
   techDecisions: localizedStringArraySchema.optional(),

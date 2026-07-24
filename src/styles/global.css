@@ -483,8 +483,10 @@ body {
   }
 
   .daesin-case > #visual { grid-row: 3; }
-  .daesin-case > #architecture { grid-row: 4; }
-  .portfolio-detail.daesin-case > #problems { grid-row: 5; order: 0; }
+  .portfolio-detail.daesin-case > #problems { grid-row: 4; order: 0; }
+  .daesin-case > #architecture { grid-row: 5; }
+  .daesin-case > #limits { grid-row: 6; }
+  .daesin-case > #public-evidence { grid-row: 7; }
   .daesin-case .case-diagram-caption { max-width: 68ch; }
 }
 

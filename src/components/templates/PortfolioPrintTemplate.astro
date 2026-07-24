@@ -216,6 +216,52 @@ function formatPeriod(period: { start: string; end: string }): string {
       border-radius: 2mm;
     }
 
+    .scenario-strip {
+      margin: 2mm 0 1mm;
+      break-inside: avoid;
+    }
+
+    .scenario-strip img {
+      display: block;
+      width: 100%;
+      border: 0.5pt solid #e5e7eb;
+      border-radius: 2mm;
+    }
+
+    .scenario-strip figcaption {
+      margin-top: 0.7mm;
+      color: #6b7280;
+      font-size: 7pt;
+    }
+
+    .daesin-print-footer {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 3mm;
+      margin-top: 1.5mm;
+      break-inside: avoid;
+    }
+
+    .bullet-list.compact li {
+      margin-bottom: 0.5mm;
+      font-size: 7.4pt;
+      line-height: 1.35;
+    }
+
+    .evidence-links-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1mm 2mm;
+      font-size: 7.4pt;
+      line-height: 1.35;
+    }
+
+    .evidence-links-line a {
+      color: #166534;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
     .evidence-register-print .arch-diagram {
       text-align: center;
     }
@@ -444,7 +490,10 @@ function formatPeriod(period: { start: string; end: string }): string {
       const role = project.role?.[lang] || project.role?.ko;
       const isEvidenceRegister = project.slug === 'ai-coding-harness';
       const isDaesinCase = project.slug === 'daesin-logistics-bot';
-      const architectureDiagram = project.architectureDiagram ? localize(project.architectureDiagram) : null;
+      const coverImage = project.printScenarioImage ? localize(project.printScenarioImage) : (project.coverImage ? localize(project.coverImage) : null);
+      const architectureDiagram = project.printArchitectureDiagram ? localize(project.printArchitectureDiagram) : (project.architectureDiagram ? localize(project.architectureDiagram) : null);
+      const operationalLimits = project.operationalLimits?.[lang];
+      const publicEvidence = project.publicEvidence;
       const detailUrl = new URL(`${localePrefix}/portfolio/${project.slug}`, Astro.site).toString();
 
       return (
@@ -475,7 +524,7 @@ function formatPeriod(period: { start: string; end: string }): string {
 
             <p class="project-summary">{summary}</p>
 
-            {!isEvidenceRegister && project.skills && project.skills.length > 0 && (
+            {!isEvidenceRegister && !isDaesinCase && project.skills && project.skills.length > 0 && (
               <div class="tech-stack">
                 {project.skills.map((skill) => (
                   <span class="tech-badge">{skill}</span>
@@ -483,9 +532,16 @@ function formatPeriod(period: { start: string; end: string }): string {
               </div>
             )}
 
+            {isDaesinCase && coverImage && (
+              <figure class="scenario-strip">
+                <img src={withBasePath(coverImage)} alt={lang === 'ko' ? '합성 데이터로 재현한 배차현황, 검색, 상세의 사용 흐름' : 'Synthetic user journey across dispatch overview, search, and detail'} />
+                <figcaption>{lang === 'ko' ? '실제 UI 구조 · 고정 synthetic fixture · 실시간 데이터 근거 아님' : 'Actual UI structure · deterministic synthetic fixture · not live-data evidence'}</figcaption>
+              </figure>
+            )}
+
             {architectureDiagram && (
               <div class="arch-diagram">
-                <img src={withBasePath(architectureDiagram)} alt={isDaesinCase ? (lang === 'ko' ? '외부 사이트에서 singleton KST scheduler와 crawler를 거쳐 SQLite에 저장하는 수집 흐름 및 Next.js에서 Vercel read-only proxy, Traefik, Express active slot을 거쳐 SQLite를 읽는 조회 흐름' : 'Collection flow from the external site through a singleton KST scheduler and crawler into SQLite, and query flow from Next.js through a Vercel read-only proxy, Traefik, and the Express active slot into SQLite') : `${name} architecture`} />
+                <img src={withBasePath(architectureDiagram)} alt={isDaesinCase ? (lang === 'ko' ? '오늘 날짜 독립 재조회와 Next.js proxy의 public route DTO branch를 포함한 수집·조회·배포 경계' : 'Collection, query, and deployment boundary with current-date independent rechecks and the public route DTO branch inside the Next.js proxy') : `${name} architecture`} />
               </div>
             )}
 
@@ -511,7 +567,7 @@ function formatPeriod(period: { start: string; end: string }): string {
               </table>
             )}
 
-            {project.problemSolving && project.problemSolving.length > 0 && (
+            {!isDaesinCase && project.problemSolving && project.problemSolving.length > 0 && (
               <section class="problem-solving-print">
                 <p class="bullet-section-heading">{currentLabels.problemSolving}</p>
                 {(isDaesinCase ? project.problemSolving.slice(0, 3) : project.problemSolving).map((entry) => (
@@ -524,7 +580,7 @@ function formatPeriod(period: { start: string; end: string }): string {
               </section>
             )}
 
-            {project.techDecisions?.[lang] && project.techDecisions[lang].length > 0 && (
+            {!isDaesinCase && project.techDecisions?.[lang] && project.techDecisions[lang].length > 0 && (
               <>
                 <p class="bullet-section-heading">{currentLabels.techDecisions}</p>
                 <ul class="bullet-list">
@@ -533,6 +589,28 @@ function formatPeriod(period: { start: string; end: string }): string {
                   ))}
                 </ul>
               </>
+            )}
+
+            {isDaesinCase && operationalLimits && (
+              <div class="daesin-print-footer">
+                <div>
+                  <p class="bullet-section-heading">{lang === 'ko' ? '운영 한계' : 'Operating limits'}</p>
+                  <ul class="bullet-list compact">
+                    {operationalLimits.map((item) => <li><span class="bullet">&bull;</span>{item}</li>)}
+                  </ul>
+                </div>
+                {publicEvidence && (
+                  <div>
+                    <p class="bullet-section-heading">{lang === 'ko' ? '공개 근거' : 'Public evidence'}</p>
+                    <p class="evidence-links-line">{publicEvidence.map((item) => (
+                      <>
+                        <a href={item.url} target="_blank" rel="noopener noreferrer">{item.label} ↗</a>
+                        {item.testLabel && item.testUrl && <a href={item.testUrl} target="_blank" rel="noopener noreferrer">{item.testLabel} ↗</a>}
+                      </>
+                    ))}</p>
+                  </div>
+                )}
+              </div>
             )}
 
             {!isEvidenceRegister && !isDaesinCase && highlights && highlights.length > 0 && (

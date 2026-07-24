@@ -8,13 +8,16 @@ import test from 'node:test';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 
-async function textFiles(dir) {
+async function files(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
   return (await Promise.all(entries.map((entry) => {
     const path = join(dir, entry.name);
-    if (entry.isDirectory()) return textFiles(path);
-    return /\.(?:astro|css|html|js|json|md|mjs|svg|ts|txt)$/.test(entry.name) ? [path] : [];
+    return entry.isDirectory() ? files(path) : [path];
   }))).flat();
+}
+
+async function textFiles(dir) {
+  return (await files(dir)).filter((path) => /\.(?:astro|css|html|js|json|md|mjs|svg|ts|txt)$/.test(path));
 }
 
 test('private operating namespaces are never tracked', () => {
@@ -115,5 +118,19 @@ test('deployable sources exclude blocked recruiting evidence fingerprints', asyn
   for (const file of files) {
     const text = await readFile(file, 'utf8');
     assert.equal(hasBlockedFingerprint(text), false, file);
+  }
+});
+
+test('deprecated Ledgerly is absent from public release surfaces', async () => {
+  const portfolio = JSON.parse(await readFile(join(root, 'src/data/portfolio.json'), 'utf8'));
+  assert.equal(portfolio.projects.some((project) => project.slug === 'ledgerly'), false);
+  assert.equal(portfolio.projects.filter((project) => project.featured).length, 3);
+
+  for (const dir of ['src', 'public', 'dist']) {
+    const releaseFiles = await files(join(root, dir));
+    for (const file of releaseFiles) assert.doesNotMatch(file, /ledgerly/i);
+    for (const file of await textFiles(join(root, dir))) {
+      assert.doesNotMatch(await readFile(file, 'utf8'), /ledgerly/i, file);
+    }
   }
 });

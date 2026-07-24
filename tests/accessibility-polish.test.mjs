@@ -120,7 +120,7 @@ test('dark print keeps every visible direct-text sample at WCAG AA', { timeout: 
     .map((match) => new URL(match[1]).pathname)
     .filter((path) => !/(?:-print|resume-ats|og-image)/.test(path));
   paths.push('/404.html');
-  assert.equal(paths.length, 37, 'dark-print route scan must cover every screen route');
+  assert.equal(paths.length, 35, 'dark-print route scan must cover every screen route');
   const { server, origin } = await serveDist();
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
   let sampleCount = 0;

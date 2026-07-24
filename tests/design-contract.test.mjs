@@ -215,6 +215,9 @@ test('Daesin case study keeps KO/EN facts, evidence, and print budgets aligned',
   assert.match(publicCopy, /30\/day/);
   assert.match(publicCopy, /15\/day/);
   assert.match(publicCopy, /singleton KST/);
+  assert.doesNotMatch(publicCopy, /검증 완료 전|until verified/i);
+  assert.match(publicCopy, /공개 조회 경계·인증·배포 회귀 검증/);
+  assert.match(publicCopy, /public read boundary, authentication, and deployment regression checks/);
 
   const [detail, print, css, diagram] = await Promise.all([
     read('src/components/templates/PortfolioDetailTemplate.astro'),

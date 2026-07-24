@@ -4,6 +4,7 @@ import GitHubIcon from '../icons/GitHubIcon.astro';
 import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
 import type { PortfolioProject, PortfolioLabels } from '../../types/portfolio';
 import { getLocalePrefix, withBasePath } from '../../utils/paths';
+import { selectFeaturedPortfolioProjects, selectListedPortfolioProjects } from '../../utils/portfolio-visibility';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -13,12 +14,8 @@ interface Props {
 
 const { lang, projects: rawProjects, labels } = Astro.props;
 const localePrefix = getLocalePrefix(lang);
-const projects = [...rawProjects].sort((a, b) =>
-  (a.printOrder ?? Number.MAX_SAFE_INTEGER) - (b.printOrder ?? Number.MAX_SAFE_INTEGER)
-  || new Date(b.period.start).getTime() - new Date(a.period.start).getTime()
-);
-const featuredProjects = projects.filter((project) => project.featured).slice(0, 3);
-const archiveProjects = projects.filter((project) => !featuredProjects.some((featured) => featured.slug === project.slug));
+const featuredProjects = selectFeaturedPortfolioProjects(rawProjects);
+const archiveProjects = selectListedPortfolioProjects(rawProjects);
 ---
 
 <Layout title={`${labels.portfolio} | Portfolio`} description={lang === 'ko' ? '개인 프로젝트 포트폴리오' : 'Personal Project Portfolio'} lang={lang}>

@@ -1,7 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /resume-print
-Disallow: /resume-ats
-Disallow: /en/resume-print
-Disallow: /en/resume-ats
 Sitemap: https://career.kilpenguin.com/sitemap-index.xml

@@ -41,6 +41,17 @@ test('shared layout exposes the approved dossier design hooks and 44px controls'
   assert.match(robots, /Sitemap: https:\/\/career\.kilpenguin\.com\/sitemap-index\.xml/);
 });
 
+test('experience position periods keep WCAG AA text contrast', async () => {
+  const [resume, detail] = await Promise.all([
+    read('src/components/resume/ResumeExperience.astro'),
+    read('src/components/templates/ExperienceDetailTemplate.astro'),
+  ]);
+  for (const source of [resume, detail]) {
+    assert.match(source, /text-gray-600 dark:text-gray-400/);
+    assert.doesNotMatch(source, /text-gray-400 dark:text-gray-500/);
+  }
+});
+
 test('approved convention-preserving polish is screen-only and keeps content visible', async () => {
   const css = await read('src/styles/global.css');
   const prefix = '/* Convention-preserving polish · P1 */\n';

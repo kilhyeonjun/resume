@@ -396,6 +396,7 @@ body {
 .resume-dossier .section-title { display: block; letter-spacing: -.02em; }
 .resume-dossier .section-title::after { display: none; }
 .resume-dossier .experience-item { border-radius: 0; box-shadow: none; border-width: 1px 0 0; background: transparent; }
+.resume-dossier .experience-item::before { display: none; }
 
 .portfolio-index { padding-top: 4.5rem; }
 .portfolio-hero { margin-bottom: 3.25rem; }

@@ -2,10 +2,12 @@
 import PortfolioDetailTemplate from '../../components/templates/PortfolioDetailTemplate.astro';
 import rawPortfolioData from '../../data/portfolio.json';
 import { portfolioDataSchema } from '../../types/portfolio';
+import { selectPublicPortfolioProjects } from '../../utils/portfolio-visibility';
 
 export function getStaticPaths() {
   const portfolioData = portfolioDataSchema.parse(rawPortfolioData);
-  const { projects, labels } = portfolioData;
+  const { projects: rawProjects, labels } = portfolioData;
+  const projects = selectPublicPortfolioProjects(rawProjects);
   
   return projects.map((project, index) => ({
     params: { slug: project.slug },

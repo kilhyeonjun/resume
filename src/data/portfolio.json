@@ -288,8 +288,8 @@
         "en": "A current-day dispatch ledger for route, vehicle, and statistics views, with singleton collection ownership and a fixed browser data boundary"
       },
       "description": {
-        "ko": "외부 배차 사이트의 EUC-KR 데이터를 Cheerio와 Axios로 수집해 Prisma SQLite에 저장하고 Next.js 웹에서 조회한다. 웹 replica와 분리한 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 오늘 날짜를 재조회하므로 오전 데이터와 늦게 공개된 변경분을 이후 실행에서 반영할 수 있다. Next.js proxy의 public route DTO branch는 필수 핵심 필드와 허용된 원천 URL을 검증해 운영 화면에 필요한 필드만 projection하고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외하며, 인증·migration 경로는 별도로 전달한다. 배포는 비활성 slot의 health check 후 Traefik active slot을 전환하며 이상 시 운영자가 수동 롤백한다.",
-        "en": "The service collects EUC-KR data from an external dispatch site with Cheerio and Axios, stores it in Prisma SQLite, and serves it through a Next.js web app. A singleton KST scheduler separated from web replicas rechecks the current date in 15 scheduled hourly slots from Mon–Sat 06:00–20:00, so subsequent runs can capture morning data and later source changes. The public route DTO branch inside the Next.js proxy validates required core fields and allowlisted source URLs, projects only fields needed by the operational UI, and excludes internal IDs, unknown fields, and the credential-bearing tracking URL; authenticated migration routes pass through separately. Deployment switches Traefik to an inactive slot only after its health check passes, and rollback is manual."
+        "ko": "외부 배차 사이트의 EUC-KR 데이터를 Cheerio와 Axios로 수집해 Prisma SQLite에 저장하고 Next.js 웹에서 조회한다. 웹 replica와 분리한 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 오늘 날짜를 재조회하므로 오전 데이터와 늦게 공개된 변경분을 이후 실행에서 반영할 수 있다. Next.js proxy의 public route DTO branch는 필수 핵심 필드와 허용된 원천 URL을 검증해 운영 화면에 필요한 필드만 projection하고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외하며, 인증·migration 경로는 allowlist된 method/path만 별도로 forward한다. 배포는 비활성 slot의 health check 후 Traefik active slot을 전환하며 이상 시 운영자가 수동 롤백한다.",
+        "en": "The service collects EUC-KR data from an external dispatch site with Cheerio and Axios, stores it in Prisma SQLite, and serves it through a Next.js web app. A singleton KST scheduler separated from web replicas rechecks the current date in 15 scheduled hourly slots from Mon–Sat 06:00–20:00, so subsequent runs can capture morning data and later source changes. The public route DTO branch inside the Next.js proxy validates required core fields and allowlisted source URLs, projects only fields needed by the operational UI, and excludes internal IDs, unknown fields, and the credential-bearing tracking URL; only allowlisted methods and paths for authenticated migration routes are forwarded separately. Deployment switches Traefik to an inactive slot only after its health check passes, and rollback is manual."
       },
       "role": {
         "ko": "기획·FE·BE·배포·운영 단독",
@@ -339,8 +339,8 @@
             "en": "Separate public route responses from authenticated routes"
           },
           "caption": {
-            "ko": "Next.js proxy 전체가 아니라 public route 응답에만 allowlist projection을 적용한다. exact method/path·schema·payload limit·redirect 차단을 거치며 인증 경로는 별도로 전달한다.",
-            "en": "Applies allowlist projection only to public route responses, not the whole Next.js proxy. It enforces exact method and path, schema, payload limits, and redirect rejection while forwarding authenticated routes separately."
+            "ko": "Next.js proxy 전체가 아니라 public route 응답에만 allowlist projection을 적용한다. exact method/path·schema·payload limit·redirect 차단을 거치며 인증 경로는 allowlist된 method/path만 별도로 forward한다.",
+            "en": "Applies allowlist projection only to public route responses, not the whole Next.js proxy. It enforces exact method and path, schema, payload limits, and redirect rejection while forwarding only allowlisted methods and paths for authenticated routes."
           }
         }
       ],
@@ -383,8 +383,8 @@
             "en": "How — used a method/path allowlist, required-field validation, a fixed output projection, and source-URL contracts to pass only operational UI fields while excluding internal IDs, unknown fields, and the credential-bearing tracking URL"
           },
           "result": {
-            "ko": "Result — 고정 출력 projection과 원천 URL allowlist를 인증·redirect·payload·배포 회귀 경계와 함께 검증",
-            "en": "Result — verified the fixed output projection and source-URL allowlist together with authentication, redirect, payload, and deployment regression boundaries"
+            "ko": "Result — 고정 출력 projection과 원천 URL allowlist를 redirect·payload·배포 회귀 경계와 함께 검증",
+            "en": "Result — verified the fixed output projection and source-URL allowlist together with redirect, payload, and deployment regression boundaries"
           }
         }
       ],
@@ -465,29 +465,29 @@
           "claim": { "ko": "오늘 날짜 기본값", "en": "Current-date default" },
           "question": { "ko": "오전에도 오늘 날짜를 선택하는가?", "en": "Does morning collection select the current date?" },
           "label": "SearchDate.ts",
-          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/main/src/domain/value-objects/SearchDate.ts",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/src/domain/value-objects/SearchDate.ts",
           "testLabel": "search-date.test.ts",
-          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/main/tests/search-date.test.ts"
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/tests/search-date.test.ts"
         },
         {
           "claim": { "ko": "KST singleton schedule", "en": "KST singleton schedule" },
           "question": { "ko": "언제, 어느 timezone에서 실행되는가?", "en": "When and in which timezone does it run?" },
           "label": "scheduleRouteSync.ts",
-          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/main/src/scheduling/scheduleRouteSync.ts",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/src/scheduling/scheduleRouteSync.ts",
           "testLabel": "scheduler.test.ts",
-          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/main/tests/scheduler.test.ts"
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/tests/scheduler.test.ts"
         },
         {
           "claim": { "ko": "public route DTO 경계", "en": "Public route DTO boundary" },
           "question": { "ko": "무엇을 허용·차단하는가?", "en": "Which fields and routes are allowed or blocked?" },
           "label": "proxy route",
-          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe/blob/main/src/app/api/proxy/%5B...path%5D/route.ts",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe/blob/78d364a5f886594e1dccf5f2f358c1dcd8b74528/src/app/api/proxy/%5B...path%5D/route.ts",
           "testLabel": "proxy-route.test.ts",
-          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe/blob/main/src/__tests__/app/proxy-route.test.ts"
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe/blob/78d364a5f886594e1dccf5f2f358c1dcd8b74528/src/__tests__/app/proxy-route.test.ts"
         },
         {
-          "claim": { "ko": "clean runner 검증", "en": "Clean-runner verification" },
-          "question": { "ko": "재생성된 저장소에서 검증됐는가?", "en": "Did verification pass in the recreated repository?" },
+          "claim": { "ko": "BE clean CI run", "en": "BE clean CI run" },
+          "question": { "ko": "BE 저장소의 clean CI가 성공했는가?", "en": "Did the backend repository pass a clean CI run?" },
           "label": "GitHub Actions",
           "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/actions/runs/30065170941"
         }
@@ -704,28 +704,28 @@
       "featured": true,
       "printOrder": 2,
       "summary": {
-        "ko": "1만 동시 요청 환경에서 좌석 선점·결제·포인트 충전의 동시성 문제를 시나리오별 하이브리드 락 전략으로 해결한 콘서트 좌석 예약 서비스 — 낙관적 락 + Redisson 분산 락, Redis 캐싱 TPS 15배 향상, Kafka 이벤트 드리븐 아키텍처, K6 부하 테스트 기반 병목 개선",
-        "en": "Concert seat reservation service resolving concurrency across seat locking, payments, and point charging under 10K concurrent requests — hybrid locking strategy (optimistic + Redisson distributed lock), 15x TPS improvement via Redis caching, Kafka event-driven architecture, K6 load test-driven optimization"
+        "ko": "동일 좌석·사용자 지갑 동시성 테스트로 좌석에는 낙관적 락, 결제·충전에는 사용자 단위 Redisson 락을 적용하고, 공개 k6 보고서에서 캐시 스탬피드 p95를 5.74초에서 676ms로 낮춘 콘서트 예약 프로젝트",
+        "en": "Concert reservation project that verifies same-seat booking and wallet payment with optimistic and Redisson locks, then reduces cache-stampede p95 from 5.74s to 676ms through cache warming and TTL changes in the public load-test report"
       },
       "description": {
-        "ko": "대규모 트래픽 환경에서의 동시성 문제를 다양한 락 전략(비관적 락, 낙관적 락, Redis 분산 락)으로 해결하고, 시나리오별 최적의 동시성 제어 방식을 선정한 프로젝트이다. 좌석 선점에는 낙관적 락, 포인트 충전과 결제에는 Redisson 기반 분산 락을 적용하는 하이브리드 전략을 설계했으며, Redis 캐싱과 DB 인덱싱으로 조회 성능을 최적화하고 Kafka를 활용한 이벤트 기반 아키텍처로 시스템 간 결합도를 낮췄다. K6 부하 테스트를 통해 성능 병목을 식별하고 개선하는 전 과정을 경험했다.",
-        "en": "A project that resolved concurrency issues in high-traffic environments using multiple locking strategies (pessimistic, optimistic, and Redis distributed locks), selecting the optimal approach per scenario. Designed a hybrid strategy applying optimistic locks for seat reservation and Redisson-based distributed locks for point charging and payments. Optimized read performance through Redis caching and DB indexing, and reduced system coupling with Kafka-based event-driven architecture. Experienced the full cycle of identifying and resolving performance bottlenecks through K6 load testing."
+        "ko": "공개 저장소의 100-thread 통합 테스트는 동일 좌석 요청에서 예약 행 하나만 남는지, 사용자 단위 Redisson 락 아래 충전·결제 결과가 기대값과 일치하는지 검증한다. 결제 트랜잭션은 PENDING outbox 행을 만들고 scheduler가 Kafka 발행·실패 재시도를 맡는다. k6 예약 시나리오는 3,000 requests/s를 설정했지만 최대 VU는 2,400이므로 이를 달성 처리량이나 동시 사용자 수로 표현하지 않는다. 공개 보고서에 기록된 예약 오류율 0.64%와 p95 5.74s, 캐시 워밍·TTL 조정 후 p95 676ms만 관측 결과로 사용한다.",
+        "en": "Public-repository 100-thread integration tests verify that same-seat requests leave one reservation row and that per-user Redisson locking produces the expected charge and payment state. The payment transaction creates a PENDING outbox row, while a scheduler handles Kafka publication and failed-event retries. The k6 reservation scenario configures 3,000 requests/s with a 2,400 max-VU ceiling, so it is not presented as achieved throughput or concurrent users. Only the public report's observed 0.64% reservation error rate, p95 5.74s, and post-cache-warming/TTL p95 676ms are reported as outcomes."
       },
       "coverImage": "/images/portfolio/concert-reservation-cover.webp",
       "contentImages": [],
       "problemSolving": [
         {
           "problem": {
-            "ko": "1만 동시 요청 환경에서 좌석 선점 시 동일 좌석 이중 배정 위험",
-            "en": "Risk of double-booking under 10K concurrent seat reservation requests"
+            "ko": "동일 좌석에 100개 thread가 동시에 예약을 시도할 때 중복 예약 위험",
+            "en": "Duplicate-reservation risk when 100 threads target the same seat"
           },
           "process": {
-            "ko": "비관적/낙관적/분산 락 3종을 K6로 비교 검증 후, 단일 좌석 경합에 최적인 @Version 낙관적 락 선택",
-            "en": "Compared pessimistic, optimistic, and distributed locks via K6; selected @Version optimistic lock optimal for single-row contention"
+            "ko": "ConcertSeat @Version 낙관적 락과 100-thread Spring 통합 테스트로 충돌 경로 검증",
+            "en": "Exercised the conflict path with ConcertSeat @Version optimistic locking and a 100-thread Spring integration test"
           },
           "result": {
-            "ko": "좌석 예약 응답시간 50% 개선 (1,678ms → 835ms), 이중 배정 0건",
-            "en": "50% reservation latency improvement (1,678ms → 835ms), zero double-bookings"
+            "ko": "테스트 종료 후 예약 행 1개와 reserved 상태를 assertion으로 확인",
+            "en": "Assertions confirm one reservation row and the reserved state after the test"
           }
         },
         {
@@ -734,40 +734,40 @@
             "en": "Balance integrity corruption under concurrent point charging and payments"
           },
           "process": {
-            "ko": "재시도 기반 낙관적 락의 무한 루프 위험을 분석하고, Redisson 분산 락(userWalletLock:{userId})으로 사용자 단위 직렬화",
-            "en": "Analyzed infinite retry risk of optimistic lock; applied Redisson distributed lock (userWalletLock:{userId}) for per-user serialization"
+            "ko": "Redisson 분산 락(userWalletLock:{userId})으로 사용자 단위 충전·결제 경로를 직렬화",
+            "en": "Serialized per-user charge and payment paths with a Redisson distributed lock (userWalletLock:{userId})"
           },
           "result": {
-            "ko": "동시 충전/결제 시나리오에서 잔액 정합성 100% 보장",
-            "en": "100% balance consistency under concurrent charge/payment scenarios"
+            "ko": "100-thread 충전 테스트에서 최종 잔액을 기대 합계와 비교하고 결제 테스트에서 단일 결제 상태를 확인",
+            "en": "A 100-thread charge test compares the final balance with the expected sum, while the payment test checks a single payment state"
           }
         },
         {
           "problem": {
-            "ko": "콘서트/좌석 조회 TPS가 100에 불과하여 예약 오픈 시 DB 병목",
-            "en": "Concert/seat query TPS only 100, causing DB bottleneck at reservation open"
+            "ko": "예약 부하 테스트에서 캐시 만료 구간의 stampede와 p95 5.74s 지연 관측",
+            "en": "Observed a cache stampede and p95 5.74s latency during the reservation load test"
           },
           "process": {
-            "ko": "Redis 캐시 레이어 적용 + DB 인덱스 최적화를 병행하여 계층적 캐싱 전략 구현",
-            "en": "Implemented layered caching strategy combining Redis cache with DB index optimization"
+            "ko": "예약 시작 3분 전 캐시 워밍과 TTL 2분→5분 조정을 적용",
+            "en": "Applied cache warming three minutes before reservations and changed TTL from two to five minutes"
           },
           "result": {
-            "ko": "TPS 100 → 1,500 (15배 향상), DB 쿼리 94% 감소",
-            "en": "TPS 100 → 1,500 (15x improvement), 94% DB query reduction"
+            "ko": "공개 보고서 기준 예약 p95 5.74s → 676ms, 설정 SLO 1s 이내",
+            "en": "Public report records reservation p95 5.74s → 676ms, within its configured 1s SLO"
           }
         },
         {
           "problem": {
-            "ko": "예약 완료 후 결제/알림 처리가 동기 호출로 묶여 도메인 간 강결합",
-            "en": "Payment/notification tightly coupled via synchronous calls after reservation"
+            "ko": "결제 이벤트의 저장·발행·실패 재시도 상태를 하나의 동기 호출에서 분리해야 했다",
+            "en": "Payment-event persistence, publication, and failed-event retry states needed separate boundaries"
           },
           "process": {
-            "ko": "Kafka Transactional Outbox 패턴으로 예약 TX 내 outbox_event 삽입 후 스케줄러가 비동기 발행",
-            "en": "Kafka Transactional Outbox: outbox_event inserted within TX, scheduler publishes asynchronously"
+            "ko": "Kafka Transactional Outbox 패턴으로 결제 TX 내 PENDING outbox_event를 저장하고 scheduler가 비동기 발행",
+            "en": "Kafka Transactional Outbox stores a PENDING outbox_event within the payment transaction, then a scheduler publishes it asynchronously"
           },
           "result": {
-            "ko": "도메인 간 결합도 제거, 메시지 유실 방지, 독립 확장 가능",
-            "en": "Eliminated coupling, prevented message loss, enabled independent scaling"
+            "ko": "결제 트랜잭션의 PENDING outbox 생성과 발행 실패 상태·재시도 경로를 코드와 테스트로 분리",
+            "en": "Separated PENDING outbox creation from publication-failure state and retry paths in code and tests"
           }
         }
       ],
@@ -787,14 +787,17 @@
       ],
       "github": "https://github.com/hhpb-code/hhplus-concert",
       "links": {
-        "erd": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/ERD.md",
-        "apiSpec": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/API_SPEC.md",
-        "sequenceDiagram": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/SEQUENCE_DIAGRAM.md",
-        "requirements": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/REQUIREMENT.md",
-        "projectStructure": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/PROJECT_STRUCTURE.md",
-        "concurrencyAnalysis": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/CONCURRENCY.md",
-        "cachingStrategy": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/CACHING.md",
-        "indexOptimization": "https://github.com/hhpb-code/hhplus-concert/blob/master/docs/INDEXING.md"
+        "erd": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/ERD.md",
+        "apiSpec": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/API_SPEC.md",
+        "sequenceDiagram": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/SEQUENCE_DIAGRAM.md",
+        "requirements": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/REQUIREMENT.md",
+        "projectStructure": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/PROJECT_STRUCTURE.md",
+        "seatAndPaymentConcurrencyTests": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/src/test/java/com/example/hhplus/concert/application/ConcertFacadeConcurrencyTest.java",
+        "walletConcurrencyTests": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/src/test/java/com/example/hhplus/concert/application/UserFacadeConcurrencyTest.java",
+        "cacheAndQueueDesign": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/CACHE_REDIS_QUEUE.md",
+        "loadTestResult": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/LOAD_TEST_RESULT.md",
+        "loadConfiguration": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/k6/concert-reservation-script.js",
+        "indexOptimization": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/INDEXING.md"
       },
       "blogPosts": [
         {
@@ -828,80 +831,92 @@
       ],
       "highlights": {
         "ko": [
-          "낙관적 락으로 좌석 예약 응답 시간 50% 개선 (1,678ms → 835ms)",
-          "시나리오별 하이브리드 락 전략 설계 (낙관적 락 + Redisson 분산 락)",
-          "Redis 캐싱으로 TPS 15배 향상 (100 → 1,500), DB 쿼리 94% 감소",
-          "Kafka 이벤트 드리븐 아키텍처로 도메인 간 결합도 제거",
-          "K6 부하 테스트 기반 성능 병목 식별 및 개선"
+          "동일 좌석 100-thread 통합 테스트에서 예약 행 1개 확인",
+          "사용자 지갑·결제를 Redisson 사용자 단위 락으로 직렬화",
+          "캐시 워밍·TTL 조정 후 공개 보고서 p95 5.74s → 676ms",
+          "결제 TX의 PENDING outbox와 scheduler 발행·재시도 경로 구현",
+          "k6 설정값 3,000 requests/s와 최대 2,400 VU를 관측 성과와 분리"
         ],
         "en": [
-          "50% seat reservation response time improvement with optimistic locking (10K concurrent)",
-          "Hybrid locking strategy: optimistic lock for seats, Redisson for payments",
-          "15x TPS improvement (100 → 1,500), 94% DB query reduction via Redis caching",
-          "Kafka event-driven architecture eliminating inter-domain coupling",
-          "Performance bottleneck identification and resolution via K6 load testing"
+          "One reservation row after a 100-thread same-seat integration test",
+          "Per-user Redisson serialization for wallet and payment paths",
+          "Public-report p95 5.74s → 676ms after cache warming and TTL changes",
+          "PENDING outbox in the payment transaction plus scheduler publication and retry paths",
+          "Configured 3,000 requests/s and 2,400 max VUs kept separate from observed outcomes"
         ]
       },
       "lessons": {
         "ko": [
-          "비관적/낙관적/분산 락의 트레이드오프를 비교하며 동시성 제어의 본질적 차이를 이해",
-          "시나리오별 하이브리드 락 전략 설계로 단일 솔루션이 아닌 맥락 기반 선택의 중요성 학습",
-          "Redis 캐싱과 DB 인덱스 최적화를 병행하여 읽기 성능을 극대화하는 계층적 캐싱 전략 경험",
-          "Kafka 기반 이벤트 드리븐 아키텍처로 도메인 간 결합도를 제거하는 비동기 통신 설계 학습"
+          "동일 좌석과 사용자 지갑의 경합 범위에 따라 낙관적 락과 사용자 단위 분산 락을 구분",
+          "k6 설정값·최대 VU와 보고서의 관측 결과를 분리해 성능 수치의 범위를 명확히 기록",
+          "캐시 워밍과 TTL 조정은 공개 보고서의 예약 p95 개선 범위로만 해석",
+          "결제 outbox의 PENDING·발행 실패·재시도 상태를 분리해 비동기 경계를 명시"
         ],
         "en": [
-          "Understood fundamental differences in concurrency control by comparing pessimistic, optimistic, and distributed lock tradeoffs",
-          "Learned context-driven selection over single solutions through hybrid locking strategy design per scenario",
-          "Experienced layered caching strategy maximizing read performance by combining Redis caching with DB index optimization",
-          "Learned async communication design eliminating inter-domain coupling through Kafka-based event-driven architecture"
+          "Separated optimistic locking for same-seat contention from per-user distributed locking for wallet contention",
+          "Kept configured k6 rate and max VUs distinct from observations reported by the load test",
+          "Scoped cache warming and TTL changes to the reservation p95 improvement recorded in the public report",
+          "Made the asynchronous boundary explicit through separate PENDING, publication-failure, and retry states in the payment outbox"
         ]
       },
-      "architectureDiagram": "/images/portfolio/concert-reservation-arch.svg",
+      "architectureDiagram": {
+        "ko": "/images/portfolio/concert-reservation-arch.svg",
+        "en": "/images/portfolio/concert-reservation-arch-en.svg"
+      },
       "scale": {
-        "ko": "1만 동시 요청 · K6 3,000 TPS · Kafka 3-broker · Prometheus+Grafana",
-        "en": "10K concurrent · K6 3,000 TPS · Kafka 3-broker · Prometheus+Grafana"
+        "ko": "k6 설정값 3,000 requests/s · 최대 2,400 VU · 관측 예약 오류율 0.64% · Prometheus+Grafana",
+        "en": "Configured 3,000 requests/s · 2,400 max VUs · observed reservation error rate 0.64% · Prometheus+Grafana"
       },
       "metrics": [
         {
           "label": {
-            "ko": "좌석 예약 응답시간",
-            "en": "Reservation latency"
+            "ko": "예약 p95",
+            "en": "Reservation p95"
           },
-          "before": "1,678ms",
-          "after": "835ms",
-          "improvement": "-50%"
+          "before": "5.74s",
+          "after": "676ms",
+          "improvement": {
+            "ko": "캐시 워밍 + TTL 2분→5분",
+            "en": "cache warming + TTL 2m→5m"
+          }
         },
         {
           "label": {
-            "ko": "좌석 조회 TPS",
-            "en": "Seat query TPS"
+            "ko": "예약 오류율",
+            "en": "Reservation error rate"
           },
-          "before": "100",
-          "after": "1,500",
-          "improvement": "15x"
+          "before": "-",
+          "after": "0.64%",
+          "improvement": {
+            "ko": "예약 시나리오 394건 실패 기록",
+            "en": "394 failures in the reservation scenario"
+          }
         },
         {
           "label": {
-            "ko": "DB 쿼리 비율",
-            "en": "DB query ratio"
+            "ko": "대기열 p95",
+            "en": "Queue p95"
           },
-          "before": "100%",
-          "after": "6%",
-          "improvement": "-94%"
+          "before": "-",
+          "after": "62.5ms",
+          "improvement": {
+            "ko": "대기열 시나리오 오류율 0%",
+            "en": "0% error rate in the queue scenario"
+          }
         }
       ],
       "techDecisions": {
         "ko": [
-          "좌석 선점에 @Version 낙관적 락: 단일 좌석 경합에서 비관적 락 대비 처리량 우위, K6 1만 VU 검증",
-          "결제·충전에 Redisson 분산 락(userWalletLock:{userId}): 잔액 정합성 필수 트랜잭션에서 재시도 기반 낙관적 락의 무한 루프 위험 회피",
-          "Redis Sorted Set 대기열: 스코어=Unix timestamp로 입장 순서+만료 시간 이중 활용, DB 대기열 대비 O(log N)",
-          "Transactional Outbox 패턴: 결제 TX 내 outbox_event 행 삽입 → 스케줄러가 Kafka 발행, 메시지 유실 방지"
+          "좌석 선점에 @Version 낙관적 락: 100-thread 동일 좌석 통합 테스트가 예약 행 1개를 assertion",
+          "결제·충전에 Redisson 사용자 단위 락: 100-thread 테스트가 결제 상태와 최종 잔액을 기대값과 비교",
+          "Redis Sorted Set 대기열: 입장 순서와 만료 상태를 score로 관리",
+          "결제 TX에서 PENDING outbox 생성 후 scheduler가 발행 실패 상태와 재시도 경로를 관리"
         ],
         "en": [
-          "@Version optimistic lock for seat reservation: higher throughput than pessimistic lock on single-row contention, validated with K6 10K VU",
-          "Redisson distributed lock (userWalletLock:{userId}) for payments: avoids infinite retry loops of optimistic lock in balance-critical transactions",
-          "Redis Sorted Set queue: score=Unix timestamp serves dual purpose (entry order + expiry), O(log N) vs DB-based queue",
-          "Transactional Outbox pattern: outbox_event row inserted within payment TX → scheduler publishes to Kafka, preventing message loss"
+          "@Version optimistic locking for seats: a 100-thread same-seat integration test asserts one reservation row",
+          "Per-user Redisson locking for payment and charging: 100-thread tests compare payment state and final balance with expected values",
+          "Redis Sorted Set queue: scores track entry order and expiry state",
+          "Create a PENDING outbox record in the payment transaction, then let the scheduler manage publication-failure and retry paths"
         ]
       }
     },

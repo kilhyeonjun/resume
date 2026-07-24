@@ -77,8 +77,8 @@ test('interactive route families expose their shared design hooks', async () => 
   for (const [path, hook] of families) assert.match(await read(path), new RegExp(hook), path);
   assert.match(await read('src/components/templates/ResumeTemplate.astro'), /filter\(\(proof\) => \/\\d\//);
   assert.match(await read('src/components/templates/PortfolioTemplate.astro'), /portfolio-archive/);
-  assert.match(await read('src/components/templates/PortfolioTemplate.astro'), /filter\(\(project\) => project\.featured\)/);
-  assert.match(await read('src/components/templates/PortfolioTemplate.astro'), /printOrder/);
+  assert.match(await read('src/components/templates/PortfolioTemplate.astro'), /selectFeaturedPortfolioProjects/);
+  assert.match(await read('src/utils/portfolio-visibility.ts'), /printOrder/);
   assert.match(await read('src/components/resume/ResumeHeader.astro'), /\{data\.title\}<\/span>/);
   for (const path of ['src/components/templates/PortfolioDetailTemplate.astro', 'src/components/templates/ExperienceDetailTemplate.astro']) {
     const source = await read(path);
@@ -343,7 +343,7 @@ test('production build includes the English portfolio print route', async (t) =>
   let files;
   try { files = await htmlFiles(join(rootPath, 'dist')); }
   catch { return t.skip('run after npm run build'); }
-  assert.equal(files.length, 44);
+  assert.equal(files.length, 36);
   for (const file of files) {
     const html = await readFile(file, 'utf8');
     assert.match(html, /<h1(?:\s|>)/, file);

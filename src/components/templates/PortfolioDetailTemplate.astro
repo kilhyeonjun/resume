@@ -605,6 +605,7 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
         {prevProject ? (
           <a 
             href={`${localePrefix}/portfolio/${prevProject.slug}`}
+            aria-label={`${labels.previousProject}: ${prevProject.name[lang] || prevProject.name.ko}`}
             class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
             <ArrowLeftIcon class="h-5 w-5 flex-shrink-0 transition-transform group-hover:-translate-x-1" />
@@ -627,6 +628,7 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
         {nextProject ? (
           <a 
             href={`${localePrefix}/portfolio/${nextProject.slug}`}
+            aria-label={`${labels.nextProject}: ${nextProject.name[lang] || nextProject.name.ko}`}
             class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
             <div class="text-right">

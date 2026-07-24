@@ -4,6 +4,7 @@ import { prepareResumeData } from '../../utils/resume-data';
 import { getLocalePrefix, withBasePath } from '../../utils/paths';
 import rawPortfolioData from '../../data/portfolio.json';
 import { portfolioDataSchema } from '../../types/portfolio';
+import { selectFeaturedPortfolioProjects, selectListedPortfolioProjects } from '../../utils/portfolio-visibility';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -22,10 +23,8 @@ const portfolioData = portfolioDataSchema.parse(rawPortfolioData);
 const { projects, labels } = portfolioData;
 const currentLabels = labels[lang];
 
-const featuredProjects = projects
-  .filter((p) => p.featured && !p.hidden)
-  .sort((a, b) => (a.printOrder ?? 99) - (b.printOrder ?? 99));
-const listedProjects = projects.filter((p) => p.listed && !p.hidden);
+const featuredProjects = selectFeaturedPortfolioProjects(projects);
+const listedProjects = selectListedPortfolioProjects(projects);
 
 const localePrefix = getLocalePrefix(lang);
 const portfolioUrl = new URL(`${localePrefix}/portfolio`, Astro.site).toString();
@@ -46,6 +45,7 @@ function formatPeriod(period: { start: string; end: string }): string {
 <html lang={lang}>
 <head>
   <meta charset="UTF-8">
+  <meta name="robots" content="noindex, follow">
   <link rel="icon" type="image/svg+xml" href={withBasePath('favicon.svg')}>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{data.name} - {pageTitle}</title>

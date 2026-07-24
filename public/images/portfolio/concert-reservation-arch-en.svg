@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718 292" width="718" height="292" font-family="Arial, sans-serif" role="img">
-  <title>콘서트 예약 시스템 아키텍처</title>
-  <desc>Redis 대기열과 캐시, 좌석 낙관적 락, 사용자 지갑 분산 락, 결제 Outbox 발행 경계를 보여주는 구성도</desc>
+  <title>Concert Reservation System Architecture</title>
+  <desc>Architecture showing Redis queue/cache, optimistic seat locking, per-user wallet locking, and the payment outbox publication boundary</desc>
 
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
@@ -16,8 +16,8 @@
   <rect width="718" height="292" fill="#f9fafb" rx="8"/>
 
   <!-- Title -->
-  <text x="359" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="#111827">콘서트 예약 시스템 아키텍처</text>
-  <text x="359" y="40" text-anchor="middle" font-size="9.5" fill="#6b7280">4-Layer Clean Architecture  |  Redis 대기열  |  낙관적/분산 락  |  Kafka Outbox</text>
+  <text x="359" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="#111827">Concert Reservation System Architecture</text>
+  <text x="359" y="40" text-anchor="middle" font-size="9.5" fill="#6b7280">4-Layer Clean Architecture  |  Redis Queue  |  Optimistic/Distributed Locks  |  Kafka Outbox</text>
 
   <!-- ──────────────────────────────────────────────
        ROW 1  (y=56)  :  Client  →  Interceptor  →  API Controller
@@ -26,15 +26,15 @@
   <!-- Client -->
   <rect x="20" y="56" width="88" height="44" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
   <text x="64" y="75" text-anchor="middle" font-size="11" font-weight="bold" fill="#111827">Client</text>
-  <text x="64" y="90" text-anchor="middle" font-size="9" fill="#6b7280">HTTP 요청</text>
+  <text x="64" y="90" text-anchor="middle" font-size="9" fill="#6b7280">HTTP request</text>
 
   <!-- → -->
   <line x1="108" y1="78" x2="138" y2="78" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
 
   <!-- WaitingQueue Interceptor -->
   <rect x="138" y="56" width="140" height="44" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="208" y="74" text-anchor="middle" font-size="10" font-weight="bold" fill="#2563eb">대기열 Interceptor</text>
-  <text x="208" y="89" text-anchor="middle" font-size="9" fill="#3b82f6">Redis ZSCORE 활성 여부 확인</text>
+  <text x="208" y="74" text-anchor="middle" font-size="10" font-weight="bold" fill="#2563eb">Queue Interceptor</text>
+  <text x="208" y="89" text-anchor="middle" font-size="9" fill="#3b82f6">Check active Redis ZSCORE</text>
 
   <!-- → -->
   <line x1="278" y1="78" x2="308" y2="78" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
@@ -42,13 +42,13 @@
   <!-- API Controller -->
   <rect x="308" y="56" width="120" height="44" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
   <text x="368" y="74" text-anchor="middle" font-size="10" font-weight="bold" fill="#111827">API Controller</text>
-  <text x="368" y="89" text-anchor="middle" font-size="9" fill="#6b7280">인터페이스 레이어</text>
+  <text x="368" y="89" text-anchor="middle" font-size="9" fill="#6b7280">Interface layer</text>
 
   <!-- Redis Sorted Set (right side, queue info) -->
   <rect x="570" y="56" width="130" height="58" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
   <text x="635" y="74" text-anchor="middle" font-size="10" font-weight="bold" fill="#111827">Redis Sorted Set</text>
-  <text x="635" y="89" text-anchor="middle" font-size="9" fill="#6b7280">대기큐  score = 입장시간</text>
-  <text x="635" y="103" text-anchor="middle" font-size="9" fill="#6b7280">활성큐  score = 만료시간</text>
+  <text x="635" y="89" text-anchor="middle" font-size="9" fill="#6b7280">Waiting score = entry time</text>
+  <text x="635" y="103" text-anchor="middle" font-size="9" fill="#6b7280">Active score = expiry time</text>
 
   <!-- dashed connector: Interceptor ↔ Redis (curved above API Controller) -->
   <path d="M278,66 C350,38 500,38 570,66" stroke="#2563eb" stroke-width="1" stroke-dasharray="5,3" fill="none" marker-end="url(#arrb)"/>
@@ -63,18 +63,18 @@
   <!-- ConcertFacade -->
   <rect x="308" y="130" width="120" height="44" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
   <text x="368" y="148" text-anchor="middle" font-size="10" font-weight="bold" fill="#2563eb">ConcertFacade</text>
-  <text x="368" y="163" text-anchor="middle" font-size="9" fill="#3b82f6">애플리케이션 레이어</text>
+  <text x="368" y="163" text-anchor="middle" font-size="9" fill="#3b82f6">Application layer</text>
 
   <!-- WaitingQueueFacade (left branch) -->
   <line x1="308" y1="152" x2="278" y2="152" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
   <rect x="138" y="130" width="140" height="44" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
   <text x="208" y="148" text-anchor="middle" font-size="10" font-weight="bold" fill="#2563eb">WaitingQueueFacade</text>
-  <text x="208" y="163" text-anchor="middle" font-size="9" fill="#3b82f6">대기열 상태 관리</text>
+  <text x="208" y="163" text-anchor="middle" font-size="9" fill="#3b82f6">Queue state management</text>
 
   <!-- Redis Cache label (right) -->
   <rect x="570" y="130" width="130" height="44" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
   <text x="635" y="148" text-anchor="middle" font-size="10" font-weight="bold" fill="#111827">Redis Cache</text>
-  <text x="635" y="163" text-anchor="middle" font-size="9" fill="#6b7280">Concert/Schedule  코드 설정 TTL 2분</text>
+  <text x="635" y="163" text-anchor="middle" font-size="9" fill="#6b7280">Concert/Schedule  code config TTL 2 min</text>
 
   <!-- → ConcertFacade → Redis Cache -->
   <line x1="428" y1="152" x2="570" y2="152" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
@@ -92,19 +92,19 @@
   <rect x="160" y="204" width="110" height="52" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
   <text x="215" y="222" text-anchor="middle" font-size="10" font-weight="bold" fill="#111827">ConcertSeat</text>
   <text x="215" y="237" text-anchor="middle" font-size="9" fill="#6b7280">@Version</text>
-  <text x="215" y="250" text-anchor="middle" font-size="9" fill="#dc2626">낙관적 락</text>
+  <text x="215" y="250" text-anchor="middle" font-size="9" fill="#dc2626">Optimistic lock</text>
 
   <!-- Wallet -->
   <rect x="310" y="204" width="110" height="52" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
   <text x="365" y="222" text-anchor="middle" font-size="10" font-weight="bold" fill="#111827">Wallet</text>
   <text x="365" y="237" text-anchor="middle" font-size="9" fill="#6b7280">Redisson</text>
-  <text x="365" y="250" text-anchor="middle" font-size="9" fill="#d97706">분산 락</text>
+  <text x="365" y="250" text-anchor="middle" font-size="9" fill="#d97706">Distributed lock</text>
 
   <!-- Payment -->
   <rect x="460" y="204" width="130" height="52" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
   <text x="525" y="222" text-anchor="middle" font-size="10" font-weight="bold" fill="#111827">Payment</text>
-  <text x="525" y="237" text-anchor="middle" font-size="9" fill="#6b7280">Outbox 트랜잭션</text>
-  <text x="525" y="250" text-anchor="middle" font-size="9" fill="#7c3aed">→ Kafka 발행</text>
+  <text x="525" y="237" text-anchor="middle" font-size="9" fill="#6b7280">Outbox transaction</text>
+  <text x="525" y="250" text-anchor="middle" font-size="9" fill="#7c3aed">→ Publish to Kafka</text>
 
   <!-- Divider line before storage -->
   <line x1="30" y1="268" x2="688" y2="268" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,4"/>

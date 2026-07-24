@@ -71,17 +71,18 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
 
     /* Company Section */
     .company-section {
-      page-break-after: always;
+      margin-top: 6mm;
     }
 
-    .company-section:last-child {
-      page-break-after: auto;
+    .doc-title + .company-section {
+      margin-top: 0;
     }
 
     .company-header {
       margin-bottom: 3mm;
       padding-bottom: 2mm;
       border-bottom: 1pt solid #d1d5db;
+      break-after: avoid-page;
     }
 
     .company-name {
@@ -118,6 +119,7 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
       margin: 4mm 0 2mm;
       padding-bottom: 1mm;
       border-bottom: 0.5pt solid #e5e7eb;
+      break-after: avoid-page;
     }
 
     /* Highlights */
@@ -321,13 +323,13 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
   <div class="document">
     <h1 class="doc-title">{pageTitle} — {data.name}</h1>
 
-    {data.experience.map((exp, idx) => {
+    {data.experience.map((exp) => {
       const period = exp.current
         ? `${exp.startDate.replace('-', '.')} — ${labels.current}`
         : `${exp.startDate.replace('-', '.')} — ${exp.endDate?.replace('-', '.')}`;
 
       return (
-        <div class={idx < data.experience.length - 1 ? 'company-section' : ''}>
+        <div class="company-section">
           <header class="company-header">
             <h2 class="company-name">{exp.company}</h2>
             <p class="company-position">{exp.position}</p>

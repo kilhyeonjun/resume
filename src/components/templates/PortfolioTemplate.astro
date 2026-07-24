@@ -31,8 +31,8 @@ const archiveProjects = projects.filter((project) => !featuredProjects.some((fea
       <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
         {lang === 'ko' ? '개인 및 팀 프로젝트 모음' : 'Collection of personal and team projects'}
       </p>
-      <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
-        <a href={`${localePrefix}/portfolio-print`} class="hover:text-primary-600 dark:hover:text-primary-400">{lang === 'ko' ? 'PDF 다운로드' : 'Download PDF'}</a>
+      <div class="mt-4 text-sm">
+        <a href={`${localePrefix}/portfolio-print`} class="touch-target inline-flex items-center rounded-lg border border-gray-300 px-4 font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-primary-300">{lang === 'ko' ? 'PDF 다운로드' : 'Download PDF'}</a>
       </div>
     </header>
 
@@ -116,7 +116,7 @@ const archiveProjects = projects.filter((project) => !featuredProjects.some((fea
                 </span>
               ))}
               {project.skills.length > 4 && (
-                 <span class="rounded-md bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-300">
+                 <span class="rounded-md bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                   +{project.skills.length - 4}
                 </span>
               )}

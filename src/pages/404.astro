@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getHomePath, getLocalePrefix } from '../utils/paths';
+
+const homePath = getHomePath('ko');
+const portfolioPath = `${getLocalePrefix('ko')}/portfolio`;
+---
+
+<Layout title="404 | KilPenguin" description="Page not found" lang="ko" noindex>
+  <section class="mx-auto flex min-h-[65vh] max-w-2xl flex-col justify-center py-16" aria-labelledby="not-found-title">
+    <p class="dossier-label">404 / NOT FOUND</p>
+    <h1 id="not-found-title" class="mt-4 text-4xl font-bold text-gray-900 dark:text-white">페이지를 찾을 수 없습니다</h1>
+    <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">Page not found. 주소가 변경되었거나 존재하지 않는 페이지입니다.</p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a class="touch-target inline-flex items-center rounded-lg bg-primary-600 px-4 font-semibold text-white hover:bg-primary-700" href={homePath}>이력서로 돌아가기</a>
+      <a class="touch-target inline-flex items-center rounded-lg border border-gray-300 px-4 font-semibold text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800" href={portfolioPath}>Portfolio</a>
+    </div>
+  </section>
+</Layout>

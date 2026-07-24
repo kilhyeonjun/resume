@@ -47,6 +47,31 @@ const projectArchitectureDiagram = project.architectureDiagram ? localize(projec
 const projectSequenceDiagram = project.sequenceDiagram ? localize(project.sequenceDiagram) : null;
 const isEvidenceRegister = project.slug === 'ai-coding-harness';
 const isDaesinCase = project.slug === 'daesin-logistics-bot';
+const evidenceIndex: Array<{ id: string; label: string }> = [];
+const addEvidence = (condition: unknown, id: string, label: string) => {
+  if (condition) evidenceIndex.push({ id, label });
+};
+addEvidence((isEvidenceRegister || isDaesinCase) && project.metrics?.length, 'outcomes', lang === 'ko' ? '성과 지표' : 'Outcomes');
+addEvidence(isEvidenceRegister && projectArchitectureDiagram, 'boundary', lang === 'ko' ? '프로필 경계' : 'Profile boundary');
+addEvidence(isEvidenceRegister && projectSequenceDiagram, 'sequence', lang === 'ko' ? '실행 흐름' : 'Launch flow');
+addEvidence(!isEvidenceRegister && !isDaesinCase && project.metrics?.length, 'outcomes', labels.metrics);
+addEvidence(projectProblemSolving?.length, 'problems', labels.problemSolving);
+addEvidence(!isEvidenceRegister && !isDaesinCase && projectArchitectureDiagram, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
+addEvidence(isDaesinCase && projectArchitectureDiagram, 'architecture', lang === 'ko' ? '운영 경계' : 'Operating boundary');
+addEvidence(isDaesinCase && projectOperationalLimits?.length, 'limits', lang === 'ko' ? '운영 한계' : 'Operating limits');
+addEvidence(projectPublicEvidence?.length, 'public-evidence', lang === 'ko' ? '공개 근거' : 'Public evidence');
+addEvidence(projectDescription && !isDaesinCase, 'description', labels.description);
+addEvidence(teamComposition, 'team', labels.teamComposition);
+addEvidence(project.collaborationTools?.length, 'collaboration', labels.collaborationTools);
+addEvidence(!isDaesinCase && projectHighlights?.length, 'highlights', labels.highlights);
+addEvidence(!isDaesinCase && projectTechDecisions?.length, 'decisions', labels.techDecisions);
+addEvidence(!projectProblemSolving && projectFeatures?.length, 'features', labels.features);
+addEvidence(!isDaesinCase && projectLessons?.length, 'lessons', labels.lessons);
+addEvidence(projectGlossary?.length, 'glossary', lang === 'ko' ? '용어 풀이' : 'Glossary');
+addEvidence(project.skills?.length, 'stack', labels.skills);
+addEvidence(project.blogPosts?.length, 'related-posts', labels.relatedPosts);
+addEvidence(!isEvidenceRegister && project.links && Object.keys(project.links).length, 'related-links', labels.relatedLinks);
+addEvidence(project.contentImages?.length, 'project-images', labels.projectImages);
 ---
 
 <Layout title={`${projectName} | Portfolio`} description={projectSummary} lang={lang}>
@@ -119,17 +144,9 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
         ))}
       </div>
       <nav class="evidence-index" aria-label={lang === 'ko' ? '프로젝트 근거 목차' : 'Project evidence index'}>
-        {project.metrics && project.metrics.length > 0 && <a href="#outcomes"><span>01</span>{labels.metrics}</a>}
-        {isEvidenceRegister && projectArchitectureDiagram && <a href="#boundary"><span>02</span>{lang === 'ko' ? '프로필 경계' : 'Profile boundary'}</a>}
-        {isEvidenceRegister && projectSequenceDiagram && <a href="#sequence"><span>03</span>{lang === 'ko' ? '실행 흐름' : 'Launch flow'}</a>}
-        {isDaesinCase && projectCoverImage && <a href="#visual"><span>02</span>{lang === 'ko' ? '사용 흐름' : 'User journey'}</a>}
-        {projectProblemSolving && projectProblemSolving.length > 0 && <a href="#problems"><span>{isEvidenceRegister ? '04' : isDaesinCase ? '03' : '02'}</span>{labels.problemSolving}</a>}
-        {isDaesinCase && projectArchitectureDiagram && <a href="#architecture"><span>04</span>{lang === 'ko' ? '운영 경계' : 'Operating boundary'}</a>}
-        {projectPublicEvidence && projectPublicEvidence.length > 0 && <a href="#public-evidence"><span>05</span>{lang === 'ko' ? '공개 근거' : 'Public evidence'}</a>}
-        {!isDaesinCase && projectTechDecisions && projectTechDecisions.length > 0 && <a href="#decisions"><span>{isEvidenceRegister ? '05' : '03'}</span>{labels.techDecisions}</a>}
-        {projectGlossary && projectGlossary.length > 0
-          ? <a href="#glossary"><span>{isEvidenceRegister ? '06' : '05'}</span>{lang === 'ko' ? '용어 풀이' : 'Glossary'}</a>
-          : project.skills && project.skills.length > 0 && <a href="#stack"><span>{isDaesinCase ? '06' : '04'}</span>{labels.skills}</a>}
+        {evidenceIndex.map((item, itemIndex) => (
+          <a href={`#${item.id}`}><span>{String(itemIndex + 1).padStart(2, '0')}</span>{item.label}</a>
+        ))}
       </nav>
     </header>
 
@@ -216,7 +233,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
 
     {/* Architecture Diagram */}
     {!isEvidenceRegister && !isDaesinCase && projectArchitectureDiagram && (
-      <section class="mb-10">
+      <section id="architecture" class="mb-10">
         <h2 class="section-title mb-6">{lang === 'ko' ? '시스템 아키텍처' : 'System Architecture'}</h2>
         <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
           <img
@@ -352,7 +369,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
 
     {/* Description */}
     {projectDescription && !isDaesinCase && (
-      <section class="mb-10">
+      <section id="description" class="mb-10">
         <h2 class="section-title mb-6">{labels.description}</h2>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{projectDescription}</p>
       </section>
@@ -360,7 +377,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
 
     {/* Team Composition */}
     {teamComposition && (
-      <section class="mb-10">
+      <section id="team" class="mb-10">
         <h2 class="section-title mb-6">{labels.teamComposition}</h2>
         <p class="text-gray-700 dark:text-gray-300">{teamComposition}</p>
       </section>
@@ -368,7 +385,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
 
     {/* Collaboration Tools */}
     {project.collaborationTools && project.collaborationTools.length > 0 && (
-      <section class="mb-10">
+      <section id="collaboration" class="mb-10">
         <h2 class="section-title mb-4">{labels.collaborationTools}</h2>
         <div class="flex flex-wrap gap-2">
            {project.collaborationTools.map((tool: string) => (
@@ -382,7 +399,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
 
     <!-- Highlights -->
     {!isDaesinCase && projectHighlights && projectHighlights.length > 0 && (
-      <section class="mb-10">
+      <section id="highlights" class="mb-10">
         <h2 class="section-title mb-6">{labels.highlights}</h2>
         <ul class="space-y-3">
           {projectHighlights.map((highlight: string) => (
@@ -441,7 +458,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
 
     <!-- Features (hidden when problemSolving exists) -->
     {!projectProblemSolving && projectFeatures && projectFeatures.length > 0 && (
-      <section class="mb-10">
+      <section id="features" class="mb-10">
         <h2 class="section-title mb-6">{labels.features}</h2>
         <ul class="space-y-3">
           {projectFeatures.map((feature: string) => (
@@ -456,7 +473,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
 
     <!-- Lessons Learned -->
     {!isDaesinCase && projectLessons && projectLessons.length > 0 && (
-      <section class="mb-10">
+      <section id="lessons" class="mb-10">
         <h2 class="section-title mb-6">{labels.lessons}</h2>
         <ul class="space-y-3">
           {projectLessons.map((lesson: string) => (
@@ -505,7 +522,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
 
     <!-- Related Blog Posts -->
     {project.blogPosts && project.blogPosts.length > 0 && (
-      <section class="mb-10">
+      <section id="related-posts" class="mb-10">
         <h2 class="section-title mb-6">{labels.relatedPosts}</h2>
         <ul class="space-y-3">
           {project.blogPosts.map((post: BlogPost) => {
@@ -537,7 +554,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
 
     <!-- Related Links -->
     {!isEvidenceRegister && project.links && Object.keys(project.links).length > 0 && (
-      <section class="mb-10">
+      <section id="related-links" class="mb-10">
         <h2 class="section-title mb-6">{labels.relatedLinks}</h2>
         <ul class="space-y-3">
           {Object.entries(project.links).map(([key, url]) => (
@@ -562,7 +579,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
 
     <!-- Content Images -->
     {project.contentImages && project.contentImages.length > 0 && (
-      <section class="mb-10">
+      <section id="project-images" class="mb-10">
         <h2 class="section-title mb-6">{labels.projectImages}</h2>
         <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
           {project.contentImages.map((imageUrl: string, idx: number) => (
@@ -590,7 +607,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
             href={`${localePrefix}/portfolio/${prevProject.slug}`}
             class="group flex items-center gap-2 text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
-            <ArrowLeftIcon class="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+            <ArrowLeftIcon class="h-5 w-5 flex-shrink-0 transition-transform group-hover:-translate-x-1" />
             <div class="text-left">
               <p class="text-xs text-gray-500 dark:text-gray-300">{labels.previousProject}</p>
               <p class="font-medium">{prevProject.name[lang] || prevProject.name.ko}</p>
@@ -616,7 +633,7 @@ const isDaesinCase = project.slug === 'daesin-logistics-bot';
               <p class="text-xs text-gray-500 dark:text-gray-300">{labels.nextProject}</p>
               <p class="font-medium">{nextProject.name[lang] || nextProject.name.ko}</p>
             </div>
-            <ArrowRightIcon class="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            <ArrowRightIcon class="h-5 w-5 flex-shrink-0 transition-transform group-hover:translate-x-1" />
           </a>
         ) : (
           <div></div>

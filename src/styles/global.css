@@ -94,7 +94,6 @@ body {
 @media print {
   /* Hide non-printable elements */
   .no-print,
-  header:has(nav),
   footer,
   nav,
   button,
@@ -120,11 +119,70 @@ body {
     padding: 0;
   }
 
-  /* Remove dark mode in print */
+  /* Remove dark mode in print, including direct dark:* utility colors. */
   .dark body,
-  body.dark {
+  body.dark,
+  html.dark .site-shell {
+    --dossier-ink: #0b1220;
+    --dossier-muted: #475569;
+    --dossier-line: #cbd5e1;
+    --dossier-canvas: #fff;
+    --dossier-surface: #fff;
+    --dossier-blue: #1d4ed8;
+    --dossier-teal: #0e7490;
+    --dossier-teal-text: #0e7490;
     background: white !important;
-    color: black !important;
+    color: #0b1220 !important;
+  }
+
+  html.dark .site-shell :where(h1, h2, h3, h4, h5, h6, strong, dt) {
+    color: #0b1220 !important;
+  }
+
+  html.dark .site-shell :where(p, li, span, em, div, dd, figcaption, td, th) {
+    color: #334155 !important;
+  }
+
+  html.dark .site-shell [class*="dark:bg-"] {
+    background: white !important;
+  }
+
+  html.dark .site-shell #problems figure,
+  html.dark .site-shell #problems figcaption {
+    background: white !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  html.dark .site-shell #limits article {
+    background: #fffbeb !important;
+    color: #334155 !important;
+  }
+
+  .portfolio-case:has(> .portfolio-cover) {
+    grid-template-columns: 1fr !important;
+  }
+
+  .portfolio-case > .portfolio-cover {
+    display: none !important;
+  }
+
+  html.dark .site-shell .portfolio-case,
+  html.dark .site-shell .portfolio-cover,
+  html.dark .site-shell .project-proof-links a {
+    background: white !important;
+    border-color: #cbd5e1 !important;
+    color: #1d4ed8 !important;
+  }
+
+  html.dark .site-shell .portfolio-case span {
+    background: transparent !important;
+    color: #334155 !important;
+  }
+
+  html.dark .site-shell :where(a, button) {
+    background: transparent !important;
+    border-color: #cbd5e1 !important;
+    color: #1d4ed8 !important;
   }
 
   /* Links in print */
@@ -341,6 +399,7 @@ body {
   --dossier-surface: #fff;
   --dossier-blue: #1d4ed8;
   --dossier-teal: #0e7490;
+  --dossier-teal-text: #0e7490;
   --dossier-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -356,6 +415,7 @@ body {
   --dossier-canvas: #070b14;
   --dossier-surface: #0f172a;
   --dossier-blue: #60a5fa;
+  --dossier-teal-text: #22d3ee;
 }
 .site-width, .site-nav, .site-main { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
 .site-header { border-color: var(--dossier-line); background: color-mix(in srgb, var(--dossier-surface) 96%, transparent); }
@@ -408,6 +468,8 @@ body {
 .portfolio-case-featured > a { height: 100%; }
 .portfolio-case-featured p { color: #aebbd0; }
 .portfolio-case-featured h2, .portfolio-case-featured .tech-badge { color: white; }
+.portfolio-case-featured .touch-target[href*="/portfolio/"] { color: #93c5fd; }
+.portfolio-case-featured a[aria-label], .portfolio-case-featured .text-gray-500 { color: #cbd5e1; }
 .portfolio-cover { background: var(--dossier-teal); }
 .portfolio-archive { margin-top: 4.5rem; }
 .portfolio-archive h2 { margin: .7rem 0 1.5rem; font-size: 1.75rem; letter-spacing: -.03em; }
@@ -437,7 +499,9 @@ body {
 .detail-dossier .section-title::after { display: none; }
 .detail-dossier section > .rounded-xl, .detail-dossier section > .space-y-8 > .rounded-xl { border-radius: 0; box-shadow: none; background: transparent; }
 
-@media (max-width: 760px) {
+@media (max-width: 800px) {
+  .portfolio-grid, .portfolio-case-featured { grid-template-columns: 1fr; }
+  .portfolio-case-featured { grid-column: auto; }
   .site-width, .site-nav, .site-main { width: min(100% - 32px, 640px); }
   .site-brand { max-width: 8rem; font-size: .7rem; }
   .site-nav > div { gap: 0; }
@@ -453,8 +517,6 @@ body {
   .resume-actions a { justify-content: center; }
   .resume-divider { display: none; }
   .portfolio-index { padding-top: 2.75rem; }
-  .portfolio-grid, .portfolio-case-featured { grid-template-columns: 1fr; }
-  .portfolio-case-featured { grid-column: auto; }
   .portfolio-archive { margin-top: 3rem; }
   .portfolio-archive-row { grid-template-columns: 4.5rem 1fr 1.5rem; gap: .75rem; padding: .75rem 0; }
   .portfolio-archive-row > span:nth-child(3) { display: none; }
@@ -1277,7 +1339,7 @@ body {
   }
 
   .case-study-evidence-register .project-role {
-    color: var(--dossier-teal);
+    color: var(--dossier-teal-text);
     font-family: var(--dossier-mono);
     letter-spacing: 0.02em;
   }
@@ -1317,7 +1379,7 @@ body {
 
   .outcome-register-impact {
     margin-top: 0.45rem;
-    color: var(--dossier-teal);
+    color: var(--dossier-teal-text);
     font-size: 0.85rem;
     font-weight: 650;
     line-height: 1.5;

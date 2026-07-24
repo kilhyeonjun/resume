@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "pretest": "astro build",
     "test": "node --test tests/*.test.mjs",
     "check": "astro check",
     "diagrams": "bash scripts/generate-ai-harness-diagrams.sh",

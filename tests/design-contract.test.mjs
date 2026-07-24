@@ -29,8 +29,8 @@ test('shared layout exposes the approved dossier design hooks and 44px controls'
   assert.match(layout, /withBasePath\('favicon\.svg'\)/);
   assert.match(layout, /href=\{enHref\}/);
   assert.match(layout, /href=\{koHref\}/);
-  assert.match(layout, /new URL\(withBasePath\(hrefRelativePath\), Astro\.site\)/);
-  assert.match(layout, /new URL\(withBasePath\(`en\$\{hrefRelativePath\}`\), Astro\.site\)/);
+  assert.match(layout, /noindex \? getHomePath\('ko'\) : withBasePath\(hrefRelativePath\)/);
+  assert.match(layout, /noindex \? getHomePath\('en'\) : withBasePath\(`en\$\{hrefRelativePath\}`\)/);
   assert.match(layout, /new URL\(withBasePath\('og-image\.png'\), Astro\.site\)/);
   assert.match(layout, /href=\{homePath\}/);
   assert.match(layout, /startsWith\(`\$\{localePrefix\}\/experience`\)/);
@@ -63,7 +63,7 @@ test('approved convention-preserving polish is screen-only and keeps content vis
   const polish = css.split(prefix, 2)[1];
   assert.equal(
     createHash('sha256').update(polish).digest('hex'),
-    '7eea120a201880cf8e07bc4d788a277a590e989ab94ae21f2753dbd4b2bbddf7',
+    '772d6b4db61258094110d49c5824557428a2e6bc3a7d652c8352e79c40786ab1',
   );
 });
 
@@ -83,9 +83,12 @@ test('interactive route families expose their shared design hooks', async () => 
   for (const path of ['src/components/templates/PortfolioDetailTemplate.astro', 'src/components/templates/ExperienceDetailTemplate.astro']) {
     const source = await read(path);
     assert.match(source, /class="evidence-index"/, path);
-    assert.match(source, /href="#outcomes"/, path);
     assert.match(source, /id="outcomes"/, path);
   }
+  const portfolioDetail = await read('src/components/templates/PortfolioDetailTemplate.astro');
+  assert.match(portfolioDetail, /evidenceIndex\.map/);
+  assert.match(portfolioDetail, /href=\{`#\$\{item\.id\}`\}/);
+  assert.match(await read('src/components/templates/ExperienceDetailTemplate.astro'), /href="#outcomes"/);
   assert.match(await read('src/styles/global.css'), /\.resume-actions\s*\{[^}]*grid-row:\s*2/s);
   assert.match(await read('src/styles/global.css'), /\.portfolio-detail > #outcomes\s*\{[^}]*order:\s*-2/s);
 });
@@ -326,12 +329,21 @@ test('portfolio print keeps project identity with continuation content', async (
   assert.match(source, /\.listed-box\s*\{[^}]*break-inside:\s*avoid/s);
 });
 
+test('career print avoids forced spill pages and orphan section headings', async () => {
+  const source = await read('src/components/templates/ExperienceDetailPrintTemplate.astro');
+  assert.doesNotMatch(source, /\.company-section\s*\{[^}]*page-break-after:\s*always/s);
+  assert.match(source, /\.company-header\s*\{[^}]*break-after:\s*avoid-page/s);
+  assert.match(source, /\.section-heading\s*\{[^}]*break-after:\s*avoid-page/s);
+  assert.match(source, /class="company-section"/);
+  assert.doesNotMatch(source, /idx < data\.experience\.length - 1/);
+});
+
 test('production build includes the English portfolio print route', async (t) => {
   assert.match(await read('src/pages/en/portfolio-print.astro'), /PortfolioPrintTemplate lang="en"/);
   let files;
   try { files = await htmlFiles(join(rootPath, 'dist')); }
   catch { return t.skip('run after npm run build'); }
-  assert.equal(files.length, 45);
+  assert.equal(files.length, 46);
   for (const file of files) {
     const html = await readFile(file, 'utf8');
     assert.match(html, /<h1(?:\s|>)/, file);

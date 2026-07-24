@@ -8,9 +8,10 @@ interface Props {
   title: string;
   description?: string;
   lang?: 'ko' | 'en';
+  noindex?: boolean;
 }
 
-const { title, description: rawDesc, lang = 'ko' } = Astro.props;
+const { title, description: rawDesc, lang = 'ko', noindex = false } = Astro.props;
 const description = rawDesc || (lang === 'en' ? 'Personal Resume and Portfolio' : '개인 이력서 및 포트폴리오');
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const localePrefix = getLocalePrefix(lang);
@@ -27,8 +28,8 @@ const isResume = !isPortfolio && (
 
 // Compute hreflang alternate URLs
 const hrefRelativePath = currentPath.slice(localePrefix.length) || '/';
-const koHref = new URL(withBasePath(hrefRelativePath), Astro.site).toString();
-const enHref = new URL(withBasePath(`en${hrefRelativePath}`), Astro.site).toString();
+const koHref = new URL(noindex ? getHomePath('ko') : withBasePath(hrefRelativePath), Astro.site).toString();
+const enHref = new URL(noindex ? getHomePath('en') : withBasePath(`en${hrefRelativePath}`), Astro.site).toString();
 const ogImage = new URL(withBasePath('og-image.png'), Astro.site).toString();
 ---
 
@@ -39,8 +40,8 @@ const ogImage = new URL(withBasePath('og-image.png'), Astro.site).toString();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={canonicalURL} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    {!noindex && <link rel="canonical" href={canonicalURL} />}
     <link rel="icon" type="image/svg+xml" href={withBasePath('favicon.svg')} />
 
     <!-- Security Headers -->
@@ -50,7 +51,7 @@ const ogImage = new URL(withBasePath('og-image.png'), Astro.site).toString();
     <!-- OG / Twitter Card -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL.toString()} />
+    {!noindex && <meta property="og:url" content={canonicalURL.toString()} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={lang === 'ko' ? 'ko_KR' : 'en_US'} />
     <meta property="og:image" content={ogImage} />
@@ -60,9 +61,9 @@ const ogImage = new URL(withBasePath('og-image.png'), Astro.site).toString();
     <meta name="twitter:description" content={description} />
 
     <!-- hreflang -->
-    <link rel="alternate" hreflang="ko" href={koHref} />
-    <link rel="alternate" hreflang="en" href={enHref} />
-    <link rel="alternate" hreflang="x-default" href={koHref} />
+    {!noindex && <link rel="alternate" hreflang="ko" href={koHref} />}
+    {!noindex && <link rel="alternate" hreflang="en" href={enHref} />}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={koHref} />}
     
     <!-- Prevent flash of unstyled content for dark mode -->
     <script is:inline>

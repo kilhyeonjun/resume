@@ -46,10 +46,14 @@ test('experience position periods keep WCAG AA text contrast', async () => {
     read('src/components/resume/ResumeExperience.astro'),
     read('src/components/templates/ExperienceDetailTemplate.astro'),
   ]);
-  for (const source of [resume, detail]) {
-    assert.match(source, /text-gray-600 dark:text-gray-400/);
-    assert.doesNotMatch(source, /text-gray-400 dark:text-gray-500/);
-  }
+  assert.match(
+    resume,
+    /<span class="text-xs text-gray-600 dark:text-gray-400">\s*\{pos\.startDate/,
+  );
+  assert.match(
+    detail,
+    /<span class="ml-2 text-sm font-normal text-gray-600 dark:text-gray-400">\s*\{pos\.startDate/,
+  );
 });
 
 test('approved convention-preserving polish is screen-only and keeps content visible', async () => {

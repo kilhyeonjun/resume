@@ -55,7 +55,7 @@ const outcomeKickers = lang === 'ko'
 ---
 
 <Layout title={`${data.name} — ${data.title}`} description="Professional resume and work experience" lang={lang}>
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <article class="resume-dossier resume-container">
     <!-- Header Section -->
     <ResumeHeader data={data} />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" role="img" aria-labelledby="title desc" font-family="Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="560" viewBox="0 0 1080 560" role="img" aria-labelledby="title desc" font-family="Arial, sans-serif">
   <title>Daesin Dispatch Operations Ledger collection and query architecture</title>
-  <desc>The collection flow moves external dispatch data through a singleton KST scheduler and crawler into SQLite. The query flow reads SQLite through Next.js, a Vercel read-only proxy, Traefik, and the active Express slot. Traffic switches only after the inactive slot passes its health check; an operator performs manual rollback on failure.</desc>
+  <desc>The collection flow independently rechecks the current date hourly from the public dispatch source through a singleton KST scheduler and crawler into SQLite. The query flow reads SQLite through the public route DTO branch inside the Next.js proxy, Traefik, and the active Express slot, exposing vehicle details while excluding internal IDs and the credential-bearing tracking URL. Authenticated routes pass separately. Traffic switches only after the inactive slot passes its health check; an operator performs manual rollback on failure.</desc>
   <defs>
     <marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
       <path d="M0 0 9 3.5 0 7Z" fill="#64748b"/>
@@ -21,8 +21,8 @@
   <text class="sub" x="143" y="166" text-anchor="middle">source system</text>
   <rect class="node" x="286" y="108" width="224" height="86" rx="9"/>
   <text class="label" x="398" y="136" text-anchor="middle">singleton KST scheduler</text>
-  <text class="sub" x="398" y="159" text-anchor="middle">Mon–Sat 06:00–20:00</text>
-  <text class="sub" x="398" y="179" text-anchor="middle">15/day</text>
+  <text class="sub" x="398" y="159" text-anchor="middle">Mon–Sat 06:00–20:00 · 15 scheduled slots</text>
+  <text class="sub" x="398" y="179" text-anchor="middle">current date · hourly recheck</text>
   <rect class="node" x="558" y="108" width="208" height="86" rx="9"/>
   <text class="label" x="662" y="142" text-anchor="middle">Crawler</text>
   <text class="sub" x="662" y="166" text-anchor="middle">Cheerio + Axios · EUC-KR</text>
@@ -37,8 +37,8 @@
   <text class="label" x="128" y="338" text-anchor="middle">Next.js Web</text>
   <text class="sub" x="128" y="362" text-anchor="middle">browser query</text>
   <rect class="node" x="246" y="304" width="206" height="84" rx="9"/>
-  <text class="label" x="349" y="337" text-anchor="middle">Vercel read-only proxy</text>
-  <text class="sub" x="349" y="361" text-anchor="middle">read boundary</text>
+  <text class="label" x="349" y="337" text-anchor="middle">Next.js proxy</text>
+  <text class="sub" x="349" y="361" text-anchor="middle">public route DTO branch</text>
   <rect class="node" x="490" y="304" width="150" height="84" rx="9"/>
   <text class="label" x="565" y="338" text-anchor="middle">Traefik</text>
   <text class="sub" x="565" y="362" text-anchor="middle">route switch</text>

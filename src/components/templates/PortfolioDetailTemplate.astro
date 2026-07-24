@@ -43,10 +43,11 @@ const projectCoverImage = project.coverImage ? localize(project.coverImage) : nu
 const projectArchitectureDiagram = project.architectureDiagram ? localize(project.architectureDiagram) : null;
 const projectSequenceDiagram = project.sequenceDiagram ? localize(project.sequenceDiagram) : null;
 const isEvidenceRegister = project.slug === 'ai-coding-harness';
+const isDaesinCase = project.slug === 'daesin-logistics-bot';
 ---
 
 <Layout title={`${projectName} | Portfolio`} description={projectSummary} lang={lang}>
-  <article class:list={['detail-dossier portfolio-detail', isEvidenceRegister && 'case-study-evidence-register']}>
+  <article class:list={['detail-dossier portfolio-detail', isEvidenceRegister && 'case-study-evidence-register', isDaesinCase && 'daesin-case']}>
     <!-- Back to Portfolio -->
     <nav class="mb-8">
       <a 
@@ -89,7 +90,7 @@ const isEvidenceRegister = project.slug === 'ai-coding-harness';
       
       {/* GitHub & Links */}
       <div class="project-proof-links mt-6 flex flex-wrap gap-3">
-        {project.github && (
+        {project.github && !isDaesinCase && (
           <a 
             href={project.github} 
             target="_blank" 
@@ -100,7 +101,7 @@ const isEvidenceRegister = project.slug === 'ai-coding-harness';
             {labels.github}
           </a>
         )}
-        {isEvidenceRegister && project.links && Object.entries(project.links).map(([key, url]) => (
+        {(isEvidenceRegister || isDaesinCase) && project.links && Object.entries(project.links).map(([key, url]) => (
           typeof url === 'string' && (
             <a
               href={url}
@@ -118,17 +119,18 @@ const isEvidenceRegister = project.slug === 'ai-coding-harness';
         {project.metrics && project.metrics.length > 0 && <a href="#outcomes"><span>01</span>{labels.metrics}</a>}
         {isEvidenceRegister && projectArchitectureDiagram && <a href="#boundary"><span>02</span>{lang === 'ko' ? '프로필 경계' : 'Profile boundary'}</a>}
         {isEvidenceRegister && projectSequenceDiagram && <a href="#sequence"><span>03</span>{lang === 'ko' ? '실행 흐름' : 'Launch flow'}</a>}
-        {projectProblemSolving && projectProblemSolving.length > 0 && <a href="#problems"><span>{isEvidenceRegister ? '04' : '02'}</span>{labels.problemSolving}</a>}
-        {projectTechDecisions && projectTechDecisions.length > 0 && <a href="#decisions"><span>{isEvidenceRegister ? '05' : '03'}</span>{labels.techDecisions}</a>}
+        {isDaesinCase && projectArchitectureDiagram && <a href="#architecture"><span>02</span>{lang === 'ko' ? '운영 경계' : 'Operating boundary'}</a>}
+        {projectProblemSolving && projectProblemSolving.length > 0 && <a href="#problems"><span>{isEvidenceRegister ? '04' : isDaesinCase ? '03' : '02'}</span>{labels.problemSolving}</a>}
+        {projectTechDecisions && projectTechDecisions.length > 0 && <a href="#decisions"><span>{isEvidenceRegister ? '05' : isDaesinCase ? '04' : '03'}</span>{labels.techDecisions}</a>}
         {projectGlossary && projectGlossary.length > 0
           ? <a href="#glossary"><span>{isEvidenceRegister ? '06' : '05'}</span>{lang === 'ko' ? '용어 풀이' : 'Glossary'}</a>
-          : project.skills && project.skills.length > 0 && <a href="#stack"><span>04</span>{labels.skills}</a>}
+          : project.skills && project.skills.length > 0 && <a href="#stack"><span>{isDaesinCase ? '05' : '04'}</span>{labels.skills}</a>}
       </nav>
     </header>
 
-    {isEvidenceRegister && project.metrics && project.metrics.length > 0 && (
+    {(isEvidenceRegister || isDaesinCase) && project.metrics && project.metrics.length > 0 && (
       <section id="outcomes" class="mb-10 case-outcomes" aria-labelledby="outcomes-title">
-        <h2 id="outcomes-title" class="section-title mb-6">{lang === 'ko' ? '검증된 변화' : 'Verified changes'}</h2>
+        <h2 id="outcomes-title" class="section-title mb-6">{lang === 'ko' ? '검증된 결과' : 'Verified outcomes'}</h2>
         <div class="outcome-register">
           {project.metrics.map((metric) => (
             <article class="outcome-register-entry">
@@ -188,30 +190,35 @@ const isEvidenceRegister = project.slug === 'ai-coding-harness';
 
     {/* Cover Image */}
     {!isEvidenceRegister && projectCoverImage && (
-      <section class="mb-10">
-        <div class="overflow-hidden rounded-xl">
-          <img 
-            src={withBasePath(projectCoverImage)}
-            alt={`${projectName} project cover image`}
-            width={1200}
-            height={630}
-            sizes="(max-width: 896px) 100vw, 896px"
-            class="w-full object-cover"
-            loading="eager"
-          />
-        </div>
+      <section id={isDaesinCase ? 'visual' : undefined} class="mb-10">
+        <figure>
+          <div class:list={['overflow-hidden rounded-xl', isDaesinCase && 'daesin-cover-frame']}>
+            <img
+              src={withBasePath(projectCoverImage)}
+              alt={isDaesinCase ? (lang === 'ko' ? '운영 데이터가 익명화된 대신물류 배차 운영 원장 화면' : 'Daesin Logistics Dispatch Operations Ledger screen with operational data anonymized') : `${projectName} project cover image`}
+              width={1200}
+              height={630}
+              sizes="(max-width: 896px) 100vw, 896px"
+              class="w-full object-cover"
+              loading="eager"
+            />
+          </div>
+          {isDaesinCase && <figcaption class="case-diagram-caption mt-3 text-sm text-gray-600 dark:text-gray-300">{lang === 'ko' ? '익명화된 현재 화면 자산을 16:9 프레임에 배치했으며 운영 데이터를 재구성하지 않았습니다.' : 'The current anonymized screen asset is framed at 16:9 without reconstructing operational data.'}</figcaption>}
+        </figure>
       </section>
     )}
 
     {/* Architecture Diagram */}
     {!isEvidenceRegister && projectArchitectureDiagram && (
-      <section class="mb-10">
+      <section id={isDaesinCase ? 'architecture' : undefined} class="mb-10">
         <h2 class="section-title mb-6">{labels.techDecisions ? (lang === 'ko' ? '시스템 아키텍처' : 'System Architecture') : 'Architecture'}</h2>
-        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+        {isDaesinCase && <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">{lang === 'ko' ? '수집은 외부 사이트에서 singleton KST scheduler와 crawler를 거쳐 SQLite로 흐릅니다. 조회는 Next.js에서 Vercel read-only proxy, Traefik, Express active slot을 거쳐 같은 SQLite를 읽습니다. 비활성 slot은 health check 통과 뒤 전환하며 rollback은 운영자가 수행합니다.' : 'Collection flows from the external site through the singleton KST scheduler and crawler into SQLite. Queries flow from Next.js through the Vercel read-only proxy, Traefik, and the Express active slot to the same SQLite store. The inactive slot must pass its health check before switching, and rollback is performed by an operator.'}</p>}
+        {isDaesinCase && <p class="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400 lg:hidden">{lang === 'ko' ? '← 좌우로 스크롤해 두 흐름 전체 보기 →' : '← Scroll horizontally to view both flows →'}</p>}
+        <div class:list={['overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700', isDaesinCase && 'daesin-architecture-frame']}>
           <img
             src={withBasePath(projectArchitectureDiagram)}
-            alt={`${projectName} architecture diagram`}
-            class="w-full"
+            alt={isDaesinCase ? (lang === 'ko' ? '외부 배차 사이트에서 singleton KST scheduler와 crawler를 거쳐 SQLite에 저장하는 수집 흐름, 그리고 Next.js에서 Vercel read-only proxy, Traefik, Express active slot을 거쳐 SQLite를 읽는 조회 흐름과 health-gated switch 및 manual rollback 경계' : 'Collection flow from the external dispatch site through a singleton KST scheduler and crawler into SQLite, plus query flow from Next.js through a Vercel read-only proxy, Traefik, and the Express active slot into SQLite, with a health-gated switch and manual rollback boundary') : `${projectName} architecture diagram`}
+            class:list={['w-full', isDaesinCase && 'daesin-architecture-image']}
             loading="lazy"
           />
         </div>
@@ -304,7 +311,7 @@ const isEvidenceRegister = project.slug === 'ai-coding-harness';
     )}
 
     {/* Metrics */}
-    {!isEvidenceRegister && project.metrics && project.metrics.length > 0 && (
+    {!isEvidenceRegister && !isDaesinCase && project.metrics && project.metrics.length > 0 && (
       <section id="outcomes" class="mb-10">
         <h2 class="section-title mb-6">{labels.metrics}</h2>
         <div class="overflow-x-auto">

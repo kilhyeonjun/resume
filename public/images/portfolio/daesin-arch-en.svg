@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" role="img" aria-labelledby="title desc" font-family="Arial, sans-serif">
-  <title>대신물류 배차 운영 원장 수집·조회 아키텍처</title>
-  <desc>수집 흐름은 외부 배차 사이트에서 singleton KST scheduler와 crawler를 거쳐 SQLite로 이어진다. 조회 흐름은 Next.js에서 Vercel read-only proxy, Traefik, Express active slot을 거쳐 SQLite를 읽는다. 비활성 slot은 health check 통과 뒤 전환하고 운영자가 manual rollback한다.</desc>
+  <title>Daesin Dispatch Operations Ledger collection and query architecture</title>
+  <desc>The collection flow moves external dispatch data through a singleton KST scheduler and crawler into SQLite. The query flow reads SQLite through Next.js, a Vercel read-only proxy, Traefik, and the active Express slot. Traffic switches only after the inactive slot passes its health check; an operator performs manual rollback on failure.</desc>
   <defs>
     <marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
       <path d="M0 0 9 3.5 0 7Z" fill="#64748b"/>
@@ -12,13 +12,13 @@
   </defs>
 
   <rect width="1080" height="560" rx="16" fill="#f1f5f9"/>
-  <text x="540" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">대신물류 배차 운영 원장 · Daesin Dispatch Operations Ledger</text>
+  <text x="540" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Daesin Dispatch Operations Ledger</text>
 
   <rect class="lane" x="24" y="58" width="1032" height="176" rx="12"/>
-  <text class="lane-title" x="48" y="88">수집 흐름 · Collection flow</text>
+  <text class="lane-title" x="48" y="88">Collection flow</text>
   <rect class="node" x="48" y="108" width="190" height="86" rx="9"/>
-  <text class="label" x="143" y="142" text-anchor="middle">외부 배차 사이트</text>
-  <text class="sub" x="143" y="166" text-anchor="middle">External dispatch site</text>
+  <text class="label" x="143" y="142" text-anchor="middle">External dispatch site</text>
+  <text class="sub" x="143" y="166" text-anchor="middle">source system</text>
   <rect class="node" x="286" y="108" width="224" height="86" rx="9"/>
   <text class="label" x="398" y="136" text-anchor="middle">singleton KST scheduler</text>
   <text class="sub" x="398" y="159" text-anchor="middle">Mon–Sat 06:00–20:00</text>
@@ -32,7 +32,7 @@
   <path class="edge" d="M238 151H286"/><path class="edge" d="M510 151H558"/><path class="edge" d="M766 151H814"/>
 
   <rect class="lane" x="24" y="254" width="1032" height="176" rx="12"/>
-  <text class="lane-title" x="48" y="284">조회 흐름 · Query flow</text>
+  <text class="lane-title" x="48" y="284">Query flow</text>
   <rect class="node" x="48" y="304" width="160" height="84" rx="9"/>
   <text class="label" x="128" y="338" text-anchor="middle">Next.js Web</text>
   <text class="sub" x="128" y="362" text-anchor="middle">browser query</text>
@@ -51,7 +51,7 @@
   <path class="edge" d="M208 346H246"/><path class="edge" d="M452 346H490"/><path class="edge" d="M640 346H678"/><path class="edge" d="M856 346H894"/>
 
   <rect class="ops" x="246" y="458" width="610" height="76" rx="10"/>
-  <text class="label" x="270" y="486">배포 운영 · Deployment operations</text>
+  <text class="label" x="270" y="486">Deployment operations</text>
   <text class="sub" x="270" y="512">inactive slot → health check → health-gated switch · failure → operator manual rollback</text>
   <path class="edge" d="M565 458V394"/>
 </svg>

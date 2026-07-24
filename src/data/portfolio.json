@@ -445,77 +445,67 @@
     {
       "slug": "daesin-logistics-bot",
       "name": {
-        "ko": "대신물류 배차현황 챗봇",
-        "en": "Daesin Logistics Dispatch Bot"
+        "ko": "대신물류 배차 운영 원장",
+        "en": "Daesin Logistics Dispatch Operations Ledger"
       },
       "type": "personal",
       "featured": true,
       "printOrder": 4,
       "summary": {
-        "ko": "대신물류 배차현황 데이터를 Cheerio로 크롤링하고 카카오톡 챗봇 스킬서버와 Next.js 모바일웹으로 조회할 수 있는 서비스 — Clean Architecture + TSyringe DI, Express 5, Prisma SQLite, Traefik Blue-Green 무중단 배포",
-        "en": "Logistics dispatch data service crawling with Cheerio, queryable via KakaoTalk chatbot skill server and Next.js mobile web — Clean Architecture + TSyringe DI, Express 5, Prisma SQLite, Traefik Blue-Green zero-downtime deployment"
+        "ko": "외부 배차 데이터를 정해진 시간에 수집하고 웹에서 조회하는 FE+BE 운영 원장 — replica별 중복 실행을 singleton KST scheduler로 분리해 과거 30/day를 15/day로 복구",
+        "en": "A frontend-and-backend web ledger that collects external dispatch data on schedule and serves read queries — moved duplicated per-replica jobs to a singleton KST scheduler, restoring the historical 30/day run count to 15/day"
       },
       "description": {
-        "ko": "물류 회사의 배차현황 데이터를 자동 수집하여 카카오톡 챗봇과 모바일 웹으로 실시간 조회할 수 있는 서비스이다. 백엔드는 Clean Architecture와 TSyringe 기반 의존성 주입으로 도메인·애플리케이션·인프라 계층을 분리하고, Cheerio + Axios로 배차 데이터를 크롤링하여 Prisma SQLite에 저장한다. node-cron으로 월~토 오전 6시부터 오후 8시까지 매시 정각에 자동 동기화하며, 카카오 i 오픈빌더 스킬서버로 노선코드·차량번호·도착지 검색과 일별 통계 조회를 제공한다. 프론트엔드는 Next.js 모바일웹으로 TanStack Query 기반 데이터 조회와 Recharts 통계 시각화를 구현했다. Docker 환경에서 Traefik 리버스 프록시를 활용한 Blue-Green 무중단 배포 구조를 설계하고, 자동 배포 스크립트로 빌드→헬스체크→트래픽 전환→롤백까지 자동화했다.",
-        "en": "A service that automatically collects logistics dispatch data for real-time querying via KakaoTalk chatbot and mobile web. The backend separates domain, application, and infrastructure layers using Clean Architecture with TSyringe-based dependency injection, crawling dispatch data with Cheerio + Axios and storing in Prisma SQLite. Auto-syncs via node-cron every hour from 6 AM to 8 PM (Mon-Sat), and provides route code, vehicle number, and destination search with daily statistics through a Kakao i Open Builder skill server. The frontend is a Next.js mobile web with TanStack Query-based data fetching and Recharts statistics visualization. Designed a Blue-Green zero-downtime deployment architecture using Traefik reverse proxy in Docker, automating the full cycle from build to health check to traffic switching to rollback via deployment scripts."
+        "ko": "외부 배차 사이트의 EUC-KR 데이터를 Cheerio와 Axios로 수집해 Prisma SQLite에 저장하고, Next.js 웹에서 Vercel read-only proxy와 Express API를 거쳐 조회한다. 수집 작업은 웹 replica에서 분리한 singleton KST scheduler가 월~토 06:00–20:00에 실행한다. 배포는 비활성 slot의 health check를 통과한 뒤 Traefik active slot을 전환하며, 이상 시 운영자가 수동으로 롤백한다. 2026-07-23 관측값은 485일·280,925 rows이며 데이터 최신성의 근거로 사용하지 않았다. BE hardening 결과는 검증 완료 전이라 성과 수치에서 제외했다.",
+        "en": "The service collects EUC-KR data from an external dispatch site with Cheerio and Axios, stores it in Prisma SQLite, and serves web queries from Next.js through a Vercel read-only proxy and Express API. A singleton KST scheduler separated from web replicas runs Mon–Sat 06:00–20:00. Deployment switches Traefik to an inactive slot only after its health check passes; an operator performs rollback manually when needed. The 2026-07-23 observation was 485 days and 280,925 rows and is not used as evidence of data freshness. Backend hardening results are excluded from outcome counts until verified."
+      },
+      "role": {
+        "ko": "기획·FE·BE·배포·운영 단독",
+        "en": "Sole owner of planning, frontend, backend, deployment, and operations"
       },
       "coverImage": "/images/portfolio/daesin-cover.webp",
       "contentImages": [],
       "problemSolving": [
         {
           "problem": {
-            "ko": "물류 회사 배차현황을 웹사이트에서 수동 확인해야 하는 운영 비효율",
-            "en": "Operational inefficiency from manually checking dispatch status on website"
+            "ko": "Why — 외부 사이트를 매번 열어 배차 데이터를 수동 확인해야 했다",
+            "en": "Why — dispatch data had to be checked manually on the external site"
           },
           "process": {
-            "ko": "Cheerio + Axios로 EUC-KR 인코딩 배차 데이터 크롤링, node-cron으로 월~토 06:00~20:00 매시 자동 동기화",
-            "en": "Crawled EUC-KR encoded dispatch data with Cheerio + Axios, node-cron auto-sync Mon-Sat 06:00-20:00 hourly"
+            "ko": "How — Cheerio + Axios로 EUC-KR 응답을 수집하고 singleton KST scheduler에서 월~토 06:00–20:00에 실행해 SQLite에 적재했다",
+            "en": "How — collected EUC-KR responses with Cheerio + Axios and loaded SQLite from a singleton KST scheduler running Mon–Sat 06:00–20:00"
           },
           "result": {
-            "ko": "수동 조회 → 일 15회 자동 크롤링, 실시간 데이터 제공",
-            "en": "Manual lookup → 15 daily auto-crawls, real-time data availability"
+            "ko": "Result — 수동 확인에 의존하던 수집을 운영 시간대 15/day 일정으로 전환",
+            "en": "Result — replaced collection dependent on manual checks with a 15/day operating schedule"
           }
         },
         {
           "problem": {
-            "ko": "현장 직원이 PC 없이 모바일로 배차 정보를 조회할 수단 부재",
-            "en": "Field workers had no mobile access to dispatch info without PC"
+            "ko": "Why — web replica마다 scheduler가 시작되어 동일 수집이 중복 실행됐다",
+            "en": "Why — each web replica started a scheduler, duplicating the same collection job"
           },
           "process": {
-            "ko": "카카오 i 오픈빌더 스킬서버 프로토콜 직접 구현 + Next.js 반응형 모바일 웹 + Recharts 통계 대시보드 병행 제공",
-            "en": "Implemented Kakao i Open Builder skill server + Next.js responsive mobile web + Recharts stats dashboard"
+            "ko": "How — 수집 책임을 web process 밖의 singleton KST scheduler 하나로 분리했다",
+            "en": "How — moved collection responsibility out of web processes into one singleton KST scheduler"
           },
           "result": {
-            "ko": "카카오톡 챗봇 + 모바일 웹 이중 채널로 현장 즉시 조회 가능",
-            "en": "Dual-channel (KakaoTalk + mobile web) enabling instant field queries"
+            "ko": "Result — 과거 중복 30/day를 의도한 15/day로 복구",
+            "en": "Result — restored the historical duplicated 30/day count to the intended 15/day"
           }
         },
         {
           "problem": {
-            "ko": "크롤러/카카오 API/DB 등 외부 의존성 변경 시 비즈니스 로직까지 수정 필요",
-            "en": "Business logic changes required when external dependencies changed"
+            "ko": "Why — 공개 조회 경로와 배포 전환의 운영 경계를 분명히 해야 했다",
+            "en": "Why — the public read path and deployment switching boundary needed to be explicit"
           },
           "process": {
-            "ko": "Clean Architecture로 도메인/애플리케이션/인프라 계층 분리, TSyringe DI 토큰으로 인터페이스 바인딩, Value Object 패턴으로 도메인 규칙 타입 수준 강제",
-            "en": "Clean Architecture layer separation, TSyringe DI token interface binding, Value Object pattern for type-level domain rule enforcement"
+            "ko": "How — Next.js → Vercel read-only proxy → Traefik → Express active slot → SQLite로 조회 경로를 제한하고 비활성 slot health check 뒤 전환하도록 구성했다",
+            "en": "How — constrained reads to Next.js → Vercel read-only proxy → Traefik → Express active slot → SQLite, switching only after the inactive slot passes its health check"
           },
           "result": {
-            "ko": "외부 의존성 교체 시 인프라 계층만 수정, 비즈니스 로직 무변경",
-            "en": "Only infra layer changes on dependency swap, zero business logic changes"
-          }
-        },
-        {
-          "problem": {
-            "ko": "수동 재시작 방식의 배포로 서비스 다운타임 발생",
-            "en": "Service downtime from manual restart deployment"
-          },
-          "process": {
-            "ko": "Traefik 파일 프로바이더 기반 Blue-Green 배포 설계, deploy.sh로 빌드 → 헬스체크 → YAML 재작성 → 트래픽 전환 자동화",
-            "en": "Traefik file-provider Blue-Green deployment, deploy.sh automating build → health check → YAML rewrite → traffic switch"
-          },
-          "result": {
-            "ko": "배포 다운타임 0초 달성, Docker 소켓 노출 없이 보안성 확보",
-            "en": "Zero deploy downtime, security without Docker socket exposure"
+            "ko": "Result — health-gated switch와 manual rollback 책임을 운영 절차로 명시",
+            "en": "Result — made the health-gated switch and manual rollback responsibilities explicit in operations"
           }
         }
       ],
@@ -533,7 +523,6 @@
         "Cheerio",
         "TSyringe",
         "TanStack Query",
-        "Recharts",
         "Docker",
         "Traefik",
         "Tailwind CSS",
@@ -541,74 +530,106 @@
       ],
       "github": "https://github.com/kilhyeonjun/daesin-logistics-bot-be",
       "links": {
-        "live": "https://daesin-logistics-bot-fe.vercel.app",
-        "github-fe": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe"
+        "Live": "https://daesin.kilpenguin.com",
+        "FE": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe",
+        "BE": "https://github.com/kilhyeonjun/daesin-logistics-bot-be"
       },
       "highlights": {
         "ko": [
-          "Clean Architecture + TSyringe DI로 계층 분리 설계",
-          "Cheerio 크롤링 + node-cron 자동 동기화 (월~토 매시)",
-          "카카오톡 챗봇 스킬서버 연동 (노선·차량·도착지 검색)",
-          "Traefik Blue-Green 무중단 배포 + 자동 배포 스크립트",
-          "Next.js 모바일웹 + Recharts 통계 대시보드"
+          "FE+BE 웹의 기획·구현·배포·운영을 단독 수행",
+          "수집 작업을 singleton KST scheduler로 분리",
+          "Vercel read-only proxy와 Traefik active slot으로 조회 경계 구성"
         ],
         "en": [
-          "Clean Architecture + TSyringe DI layer separation design",
-          "Cheerio crawling + node-cron hourly auto-sync (Mon-Sat)",
-          "KakaoTalk chatbot skill server (route/vehicle/destination search)",
-          "Traefik Blue-Green zero-downtime deploy + automated deploy scripts",
-          "Next.js mobile web + Recharts statistics dashboard"
+          "Sole ownership of planning, implementation, deployment, and operations for the frontend-and-backend web product",
+          "Separated collection into a singleton KST scheduler",
+          "Bound reads through a Vercel read-only proxy and Traefik active slot"
         ]
       },
       "lessons": {
         "ko": [
-          "Clean Architecture의 도메인·애플리케이션·인프라 계층 분리와 TSyringe DI 컨테이너를 적용하며, 비즈니스 로직과 외부 의존성(크롤러, DB, 카카오 API)의 결합도를 제거하는 설계를 학습",
-          "카카오 i 오픈빌더 스킬서버 프로토콜을 직접 구현하며 챗봇 플랫폼의 요청·응답 규격과 시나리오 블록 연동 방식을 이해",
-          "Traefik 리버스 프록시 기반 Blue-Green 배포 구조를 설계하고 자동 배포 스크립트를 구축하며, 무중단 배포의 트래픽 전환·헬스체크·롤백 전략을 경험",
-          "Value Object 패턴(LineCode, SearchDate)으로 도메인 규칙을 타입 수준에서 강제하며, 원시 타입 남용을 방지하는 도메인 모델링 기법을 학습"
+          "replica와 scheduled side effect의 lifecycle을 분리하지 않으면 upsert가 있어도 외부 요청과 쓰기가 중복될 수 있다",
+          "관측 행 수와 관측 날짜는 운영 규모 근거일 뿐 데이터 최신성 근거가 아니다",
+          "health check 통과와 운영자 rollback 절차를 트래픽 전환 책임과 함께 명시해야 한다"
         ],
         "en": [
-          "Learned decoupling business logic from external dependencies (crawler, DB, Kakao API) by applying Clean Architecture layer separation with TSyringe DI container",
-          "Understood chatbot platform request/response protocols and scenario block integration by directly implementing Kakao i Open Builder skill server",
-          "Experienced zero-downtime deployment traffic switching, health checking, and rollback strategies by designing Traefik-based Blue-Green deployment with automated deploy scripts",
-          "Learned domain modeling techniques preventing primitive type abuse by enforcing domain rules at type level through Value Object pattern (LineCode, SearchDate)"
+          "If replica lifecycle and scheduled side effects are not separated, external requests and writes can duplicate even when upserts hide the symptom",
+          "Observed row count and observation date evidence operating scale, not data freshness",
+          "Traffic-switch responsibility must state both the health gate and the operator rollback procedure"
         ]
       },
-      "architectureDiagram": "/images/portfolio/daesin-arch.svg",
+      "architectureDiagram": {
+        "ko": "/images/portfolio/daesin-arch.svg",
+        "en": "/images/portfolio/daesin-arch-en.svg"
+      },
       "scale": {
-        "ko": "월~토 06:00~20:00 매시 크롤링 · Blue-Green 무중단 배포 · SQLite 단일 서버",
-        "en": "Mon-Sat 06:00-20:00 hourly crawl · Blue-Green zero-downtime · SQLite single server"
+        "ko": "FE+BE 웹 · singleton KST 월~토 06:00–20:00 · 2026-07-23 관측 485일·280,925 rows",
+        "en": "Frontend + backend web · singleton KST Mon–Sat 06:00–20:00 · observed 2026-07-23: 485 days, 280,925 rows"
       },
       "metrics": [
         {
           "label": {
-            "ko": "크롤링 주기",
-            "en": "Crawl frequency"
+            "ko": "수집 일정",
+            "en": "Collection schedule"
           },
-          "before": "수동 조회",
-          "after": "일 15회 자동",
-          "improvement": "자동화"
+          "before": {
+            "ko": "수동 확인 의존",
+            "en": "Dependent on manual checks"
+          },
+          "after": {
+            "ko": "singleton KST · 월~토 06:00–20:00 · 일 15회",
+            "en": "singleton KST · Mon–Sat 06:00–20:00 · 15/day"
+          },
+          "improvement": {
+            "ko": "운영 시간대 수집",
+            "en": "Scheduled collection window"
+          }
         },
         {
           "label": {
-            "ko": "배포 다운타임",
-            "en": "Deploy downtime"
+            "ko": "replica 중복",
+            "en": "Replica duplication"
           },
-          "before": "수동 재시작",
-          "after": "0초",
-          "improvement": "Blue-Green"
+          "before": {
+            "ko": "기존 일 30회",
+            "en": "Historical 30/day"
+          },
+          "after": {
+            "ko": "일 15회",
+            "en": "15/day"
+          },
+          "improvement": {
+            "ko": "singleton 복구",
+            "en": "Singleton restored"
+          }
+        },
+        {
+          "label": {
+            "ko": "관측 규모",
+            "en": "Observed scale"
+          },
+          "before": {
+            "ko": "관측일 미표기",
+            "en": "No observation date"
+          },
+          "after": {
+            "ko": "2026-07-23 · 485일 · 280,925건",
+            "en": "2026-07-23 · 485 days · 280,925 rows"
+          },
+          "improvement": {
+            "ko": "관측일 명시",
+            "en": "Observation date stated"
+          }
         }
       ],
       "techDecisions": {
         "ko": [
-          "Clean Architecture + TSyringe DI: 크롤러·카카오 API·DB 등 외부 의존성 교체 가능성을 고려한 계층 분리, DI 토큰으로 인터페이스 바인딩",
-          "SQLite 선택: 단일 서버·읽기 위주 워크로드에서 PostgreSQL 대비 운영 오버헤드 제거, 파일 기반 볼륨 마운트로 Docker 이식성 확보",
-          "Traefik 파일 프로바이더: Docker 소켓 노출 없이 YAML 재작성으로 트래픽 전환, 보안성과 롤백 단순화 동시 달성"
+          "SQLite 단일 저장소: 현재 운영 단순성과 read-heavy 조회에 맞지만 수평 쓰기 확장에는 한계가 있다",
+          "Traefik slot 전환: 비활성 slot health check 뒤 active slot을 바꾸고, 문제 발생 시 운영자가 manual rollback한다"
         ],
         "en": [
-          "Clean Architecture + TSyringe DI: layer separation for swappable external dependencies (crawler, Kakao API, DB), interface binding via DI tokens",
-          "SQLite: eliminates PostgreSQL operational overhead for single-server read-heavy workload, file-based volume mount ensures Docker portability",
-          "Traefik file provider: traffic switching via YAML rewrite without Docker socket exposure, achieving both security and simple rollback"
+          "Single SQLite store: fits current operational simplicity and read-heavy queries, with a ceiling on horizontal write scaling",
+          "Traefik slot switch: change the active slot only after the inactive slot passes its health check; an operator performs manual rollback on failure"
         ]
       }
     },

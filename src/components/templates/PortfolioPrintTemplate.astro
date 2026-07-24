@@ -443,23 +443,24 @@ function formatPeriod(period: { start: string; end: string }): string {
         : (lang === 'ko' ? '팀' : 'Team');
       const role = project.role?.[lang] || project.role?.ko;
       const isEvidenceRegister = project.slug === 'ai-coding-harness';
+      const isDaesinCase = project.slug === 'daesin-logistics-bot';
       const architectureDiagram = project.architectureDiagram ? localize(project.architectureDiagram) : null;
       const detailUrl = new URL(`${localePrefix}/portfolio/${project.slug}`, Astro.site).toString();
 
       return (
         <>
           {idx > 0 && <hr class="project-separator" />}
-          <div class:list={['project-item', isEvidenceRegister && 'evidence-register-print']}>
+          <div class:list={['project-item', isEvidenceRegister && 'evidence-register-print', isDaesinCase && 'daesin-case-print']}>
             <div class="project-header">
               <span class="project-name">{name}</span>
               <span class="project-meta">{period} · {role ? `${role} · ` : ''}{typeLabel}</span>
             </div>
 
             <div class="project-links">
-              {project.github && (
+              {project.github && !isDaesinCase && (
                 <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
               )}
-              {isEvidenceRegister && project.links && Object.entries(project.links).map(([key, url]) => (
+              {(isEvidenceRegister || isDaesinCase) && project.links && Object.entries(project.links).map(([key, url]) => (
                 typeof url === 'string' && <a href={url} target="_blank" rel="noopener noreferrer">{key} ↗</a>
               ))}
               <a href={detailUrl} target="_blank" rel="noopener noreferrer">{lang === 'ko' ? '상세 ↗' : 'Detail ↗'}</a>
@@ -484,7 +485,7 @@ function formatPeriod(period: { start: string; end: string }): string {
 
             {architectureDiagram && (
               <div class="arch-diagram">
-                <img src={withBasePath(architectureDiagram)} alt={`${name} architecture`} />
+                <img src={withBasePath(architectureDiagram)} alt={isDaesinCase ? (lang === 'ko' ? '외부 사이트에서 singleton KST scheduler와 crawler를 거쳐 SQLite에 저장하는 수집 흐름 및 Next.js에서 Vercel read-only proxy, Traefik, Express active slot을 거쳐 SQLite를 읽는 조회 흐름' : 'Collection flow from the external site through a singleton KST scheduler and crawler into SQLite, and query flow from Next.js through a Vercel read-only proxy, Traefik, and the Express active slot into SQLite') : `${name} architecture`} />
               </div>
             )}
 
@@ -499,7 +500,7 @@ function formatPeriod(period: { start: string; end: string }): string {
                   </tr>
                 </thead>
                 <tbody>
-                  {project.metrics.map((m) => (
+                  {(isDaesinCase ? project.metrics.slice(0, 3) : project.metrics).map((m) => (
                     <tr>
                       <td>{m.label[lang]}</td>
                       <td>{localize(m.before)}</td>
@@ -513,7 +514,7 @@ function formatPeriod(period: { start: string; end: string }): string {
             {project.problemSolving && project.problemSolving.length > 0 && (
               <section class="problem-solving-print">
                 <p class="bullet-section-heading">{currentLabels.problemSolving}</p>
-                {project.problemSolving.map((entry) => (
+                {(isDaesinCase ? project.problemSolving.slice(0, 3) : project.problemSolving).map((entry) => (
                   <div class="ps-entry">
                     <div class="ps-problem">{entry.problem[lang]}</div>
                     <div class="ps-text">{entry.process[lang]}</div>
@@ -534,7 +535,7 @@ function formatPeriod(period: { start: string; end: string }): string {
               </>
             )}
 
-            {!isEvidenceRegister && highlights && highlights.length > 0 && (
+            {!isEvidenceRegister && !isDaesinCase && highlights && highlights.length > 0 && (
               <>
                 <p class="bullet-section-heading">{currentLabels.highlights}</p>
                 <ul class="bullet-list">
@@ -545,7 +546,7 @@ function formatPeriod(period: { start: string; end: string }): string {
               </>
             )}
 
-            {!isEvidenceRegister && lessons && lessons.length > 0 && (
+            {!isEvidenceRegister && !isDaesinCase && lessons && lessons.length > 0 && (
               <>
                 <p class="bullet-section-heading">{currentLabels.lessons}</p>
                 <ul class="bullet-list">

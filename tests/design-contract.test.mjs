@@ -190,6 +190,56 @@ test('AI harness case study keeps public evidence current and recruiter-first', 
   await assert.rejects(read('public/images/portfolio/ai-coding-harness-sequence.svg'), (error) => error.code === 'ENOENT');
 });
 
+test('Daesin case study keeps KO/EN facts, evidence, and print budgets aligned', async () => {
+  const portfolio = JSON.parse(await read('src/data/portfolio.json'));
+  const project = portfolio.projects.find((item) => item.slug === 'daesin-logistics-bot');
+  assert.ok(project);
+  assert.equal(project.name.ko, '대신물류 배차 운영 원장');
+  assert.equal(project.name.en, 'Daesin Logistics Dispatch Operations Ledger');
+  assert.equal(project.role.ko, '기획·FE·BE·배포·운영 단독');
+  assert.equal(project.role.en, 'Sole owner of planning, frontend, backend, deployment, and operations');
+  assert.equal(project.links.Live, 'https://daesin.kilpenguin.com');
+  assert.equal(project.links.FE, 'https://github.com/kilhyeonjun/daesin-logistics-bot-fe');
+  assert.equal(project.links.BE, 'https://github.com/kilhyeonjun/daesin-logistics-bot-be');
+  assert.equal(project.metrics.length, 3);
+  assert.equal(project.problemSolving.length, 3);
+  assert.equal(project.techDecisions.ko.length, 2);
+  assert.equal(project.techDecisions.en.length, 2);
+  const publicCopy = JSON.stringify(project);
+  for (const forbidden of [/zero[- ]downtime/i, /real[- ]time/i, /automatic rollback/i, /Recharts/i, /Kakao/i, /카카오/, /무중단/, /실시간/, /자동 롤백/]) {
+    assert.doesNotMatch(publicCopy, forbidden);
+  }
+  assert.match(publicCopy, /2026-07-23/);
+  assert.match(publicCopy, /280,925/);
+  assert.match(publicCopy, /485/);
+  assert.match(publicCopy, /30\/day/);
+  assert.match(publicCopy, /15\/day/);
+  assert.match(publicCopy, /singleton KST/);
+
+  const [detail, print, css, diagram] = await Promise.all([
+    read('src/components/templates/PortfolioDetailTemplate.astro'),
+    read('src/components/templates/PortfolioPrintTemplate.astro'),
+    read('src/styles/global.css'),
+    read('public/images/portfolio/daesin-arch.svg'),
+  ]);
+  assert.match(detail, /isDaesinCase/);
+  assert.match(detail, /daesin-cover-frame/);
+  assert.match(detail, /project\.links && Object\.entries\(project\.links\)/);
+  assert.match(css, /\.daesin-cover-frame\s*\{[^}]*aspect-ratio:\s*16\s*\/\s*9/s);
+  assert.match(css, /\.portfolio-detail\.daesin-case > #problems\s*\{[^}]*grid-row:\s*5/s);
+  assert.match(print, /isDaesinCase/);
+  assert.match(print, /project\.metrics\.slice\(0, 3\)/);
+  assert.match(print, /project\.problemSolving\.slice\(0, 3\)/);
+  assert.match(diagram, /수집 흐름 · Collection flow/);
+  assert.match(diagram, /조회 흐름 · Query flow/);
+  assert.match(diagram, /singleton KST scheduler/);
+  assert.match(diagram, /Vercel read-only proxy/);
+  assert.match(diagram, /health-gated switch/);
+  assert.match(diagram, /manual rollback/);
+  assert.match(diagram, /<title>/);
+  assert.match(diagram, /<desc>/);
+});
+
 test('fonts are local/system-only and every standalone output has a semantic h1', async () => {
   const sourceFiles = [
     'src/styles/global.css',

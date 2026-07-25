@@ -6,7 +6,19 @@ import test from 'node:test';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = (path) => readFile(join(root, path), 'utf8');
-const withoutComments = (html) => html.replace(/<!--[\s\S]*?-->/g, '');
+const withoutComments = (html) => {
+  let output = '';
+  let cursor = 0;
+  while (cursor < html.length) {
+    const start = html.indexOf('<!--', cursor);
+    if (start < 0) return output + html.slice(cursor);
+    output += html.slice(cursor, start);
+    const end = html.indexOf('-->', start + 4);
+    if (end < 0) return output;
+    cursor = end + 3;
+  }
+  return output;
+};
 const robotsMetaCount = (html) => (withoutComments(html).match(
   /<meta\s+name=["']robots["']\s+content=["']noindex, follow["']\s*\/?>/g,
 ) || []).length;
@@ -70,6 +82,10 @@ test('derivative sources declare active noindex and robots allows crawlers to re
   ]);
   assert.match(config, /page\.includes\('\/portfolio-print'\)/);
   assert.match(config, /page\.includes\('\/experience-print'\)/);
+  assert.equal(
+    robotsMetaCount('<!-- <meta name="robots" content="noindex, follow">'),
+    0,
+  );
   for (const source of [portfolioPrint, experiencePrint, resumePrint, resumeAts, ogImage]) {
     assert.equal(robotsMetaCount(source), 1);
   }

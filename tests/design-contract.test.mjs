@@ -396,13 +396,20 @@ test('local generation and deployment use the same IPv4 dev-server origin', asyn
   const deployEnd = nextJobOffset < 0 ? workflow.length : deployStart + 1 + nextJobOffset;
   const deployJob = workflow.slice(deployStart, deployEnd);
   assert.match(deployJob, /^    permissions:\n      pages: write\n      id-token: write/m);
-  for (const action of [
-    'actions/checkout@v7',
-    'actions/setup-node@v7',
-    'actions/configure-pages@v6',
-    'actions/upload-pages-artifact@v5',
-    'actions/deploy-pages@v5',
-  ]) assert.match(workflow, new RegExp(`uses: ${action.replace('/', '\\/')}`));
+  assert.deepEqual(
+    workflow.match(/^\s+uses: \S+(?: # \S+)?$/gm),
+    [
+      '        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7',
+      '        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7',
+      '        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6',
+      '        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5',
+      '        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5',
+    ],
+  );
+  assert.equal(
+    await read('.github/dependabot.yml'),
+    'version: 2\nupdates:\n  - package-ecosystem: github-actions\n    directory: /\n    schedule:\n      interval: weekly\n',
+  );
   assert.match(workflow, /node-version: "24"/);
   assert.match(workflow, /name: Type Check\s*\n\s+run: npm run check/);
   assert.doesNotMatch(workflow, /npx astro check/);

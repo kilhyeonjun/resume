@@ -14,8 +14,8 @@
         "en": "A local-first work planner that combines recognized load, actual work, leave, and daily/weekly caps into one deterministic allocation contract, exposing infeasible targets as explicit gaps instead of forced over-allocation."
       },
       "description": {
-        "ko": "월 목표와 날짜별 제약을 정규화한 뒤 고정 계획을 먼저 적용하고, 필요한 날짜만 선택적으로 활성화해 남은 시간을 배분합니다. 목표를 채울 수 없으면 hard limit을 깨지 않고 부족 시간과 상태를 반환합니다. 사용자가 날짜를 고정할 때는 preview에서 충돌과 초과를 확인한 뒤 나머지 날짜만 재배분해 브라우저 로컬 상태에 저장하며 외부 HR 시스템에는 쓰지 않습니다. 공개 사례는 synthetic fixture만 사용합니다.",
-        "en": "The planner normalizes monthly targets and per-date constraints, applies fixed plans first, and selectively activates only the dates needed for the remaining allocation. When capacity is insufficient, it preserves hard limits and returns the remaining gap and status. Date overrides go through a conflict/excess preview before redistributing only the remaining dates into browser-local state; no external HR system is modified. The public case uses synthetic fixtures only."
+        "ko": "월 목표와 날짜별 제약을 정규화한 뒤 고정 계획을 먼저 적용하고, 필요한 날짜만 선택적으로 활성화해 남은 시간을 배분합니다. 목표를 채울 수 없으면 hard limit을 깨지 않고 부족 시간과 상태를 반환합니다. 날짜 override 화면은 충돌과 초과를 preview하고 나머지 날짜의 재배분 결과를 계산하며, 공개 구현은 synthetic fixture 기반 미리보기 경계까지만 다룹니다.",
+        "en": "The planner normalizes monthly targets and per-date constraints, applies fixed plans first, and selectively activates only the dates needed for the remaining allocation. When capacity is insufficient, it preserves hard limits and returns the remaining gap and status. The date-override UI previews conflicts and excess while calculating redistribution of the remaining dates; the public implementation stops at this synthetic-fixture preview boundary."
       },
       "role": {
         "ko": "개인 설계·구현·검증",
@@ -64,8 +64,8 @@
             "en": "Lock one date and redistribute only the remainder"
           },
           "caption": {
-            "ko": "사용자 고정 계획을 먼저 잠그고 preview에서 충돌을 확인한 뒤 나머지 날짜만 다시 계산해 로컬에 저장합니다.",
-            "en": "A user-fixed plan is locked first, conflicts are checked in preview, and only the remaining dates are recalculated and stored locally."
+            "ko": "합성 fixture에서 사용자 고정 계획을 먼저 잠그고 preview에서 충돌을 확인한 뒤 나머지 날짜만 다시 계산합니다.",
+            "en": "In a synthetic fixture, a user-fixed plan is locked first, conflicts are checked in preview, and only the remaining dates are recalculated."
           }
         }
       ],
@@ -94,8 +94,8 @@
             "en": "Lock the selected date first, preview conflicts, then deterministically redistribute only the remainder"
           },
           "result": {
-            "ko": "외부 시스템 쓰기 없이 로컬 계획의 변경 범위와 reset 경계를 유지",
-            "en": "Keeps the local change scope and reset boundary without external writes"
+            "ko": "외부 시스템 쓰기 없이 preview에서 변경 범위와 충돌 경계를 표시",
+            "en": "Shows change scope and conflict boundaries in preview without external writes"
           }
         }
       ],
@@ -103,13 +103,13 @@
         "ko": [
           "고정 계획 우선·선택적 최소 활성화·hard-limit 유지의 단일 allocator 계약",
           "달성 불가능 상태를 부족 시간과 원인으로 노출",
-          "날짜 override preview·재배분·reset과 브라우저 history 복원",
+          "날짜 override preview와 나머지 날짜 재배분 계산",
           "synthetic scenario·공개 경계 scan·Python/Playwright CI"
         ],
         "en": [
           "One allocator contract for fixed-plan priority, selective minimum activation, and hard-limit preservation",
           "Infeasibility exposed as a remaining gap and reason",
-          "Date-override preview, redistribution, reset, and browser-history restoration",
+          "Date-override preview and redistribution calculation for remaining dates",
           "Synthetic scenarios, public-boundary scan, and Python/Playwright CI"
         ]
       },
@@ -125,11 +125,11 @@
       },
       "operationalLimits": {
         "ko": [
-          "브라우저 로컬 계획이며 공식 근태 시스템을 수정하지 않습니다.",
+          "공개 구현은 synthetic preview이며 공식 근태 시스템을 수정하지 않습니다.",
           "공개 사례는 synthetic fixture만 사용하며 실제 근무 기록을 포함하지 않습니다."
         ],
         "en": [
-          "Plans are browser-local and do not modify an official attendance system.",
+          "The public implementation is a synthetic preview and does not modify an official attendance system.",
           "The public case uses synthetic fixtures and contains no real work records."
         ]
       },
@@ -167,8 +167,8 @@
             "en": "fixed date + remainder redistribution"
           },
           "improvement": {
-            "ko": "preview·reset 경계",
-            "en": "preview and reset boundary"
+            "ko": "preview·재배분 경계",
+            "en": "preview and redistribution boundary"
           }
         }
       ],
@@ -470,8 +470,8 @@
         "en": "A five-game realtime service where mobile clients request actions and a room-scoped Durable Object owns phase, turn, hidden information, and reconnect behavior."
       },
       "description": {
-        "ko": "방 코드로 입장하는 모바일 웹과 Cloudflare Durable Object 기반 Room을 분리했습니다. Room은 게임별 순수 상태 머신에 행동을 전달하기 전에 phase·turn·권한을 검증하고, 각 참가자에게 허용된 player view만 투영합니다. 연결이 끊겨도 서버 상태를 정본으로 유지하고 같은 player key가 돌아오면 허용된 개인 view를 다시 제공합니다. 공개 포트폴리오에는 실제 방 코드·닉네임·전적과 비공개 저장소 내용을 포함하지 않습니다.",
-        "en": "The mobile room-code client is separated from a Cloudflare Durable Object Room. Before dispatching an action to a pure per-game state machine, the Room validates phase, turn, and authority, then projects only the allowed player view. Server state remains authoritative across disconnects and the allowed personal view is restored when the same player key returns. The portfolio excludes real room codes, nicknames, stats, and private repository content."
+        "ko": "방 코드로 입장하는 모바일 웹과 Cloudflare Durable Object 기반 Room을 분리했습니다. Room은 게임별 순수 상태 머신에 행동을 전달하기 전에 phase·turn·권한을 검증하고, 각 참가자에게 허용된 player view만 투영합니다. 연결이 끊겨도 서버 상태를 정본으로 유지하고 유효한 reconnect token이 돌아오면 허용된 개인 view를 다시 제공합니다. 공개 포트폴리오에는 실제 방 코드·닉네임·전적과 비공개 저장소 내용을 포함하지 않습니다.",
+        "en": "The mobile room-code client is separated from a Cloudflare Durable Object Room. Before dispatching an action to a pure per-game state machine, the Room validates phase, turn, and authority, then projects only the allowed player view. Server state remains authoritative across disconnects and the allowed personal view is restored when a valid reconnect token returns. The portfolio excludes real room codes, nicknames, stats, and private repository content."
       },
       "role": {
         "ko": "개인 설계·구현·배포",
@@ -504,8 +504,8 @@
             "en": "Server rulings survive a disconnect"
           },
           "caption": {
-            "ko": "합성 시퀀스에서 클라이언트 행동을 서버가 검증하고, 끊김 뒤 같은 player key에 허용된 view만 다시 투영합니다.",
-            "en": "In this synthetic sequence the server validates a client action and, after disconnect, projects only the allowed view back to the same player key."
+            "ko": "합성 시퀀스에서 클라이언트 행동을 서버가 검증하고, 끊김 뒤 유효한 reconnect token에 허용된 view만 다시 투영합니다.",
+            "en": "In this synthetic sequence the server validates a client action and, after disconnect, projects only the allowed view for a valid reconnect token."
           }
         }
       ],
@@ -530,8 +530,8 @@
             "en": "Mobile disconnects could lose state or mis-handle room ownership"
           },
           "process": {
-            "ko": "연결과 player identity를 분리하고 재접속 여유·방 lifecycle·player key 복귀 경로를 서버에서 관리",
-            "en": "Separate connections from player identity and manage reconnect headroom, room lifecycle, and player-key return on the server"
+            "ko": "연결과 player identity를 분리하고 재접속 여유·방 lifecycle·token 기반 복귀 경로를 서버에서 관리",
+            "en": "Separate connections from player identity and manage reconnect headroom, room lifecycle, and token-based return on the server"
           },
           "result": {
             "ko": "연결 복구 시 기존 서버 상태에서 허용 view를 재생성",
@@ -597,8 +597,8 @@
       "type": "personal",
       "listed": true,
       "summary": {
-        "ko": "여러 채용 원천을 정규화해 공식 공고 중심으로 탐색하고, 마감·지역·고용형태 추천 이유와 계정별 지원 상태를 함께 관리하는 모바일 우선 대시보드",
-        "en": "A mobile-first dashboard that normalizes multiple job sources for official-posting discovery, explains deadline/region/employment recommendations, and keeps account-scoped application state."
+        "ko": "채용 플랫폼과 병원 채용 페이지 원천을 정규화해 탐색하고, 마감·지역·고용형태 추천 이유와 계정별 지원 상태를 함께 관리하는 모바일 우선 대시보드",
+        "en": "A mobile-first dashboard that normalizes job-platform and hospital-career-page sources, explains deadline/region/employment recommendations, and keeps account-scoped application state."
       },
       "description": {
         "ko": "채용 플랫폼과 병원 채용 페이지를 adapter로 수집해 공고 ID·마감·지역·고용형태를 하나의 read model로 정규화합니다. 공개 탐색과 로그인 후 관심·지원·면접·결과 상태를 분리하고, 알림은 dedupe key·원자적 lease·전달 성공 확인 후 watermark 전진으로 중복 실행과 일시 실패를 다룹니다. 공개 사례에는 실제 지원 기록·가족 데이터·운영 URL·알림 대상을 포함하지 않습니다.",
@@ -645,8 +645,8 @@
             "en": "Source-specific deadline, region, and employment formats make comparison and prioritization difficult"
           },
           "process": {
-            "ko": "source adapter에서 ingestion 시점에 필드를 정규화하고 공식 원문·freshness·open 상태를 read model에 저장",
-            "en": "Normalize fields at ingestion and retain official source, freshness, and open state in the read model"
+            "ko": "source adapter에서 ingestion 시점에 필드를 정규화하고 수집 원문 링크·freshness·open 상태를 read model에 저장",
+            "en": "Normalize fields at ingestion and retain the collected source link, freshness, and open state in the read model"
           },
           "result": {
             "ko": "한 화면에서 마감·지역·고용형태 필터와 추천 이유 제공",
@@ -671,24 +671,24 @@
       "highlights": {
         "ko": [
           "다중 채용 플랫폼·병원 원천 adapter와 정규화 read model",
-          "공식 원문·마감·지역·고용형태 기반 설명 가능한 추천",
+          "수집 원문 링크·마감·지역·고용형태 기반 설명 가능한 추천",
           "관심·지원·면접·결과의 계정별 tracker",
           "dedupe·lease·delivery confirmation 기반 durable outbox"
         ],
         "en": [
           "Multi-platform and hospital-source adapters with a normalized read model",
-          "Explainable recommendations from official source, deadline, region, and employment type",
+          "Explainable recommendations from collected source links, deadline, region, and employment type",
           "Account-scoped interest/application/interview/result tracker",
           "Durable outbox with dedupe, lease, and delivery confirmation"
         ]
       },
       "lessons": {
         "ko": [
-          "가족용 제품은 자동화보다 공식 원문과 판단 이유를 먼저 보여줘야 신뢰를 얻는다.",
+          "가족용 제품은 자동화보다 수집 원문 링크와 판단 이유를 먼저 보여줘야 신뢰를 얻는다.",
           "알림 신뢰성은 재시도 횟수보다 완료 조건과 watermark 경계를 명시하는 데서 시작한다."
         ],
         "en": [
-          "A family-facing product earns trust by showing the official source and decision reason before automation.",
+          "A family-facing product earns trust by showing the collected source link and decision reason before automation.",
           "Notification reliability starts with explicit completion and watermark boundaries, not retry counts alone."
         ]
       },

@@ -144,6 +144,10 @@ test('new portfolio candidates stay synthetic, scoped, and visually evidenced', 
   assert.equal(data.projects.some((project) => project.slug === 'medical-recruit'), false);
   assert.doesNotMatch(candidates[1].highlights.en.join(' '), /Tests cover/);
   assert.match(candidates[2].role.en, /Family-user-informed/);
+  assert.doesNotMatch(JSON.stringify(candidates[0]), /stored locally|browser-history restoration|Plans are browser-local|reset boundary|로컬에 저장|브라우저 history 복원|reset 경계/);
+  assert.doesNotMatch(JSON.stringify(candidates[1]), /same player key|player-key return|같은 player key/);
+  assert.match(JSON.stringify(candidates[1]), /valid reconnect token/);
+  assert.doesNotMatch(JSON.stringify(candidates[2]), /official-posting|official source|공식 공고|공식 원문/);
   for (const project of candidates) {
     assert.ok(project.architectureDiagram, project.slug);
     assert.ok(project.scenarioEvidence?.length, project.slug);

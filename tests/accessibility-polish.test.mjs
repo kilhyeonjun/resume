@@ -129,7 +129,7 @@ test('dark print keeps every visible direct-text sample at WCAG AA', { timeout: 
     await page.evaluateOnNewDocument(() => localStorage.setItem('theme', 'dark'));
     await page.emulateMediaType('print');
     for (const path of paths) {
-      const response = await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
+      const response = await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' });
       assert.equal(response?.status(), 200, `${path} must return HTTP 200`);
       assert.ok(await page.title(), `${path} must expose a document title`);
       const result = await page.$eval('body', (body) => {

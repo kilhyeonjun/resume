@@ -70,6 +70,16 @@ test('portfolio visibility has one shared public-route contract', async () => {
   assert.match(selector, /\.\.\.selectListedPortfolioProjects\(projects\)/);
 });
 
+test('portfolio supports explicit backend-platform and product-algorithm featured orders', async () => {
+  const template = await read('src/components/templates/PortfolioTemplate.astro');
+  assert.match(template, /backend-platform.*ai-coding-harness.*concert-reservation.*flex-work-schedule/s);
+  assert.match(template, /product-algorithm.*flex-work-schedule.*concert-reservation.*ai-coding-harness/s);
+  assert.match(template, /new URLSearchParams\(location\.search\)/);
+  assert.match(template, /data-slug=\{project\.slug\}/);
+  assert.match(template, /focus=backend-platform/);
+  assert.match(template, /focus=product-algorithm/);
+});
+
 test('derivative sources declare active noindex and robots allows crawlers to read it', async () => {
   const [config, portfolioPrint, experiencePrint, resumePrint, resumeAts, ogImage, robots] = await Promise.all([
     read('astro.config.mjs'),

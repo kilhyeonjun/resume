@@ -1,6 +1,189 @@
 {
   "projects": [
     {
+      "slug": "flex-work-schedule",
+      "name": {
+        "ko": "Flex — 제약을 숨기지 않는 근무 계획기",
+        "en": "Flex — Constraint-Explicit Work Planner"
+      },
+      "type": "personal",
+      "featured": true,
+      "printOrder": 1,
+      "summary": {
+        "ko": "인정시간·실제 근무·휴가·일/주 상한을 하나의 결정론적 배분 계약으로 묶고, 달성 불가능한 목표는 초과 배정 대신 부족분과 이유로 표시하는 로컬 우선 근무 계획기",
+        "en": "A local-first work planner that combines recognized load, actual work, leave, and daily/weekly caps into one deterministic allocation contract, exposing infeasible targets as explicit gaps instead of forced over-allocation."
+      },
+      "description": {
+        "ko": "월 목표와 날짜별 제약을 정규화한 뒤 고정 계획을 먼저 적용하고, 필요한 날짜만 선택적으로 활성화해 남은 시간을 배분합니다. 목표를 채울 수 없으면 hard limit을 깨지 않고 부족 시간과 상태를 반환합니다. 사용자가 날짜를 고정할 때는 preview에서 충돌과 초과를 확인한 뒤 나머지 날짜만 재배분해 브라우저 로컬 상태에 저장하며 외부 HR 시스템에는 쓰지 않습니다. 공개 사례는 synthetic fixture만 사용합니다.",
+        "en": "The planner normalizes monthly targets and per-date constraints, applies fixed plans first, and selectively activates only the dates needed for the remaining allocation. When capacity is insufficient, it preserves hard limits and returns the remaining gap and status. Date overrides go through a conflict/excess preview before redistributing only the remaining dates into browser-local state; no external HR system is modified. The public case uses synthetic fixtures only."
+      },
+      "role": {
+        "ko": "개인 설계·구현·검증",
+        "en": "Sole designer, implementer, and verifier"
+      },
+      "period": {
+        "start": "2026-07-01",
+        "end": "present"
+      },
+      "skills": [
+        "Python",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "Playwright",
+        "Property Testing",
+        "GitHub Actions"
+      ],
+      "github": "https://github.com/kilhyeonjun/work-schedule-planner",
+      "links": {
+        "CI": "https://github.com/kilhyeonjun/work-schedule-planner/actions"
+      },
+      "architectureDiagram": "/images/portfolio/flex-architecture.svg",
+      "scenarioEvidence": [
+        {
+          "image": {
+            "ko": "/images/portfolio/flex-scenario-infeasible.svg",
+            "en": "/images/portfolio/flex-scenario-infeasible.svg"
+          },
+          "title": {
+            "ko": "불가능한 목표를 부족분으로 표시",
+            "en": "Expose an infeasible target as a gap"
+          },
+          "caption": {
+            "ko": "합성 월 목표가 남은 일·주 상한보다 큰 경우 상한을 유지하고 insufficient_slots와 부족 시간을 반환합니다.",
+            "en": "When a synthetic monthly target exceeds remaining daily and weekly capacity, the planner preserves those caps and returns insufficient_slots with the remaining gap."
+          }
+        },
+        {
+          "image": {
+            "ko": "/images/portfolio/flex-scenario-override.svg",
+            "en": "/images/portfolio/flex-scenario-override.svg"
+          },
+          "title": {
+            "ko": "날짜 고정 후 나머지만 재배분",
+            "en": "Lock one date and redistribute only the remainder"
+          },
+          "caption": {
+            "ko": "사용자 고정 계획을 먼저 잠그고 preview에서 충돌을 확인한 뒤 나머지 날짜만 다시 계산해 로컬에 저장합니다.",
+            "en": "A user-fixed plan is locked first, conflicts are checked in preview, and only the remaining dates are recalculated and stored locally."
+          }
+        }
+      ],
+      "problemSolving": [
+        {
+          "problem": {
+            "ko": "목표 시간이 남은 가용 슬롯보다 커도 강제로 초과 배정하면 계획이 현실을 숨기는 문제",
+            "en": "Forced allocation above remaining capacity would hide an infeasible plan"
+          },
+          "process": {
+            "ko": "일·주 상한과 고정 계획을 먼저 적용하고 배정 가능한 시간을 계산한 뒤 부족분을 명시적 상태로 반환",
+            "en": "Apply daily/weekly caps and fixed plans first, compute allocatable time, then return the remaining gap as an explicit state"
+          },
+          "result": {
+            "ko": "상한을 깨지 않고 insufficient_slots와 부족 시간을 화면에 표시",
+            "en": "Preserves hard limits while displaying insufficient_slots and the remaining gap"
+          }
+        },
+        {
+          "problem": {
+            "ko": "특정 날짜 변경이 월 전체 계획을 예기치 않게 덮어쓸 수 있는 문제",
+            "en": "A date override could unexpectedly overwrite the whole monthly plan"
+          },
+          "process": {
+            "ko": "고정 날짜를 우선 잠그고 충돌 preview 후 나머지 날짜에만 결정론적 재배분 적용",
+            "en": "Lock the selected date first, preview conflicts, then deterministically redistribute only the remainder"
+          },
+          "result": {
+            "ko": "외부 시스템 쓰기 없이 로컬 계획의 변경 범위와 reset 경계를 유지",
+            "en": "Keeps the local change scope and reset boundary without external writes"
+          }
+        }
+      ],
+      "highlights": {
+        "ko": [
+          "고정 계획 우선·선택적 최소 활성화·hard-limit 유지의 단일 allocator 계약",
+          "달성 불가능 상태를 부족 시간과 원인으로 노출",
+          "날짜 override preview·재배분·reset과 브라우저 history 복원",
+          "synthetic scenario·공개 경계 scan·Python/Playwright CI"
+        ],
+        "en": [
+          "One allocator contract for fixed-plan priority, selective minimum activation, and hard-limit preservation",
+          "Infeasibility exposed as a remaining gap and reason",
+          "Date-override preview, redistribution, reset, and browser-history restoration",
+          "Synthetic scenarios, public-boundary scan, and Python/Playwright CI"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "최적화보다 먼저 불가능 상태를 정확히 모델링해야 계획기가 현실을 왜곡하지 않는다.",
+          "사용자 override는 전체 재계산보다 고정 범위와 나머지 배분 경계를 분리해야 예측 가능하다."
+        ],
+        "en": [
+          "A planner must model infeasibility before optimizing, or it will distort reality.",
+          "User overrides remain predictable when the fixed scope is separated from redistribution of the remainder."
+        ]
+      },
+      "operationalLimits": {
+        "ko": [
+          "브라우저 로컬 계획이며 공식 근태 시스템을 수정하지 않습니다.",
+          "공개 사례는 synthetic fixture만 사용하며 실제 근무 기록을 포함하지 않습니다."
+        ],
+        "en": [
+          "Plans are browser-local and do not modify an official attendance system.",
+          "The public case uses synthetic fixtures and contains no real work records."
+        ]
+      },
+      "scale": {
+        "ko": "결정론적 월간 allocator · 날짜별 제약 · Python/React 이중 검증",
+        "en": "Deterministic monthly allocator · per-date constraints · Python/React verification"
+      },
+      "metrics": [
+        {
+          "label": {
+            "ko": "불가능 상태",
+            "en": "Infeasible state"
+          },
+          "before": {
+            "ko": "강제 배정 위험",
+            "en": "Risk of forced allocation"
+          },
+          "after": "insufficient_slots + gap",
+          "improvement": {
+            "ko": "hard limit 유지",
+            "en": "hard limits preserved"
+          }
+        },
+        {
+          "label": {
+            "ko": "날짜 변경 범위",
+            "en": "Date-change scope"
+          },
+          "before": {
+            "ko": "월 전체 재계산 위험",
+            "en": "Risk of full-month overwrite"
+          },
+          "after": {
+            "ko": "고정 날짜 + 나머지 재배분",
+            "en": "fixed date + remainder redistribution"
+          },
+          "improvement": {
+            "ko": "preview·reset 경계",
+            "en": "preview and reset boundary"
+          }
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "기존 _minimum_activation 흐름을 복원해 최소 근무시간을 의무 시드가 아닌 선택적 활성화 하한으로 유지",
+          "외부 시스템 연동을 추가하지 않고 URL/로컬 상태로 재현 가능한 판단 표면 제공"
+        ],
+        "en": [
+          "Restored the existing _minimum_activation flow so minimum work remains a selective activation floor rather than a mandatory seed",
+          "Kept the decision surface reproducible through URL/local state without adding external-system integration"
+        ]
+      }
+    },
+    {
       "slug": "ai-coding-harness",
       "name": {
         "ko": "프로젝트별 AI CLI 런타임을 분리하고 검증하는 공개 런처",
@@ -8,7 +191,7 @@
       },
       "type": "personal",
       "featured": true,
-      "printOrder": 1,
+      "printOrder": 2,
       "summary": {
         "ko": "Claude Code·Codex·Kiro의 전역 상태를 프로젝트별 실행 경계로 분리하고, 잘못된 작업 경계와 설정 드리프트를 시작 전에 차단하는 공개 런처입니다.",
         "en": "A public launcher that isolates global Claude Code, Codex, and Kiro state into project-scoped boundaries and blocks invalid workspaces or configuration drift before startup."
@@ -275,14 +458,274 @@
       }
     },
     {
+      "slug": "gamebang",
+      "name": {
+        "ko": "Gamebang — 서버 권위형 실시간 게임 공방",
+        "en": "Gamebang — Server-Authoritative Realtime Game Room"
+      },
+      "type": "personal",
+      "listed": true,
+      "summary": {
+        "ko": "모바일 클라이언트는 행동만 요청하고 방별 Durable Object가 phase·turn·숨은 정보·재접속을 판정하는 5종 실시간 미니게임 서비스",
+        "en": "A five-game realtime service where mobile clients request actions and a room-scoped Durable Object owns phase, turn, hidden information, and reconnect behavior."
+      },
+      "description": {
+        "ko": "방 코드로 입장하는 모바일 웹과 Cloudflare Durable Object 기반 Room을 분리했습니다. Room은 게임별 순수 상태 머신에 행동을 전달하기 전에 phase·turn·권한을 검증하고, 각 참가자에게 허용된 player view만 투영합니다. 연결이 끊겨도 서버 상태를 정본으로 유지하고 같은 player key가 돌아오면 허용된 개인 view를 다시 제공합니다. 공개 포트폴리오에는 실제 방 코드·닉네임·전적과 비공개 저장소 내용을 포함하지 않습니다.",
+        "en": "The mobile room-code client is separated from a Cloudflare Durable Object Room. Before dispatching an action to a pure per-game state machine, the Room validates phase, turn, and authority, then projects only the allowed player view. Server state remains authoritative across disconnects and the allowed personal view is restored when the same player key returns. The portfolio excludes real room codes, nicknames, stats, and private repository content."
+      },
+      "role": {
+        "ko": "개인 설계·구현·배포",
+        "en": "Sole designer, implementer, and deployer"
+      },
+      "period": {
+        "start": "2026-07-01",
+        "end": "present"
+      },
+      "skills": [
+        "TypeScript",
+        "React",
+        "WebSocket",
+        "Cloudflare Workers",
+        "Durable Objects",
+        "Vitest"
+      ],
+      "links": {
+        "Live": "https://gamebang.penguin-gamebang.workers.dev"
+      },
+      "architectureDiagram": "/images/portfolio/gamebang-architecture.svg",
+      "scenarioEvidence": [
+        {
+          "image": {
+            "ko": "/images/portfolio/gamebang-scenario.svg",
+            "en": "/images/portfolio/gamebang-scenario.svg"
+          },
+          "title": {
+            "ko": "연결이 끊겨도 서버 판정 유지",
+            "en": "Server rulings survive a disconnect"
+          },
+          "caption": {
+            "ko": "합성 시퀀스에서 클라이언트 행동을 서버가 검증하고, 끊김 뒤 같은 player key에 허용된 view만 다시 투영합니다.",
+            "en": "In this synthetic sequence the server validates a client action and, after disconnect, projects only the allowed view back to the same player key."
+          }
+        }
+      ],
+      "problemSolving": [
+        {
+          "problem": {
+            "ko": "클라이언트가 카드·턴·승패를 판정하면 조작과 참가자별 정보 누출 위험이 생김",
+            "en": "Client-side card, turn, or result rulings create tampering and hidden-information risks"
+          },
+          "process": {
+            "ko": "방별 Durable Object가 상태 정본을 소유하고 phase·turn·행동을 검증한 뒤 참가자별 view를 투영",
+            "en": "A room Durable Object owns authoritative state, validates phase, turn, and actions, then projects per-player views"
+          },
+          "result": {
+            "ko": "클라이언트에는 자기 정보와 공개 상태만 전달",
+            "en": "Clients receive only their own information and public state"
+          }
+        },
+        {
+          "problem": {
+            "ko": "모바일 연결 끊김이 게임 상태 손실이나 방장 오판정으로 이어질 수 있음",
+            "en": "Mobile disconnects could lose state or mis-handle room ownership"
+          },
+          "process": {
+            "ko": "연결과 player identity를 분리하고 재접속 여유·방 lifecycle·player key 복귀 경로를 서버에서 관리",
+            "en": "Separate connections from player identity and manage reconnect headroom, room lifecycle, and player-key return on the server"
+          },
+          "result": {
+            "ko": "연결 복구 시 기존 서버 상태에서 허용 view를 재생성",
+            "en": "Reconnect regenerates the allowed view from existing server state"
+          }
+        }
+      ],
+      "highlights": {
+        "ko": [
+          "5종 게임을 공통 GameDef·상태 머신 계약으로 등록",
+          "방별 Durable Object가 phase·turn·host·행동 검증",
+          "참가자별 player view로 숨은 정보 분리",
+          "CSP·보안 헤더·room lifecycle·재접속 경계를 테스트로 고정"
+        ],
+        "en": [
+          "Five games registered through one GameDef/state-machine contract",
+          "Room Durable Object validates phase, turn, host, and actions",
+          "Per-player views isolate hidden information",
+          "Repository tests specify CSP/security headers, room lifecycle, and reconnect boundaries"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "실시간 게임은 연결 상태와 게임 상태를 분리해야 재접속이 규칙 정본을 흔들지 않는다.",
+          "공통 엔진은 게임별 규칙을 추상화하되 숨은 정보 projection은 서버 경계에 남겨야 한다."
+        ],
+        "en": [
+          "Realtime games must separate connection state from game state so reconnects do not disturb the rules source of truth.",
+          "A shared engine can abstract game rules, but hidden-information projection must remain at the server boundary."
+        ]
+      },
+      "operationalLimits": {
+        "ko": [
+          "소규모 친구 모임용이며 현금·충전·환전·광고 기능이 없습니다.",
+          "비공개 저장소와 실제 참가 데이터는 공개 근거가 아닙니다."
+        ],
+        "en": [
+          "It targets small friend groups and has no cash, charging, exchange, or advertising features.",
+          "The private repository and real participant data are not public evidence."
+        ]
+      },
+      "scale": {
+        "ko": "5종 게임 · 방별 Durable Object · 모바일 WebSocket",
+        "en": "Five games · room-scoped Durable Objects · mobile WebSocket"
+      },
+      "techDecisions": {
+        "ko": [
+          "방 단위 상태 정본에 Durable Object를 사용하고 게임 규칙은 순수 상태 머신으로 분리",
+          "playerView projection을 서버에서 수행해 참가자별 숨은 정보 경계를 유지"
+        ],
+        "en": [
+          "Use a Durable Object as the room source of truth while keeping game rules in pure state machines",
+          "Perform playerView projection on the server to preserve per-participant hidden-information boundaries"
+        ]
+      }
+    },
+    {
+      "slug": "clinical-lab-jobs",
+      "name": {
+        "ko": "임상병리사 채용 의사결정 대시보드",
+        "en": "Clinical-Lab Job Decision Dashboard"
+      },
+      "type": "personal",
+      "listed": true,
+      "summary": {
+        "ko": "여러 채용 원천을 정규화해 공식 공고 중심으로 탐색하고, 마감·지역·고용형태 추천 이유와 계정별 지원 상태를 함께 관리하는 모바일 우선 대시보드",
+        "en": "A mobile-first dashboard that normalizes multiple job sources for official-posting discovery, explains deadline/region/employment recommendations, and keeps account-scoped application state."
+      },
+      "description": {
+        "ko": "채용 플랫폼과 병원 채용 페이지를 adapter로 수집해 공고 ID·마감·지역·고용형태를 하나의 read model로 정규화합니다. 공개 탐색과 로그인 후 관심·지원·면접·결과 상태를 분리하고, 알림은 dedupe key·원자적 lease·전달 성공 확인 후 watermark 전진으로 중복 실행과 일시 실패를 다룹니다. 공개 사례에는 실제 지원 기록·가족 데이터·운영 URL·알림 대상을 포함하지 않습니다.",
+        "en": "Adapters collect job platforms and hospital career pages into one normalized read model for posting ID, deadline, region, and employment type. Public discovery stays separate from account-scoped interest/application/interview/result state. Notifications handle duplicate workers and transient failures through dedupe keys, atomic leases, and watermark advancement only after confirmed delivery. The public case excludes real applications, family data, operating URLs, and notification destinations."
+      },
+      "role": {
+        "ko": "가족 사용자 요구 기반 제품 설계·FE/BE·운영",
+        "en": "Family-user-informed product design, frontend/backend, and operations"
+      },
+      "period": {
+        "start": "2026-07-01",
+        "end": "present"
+      },
+      "skills": [
+        "Python",
+        "FastAPI",
+        "SQLite",
+        "React",
+        "TypeScript",
+        "Playwright",
+        "Durable Outbox"
+      ],
+      "architectureDiagram": "/images/portfolio/clinical-lab-architecture.svg",
+      "scenarioEvidence": [
+        {
+          "image": {
+            "ko": "/images/portfolio/clinical-lab-outbox.svg",
+            "en": "/images/portfolio/clinical-lab-outbox.svg"
+          },
+          "title": {
+            "ko": "전달 확인 후 watermark 전진",
+            "en": "Advance the watermark after confirmed delivery"
+          },
+          "caption": {
+            "ko": "합성 알림 흐름에서 dedupe·lease·성공 확인을 분리해 동시 worker와 일시 실패를 명시적으로 처리합니다.",
+            "en": "This synthetic notification flow separates dedupe, lease, and delivery confirmation so concurrent workers and transient failures remain explicit."
+          }
+        }
+      ],
+      "problemSolving": [
+        {
+          "problem": {
+            "ko": "채용 원천마다 마감·지역·고용형태 표현이 달라 비교와 우선순위 판단이 어려움",
+            "en": "Source-specific deadline, region, and employment formats make comparison and prioritization difficult"
+          },
+          "process": {
+            "ko": "source adapter에서 ingestion 시점에 필드를 정규화하고 공식 원문·freshness·open 상태를 read model에 저장",
+            "en": "Normalize fields at ingestion and retain official source, freshness, and open state in the read model"
+          },
+          "result": {
+            "ko": "한 화면에서 마감·지역·고용형태 필터와 추천 이유 제공",
+            "en": "One screen provides deadline, region, employment filters, and recommendation reasons"
+          }
+        },
+        {
+          "problem": {
+            "ko": "알림 worker 중복 실행이나 일시 실패가 중복 발송 또는 공고 누락으로 이어질 수 있음",
+            "en": "Duplicate workers or transient failures can cause duplicate sends or missed postings"
+          },
+          "process": {
+            "ko": "dedupe key outbox, 원자적 lease, 제한 재시도, 전달 확인 후 watermark 전진을 분리 구현",
+            "en": "Separate a dedupe-key outbox, atomic lease, bounded retry, and watermark advancement after confirmed delivery"
+          },
+          "result": {
+            "ko": "전달 성공 전 공고 stream을 완료 처리하지 않는 명시적 상태 계약",
+            "en": "An explicit state contract that does not complete the posting stream before confirmed delivery"
+          }
+        }
+      ],
+      "highlights": {
+        "ko": [
+          "다중 채용 플랫폼·병원 원천 adapter와 정규화 read model",
+          "공식 원문·마감·지역·고용형태 기반 설명 가능한 추천",
+          "관심·지원·면접·결과의 계정별 tracker",
+          "dedupe·lease·delivery confirmation 기반 durable outbox"
+        ],
+        "en": [
+          "Multi-platform and hospital-source adapters with a normalized read model",
+          "Explainable recommendations from official source, deadline, region, and employment type",
+          "Account-scoped interest/application/interview/result tracker",
+          "Durable outbox with dedupe, lease, and delivery confirmation"
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "가족용 제품은 자동화보다 공식 원문과 판단 이유를 먼저 보여줘야 신뢰를 얻는다.",
+          "알림 신뢰성은 재시도 횟수보다 완료 조건과 watermark 경계를 명시하는 데서 시작한다."
+        ],
+        "en": [
+          "A family-facing product earns trust by showing the official source and decision reason before automation.",
+          "Notification reliability starts with explicit completion and watermark boundaries, not retry counts alone."
+        ]
+      },
+      "operationalLimits": {
+        "ko": [
+          "수집 성공률·전체 병원 커버리지·지원 성과를 공개 수치로 주장하지 않습니다.",
+          "실제 가족 계정·지원 기록·알림 대상·운영 URL은 공개하지 않습니다."
+        ],
+        "en": [
+          "No public claim is made for collection success rate, total hospital coverage, or application outcomes.",
+          "Real family accounts, applications, notification destinations, and operating URLs remain private."
+        ]
+      },
+      "scale": {
+        "ko": "FastAPI + SQLite · React dashboard · 다중 source adapters · durable outbox",
+        "en": "FastAPI + SQLite · React dashboard · multiple source adapters · durable outbox"
+      },
+      "techDecisions": {
+        "ko": [
+          "source별 deadline text를 ingestion에서 한 번 정규화해 조회·필터의 의미를 통일",
+          "public discovery와 account-scoped application state를 분리",
+          "outbox 완료와 watermark 전진을 delivery confirmation 뒤로 묶어 누락 경계를 명시"
+        ],
+        "en": [
+          "Normalize source-specific deadline text once at ingestion to keep query/filter semantics consistent",
+          "Separate public discovery from account-scoped application state",
+          "Tie outbox completion and watermark advancement to delivery confirmation to make the loss boundary explicit"
+        ]
+      }
+    },
+    {
       "slug": "daesin-logistics-bot",
       "name": {
         "ko": "대신물류 배차 운영 원장",
         "en": "Daesin Logistics Dispatch Operations Ledger"
       },
       "type": "personal",
-      "featured": true,
-      "printOrder": 4,
       "summary": {
         "ko": "외부 배차 정보를 오늘 날짜로 수집해 노선·차량 검색과 통계를 제공하고, 수집 중복과 브라우저 데이터 경계를 분리한 운영 원장",
         "en": "A current-day dispatch ledger for route, vehicle, and statistics views, with singleton collection ownership and a fixed browser data boundary"
@@ -462,32 +905,56 @@
       },
       "publicEvidence": [
         {
-          "claim": { "ko": "오늘 날짜 기본값", "en": "Current-date default" },
-          "question": { "ko": "오전에도 오늘 날짜를 선택하는가?", "en": "Does morning collection select the current date?" },
+          "claim": {
+            "ko": "오늘 날짜 기본값",
+            "en": "Current-date default"
+          },
+          "question": {
+            "ko": "오전에도 오늘 날짜를 선택하는가?",
+            "en": "Does morning collection select the current date?"
+          },
           "label": "SearchDate.ts",
           "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/src/domain/value-objects/SearchDate.ts",
           "testLabel": "search-date.test.ts",
           "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/tests/search-date.test.ts"
         },
         {
-          "claim": { "ko": "KST singleton schedule", "en": "KST singleton schedule" },
-          "question": { "ko": "언제, 어느 timezone에서 실행되는가?", "en": "When and in which timezone does it run?" },
+          "claim": {
+            "ko": "KST singleton schedule",
+            "en": "KST singleton schedule"
+          },
+          "question": {
+            "ko": "언제, 어느 timezone에서 실행되는가?",
+            "en": "When and in which timezone does it run?"
+          },
           "label": "scheduleRouteSync.ts",
           "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/src/scheduling/scheduleRouteSync.ts",
           "testLabel": "scheduler.test.ts",
           "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/tests/scheduler.test.ts"
         },
         {
-          "claim": { "ko": "public route DTO 경계", "en": "Public route DTO boundary" },
-          "question": { "ko": "무엇을 허용·차단하는가?", "en": "Which fields and routes are allowed or blocked?" },
+          "claim": {
+            "ko": "public route DTO 경계",
+            "en": "Public route DTO boundary"
+          },
+          "question": {
+            "ko": "무엇을 허용·차단하는가?",
+            "en": "Which fields and routes are allowed or blocked?"
+          },
           "label": "proxy route",
           "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe/blob/78d364a5f886594e1dccf5f2f358c1dcd8b74528/src/app/api/proxy/%5B...path%5D/route.ts",
           "testLabel": "proxy-route.test.ts",
           "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-fe/blob/78d364a5f886594e1dccf5f2f358c1dcd8b74528/src/__tests__/app/proxy-route.test.ts"
         },
         {
-          "claim": { "ko": "BE clean CI run", "en": "BE clean CI run" },
-          "question": { "ko": "BE 저장소의 clean CI가 성공했는가?", "en": "Did the backend repository pass a clean CI run?" },
+          "claim": {
+            "ko": "BE clean CI run",
+            "en": "BE clean CI run"
+          },
+          "question": {
+            "ko": "BE 저장소의 clean CI가 성공했는가?",
+            "en": "Did the backend repository pass a clean CI run?"
+          },
           "label": "GitHub Actions",
           "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/actions/runs/30065170941"
         }
@@ -561,7 +1028,8 @@
           "Single SQLite store: fits current operational simplicity and read-heavy queries, with a ceiling on horizontal write scaling",
           "Traefik slot switch: change the active slot only after the inactive slot passes its health check; an operator performs manual rollback on failure"
         ]
-      }
+      },
+      "listed": true
     },
     {
       "slug": "innovalley-menu-bot",
@@ -702,7 +1170,7 @@
       },
       "type": "personal",
       "featured": true,
-      "printOrder": 2,
+      "printOrder": 3,
       "summary": {
         "ko": "동일 좌석·사용자 지갑 동시성 테스트로 좌석에는 낙관적 락, 결제·충전에는 사용자 단위 Redisson 락을 적용하고, 공개 k6 보고서에서 캐시 스탬피드 p95를 5.74초에서 676ms로 낮춘 콘서트 예약 프로젝트",
         "en": "Concert reservation project that verifies same-seat booking and wallet payment with optimistic and Redisson locks, then reduces cache-stampede p95 from 5.74s to 676ms through cache warming and TTL changes in the public load-test report"
@@ -917,140 +1385,6 @@
           "Per-user Redisson locking for payment and charging: 100-thread tests compare payment state and final balance with expected values",
           "Redis Sorted Set queue: scores track entry order and expiry state",
           "Create a PENDING outbox record in the payment transaction, then let the scheduler manage publication-failure and retry paths"
-        ]
-      }
-    },
-    {
-      "slug": "medical-recruit",
-      "name": {
-        "ko": "병원 채용공고 알림 프로젝트",
-        "en": "Hospital Job Alert Service"
-      },
-      "type": "personal",
-      "listed": true,
-      "summary": {
-        "ko": "4개 대학병원 채용공고를 자동 수집하고 키워드 기반 이메일 알림을 제공하는 서버리스 백엔드 서비스",
-        "en": "Serverless backend service that automatically collects job postings from 4 university hospitals and delivers keyword-based email notifications"
-      },
-      "description": {
-        "ko": "의료계 취업 준비생이 여러 대학병원 채용 사이트를 일일이 확인해야 하는 불편함을 해소하기 위해 개발한 프로젝트이다. 세브란스, 이대, 중앙대 등 4개 대학병원의 채용공고를 매시간 자동으로 스크래핑하고, 구독자가 등록한 키워드와 매칭되는 신규 공고를 이메일로 알려준다. 병원별로 상이한 채용 사이트 구조에 대응하기 위해 Strategy 패턴을 적용하여 API 기반 스크래핑과 Puppeteer 브라우저 자동화를 병원별로 분리 구현했으며, 알림 큐에 비관적 락과 재시도 로직을 적용하여 이메일 발송의 신뢰성을 확보했다.",
-        "en": "Built to eliminate the hassle of manually checking multiple hospital career sites for medical job seekers. The service automatically scrapes job postings from 4 university hospitals (Severance, Ewha, Chung-Ang, etc.) every hour and sends email notifications when new postings match subscriber-registered keywords. Applied the Strategy pattern to handle varying hospital site structures — separating API-based scraping and Puppeteer browser automation per hospital. Ensured email delivery reliability through pessimistic locking and retry logic on the notification queue."
-      },
-      "coverImage": "/images/portfolio/medical-recruit-cover.webp",
-      "contentImages": [
-        "/images/portfolio/medical-recruit-1.webp",
-        "/images/portfolio/medical-recruit-2.webp",
-        "/images/portfolio/medical-recruit-3.webp"
-      ],
-      "problemSolving": [
-        {
-          "problem": {
-            "ko": "4개 대학병원 채용 사이트를 매일 수동 확인해야 하는 구직자 불편",
-            "en": "Job seekers manually checking 4 hospital career sites daily"
-          },
-          "process": {
-            "ko": "병원별 Strategy 패턴 — API 방식(세브란스, 이대, 중앙대) + Puppeteer 자동화(중앙대 흑석), 매시간 자동 스크래핑",
-            "en": "Strategy pattern per hospital — API (Severance, Ewha, Chung-Ang) + Puppeteer (Chung-Ang Heukseok), hourly auto-scraping"
-          },
-          "result": {
-            "ko": "4개 병원 채용공고 자동 수집 + 키워드 매칭 이메일 알림",
-            "en": "Auto-collected from 4 hospitals + keyword-matched email notifications"
-          }
-        },
-        {
-          "problem": {
-            "ko": "이메일 알림 발송 실패 시 공고를 놓칠 위험",
-            "en": "Risk of missing postings when email notification fails"
-          },
-          "process": {
-            "ko": "비관적 락 기반 알림 큐 관리, 배치 처리(10건), 실패 시 최대 3회 재시도",
-            "en": "Pessimistic lock notification queue, batch processing (10), up to 3 retries on failure"
-          },
-          "result": {
-            "ko": "외부 ID 기반 중복 필터링 + 안정적 알림 전달 보장",
-            "en": "External ID dedup + reliable notification delivery guaranteed"
-          }
-        }
-      ],
-      "period": {
-        "start": "2024-08-02",
-        "end": "2024-08-14"
-      },
-      "skills": [
-        "NestJS",
-        "TypeScript",
-        "PostgreSQL",
-        "TypeORM",
-        "Puppeteer",
-        "Cheerio",
-        "Nodemailer",
-        "Docker",
-        "AWS EC2",
-        "AWS RDS",
-        "AWS Lambda",
-        "Serverless Framework"
-      ],
-      "github": "https://github.com/kilhyeonjun/medical-recruit-be",
-      "highlights": {
-        "ko": [
-          "4개 대학병원 채용공고 매시간 자동 수집, Strategy 패턴 적용",
-          "비관적 락 기반 알림 큐로 동시 처리 시 중복 발송 방지",
-          "Docker EC2 + Serverless Lambda 이중 배포 구성",
-          "GitHub Actions CI/CD 구축 및 배포 후 헬스체크 자동 검증"
-        ],
-        "en": [
-          "Hourly automated collection from 4 hospitals with Strategy pattern",
-          "Pessimistic locking on notification queue preventing duplicate sends",
-          "Dual deployment: Docker on EC2 + Serverless Framework on Lambda",
-          "GitHub Actions CI/CD with automated post-deploy health checks"
-        ]
-      },
-      "lessons": {
-        "ko": [
-          "병원별 상이한 사이트 구조에 Strategy 패턴을 적용하여 스크래핑 로직의 확장성과 유지보수성 확보",
-          "Strategy 패턴의 런타임 알고리즘 전환으로 새로운 병원 추가 시 기존 코드 수정 없이 확장 가능한 구조 설계",
-          "EC2 상시 서버와 Lambda 서버리스를 이중 배포하여 비용 효율과 안정성을 동시에 확보하는 아키텍처 경험",
-          "GitHub Actions CI/CD 파이프라인 구축과 배포 후 헬스체크 자동화로 무중단 배포 신뢰성 확보"
-        ],
-        "en": [
-          "Achieved scraping logic extensibility and maintainability by applying Strategy pattern to handle varying hospital site structures",
-          "Designed extensible architecture enabling new hospital additions without modifying existing code through runtime algorithm switching",
-          "Experienced dual deployment architecture combining EC2 persistent server with Lambda serverless for cost efficiency and reliability",
-          "Ensured deployment reliability through GitHub Actions CI/CD pipeline with automated post-deploy health checks"
-        ]
-      },
-      "scale": {
-        "ko": "4개 대학병원 자동 스크래핑 · 매시간 배치",
-        "en": "4 university hospitals auto-scraping · hourly batch"
-      },
-      "metrics": [
-        {
-          "label": {
-            "ko": "스크래핑 대상",
-            "en": "Scraping targets"
-          },
-          "before": "수동 확인",
-          "after": "4개 병원 매시간 자동",
-          "improvement": "자동화"
-        },
-        {
-          "label": {
-            "ko": "알림 신뢰성",
-            "en": "Notification reliability"
-          },
-          "before": "단건 발송",
-          "after": "배치 10건 + 3회 재시도",
-          "improvement": "비관적 락"
-        }
-      ],
-      "techDecisions": {
-        "ko": [
-          "Strategy 패턴: 병원별 상이한 사이트 구조에 대응 — API 방식(세브란스·이대·중앙대)과 Puppeteer 자동화(중앙대 흑석) 분리 구현",
-          "비관적 락 알림 큐: 동시 배치 실행 시 동일 알림 중복 발송 방지, 배치 10건 단위 + 실패 시 최대 3회 재시도로 이메일 발송 신뢰성 보장"
-        ],
-        "en": [
-          "Strategy pattern: handles varying hospital site structures — separates API-based scraping (Severance, Ewha, Chung-Ang) from Puppeteer automation (Chung-Ang Heukseok)",
-          "Pessimistic lock notification queue: prevents duplicate sends under concurrent batch execution, batch size 10 + up to 3 retries on failure for reliable email delivery"
         ]
       }
     },

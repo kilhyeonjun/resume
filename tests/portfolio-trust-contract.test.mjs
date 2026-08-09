@@ -28,8 +28,8 @@ const directionalHrefs = (html, label) => [...withoutComments(html).matchAll(new
   'g',
 ))].map((match) => match[1]);
 
-const expectedFeatured = ['ai-coding-harness', 'concert-reservation', 'daesin-logistics-bot'];
-const expectedListed = ['innovalley-menu-bot', 'medical-recruit', 'startuppool'];
+const expectedFeatured = ['flex-work-schedule', 'ai-coding-harness', 'concert-reservation'];
+const expectedListed = ['gamebang', 'clinical-lab-jobs', 'daesin-logistics-bot', 'innovalley-menu-bot', 'startuppool'];
 const expectedHidden = ['slack-clone', 'react-nodebird', 'multichat', 'trollgg'];
 
 test('portfolio visibility has one shared public-route contract', async () => {
@@ -134,6 +134,35 @@ test('Concert and Daesin claims stay pinned to public evidence', async () => {
     }
   }
   assert.equal(daesin.publicEvidence.at(-1).claim.en, 'BE clean CI run');
+});
+
+test('new portfolio candidates stay synthetic, scoped, and visually evidenced', async () => {
+  const data = JSON.parse(await read('src/data/portfolio.json'));
+  const candidates = ['flex-work-schedule', 'gamebang', 'clinical-lab-jobs']
+    .map((slug) => data.projects.find((project) => project.slug === slug));
+  assert.equal(candidates.every(Boolean), true);
+  assert.equal(data.projects.some((project) => project.slug === 'medical-recruit'), false);
+  assert.doesNotMatch(candidates[1].highlights.en.join(' '), /Tests cover/);
+  assert.match(candidates[2].role.en, /Family-user-informed/);
+  for (const project of candidates) {
+    assert.ok(project.architectureDiagram, project.slug);
+    assert.ok(project.scenarioEvidence?.length, project.slug);
+    assert.ok(project.operationalLimits?.ko.length, project.slug);
+    for (const path of [project.architectureDiagram, ...project.scenarioEvidence.flatMap((item) => Object.values(item.image))]) {
+      const svg = await read(`public/${path.replace(/^\//, '')}`);
+      assert.match(svg, /role="img"/);
+      assert.match(svg, /<title>/);
+      assert.match(svg, /<desc>/);
+    }
+  }
+  assert.doesNotMatch(JSON.stringify(candidates), /\/Users\/|CLINICAL_JOBS_|room code \w{4,}/);
+});
+
+test('listed projects retain backend summaries in portfolio print', async () => {
+  const printTemplate = await read('src/components/templates/PortfolioPrintTemplate.astro');
+  assert.match(printTemplate, /Additional Backend Projects/);
+  assert.match(printTemplate, /project\.summary\[lang\]/);
+  assert.match(printTemplate, /listed-project-summary/);
 });
 
 test('built public routes exclude hidden projects and print derivatives from discovery', async (t) => {

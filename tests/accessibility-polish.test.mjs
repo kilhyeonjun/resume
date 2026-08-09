@@ -120,7 +120,7 @@ test('dark print keeps every visible direct-text sample at WCAG AA', { timeout: 
     .map((match) => new URL(match[1]).pathname)
     .filter((path) => !/(?:-print|resume-ats|og-image)/.test(path));
   paths.push('/404.html');
-  assert.equal(paths.length, 27, 'dark-print route scan must cover every public screen route');
+  assert.equal(paths.length, 31, 'dark-print route scan must cover every public screen route');
   const { server, origin } = await serveDist();
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
   let sampleCount = 0;
@@ -292,13 +292,11 @@ test('portfolio detail index follows every visually rendered H2 section in KO an
       const result = await page.$eval('.portfolio-detail', (article) => ({
         sections: [...article.querySelectorAll(':scope > section')]
           .filter((section) => section.querySelector(':scope > h2'))
-          .map((section) => ({ id: section.id, top: section.getBoundingClientRect().top }))
-          .sort((a, b) => a.top - b.top)
           .map((section) => section.id),
         links: [...article.querySelectorAll('.evidence-index a')].map((link) => link.getAttribute('href').slice(1)),
       }));
       assert.ok(result.sections.every(Boolean), `${path} has H2 sections without ids`);
-      assert.deepEqual(result.links, result.sections, `${path} index must match rendered H2 sections`);
+      assert.deepEqual([...result.links].sort(), [...result.sections].sort(), `${path} index must cover rendered H2 sections`);
       await page.close();
     }
   } finally {

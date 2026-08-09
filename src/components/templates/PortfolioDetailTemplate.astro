@@ -55,8 +55,10 @@ addEvidence((isEvidenceRegister || isDaesinCase) && project.metrics?.length, 'ou
 addEvidence(isEvidenceRegister && projectArchitectureDiagram, 'boundary', lang === 'ko' ? '프로필 경계' : 'Profile boundary');
 addEvidence(isEvidenceRegister && projectSequenceDiagram, 'sequence', lang === 'ko' ? '실행 흐름' : 'Launch flow');
 addEvidence(!isEvidenceRegister && !isDaesinCase && project.metrics?.length, 'outcomes', labels.metrics);
+addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && projectScenarioEvidence?.length, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
 addEvidence(projectProblemSolving?.length, 'problems', labels.problemSolving);
-addEvidence(!isEvidenceRegister && !isDaesinCase && projectArchitectureDiagram, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
+addEvidence(!isDaesinCase && projectScenarioEvidence?.length, 'scenarios', lang === 'ko' ? '합성 시나리오' : 'Synthetic scenarios');
+addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && !projectScenarioEvidence?.length, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
 addEvidence(isDaesinCase && projectArchitectureDiagram, 'architecture', lang === 'ko' ? '운영 경계' : 'Operating boundary');
 addEvidence(isDaesinCase && projectOperationalLimits?.length, 'limits', lang === 'ko' ? '운영 한계' : 'Operating limits');
 addEvidence(projectPublicEvidence?.length, 'public-evidence', lang === 'ko' ? '공개 근거' : 'Public evidence');
@@ -299,6 +301,30 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
                 </figure>
               )}
             </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {!isDaesinCase && projectScenarioEvidence && projectScenarioEvidence.length > 0 && (
+      <section id="scenarios" class="mb-10" aria-labelledby="scenarios-title">
+        <h2 id="scenarios-title" class="section-title mb-3">{lang === 'ko' ? '합성 시나리오' : 'Synthetic scenarios'}</h2>
+        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">
+          {lang === 'ko'
+            ? '실제 운영·개인 데이터 없이 코드의 상태 전이와 경계만 고정 fixture로 재현합니다.'
+            : 'Deterministic fixtures reproduce the code paths and boundaries without operational or personal data.'}
+        </p>
+        <div class="space-y-6">
+          {projectScenarioEvidence.map((scenario) => (
+            <figure class="overflow-hidden rounded-xl border border-gray-200 bg-stone-50 dark:border-gray-700 dark:bg-gray-900">
+              <div class="overflow-x-auto">
+                <img src={withBasePath(scenario.image[lang])} alt={scenario.title[lang]} class="min-w-[760px] w-full lg:min-w-0" loading="lazy" />
+              </div>
+              <figcaption class="border-t border-gray-200 p-4 dark:border-gray-700">
+                <strong class="block text-gray-900 dark:text-white">{scenario.title[lang]}</strong>
+                <span class="mt-1 block text-sm text-gray-600 dark:text-gray-300">{scenario.caption[lang]}</span>
+              </figcaption>
+            </figure>
           ))}
         </div>
       </section>

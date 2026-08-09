@@ -462,6 +462,11 @@ body {
 .portfolio-hero { margin-bottom: 3.25rem; }
 .portfolio-hero h1 { margin-top: .9rem; font-size: clamp(2.75rem, 7vw, 4.5rem); line-height: 1; letter-spacing: -.055em; }
 .portfolio-hero p { max-width: 44rem; color: var(--dossier-muted); }
+.portfolio-focus { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.portfolio-focus a { min-height: 44px; display: inline-flex; align-items: center; border: 1px solid #d1d5db; border-radius: .5rem; padding: 0 .875rem; color: #374151; font-weight: 600; }
+.portfolio-focus a.active { border-color: #4f46e5; background: #eef2ff; color: #4338ca; }
+.dark .portfolio-focus a { border-color: #4b5563; color: #e5e7eb; }
+.dark .portfolio-focus a.active { border-color: #818cf8; background: rgb(49 46 129 / .35); color: #c7d2fe; }
 .portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.125rem; }
 .portfolio-case { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--dossier-line); background: var(--dossier-surface); }
 .portfolio-case-featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1.1fr .9fr; background: #0f172a; color: white; border-color: #0f172a; }

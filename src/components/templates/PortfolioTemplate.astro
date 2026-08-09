@@ -4,7 +4,7 @@ import GitHubIcon from '../icons/GitHubIcon.astro';
 import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
 import type { PortfolioProject, PortfolioLabels } from '../../types/portfolio';
 import { getLocalePrefix, withBasePath } from '../../utils/paths';
-import { selectFeaturedPortfolioProjects, selectListedPortfolioProjects } from '../../utils/portfolio-visibility';
+import { selectFeaturedPortfolioProjects, selectListedPortfolioProjects, type PortfolioFocus } from '../../utils/portfolio-visibility';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -14,7 +14,9 @@ interface Props {
 
 const { lang, projects: rawProjects, labels } = Astro.props;
 const localePrefix = getLocalePrefix(lang);
-const featuredProjects = selectFeaturedPortfolioProjects(rawProjects);
+const requestedFocus = Astro.url.searchParams.get('focus');
+const focus: PortfolioFocus = requestedFocus === 'backend-platform' || requestedFocus === 'product-algorithm' ? requestedFocus : null;
+const featuredProjects = selectFeaturedPortfolioProjects(rawProjects, focus);
 const archiveProjects = selectListedPortfolioProjects(rawProjects);
 ---
 
@@ -28,6 +30,11 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
       <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
         {lang === 'ko' ? '개인 및 팀 프로젝트 모음' : 'Collection of personal and team projects'}
       </p>
+      <nav class="portfolio-focus" aria-label={lang === 'ko' ? '지원 직무별 보기' : 'Role-focused view'}>
+        <a class:list={[!focus && 'active']} href={`${localePrefix}/portfolio/`}>{lang === 'ko' ? '기본' : 'Default'}</a>
+        <a class:list={[focus === 'backend-platform' && 'active']} href={`${localePrefix}/portfolio/?focus=backend-platform`}>{lang === 'ko' ? '백엔드 플랫폼' : 'Backend platform'}</a>
+        <a class:list={[focus === 'product-algorithm' && 'active']} href={`${localePrefix}/portfolio/?focus=product-algorithm`}>{lang === 'ko' ? '제품·알고리즘' : 'Product · algorithm'}</a>
+      </nav>
       <div class="mt-4 text-sm">
         <a href={`${localePrefix}/portfolio-print`} class="touch-target inline-flex items-center rounded-lg border border-gray-300 px-4 font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-primary-300">{lang === 'ko' ? 'PDF 다운로드' : 'Download PDF'}</a>
       </div>

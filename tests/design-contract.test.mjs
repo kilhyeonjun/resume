@@ -326,7 +326,7 @@ test('portfolio print keeps project identity with continuation content', async (
   assert.match(source, /\.project-links\s*\{[^}]*break-after:\s*avoid-page/s);
   assert.match(source, /\.scale-badge\s*\{[^}]*break-after:\s*avoid-page/s);
   assert.match(source, /\.project-summary\s*\{[^}]*break-before:\s*avoid-page/s);
-  assert.match(source, /\.listed-box\s*\{[^}]*break-inside:\s*avoid/s);
+  assert.match(source, /\.listed-project-row\s*\{[^}]*break-inside:\s*avoid/s);
 });
 
 test('career print avoids forced spill pages and orphan section headings', async () => {
@@ -343,7 +343,7 @@ test('production build includes the English portfolio print route', async (t) =>
   let files;
   try { files = await htmlFiles(join(rootPath, 'dist')); }
   catch { return t.skip('run after npm run build'); }
-  assert.equal(files.length, 36);
+  assert.equal(files.length, 40);
   for (const file of files) {
     const html = await readFile(file, 'utf8');
     assert.match(html, /<h1(?:\s|>)/, file);

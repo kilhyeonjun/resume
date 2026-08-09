@@ -395,14 +395,10 @@ function formatPeriod(period: { start: string; end: string }): string {
 
     /* Listed projects box */
     .listed-box {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 1mm 3mm;
+      display: block;
       border-top: 0.5pt solid #e2e8f0;
       padding-top: 2mm;
       margin-top: 2mm;
-      break-inside: avoid;
     }
 
     .listed-box-title {
@@ -414,10 +410,12 @@ function formatPeriod(period: { start: string; end: string }): string {
     .listed-project-row {
       font-size: 8pt;
       color: #4b5563;
-      display: inline-flex;
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
       gap: 1mm;
       align-items: baseline;
-      white-space: nowrap;
+      break-inside: avoid;
+      margin-top: 1mm;
     }
 
     .listed-project-name {
@@ -430,7 +428,15 @@ function formatPeriod(period: { start: string; end: string }): string {
     }
 
     .listed-project-skills {
-      display: none;
+      color: #4b5563;
+    }
+
+    .listed-project-summary {
+      grid-column: 1 / -1;
+      margin: 0;
+      color: #374151;
+      font-size: 7.5pt;
+      line-height: 1.35;
     }
 
     /* Back button (web only) */
@@ -545,6 +551,13 @@ function formatPeriod(period: { start: string; end: string }): string {
               </div>
             )}
 
+            {project.scenarioEvidence?.[0] && (
+              <figure class="scenario-strip">
+                <img src={withBasePath(project.scenarioEvidence[0].image[lang])} alt={project.scenarioEvidence[0].title[lang]} />
+                <figcaption>{project.scenarioEvidence[0].caption[lang]}</figcaption>
+              </figure>
+            )}
+
             {project.metrics && project.metrics.length > 0 && (
               <table class="metric-table">
                 <colgroup><col /><col /><col /></colgroup>
@@ -642,7 +655,7 @@ function formatPeriod(period: { start: string; end: string }): string {
     <!-- Listed Projects Box -->
     {listedProjects.length > 0 && (
       <div class="listed-box">
-        <div class="listed-box-title">{lang === 'ko' ? '기타 프로젝트' : 'Other Projects'}</div>
+        <div class="listed-box-title">{lang === 'ko' ? '추가 백엔드 프로젝트' : 'Additional Backend Projects'}</div>
         {listedProjects.map((project) => {
           const name = project.name[lang] || project.name.ko;
           const typeLabel = project.type === 'personal'
@@ -657,6 +670,7 @@ function formatPeriod(period: { start: string; end: string }): string {
               <span class="listed-project-type">({typeLabel})</span>
               <span class="listed-project-skills">— {topSkills}</span>
               <a href={detailUrl} target="_blank" rel="noopener noreferrer">{lang === 'ko' ? '상세 ↗' : 'Detail ↗'}</a>
+              <p class="listed-project-summary">{project.summary[lang] || project.summary.ko}</p>
             </div>
           );
         })}

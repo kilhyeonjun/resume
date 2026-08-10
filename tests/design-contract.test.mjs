@@ -343,7 +343,7 @@ test('production build includes the English portfolio print route', async (t) =>
   let files;
   try { files = await htmlFiles(join(rootPath, 'dist')); }
   catch { return t.skip('run after npm run build'); }
-  assert.equal(files.length, 42);
+  assert.equal(files.length, 40);
   for (const file of files) {
     const html = await readFile(file, 'utf8');
     assert.match(html, /<h1(?:\s|>)/, file);

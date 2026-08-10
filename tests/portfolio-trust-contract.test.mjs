@@ -29,8 +29,8 @@ const directionalHrefs = (html, label) => [...withoutComments(html).matchAll(new
 ))].map((match) => match[1]);
 
 const expectedFeatured = ['flex-work-schedule', 'ai-coding-harness', 'concert-reservation'];
-const expectedListed = ['family-budget-demo', 'gamebang', 'clinical-lab-jobs', 'daesin-logistics-bot', 'innovalley-menu-bot', 'startuppool'];
-const expectedHidden = ['slack-clone', 'react-nodebird', 'multichat', 'trollgg'];
+const expectedListed = ['gamebang', 'clinical-lab-jobs', 'daesin-logistics-bot', 'innovalley-menu-bot', 'startuppool'];
+const expectedHidden = ['slack-clone', 'family-budget-demo', 'react-nodebird', 'multichat', 'trollgg'];
 
 test('portfolio visibility has one shared public-route contract', async () => {
   const data = JSON.parse(await read('src/data/portfolio.json'));
@@ -172,15 +172,12 @@ test('new portfolio candidates stay synthetic, scoped, and visually evidenced', 
   assert.doesNotMatch(JSON.stringify(candidates), /\/Users\/|CLINICAL_JOBS_|room code \w{4,}/);
 });
 
-test('family budget demo is listed only with synthetic browser-local production evidence', async () => {
+test('family budget demo stays hidden until the replacement matches the operating product', async () => {
   const { projects } = JSON.parse(await read('src/data/portfolio.json'));
   const demo = projects.find((project) => project.slug === 'family-budget-demo');
-  assert.equal(demo?.listed, true);
+  assert.equal(demo?.hidden, true);
+  assert.equal(demo?.listed, undefined);
   assert.equal(demo?.featured, undefined);
-  assert.equal(demo?.links?.demo, 'https://family-budget-demo-three.vercel.app');
-  assert.match(JSON.stringify(demo), /synthetic|합성/);
-  assert.match(JSON.stringify(demo), /localStorage|browser-local|브라우저/);
-  assert.doesNotMatch(JSON.stringify(demo), /real family financial (?:records|transactions)|실제 가족 (?:거래|계좌|잔액)/);
 });
 
 test('listed projects retain backend summaries in portfolio print', async () => {

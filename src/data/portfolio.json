@@ -1602,7 +1602,7 @@
         "en": "Family Budget Demo — Synthetic Budget Vertical Slice"
       },
       "type": "personal",
-      "listed": true,
+      "hidden": true,
       "printOrder": 9,
       "summary": {
         "ko": "합성 seed만 사용하는 가계부 공개 데모로, 브라우저 로컬 저장을 통해 거래 입력부터 Dashboard·Ledger 조회와 reset까지 하나의 read/write 흐름을 검증",

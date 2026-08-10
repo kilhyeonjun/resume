@@ -1596,6 +1596,68 @@
       }
     },
     {
+      "slug": "family-budget-demo",
+      "name": {
+        "ko": "Family Budget Demo — 합성 가계부 vertical slice",
+        "en": "Family Budget Demo — Synthetic Budget Vertical Slice"
+      },
+      "type": "personal",
+      "listed": true,
+      "printOrder": 9,
+      "summary": {
+        "ko": "합성 seed만 사용하는 가계부 공개 데모로, 브라우저 로컬 저장을 통해 거래 입력부터 Dashboard·Ledger 조회와 reset까지 하나의 read/write 흐름을 검증",
+        "en": "A synthetic-only public budget demo validating one read/write flow from transaction entry to Dashboard and Ledger read-back and reset through browser-local storage"
+      },
+      "description": {
+        "ko": "실제 가족 데이터·운영 DB·자격증명을 포함하지 않는 공개 Next.js 데모다. Add Transaction에서 입력한 합성 거래는 브라우저 localStorage에만 저장되고 Dashboard 요약과 Ledger에 즉시 반영된다. Reset demo는 저장된 값을 제거하고 저장소에 포함된 합성 seed로 복원한다. Vitest 26개 테스트와 CI build를 통과했으며 공개 Production에서 desktop/mobile add→read→reset을 검증했다.",
+        "en": "A public Next.js demo containing no real family data, operating database, or credentials. Synthetic transactions entered through Add Transaction are stored only in browser localStorage and immediately reflected in the Dashboard summary and Ledger. Reset demo removes browser state and restores the tracked synthetic seed. The project passes 26 Vitest tests and CI build, with desktop/mobile add-to-read-to-reset verified in public Production."
+      },
+      "role": {
+        "ko": "제품 경계 설계 · Next.js/TypeScript 구현 · TDD · 공개 배포 검증",
+        "en": "Product boundary design · Next.js/TypeScript implementation · TDD · public release verification"
+      },
+      "period": {
+        "start": "2026-08-09",
+        "end": "2026-08-10"
+      },
+      "skills": ["TypeScript", "Next.js", "React", "Vitest", "Vercel"],
+      "github": "https://github.com/kilhyeonjun/family-budget-demo",
+      "links": {
+        "demo": "https://family-budget-demo-three.vercel.app"
+      },
+      "highlights": {
+        "ko": [
+          "합성 seed와 브라우저 localStorage만 사용하는 공개 데이터 경계",
+          "Add Transaction → Dashboard/Ledger read-back → Reset의 최소 vertical slice",
+          "Vitest 26/26 PASS · Next production build · GitGuardian · Vercel Production 검증"
+        ],
+        "en": [
+          "Public data boundary using only synthetic seed data and browser localStorage",
+          "Minimal Add Transaction → Dashboard/Ledger read-back → Reset vertical slice",
+          "Vitest 26/26 PASS · Next production build · GitGuardian · Vercel Production verification"
+        ]
+      },
+      "operationalLimits": {
+        "ko": [
+          "저장은 현재 브라우저에만 남으며 기기 간 동기화·사용자 계정·공유 기능은 없다.",
+          "공개 데모에는 실제 가족 재무 데이터와 private 운영 앱 연동이 없다."
+        ],
+        "en": [
+          "Data remains in the current browser; there is no cross-device sync, user account, or sharing.",
+          "The public demo has no real family financial data or integration with the private operating app."
+        ]
+      },
+      "blogPosts": [
+        {
+          "title": {
+            "ko": "원격 CI 검증",
+            "en": "Remote CI verification"
+          },
+          "url": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31339009068"
+        }
+      ]
+    },
+    {
       "slug": "react-nodebird",
       "name": {
         "ko": "React Nodebird",

@@ -223,6 +223,12 @@ test('family budget case study centers the operational product and keeps the dem
   assert.match(detailTemplate, /합성 공개 데모 · 운영 미연결|Synthetic public demo · not connected to operations/);
   assert.doesNotMatch(detailTemplate, /라이브 데모 · 합성 데이터|Live demo · synthetic data/);
   assert.match(detailTemplate, /project\.links\.Demo/);
+
+  const printTemplate = await read('src/components/templates/PortfolioPrintTemplate.astro');
+  assert.match(printTemplate, /핵심 시스템 설계|Core system design/);
+  assert.match(printTemplate, /핵심 문제 해결|Key problem solving/);
+  assert.match(printTemplate, /project\.problemSolving\[0\]/);
+  assert.doesNotMatch(printTemplate, /isFamilyBudgetCase \? `\$\{period\} · \$\{typeLabel\}`/);
 });
 
 test('listed projects retain backend summaries in portfolio print', async () => {

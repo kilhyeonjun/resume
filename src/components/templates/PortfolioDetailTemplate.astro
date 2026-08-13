@@ -162,7 +162,7 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
 
     {(isEvidenceRegister || isDaesinCase || isFamilyBudgetCase) && project.metrics && project.metrics.length > 0 && (
       <section id="outcomes" class="mb-10 case-outcomes" aria-labelledby="outcomes-title">
-        <h2 id="outcomes-title" class="section-title mb-6">{isFamilyBudgetCase ? (lang === 'ko' ? '검증된 시스템 행동' : 'Verified system behaviors') : (lang === 'ko' ? '검증된 결과' : 'Verified outcomes')}</h2>
+        <h2 id="outcomes-title" class="section-title mb-6">{isFamilyBudgetCase ? (lang === 'ko' ? '핵심 시스템 설계' : 'Core system design') : (lang === 'ko' ? '검증된 결과' : 'Verified outcomes')}</h2>
         <div class="outcome-register">
           {project.metrics.map((metric) => (
             <article class="outcome-register-entry">

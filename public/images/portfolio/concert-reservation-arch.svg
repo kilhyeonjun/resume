@@ -74,7 +74,7 @@
   <!-- Redis Cache label (right) -->
   <rect x="570" y="130" width="130" height="44" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
   <text x="635" y="148" text-anchor="middle" font-size="10" font-weight="bold" fill="#111827">Redis Cache</text>
-  <text x="635" y="163" text-anchor="middle" font-size="9" fill="#6b7280">Concert/Schedule  코드 설정 TTL 2분</text>
+  <text x="635" y="160" text-anchor="middle" font-size="8" fill="#6b7280">코드별 TTL 2분</text>
 
   <!-- → ConcertFacade → Redis Cache -->
   <line x1="428" y1="152" x2="570" y2="152" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>

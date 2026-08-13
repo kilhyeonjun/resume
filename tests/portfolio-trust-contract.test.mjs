@@ -28,8 +28,8 @@ const directionalHrefs = (html, label) => [...withoutComments(html).matchAll(new
   'g',
 ))].map((match) => match[1]);
 
-const expectedFeatured = ['flex-work-schedule', 'ai-coding-harness', 'concert-reservation'];
-const expectedListed = ['family-budget-demo', 'gamebang', 'clinical-lab-jobs', 'daesin-logistics-bot', 'innovalley-menu-bot', 'startuppool'];
+const expectedFeatured = ['flex-work-schedule', 'ai-coding-harness', 'concert-reservation', 'family-budget-demo'];
+const expectedListed = ['gamebang', 'clinical-lab-jobs', 'daesin-logistics-bot', 'innovalley-menu-bot', 'startuppool'];
 const expectedHidden = ['slack-clone', 'react-nodebird', 'multichat', 'trollgg'];
 
 test('portfolio visibility has one shared public-route contract', async () => {
@@ -134,7 +134,7 @@ test('Concert and Daesin claims stay pinned to public evidence', async () => {
     assert.match(diagram, /role="img"/);
     assert.match(diagram, /<title>/);
     assert.match(diagram, /<desc>/);
-    assert.match(diagram, /(?:코드 설정|code config) TTL (?:2분|2 min)/);
+    assert.match(diagram, /(?:코드별 TTL 2분|Per-code TTL: 2 min)/);
   }
   assert.doesNotMatch(concertEnDiagram, /[가-힣]/);
 
@@ -172,14 +172,40 @@ test('new portfolio candidates stay synthetic, scoped, and visually evidenced', 
   assert.doesNotMatch(JSON.stringify(candidates), /\/Users\/|CLINICAL_JOBS_|room code \w{4,}/);
 });
 
-test('family budget demo is listed after matching the operating product flow', async () => {
+test('family budget demo is a public-evidence case study without unsupported claims', async () => {
   const { projects } = JSON.parse(await read('src/data/portfolio.json'));
   const demo = projects.find((project) => project.slug === 'family-budget-demo');
+  const copy = JSON.stringify(demo);
   assert.equal(demo?.hidden, undefined);
-  assert.equal(demo?.listed, true);
-  assert.equal(demo?.featured, undefined);
+  assert.equal(demo?.featured, true);
+  assert.equal(demo?.listed, undefined);
   assert.match(demo?.description?.ko ?? '', /7개 화면/);
-  assert.match(demo?.description?.en ?? '', /seven screens/);
+  assert.match(demo?.description?.en ?? '', /Seven screens/);
+  assert.equal(demo?.metrics?.length, 3);
+  assert.equal(demo?.problemSolving?.length, 3);
+  assert.equal(demo?.techDecisions?.ko.length, 3);
+  assert.equal(demo?.operationalLimits?.ko.length, 3);
+  assert.ok(demo?.architectureDiagram);
+  assert.ok(demo?.sequenceDiagram);
+  assert.ok(demo?.scenarioEvidence?.length >= 2);
+  assert.ok(demo?.publicEvidence?.length >= 4);
+  assert.equal(demo?.links?.Demo, 'https://family-budget-demo-three.vercel.app');
+  for (const evidence of demo.publicEvidence) {
+    for (const url of [evidence.url, evidence.testUrl].filter(Boolean)) {
+      if (url.includes('/blob/')) assert.match(url, /\/blob\/b822842ea84d7e63401d2288a8944afd9f4fe5cd\//);
+    }
+  }
+  for (const path of [demo.architectureDiagram.ko, demo.architectureDiagram.en, demo.sequenceDiagram.ko, demo.sequenceDiagram.en, ...demo.scenarioEvidence.flatMap((item) => Object.values(item.image))]) {
+    const svg = await read(`public/${path.replace(/^\//, '')}`);
+    assert.match(svg, /role="img"/);
+    assert.match(svg, /<title\b/);
+    assert.match(svg, /<desc\b/);
+  }
+  assert.doesNotMatch(copy, /단독|solo ownership|private API 0건|zero private API|사용자 수|user count|재무 효과|financial impact/);
+
+  const detailTemplate = await read('src/components/templates/PortfolioDetailTemplate.astro');
+  assert.match(detailTemplate, /isFamilyBudgetCase/);
+  assert.match(detailTemplate, /project\.links\.Demo/);
 });
 
 test('listed projects retain backend summaries in portfolio print', async () => {

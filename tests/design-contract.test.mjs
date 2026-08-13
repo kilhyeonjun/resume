@@ -147,6 +147,18 @@ test('AI harness case study keeps public evidence current and recruiter-first', 
   assert.equal(project.links.CI, 'https://github.com/kilhyeonjun/harness-launcher/actions');
   assert.equal(project.sequenceDiagram.ko, '/images/portfolio/ai-coding-harness-sequence-ko.svg');
   assert.equal(project.sequenceDiagram.en, '/images/portfolio/ai-coding-harness-sequence-en.svg');
+  assert.equal(project.printArchitectureDiagram.ko, '/images/portfolio/ai-coding-harness-boundary-print-ko.svg');
+  assert.equal(project.printArchitectureDiagram.en, '/images/portfolio/ai-coding-harness-boundary-print-en.svg');
+  for (const path of [project.printArchitectureDiagram.ko, project.printArchitectureDiagram.en]) {
+    const printDiagram = await read(`public${path}`);
+    assert.doesNotMatch(printDiagram, /class="cluster"/);
+    assert.match(printDiagram, /marker-end=/);
+  }
+  const concertDiagrams = await Promise.all([
+    read('public/images/portfolio/concert-reservation-arch.svg'),
+    read('public/images/portfolio/concert-reservation-arch-en.svg'),
+  ]);
+  for (const diagram of concertDiagrams) assert.doesNotMatch(diagram, /Concert\/Schedule/);
   const publicCopy = JSON.stringify(project);
   assert.match(publicCopy, /runtime state stays project-scoped/i);
   assert.match(publicCopy, /public contract demo/i);

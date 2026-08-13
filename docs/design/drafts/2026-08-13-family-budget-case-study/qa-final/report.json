@@ -1,0 +1,178 @@
+[
+  {
+    "lang": "ko",
+    "name": "desktop",
+    "status": 200,
+    "h1": "실제 가족 데이터를 노출하지 않고 7개 흐름을 재현한 공개 가계부 데모",
+    "h2": [
+      "검증된 결과",
+      "공개·비공개 데이터 경계",
+      "대표 local read/write 흐름",
+      "문제 해결 과정",
+      "합성 시나리오",
+      "운영 한계",
+      "Claim → 공개 근거",
+      "프로젝트 설명",
+      "주요 내용",
+      "기술 선택 근거",
+      "기술 스택",
+      "관련 링크"
+    ],
+    "overflow": false,
+    "broken": [],
+    "links": [
+      "https://career.kilpenguin.com/en/portfolio/family-budget-demo/",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://github.com/kilhyeonjun/family-budget-demo",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/ssot/exact-source-manifest.json",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/verify-ssot.mjs",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.ts",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.test.ts",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/packages/budget-ui/src/runtime.tsx",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/components/DemoShell.tsx",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/scan-public-boundary.mjs",
+      "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648"
+    ],
+    "svgTitles": [
+      "비공개 운영 영역과 공개 UI package, 합성 seed와 localStorage를 사용하는 공개 데모의 분리된 경계",
+      "Today 입력부터 localStorage 저장, Dashboard와 Ledger read-back, reset으로 이어지는 흐름",
+      "합성 거래의 입력과 read-back",
+      "브라우저 로컬 저장과 초기화 경계"
+    ]
+  },
+  {
+    "lang": "ko",
+    "name": "mobile",
+    "status": 200,
+    "h1": "실제 가족 데이터를 노출하지 않고 7개 흐름을 재현한 공개 가계부 데모",
+    "h2": [
+      "검증된 결과",
+      "공개·비공개 데이터 경계",
+      "대표 local read/write 흐름",
+      "문제 해결 과정",
+      "합성 시나리오",
+      "운영 한계",
+      "Claim → 공개 근거",
+      "프로젝트 설명",
+      "주요 내용",
+      "기술 선택 근거",
+      "기술 스택",
+      "관련 링크"
+    ],
+    "overflow": false,
+    "broken": [],
+    "links": [
+      "https://career.kilpenguin.com/en/portfolio/family-budget-demo/",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://github.com/kilhyeonjun/family-budget-demo",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/ssot/exact-source-manifest.json",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/verify-ssot.mjs",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.ts",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.test.ts",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/packages/budget-ui/src/runtime.tsx",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/components/DemoShell.tsx",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/scan-public-boundary.mjs",
+      "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648"
+    ],
+    "svgTitles": [
+      "비공개 운영 영역과 공개 UI package, 합성 seed와 localStorage를 사용하는 공개 데모의 분리된 경계",
+      "Today 입력부터 localStorage 저장, Dashboard와 Ledger read-back, reset으로 이어지는 흐름",
+      "합성 거래의 입력과 read-back",
+      "브라우저 로컬 저장과 초기화 경계"
+    ]
+  },
+  {
+    "lang": "en",
+    "name": "desktop",
+    "status": 200,
+    "h1": "A Public Budget Demo Reproducing Seven Flows Without Exposing Family Data",
+    "h2": [
+      "Verified outcomes",
+      "Public and private data boundary",
+      "Representative local read/write flow",
+      "Problem Solving",
+      "Synthetic scenarios",
+      "Operating limits",
+      "Claim → public evidence",
+      "Project Description",
+      "Highlights",
+      "Tech Decisions",
+      "Tech Stack",
+      "Related Links"
+    ],
+    "overflow": false,
+    "broken": [],
+    "links": [
+      "https://career.kilpenguin.com/portfolio/family-budget-demo/",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://github.com/kilhyeonjun/family-budget-demo",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/ssot/exact-source-manifest.json",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/verify-ssot.mjs",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.ts",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.test.ts",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/packages/budget-ui/src/runtime.tsx",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/components/DemoShell.tsx",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/scan-public-boundary.mjs",
+      "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648"
+    ],
+    "svgTitles": [
+      "Separated boundary between the private operating area, the public UI package, and the public demo using synthetic seed data and localStorage",
+      "Flow from Today entry through localStorage save and Dashboard and Ledger read-back to reset",
+      "Synthetic transaction entry and read-back",
+      "Browser-local persistence and reset boundary"
+    ]
+  },
+  {
+    "lang": "en",
+    "name": "mobile",
+    "status": 200,
+    "h1": "A Public Budget Demo Reproducing Seven Flows Without Exposing Family Data",
+    "h2": [
+      "Verified outcomes",
+      "Public and private data boundary",
+      "Representative local read/write flow",
+      "Problem Solving",
+      "Synthetic scenarios",
+      "Operating limits",
+      "Claim → public evidence",
+      "Project Description",
+      "Highlights",
+      "Tech Decisions",
+      "Tech Stack",
+      "Related Links"
+    ],
+    "overflow": false,
+    "broken": [],
+    "links": [
+      "https://career.kilpenguin.com/portfolio/family-budget-demo/",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://github.com/kilhyeonjun/family-budget-demo",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/ssot/exact-source-manifest.json",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/verify-ssot.mjs",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.ts",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.test.ts",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/packages/budget-ui/src/runtime.tsx",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/components/DemoShell.tsx",
+      "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/scan-public-boundary.mjs",
+      "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://family-budget-demo-three.vercel.app/",
+      "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648"
+    ],
+    "svgTitles": [
+      "Separated boundary between the private operating area, the public UI package, and the public demo using synthetic seed data and localStorage",
+      "Flow from Today entry through localStorage save and Dashboard and Ledger read-back to reset",
+      "Synthetic transaction entry and read-back",
+      "Browser-local persistence and reset boundary"
+    ]
+  }
+]

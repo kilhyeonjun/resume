@@ -172,39 +172,56 @@ test('new portfolio candidates stay synthetic, scoped, and visually evidenced', 
   assert.doesNotMatch(JSON.stringify(candidates), /\/Users\/|CLINICAL_JOBS_|room code \w{4,}/);
 });
 
-test('family budget demo is a public-evidence case study without unsupported claims', async () => {
+test('family budget case study centers the operational product and keeps the demo as public evidence', async () => {
   const { projects } = JSON.parse(await read('src/data/portfolio.json'));
-  const demo = projects.find((project) => project.slug === 'family-budget-demo');
-  const copy = JSON.stringify(demo);
-  assert.equal(demo?.hidden, undefined);
-  assert.equal(demo?.featured, true);
-  assert.equal(demo?.listed, undefined);
-  assert.match(demo?.description?.ko ?? '', /7개 화면/);
-  assert.match(demo?.description?.en ?? '', /Seven screens/);
-  assert.equal(demo?.metrics?.length, 3);
-  assert.equal(demo?.problemSolving?.length, 3);
-  assert.equal(demo?.techDecisions?.ko.length, 3);
-  assert.equal(demo?.operationalLimits?.ko.length, 3);
-  assert.ok(demo?.architectureDiagram);
-  assert.ok(demo?.sequenceDiagram);
-  assert.ok(demo?.scenarioEvidence?.length >= 2);
-  assert.ok(demo?.publicEvidence?.length >= 4);
-  assert.equal(demo?.links?.Demo, 'https://family-budget-demo-three.vercel.app');
-  for (const evidence of demo.publicEvidence) {
+  const project = projects.find((candidate) => candidate.slug === 'family-budget-demo');
+  assert.equal(project?.hidden, undefined);
+  assert.equal(project?.featured, true);
+  assert.equal(project?.listed, undefined);
+  assert.match(project?.name?.ko ?? '', /계획과 실제/);
+  assert.match(project?.name?.en ?? '', /Plan.*Actual/i);
+  assert.match(project?.summary?.ko ?? '', /애플리케이션 정본/);
+  assert.match(project?.summary?.en ?? '', /operational source of truth/i);
+  assert.match(project?.role?.ko ?? '', /제품 기획.*백엔드.*데이터 모델.*운영 자동화.*UX/);
+  assert.doesNotMatch(`${project?.name?.ko} ${project?.summary?.ko} ${project?.role?.ko}`, /7개 화면|localStorage|공개 데모 설계/);
+  assert.deepEqual(project?.metrics?.map((metric) => metric.label.ko), ['운영 정본 전환', '계획 ≠ 실제', '중복·불확실성 차단']);
+  assert.equal(project?.problemSolving?.length, 3);
+  assert.equal(project?.techDecisions?.ko.length, 3);
+  assert.equal(project?.operationalLimits?.ko.length, 3);
+  assert.ok(project?.architectureDiagram);
+  assert.ok(project?.sequenceDiagram);
+  assert.ok(project?.scenarioEvidence?.length >= 2);
+  assert.ok(project?.publicEvidence?.length >= 4);
+  assert.equal(project?.links?.Demo, 'https://family-budget-demo-three.vercel.app');
+  for (const evidence of project.publicEvidence) {
     for (const url of [evidence.url, evidence.testUrl].filter(Boolean)) {
       if (url.includes('/blob/')) assert.match(url, /\/blob\/b822842ea84d7e63401d2288a8944afd9f4fe5cd\//);
     }
   }
-  for (const path of [demo.architectureDiagram.ko, demo.architectureDiagram.en, demo.sequenceDiagram.ko, demo.sequenceDiagram.en, ...demo.scenarioEvidence.flatMap((item) => Object.values(item.image))]) {
+  for (const path of [project.architectureDiagram.ko, project.architectureDiagram.en, project.sequenceDiagram.ko, project.sequenceDiagram.en, ...project.scenarioEvidence.flatMap((item) => Object.values(item.image))]) {
     const svg = await read(`public/${path.replace(/^\//, '')}`);
     assert.match(svg, /role="img"/);
     assert.match(svg, /<title\b/);
     assert.match(svg, /<desc\b/);
   }
-  assert.doesNotMatch(copy, /단독|solo ownership|private API 0건|zero private API|사용자 수|user count|재무 효과|financial impact/);
+  const claimCopy = JSON.stringify({
+    name: project.name,
+    summary: project.summary,
+    description: project.description,
+    role: project.role,
+    highlights: project.highlights,
+    metrics: project.metrics,
+    problemSolving: project.problemSolving,
+  });
+  assert.doesNotMatch(claimCopy, /단독|solo ownership|private API 0건|zero private API|사용자 수|user count|재무 효과|financial impact|실제 금액|real financial amount/);
 
   const detailTemplate = await read('src/components/templates/PortfolioDetailTemplate.astro');
   assert.match(detailTemplate, /isFamilyBudgetCase/);
+  assert.match(detailTemplate, /운영 제품 경계|Operational product boundary/);
+  assert.match(detailTemplate, /조정 흐름|reconciliation flow/);
+  assert.match(detailTemplate, /공개 증거 저장소|Public evidence repository/);
+  assert.match(detailTemplate, /합성 공개 데모 · 운영 미연결|Synthetic public demo · not connected to operations/);
+  assert.doesNotMatch(detailTemplate, /라이브 데모 · 합성 데이터|Live demo · synthetic data/);
   assert.match(detailTemplate, /project\.links\.Demo/);
 });
 

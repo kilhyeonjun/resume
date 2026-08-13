@@ -275,6 +275,43 @@ function formatPeriod(period: { start: string; end: string }): string {
       break-before: page;
     }
 
+    .family-budget-print .project-header {
+      display: block;
+    }
+
+    .family-budget-print .project-name {
+      display: block;
+      max-width: 150mm;
+      line-height: 1.18;
+    }
+
+    .family-budget-print .project-meta {
+      display: block;
+      margin: 1mm 0 0;
+    }
+
+    .family-budget-print .arch-diagram img {
+      max-height: 93mm;
+      object-fit: contain;
+    }
+
+    .family-budget-print .metric-table {
+      font-size: 9pt;
+    }
+
+    .family-budget-print .metric-table td {
+      border-bottom: 0.35pt solid #eef2f7;
+      padding-top: 0.8mm;
+      padding-bottom: 0.8mm;
+    }
+
+    .family-budget-print .metric-table .improvement,
+    .family-budget-print .bullet-list.compact li,
+    .family-budget-print .evidence-links-line {
+      font-size: 8pt;
+      line-height: 1.42;
+    }
+
     .evidence-register-print .project-summary {
       margin-bottom: 1mm;
     }
@@ -518,10 +555,10 @@ function formatPeriod(period: { start: string; end: string }): string {
 
             <div class="project-links">
               {isFamilyBudgetCase && project.links?.Demo && (
-                <a href={project.links.Demo} target="_blank" rel="noopener noreferrer">{lang === 'ko' ? '라이브 데모 ↗' : 'Live Demo ↗'}</a>
+                <a href={project.links.Demo} target="_blank" rel="noopener noreferrer">{lang === 'ko' ? '합성 공개 데모 ↗' : 'Synthetic Public Demo ↗'}</a>
               )}
               {project.github && !isDaesinCase && (
-                <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+                <a href={project.github} target="_blank" rel="noopener noreferrer">{isFamilyBudgetCase ? (lang === 'ko' ? '공개 증거 저장소 ↗' : 'Public Evidence Repository ↗') : 'GitHub ↗'}</a>
               )}
               {(isEvidenceRegister || isDaesinCase) && project.links && Object.entries(project.links).map(([key, url]) => (
                 typeof url === 'string' && <a href={url} target="_blank" rel="noopener noreferrer">{key} ↗</a>
@@ -555,7 +592,7 @@ function formatPeriod(period: { start: string; end: string }): string {
 
             {isFamilyBudgetCase && architectureDiagram && (
               <div class="arch-diagram">
-                <img src={withBasePath(architectureDiagram)} alt={lang === 'ko' ? '공개 UI package와 합성 localStorage 데모의 데이터 경계' : 'Data boundary between the public UI package and synthetic localStorage demo'} />
+                <img src={withBasePath(architectureDiagram)} alt={lang === 'ko' ? '가족 구성원과 승인형 도우미가 인증 API를 거쳐 운영 원장에 접근하고 과거 스프레드시트와 합성 공개 데모를 별도 경계에 두는 운영 제품 아키텍처' : 'Operational product architecture where household members and an approval-gated assistant reach the ledger through an authenticated API while the historical spreadsheet and synthetic public demo remain separate'} />
               </div>
             )}
 
@@ -575,7 +612,7 @@ function formatPeriod(period: { start: string; end: string }): string {
             {isFamilyBudgetCase && project.metrics && project.metrics.length > 0 && (
               <table class="metric-table">
                 <colgroup><col /><col /><col /></colgroup>
-                <thead><tr><th>{lang === 'ko' ? '검증된 결과' : 'Verified outcomes'}</th><th>{lang === 'ko' ? '이전' : 'Before'}</th><th>{lang === 'ko' ? '이후' : 'After'}</th></tr></thead>
+                <thead><tr><th>{lang === 'ko' ? '검증된 시스템 행동' : 'Verified system behaviors'}</th><th>{lang === 'ko' ? '이전' : 'Before'}</th><th>{lang === 'ko' ? '이후' : 'After'}</th></tr></thead>
                 <tbody>{project.metrics.map((m) => <tr><td>{m.label[lang]}</td><td>{localize(m.before)}</td><td class="after-cell">{localize(m.after)} <span class="improvement">({localize(m.improvement)})</span></td></tr>)}</tbody>
               </table>
             )}

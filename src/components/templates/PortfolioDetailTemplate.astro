@@ -56,10 +56,10 @@ addEvidence((isEvidenceRegister || isDaesinCase || isFamilyBudgetCase) && projec
 addEvidence(isEvidenceRegister && projectArchitectureDiagram, 'boundary', lang === 'ko' ? '프로필 경계' : 'Profile boundary');
 addEvidence(isEvidenceRegister && projectSequenceDiagram, 'sequence', lang === 'ko' ? '실행 흐름' : 'Launch flow');
 addEvidence(!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && project.metrics?.length, 'outcomes', labels.metrics);
-addEvidence(isFamilyBudgetCase && projectArchitectureDiagram, 'boundary', lang === 'ko' ? '공개 경계' : 'Public boundary');
-addEvidence(isFamilyBudgetCase && projectSequenceDiagram, 'sequence', lang === 'ko' ? '로컬 흐름' : 'Local flow');
-addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && projectScenarioEvidence?.length, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
 addEvidence(projectProblemSolving?.length, 'problems', labels.problemSolving);
+addEvidence(isFamilyBudgetCase && projectArchitectureDiagram, 'boundary', lang === 'ko' ? '운영 제품 경계' : 'Operational product boundary');
+addEvidence(isFamilyBudgetCase && projectSequenceDiagram, 'sequence', lang === 'ko' ? '조정 흐름' : 'Reconciliation flow');
+addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && projectScenarioEvidence?.length, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
 addEvidence(!isDaesinCase && projectScenarioEvidence?.length, 'scenarios', lang === 'ko' ? '합성 시나리오' : 'Synthetic scenarios');
 addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && !projectScenarioEvidence?.length, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
 addEvidence(isDaesinCase && projectArchitectureDiagram, 'architecture', lang === 'ko' ? '운영 경계' : 'Operating boundary');
@@ -123,11 +123,6 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
       
       {/* GitHub & Links */}
       <div class="project-proof-links mt-6 flex flex-wrap gap-3">
-        {isFamilyBudgetCase && project.links?.Demo && (
-          <a href={project.links.Demo} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300">
-            {lang === 'ko' ? '라이브 데모 · 합성 데이터' : 'Live demo · synthetic data'}<ExternalLinkIcon class="h-4 w-4" />
-          </a>
-        )}
         {project.github && !isDaesinCase && (
           <a 
             href={project.github} 
@@ -136,7 +131,12 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
             class="inline-flex min-h-11 items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300"
           >
             <GitHubIcon class="h-4 w-4" />
-            {labels.github}
+            {isFamilyBudgetCase ? (lang === 'ko' ? '공개 증거 저장소' : 'Public evidence repository') : labels.github}
+          </a>
+        )}
+        {isFamilyBudgetCase && project.links?.Demo && (
+          <a href={project.links.Demo} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:border-primary-400 hover:bg-primary-50 dark:border-gray-600 dark:bg-gray-900 dark:text-primary-300 dark:hover:border-primary-500">
+            {lang === 'ko' ? '합성 공개 데모 · 운영 미연결' : 'Synthetic public demo · not connected to operations'}<ExternalLinkIcon class="h-4 w-4" />
           </a>
         )}
         {(isEvidenceRegister || isDaesinCase) && project.links && Object.entries(project.links).map(([key, url]) => (
@@ -162,7 +162,7 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
 
     {(isEvidenceRegister || isDaesinCase || isFamilyBudgetCase) && project.metrics && project.metrics.length > 0 && (
       <section id="outcomes" class="mb-10 case-outcomes" aria-labelledby="outcomes-title">
-        <h2 id="outcomes-title" class="section-title mb-6">{lang === 'ko' ? '검증된 결과' : 'Verified outcomes'}</h2>
+        <h2 id="outcomes-title" class="section-title mb-6">{isFamilyBudgetCase ? (lang === 'ko' ? '검증된 시스템 행동' : 'Verified system behaviors') : (lang === 'ko' ? '검증된 결과' : 'Verified outcomes')}</h2>
         <div class="outcome-register">
           {project.metrics.map((metric) => (
             <article class="outcome-register-entry">
@@ -178,17 +178,17 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
 
     {isFamilyBudgetCase && projectArchitectureDiagram && (
       <section id="boundary" class="mb-10 case-boundary">
-        <h2 class="section-title mb-3">{lang === 'ko' ? '공개·비공개 데이터 경계' : 'Public and private data boundary'}</h2>
-        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">{lang === 'ko' ? '공개 가능한 UI 정본만 공유하고, 공개 데모의 데이터와 명령은 방문자 브라우저 안에서만 동작합니다.' : 'Only the public UI source of truth is shared; public-demo data and commands run inside the visitor browser.'}</p>
-        <img src={withBasePath(projectArchitectureDiagram)} alt={lang === 'ko' ? '비공개 운영 영역과 공개 UI package, 합성 seed와 localStorage를 사용하는 공개 데모의 분리된 경계' : 'Separated boundary between the private operating area, the public UI package, and the public demo using synthetic seed data and localStorage'} class="w-full rounded-xl border border-gray-200 dark:border-gray-700" loading="eager" />
+        <h2 class="section-title mb-3">{lang === 'ko' ? '운영 제품 경계와 공개 증거' : 'Operational product boundary and public evidence'}</h2>
+        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">{lang === 'ko' ? '가족 구성원과 승인형 도우미는 인증 API를 통해 운영 원장을 사용합니다. 과거 스프레드시트는 읽기 전용 가져오기 경계이며, 공개 데모는 합성 데이터로 화면 계약만 보여주는 보조 증거입니다.' : 'Household members and an approval-gated assistant use the operational ledger through an authenticated API. The historical spreadsheet is a read-only import boundary, while the synthetic public demo is secondary evidence for screen contracts.'}</p>
+        <img src={withBasePath(projectArchitectureDiagram)} alt={lang === 'ko' ? '가족 구성원과 승인형 도우미가 인증 API를 거쳐 운영 원장에 접근하고 과거 스프레드시트와 공개 데모를 별도 경계에 두는 운영 제품 아키텍처' : 'Operational product architecture where household members and an approval-gated assistant reach the ledger through an authenticated API while the historical spreadsheet and public demo remain separate'} class="w-full rounded-xl border border-gray-200 dark:border-gray-700" loading="eager" />
       </section>
     )}
 
     {isFamilyBudgetCase && projectSequenceDiagram && (
       <section id="sequence" class="mb-10 case-sequence">
-        <h2 class="section-title mb-3">{lang === 'ko' ? '대표 local read/write 흐름' : 'Representative local read/write flow'}</h2>
-        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">{lang === 'ko' ? '합성 거래는 현재 브라우저에서 저장·조회·초기화되며 운영 API나 서버 동기화를 주장하지 않습니다.' : 'Synthetic transactions are stored, read back, and reset in the current browser; this does not claim an operational API or server synchronization.'}</p>
-        <img src={withBasePath(projectSequenceDiagram)} alt={lang === 'ko' ? 'Today 입력부터 localStorage 저장, Dashboard와 Ledger read-back, reset으로 이어지는 흐름' : 'Flow from Today entry through localStorage save and Dashboard and Ledger read-back to reset'} class="w-full rounded-xl border border-gray-200 dark:border-gray-700" loading="lazy" />
+        <h2 class="section-title mb-3">{lang === 'ko' ? '대표 조정 흐름' : 'Representative reconciliation flow'}</h2>
+        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">{lang === 'ko' ? '월별 occurrence는 기존 실제 후보를 먼저 찾습니다. 사용자 확인 뒤 연결하거나 새로 만들고, 트랜잭션 쓰기와 read-back을 거쳐 예상·실제·차이를 갱신합니다.' : 'A monthly occurrence looks for an existing actual first. After confirmation it links or creates, then updates expected, actual, and variance through a transactional write and read-back.'}</p>
+        <img src={withBasePath(projectSequenceDiagram)} alt={lang === 'ko' ? 'occurrence와 기존 실제 후보 탐색, 사용자 확인, 연결 또는 생성, 트랜잭션 쓰기, read-back, 충돌과 reopen으로 이어지는 조정 흐름' : 'Reconciliation flow from occurrence and candidate discovery through confirmation, link or create, transactional write, read-back, conflict handling, and reopen'} class="w-full rounded-xl border border-gray-200 dark:border-gray-700" loading="lazy" />
       </section>
     )}
 
@@ -332,11 +332,11 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
 
     {!isDaesinCase && projectScenarioEvidence && projectScenarioEvidence.length > 0 && (
       <section id="scenarios" class="mb-10" aria-labelledby="scenarios-title">
-        <h2 id="scenarios-title" class="section-title mb-3">{lang === 'ko' ? '합성 시나리오' : 'Synthetic scenarios'}</h2>
+        <h2 id="scenarios-title" class="section-title mb-3">{isFamilyBudgetCase ? (lang === 'ko' ? '도메인 모델과 사용자 흐름' : 'Domain model and user flows') : (lang === 'ko' ? '합성 시나리오' : 'Synthetic scenarios')}</h2>
         <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">
           {lang === 'ko'
-            ? '실제 운영·개인 데이터 없이 코드의 상태 전이와 경계만 고정 fixture로 재현합니다.'
-            : 'Deterministic fixtures reproduce the code paths and boundaries without operational or personal data.'}
+            ? (isFamilyBudgetCase ? '계획·occurrence·actual의 관계와 모바일 입력·데스크톱 검토 흐름을 공개 안전한 다이어그램으로 설명합니다.' : '실제 운영·개인 데이터 없이 코드의 상태 전이와 경계만 고정 fixture로 재현합니다.')
+            : (isFamilyBudgetCase ? 'Public-safe diagrams explain the relationship between plan, occurrence, and actual, plus the mobile-entry and desktop-review flows.' : 'Deterministic fixtures reproduce the code paths and boundaries without operational or personal data.')}
         </p>
         <div class="space-y-6">
           {projectScenarioEvidence.map((scenario) => (

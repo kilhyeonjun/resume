@@ -271,6 +271,10 @@ function formatPeriod(period: { start: string; end: string }): string {
       max-width: 100%;
     }
 
+    .family-budget-print {
+      break-before: page;
+    }
+
     .evidence-register-print .project-summary {
       margin-bottom: 1mm;
     }
@@ -496,6 +500,7 @@ function formatPeriod(period: { start: string; end: string }): string {
       const role = project.role?.[lang] || project.role?.ko;
       const isEvidenceRegister = project.slug === 'ai-coding-harness';
       const isDaesinCase = project.slug === 'daesin-logistics-bot';
+      const isFamilyBudgetCase = project.slug === 'family-budget-demo';
       const coverImage = project.printScenarioImage ? localize(project.printScenarioImage) : (project.coverImage ? localize(project.coverImage) : null);
       const architectureDiagram = project.printArchitectureDiagram ? localize(project.printArchitectureDiagram) : (project.architectureDiagram ? localize(project.architectureDiagram) : null);
       const operationalLimits = project.operationalLimits?.[lang];
@@ -505,13 +510,16 @@ function formatPeriod(period: { start: string; end: string }): string {
       return (
         <>
           {idx > 0 && <hr class="project-separator" />}
-          <div class:list={['project-item', isEvidenceRegister && 'evidence-register-print', isDaesinCase && 'daesin-case-print']}>
+          <div class:list={['project-item', isEvidenceRegister && 'evidence-register-print', isDaesinCase && 'daesin-case-print', isFamilyBudgetCase && 'family-budget-print']}>
             <div class="project-header">
               <span class="project-name">{name}</span>
-              <span class="project-meta">{period} · {role ? `${role} · ` : ''}{typeLabel}</span>
+              <span class="project-meta">{isFamilyBudgetCase ? `${period} · ${typeLabel}` : `${period} · ${role ? `${role} · ` : ''}${typeLabel}`}</span>
             </div>
 
             <div class="project-links">
+              {isFamilyBudgetCase && project.links?.Demo && (
+                <a href={project.links.Demo} target="_blank" rel="noopener noreferrer">{lang === 'ko' ? '라이브 데모 ↗' : 'Live Demo ↗'}</a>
+              )}
               {project.github && !isDaesinCase && (
                 <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
               )}
@@ -545,20 +553,34 @@ function formatPeriod(period: { start: string; end: string }): string {
               </figure>
             )}
 
-            {architectureDiagram && (
+            {isFamilyBudgetCase && architectureDiagram && (
+              <div class="arch-diagram">
+                <img src={withBasePath(architectureDiagram)} alt={lang === 'ko' ? '공개 UI package와 합성 localStorage 데모의 데이터 경계' : 'Data boundary between the public UI package and synthetic localStorage demo'} />
+              </div>
+            )}
+
+            {architectureDiagram && !isFamilyBudgetCase && (
               <div class="arch-diagram">
                 <img src={withBasePath(architectureDiagram)} alt={isDaesinCase ? (lang === 'ko' ? '오늘 날짜 독립 재조회와 Next.js proxy의 public route DTO branch를 포함한 수집·조회·배포 경계' : 'Collection, query, and deployment boundary with current-date independent rechecks and the public route DTO branch inside the Next.js proxy') : `${name} architecture`} />
               </div>
             )}
 
-            {project.scenarioEvidence?.[0] && (
+            {!isFamilyBudgetCase && project.scenarioEvidence?.[0] && (
               <figure class="scenario-strip">
                 <img src={withBasePath(project.scenarioEvidence[0].image[lang])} alt={project.scenarioEvidence[0].title[lang]} />
                 <figcaption>{project.scenarioEvidence[0].caption[lang]}</figcaption>
               </figure>
             )}
 
-            {project.metrics && project.metrics.length > 0 && (
+            {isFamilyBudgetCase && project.metrics && project.metrics.length > 0 && (
+              <table class="metric-table">
+                <colgroup><col /><col /><col /></colgroup>
+                <thead><tr><th>{lang === 'ko' ? '검증된 결과' : 'Verified outcomes'}</th><th>{lang === 'ko' ? '이전' : 'Before'}</th><th>{lang === 'ko' ? '이후' : 'After'}</th></tr></thead>
+                <tbody>{project.metrics.map((m) => <tr><td>{m.label[lang]}</td><td>{localize(m.before)}</td><td class="after-cell">{localize(m.after)} <span class="improvement">({localize(m.improvement)})</span></td></tr>)}</tbody>
+              </table>
+            )}
+
+            {!isFamilyBudgetCase && project.metrics && project.metrics.length > 0 && (
               <table class="metric-table">
                 <colgroup><col /><col /><col /></colgroup>
                 <thead>
@@ -580,7 +602,7 @@ function formatPeriod(period: { start: string; end: string }): string {
               </table>
             )}
 
-            {!isDaesinCase && project.problemSolving && project.problemSolving.length > 0 && (
+            {!isDaesinCase && !isFamilyBudgetCase && project.problemSolving && project.problemSolving.length > 0 && (
               <section class="problem-solving-print">
                 <p class="bullet-section-heading">{currentLabels.problemSolving}</p>
                 {(isDaesinCase ? project.problemSolving.slice(0, 3) : project.problemSolving).map((entry) => (
@@ -593,7 +615,7 @@ function formatPeriod(period: { start: string; end: string }): string {
               </section>
             )}
 
-            {!isDaesinCase && project.techDecisions?.[lang] && project.techDecisions[lang].length > 0 && (
+            {!isDaesinCase && !isFamilyBudgetCase && !isEvidenceRegister && project.techDecisions?.[lang] && project.techDecisions[lang].length > 0 && (
               <>
                 <p class="bullet-section-heading">{currentLabels.techDecisions}</p>
                 <ul class="bullet-list">
@@ -626,7 +648,26 @@ function formatPeriod(period: { start: string; end: string }): string {
               </div>
             )}
 
-            {!isEvidenceRegister && !isDaesinCase && highlights && highlights.length > 0 && (
+            {isFamilyBudgetCase && operationalLimits && (
+              <div class="daesin-print-footer">
+                <div>
+                  <p class="bullet-section-heading">{lang === 'ko' ? '운영 한계' : 'Operating limits'}</p>
+                  <ul class="bullet-list compact">
+                    {operationalLimits.map((item) => <li><span class="bullet">&bull;</span>{item}</li>)}
+                  </ul>
+                </div>
+                {publicEvidence && (
+                  <div>
+                    <p class="bullet-section-heading">{lang === 'ko' ? '공개 근거' : 'Public evidence'}</p>
+                    <p class="evidence-links-line">{publicEvidence.slice(0, 3).map((item) => (
+                      <a href={item.url} target="_blank" rel="noopener noreferrer">{item.label} ↗</a>
+                    ))}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && highlights && highlights.length > 0 && (
               <>
                 <p class="bullet-section-heading">{currentLabels.highlights}</p>
                 <ul class="bullet-list">
@@ -637,7 +678,7 @@ function formatPeriod(period: { start: string; end: string }): string {
               </>
             )}
 
-            {!isEvidenceRegister && !isDaesinCase && lessons && lessons.length > 0 && (
+            {!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && lessons && lessons.length > 0 && (
               <>
                 <p class="bullet-section-heading">{currentLabels.lessons}</p>
                 <ul class="bullet-list">

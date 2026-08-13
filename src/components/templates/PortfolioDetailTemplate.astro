@@ -47,20 +47,23 @@ const projectArchitectureDiagram = project.architectureDiagram ? localize(projec
 const projectSequenceDiagram = project.sequenceDiagram ? localize(project.sequenceDiagram) : null;
 const isEvidenceRegister = project.slug === 'ai-coding-harness';
 const isDaesinCase = project.slug === 'daesin-logistics-bot';
+const isFamilyBudgetCase = project.slug === 'family-budget-demo';
 const evidenceIndex: Array<{ id: string; label: string }> = [];
 const addEvidence = (condition: unknown, id: string, label: string) => {
   if (condition) evidenceIndex.push({ id, label });
 };
-addEvidence((isEvidenceRegister || isDaesinCase) && project.metrics?.length, 'outcomes', lang === 'ko' ? '성과 지표' : 'Outcomes');
+addEvidence((isEvidenceRegister || isDaesinCase || isFamilyBudgetCase) && project.metrics?.length, 'outcomes', lang === 'ko' ? '검증된 결과' : 'Verified outcomes');
 addEvidence(isEvidenceRegister && projectArchitectureDiagram, 'boundary', lang === 'ko' ? '프로필 경계' : 'Profile boundary');
 addEvidence(isEvidenceRegister && projectSequenceDiagram, 'sequence', lang === 'ko' ? '실행 흐름' : 'Launch flow');
-addEvidence(!isEvidenceRegister && !isDaesinCase && project.metrics?.length, 'outcomes', labels.metrics);
-addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && projectScenarioEvidence?.length, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
+addEvidence(!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && project.metrics?.length, 'outcomes', labels.metrics);
+addEvidence(isFamilyBudgetCase && projectArchitectureDiagram, 'boundary', lang === 'ko' ? '공개 경계' : 'Public boundary');
+addEvidence(isFamilyBudgetCase && projectSequenceDiagram, 'sequence', lang === 'ko' ? '로컬 흐름' : 'Local flow');
+addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && projectScenarioEvidence?.length, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
 addEvidence(projectProblemSolving?.length, 'problems', labels.problemSolving);
 addEvidence(!isDaesinCase && projectScenarioEvidence?.length, 'scenarios', lang === 'ko' ? '합성 시나리오' : 'Synthetic scenarios');
-addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && !projectScenarioEvidence?.length, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
+addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && !projectScenarioEvidence?.length, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
 addEvidence(isDaesinCase && projectArchitectureDiagram, 'architecture', lang === 'ko' ? '운영 경계' : 'Operating boundary');
-addEvidence(isDaesinCase && projectOperationalLimits?.length, 'limits', lang === 'ko' ? '운영 한계' : 'Operating limits');
+addEvidence((isDaesinCase || isFamilyBudgetCase) && projectOperationalLimits?.length, 'limits', lang === 'ko' ? '운영 한계' : 'Operating limits');
 addEvidence(projectPublicEvidence?.length, 'public-evidence', lang === 'ko' ? '공개 근거' : 'Public evidence');
 addEvidence(projectDescription && !isDaesinCase, 'description', labels.description);
 addEvidence(teamComposition, 'team', labels.teamComposition);
@@ -120,6 +123,11 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
       
       {/* GitHub & Links */}
       <div class="project-proof-links mt-6 flex flex-wrap gap-3">
+        {isFamilyBudgetCase && project.links?.Demo && (
+          <a href={project.links.Demo} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300">
+            {lang === 'ko' ? '라이브 데모 · 합성 데이터' : 'Live demo · synthetic data'}<ExternalLinkIcon class="h-4 w-4" />
+          </a>
+        )}
         {project.github && !isDaesinCase && (
           <a 
             href={project.github} 
@@ -152,7 +160,7 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
       </nav>
     </header>
 
-    {(isEvidenceRegister || isDaesinCase) && project.metrics && project.metrics.length > 0 && (
+    {(isEvidenceRegister || isDaesinCase || isFamilyBudgetCase) && project.metrics && project.metrics.length > 0 && (
       <section id="outcomes" class="mb-10 case-outcomes" aria-labelledby="outcomes-title">
         <h2 id="outcomes-title" class="section-title mb-6">{lang === 'ko' ? '검증된 결과' : 'Verified outcomes'}</h2>
         <div class="outcome-register">
@@ -165,6 +173,22 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
             </article>
           ))}
         </div>
+      </section>
+    )}
+
+    {isFamilyBudgetCase && projectArchitectureDiagram && (
+      <section id="boundary" class="mb-10 case-boundary">
+        <h2 class="section-title mb-3">{lang === 'ko' ? '공개·비공개 데이터 경계' : 'Public and private data boundary'}</h2>
+        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">{lang === 'ko' ? '공개 가능한 UI 정본만 공유하고, 공개 데모의 데이터와 명령은 방문자 브라우저 안에서만 동작합니다.' : 'Only the public UI source of truth is shared; public-demo data and commands run inside the visitor browser.'}</p>
+        <img src={withBasePath(projectArchitectureDiagram)} alt={lang === 'ko' ? '비공개 운영 영역과 공개 UI package, 합성 seed와 localStorage를 사용하는 공개 데모의 분리된 경계' : 'Separated boundary between the private operating area, the public UI package, and the public demo using synthetic seed data and localStorage'} class="w-full rounded-xl border border-gray-200 dark:border-gray-700" loading="eager" />
+      </section>
+    )}
+
+    {isFamilyBudgetCase && projectSequenceDiagram && (
+      <section id="sequence" class="mb-10 case-sequence">
+        <h2 class="section-title mb-3">{lang === 'ko' ? '대표 local read/write 흐름' : 'Representative local read/write flow'}</h2>
+        <p class="case-diagram-caption mb-6 text-gray-600 dark:text-gray-300">{lang === 'ko' ? '합성 거래는 현재 브라우저에서 저장·조회·초기화되며 운영 API나 서버 동기화를 주장하지 않습니다.' : 'Synthetic transactions are stored, read back, and reset in the current browser; this does not claim an operational API or server synchronization.'}</p>
+        <img src={withBasePath(projectSequenceDiagram)} alt={lang === 'ko' ? 'Today 입력부터 localStorage 저장, Dashboard와 Ledger read-back, reset으로 이어지는 흐름' : 'Flow from Today entry through localStorage save and Dashboard and Ledger read-back to reset'} class="w-full rounded-xl border border-gray-200 dark:border-gray-700" loading="lazy" />
       </section>
     )}
 
@@ -234,7 +258,7 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
     )}
 
     {/* Architecture Diagram */}
-    {!isEvidenceRegister && !isDaesinCase && projectArchitectureDiagram && (
+    {!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && projectArchitectureDiagram && (
       <section id="architecture" class="mb-10">
         <h2 class="section-title mb-6">{lang === 'ko' ? '시스템 아키텍처' : 'System Architecture'}</h2>
         <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
@@ -352,7 +376,7 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
       </section>
     )}
 
-    {isDaesinCase && projectOperationalLimits && projectOperationalLimits.length > 0 && (
+    {(isDaesinCase || isFamilyBudgetCase) && projectOperationalLimits && projectOperationalLimits.length > 0 && (
       <section id="limits" class="mb-10" aria-labelledby="limits-title">
         <h2 id="limits-title" class="section-title mb-6">{lang === 'ko' ? '운영 한계' : 'Operating limits'}</h2>
         <div class="grid gap-3 md:grid-cols-3">
@@ -365,7 +389,7 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
       </section>
     )}
 
-    {isDaesinCase && projectPublicEvidence && projectPublicEvidence.length > 0 && (
+    {(isDaesinCase || isFamilyBudgetCase) && projectPublicEvidence && projectPublicEvidence.length > 0 && (
       <section id="public-evidence" class="mb-10" aria-labelledby="public-evidence-title">
         <h2 id="public-evidence-title" class="section-title mb-3">{lang === 'ko' ? 'Claim → 공개 근거' : 'Claim → public evidence'}</h2>
         <p class="mb-6 text-sm text-gray-600 dark:text-gray-300">
@@ -439,7 +463,7 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
     )}
 
     {/* Metrics */}
-    {!isEvidenceRegister && !isDaesinCase && project.metrics && project.metrics.length > 0 && (
+    {!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && project.metrics && project.metrics.length > 0 && (
       <section id="outcomes" class="mb-10">
         <h2 class="section-title mb-6">{labels.metrics}</h2>
         <div class="overflow-x-auto">

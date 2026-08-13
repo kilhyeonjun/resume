@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Budget Demo — Synthetic Budget Vertical Slice</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#eceef2",
+                    "on-tertiary-fixed-variant": "#55442d",
+                    "secondary-container": "#316bf3",
+                    "surface-variant": "#e0e2e6",
+                    "surface-dim": "#d8dade",
+                    "inverse-primary": "#c0c6db",
+                    "surface-container-highest": "#e0e2e6",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "on-secondary": "#ffffff",
+                    "surface-container-high": "#e6e8ec",
+                    "primary": "#000000",
+                    "tertiary": "#000000",
+                    "outline": "#76777d",
+                    "background": "#f7f9fd",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#261906",
+                    "inverse-on-surface": "#eff1f5",
+                    "inverse-surface": "#2d3134",
+                    "on-primary-fixed": "#141b2b",
+                    "primary-container": "#141b2b",
+                    "on-surface": "#191c1f",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f7f9fd",
+                    "outline-variant": "#c6c6cd",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#968065",
+                    "tertiary-fixed-dim": "#dcc2a4",
+                    "surface": "#f7f9fd",
+                    "surface-container-low": "#f2f4f8",
+                    "on-surface-variant": "#45464c",
+                    "on-background": "#191c1f",
+                    "on-primary-fixed-variant": "#404758",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#fefcff",
+                    "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#c0c6db",
+                    "on-secondary-fixed": "#00174b",
+                    "secondary-fixed": "#dbe1ff",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#f9debf",
+                    "on-primary-container": "#7d8497",
+                    "on-tertiary-fixed": "#261906",
+                    "surface-tint": "#575e70",
+                    "primary-fixed": "#dce2f7",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "secondary": "#0051d5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "container-max": "1120px",
+                    "stack-sm": "8px",
+                    "section-gap": "80px",
+                    "stack-lg": "32px",
+                    "gutter": "24px",
+                    "unit": "4px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": [
+                            "Inter", "Pretendard", "sans-serif"
+                    ],
+                    "label-caps": [
+                            "Inter", "Pretendard", "sans-serif"
+                    ],
+                    "caption": [
+                            "Inter", "Pretendard", "sans-serif"
+                    ],
+                    "headline-sm": [
+                            "Inter", "Pretendard", "sans-serif"
+                    ],
+                    "body-md": [
+                            "Inter", "Pretendard", "sans-serif"
+                    ],
+                    "headline-md": [
+                            "Inter", "Pretendard", "sans-serif"
+                    ],
+                    "display-lg-mobile": [
+                            "Inter", "Pretendard", "sans-serif"
+                    ],
+                    "body-lg": [
+                            "Inter", "Pretendard", "sans-serif"
+                    ]
+            },
+            "fontSize": {
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "1.0",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "caption": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-sm": [
+                            "20px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.3",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg-mobile": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.7",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', 'Pretendard', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        [data-weight="fill"] .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased w-full selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-inverse-surface text-primary dark:text-primary-fixed border-b border-outline-variant dark:border-outline full-width top-0 z-50 sticky">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-gutter max-w-container-max mx-auto h-20">
+<div class="font-display-lg text-display-lg font-bold text-primary dark:text-primary-fixed uppercase tracking-tighter">Dossier 01</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-caps text-label-caps text-primary dark:text-primary-fixed border-b-2 border-primary pb-1 uppercase" href="#">Portfolio</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 uppercase" href="#">Archives</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 uppercase" href="#">About</a>
+</div>
+<div class="font-label-caps text-label-caps cursor-pointer opacity-80 hover:opacity-100 transition-opacity">EN/KR</div>
+</div>
+</nav>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter flex flex-col lg:flex-row relative">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col py-stack-lg sticky top-20 bg-surface-container-lowest dark:bg-surface-container border-r border-outline-variant dark:border-outline h-[calc(100vh-80px)] w-64 shrink-0 overflow-y-auto">
+<div class="mb-stack-lg px-4">
+<div class="font-label-caps text-label-caps text-primary mb-1 uppercase tracking-widest">Project Archive</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold">Project Navigator</div>
+<div class="font-caption text-caption text-on-surface-variant mt-1">Editorial Case Study</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 py-2 text-primary dark:text-primary-fixed font-bold border-l-4 border-primary pl-4 hover:bg-surface-variant dark:hover:bg-on-surface-variant transition-all duration-150 group" href="#overview">
+<span class="material-symbols-outlined text-[20px]" data-icon="info">info</span>
+<span class="font-label-caps text-label-caps uppercase">Overview</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant dark:text-outline-variant pl-4 border-l-4 border-transparent hover:bg-surface-variant dark:hover:bg-on-surface-variant transition-all duration-150 group" href="#engineering-outcomes">
+<span class="material-symbols-outlined text-[20px]" data-icon="trending_up">trending_up</span>
+<span class="font-label-caps text-label-caps uppercase">Engineering Outcomes</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant dark:text-outline-variant pl-4 border-l-4 border-transparent hover:bg-surface-variant dark:hover:bg-on-surface-variant transition-all duration-150 group" href="#architecture">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_tree">account_tree</span>
+<span class="font-label-caps text-label-caps uppercase">Architecture</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant dark:text-outline-variant pl-4 border-l-4 border-transparent hover:bg-surface-variant dark:hover:bg-on-surface-variant transition-all duration-150 group" href="#stories">
+<span class="material-symbols-outlined text-[20px]" data-icon="auto_stories">auto_stories</span>
+<span class="font-label-caps text-label-caps uppercase">Stories</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant dark:text-outline-variant pl-4 border-l-4 border-transparent hover:bg-surface-variant dark:hover:bg-on-surface-variant transition-all duration-150 group" href="#technical-decisions">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings_suggest">settings_suggest</span>
+<span class="font-label-caps text-label-caps uppercase">Technical Decisions</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant dark:text-outline-variant pl-4 border-l-4 border-transparent hover:bg-surface-variant dark:hover:bg-on-surface-variant transition-all duration-150 group" href="#operational-limits">
+<span class="material-symbols-outlined text-[20px]" data-icon="speed">speed</span>
+<span class="font-label-caps text-label-caps uppercase">Operational Limits</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant dark:text-outline-variant pl-4 border-l-4 border-transparent hover:bg-surface-variant dark:hover:bg-on-surface-variant transition-all duration-150 group" href="#evidence">
+<span class="material-symbols-outlined text-[20px]" data-icon="menu_book">menu_book</span>
+<span class="font-label-caps text-label-caps uppercase">Evidence</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 lg:pl-section-gap py-section-gap max-w-[800px]">
+<!-- Dossier Header -->
+<header class="mb-section-gap scroll-mt-24" id="overview">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-4 uppercase tracking-widest">Project Overview</div>
+<h1 class="font-display-lg text-display-lg text-primary mb-stack-md">Family Budget Demo</h1>
+<h2 class="font-headline-md text-headline-md text-primary mb-stack-lg pb-stack-md border-b border-primary border-b-2">Synthetic Budget Vertical Slice</h2>
+<p class="font-body-lg text-body-lg text-on-surface mb-stack-lg leading-relaxed">
+                    가계부 서비스의 핵심 기능을 안전한 합성 데이터로 구현한 기술 수직 슬라이스<br/>
+<span class="text-on-surface-variant text-body-md font-body-md">(A technical vertical slice of a budget service using safe synthetic data)</span>
+</p>
+<div class="grid grid-cols-2 gap-gutter mb-stack-lg pb-stack-lg border-b border-outline-variant">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase">Role</div>
+<div class="font-body-md text-body-md text-primary font-medium">단독 개발 (Sole Developer/Owner)</div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase">Period</div>
+<div class="font-body-md text-body-md text-primary font-medium">2024.01 - 2024.03</div>
+</div>
+</div>
+<div class="flex gap-4">
+<a class="inline-flex items-center justify-center bg-primary text-on-primary font-label-caps text-label-caps uppercase px-6 py-3 rounded hover:bg-primary-container transition-colors" href="#">GitHub</a>
+<a class="inline-flex items-center justify-center bg-surface-container-lowest text-primary border border-outline font-label-caps text-label-caps uppercase px-6 py-3 rounded hover:bg-surface-container-low transition-colors" href="#">Public Demo</a>
+</div>
+</header>
+<!-- Engineering Outcomes -->
+<section class="mb-section-gap scroll-mt-24" id="engineering-outcomes">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm uppercase tracking-widest border-b border-outline-variant pb-2">Key Results</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-stack-lg">Engineering Outcomes</h3>
+<ul class="space-y-stack-md">
+<li class="flex gap-4 items-start bg-surface-container-low p-6 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-secondary mt-1" data-icon="check_circle">check_circle</span>
+<div>
+<div class="font-body-md text-body-md text-primary font-medium mb-1">단일 공용 UI 패키지를 통해 공개 데모와 비공개 운영 앱 간의 소스 정합성 100% 달성</div>
+<div class="font-caption text-caption text-on-surface-variant">100% source consistency via single public UI package</div>
+</div>
+</li>
+<li class="flex gap-4 items-start bg-surface-container-low p-6 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-secondary mt-1" data-icon="check_circle">check_circle</span>
+<div>
+<div class="font-body-md text-body-md text-primary font-medium mb-1">합성 데이터 어댑터를 통한 오프라인/로컬 스토리지 기반의 7가지 주요 경로 구현</div>
+<div class="font-caption text-caption text-on-surface-variant">7 major routes via synthetic adapter</div>
+</div>
+</li>
+<li class="flex gap-4 items-start bg-surface-container-low p-6 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-secondary mt-1" data-icon="check_circle">check_circle</span>
+<div>
+<div class="font-body-md text-body-md text-primary font-medium mb-1">21개 케이스의 반응형/접근성 QA 통과 및 CI 빌드 성공</div>
+<div class="font-caption text-caption text-on-surface-variant">Passed 21-case responsive/accessibility QA &amp; CI build</div>
+</div>
+</li>
+</ul>
+</section>
+<!-- Architecture -->
+<section class="mb-section-gap scroll-mt-24" id="architecture">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm uppercase tracking-widest border-b border-outline-variant pb-2">System Design</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-stack-md">Architecture Boundary</h3>
+<figure class="bg-surface-container-lowest border border-outline-variant rounded p-2 mb-4">
+<img alt="시스템 경계 및 데이터 흐름 다이어그램" class="w-full h-auto object-cover rounded-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2m03YULOSMPVRMoxidtE_TuojcqwWMDjbM-b3eFskJqerRZLn-mKZfK-_2UpLeGvUp11Mfrf2cQF8bzOrt2jQPWBAHt9R9LQC6Zr3BgQFElNhNsSImf2ZdYqUcXbda3TGqwy-itLBgUtv2mAopEbTcY2pqy3hjooIMpnNLM69tEDPH7yttqb6JgVTfvMGBJfFh5NOqly3L5291xDzaG_f2r2A-rhrCve0OZUdzaHfJCrLc4saEZVlkli_8DGm3-v3x1vr49f3DU8"/>
+<figcaption class="font-caption text-caption text-on-surface-variant text-center mt-4 pb-2">시스템 경계 및 데이터 흐름: 비공개 데이터의 데모 환경 유입 원천 차단 (System Boundaries: Prevention of private data leaks)</figcaption>
+</figure>
+</section>
+<!-- Stories -->
+<section class="mb-section-gap scroll-mt-24" id="stories">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm uppercase tracking-widest border-b border-outline-variant pb-2">Implementation</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-stack-lg">Three Stories</h3>
+<div class="space-y-stack-lg">
+<article class="bg-surface-container-lowest border border-outline-variant rounded p-8">
+<h4 class="font-headline-sm text-headline-sm text-primary mb-2">1. 소스 추출 및 정합성 (Source Extraction)</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            데모용 중복 UI 제거 및 SHA 매니페스트 기반의 패키지 관리를 통해 코드 베이스의 무결성을 유지했습니다. 단일 진실 공급원(Single Source of Truth) 원칙을 적용하여 유지보수 오버헤드를 극적으로 줄였습니다.
+                        </p>
+</article>
+<article class="bg-surface-container-lowest border border-outline-variant rounded p-8">
+<h4 class="font-headline-sm text-headline-sm text-primary mb-2">2. 런타임 어댑터 전환 (Runtime Adapter)</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            소스 별칭(Alias)을 패키지 export로 교체하여 비공개 API 동작을 보존했습니다. 환경 변수에 따른 의존성 주입을 통해 퍼블릭 런타임에서는 합성 데이터를, 프라이빗 런타임에서는 실제 API를 호출하도록 설계했습니다.
+                        </p>
+</article>
+<article class="bg-surface-container-lowest border border-outline-variant rounded p-8">
+<h4 class="font-headline-sm text-headline-sm text-primary mb-2">3. 릴리스 품질 확보 (Release Quality)</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            엄격한 반응형 및 접근성 테스트를 통해 CSS 레이아웃 결함을 제거했습니다. 크로스 브라우징 및 다양한 디바이스 환경에서의 일관된 렌더링을 보장하기 위해 자동화된 CI 파이프라인을 구축했습니다.
+                        </p>
+</article>
+</div>
+</section>
+</main>
+</div>
+</body></html>

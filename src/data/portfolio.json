@@ -289,6 +289,10 @@
         "ko": "images/portfolio/ai-coding-harness-boundary-ko.svg",
         "en": "images/portfolio/ai-coding-harness-boundary-en.svg"
       },
+      "printArchitectureDiagram": {
+        "ko": "/images/portfolio/ai-coding-harness-boundary-print-ko.svg",
+        "en": "/images/portfolio/ai-coding-harness-boundary-print-en.svg"
+      },
       "scale": {
         "ko": "공개 런처 · AI CLI 3종 · contract demo",
         "en": "Public launcher · 3 AI CLIs · contract demo"
@@ -1598,23 +1602,22 @@
     {
       "slug": "family-budget-demo",
       "name": {
-        "ko": "Family Budget Demo — 합성 가계부 vertical slice",
-        "en": "Family Budget Demo — Synthetic Budget Vertical Slice"
+        "ko": "실제 가족 데이터를 노출하지 않고 7개 화면을 재현한 공개 가계부 데모",
+        "en": "A Public Budget Demo Reproducing Seven Screens Without Exposing Family Data"
       },
       "type": "personal",
-      "listed": true,
-      "printOrder": 9,
+      "printOrder": 4,
       "summary": {
-        "ko": "합성 seed만 사용하는 가계부 공개 데모로, 브라우저 로컬 저장을 통해 거래 입력부터 Dashboard·Ledger 조회와 reset까지 하나의 read/write 흐름을 검증",
-        "en": "A synthetic-only public budget demo validating one read/write flow from transaction entry to Dashboard and Ledger read-back and reset through browser-local storage"
+        "ko": "공개 가능한 UI 26개 파일을 hash manifest로 고정하고, 합성 seed와 브라우저 localStorage 어댑터를 연결해 실제 가족 데이터·운영 DB·자격증명 없이 7개 공개 화면의 입력·조회·초기화를 재현했다.",
+        "en": "Pinned 26 public UI files with a hash manifest and connected synthetic seed data to a browser-local adapter, reproducing entry, read-back, and reset flows across seven public screens without real family data, an operating database, or credentials."
       },
       "description": {
-        "ko": "실제 가족 데이터·운영 DB·자격증명을 포함하지 않는 공개 Next.js 데모다. 운영 앱과 동일한 공개 UI SSOT를 사용하며 Today·Dashboard·Ledger·목적통장·자산·예상 항목·설정 7개 화면을 합성 seed와 브라우저 localStorage로 실행한다. 원격 CI build, GitGuardian, Vercel Production과 desktop·tablet·mobile 반응형·접근성 gate를 통과했다.",
-        "en": "A public Next.js demo containing no real family data, operating database, or credentials. It uses the same public UI SSOT as the operational app and runs seven screens—Today, Dashboard, Ledger, Purpose, Assets, Recurring, and Settings—with tracked synthetic seed data and browser localStorage. Remote CI build, GitGuardian, Vercel Production, and desktop/tablet/mobile responsive-accessibility gates passed."
+        "ko": "실사용 금융 앱의 UI와 제품 흐름을 공개하되 실제 가족 데이터, 운영 DB/API, 인증 비밀과 배포 토폴로지는 노출하지 않아야 했다. 화면을 재작성하는 대신 공개 가능한 canonical UI 패키지를 추출하고, 공개 데모에는 합성 read/command adapter를 주입했다. Today·Dashboard·Ledger·목적통장·자산·예상 항목·설정 7개 화면은 방문자 브라우저의 localStorage에서만 읽고 쓰며 초기화할 수 있다.",
+        "en": "The goal was to demonstrate a real financial-product UI and workflow without exposing family data, operating databases or APIs, authentication secrets, or deployment topology. Instead of rewriting the screens, the public canonical UI package was extracted and wired to synthetic read and command adapters. Seven screens—Today, Dashboard, Ledger, Purpose, Assets, Recurring, and Settings—read, write, and reset only inside the visitor browser through localStorage."
       },
       "role": {
-        "ko": "제품 경계 설계 · Next.js/TypeScript 구현 · TDD · 공개 배포 검증",
-        "en": "Product boundary design · Next.js/TypeScript implementation · TDD · public release verification"
+        "ko": "공개 데모 설계·구현 · canonical UI 패키지 추출 · 합성 데이터 어댑터 · 공개 경계 검증 자동화",
+        "en": "Public demo design and implementation · canonical UI package extraction · synthetic data adapter · automated public-boundary verification"
       },
       "period": {
         "start": "2026-08-09",
@@ -1629,39 +1632,249 @@
       ],
       "github": "https://github.com/kilhyeonjun/family-budget-demo",
       "links": {
-        "demo": "https://family-budget-demo-three.vercel.app"
+        "Demo": "https://family-budget-demo-three.vercel.app",
+        "CI": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648"
       },
       "highlights": {
         "ko": [
-          "운영 앱과 demo가 고정 SHA로 소비하는 단일 공개 UI SSOT",
-          "7개 화면의 합성 seed·localStorage read/write 흐름과 private API 0건 경계",
-          "33/33 테스트 · 원격 CI build · GitGuardian · Vercel Production · 21-case 반응형 QA"
+          "고정 upstream SHA에서 추출한 canonical UI 26개 파일을 SHA-256 manifest와 package export 계약으로 관리",
+          "7개 화면의 합성 seed·localStorage read/write·reset 흐름을 실제 가족 데이터나 운영 저장소 없이 재현",
+          "고정 SHA snapshot에서 33개 테스트, production build, 공개 경계·package runtime·production CSS 검사를 통과"
         ],
         "en": [
-          "One public UI SSOT consumed by the operational app and demo at a pinned SHA",
-          "Synthetic seed and localStorage read/write flow across seven screens with zero private API requests",
-          "33/33 tests · remote CI build · GitGuardian · Vercel Production · 21-case responsive QA"
+          "Manage 26 canonical UI files extracted from a pinned upstream SHA through a SHA-256 manifest and package-export contract",
+          "Reproduce synthetic seed, localStorage read/write, and reset flows across seven screens without family data or operational storage",
+          "Pass 33 tests, a production build, and public-boundary, package-runtime, and production-CSS checks in a pinned-SHA snapshot"
         ]
       },
       "operationalLimits": {
         "ko": [
-          "저장은 현재 브라우저에만 남으며 기기 간 동기화·사용자 계정·공유 기능은 없다.",
-          "공개 데모에는 실제 가족 재무 데이터와 private 운영 앱 연동이 없다."
+          "저장은 현재 브라우저에만 남으며 기기 간 동기화·사용자 계정·공유·서버 백업은 없다.",
+          "공개 데모는 운영 백엔드, 실제 데이터 규모, 다중 사용자 협업을 증명하지 않는다.",
+          "공개 경계 스캔은 정의된 source tree와 literal 패턴을 검사하며 저장소 전체 범용 secret scanner나 WCAG 감사가 아니다."
         ],
         "en": [
-          "Data remains in the current browser; there is no cross-device sync, user account, or sharing.",
-          "The public demo has no real family financial data or integration with the private operating app."
+          "Data remains in the current browser; there is no cross-device sync, user account, sharing, or server backup.",
+          "The public demo does not prove the operational backend, real data scale, or multi-user collaboration.",
+          "The public-boundary scan checks defined source trees and literal patterns; it is not a repository-wide general secret scanner or a WCAG audit."
         ]
       },
-      "blogPosts": [
+      "metrics": [
         {
-          "title": {
-            "ko": "원격 CI 검증",
-            "en": "Remote CI verification"
+          "label": {
+            "ko": "공개 UI 정본",
+            "en": "Canonical public UI"
           },
-          "url": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31655596910"
+          "before": {
+            "ko": "별도 화면 재작성 시 drift 위험",
+            "en": "Drift risk from separately rewritten screens"
+          },
+          "after": "26 files",
+          "improvement": {
+            "ko": "SHA-256 manifest로 고정된 공개 파일",
+            "en": "Public files pinned by a SHA-256 manifest"
+          }
+        },
+        {
+          "label": {
+            "ko": "공개 제품 흐름",
+            "en": "Public product flow"
+          },
+          "before": {
+            "ko": "운영 데이터·인증 없이 증명하기 어려움",
+            "en": "Hard to demonstrate without operational data or authentication"
+          },
+          "after": "7 screens",
+          "improvement": {
+            "ko": "합성 입력·조회·초기화 흐름",
+            "en": "Synthetic entry, read-back, and reset flow"
+          }
+        },
+        {
+          "label": {
+            "ko": "Release verification",
+            "en": "Release verification"
+          },
+          "before": {
+            "ko": "빌드 성공만으로 화면 경계를 판단할 수 없음",
+            "en": "A successful build alone cannot prove the UI boundary"
+          },
+          "after": "33 tests",
+          "improvement": {
+            "ko": "production build와 경계·runtime·CSS 검사 포함",
+            "en": "Plus production build and boundary, runtime, and CSS checks"
+          }
         }
-      ]
+      ],
+      "architectureDiagram": {
+        "ko": "/images/portfolio/family-budget-boundary-ko.svg",
+        "en": "/images/portfolio/family-budget-boundary-en.svg"
+      },
+      "sequenceDiagram": {
+        "ko": "/images/portfolio/family-budget-flow-ko.svg",
+        "en": "/images/portfolio/family-budget-flow-en.svg"
+      },
+      "scenarioEvidence": [
+        {
+          "image": {
+            "ko": "/images/portfolio/family-budget-evidence-ko.svg",
+            "en": "/images/portfolio/family-budget-evidence-en.svg"
+          },
+          "title": {
+            "ko": "합성 거래의 입력과 read-back",
+            "en": "Synthetic transaction entry and read-back"
+          },
+          "caption": {
+            "ko": "동일한 고정 합성 시나리오가 Today 입력에서 Dashboard 집계와 Ledger 행으로 이어지며, 실제 가족 데이터는 포함하지 않는다.",
+            "en": "One deterministic synthetic scenario flows from Today entry to Dashboard aggregation and a Ledger row without containing family data."
+          }
+        },
+        {
+          "image": {
+            "ko": "/images/portfolio/family-budget-reset-ko.svg",
+            "en": "/images/portfolio/family-budget-reset-en.svg"
+          },
+          "title": {
+            "ko": "브라우저 로컬 저장과 초기화 경계",
+            "en": "Browser-local persistence and reset boundary"
+          },
+          "caption": {
+            "ko": "변경은 현재 브라우저 localStorage에만 남고 초기화로 추적된 seed를 복원한다. 서버 동기화나 계정 공유를 증명하지 않는다.",
+            "en": "Changes remain in the current browser localStorage, and reset restores the tracked seed. This does not claim server synchronization or account sharing."
+          }
+        }
+      ],
+      "problemSolving": [
+        {
+          "problem": {
+            "ko": "운영 UI를 별도 데모로 재작성하면 두 화면이 다시 어긋날 수 있었다.",
+            "en": "Rewriting the operational UI as a separate demo could make the two surfaces drift again."
+          },
+          "process": {
+            "ko": "canonical UI 26개 파일을 공개 package로 추출하고 exact/seam 파일을 SHA-256 manifest와 명시적 export로 관리했다.",
+            "en": "Extracted 26 canonical UI files into a public package and managed exact and seam files through a SHA-256 manifest and explicit exports."
+          },
+          "result": {
+            "ko": "소비자는 공개 package 경계만 사용하고 hash drift와 원본 우회 alias를 실행 가능한 검사로 차단한다.",
+            "en": "Consumers use only the public package boundary, while executable checks block hash drift and source-bypass aliases."
+          }
+        },
+        {
+          "problem": {
+            "ko": "같은 화면을 공개하면 운영 데이터 소스와 인증 경계까지 따라올 위험이 있었다.",
+            "en": "Publishing the same screens risked carrying operational data sources and authentication boundaries with them."
+          },
+          "process": {
+            "ko": "공통 UI가 BudgetRuntimeProvider 계약에만 의존하도록 하고 공개 앱에는 syntheticReads와 syntheticCommands를 주입했다.",
+            "en": "Made the shared UI depend only on the BudgetRuntimeProvider contract and injected syntheticReads and syntheticCommands into the public app."
+          },
+          "result": {
+            "ko": "확인된 공개 read/write 경로는 메모리와 localStorage에서 동작하며 synthetic read 테스트에서 fetch를 호출하지 않는다.",
+            "en": "The verified public read/write path runs in memory and localStorage, and the synthetic read test does not call fetch."
+          }
+        },
+        {
+          "problem": {
+            "ko": "production build 성공만으로 표 기반 화면의 반응형 품질과 공개 경계를 보장할 수 없었다.",
+            "en": "A successful production build alone could not guarantee responsive table layouts or the public boundary."
+          },
+          "process": {
+            "ko": "canonical UI의 responsive CSS를 수정하고 테스트·production build·SSOT·public-boundary·package-runtime·production-CSS 검사를 고정 SHA에서 실행했다.",
+            "en": "Corrected responsive CSS in the canonical UI and ran tests, a production build, and SSOT, public-boundary, package-runtime, and production-CSS checks at the pinned SHA."
+          },
+          "result": {
+            "ko": "7개 주요 route가 live에서 HTTP 200을 반환했고 데스크톱 설정 화면의 canonical 내비게이션과 합성 데이터 고지를 확인했다.",
+            "en": "Seven primary routes returned HTTP 200 live, and the desktop Settings view showed canonical navigation and the synthetic-data disclosure."
+          }
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "UI 복사 대신 고정 SHA의 공개 package를 선택해 drift 검증이 가능해졌지만 package release와 consumer pin을 함께 관리해야 한다.",
+          "공개 mock server 대신 synthetic seed와 localStorage를 선택해 운영 자격증명 없이 read/write를 체험하게 했지만 다중 사용자·기기 간 동기화는 범위 밖이다.",
+          "범용 보안 인증을 주장하지 않고 정해진 공개 source tree와 literal 패턴을 검사하는 fail-closed boundary scan을 사용한다."
+        ],
+        "en": [
+          "Chose a public package pinned to a fixed SHA instead of copying UI, enabling drift verification while requiring coordinated package releases and consumer pins.",
+          "Chose synthetic seed data and localStorage instead of a public mock server, enabling read/write interaction without operational credentials while leaving multi-user and cross-device synchronization out of scope.",
+          "Use a fail-closed boundary scan over defined public source trees and literal patterns without claiming general security certification."
+        ]
+      },
+      "publicEvidence": [
+        {
+          "claim": {
+            "ko": "26개 canonical UI 파일",
+            "en": "26 canonical UI files"
+          },
+          "question": {
+            "ko": "UI 정본과 허용 seam은 어떻게 고정했는가?",
+            "en": "How are the UI source of truth and allowed seams pinned?"
+          },
+          "label": "Manifest",
+          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/ssot/exact-source-manifest.json",
+          "testLabel": "Verifier",
+          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/verify-ssot.mjs"
+        },
+        {
+          "claim": {
+            "ko": "브라우저 로컬 read/write",
+            "en": "Browser-local read/write"
+          },
+          "question": {
+            "ko": "합성 데이터의 저장·조회·초기화는 어디서 동작하는가?",
+            "en": "Where do synthetic storage, reads, and reset run?"
+          },
+          "label": "Adapter",
+          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.ts",
+          "testLabel": "Test",
+          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.test.ts"
+        },
+        {
+          "claim": {
+            "ko": "UI와 데이터 소스 분리",
+            "en": "UI and data-source separation"
+          },
+          "question": {
+            "ko": "공통 UI에 공개 어댑터를 어떻게 주입하는가?",
+            "en": "How is the public adapter injected into shared UI?"
+          },
+          "label": "Runtime",
+          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/packages/budget-ui/src/runtime.tsx",
+          "testLabel": "DemoShell",
+          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/components/DemoShell.tsx"
+        },
+        {
+          "claim": {
+            "ko": "공개 경계 검사",
+            "en": "Public-boundary checks"
+          },
+          "question": {
+            "ko": "어떤 실행 가능한 검사가 drift와 금지 패턴을 차단하는가?",
+            "en": "Which executable checks block drift and forbidden patterns?"
+          },
+          "label": "Boundary scan",
+          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/scan-public-boundary.mjs",
+          "testLabel": "CI",
+          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648"
+        },
+        {
+          "claim": {
+            "ko": "라이브 합성 제품 흐름",
+            "en": "Live synthetic product flow"
+          },
+          "question": {
+            "ko": "로그인 없이 공개 화면을 직접 확인할 수 있는가?",
+            "en": "Can the public screens be inspected without login?"
+          },
+          "label": "Live Demo",
+          "url": "https://family-budget-demo-three.vercel.app"
+        }
+      ],
+      "featured": true,
+      "printArchitectureDiagram": {
+        "ko": "/images/portfolio/family-budget-boundary-print-ko.svg",
+        "en": "/images/portfolio/family-budget-boundary-print-en.svg"
+      }
     },
     {
       "slug": "react-nodebird",

@@ -124,7 +124,7 @@ test('deployable sources exclude blocked recruiting evidence fingerprints', asyn
 test('deprecated Ledgerly is absent from public release surfaces', async () => {
   const portfolio = JSON.parse(await readFile(join(root, 'src/data/portfolio.json'), 'utf8'));
   assert.equal(portfolio.projects.some((project) => project.slug === 'ledgerly'), false);
-  assert.equal(portfolio.projects.filter((project) => project.featured).length, 3);
+  assert.equal(portfolio.projects.filter((project) => project.featured).length, 4);
 
   for (const dir of ['src', 'public', 'dist']) {
     const releaseFiles = await files(join(root, dir));

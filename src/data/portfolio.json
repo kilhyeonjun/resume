@@ -1602,26 +1602,26 @@
     {
       "slug": "family-budget-demo",
       "name": {
-        "ko": "실제 가족 데이터를 노출하지 않고 7개 화면을 재현한 공개 가계부 데모",
-        "en": "A Public Budget Demo Reproducing Seven Screens Without Exposing Family Data"
+        "ko": "Family Budget — 계획과 실제를 분리한 부부 공용 가계 운영 원장",
+        "en": "Family Budget — A Shared Household Ledger Keeping Plans Separate from Actuals"
       },
       "type": "personal",
       "printOrder": 4,
       "summary": {
-        "ko": "공개 가능한 UI 26개 파일을 hash manifest로 고정하고, 합성 seed와 브라우저 localStorage 어댑터를 연결해 실제 가족 데이터·운영 DB·자격증명 없이 7개 공개 화면의 입력·조회·초기화를 재현했다.",
-        "en": "Pinned 26 public UI files with a hash manifest and connected synthetic seed data to a browser-local adapter, reproducing entry, read-back, and reset flows across seven public screens without real family data, an operating database, or credentials."
+        "ko": "스프레드시트 중심 가계 운영을 애플리케이션 정본으로 전환하고, 예상 규칙·월별 occurrence·실제 거래를 분리해 중복 없는 조정과 실패 안전한 입력 흐름을 설계했습니다.",
+        "en": "Moved spreadsheet-led household finance into an application as the operational source of truth, separating expected rules, monthly occurrences, and actual ledger events for duplicate-safe reconciliation and failure-aware writes."
       },
       "description": {
-        "ko": "실사용 금융 앱의 UI와 제품 흐름을 공개하되 실제 가족 데이터, 운영 DB/API, 인증 비밀과 배포 토폴로지는 노출하지 않아야 했다. 화면을 재작성하는 대신 공개 가능한 canonical UI 패키지를 추출하고, 공개 데모에는 합성 read/command adapter를 주입했다. Today·Dashboard·Ledger·목적통장·자산·예상 항목·설정 7개 화면은 방문자 브라우저의 localStorage에서만 읽고 쓰며 초기화할 수 있다.",
-        "en": "The goal was to demonstrate a real financial-product UI and workflow without exposing family data, operating databases or APIs, authentication secrets, or deployment topology. Instead of rewriting the screens, the public canonical UI package was extracted and wired to synthetic read and command adapters. Seven screens—Today, Dashboard, Ledger, Purpose, Assets, Recurring, and Settings—read, write, and reset only inside the visitor browser through localStorage."
+        "ko": "운영 제품은 예상 수입·고정지출·저축 규칙을 실제 거래와 분리하고, 매월 occurrence가 기존 실제 내역을 먼저 연결하도록 설계했습니다. 사용자 확인 뒤에만 새 실제 내역을 만들며, 쓰기 결과는 read-back으로 검증하고 부분 성공·충돌·reopen 상태를 숨기지 않습니다. 비개발 가족 구성원은 모바일 빠른 입력을, 검토 사용자는 데스크톱 원장과 조정 화면을 사용합니다. 공개 데모는 canonical UI package에 합성 seed와 브라우저 로컬 어댑터를 연결한 보조 증거이며 운영 제품의 데이터·백엔드·협업을 대체해 증명하지 않습니다.",
+        "en": "The operational product keeps expected income, fixed-spend, and savings rules separate from actual ledger events, with each monthly occurrence preferring an existing actual to a duplicate. A new actual is created only after confirmation; writes are verified by read-back, and partial success, conflicts, and reopen states remain explicit. A non-developer household member gets mobile quick entry while the review workflow uses a desktop ledger and reconciliation view. The public demo is secondary evidence: a canonical UI package connected to synthetic seed data and a browser-local adapter, not proof of the operational backend, data, or collaboration model."
       },
       "role": {
-        "ko": "공개 데모 설계·구현 · canonical UI 패키지 추출 · 합성 데이터 어댑터 · 공개 경계 검증 자동화",
-        "en": "Public demo design and implementation · canonical UI package extraction · synthetic data adapter · automated public-boundary verification"
+        "ko": "제품 기획 · 백엔드 · 데이터 모델 · 운영 자동화 · 모바일/데스크톱 UX",
+        "en": "Product design · backend · data model · operational automation · mobile/desktop UX"
       },
       "period": {
-        "start": "2026-08-09",
-        "end": "2026-08-13"
+        "start": "2026-08-14",
+        "end": "present"
       },
       "skills": [
         "TypeScript",
@@ -1637,72 +1637,81 @@
       },
       "highlights": {
         "ko": [
-          "고정 upstream SHA에서 추출한 canonical UI 26개 파일을 SHA-256 manifest와 package export 계약으로 관리",
-          "7개 화면의 합성 seed·localStorage read/write·reset 흐름을 실제 가족 데이터나 운영 저장소 없이 재현",
-          "고정 SHA snapshot에서 33개 테스트, production build, 공개 경계·package runtime·production CSS 검사를 통과"
+          "과거 스프레드시트를 읽기 전용 가져오기 경계로 두고 애플리케이션을 현재 쓰기 정본으로 운영",
+          "반복 규칙 → 월별 occurrence → 실제 거래/목적통장 입금 연결로 계획·실제·차이를 분리",
+          "기존 실제 내역 우선 연결, 사용자 승인, read-back, 부분 성공 공개, reopen으로 중복과 불확실성 차단"
         ],
         "en": [
-          "Manage 26 canonical UI files extracted from a pinned upstream SHA through a SHA-256 manifest and package-export contract",
-          "Reproduce synthetic seed, localStorage read/write, and reset flows across seven screens without family data or operational storage",
-          "Pass 33 tests, a production build, and public-boundary, package-runtime, and production-CSS checks in a pinned-SHA snapshot"
+          "Keep the historical spreadsheet behind a read-only import boundary while the application owns current writes",
+          "Separate plan, actual, and variance through recurring rule → monthly occurrence → linked transaction or purpose deposit",
+          "Block duplication and ambiguity through existing-actual-first matching, confirmation, read-back, partial-success disclosure, and reopen"
         ]
       },
       "operationalLimits": {
         "ko": [
-          "저장은 현재 브라우저에만 남으며 기기 간 동기화·사용자 계정·공유·서버 백업은 없다.",
-          "공개 데모는 운영 백엔드, 실제 데이터 규모, 다중 사용자 협업을 증명하지 않는다.",
-          "공개 경계 스캔은 정의된 source tree와 literal 패턴을 검사하며 저장소 전체 범용 secret scanner나 WCAG 감사가 아니다."
+          "공개 사례는 실제 금융값·계좌명·가족 식별자·운영 URL·인증 정보·인프라 식별자를 포함하지 않습니다.",
+          "공개 데모는 합성 데이터와 브라우저 로컬 저장만 사용하며 운영 백엔드·실제 데이터 규모·다중 사용자 협업을 증명하지 않습니다.",
+          "사용자 수·절감 시간·재무 효과·완전 자동화·실시간·무결점 운영을 공개 근거 없이 주장하지 않습니다."
         ],
         "en": [
-          "Data remains in the current browser; there is no cross-device sync, user account, sharing, or server backup.",
-          "The public demo does not prove the operational backend, real data scale, or multi-user collaboration.",
-          "The public-boundary scan checks defined source trees and literal patterns; it is not a repository-wide general secret scanner or a WCAG audit."
+          "The public case excludes real financial values, account names, family identifiers, operating URLs, credentials, and infrastructure identifiers.",
+          "The public demo uses synthetic data and browser-local storage; it does not prove the operational backend, real data scale, or multi-user collaboration.",
+          "This case study does not claim user count, time saved, financial impact, full automation, real-time behavior, or perfect operation without public evidence."
         ]
       },
       "metrics": [
         {
           "label": {
-            "ko": "공개 UI 정본",
-            "en": "Canonical public UI"
+            "ko": "운영 정본 전환",
+            "en": "Operational source of truth"
           },
           "before": {
-            "ko": "별도 화면 재작성 시 drift 위험",
-            "en": "Drift risk from separately rewritten screens"
+            "ko": "스프레드시트 중심 입력과 해석",
+            "en": "Spreadsheet-led entry and interpretation"
           },
-          "after": "26 files",
+          "after": {
+            "ko": "애플리케이션 정본",
+            "en": "Application-owned writes"
+          },
           "improvement": {
-            "ko": "SHA-256 manifest로 고정된 공개 파일",
-            "en": "Public files pinned by a SHA-256 manifest"
+            "ko": "과거 시트는 읽기 전용 가져오기 경계로 분리",
+            "en": "Historical sheets remain a read-only import boundary"
           }
         },
         {
           "label": {
-            "ko": "공개 제품 흐름",
-            "en": "Public product flow"
+            "ko": "계획 ≠ 실제",
+            "en": "Plan ≠ actual"
           },
           "before": {
-            "ko": "운영 데이터·인증 없이 증명하기 어려움",
-            "en": "Hard to demonstrate without operational data or authentication"
+            "ko": "예상 규칙과 실제 입금·지출 혼동",
+            "en": "Expected rules confused with actual income and spend"
           },
-          "after": "7 screens",
+          "after": {
+            "ko": "규칙 · occurrence · actual 분리",
+            "en": "Rule · occurrence · actual separation"
+          },
           "improvement": {
-            "ko": "합성 입력·조회·초기화 흐름",
-            "en": "Synthetic entry, read-back, and reset flow"
+            "ko": "예상·실제·차이를 각각 추적",
+            "en": "Expected, actual, and variance stay independently traceable"
           }
         },
         {
           "label": {
-            "ko": "Release verification",
-            "en": "Release verification"
+            "ko": "중복·불확실성 차단",
+            "en": "Duplicate and ambiguity control"
           },
           "before": {
-            "ko": "빌드 성공만으로 화면 경계를 판단할 수 없음",
-            "en": "A successful build alone cannot prove the UI boundary"
+            "ko": "후보가 있어도 새 실제 내역을 만들 위험",
+            "en": "Risk of creating a new actual despite an existing candidate"
           },
-          "after": "33 tests",
+          "after": {
+            "ko": "연결 우선 · 승인 · read-back",
+            "en": "Link first · confirm · read back"
+          },
           "improvement": {
-            "ko": "production build와 경계·runtime·CSS 검사 포함",
-            "en": "Plus production build and boundary, runtime, and CSS checks"
+            "ko": "부분 성공과 reopen까지 명시적으로 처리",
+            "en": "Partial success and reopen remain explicit"
           }
         }
       ],
@@ -1721,12 +1730,12 @@
             "en": "/images/portfolio/family-budget-evidence-en.svg"
           },
           "title": {
-            "ko": "합성 거래의 입력과 read-back",
-            "en": "Synthetic transaction entry and read-back"
+            "ko": "계획·occurrence·actual의 도메인 정본",
+            "en": "Domain truth for plan, occurrence, and actual"
           },
           "caption": {
-            "ko": "동일한 고정 합성 시나리오가 Today 입력에서 Dashboard 집계와 Ledger 행으로 이어지며, 실제 가족 데이터는 포함하지 않는다.",
-            "en": "One deterministic synthetic scenario flows from Today entry to Dashboard aggregation and a Ledger row without containing family data."
+            "ko": "반복 규칙은 계획, 월별 occurrence는 조정 단위, 거래·목적통장 입금은 실제 사실로 분리하며 대시보드는 예상·실제·차이를 파생합니다.",
+            "en": "Recurring rules hold the plan, monthly occurrences hold reconciliation state, and transactions or purpose deposits hold actual facts; the dashboard derives expected, actual, and variance."
           }
         },
         {
@@ -1735,69 +1744,69 @@
             "en": "/images/portfolio/family-budget-reset-en.svg"
           },
           "title": {
-            "ko": "브라우저 로컬 저장과 초기화 경계",
-            "en": "Browser-local persistence and reset boundary"
+            "ko": "모바일 입력과 데스크톱 검토, 공개 증거 분리",
+            "en": "Mobile entry, desktop review, and separated public evidence"
           },
           "caption": {
-            "ko": "변경은 현재 브라우저 localStorage에만 남고 초기화로 추적된 seed를 복원한다. 서버 동기화나 계정 공유를 증명하지 않는다.",
-            "en": "Changes remain in the current browser localStorage, and reset restores the tracked seed. This does not claim server synchronization or account sharing."
+            "ko": "비개발 가족 구성원의 빠른 입력과 검토 사용자의 원장·조정 흐름은 같은 운영 정본을 사용하며, 합성 공개 데모는 화면 계약을 보여주는 보조 증거로만 둡니다.",
+            "en": "Mobile quick entry and desktop ledger reconciliation share the same operational truth, while the synthetic public demo remains secondary evidence for the screen contract."
           }
         }
       ],
       "problemSolving": [
         {
           "problem": {
-            "ko": "운영 UI를 별도 데모로 재작성하면 두 화면이 다시 어긋날 수 있었다.",
-            "en": "Rewriting the operational UI as a separate demo could make the two surfaces drift again."
+            "ko": "계획 항목을 실제 거래처럼 다루면 수입·지출이 중복 집계되고 월별 차이를 설명할 수 없었습니다.",
+            "en": "Treating planned items as actual ledger events would duplicate income and spend and erase explainable monthly variance."
           },
           "process": {
-            "ko": "canonical UI 26개 파일을 공개 package로 추출하고 exact/seam 파일을 SHA-256 manifest와 명시적 export로 관리했다.",
-            "en": "Extracted 26 canonical UI files into a public package and managed exact and seam files through a SHA-256 manifest and explicit exports."
+            "ko": "반복 규칙을 계획 정본, 월별 occurrence를 조정 단위, 거래·목적통장 입금을 실제 사실 정본으로 분리했습니다.",
+            "en": "Separated recurring rules as plan truth, monthly occurrences as reconciliation units, and transactions or purpose deposits as actual fact truth."
           },
           "result": {
-            "ko": "소비자는 공개 package 경계만 사용하고 hash drift와 원본 우회 alias를 실행 가능한 검사로 차단한다.",
-            "en": "Consumers use only the public package boundary, while executable checks block hash drift and source-bypass aliases."
+            "ko": "대시보드는 예상·실제·차이를 독립 계산하며 “계획은 실제 거래가 아니다”라는 계약을 유지합니다.",
+            "en": "The dashboard derives expected, actual, and variance independently while preserving the contract that a plan is not an actual transaction."
           }
         },
         {
           "problem": {
-            "ko": "같은 화면을 공개하면 운영 데이터 소스와 인증 경계까지 따라올 위험이 있었다.",
-            "en": "Publishing the same screens risked carrying operational data sources and authentication boundaries with them."
+            "ko": "실제 입금을 반영할 때 이미 원장에 있는 후보를 놓치면 같은 사건이 새 거래로 중복될 수 있었습니다.",
+            "en": "When realizing income or spend, missing an existing ledger candidate could duplicate the same event as a new transaction."
           },
           "process": {
-            "ko": "공통 UI가 BudgetRuntimeProvider 계약에만 의존하도록 하고 공개 앱에는 syntheticReads와 syntheticCommands를 주입했다.",
-            "en": "Made the shared UI depend only on the BudgetRuntimeProvider contract and injected syntheticReads and syntheticCommands into the public app."
+            "ko": "이름·소유자·월로 occurrence와 후보를 찾고, 후보가 있으면 자동 생성 대신 연결을 먼저 제안하며 새 생성은 명시적 선택으로 제한했습니다.",
+            "en": "Find the occurrence and candidates by name, owner, and month; when a candidate exists, propose linking before creation and require an explicit choice for a new actual."
           },
           "result": {
-            "ko": "확인된 공개 read/write 경로는 메모리와 localStorage에서 동작하며 synthetic read 테스트에서 fetch를 호출하지 않는다.",
-            "en": "The verified public read/write path runs in memory and localStorage, and the synthetic read test does not call fetch."
+            "ko": "연결·새 생성·건너뜀·reopen 경로가 같은 조정 흐름 안에서 중복 없이 추적됩니다.",
+            "en": "Link, create, skip, and reopen paths remain traceable in one reconciliation flow without silent duplication."
           }
         },
         {
           "problem": {
-            "ko": "production build 성공만으로 표 기반 화면의 반응형 품질과 공개 경계를 보장할 수 없었다.",
-            "en": "A successful production build alone could not guarantee responsive table layouts or the public boundary."
+            "ko": "자동화가 쓰기 성공과 후속 조회 실패를 하나의 실패로 뭉개면 성공한 기록을 재시도해 중복을 만들 수 있었습니다.",
+            "en": "If automation collapsed a successful write and failed refresh into one error, retrying could duplicate a record that already succeeded."
           },
           "process": {
-            "ko": "canonical UI의 responsive CSS를 수정하고 테스트·production build·SSOT·public-boundary·package-runtime·production-CSS 검사를 고정 SHA에서 실행했다.",
-            "en": "Corrected responsive CSS in the canonical UI and ran tests, a production build, and SSOT, public-boundary, package-runtime, and production-CSS checks at the pinned SHA."
+            "ko": "변경 전 요청 본문을 보여 승인받고, 쓰기 후 원장과 대시보드를 read-back하며 부분 성공·검증 실패를 별도 상태로 보고합니다.",
+            "en": "Preview the request for approval, then read back the ledger and dashboard after writing while reporting partial success and verification failure as distinct states."
           },
           "result": {
-            "ko": "7개 주요 route가 live에서 HTTP 200을 반환했고 데스크톱 설정 화면의 canonical 내비게이션과 합성 데이터 고지를 확인했다.",
-            "en": "Seven primary routes returned HTTP 200 live, and the desktop Settings view showed canonical navigation and the synthetic-data disclosure."
+            "ko": "확인되지 않은 재시도 대신 현재 사실을 다시 조회하고, 필요한 경우 occurrence를 reopen해 안전하게 복구합니다.",
+            "en": "The workflow re-reads current truth instead of blindly retrying, and can safely recover by reopening the occurrence when needed."
           }
         }
       ],
       "techDecisions": {
         "ko": [
-          "UI 복사 대신 고정 SHA의 공개 package를 선택해 drift 검증이 가능해졌지만 package release와 consumer pin을 함께 관리해야 한다.",
-          "공개 mock server 대신 synthetic seed와 localStorage를 선택해 운영 자격증명 없이 read/write를 체험하게 했지만 다중 사용자·기기 간 동기화는 범위 밖이다.",
-          "범용 보안 인증을 주장하지 않고 정해진 공개 source tree와 literal 패턴을 검사하는 fail-closed boundary scan을 사용한다."
+          "반복 규칙·월별 occurrence·실제 원장을 분리해 모델은 늘었지만 계획 변경과 실제 사실을 서로 덮어쓰지 않게 했습니다.",
+          "후보 자동 연결보다 사용자 확인을 선택해 한 단계가 늘었지만 금융 원장에서 잘못된 결합을 방지했습니다.",
+          "공개 UI package와 합성 데모를 보조 증거로 분리해 운영 구현을 공개하지 않으면서 화면 계약과 공개 경계를 재현했습니다."
         ],
         "en": [
-          "Chose a public package pinned to a fixed SHA instead of copying UI, enabling drift verification while requiring coordinated package releases and consumer pins.",
-          "Chose synthetic seed data and localStorage instead of a public mock server, enabling read/write interaction without operational credentials while leaving multi-user and cross-device synchronization out of scope.",
-          "Use a fail-closed boundary scan over defined public source trees and literal patterns without claiming general security certification."
+          "Separate recurring rules, monthly occurrences, and the actual ledger; the model is larger, but plan changes cannot overwrite recorded facts.",
+          "Choose user confirmation over automatic candidate linking; it adds a step but prevents incorrect joins in a financial ledger.",
+          "Keep the public UI package and synthetic demo as secondary evidence, reproducing UI contracts and public boundaries without exposing operational implementation."
         ]
       },
       "publicEvidence": [

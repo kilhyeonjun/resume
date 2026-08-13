@@ -1,0 +1,277 @@
+{
+  "asOf": "2026-08-14",
+  "productSubject": "private operational household-finance application",
+  "contentSSOT": "src/data/portfolio.json#family-budget-demo",
+  "publicEvidence": "https://github.com/kilhyeonjun/family-budget-demo",
+  "fields": {
+    "name": {
+      "ko": "Family Budget — 계획과 실제를 분리한 부부 공용 가계 운영 원장",
+      "en": "Family Budget — A Shared Household Ledger Keeping Plans Separate from Actuals"
+    },
+    "summary": {
+      "ko": "스프레드시트 중심 가계 운영을 애플리케이션 정본으로 전환하고, 예상 규칙·월별 occurrence·실제 거래를 분리해 중복 없는 조정과 실패 안전한 입력 흐름을 설계했습니다.",
+      "en": "Moved spreadsheet-led household finance into an application as the operational source of truth, separating expected rules, monthly occurrences, and actual ledger events for duplicate-safe reconciliation and failure-aware writes."
+    },
+    "description": {
+      "ko": "운영 제품은 예상 수입·고정지출·저축 규칙을 실제 거래와 분리하고, 매월 occurrence가 기존 실제 내역을 먼저 연결하도록 설계했습니다. 사용자 확인 뒤에만 새 실제 내역을 만들며, 쓰기 결과는 read-back으로 검증하고 부분 성공·충돌·reopen 상태를 숨기지 않습니다. 비개발 가족 구성원은 모바일 빠른 입력을, 검토 사용자는 데스크톱 원장과 조정 화면을 사용합니다. 공개 데모는 canonical UI package에 합성 seed와 브라우저 로컬 어댑터를 연결한 보조 증거이며 운영 제품의 데이터·백엔드·협업을 대체해 증명하지 않습니다.",
+      "en": "The operational product keeps expected income, fixed-spend, and savings rules separate from actual ledger events, with each monthly occurrence preferring an existing actual to a duplicate. A new actual is created only after confirmation; writes are verified by read-back, and partial success, conflicts, and reopen states remain explicit. A non-developer household member gets mobile quick entry while the review workflow uses a desktop ledger and reconciliation view. The public demo is secondary evidence: a canonical UI package connected to synthetic seed data and a browser-local adapter, not proof of the operational backend, data, or collaboration model."
+    },
+    "role": {
+      "ko": "제품 기획 · 백엔드 · 데이터 모델 · 운영 자동화 · 모바일/데스크톱 UX",
+      "en": "Product design · backend · data model · operational automation · mobile/desktop UX"
+    },
+    "highlights": {
+      "ko": [
+        "과거 스프레드시트를 읽기 전용 가져오기 경계로 두고 애플리케이션을 현재 쓰기 정본으로 운영",
+        "반복 규칙 → 월별 occurrence → 실제 거래/목적통장 입금 연결로 계획·실제·차이를 분리",
+        "기존 실제 내역 우선 연결, 사용자 승인, read-back, 부분 성공 공개, reopen으로 중복과 불확실성 차단"
+      ],
+      "en": [
+        "Keep the historical spreadsheet behind a read-only import boundary while the application owns current writes",
+        "Separate plan, actual, and variance through recurring rule → monthly occurrence → linked transaction or purpose deposit",
+        "Block duplication and ambiguity through existing-actual-first matching, confirmation, read-back, partial-success disclosure, and reopen"
+      ]
+    },
+    "metrics": [
+      {
+        "label": {
+          "ko": "운영 정본 전환",
+          "en": "Operational source of truth"
+        },
+        "before": {
+          "ko": "스프레드시트 중심 입력과 해석",
+          "en": "Spreadsheet-led entry and interpretation"
+        },
+        "after": {
+          "ko": "애플리케이션 정본",
+          "en": "Application-owned writes"
+        },
+        "improvement": {
+          "ko": "과거 시트는 읽기 전용 가져오기 경계로 분리",
+          "en": "Historical sheets remain a read-only import boundary"
+        }
+      },
+      {
+        "label": {
+          "ko": "계획 ≠ 실제",
+          "en": "Plan ≠ actual"
+        },
+        "before": {
+          "ko": "예상 규칙과 실제 입금·지출 혼동",
+          "en": "Expected rules confused with actual income and spend"
+        },
+        "after": {
+          "ko": "규칙 · occurrence · actual 분리",
+          "en": "Rule · occurrence · actual separation"
+        },
+        "improvement": {
+          "ko": "예상·실제·차이를 각각 추적",
+          "en": "Expected, actual, and variance stay independently traceable"
+        }
+      },
+      {
+        "label": {
+          "ko": "중복·불확실성 차단",
+          "en": "Duplicate and ambiguity control"
+        },
+        "before": {
+          "ko": "후보가 있어도 새 실제 내역을 만들 위험",
+          "en": "Risk of creating a new actual despite an existing candidate"
+        },
+        "after": {
+          "ko": "연결 우선 · 승인 · read-back",
+          "en": "Link first · confirm · read back"
+        },
+        "improvement": {
+          "ko": "부분 성공과 reopen까지 명시적으로 처리",
+          "en": "Partial success and reopen remain explicit"
+        }
+      }
+    ],
+    "problemSolving": [
+      {
+        "problem": {
+          "ko": "계획 항목을 실제 거래처럼 다루면 수입·지출이 중복 집계되고 월별 차이를 설명할 수 없었습니다.",
+          "en": "Treating planned items as actual ledger events would duplicate income and spend and erase explainable monthly variance."
+        },
+        "process": {
+          "ko": "반복 규칙을 계획 정본, 월별 occurrence를 조정 단위, 거래·목적통장 입금을 실제 사실 정본으로 분리했습니다.",
+          "en": "Separated recurring rules as plan truth, monthly occurrences as reconciliation units, and transactions or purpose deposits as actual fact truth."
+        },
+        "result": {
+          "ko": "대시보드는 예상·실제·차이를 독립 계산하며 “계획은 실제 거래가 아니다”라는 계약을 유지합니다.",
+          "en": "The dashboard derives expected, actual, and variance independently while preserving the contract that a plan is not an actual transaction."
+        }
+      },
+      {
+        "problem": {
+          "ko": "실제 입금을 반영할 때 이미 원장에 있는 후보를 놓치면 같은 사건이 새 거래로 중복될 수 있었습니다.",
+          "en": "When realizing income or spend, missing an existing ledger candidate could duplicate the same event as a new transaction."
+        },
+        "process": {
+          "ko": "이름·소유자·월로 occurrence와 후보를 찾고, 후보가 있으면 자동 생성 대신 연결을 먼저 제안하며 새 생성은 명시적 선택으로 제한했습니다.",
+          "en": "Find the occurrence and candidates by name, owner, and month; when a candidate exists, propose linking before creation and require an explicit choice for a new actual."
+        },
+        "result": {
+          "ko": "연결·새 생성·건너뜀·reopen 경로가 같은 조정 흐름 안에서 중복 없이 추적됩니다.",
+          "en": "Link, create, skip, and reopen paths remain traceable in one reconciliation flow without silent duplication."
+        }
+      },
+      {
+        "problem": {
+          "ko": "자동화가 쓰기 성공과 후속 조회 실패를 하나의 실패로 뭉개면 성공한 기록을 재시도해 중복을 만들 수 있었습니다.",
+          "en": "If automation collapsed a successful write and failed refresh into one error, retrying could duplicate a record that already succeeded."
+        },
+        "process": {
+          "ko": "변경 전 요청 본문을 보여 승인받고, 쓰기 후 원장과 대시보드를 read-back하며 부분 성공·검증 실패를 별도 상태로 보고합니다.",
+          "en": "Preview the request for approval, then read back the ledger and dashboard after writing while reporting partial success and verification failure as distinct states."
+        },
+        "result": {
+          "ko": "확인되지 않은 재시도 대신 현재 사실을 다시 조회하고, 필요한 경우 occurrence를 reopen해 안전하게 복구합니다.",
+          "en": "The workflow re-reads current truth instead of blindly retrying, and can safely recover by reopening the occurrence when needed."
+        }
+      }
+    ],
+    "techDecisions": {
+      "ko": [
+        "반복 규칙·월별 occurrence·실제 원장을 분리해 모델은 늘었지만 계획 변경과 실제 사실을 서로 덮어쓰지 않게 했습니다.",
+        "후보 자동 연결보다 사용자 확인을 선택해 한 단계가 늘었지만 금융 원장에서 잘못된 결합을 방지했습니다.",
+        "공개 UI package와 합성 데모를 보조 증거로 분리해 운영 구현을 공개하지 않으면서 화면 계약과 공개 경계를 재현했습니다."
+      ],
+      "en": [
+        "Separate recurring rules, monthly occurrences, and the actual ledger; the model is larger, but plan changes cannot overwrite recorded facts.",
+        "Choose user confirmation over automatic candidate linking; it adds a step but prevents incorrect joins in a financial ledger.",
+        "Keep the public UI package and synthetic demo as secondary evidence, reproducing UI contracts and public boundaries without exposing operational implementation."
+      ]
+    },
+    "operationalLimits": {
+      "ko": [
+        "공개 사례는 실제 금융값·계좌명·가족 식별자·운영 URL·인증 정보·인프라 식별자를 포함하지 않습니다.",
+        "공개 데모는 합성 데이터와 브라우저 로컬 저장만 사용하며 운영 백엔드·실제 데이터 규모·다중 사용자 협업을 증명하지 않습니다.",
+        "사용자 수·절감 시간·재무 효과·완전 자동화·실시간·무결점 운영을 공개 근거 없이 주장하지 않습니다."
+      ],
+      "en": [
+        "The public case excludes real financial values, account names, family identifiers, operating URLs, credentials, and infrastructure identifiers.",
+        "The public demo uses synthetic data and browser-local storage; it does not prove the operational backend, real data scale, or multi-user collaboration.",
+        "This case study does not claim user count, time saved, financial impact, full automation, real-time behavior, or perfect operation without public evidence."
+      ]
+    },
+    "architectureDiagram": {
+      "ko": "/images/portfolio/family-budget-boundary-ko.svg",
+      "en": "/images/portfolio/family-budget-boundary-en.svg"
+    },
+    "sequenceDiagram": {
+      "ko": "/images/portfolio/family-budget-flow-ko.svg",
+      "en": "/images/portfolio/family-budget-flow-en.svg"
+    },
+    "scenarioEvidence": [
+      {
+        "image": {
+          "ko": "/images/portfolio/family-budget-evidence-ko.svg",
+          "en": "/images/portfolio/family-budget-evidence-en.svg"
+        },
+        "title": {
+          "ko": "계획·occurrence·actual의 도메인 정본",
+          "en": "Domain truth for plan, occurrence, and actual"
+        },
+        "caption": {
+          "ko": "반복 규칙은 계획, 월별 occurrence는 조정 단위, 거래·목적통장 입금은 실제 사실로 분리하며 대시보드는 예상·실제·차이를 파생합니다.",
+          "en": "Recurring rules hold the plan, monthly occurrences hold reconciliation state, and transactions or purpose deposits hold actual facts; the dashboard derives expected, actual, and variance."
+        }
+      },
+      {
+        "image": {
+          "ko": "/images/portfolio/family-budget-reset-ko.svg",
+          "en": "/images/portfolio/family-budget-reset-en.svg"
+        },
+        "title": {
+          "ko": "모바일 입력과 데스크톱 검토, 공개 증거 분리",
+          "en": "Mobile entry, desktop review, and separated public evidence"
+        },
+        "caption": {
+          "ko": "비개발 가족 구성원의 빠른 입력과 검토 사용자의 원장·조정 흐름은 같은 운영 정본을 사용하며, 합성 공개 데모는 화면 계약을 보여주는 보조 증거로만 둡니다.",
+          "en": "Mobile quick entry and desktop ledger reconciliation share the same operational truth, while the synthetic public demo remains secondary evidence for the screen contract."
+        }
+      }
+    ],
+    "publicEvidence": [
+      {
+        "claim": {
+          "ko": "26개 canonical UI 파일",
+          "en": "26 canonical UI files"
+        },
+        "question": {
+          "ko": "UI 정본과 허용 seam은 어떻게 고정했는가?",
+          "en": "How are the UI source of truth and allowed seams pinned?"
+        },
+        "label": "Manifest",
+        "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/ssot/exact-source-manifest.json",
+        "testLabel": "Verifier",
+        "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/verify-ssot.mjs"
+      },
+      {
+        "claim": {
+          "ko": "브라우저 로컬 read/write",
+          "en": "Browser-local read/write"
+        },
+        "question": {
+          "ko": "합성 데이터의 저장·조회·초기화는 어디서 동작하는가?",
+          "en": "Where do synthetic storage, reads, and reset run?"
+        },
+        "label": "Adapter",
+        "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.ts",
+        "testLabel": "Test",
+        "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.test.ts"
+      },
+      {
+        "claim": {
+          "ko": "UI와 데이터 소스 분리",
+          "en": "UI and data-source separation"
+        },
+        "question": {
+          "ko": "공통 UI에 공개 어댑터를 어떻게 주입하는가?",
+          "en": "How is the public adapter injected into shared UI?"
+        },
+        "label": "Runtime",
+        "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/packages/budget-ui/src/runtime.tsx",
+        "testLabel": "DemoShell",
+        "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/components/DemoShell.tsx"
+      },
+      {
+        "claim": {
+          "ko": "공개 경계 검사",
+          "en": "Public-boundary checks"
+        },
+        "question": {
+          "ko": "어떤 실행 가능한 검사가 drift와 금지 패턴을 차단하는가?",
+          "en": "Which executable checks block drift and forbidden patterns?"
+        },
+        "label": "Boundary scan",
+        "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/scan-public-boundary.mjs",
+        "testLabel": "CI",
+        "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648"
+      },
+      {
+        "claim": {
+          "ko": "라이브 합성 제품 흐름",
+          "en": "Live synthetic product flow"
+        },
+        "question": {
+          "ko": "로그인 없이 공개 화면을 직접 확인할 수 있는가?",
+          "en": "Can the public screens be inspected without login?"
+        },
+        "label": "Live Demo",
+        "url": "https://family-budget-demo-three.vercel.app"
+      }
+    ]
+  },
+  "denylist": [
+    "real financial values",
+    "account names",
+    "family identifiers",
+    "private URLs or repository identifiers",
+    "credentials or infrastructure identifiers",
+    "user/adoption/time-saved/financial-impact metrics",
+    "full automation, real-time, perfect operation, or regulatory-compliance claims"
+  ]
+}

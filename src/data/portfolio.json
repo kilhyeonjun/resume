@@ -1602,15 +1602,15 @@
         "en": "Family Budget Demo — Synthetic Budget Vertical Slice"
       },
       "type": "personal",
-      "hidden": true,
+      "listed": true,
       "printOrder": 9,
       "summary": {
         "ko": "합성 seed만 사용하는 가계부 공개 데모로, 브라우저 로컬 저장을 통해 거래 입력부터 Dashboard·Ledger 조회와 reset까지 하나의 read/write 흐름을 검증",
         "en": "A synthetic-only public budget demo validating one read/write flow from transaction entry to Dashboard and Ledger read-back and reset through browser-local storage"
       },
       "description": {
-        "ko": "실제 가족 데이터·운영 DB·자격증명을 포함하지 않는 공개 Next.js 데모다. Add Transaction에서 입력한 합성 거래는 브라우저 localStorage에만 저장되고 Dashboard 요약과 Ledger에 즉시 반영된다. Reset demo는 저장된 값을 제거하고 저장소에 포함된 합성 seed로 복원한다. Vitest 26개 테스트와 CI build를 통과했으며 공개 Production에서 desktop/mobile add→read→reset을 검증했다.",
-        "en": "A public Next.js demo containing no real family data, operating database, or credentials. Synthetic transactions entered through Add Transaction are stored only in browser localStorage and immediately reflected in the Dashboard summary and Ledger. Reset demo removes browser state and restores the tracked synthetic seed. The project passes 26 Vitest tests and CI build, with desktop/mobile add-to-read-to-reset verified in public Production."
+        "ko": "실제 가족 데이터·운영 DB·자격증명을 포함하지 않는 공개 Next.js 데모다. 운영 앱과 동일한 공개 UI SSOT를 사용하며 Today·Dashboard·Ledger·목적통장·자산·예상 항목·설정 7개 화면을 합성 seed와 브라우저 localStorage로 실행한다. 원격 CI build, GitGuardian, Vercel Production과 desktop·tablet·mobile 반응형·접근성 gate를 통과했다.",
+        "en": "A public Next.js demo containing no real family data, operating database, or credentials. It uses the same public UI SSOT as the operational app and runs seven screens—Today, Dashboard, Ledger, Purpose, Assets, Recurring, and Settings—with tracked synthetic seed data and browser localStorage. Remote CI build, GitGuardian, Vercel Production, and desktop/tablet/mobile responsive-accessibility gates passed."
       },
       "role": {
         "ko": "제품 경계 설계 · Next.js/TypeScript 구현 · TDD · 공개 배포 검증",
@@ -1618,23 +1618,29 @@
       },
       "period": {
         "start": "2026-08-09",
-        "end": "2026-08-10"
+        "end": "2026-08-13"
       },
-      "skills": ["TypeScript", "Next.js", "React", "Vitest", "Vercel"],
+      "skills": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "Vitest",
+        "Vercel"
+      ],
       "github": "https://github.com/kilhyeonjun/family-budget-demo",
       "links": {
         "demo": "https://family-budget-demo-three.vercel.app"
       },
       "highlights": {
         "ko": [
-          "합성 seed와 브라우저 localStorage만 사용하는 공개 데이터 경계",
-          "Add Transaction → Dashboard/Ledger read-back → Reset의 최소 vertical slice",
-          "Vitest 26/26 PASS · Next production build · GitGuardian · Vercel Production 검증"
+          "운영 앱과 demo가 고정 SHA로 소비하는 단일 공개 UI SSOT",
+          "7개 화면의 합성 seed·localStorage read/write 흐름과 private API 0건 경계",
+          "33/33 테스트 · 원격 CI build · GitGuardian · Vercel Production · 21-case 반응형 QA"
         ],
         "en": [
-          "Public data boundary using only synthetic seed data and browser localStorage",
-          "Minimal Add Transaction → Dashboard/Ledger read-back → Reset vertical slice",
-          "Vitest 26/26 PASS · Next production build · GitGuardian · Vercel Production verification"
+          "One public UI SSOT consumed by the operational app and demo at a pinned SHA",
+          "Synthetic seed and localStorage read/write flow across seven screens with zero private API requests",
+          "33/33 tests · remote CI build · GitGuardian · Vercel Production · 21-case responsive QA"
         ]
       },
       "operationalLimits": {
@@ -1653,7 +1659,7 @@
             "ko": "원격 CI 검증",
             "en": "Remote CI verification"
           },
-          "url": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31339009068"
+          "url": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31655596910"
         }
       ]
     },

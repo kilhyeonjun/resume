@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
@@ -178,12 +178,24 @@ test('family budget case study centers the operational product and keeps the dem
   assert.equal(project?.hidden, undefined);
   assert.equal(project?.featured, true);
   assert.equal(project?.listed, undefined);
-  assert.match(project?.name?.ko ?? '', /계획과 실제/);
-  assert.match(project?.name?.en ?? '', /Plan.*Actual/i);
-  assert.match(project?.summary?.ko ?? '', /애플리케이션 정본/);
-  assert.match(project?.summary?.en ?? '', /operational source of truth/i);
-  assert.match(project?.role?.ko ?? '', /제품 기획.*백엔드.*데이터 모델.*운영 자동화.*UX/);
+  assert.match(project?.name?.ko ?? '', /^Family Budget.*부부 가계부/);
+  assert.match(project?.name?.en ?? '', /^Family Budget.*Household Budget/i);
+  assert.match(project?.summary?.ko ?? '', /부부 공용 가계부/);
+  assert.match(project?.summary?.en ?? '', /shared household budget/i);
+  assert.match(project?.role?.ko ?? '', /개인 제품.*기획.*백엔드.*데이터 모델.*운영 자동화.*반응형 UX.*전 범위 담당/);
   assert.doesNotMatch(`${project?.name?.ko} ${project?.summary?.ko} ${project?.role?.ko}`, /7개 화면|localStorage|공개 데모 설계/);
+  assert.ok(project?.coverImage);
+  assert.ok(project?.printScenarioImage);
+  assert.equal(project?.productScreens?.length, 4);
+  assert.deepEqual(project?.contentImages, [
+    '/images/portfolio/family-budget-product-today.webp',
+    '/images/portfolio/family-budget-product-mobile.webp',
+    '/images/portfolio/family-budget-product-recurring.webp',
+  ]);
+  for (const path of [project.coverImage.ko, project.printScenarioImage.ko, ...project.productScreens.flatMap((screen) => Object.values(screen.image))]) {
+    assert.match(path, /^\/images\/portfolio\/family-budget-product-/);
+    assert.ok((await stat(`public/${path.replace(/^\//, '')}`)).size > 10_000, path);
+  }
   assert.deepEqual(project?.metrics?.map((metric) => metric.label.ko), ['운영 정본 전환', '계획 ≠ 실제', '중복·불확실성 차단']);
   assert.equal(project?.problemSolving?.length, 3);
   assert.equal(project?.techDecisions?.ko.length, 3);
@@ -217,6 +229,9 @@ test('family budget case study centers the operational product and keeps the dem
 
   const detailTemplate = await read('src/components/templates/PortfolioDetailTemplate.astro');
   assert.match(detailTemplate, /isFamilyBudgetCase/);
+  assert.match(detailTemplate, /실제 제품 화면으로 보는 사용자 여정|implemented product UI/);
+  assert.match(detailTemplate, /projectProductScreens\.map/);
+  assert.match(detailTemplate, /case-product-screen-hero/);
   assert.match(detailTemplate, /운영 제품 경계|Operational product boundary/);
   assert.match(detailTemplate, /조정 흐름|reconciliation flow/);
   assert.match(detailTemplate, /공개 증거 저장소|Public evidence repository/);
@@ -225,17 +240,21 @@ test('family budget case study centers the operational product and keeps the dem
   assert.match(detailTemplate, /project\.links\.Demo/);
 
   const printTemplate = await read('src/components/templates/PortfolioPrintTemplate.astro');
+  assert.match(printTemplate, /family-budget-product-print/);
+  assert.match(printTemplate, /Family Budget 월말 대시보드|Family Budget month-end dashboard/);
   assert.match(printTemplate, /핵심 시스템 설계|Core system design/);
   assert.match(printTemplate, /핵심 문제 해결|Key problem solving/);
   assert.match(printTemplate, /project\.problemSolving\[0\]/);
   assert.doesNotMatch(printTemplate, /isFamilyBudgetCase \? `\$\{period\} · \$\{typeLabel\}`/);
 });
 
-test('listed projects retain backend summaries in portfolio print', async () => {
+test('listed projects retain backend links and skill signals in compact portfolio print', async () => {
   const printTemplate = await read('src/components/templates/PortfolioPrintTemplate.astro');
   assert.match(printTemplate, /Additional Backend Projects/);
-  assert.match(printTemplate, /project\.summary\[lang\]/);
-  assert.match(printTemplate, /listed-project-summary/);
+  assert.match(printTemplate, /topSkills/);
+  assert.match(printTemplate, /class="listed-project-skills"/);
+  assert.match(printTemplate, /class="listed-project-summary"/);
+  assert.match(printTemplate, /\.listed-project-summary\s*\{\s*display:\s*none;/s);
 });
 
 test('built public routes exclude hidden projects and print derivatives from discovery', async (t) => {

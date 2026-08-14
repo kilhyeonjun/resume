@@ -76,6 +76,7 @@ const portfolioProjectSchema = z.object({
   features: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),
   problemSolving: z.array(problemSolvingEntrySchema).optional(),
   scenarioEvidence: z.array(scenarioEvidenceSchema).optional(),
+  productScreens: z.array(scenarioEvidenceSchema).optional(),
   publicEvidence: z.array(publicEvidenceSchema).optional(),
   operationalLimits: localizedStringArraySchema.optional(),
   lessons: z.object({ ko: z.array(z.string()), en: z.array(z.string()) }).optional(),

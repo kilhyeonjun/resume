@@ -89,8 +89,10 @@ test('interactive route families expose their shared design hooks', async () => 
   assert.match(portfolioDetail, /evidenceIndex\.map/);
   assert.match(portfolioDetail, /href=\{`#\$\{item\.id\}`\}/);
   assert.match(await read('src/components/templates/ExperienceDetailTemplate.astro'), /href="#outcomes"/);
-  assert.match(await read('src/styles/global.css'), /\.resume-actions\s*\{[^}]*grid-row:\s*2/s);
-  assert.match(await read('src/styles/global.css'), /\.portfolio-detail > #outcomes\s*\{[^}]*order:\s*-2/s);
+  const css = await read('src/styles/global.css');
+  assert.match(css, /\.resume-actions\s*\{[^}]*grid-row:\s*2/s);
+  assert.match(css, /\.portfolio-detail > #product\s*\{[^}]*order:\s*-2/s);
+  assert.match(css, /\.portfolio-detail > #outcomes\s*\{[^}]*order:\s*-1/s);
 });
 
 test('evidence board separates metric, context, and supporting result copy', async () => {

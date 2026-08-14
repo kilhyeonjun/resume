@@ -550,7 +550,7 @@ function formatPeriod(period: { start: string; end: string }): string {
           <div class:list={['project-item', isEvidenceRegister && 'evidence-register-print', isDaesinCase && 'daesin-case-print', isFamilyBudgetCase && 'family-budget-print']}>
             <div class="project-header">
               <span class="project-name">{name}</span>
-              <span class="project-meta">{isFamilyBudgetCase ? `${period} · ${typeLabel}` : `${period} · ${role ? `${role} · ` : ''}${typeLabel}`}</span>
+              <span class="project-meta">{`${period} · ${role ? `${role} · ` : ''}${typeLabel}`}</span>
             </div>
 
             <div class="project-links">
@@ -612,9 +612,19 @@ function formatPeriod(period: { start: string; end: string }): string {
             {isFamilyBudgetCase && project.metrics && project.metrics.length > 0 && (
               <table class="metric-table">
                 <colgroup><col /><col /><col /></colgroup>
-                <thead><tr><th>{lang === 'ko' ? '검증된 시스템 행동' : 'Verified system behaviors'}</th><th>{lang === 'ko' ? '이전' : 'Before'}</th><th>{lang === 'ko' ? '이후' : 'After'}</th></tr></thead>
+                <thead><tr><th>{lang === 'ko' ? '핵심 시스템 설계' : 'Core system design'}</th><th>{lang === 'ko' ? '이전' : 'Before'}</th><th>{lang === 'ko' ? '이후' : 'After'}</th></tr></thead>
                 <tbody>{project.metrics.map((m) => <tr><td>{m.label[lang]}</td><td>{localize(m.before)}</td><td class="after-cell">{localize(m.after)} <span class="improvement">({localize(m.improvement)})</span></td></tr>)}</tbody>
               </table>
+            )}
+
+            {isFamilyBudgetCase && project.problemSolving?.[0] && (
+              <section class="problem-solving-print family-budget-story">
+                <p class="bullet-section-heading">{lang === 'ko' ? '핵심 문제 해결' : 'Key problem solving'}</p>
+                <div class="ps-entry">
+                  <div class="ps-problem">{project.problemSolving[0].problem[lang]}</div>
+                  <div class="ps-result">→ {project.problemSolving[0].result[lang]}</div>
+                </div>
+              </section>
             )}
 
             {!isFamilyBudgetCase && project.metrics && project.metrics.length > 0 && (

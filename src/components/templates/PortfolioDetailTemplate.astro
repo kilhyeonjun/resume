@@ -38,6 +38,7 @@ const projectTechDecisions = project.techDecisions ? (project.techDecisions[lang
 const projectScale = project.scale ? (project.scale[lang] || project.scale.ko) : null;
 const projectRole = project.role ? (project.role[lang] || project.role.ko) : null;
 const projectGlossary = project.glossary ?? null;
+const projectProductScreens = project.productScreens ?? null;
 const projectProblemSolving = project.problemSolving ?? null;
 const projectScenarioEvidence = project.scenarioEvidence ?? null;
 const projectPublicEvidence = project.publicEvidence ?? null;
@@ -49,10 +50,15 @@ const isEvidenceRegister = project.slug === 'ai-coding-harness';
 const isDaesinCase = project.slug === 'daesin-logistics-bot';
 const isFamilyBudgetCase = project.slug === 'family-budget-demo';
 const evidenceIndex: Array<{ id: string; label: string }> = [];
+const evidenceIds = new Set<string>();
 const addEvidence = (condition: unknown, id: string, label: string) => {
-  if (condition) evidenceIndex.push({ id, label });
+  if (condition && !evidenceIds.has(id)) {
+    evidenceIds.add(id);
+    evidenceIndex.push({ id, label });
+  }
 };
-addEvidence((isEvidenceRegister || isDaesinCase || isFamilyBudgetCase) && project.metrics?.length, 'outcomes', lang === 'ko' ? '검증된 결과' : 'Verified outcomes');
+addEvidence(isFamilyBudgetCase && projectProductScreens?.length, 'product', lang === 'ko' ? '제품 화면' : 'Product UI');
+addEvidence((isEvidenceRegister || isDaesinCase || isFamilyBudgetCase) && project.metrics?.length, 'outcomes', isFamilyBudgetCase ? (lang === 'ko' ? '핵심 설계' : 'Core design') : (lang === 'ko' ? '검증된 결과' : 'Verified outcomes'));
 addEvidence(isEvidenceRegister && projectArchitectureDiagram, 'boundary', lang === 'ko' ? '프로필 경계' : 'Profile boundary');
 addEvidence(isEvidenceRegister && projectSequenceDiagram, 'sequence', lang === 'ko' ? '실행 흐름' : 'Launch flow');
 addEvidence(!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && project.metrics?.length, 'outcomes', labels.metrics);
@@ -76,7 +82,7 @@ addEvidence(projectGlossary?.length, 'glossary', lang === 'ko' ? '용어 풀이'
 addEvidence(project.skills?.length, 'stack', labels.skills);
 addEvidence(project.blogPosts?.length, 'related-posts', labels.relatedPosts);
 addEvidence(!isEvidenceRegister && project.links && Object.keys(project.links).length, 'related-links', labels.relatedLinks);
-addEvidence(project.contentImages?.length, 'project-images', labels.projectImages);
+addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-images', labels.projectImages);
 ---
 
 <Layout title={`${projectName} | Portfolio`} description={projectSummary} lang={lang}>
@@ -159,6 +165,27 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
         ))}
       </nav>
     </header>
+
+    {isFamilyBudgetCase && projectProductScreens && projectProductScreens.length > 0 && (
+      <section id="product" class="mb-10 case-product-proof" aria-labelledby="product-title">
+        <h2 id="product-title" class="section-title mb-3">{lang === 'ko' ? '실제 제품 화면으로 보는 사용자 여정' : 'The user journey in the implemented product UI'}</h2>
+        <div class="mb-6 max-w-3xl">
+          <p class="mb-2 text-sm font-bold uppercase tracking-[0.16em] text-primary-700 dark:text-primary-300">Family Budget</p>
+          <p class="text-gray-600 dark:text-gray-300">{lang === 'ko' ? '대시보드에서 한 달을 판단하고, 모바일에서 빠르게 기록하며, 예상 항목을 실제 원장에 반영하기 전 확인합니다. 모든 화면은 운영 UI와 같은 canonical UI package에 합성 데이터를 연결해 캡처했습니다.' : 'Decide the month on the dashboard, capture daily activity on mobile, and confirm expected items before posting them to the ledger. Every screen uses the same canonical UI package as the operational product with synthetic data.'}</p>
+        </div>
+        <div class="case-product-grid">
+          {projectProductScreens.map((screen, index) => (
+            <figure class:list={['case-product-screen', index === 0 && 'case-product-screen-hero', index === 2 && 'case-product-screen-mobile']}>
+              <a href={withBasePath(screen.image[lang])} target="_blank" rel="noopener noreferrer" aria-label={`${screen.title[lang]} — ${lang === 'ko' ? '원본 이미지 열기' : 'Open full-resolution image'}`}>
+                <img src={withBasePath(screen.image[lang])} alt={`${screen.title[lang]} — ${screen.caption[lang]}`} loading="eager" />
+              </a>
+              <figcaption><strong>{screen.title[lang]}</strong><span>{screen.caption[lang]}</span></figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
 
     {(isEvidenceRegister || isDaesinCase || isFamilyBudgetCase) && project.metrics && project.metrics.length > 0 && (
       <section id="outcomes" class="mb-10 case-outcomes" aria-labelledby="outcomes-title">
@@ -628,7 +655,7 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
     )}
 
     <!-- Content Images -->
-    {project.contentImages && project.contentImages.length > 0 && (
+    {!isFamilyBudgetCase && project.contentImages && project.contentImages.length > 0 && (
       <section id="project-images" class="mb-10">
         <h2 class="section-title mb-6">{labels.projectImages}</h2>
         <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
@@ -694,3 +721,25 @@ addEvidence(project.contentImages?.length, 'project-images', labels.projectImage
     </nav>
   </article>
 </Layout>
+
+<style>
+  .case-product-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+  .case-product-screen { align-self:start; overflow:hidden; border:1px solid rgb(229 231 235); border-radius:1rem; background:white; box-shadow:0 16px 42px rgb(15 23 42 / 0.08); }
+  .case-product-screen-hero { grid-column:1 / -1; }
+  .case-product-screen a { display:block; overflow:hidden; background:#eef3f8; }
+  .case-product-screen img { width:100%; height:auto; display:block; }
+  .case-product-screen-mobile a { display:grid; place-items:center; padding:1.25rem; }
+  .case-product-screen-mobile img { width:min(100%,390px); border-radius:1rem; box-shadow:0 12px 28px rgb(15 23 42 / 0.14); }
+  .case-product-screen figcaption { display:grid; gap:.35rem; padding:1rem 1.1rem 1.15rem; }
+  .case-product-screen figcaption strong { color:rgb(17 24 39); font-size:1rem; }
+  .case-product-screen figcaption span { color:rgb(75 85 99); font-size:.875rem; line-height:1.55; }
+  :global(.dark) .case-product-screen { border-color:rgb(55 65 81); background:rgb(17 24 39); }
+  :global(.dark) .case-product-screen figcaption strong { color:white; }
+  :global(.dark) .case-product-screen figcaption span { color:rgb(209 213 219); }
+  @media print {
+    :global(.dark) .case-product-screen { border-color:rgb(229 231 235); background:white; }
+    :global(.dark) .case-product-screen figcaption strong { color:rgb(17 24 39); }
+    :global(.dark) .case-product-screen figcaption span { color:rgb(75 85 99); }
+  }
+  @media (max-width: 720px) { .case-product-grid { grid-template-columns:1fr; } .case-product-screen-hero { grid-column:auto; } .case-product-screen-mobile a { padding:.75rem; } .case-product-screen-mobile img { width:min(100%,340px); } }
+</style>

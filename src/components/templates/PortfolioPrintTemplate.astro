@@ -290,8 +290,18 @@ function formatPeriod(period: { start: string; end: string }): string {
       margin: 1mm 0 0;
     }
 
+    .family-budget-print .family-budget-product-print {
+      margin: 1.5mm 0 1mm;
+    }
+
+    .family-budget-print .family-budget-product-print img {
+      max-height: 54mm;
+      object-fit: cover;
+      object-position: top;
+    }
+
     .family-budget-print .arch-diagram img {
-      max-height: 93mm;
+      max-height: 58mm;
       object-fit: contain;
     }
 
@@ -438,8 +448,8 @@ function formatPeriod(period: { start: string; end: string }): string {
     .listed-box {
       display: block;
       border-top: 0.5pt solid #e2e8f0;
-      padding-top: 2mm;
-      margin-top: 2mm;
+      padding-top: 1mm;
+      margin-top: 1mm;
     }
 
     .listed-box-title {
@@ -449,14 +459,14 @@ function formatPeriod(period: { start: string; end: string }): string {
     }
 
     .listed-project-row {
-      font-size: 8pt;
+      font-size: 7.5pt;
       color: #4b5563;
       display: grid;
       grid-template-columns: auto auto 1fr auto;
-      gap: 1mm;
+      gap: .7mm;
       align-items: baseline;
       break-inside: avoid;
-      margin-top: 1mm;
+      margin-top: .35mm;
     }
 
     .listed-project-name {
@@ -473,11 +483,7 @@ function formatPeriod(period: { start: string; end: string }): string {
     }
 
     .listed-project-summary {
-      grid-column: 1 / -1;
-      margin: 0;
-      color: #374151;
-      font-size: 7.5pt;
-      line-height: 1.35;
+      display: none;
     }
 
     /* Back button (web only) */
@@ -587,6 +593,13 @@ function formatPeriod(period: { start: string; end: string }): string {
               <figure class="scenario-strip">
                 <img src={withBasePath(coverImage)} alt={lang === 'ko' ? '합성 데이터로 재현한 배차현황, 검색, 상세의 사용 흐름' : 'Synthetic user journey across dispatch overview, search, and detail'} />
                 <figcaption>{lang === 'ko' ? '실제 UI 구조 · 고정 synthetic fixture · 실시간 데이터 근거 아님' : 'Actual UI structure · deterministic synthetic fixture · not live-data evidence'}</figcaption>
+              </figure>
+            )}
+
+            {isFamilyBudgetCase && coverImage && (
+              <figure class="scenario-strip family-budget-product-print">
+                <img src={withBasePath(coverImage)} alt={lang === 'ko' ? '합성 데이터로 구현된 Family Budget 월말 대시보드' : 'Implemented Family Budget month-end dashboard with synthetic data'} />
+                <figcaption>{lang === 'ko' ? '실제 canonical UI · 합성 데이터 · Family Budget 월말 판단 화면' : 'Implemented canonical UI · synthetic data · Family Budget month-end decision'}</figcaption>
               </figure>
             )}
 

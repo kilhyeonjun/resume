@@ -352,7 +352,7 @@
               {
                 "problem": "A 26.37M-row / 27GB audit-log table lacked an index for parent-based lookups, causing page queries to trigger large full scans and prolonged IO saturation",
                 "solution": "Declared the index at the entity layer to prevent drift, pre-created the online DDL during a low-load window, and hardened the migration with duplicate-index no-op handling plus real DDL integration tests",
-                "result": "Confirmed the live index and EXPLAIN rows=3, eliminating audit-log full scans on the lookup path"
+                "result": "Eliminated full-scan queries that had run for up to 36 minutes and reduced EXPLAIN-estimated scans to 3 rows, resolving the audit-log lookup incident"
               }
             ],
             "techStack": [

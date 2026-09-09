@@ -352,7 +352,7 @@
               {
                 "problem": "2,637만 행/27GB audit log 테이블에서 parent_id 조건 인덱스 부재로 화면 조회가 대량 풀스캔과 장시간 IO 포화를 유발",
                 "solution": "엔티티 인덱스 선언으로 재-drift를 막고, 저부하 윈도에 online DDL을 선적용한 뒤 중복 인덱스 no-op 마이그레이션과 실제 DDL 통합 테스트 보강",
-                "result": "live 인덱스 실재와 EXPLAIN rows=3 확인으로 audit log 조회 풀스캔 장애 해소"
+                "result": "최장 36분간 지속되던 풀스캔 쿼리를 제거하고 EXPLAIN 예상 스캔 3행으로 축소해 audit log 조회 장애 해소"
               }
             ],
             "techStack": [

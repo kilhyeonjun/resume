@@ -49,7 +49,7 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
               <a href={`${localePrefix}/portfolio/${project.slug}`} class="block aspect-video overflow-hidden">
                 <img 
                   src={withBasePath(cardImage)}
-                  alt={coverImage ? `${projectName} ${labels.portfolio} cover` : `${projectName} ${lang === 'ko' ? '아키텍처 다이어그램' : 'architecture diagram'}`}
+                  alt={coverImage ? `${projectName} ${labels.portfolio} ${lang === 'ko' ? '표지' : 'cover'}` : `${projectName} ${lang === 'ko' ? '아키텍처 다이어그램' : 'architecture diagram'}`}
                   width={800}
                   height={450}
                   class:list={['h-full w-full transition-transform duration-300 group-hover:scale-105', coverImage ? 'object-cover' : 'bg-[#f7f5ef] object-contain p-3']}

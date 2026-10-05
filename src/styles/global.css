@@ -129,7 +129,6 @@ body {
     --dossier-canvas: #fff;
     --dossier-surface: #fff;
     --dossier-blue: #1d4ed8;
-    --dossier-teal: #0e7490;
     --dossier-teal-text: #0e7490;
     background: white !important;
     color: #0b1220 !important;
@@ -158,16 +157,7 @@ body {
     color: #334155 !important;
   }
 
-  .portfolio-case:has(> .portfolio-cover) {
-    grid-template-columns: 1fr !important;
-  }
-
-  .portfolio-case > .portfolio-cover {
-    display: none !important;
-  }
-
   html.dark .site-shell .portfolio-case,
-  html.dark .site-shell .portfolio-cover,
   html.dark .site-shell .project-proof-links a {
     background: white !important;
     border-color: #cbd5e1 !important;
@@ -398,7 +388,6 @@ body {
   --dossier-canvas: #f8fafc;
   --dossier-surface: #fff;
   --dossier-blue: #1d4ed8;
-  --dossier-teal: #0e7490;
   --dossier-teal-text: #0e7490;
   --dossier-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
 }
@@ -466,11 +455,11 @@ body {
 .portfolio-case { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--dossier-line); background: var(--dossier-surface); }
 .portfolio-case-featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1.1fr .9fr; background: #0f172a; color: white; border-color: #0f172a; }
 .portfolio-case-featured > a { height: 100%; }
+@media (min-width: 801px) { .portfolio-case-featured > a { aspect-ratio: auto; } }
 .portfolio-case-featured p { color: #aebbd0; }
 .portfolio-case-featured h2, .portfolio-case-featured .tech-badge { color: white; }
 .portfolio-case-featured .touch-target[href*="/portfolio/"] { color: #93c5fd; }
 .portfolio-case-featured a[aria-label], .portfolio-case-featured .text-gray-500 { color: #cbd5e1; }
-.portfolio-cover { background: var(--dossier-teal); }
 .portfolio-archive { margin-top: 4.5rem; }
 .portfolio-archive h2 { margin: .7rem 0 1.5rem; font-size: 1.75rem; letter-spacing: -.03em; }
 .portfolio-archive-row { min-height: 72px; display: grid; grid-template-columns: 7rem 1fr 2fr 2rem; gap: 1rem; align-items: center; border-top: 1px solid var(--dossier-line); color: var(--dossier-muted); }

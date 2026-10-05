@@ -38,31 +38,24 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
         const projectName = project.name[lang] || project.name.ko;
         const projectSummary = project.summary[lang] || project.summary.ko;
         const coverImage = typeof project.coverImage === 'string' ? project.coverImage : project.coverImage?.[lang];
+        const diagram = typeof project.architectureDiagram === 'string' ? project.architectureDiagram : project.architectureDiagram?.[lang];
+        const cardImage = coverImage ?? diagram;
         const period = `${project.period.start} — ${project.period.end}`;
         
         return (
           <article class:list={["portfolio-case group", index === 0 && "portfolio-case-featured"]}>
             {/* Cover Image */}
-            {coverImage ? (
+            {cardImage && (
               <a href={`${localePrefix}/portfolio/${project.slug}`} class="block aspect-video overflow-hidden">
                 <img 
-                  src={withBasePath(coverImage)}
-                  alt={`${projectName} ${labels.portfolio} cover`}
+                  src={withBasePath(cardImage)}
+                  alt={coverImage ? `${projectName} ${labels.portfolio} ${lang === 'ko' ? '표지' : 'cover'}` : `${projectName} ${lang === 'ko' ? '아키텍처 다이어그램' : 'architecture diagram'}`}
                   width={800}
                   height={450}
-                  class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  class:list={['h-full w-full transition-transform duration-300 group-hover:scale-105', coverImage ? 'object-cover' : 'bg-[#f7f5ef] object-contain p-3']}
                   sizes="(max-width: 640px) 100vw, 50vw"
                   loading={index < 2 ? "eager" : "lazy"}
                 />
-              </a>
-            ) : (
-              <a
-                href={`${localePrefix}/portfolio/${project.slug}`}
-                class="portfolio-cover flex aspect-video items-center justify-center overflow-hidden"
-              >
-                <span class="px-4 text-center text-lg font-bold text-white/90 drop-shadow-sm">
-                  {projectName}
-                </span>
               </a>
             )}
             

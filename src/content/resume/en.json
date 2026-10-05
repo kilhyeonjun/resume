@@ -14,9 +14,9 @@
       {
         "category": "DB Optimization, Concurrency & Distributed Systems",
         "items": [
-          "Root-caused two RDS saturation cases: removing N+1 and non-SARGable filters raised backfill throughput 26x (9.3→247 items/min), and adding a missing index eliminated full scans of up to 36 minutes",
+          "Root-caused two RDS saturation cases: removed the N+1 and non-SARGable filters behind a backfill bottleneck, and added a missing index to eliminate full scans of up to 36 minutes",
           "Deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks",
-          "Advanced Redis Streams WAL with a 4-shard Valkey cluster and serverless fanout instrumentation to preserve real-time chat ordering and horizontal scale (accept rate 99.39→99.99%, ack p95 767ms→6.6ms)"
+          "Advanced Redis Streams WAL with a 4-shard Valkey cluster and serverless fanout instrumentation to preserve real-time chat ordering and horizontal scale (WAL backlog 80,000→2,838)"
         ]
       },
       {
@@ -192,9 +192,10 @@
             "current": true,
             "highlights": [
               {
-                "problem": "The new 3-person Platform Part (BE, FE, AI) took on shared backend, chat, and marketing data work with different done criteria per task",
-                "solution": "Standardized the flow with per-work-type done criteria, review checklists, and verification templates, while personally leading server design and load validation",
-                "result": "Sized the chat server target (6,000 CCU, 18,000 RPS, 90,000 RPS burst) into quarterly OKRs and tracked all part work against the same criteria"
+                "problem": "The real-time chat server owned by the new 3-person Platform Part (BE, FE, AI) stalled at ack p95 767ms and 99.39% acceptance on a single shard under 6,000 msg/s",
+                "solution": "Standardized part work with per-type done criteria and verification templates, set the capacity target (6,000 CCU, 18,000 RPS, 90,000 RPS burst) as a quarterly OKR, and personally led shard design and load validation",
+                "result": "Load-test ack p95 767ms→6.6ms, scaling 1→4 shards, with all part work tracked against the same capacity target",
+                "proofLabel": "Load-test"
               },
               {
                 "problem": "Company-wide AI coding agent adoption needed one place to apply per-person policy, identify devices, and collect usage",
@@ -205,6 +206,12 @@
                 "problem": "Coding standards, domain knowledge, and verification rules lived in individual setups, so AI usage varied",
                 "solution": "Managed rules, agents, hooks, and domain knowledge as one Git repo config, searchable through local RAG",
                 "result": "Every member shares the same AI working context via git pull, and pre-review checks became an automated checklist"
+              },
+              {
+                "problem": "During a marketing-metrics archive backfill, RDS CPU was pinned at 99.8% and throughput sat at 9.3 items/min",
+                "solution": "Used Performance Insights to pin 99.5% of the load on one lookup query, then replaced its N+1 loop, DATE()-wrapped non-SARGable filter, and full-column select with one IN() batch, direct date comparison, and a minimal column list",
+                "result": "Backfill throughput up 26x (9.3→247 items/min), Lambda p50 63.2s→1.36s, 15,333 completed with 0 pending",
+                "proofLabel": "Backfill throughput up"
               }
             ]
           },
@@ -216,20 +223,18 @@
               {
                 "problem": "Marketing data query cost surge (full-scan billing model)",
                 "solution": "Evaluated partitioning but rejected due to Write IOPS increase; adopted gRPC distributed reads (Storage Read API)",
-                "result": "Cut per-TB read price 82% ($6.25→$1.1, BigQuery list price)",
-                "proofLabel": "Cut per-TB read price"
+                "result": "Cut per-TB read price 82% ($6.25→$1.1, BigQuery list price)"
               },
               {
                 "problem": "Batch processing collection limits (60 days)",
                 "solution": "Migrated from batch processing to EDA-based on-demand pipeline — distributing peak load and enabling throughput scaling",
-                "result": "Expanded metrics range 6x (60→360 days), processing time 2h→5min",
-                "proofLabel": "Expanded metrics range"
+                "result": "Expanded metrics range 6x (60→360 days), processing time 2h→5min"
               },
               {
                 "problem": "Code duplication and convention inconsistency across 7 projects",
                 "solution": "Replaced manual code sync with shared NestJS package system (10 utility modules + Game Server Kit, auto-deploy)",
-                "result": "Automated upgrades cutting deployment time 3hrs→15min",
-                "proofLabel": "Automated upgrades"
+                "result": "Upgrade rollout across 7 projects 3hrs→15min via automation, with shared-code changes consolidated into one package",
+                "proofLabel": "Upgrade rollout across 7 projects"
               },
               {
                 "problem": "Slow marketing queries over fragmented ad platform data (Google Ads/Meta/TikTok)",

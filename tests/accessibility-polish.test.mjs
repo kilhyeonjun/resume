@@ -408,7 +408,7 @@ test('related links are named text links without split acronyms or duplicates', 
     const html = await readFile(join(dist, path, 'index.html'), 'utf8');
     const section = html.match(/<section id="related-links"[\s\S]*?<\/section>/)?.[0];
     return section && [...section.matchAll(/<a\b[^>]*>([\s\S]*?)<\/a>/g)]
-      .map(([, inner]) => inner.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim());
+      .map(([, inner]) => inner.match(/^[^<]*/)[0].replace(/\s+/g, ' ').trim()); // label text precedes the icon
   };
   for (const prefix of ['', 'en/']) {
     const concert = await relatedLinks(`${prefix}portfolio/concert-reservation`);

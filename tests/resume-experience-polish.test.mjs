@@ -54,7 +54,7 @@ test('Platform Part leader highlights carry measurable outcomes', async () => {
     const resume = await readJson(`src/content/resume/${lang}.json`);
     const leader = resume.main.experience[0].positions[0];
     const measured = leader.highlights.filter((item) => /\d/.test(item.result));
-    assert.ok(measured.length >= 2, `${lang} leader results with numbers: ${measured.length}`);
+    assert.equal(measured.length, leader.highlights.length, `${lang} leader results with numbers: ${measured.length}`);
   }
 });
 

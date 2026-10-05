@@ -317,11 +317,6 @@
             "techRationale": "BigQuery Storage Read API로 읽기 경로 전환. GCP Pub/Sub → AWS Lambda/SQS 하이브리드 파이프라인으로 이벤트 기반 처리 전환, Outbox 패턴으로 API 비차단 비동기 발행 설계.",
             "details": [
               {
-                "problem": "3개 광고 플랫폼 캠페인 관리 분산",
-                "solution": "Google Ads/Meta/TikTok 캠페인 생성·배포·수정과 리텐션 지표 관리를 단일 플랫폼에서 처리하는 API 정립",
-                "result": "3개 광고 플랫폼 통합 캠페인 자동화로 마케터 콘솔 전환 작업 제거"
-              },
-              {
                 "problem": "Meta 에셋 동기화 성능 병목",
                 "solution": "행별 ORM 단건 저장이 트랜잭션 오버헤드를 유발해, 단건 저장 대신 벌크 INSERT·일괄 삭제로 전환",
                 "result": "Image 동기화 72% 단축(25.7s→7.1s), DB 트랜잭션 95% 단축(10~16s→0.3~0.5s)"
@@ -350,6 +345,11 @@
                 "problem": "2,637만 행/27GB audit log 테이블에서 parent_id 조건 인덱스 부재로 화면 조회가 대량 풀스캔과 장시간 IO 포화를 유발",
                 "solution": "엔티티 인덱스 선언으로 재-drift를 막고, 저부하 윈도에 online DDL을 선적용한 뒤 중복 인덱스 no-op 마이그레이션과 실제 DDL 통합 테스트 보강",
                 "result": "최장 36분간 지속되던 풀스캔 쿼리를 제거하고 EXPLAIN 예상 스캔 3행으로 축소해 audit log 조회 장애 해소"
+              },
+              {
+                "problem": "Lambda handler 빌드 대기와 격리된 테스트 스위트로 마케팅 플랫폼의 CI 피드백 지연·회귀 검증 공백 발생",
+                "solution": "handler 빌드 샤딩과 기대 산출물 누락 검증을 적용하고, 격리 스위트를 복구해 FULL 8-shard CI로 검증",
+                "result": "워크플로 수동 실행 비교 실험에서 1→6-shard 빌드 wall time 1,041→451초(58개 handler 누락 0); 총 빌드 작업 시간은 1,006→1,801초 증가. 별도로 격리 83개 스위트 전부 복구 후 FULL CI 통과"
               }
             ],
             "techStack": [

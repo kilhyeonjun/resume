@@ -59,7 +59,7 @@ const outcomeProofs = data.experience
     <aside class="outcome-board" aria-labelledby="evidence-board-heading">
       <h2 id="evidence-board-heading" class="dossier-label board-heading">EVIDENCE BOARD</h2>
       {outcomeProofs.map((proof) => {
-        const kicker = proof.proofLabel;
+        const kicker = proof.proofLabel ?? '';
         // Thousands separators and decimals like "6,000" or "$1.1," are not clause breaks.
         const [metricText, ...tailParts] = proof.result.split(/(?<!\d),\s*/);
         const metric = metricText.startsWith(kicker)

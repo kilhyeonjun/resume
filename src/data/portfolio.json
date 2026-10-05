@@ -235,7 +235,7 @@
       "slug": "flex-work-schedule",
       "name": {
         "ko": "Work Schedule Planner — 제약을 숨기지 않는 근무 계획기",
-        "en": "Work Schedule Planner — Constraint-Explicit Scheduling"
+        "en": "Work Schedule Planner — Scheduling That Surfaces Its Constraints"
       },
       "type": "personal",
       "summary": {
@@ -577,8 +577,8 @@
             "en": "Evidence depended on a private environment"
           },
           "after": {
-            "ko": "CI 테스트 스크립트 65개 통과 · 공개 릴리스 62개(2026-10 기준)",
-            "en": "65 test scripts passing in CI · 62 public releases (as of 2026-10)"
+            "ko": "CI 테스트 스크립트 65개 통과·9개 skip · 공개 릴리스 62개(2026-10 기준)",
+            "en": "65 test scripts passed, 9 skipped in CI · 62 public releases (as of 2026-10)"
           },
           "improvement": {
             "ko": "로그인 없이 핵심 계약과 실패 동작 재현",
@@ -1028,43 +1028,43 @@
         {
           "problem": {
             "ko": "오전에도 원천에 오늘 데이터가 있었지만 14시 이전에는 전일을 선택하는 규칙 때문에 누락됐다",
-            "en": "current-day source data was already available in the morning, but a pre-14:00 previous-day rule skipped it"
+            "en": "Current-day source data was already available in the morning, but a pre-14:00 previous-day rule skipped it"
           },
           "process": {
             "ko": "기본 수집일을 오늘 날짜로 고정하고 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 재조회하도록 변경했다",
-            "en": "fixed the default collection date to the current date and made the singleton KST scheduler recheck it in 15 scheduled hourly slots from Mon–Sat 06:00–20:00"
+            "en": "Fixed the default collection date to the current date and made the singleton KST scheduler recheck it in 15 scheduled hourly slots from Mon–Sat 06:00–20:00"
           },
           "result": {
             "ko": "오전 데이터와 늦게 공개된 변경분을 정적 날짜·건수 문구 없이 후속 실행에서 반영할 수 있도록 변경",
-            "en": "subsequent runs can capture morning data and later source changes without maintaining static date or row-count claims"
+            "en": "Subsequent runs can capture morning data and later source changes without maintaining static date or row-count claims"
           }
         },
         {
           "problem": {
             "ko": "web replica마다 scheduler가 시작되어 동일 수집이 중복 실행됐다",
-            "en": "each web replica started a scheduler, duplicating the same collection job"
+            "en": "Each web replica started a scheduler, duplicating the same collection job"
           },
           "process": {
             "ko": "수집 책임을 web process 밖의 singleton KST scheduler 하나로 분리했다",
-            "en": "moved collection responsibility out of web processes into one singleton KST scheduler"
+            "en": "Moved collection responsibility out of web processes into one singleton KST scheduler"
           },
           "result": {
             "ko": "replica별 15개 cron slot 구성에서 singleton의 15개 slot으로 축소(프로세스 시작 시 1회 동기화 제외)",
-            "en": "reduced per-replica 15-slot schedules to one singleton's 15 slots, excluding the one startup sync"
+            "en": "Reduced per-replica 15-slot schedules to one singleton's 15 slots, excluding the one startup sync"
           }
         },
         {
           "problem": {
             "ko": "운영 화면에 필요한 원천 필드는 제공하면서 내부·credential 필드는 차단해야 했다",
-            "en": "source fields needed by the operational UI had to remain useful while internal and credential-bearing fields stayed blocked"
+            "en": "Source fields needed by the operational UI had to remain useful while internal and credential-bearing fields stayed blocked"
           },
           "process": {
             "ko": "method/path allowlist, 필수 필드 검증, 고정 출력 projection과 원천 URL contract로 운영 화면 필드만 통과시키고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외했다",
-            "en": "used a method/path allowlist, required-field validation, a fixed output projection, and source-URL contracts to pass only operational UI fields while excluding internal IDs, unknown fields, and the credential-bearing tracking URL"
+            "en": "Used a method/path allowlist, required-field validation, a fixed output projection, and source-URL contracts to pass only operational UI fields while excluding internal IDs, unknown fields, and the credential-bearing tracking URL"
           },
           "result": {
             "ko": "고정 출력 projection과 원천 URL allowlist를 redirect·payload·배포 회귀 경계와 함께 검증",
-            "en": "verified the fixed output projection and source-URL allowlist together with redirect, payload, and deployment regression boundaries"
+            "en": "Verified the fixed output projection and source-URL allowlist together with redirect, payload, and deployment regression boundaries"
           }
         }
       ],
@@ -1418,7 +1418,7 @@
       },
       "role": {
         "ko": "항해 플러스 백엔드 6기 개인 과제 · 공개 저장소 커밋 39건 모두 본인 작성",
-        "en": "Individual assignment in Hanghae Plus Backend (6th cohort) · all 39 commits in the public repo are mine"
+        "en": "Individual assignment in Hanghae Plus Backend 6th · all 39 commits in the public repo are mine"
       },
       "coverImage": "/images/portfolio/concert-reservation-cover.webp",
       "contentImages": [],

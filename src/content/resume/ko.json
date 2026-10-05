@@ -14,7 +14,7 @@
       {
         "category": "DB 최적화·동시성 제어·분산 시스템",
         "items": [
-          "RDS 포화 2건 원인 분석: N+1·비SARGable 조건 제거로 CPU 99.8%→5~7%, 누락 인덱스 보강으로 최장 36분 풀스캔 제거",
+          "RDS 포화 2건 원인 분석: N+1·비SARGable 조건 제거로 백필 처리량 26배(9.3→247건/분), 누락 인덱스 보강으로 최장 36분 풀스캔 제거",
           "Deadlock 근본 원인 분석·분산 락 정립으로 데이터 계층 병목 해결",
           "Redis Streams 기반 WAL을 4-shard Valkey 클러스터와 serverless fanout 계측으로 고도화해 실시간 채팅 메시지 순서 보장·수평 확장 (수용률 99.39→99.99%, ack p95 767ms→6.6ms)"
         ]
@@ -334,7 +334,7 @@
               {
                 "problem": "마케팅 지표 아카이브 대용량 백필 중 Lambda 실행 63초·RDS CPU 99.8% 포화로 처리 ETA 15시간",
                 "solution": "근본 원인을 N+1 쿼리와 비SARGable 날짜 조건(DATE() 인덱스 미스)으로 규명 후 제거 — 행별 조회가 RDS를 포화시켜, 행별 조회 대신 30일치를 단일 배치 쿼리로 모아 in-memory에서 최신 버전만 dedup",
-                "result": "처리량 26배 개선(9.3→247건/분), Lambda 실행 63s→1.36s, RDS CPU 99.8%→5~7%"
+                "result": "처리량 26배 개선(9.3→247건/분), Lambda 실행 63s→1.36s"
               },
               {
                 "problem": "TikTok 배포가 외부 API 부분 성공 후 내부 저장 전에 실패하면 재시도 시 고아 campaign/adgroup/ad가 누적되거나 배포 가드에 막힘",

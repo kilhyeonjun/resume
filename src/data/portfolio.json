@@ -241,8 +241,8 @@
       "featured": true,
       "printOrder": 2,
       "summary": {
-        "ko": "RDS CPU·IO 포화 3건을 Performance Insights·EXPLAIN으로 원인 쿼리까지 좁혀 해결: 백필 처리량 26배(RDS CPU 99.8%→5~7%), 2,637만 행 감사 로그의 최장 36분 풀스캔 제거(EXPLAIN rows=3)",
-        "en": "Traced three RDS CPU/IO saturation cases to the offending query with Performance Insights and EXPLAIN: backfill throughput up 26x (RDS CPU 99.8% → 5–7%), and full scans of up to 36 minutes on a 26.37M-row audit log removed (EXPLAIN rows = 3)."
+        "ko": "RDS CPU·IO 포화 3건을 Performance Insights·EXPLAIN으로 원인 쿼리까지 좁혀 해결: 백필 처리량 26배(9.3→247건/분), 2,637만 행 감사 로그의 최장 36분 풀스캔 제거(EXPLAIN rows=3)",
+        "en": "Traced three RDS CPU/IO saturation cases to the offending query with Performance Insights and EXPLAIN: backfill throughput up 26x (9.3 → 247 items/min), and full scans of up to 36 minutes on a 26.37M-row audit log removed (EXPLAIN rows = 3)."
       },
       "description": {
         "ko": "마케팅 지표 서비스와 게임 서버의 MySQL(RDS)에서 생긴 포화 3건을 같은 순서로 다뤘습니다. 부하를 만든 쿼리를 계측으로 먼저 특정하고, 쿼리 형태·인덱스·실행 단위를 고친 뒤, 같은 문제가 다시 생기는 경로를 막았습니다. 한 건은 live 장애, 한 건은 sandbox 장애, 한 건은 대량 백필 중 병목이며 환경은 항목마다 표기했습니다. 테이블·메서드 이름 같은 회사 내부 식별자는 일반 명칭으로 바꿨습니다.",
@@ -250,7 +250,7 @@
       },
       "role": {
         "ko": "Platform Part 리더 · 원인 분석·수정·재발 방지 직접 수행",
-        "en": "Platform Part lead · did the root-cause analysis, fixes, and recurrence guards myself"
+        "en": "Platform Part lead · hands-on root-cause analysis, fixes, and recurrence guards"
       },
       "period": {
         "start": "2026-04-01",
@@ -266,15 +266,15 @@
       ],
       "highlights": {
         "ko": [
-          "Performance Insights로 백필 부하의 99.5%를 낸 조회 쿼리를 특정하고 N+1·DATE() 인덱스 미스를 제거: 처리량 9.3→247건/분(26배), RDS CPU 99.8%→5~7%",
+          "백필 중 RDS CPU 99.8% 포화: Performance Insights로 부하의 99.5%를 낸 조회 쿼리를 특정하고 N+1·DATE() 인덱스 미스를 제거해 처리량 9.3→247건/분(26배), Lambda p50 63.2s→1.36s",
           "live 장애: 자동 생성 마이그레이션이 drift로 지운 인덱스 때문에 2,637만 행 감사 로그에서 최장 36분 풀스캔 — 인덱스 복구 후 EXPLAIN rows=3",
-          "sandbox 장애: 10초 주기 스케줄러가 159개 버전을 한 쿼리로 묶어 100~224초씩 돌며 Read IOPS 190~470/s 포화 — 버전별 쿼리로 나눠 live EXPLAIN 기준 버전당 39ms",
+          "sandbox 장애: 10초 주기 스케줄러가 159개 버전을 한 쿼리로 묶어 100~224초씩 겹쳐 돌며 Read IOPS 190~470/s 포화 — 버전별 쿼리와 실행당 상한으로 실행 길이를 제한",
           "재발 방지: 인덱스를 엔티티에 선언해 drift를 막고, 실제 DDL 통합 테스트와 실행당 생성 요청 상한(500건)을 추가"
         ],
         "en": [
-          "Used Performance Insights to pin 99.5% of the backfill load on one read query, then removed its N+1 pattern and DATE() index miss: throughput 9.3 → 247 rows/min (26x), RDS CPU 99.8% → 5–7%",
+          "RDS CPU pinned at 99.8% during a backfill: Performance Insights put 99.5% of the load on one read query; removing its N+1 pattern and DATE() index miss raised throughput 9.3 → 247 items/min (26x) and cut Lambda p50 63.2s → 1.36s",
           "Live incident: an index dropped as drift by an auto-generated migration left a 26.37M-row audit log open to full scans of up to 36 minutes; after restoring it, EXPLAIN shows rows = 3",
-          "Sandbox incident: a 10-second scheduler bundled 159 versions into one query that ran 100–224s and saturated Read IOPS at 190–470/s; per-version queries measured 39ms each on live EXPLAIN",
+          "Sandbox incident: a 10-second scheduler bundled 159 versions into one query that ran 100–224s, overlapped itself, and saturated Read IOPS at 190–470/s; per-version queries and a per-run cap now bound each run",
           "Recurrence guards: declared the index on the entity so it cannot drift away, and added a real-DDL integration test and a 500-request cap per run"
         ]
       },
@@ -282,15 +282,15 @@
         {
           "problem": {
             "ko": "마케팅 지표 아카이브 백필 중 Lambda 실행이 63초, 처리량이 분당 9.3건에 머물러 남은 작업의 ETA가 15시간이었습니다. 처음 세운 가설은 대형 bulk insert 트랜잭션(540MB)이었지만 RDS CPU가 99.8%에 붙어 있었습니다.",
-            "en": "During a marketing-metrics archive backfill, Lambda runs took 63s and throughput sat at 9.3 rows/min, putting the remaining work at a 15-hour ETA. The first hypothesis was a large (540MB) bulk-insert transaction, but RDS CPU was pinned at 99.8%."
+            "en": "During a marketing-metrics archive backfill, Lambda runs took 63s and throughput sat at 9.3 items/min, putting the remaining work at a 15-hour ETA. The first hypothesis was a large (540MB) bulk-insert transaction, but RDS CPU was pinned at 99.8%."
           },
           "process": {
             "ko": "Performance Insights에서 부하의 99.5%가 일자별 최신 결과를 찾는 조회 쿼리 하나에서 나오는 것을 확인했습니다. 30일을 하루씩 도는 N+1, 날짜 컬럼을 DATE()로 감싸 인덱스를 타지 못하는 조건, 압축된 대용량 결과 컬럼 전체 select가 겹쳐 있었습니다. 30일을 IN() 단일 배치로 조회하고 날짜는 직접 비교하며 필요한 컬럼만 select한 뒤, 일자별 최신 버전은 메모리에서 골랐습니다. bulk insert도 500건 단위로 나눴습니다.",
             "en": "Performance Insights showed 99.5% of the load coming from one query that looked up the latest result per day. It combined an N+1 loop over 30 days, a DATE()-wrapped date condition that could not use the index, and a select of the full compressed result column. I replaced it with one IN() batch for the 30 days, direct date comparison, and a minimal column list, then picked the latest version per day in memory. Bulk inserts were also split into chunks of 500."
           },
           "result": {
-            "ko": "Lambda 실행 p50 63.2s→1.36s(p99 67.0s→2.99s), 처리량 9.3→247건/분(26배), RDS CPU 99.8%→5~7%. 남은 8,285건의 ETA가 약 15분으로 줄었고, 15,333건이 완료돼 대기 0건이 됐습니다.",
-            "en": "Lambda p50 63.2s → 1.36s (p99 67.0s → 2.99s), throughput 9.3 → 247 rows/min (26x), RDS CPU 99.8% → 5–7%. The ETA for the remaining 8,285 rows dropped to about 15 minutes, and the run finished with 15,333 completed and 0 pending."
+            "ko": "Lambda 실행 p50 63.2s→1.36s(p99 67.0s→2.99s), 처리량 9.3→247건/분(26배). 남은 8,285건의 ETA가 약 15분으로 줄었고, 15,333건이 완료돼 대기 0건이 됐습니다. 작업이 끝난 뒤 RDS CPU는 유휴 5~7%였습니다.",
+            "en": "Lambda p50 63.2s → 1.36s (p99 67.0s → 2.99s), throughput 9.3 → 247 items/min (26x). The ETA for the remaining 8,285 items dropped to about 15 minutes, and the run finished with 15,333 completed and 0 pending. Once the work finished, RDS CPU sat idle at 5–7%."
           }
         },
         {
@@ -317,8 +317,8 @@
             "en": "The scheduler bundled 159 versions into one IN condition and full-scanned the translation word table (3.27M rows on live); it ran every 10 seconds while each query took 100–224s, so runs overlapped and piled up. I ported the per-version pattern from the AI translation detector, running one query per version with pagination and a 500-request cap per run to bound each run. The fix shipped as a shared-package release, and applying it to the game server was checked for backward compatibility with a byte-level comparison of 1,073 fields."
           },
           "result": {
-            "ko": "버전별 쿼리는 live EXPLAIN 기준 버전당 39ms로 측정됐고, 기존 일괄 쿼리를 대체한 뒤 통합 테스트를 모두 통과했습니다.",
-            "en": "Per-version queries measured 39ms per version on live EXPLAIN; they replaced the bundled query and all integration tests passed."
+            "ko": "live EXPLAIN에서 버전별 쿼리는 버전 1개 기준 39ms, 기존 159개 버전 일괄 쿼리는 10.1초로 측정됐습니다. 버전을 모두 돌면 한 실행의 총 쿼리 시간은 크게 줄지 않으므로, 개선의 핵심은 페이지네이션과 실행당 상한으로 한 실행이 주기보다 길어지지 않게 묶은 것입니다. 통합 테스트는 모두 통과했습니다.",
+            "en": "On live EXPLAIN, the per-version query took 39ms for one version, while the old bundled query over 159 versions took 10.1s. Running every version does not shrink a run's total query time much, so the real fix is that pagination and a per-run cap keep each run shorter than its interval. All integration tests passed."
           }
         }
       ],
@@ -330,11 +330,11 @@
           },
           "before": {
             "ko": "9.3건/분",
-            "en": "9.3 rows/min"
+            "en": "9.3 items/min"
           },
           "after": {
             "ko": "247건/분",
-            "en": "247 rows/min"
+            "en": "247 items/min"
           },
           "improvement": {
             "ko": "26배 · Lambda p50 63.2s→1.36s",
@@ -343,14 +343,20 @@
         },
         {
           "label": {
-            "ko": "RDS CPU (백필)",
-            "en": "RDS CPU (backfill)"
+            "ko": "백필 ETA",
+            "en": "Backfill ETA"
           },
-          "before": "99.8%",
-          "after": "5~7%",
+          "before": {
+            "ko": "ETA 15시간 (수정 전)",
+            "en": "15-hour ETA (before the fix)"
+          },
+          "after": {
+            "ko": "ETA 약 15분 (남은 8,285건)",
+            "en": "About 15-minute ETA (8,285 items left)"
+          },
           "improvement": {
-            "ko": "N+1·DATE() 인덱스 미스 제거",
-            "en": "N+1 and DATE() index miss removed"
+            "ko": "대기 0건 · 15,333건 완료",
+            "en": "0 pending · 15,333 completed"
           }
         },
         {
@@ -370,20 +376,20 @@
         },
         {
           "label": {
-            "ko": "번역 감지 쿼리",
-            "en": "Translation detection query"
+            "ko": "번역 감지 실행 (sandbox)",
+            "en": "Translation detection run (sandbox)"
           },
           "before": {
-            "ko": "159개 버전 일괄 · 100~224초",
-            "en": "159 versions at once · 100–224s"
+            "ko": "100~224초 · 10초 주기와 겹침",
+            "en": "100–224s · overlapped the 10s interval"
           },
           "after": {
-            "ko": "버전당 39ms",
-            "en": "39ms per version"
+            "ko": "버전별 쿼리 · 실행당 상한 500건",
+            "en": "Per-version queries · 500 cap per run"
           },
           "improvement": {
-            "ko": "live EXPLAIN · 실행당 상한 500건",
-            "en": "Live EXPLAIN · 500-request cap per run"
+            "ko": "live EXPLAIN 버전 1개 39ms(일괄 10.1초)",
+            "en": "Live EXPLAIN: 39ms for one version (bundled 10.1s)"
           }
         }
       ],
@@ -403,13 +409,13 @@
       },
       "operationalLimits": {
         "ko": [
-          "RDS CPU 5~7%는 수정 후 관측값이며, 같은 부하 조건에서 비교한 수치는 아닙니다.",
-          "번역 감지 건은 sandbox 장애이고, 39ms는 live EXPLAIN 기준 버전당 쿼리 시간입니다. 기존 일괄 쿼리와 같은 조건의 총 실행 시간 비교가 아닙니다.",
+          "백필 건의 RDS CPU는 수정 전 99.8%만 비교 기준으로 쓰며, 이후 관측한 5~7%는 작업이 끝난 유휴 상태 값입니다.",
+          "번역 감지 건은 sandbox 장애입니다. 39ms는 live EXPLAIN의 버전 1개 표본이며, 버전을 모두 도는 한 실행의 총 쿼리 시간은 크게 줄지 않습니다.",
           "감사 로그 건은 인덱스 복구로 끝났고, 대용량 감사 로그의 보관·파티셔닝 정책은 다루지 않았습니다."
         ],
         "en": [
-          "The 5–7% RDS CPU figure was observed after the fix, not compared under the same load.",
-          "The translation-detection case was a sandbox incident; 39ms is the per-version query time on live EXPLAIN, not a same-condition comparison of total run time against the bundled query.",
+          "For the backfill, only the 99.8% pre-fix RDS CPU is used as a baseline; the 5–7% seen afterwards was an idle reading after the work finished.",
+          "The translation-detection case was a sandbox incident. 39ms is a single-version sample on live EXPLAIN; a run that covers every version does not take much less total query time.",
           "The audit-log case ended with restoring the index; retention and partitioning for the large audit log were out of scope."
         ]
       },
@@ -427,29 +433,29 @@
       },
       "scale": {
         "ko": "MySQL(RDS) · 2,637만 행/27GB 감사 로그 · 327만 행 번역 테이블 · 백필 15,333건",
-        "en": "MySQL (RDS) · 26.37M-row / 27GB audit log · 3.27M-row translation table · 15,333-row backfill"
+        "en": "MySQL (RDS) · 26.37M-row / 27GB audit log · 3.27M-row translation table · 15,333-item backfill"
       }
     },
     {
       "slug": "shared-package-ci-platform",
       "name": {
-        "ko": "공통 패키지·CI 플랫폼 — 7개 프로젝트의 업그레이드와 테스트 시간을 줄인 기록",
-        "en": "Shared Package & CI Platform — Faster Upgrades and Tests Across 7 Projects"
+        "ko": "공통 패키지·CI 플랫폼 — fork 정렬, 7개 프로젝트 업그레이드 자동화, 테스트 CI 단축",
+        "en": "Shared Package & CI Platform — Fork Realignment, 7-Project Upgrade Automation, Faster Test CI"
       },
       "type": "team",
       "featured": true,
       "printOrder": 3,
       "summary": {
-        "ko": "2년 넘게 어긋난 게임 데이터 모듈을 공통 npm 패키지로 정렬(610개 파일·310+ import 마이그레이션)하고, 7개 프로젝트 업그레이드를 GitHub Actions로 자동화(수동 약 3시간→약 15분), 테스트 CI를 61% 단축(15분47초→6분6초)",
-        "en": "Realigned game data modules that had drifted for 2+ years onto a shared npm package (610 files, 310+ imports migrated), automated upgrades across 7 projects with GitHub Actions (about 3 hours by hand → about 15 minutes), and cut test CI time 61% (15m47s → 6m06s)."
+        "ko": "2년 넘게 어긋난 게임 서버의 데이터 모듈 fork를 공통 npm 패키지로 정렬(610개 파일·310+ import 마이그레이션)하고, 7개 프로젝트 업그레이드를 GitHub Actions로 자동화(수동 약 3시간→약 15분), 공통 서버 키트의 테스트 job 평균 시간을 61% 단축(15분47초→6분6초)",
+        "en": "Realigned a game server's data-module fork that had drifted for 2+ years onto the shared npm package (610 files, 310+ imports migrated), automated upgrades across 7 projects with GitHub Actions (about 3 hours by hand → about 15 minutes), and cut the shared server kit's average test job time 61% (15m47s → 6m06s)."
       },
       "description": {
-        "ko": "여러 게임 서버가 같은 게임 데이터 모듈을 각자 들고 있으면서 버전이 갈라졌고, 업그레이드와 테스트가 프로젝트 수만큼 반복됐습니다. 공통 모듈을 npm 패키지와 패키지가 관리하는 마이그레이션으로 옮기고, 업그레이드는 workflow_dispatch + matrix 자동화로, 테스트 컴파일은 isolatedModules 전환으로 줄였습니다. 이관 중 생긴 live 회귀와 복구 과정도 함께 적었습니다. 내부 제품·게임 이름은 일반 명칭으로 바꿨습니다.",
-        "en": "Several game servers each carried their own copy of the same game data modules, so versions drifted and every upgrade and test run repeated once per project. I moved the shared modules into an npm package with package-managed migrations, automated upgrades with workflow_dispatch plus a matrix, and cut test compilation by switching to isolatedModules. The live regression during the migration and its recovery are included. Internal product and game names are replaced with generic names."
+        "ko": "한 게임 서버가 공통 게임 데이터 모듈을 fork한 채 2년 넘게 정렬되지 않았고, 공통 패키지 업그레이드는 7개 프로젝트에 손으로 반복됐으며, 공통 서버 키트의 테스트는 ts-jest 컴파일에 시간을 쓰고 있었습니다. fork는 npm 패키지와 패키지가 관리하는 마이그레이션으로 정렬하고, 업그레이드는 workflow_dispatch + matrix로 자동화하고, 테스트 컴파일은 isolatedModules 전환으로 줄였습니다. 이관 중 생긴 live 회귀와 복구 과정도 함께 적었습니다. 내부 제품·게임 이름은 일반 명칭으로 바꿨습니다.",
+        "en": "One game server had forked the shared game data modules and gone 2+ years without realigning, shared-package upgrades were repeated by hand across 7 projects, and the shared server kit's tests spent their time in ts-jest compilation. I realigned the fork onto the npm package with package-managed migrations, automated upgrades with workflow_dispatch plus a matrix, and cut test compilation by switching to isolatedModules. The live regression during the migration and its recovery are included. Internal product and game names are replaced with generic names."
       },
       "role": {
-        "ko": "백엔드 개발자 · 패키지 이관·업그레이드 자동화·CI 개선 직접 수행",
-        "en": "Backend developer · did the package migration, upgrade automation, and CI work myself"
+        "ko": "백엔드 개발자 → Platform Part 리더 · 패키지 이관·업그레이드 자동화·CI 개선 직접 수행",
+        "en": "Backend developer, then Platform Part lead · hands-on package migration, upgrade automation, and CI work"
       },
       "period": {
         "start": "2026-02-01",
@@ -466,15 +472,15 @@
       "highlights": {
         "ko": [
           "2년 넘게 upstream과 어긋난 게임 서버의 데이터 모듈 17개를 공통 npm 패키지로 교체: 610개 파일·로컬 마이그레이션 47개 삭제, import 310+곳 갱신",
-          "이후 데이터 모듈 기능은 패키지 버전 bump로 들어오고, 스키마는 패키지가 관리하는 마이그레이션 CLI로 맞춤",
-          "7개 프로젝트 × 2개 브랜치 업그레이드를 workflow_dispatch + matrix로 병렬화하고 Job Summary로 skip/upgrade/downgrade 보고: 수동 약 3시간→약 15분",
-          "ts-jest isolatedModules 전환으로 파일당 컴파일 약 15초→1~3초, CI 평균 15분47초→6분6초(61%), 81 suites·978 tests 통과"
+          "이후 데이터 모듈 기능은 패키지 버전 bump로 들여올 수 있고, 스키마는 패키지가 관리하는 마이그레이션 CLI로 맞춤",
+          "7개 프로젝트(브랜치 최대 12개) 업그레이드를 workflow_dispatch + matrix로 병렬화하고 Job Summary로 skip/upgrade/downgrade 보고: 수동 약 3시간→약 15분",
+          "ts-jest isolatedModules 전환으로 파일당 컴파일 약 15초→1~3초, 테스트 job 평균 15분47초→6분6초(61%), CI 전체 약 16분→약 7분"
         ],
         "en": [
           "Replaced 17 data modules in a game server that had drifted from upstream for 2+ years with the shared npm package: deleted 610 files and 47 local migrations, updated 310+ imports",
-          "Data-module features now arrive with a package version bump, and the schema follows a package-managed migration CLI",
-          "Parallelized upgrades across 7 projects × 2 branches with workflow_dispatch and a matrix, reporting skip/upgrade/downgrade in the Job Summary: about 3 hours by hand → about 15 minutes",
-          "Switched ts-jest to isolatedModules: per-file compile about 15s → 1–3s, average CI 15m47s → 6m06s (61%), 81 suites / 978 tests passing"
+          "Data-module features can now come in with a package version bump, and the schema follows a package-managed migration CLI",
+          "Parallelized upgrades across 7 projects (up to 12 branches) with workflow_dispatch and a matrix, reporting skip/upgrade/downgrade in the Job Summary: about 3 hours by hand → about 15 minutes",
+          "Switched ts-jest to isolatedModules: per-file compile about 15s → 1–3s, average test job 15m47s → 6m06s (61%), whole CI about 16 → about 7 minutes"
         ]
       },
       "problemSolving": [
@@ -488,14 +494,14 @@
             "en": "Using the alignment approach other games already followed, I split the work into two stages: first switch the internal modules to the package, then bring it to the latest version with the same pattern and package-managed migrations. Game-specific features (localization, forbidden words, dynamic environments, and so on) stayed in six thin wrapper modules."
           },
           "result": {
-            "ko": "내부 모듈 610개 파일과 로컬 마이그레이션 47개를 지웠고, 이후 신규 기능은 패키지 버전 bump로 통합됩니다. 이관 회귀로 live 관리자 기능에 500 오류가 났을 때는 보고 82분 만에 hotfix를 배포했고, 후속 작업을 9건으로 나눠 추적했습니다.",
-            "en": "Deleted the 610 internal-module files and 47 local migrations; new features now come in with a package version bump. When the migration caused a regression that returned 500 errors in a live admin feature, a hotfix shipped 82 minutes after the report, and follow-up work was split into 9 tracked tasks."
+            "ko": "내부 모듈 610개 파일과 로컬 마이그레이션 47개를 지웠고, 이후 신규 기능은 패키지 버전 bump로 들여올 수 있게 됐습니다. 이관 회귀로 live 관리자 기능에 500 오류가 났을 때는 보고 82분 만에 hotfix를 배포했고, 이관을 포함한 관련 작업 9건으로 나눠 추적했습니다.",
+            "en": "Deleted the 610 internal-module files and 47 local migrations; new features can now come in with a package version bump. When the migration caused a regression that returned 500 errors in a live admin feature, a hotfix shipped 82 minutes after the report, and the work was tracked as 9 related tasks including the migration itself."
           }
         },
         {
           "problem": {
-            "ko": "공통 패키지를 올릴 때마다 7개 프로젝트 × 2개 브랜치를 손으로 업그레이드해 약 3시간이 걸렸고 작업 전환 비용도 컸습니다.",
-            "en": "Every shared-package release meant upgrading 7 projects × 2 branches by hand, taking about 3 hours plus the cost of context switching."
+            "ko": "공통 패키지를 올릴 때마다 7개 프로젝트의 main/develop 브랜치(최대 12개)를 손으로 업그레이드해 약 3시간이 걸렸고 작업 전환 비용도 컸습니다.",
+            "en": "Every shared-package release meant upgrading the main/develop branches of 7 projects (up to 12 branches) by hand, taking about 3 hours plus the cost of context switching."
           },
           "process": {
             "ko": "workflow_dispatch로 실행하는 GitHub Actions 워크플로를 만들고 matrix로 7개 프로젝트를 병렬 처리했습니다. 프로젝트별 결과는 Job Summary에 skip/upgrade/downgrade로 남겼습니다.",
@@ -508,24 +514,24 @@
         },
         {
           "problem": {
-            "ko": "ts-jest 컴파일이 파일당 약 15초로 테스트 시간의 53%를 차지해, 순수 단위 테스트도 15~19초씩 걸렸습니다.",
-            "en": "ts-jest compilation took about 15s per file, 53% of test time, so even pure unit tests took 15–19s."
+            "ko": "공통 서버 키트에서 ts-jest 컴파일이 파일당 약 15초로 테스트 시간의 53%를 차지해, 순수 단위 테스트도 15~19초씩 걸렸습니다.",
+            "en": "In the shared server kit, ts-jest compilation took about 15s per file, 53% of test time, so even pure unit tests took 15–19s."
           },
           "process": {
-            "ko": "ts-jest를 isolatedModules로 바꿔 파일 단위로만 변환하게 했습니다. 이 모드에서는 데코레이터 메타데이터가 다른 파일의 타입을 참조하지 못해, 영향받는 엔티티 4개에 컬럼 타입을 명시했습니다.",
-            "en": "Switched ts-jest to isolatedModules so each file is transformed on its own. In this mode decorator metadata cannot see types from other files, so I declared column types explicitly on the 4 affected entities."
+            "ko": "ts-jest를 isolatedModules로 바꿔 파일 단위로만 변환하고, 타입 검사는 CI의 별도 tsc --noEmit 단계에 맡겼습니다. 이 모드에서는 데코레이터 메타데이터가 다른 파일의 타입을 참조하지 못해, 영향받는 엔티티 4개에 컬럼 타입을 명시했습니다.",
+            "en": "Switched ts-jest to isolatedModules so each file is transformed on its own, leaving type checking to a separate tsc --noEmit step in CI. In this mode decorator metadata cannot see types from other files, so I declared column types explicitly on the 4 affected entities."
           },
           "result": {
-            "ko": "파일당 컴파일 15초→1~3초, CI 평균 15분47초→6분6초(61% 단축), 81 suites·978 tests 전체 통과.",
-            "en": "Per-file compile 15s → 1–3s, average CI 15m47s → 6m06s (61% faster), all 81 suites / 978 tests passing."
+            "ko": "파일당 컴파일 15초→1~3초, 4개 shard의 테스트 job 평균 15분47초→6분6초(61% 단축), 빌드·품질 검사를 포함한 CI 전체 약 16분→약 7분. 81 suites·978 tests 전체 통과.",
+            "en": "Per-file compile 15s → 1–3s, average test job across 4 shards 15m47s → 6m06s (61% faster), whole CI including build and quality checks about 16 → about 7 minutes. All 81 suites / 978 tests passing."
           }
         }
       ],
       "metrics": [
         {
           "label": {
-            "ko": "CI 평균 시간",
-            "en": "Average CI time"
+            "ko": "테스트 job 평균",
+            "en": "Average test job"
           },
           "before": {
             "ko": "15분47초",
@@ -536,8 +542,8 @@
             "en": "6m06s"
           },
           "improvement": {
-            "ko": "61% 단축 · 978 tests 통과",
-            "en": "61% faster · 978 tests passing"
+            "ko": "61% 단축 · CI 전체 약 16분→약 7분",
+            "en": "61% faster · whole CI about 16 → 7 min"
           }
         },
         {
@@ -590,8 +596,8 @@
             "en": "Hotfix in 82 min"
           },
           "improvement": {
-            "ko": "후속 9건 추적",
-            "en": "9 follow-ups tracked"
+            "ko": "관련 작업 9건 추적",
+            "en": "9 related tasks tracked"
           }
         }
       ],
@@ -611,13 +617,13 @@
       },
       "operationalLimits": {
         "ko": [
-          "isolatedModules에서는 테스트 단계가 타입 검사를 하지 않으므로(파일 단위 변환), 타입 오류는 테스트가 아닌 다른 단계에서 잡아야 합니다.",
-          "업그레이드 자동화가 적용되지 않은 프로젝트에는 수동 롤아웃이 남아 있었고, 이때는 필드 1,073개 byte 단위 비교로 하위 호환을 확인했습니다.",
+          "isolatedModules에서는 테스트 단계가 타입 검사를 하지 않으므로, 타입 오류는 CI의 별도 tsc --noEmit 단계에서 잡습니다.",
+          "업그레이드 자동화가 적용되지 않은 프로젝트에는 수동 롤아웃이 남았고, 그중 한 번은 주석을 제외한 필드 1,073개를 byte 단위로 비교해 하위 호환을 확인했습니다.",
           "이관 회귀는 배포 후 live에서 발견됐고, 사전 테스트로 잡지 못했습니다."
         ],
         "en": [
-          "Under isolatedModules the test step does no type checking (per-file transforms), so type errors must be caught by a step other than tests.",
-          "Projects without the upgrade automation still needed manual rollouts, which were checked for backward compatibility with a byte-level comparison of 1,073 fields.",
+          "Under isolatedModules the test step does no type checking, so type errors are caught by a separate tsc --noEmit step in CI.",
+          "Projects without the upgrade automation still needed manual rollouts; one of them was checked for backward compatibility by comparing 1,073 fields byte for byte, excluding comments.",
           "The migration regression was found on live after deploy; pre-release tests did not catch it."
         ]
       },
@@ -625,17 +631,17 @@
         "ko": [
           "fork는 시간이 갈수록 정렬 비용이 커진다. 게임별 차이는 wrapper로 좁히고 나머지는 공통 패키지에 맡긴다.",
           "프로젝트 수만큼 반복되는 작업은 자동화하고, 결과를 한 화면에 남겨야 빠진 곳이 보인다.",
-          "속도를 위해 끈 검사는 다른 곳에서 대신해야 한다. isolatedModules가 넘긴 타입 정보는 명시로 메웠다."
+          "속도를 위해 끈 검사는 다른 곳이 맡아야 한다. 타입 검사는 별도 tsc 단계로 옮기고, 데코레이터 메타데이터 공백은 컬럼 타입 명시로 메웠다."
         ],
         "en": [
           "A fork gets more expensive to realign the longer it lives; keep game-specific differences in wrappers and leave the rest to the shared package.",
           "Automate work that repeats once per project, and keep the results on one screen so gaps are visible.",
-          "A check turned off for speed has to be covered somewhere else; explicit types filled what isolatedModules gave up."
+          "A check turned off for speed needs a new owner: type checking moved to a separate tsc step, and explicit column types filled the decorator-metadata gap."
         ]
       },
       "scale": {
-        "ko": "7개 프로젝트 × 2개 브랜치 · 데이터 모듈 17개 · 610개 파일 · 81 suites/978 tests",
-        "en": "7 projects × 2 branches · 17 data modules · 610 files · 81 suites / 978 tests"
+        "ko": "7개 프로젝트·브랜치 최대 12개 · 데이터 모듈 17개 · 610개 파일 · 81 suites/978 tests",
+        "en": "7 projects, up to 12 branches · 17 data modules · 610 files · 81 suites / 978 tests"
       }
     },
     {

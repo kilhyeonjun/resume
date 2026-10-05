@@ -221,14 +221,15 @@ test('company RCA and shared-package cases stay sanitized and name their environ
     assert.ok(project.metrics.length >= 4, slug);
     assert.ok(project.operationalLimits.ko.length >= 3 && project.operationalLimits.en.length === project.operationalLimits.ko.length, slug);
     assert.equal(project.highlights.en.length, project.highlights.ko.length, slug);
-    assert.doesNotMatch(JSON.stringify(project), /glider|vivox|bane|\bBN\b|\bHB\b|DTP-|gameduo|amazonaws|PR #\d|findLatest|sheet_localized|marketing_metric_daily/i, slug);
+    const copy = JSON.stringify(project);
+    assert.doesNotMatch(copy, /glider|vivox|bane|\bBN\b|\bHB\b|\bNB2\b|\bBBC\b|\bDFD\b|\blmk\b|IDX_|gameduo|amazonaws|PR #\d|#\d{3,}|findLatest|sheet_localized|marketing_metric_daily/i, slug);
+    assert.doesNotMatch(copy, /\b[A-Z][A-Z0-9]+-\d+\b/, `${slug} ticket keys`);
   }
   const rds = data.projects.find((candidate) => candidate.slug === 'rds-saturation-rca');
   for (const lang of ['ko', 'en']) {
-    const copy = JSON.stringify(rds.problemSolving.map((item) => item.problem[lang]));
-    assert.match(copy, /live/, lang);
-    assert.match(copy, /sandbox/, lang);
+    for (const item of rds.problemSolving) assert.match(item.problem[lang], /live|sandbox|백필|backfill/, lang);
   }
+  assert.doesNotMatch(JSON.stringify([rds.summary, rds.highlights, rds.metrics]), /5~7%|5–7%/, 'idle CPU is not an outcome');
 });
 
 test('family budget case study centers the operational product and keeps the demo as public evidence', async () => {

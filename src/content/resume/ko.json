@@ -392,9 +392,9 @@
                 "result": "2000+줄 코드 정리 후 공용 Repository 계층 도입으로 CRUD 중복 제거 및 데이터 접근 표준화"
               },
               {
-                "problem": "멀티 인스턴스 환경의 동시성 제어 부재",
-                "solution": "ElastiCache (Redis) 기반 분산 락을 AOP 데코레이터로 추상화하여 비즈니스 로직과 분리",
-                "result": "분산 락 데코레이터로 멀티 인스턴스 동시성 제어 일관 적용"
+                "problem": "앱마다 static-data LRU 캐시를 따로 주입해 live 게임 서버 부팅 시 데이터 워밍에 수 분 소요",
+                "solution": "static-data 저장소를 공통 키트 소유로 옮겨 앱의 LRU 주입을 제거하고 negative caching·preloadAll 추가",
+                "result": "live 게임 서버 부팅 워밍 138.1~199.5초→25.8~37.8초, 앱 워머를 preloadAll로 전환한 뒤 0.82~1.08초"
               },
               {
                 "problem": "7개 프로젝트 패키지 업그레이드 수작업(3시간)",
@@ -545,6 +545,11 @@
                 "problem": "sandbox에서 detect 스케줄러가 159개 버전을 한 번에 조회(live 기준 3.27M행 full scan)해 Read IOPS 190~470/s 포화, 일부 사용자 60초 로그인 불가",
                 "solution": "AI detect 모듈의 per-version loop 이식 + 분산락 timeout/recovery + NOT EXISTS full scan을 인덱스 staged lookup으로 대체",
                 "result": "버전별 단일 쿼리로 분할(Live EXPLAIN 버전 1개 기준 39ms)하고 페이지네이션·실행당 상한으로 한 실행의 길이를 제한"
+              },
+              {
+                "problem": "AI 번역 스케줄러가 Vertex AI 429 quota 초과로 막혀 처리되지 못한 요청이 live에 83,796건 누적",
+                "solution": "재시도 경로를 추적해 배치 내 재시도와 복구 재시도가 겹친 실효 9회 시도, 13개 스케줄러 인스턴스의 backoff·jitter 부재를 확인",
+                "result": "원인 2가지(160개 버전×4개 언어 소급 백필, 13개 인스턴스 동시 retry storm) 규명, 멈춘 요청 83,796건 삭제 후 후속 과제 4건 분리"
               }
             ],
             "techStack": [

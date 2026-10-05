@@ -392,9 +392,9 @@
                 "result": "Refactored 2000+ lines into shared Repository abstraction layer eliminating CRUD duplication"
               },
               {
-                "problem": "Concurrency conflicts in multi-instance environments",
-                "solution": "Abstracted ElastiCache (Redis) distributed locking into an AOP decorator, isolating lock logic from business code",
-                "result": "Applied distributed lock decorator consistently for multi-instance concurrency control"
+                "problem": "Each app injected its own static-data LRU cache, so boot-time data warming on live game servers took minutes",
+                "solution": "Moved static-data storage into the shared kit, removed per-app LRU injection, and added negative caching and preloadAll",
+                "result": "Live game-server boot warming 138.1–199.5s → 25.8–37.8s, then 0.82–1.08s after switching the app warmer to preloadAll"
               },
               {
                 "problem": "Manual library upgrades taking 3 hours across 7 projects",
@@ -545,6 +545,11 @@
                 "problem": "In sandbox, the detect scheduler queried all 159 versions at once (full scan of a 3.27M-row table on live), saturating Read IOPS at 190–470/s and locking some users out for 60s",
                 "solution": "Ported the per-version loop from the AI detect module, added distributed-lock timeout/recovery, and replaced the NOT EXISTS full scan with an indexed staged lookup",
                 "result": "Split into per-version queries (39ms for one version on Live EXPLAIN) and bounded each run with pagination and a per-run cap"
+              },
+              {
+                "problem": "The AI translation scheduler stalled on Vertex AI 429 quota errors, leaving 83,796 requests unprocessed on live",
+                "solution": "Traced the retry path: in-batch and recovery retries compounded to 9 effective attempts, and 13 scheduler instances retried with no backoff or jitter",
+                "result": "Identified both causes (a retroactive backfill of 160 versions × 4 languages and a 13-instance retry storm), deleted the 83,796 stuck requests, and split out 4 follow-up tasks"
               }
             ],
             "techStack": [

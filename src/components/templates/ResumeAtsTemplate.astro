@@ -232,10 +232,10 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     </section>
   )}
 
-  {data.experience && data.experience.length > 0 && (
+  {[{ sectionTitle: labels.experience, items: data.experience }, { sectionTitle: labels.sideProjects, items: data.sideProjects }].map(({ sectionTitle, items }) => items.length > 0 && (
     <section>
-      <h2>{labels.experience.toUpperCase()}</h2>
-      {data.experience.map((exp) => (
+      <h2>{sectionTitle.toUpperCase()}</h2>
+      {items.map((exp) => (
         <div class="item">
           <div class="item-header">
             <h3>
@@ -269,7 +269,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
         </div>
       ))}
     </section>
-  )}
+  ))}
 
   {data.skills && data.skills.length > 0 && (
     <section>

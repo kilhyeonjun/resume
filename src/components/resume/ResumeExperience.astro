@@ -7,9 +7,10 @@ interface Props {
   experience: Experience[];
   labels: Labels;
   basePath: string;
+  title?: string;
 }
 
-const { experience, labels, basePath } = Astro.props;
+const { experience, labels, basePath, title = labels.experience } = Astro.props;
 
 function getResultHtml(result: string) {
   return result
@@ -20,7 +21,7 @@ function getResultHtml(result: string) {
 
 {experience && experience.length > 0 && (
   <section class="mb-10">
-    <h2 class="section-title">{labels.experience}</h2>
+    <h2 class="section-title">{title}</h2>
     <div class="mt-6 space-y-10">
       {experience.map((exp) => {
         const currentPosition = exp.positions ? exp.positions[0] : null;

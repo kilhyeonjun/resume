@@ -75,7 +75,7 @@ test('interactive route families expose their shared design hooks', async () => 
     ['src/components/templates/ExperienceDetailTemplate.astro', 'detail-dossier'],
   ];
   for (const [path, hook] of families) assert.match(await read(path), new RegExp(hook), path);
-  assert.match(await read('src/components/templates/ResumeTemplate.astro'), /filter\(\(proof\) => \/\\d\//);
+  assert.match(await read('src/components/templates/ResumeTemplate.astro'), /filter\(\(proof\) => proof\.proofLabel\)/);
   assert.match(await read('src/components/templates/PortfolioTemplate.astro'), /portfolio-archive/);
   assert.match(await read('src/components/templates/PortfolioTemplate.astro'), /selectFeaturedPortfolioProjects/);
   assert.match(await read('src/utils/portfolio-visibility.ts'), /printOrder/);
@@ -100,8 +100,8 @@ test('evidence board separates metric, context, and supporting result copy', asy
     read('src/components/templates/ResumeTemplate.astro'),
     read('src/styles/global.css'),
   ]);
-  assert.match(template, /const outcomeKickers = lang === 'ko'/);
-  assert.ok(template.includes('proof.result.split(/,\\s*/)'));
+  assert.match(template, /\.filter\(\(proof\) => proof\.proofLabel\)/);
+  assert.ok(template.includes('proof.result.split(/(?<!\\d),\\s*/)'));
   assert.match(template, /metricText\.startsWith\(kicker\)/);
   assert.match(template, /metricText\.slice\(kicker\.length\)\.trim\(\)/);
   assert.match(template, /class="result-metric"/);

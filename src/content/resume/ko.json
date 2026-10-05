@@ -117,6 +117,9 @@
             "name": "Valkey"
           },
           {
+            "name": "DynamoDB"
+          },
+          {
             "name": "ClickHouse"
           }
         ]
@@ -149,26 +152,26 @@
         ]
       },
       {
-        "category": "Quality & AI Verification",
-        "description": "AI 도구 활용 결과를 TDD·통합 테스트·리뷰·Git 훅·근거 검색으로 검증하는 개발 품질 체계",
+        "category": "Quality, Observability & AI Tooling",
+        "description": "k6 부하 시험과 관측 지표로 성능을 검증하고, AI 도구 산출물을 TDD·통합 테스트·리뷰로 검증하는 개발 품질 체계",
         "items": [
           {
-            "name": "TDD Governance"
+            "name": "k6"
           },
           {
-            "name": "Integration Test"
+            "name": "Grafana"
           },
           {
-            "name": "Code Review"
+            "name": "Datadog"
           },
           {
-            "name": "Git Hooks"
+            "name": "LocalStack"
           },
           {
-            "name": "Evidence Search"
+            "name": "Claude Code"
           },
           {
-            "name": "AI Output Verification"
+            "name": "MCP"
           }
         ]
       }
@@ -188,19 +191,19 @@
             "current": true,
             "highlights": [
               {
-                "problem": "Platform Part 신설 직후 공통 백엔드 과제의 우선순위와 완료 기준이 과제마다 달라 리뷰·배포 판단이 지연",
-                "solution": "작업 유형별 완료 기준, 리뷰 체크리스트, 검증 템플릿을 정리해 플랫폼 과제를 백로그→검증→완료 흐름으로 표준화",
-                "result": "공통 인프라·패키지·채팅 서버 과제를 동일 기준으로 추적하고 리뷰 전 누락 항목을 줄이는 운영 체계 정착"
+                "problem": "신설 Platform Part(BE·FE·AI 3인)가 공통 백엔드·채팅·마케팅 데이터 과제를 함께 맡아 완료 기준이 과제마다 다름",
+                "solution": "작업 유형별 완료 기준·리뷰 체크리스트·검증 템플릿으로 과제 흐름을 표준화하고 서버 설계·부하 검증은 직접 주도",
+                "result": "채팅 서버 용량 목표(6,000 동시접속·18,000 RPS·버스트 90,000 RPS)를 산정해 분기 OKR로 확정하고 파트 과제를 동일 기준으로 추적"
               },
               {
-                "problem": "AI 지원 개발 도입 후 코드 리뷰·테스트 기준이 개인별 사용 방식에 의존",
-                "solution": "AI 산출물도 일반 코드와 동일하게 TDD, 통합 테스트, 리뷰 체크리스트, Git 훅을 통과하도록 검증 기준을 정립",
-                "result": "도구 사용 여부보다 테스트 가능한 변경 단위와 리뷰 근거를 기준으로 산출물 품질을 판단하는 팀 흐름 마련"
+                "problem": "전사 AI 코딩 에이전트 확산으로 사람별 정책 적용·기기 식별·사용량 수집을 한곳에서 관리해야 함",
+                "solution": "기기 등록·정책 세트·원격 제어·사용량 수집을 갖춘 에이전트 관리 도구를 개발해 운영 인계",
+                "result": "정책 대상 92명 배정 후 보고 중인 기기 87대 전부에서 정책 집행 확인, 보안 관련 자동화 테스트 525건 통과"
               },
               {
-                "problem": "팀 공통 코딩 표준·도메인 지식·검증 규칙이 개인 환경에 흩어져 신규/반복 작업의 편차 발생",
-                "solution": "공통 규칙·템플릿·검증 훅을 Git repo 기반 설정으로 관리하고 로컬 검색/RAG로 참조 가능하게 구성",
-                "result": "반복되는 설정·검증 누락을 줄이고 코드 리뷰 전 확인해야 할 기준을 자동화된 체크리스트로 전환"
+                "problem": "팀 코딩 표준·도메인 지식·검증 규칙이 개인 환경에 흩어져 AI 활용 편차 발생",
+                "solution": "규칙·에이전트·훅·도메인 지식을 단일 Git repo 설정으로 관리하고 로컬 RAG로 참조",
+                "result": "팀원 전원이 git pull로 같은 AI 작업 컨텍스트를 공유하고, 리뷰 전 확인 기준을 자동 체크리스트로 전환"
               }
             ]
           },
@@ -212,17 +215,20 @@
               {
                 "problem": "마케팅 데이터 조회 비용 급증(전체 스캔 과금 구조)",
                 "solution": "파티셔닝 튜닝 분석 후 Write IOPS 증가 문제로 기각, gRPC 기반 분산 읽기(Storage Read API) 전환",
-                "result": "TB당 조회 단가 $6.25→$1.1로 82% 절감(BigQuery 공시 가격 기준)"
+                "result": "TB당 조회 단가 $6.25→$1.1로 82% 절감(BigQuery 공시 가격 기준)",
+                "proofLabel": "TB당 조회 단가"
               },
               {
                 "problem": "배치 처리의 수집 기간 한계(60일)",
                 "solution": "배치 일괄 처리 대비 EDA 기반 온디맨드 처리로 전환 — 피크 부하 분산 및 처리량 확장",
-                "result": "수집 범위 6배 확장(60일→360일), 처리 시간 2시간→5분 단축"
+                "result": "수집 범위 6배 확장(60일→360일), 처리 시간 2시간→5분 단축",
+                "proofLabel": "수집 범위"
               },
               {
                 "problem": "7개 프로젝트 간 코드 중복과 컨벤션 불일치",
                 "solution": "수동 코드 동기화 대신 공통 NestJS 패키지 체계 도입 (유틸 10모듈 + 게임서버 Kit 자동 배포)",
-                "result": "업그레이드 자동화로 배포 시간 3시간→15분 단축, 7개 프로젝트의 공통 코드 수정 지점을 단일 패키지로 일원화"
+                "result": "업그레이드 자동화로 배포 시간 3시간→15분 단축, 7개 프로젝트의 공통 코드 수정 지점을 단일 패키지로 일원화",
+                "proofLabel": "업그레이드 자동화로"
               },
               {
                 "problem": "3개 광고 플랫폼 데이터 분산에 따른 마케팅 조회 지연(18초)",
@@ -1349,6 +1355,7 @@
       },
       {
         "slug": "personal",
+        "side": true,
         "company": "개인 프로젝트 (사이드)",
         "companyUrl": "https://github.com/kilhyeonjun",
         "position": "플랫폼 · 툴링 엔지니어링",
@@ -1381,6 +1388,7 @@
               }
             ],
             "techStack": [
+              "Claude Code",
               "Zsh",
               "Bash",
               "Python",
@@ -1410,6 +1418,7 @@
           }
         ],
         "techStack": [
+          "Claude Code",
           "Zsh",
           "Bash",
           "Python",
@@ -1540,6 +1549,7 @@
       "summary": "소개",
       "coreCompetencies": "핵심 역량",
       "experience": "경력",
+      "sideProjects": "사이드 프로젝트",
       "skills": "기술 스택",
       "education": "학력",
       "continuousLearning": "학습 활동",

@@ -24,10 +24,16 @@ const localizedStringArraySchema = z.object({
   en: z.array(z.string()),
 });
 
+const caseFlowStepSchema = z.object({
+  kind: z.enum(['symptom', 'rejected', 'evidence', 'cause', 'fix', 'result']),
+  text: localizedStringSchema,
+});
+
 const problemSolvingEntrySchema = z.object({
   problem: localizedStringSchema,
   process: localizedStringSchema,
   result: localizedStringSchema,
+  flow: z.array(caseFlowStepSchema).min(2).max(6).optional(),
 });
 
 const scenarioEvidenceSchema = z.object({
@@ -131,6 +137,7 @@ export const portfolioDataSchema = z.object({
 
 export type Metric = z.infer<typeof metricSchema>;
 export type ProblemSolvingEntry = z.infer<typeof problemSolvingEntrySchema>;
+export type CaseFlowStep = z.infer<typeof caseFlowStepSchema>;
 export type LocalizedString = z.infer<typeof localizedStringSchema>;
 export type BlogPost = z.infer<typeof blogPostSchema>;
 export type PortfolioProject = z.infer<typeof portfolioProjectSchema>;

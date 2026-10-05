@@ -7,6 +7,8 @@ import CheckIcon from '../icons/CheckIcon.astro';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon.astro';
 import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
+import CaseFlow from '../portfolio/CaseFlow.astro';
+import MetricDeltas from '../portfolio/MetricDeltas.astro';
 import type { PortfolioProject, PortfolioLabels, BlogPost } from '../../types/portfolio';
 import { getLocalePrefix, withBasePath } from '../../utils/paths';
 
@@ -316,6 +318,7 @@ addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-image
                 </h3>
               </div>
               <div class="ml-9 space-y-3">
+                {entry.flow && <CaseFlow steps={entry.flow} lang={lang} />}
                 <div>
                   <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
                     {labels.problemSolvingProcess}
@@ -494,28 +497,7 @@ addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-image
     {!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && project.metrics && project.metrics.length > 0 && (
       <section id="outcomes" class="mb-10">
         <h2 class="section-title mb-6">{labels.metrics}</h2>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm">
-            <thead>
-              <tr class="border-b border-gray-200 dark:border-gray-700">
-                <th class="pb-3 pr-4 font-semibold text-gray-900 dark:text-white">{labels.metrics}</th>
-                <th class="pb-3 pr-4 font-semibold text-gray-900 dark:text-white">{lang === 'ko' ? '이전' : 'Before'}</th>
-                <th class="pb-3 font-semibold text-gray-900 dark:text-white">{lang === 'ko' ? '이후' : 'After'}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {project.metrics.map((m) => (
-                <tr class="border-b border-gray-100 dark:border-gray-800">
-                  <td class="py-3 pr-4 text-gray-700 dark:text-gray-300">{m.label[lang]}</td>
-                  <td class="py-3 pr-4 text-gray-500 dark:text-gray-400">{localize(m.before)}</td>
-                  <td class="py-3 font-semibold text-primary-600 dark:text-primary-400">
-                    {localize(m.after)} <span class="text-xs font-normal text-gray-500 dark:text-gray-400">({localize(m.improvement)})</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <MetricDeltas metrics={project.metrics} lang={lang} />
       </section>
     )}
 

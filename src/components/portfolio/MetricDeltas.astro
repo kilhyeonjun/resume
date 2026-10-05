@@ -1,0 +1,98 @@
+---
+import type { Metric } from '../../types/portfolio';
+
+interface Props {
+  metrics: Metric[];
+  lang: 'ko' | 'en';
+}
+
+const { metrics, lang } = Astro.props;
+const localize = (value: string | { ko: string; en: string }) => typeof value === 'string' ? value : (value[lang] || value.ko);
+const before = lang === 'ko' ? '이전' : 'Before';
+const after = lang === 'ko' ? '이후' : 'After';
+---
+
+<dl class="metric-deltas">
+  {metrics.map((metric) => {
+    const baseline = localize(metric.before);
+    const hasBaseline = baseline !== '-';
+    return (
+    <div class:list={['metric-delta', !hasBaseline && 'is-snapshot']}>
+      <dt>{metric.label[lang]}</dt>
+      <dd class="metric-delta-values">
+        {hasBaseline && (
+          <>
+            <span class="metric-delta-before"><span class="sr-only">{before}: </span>{baseline}</span>
+            <span class="metric-delta-arrow" aria-hidden="true">→</span>
+          </>
+        )}
+        <strong class="metric-delta-after">{hasBaseline && <span class="sr-only">{after}: </span>}{localize(metric.after)}</strong>
+      </dd>
+      <dd class="metric-delta-note">{localize(metric.improvement)}</dd>
+    </div>
+    );
+  })}
+</dl>
+
+<style>
+  .metric-deltas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+  }
+
+  .metric-delta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.9rem 1rem 1rem;
+    border: 1px solid var(--dossier-line);
+    border-top: 3px solid var(--dossier-blue);
+    border-radius: 6px;
+    background: var(--dossier-surface);
+  }
+
+  .metric-delta dt {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--dossier-muted);
+  }
+
+  .metric-delta dd { margin: 0; }
+
+  .metric-delta-values {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.2rem 0.5rem;
+  }
+
+  .metric-delta-before {
+    font-size: 0.9rem;
+    color: var(--dossier-muted);
+  }
+
+  .metric-delta-arrow { color: var(--dossier-muted); }
+
+  .metric-delta-after {
+    font-size: 1.35rem;
+    line-height: 1.25;
+    font-weight: 700;
+    color: var(--dossier-blue);
+    font-variant-numeric: tabular-nums;
+    word-break: keep-all;
+  }
+
+  /* A value without a baseline is a measurement, not an improvement. */
+  .metric-delta.is-snapshot { border-top-color: var(--dossier-line); }
+  .metric-delta.is-snapshot .metric-delta-after { color: var(--dossier-ink); }
+
+  .metric-delta-note {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--dossier-muted);
+    word-break: keep-all;
+  }
+</style>

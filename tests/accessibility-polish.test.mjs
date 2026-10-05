@@ -420,3 +420,21 @@ test('related links are named text links without split acronyms or duplicates', 
     for (const label of concert) assert.ok(label && !/\b[A-Z] [A-Z]\b/.test(label), `bad label "${label}"`);
   }
 });
+
+test('company case pages render investigation flows and metric deltas instead of a table', async () => {
+  for (const [slug, flows] of [['realtime-game-chat', 5], ['rds-saturation-rca', 3], ['shared-package-ci-platform', 3]]) {
+    for (const prefix of ['', 'en/']) {
+      const html = await readFile(join(dist, `${prefix}portfolio/${slug}`, 'index.html'), 'utf8');
+      assert.equal(html.match(/<ol class="case-flow"[^>]*role="list"[^>]*aria-label="(?:문제 해결 흐름|Problem-solving flow)"/g)?.length, flows, `${prefix}${slug} flows`);
+      const flowText = (html.match(/<ol class="case-flow"[\s\S]*?<\/ol>/g) ?? []).join('');
+      assert.ok(prefix ? !/기각|증상|결과/.test(flowText) : /증상/.test(flowText), `${prefix}${slug} kind labels follow the page language`);
+      const outcomes = html.match(/<section id="outcomes"[\s\S]*?<\/section>/)?.[0] ?? '';
+      assert.match(outcomes, /<dl class="metric-deltas/, `${prefix}${slug} deltas`);
+      assert.doesNotMatch(outcomes, /<table/, `${prefix}${slug} table`);
+    }
+  }
+  const concert = await readFile(join(dist, 'portfolio/concert-reservation', 'index.html'), 'utf8');
+  const snapshot = concert.match(/<div class="metric-delta is-snapshot"[\s\S]*?<\/div>/)?.[0] ?? '';
+  assert.match(snapshot, /0\.64%/, 'a metric without a baseline renders as a snapshot');
+  assert.doesNotMatch(snapshot, /metric-delta-arrow|이후: /, 'a snapshot has no arrow or after label');
+});

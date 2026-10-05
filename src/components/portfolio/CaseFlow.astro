@@ -1,0 +1,125 @@
+---
+import type { CaseFlowStep } from '../../types/portfolio';
+
+interface Props {
+  steps: CaseFlowStep[];
+  lang: 'ko' | 'en';
+}
+
+const { steps, lang } = Astro.props;
+
+const kindLabels = {
+  ko: { symptom: '증상', rejected: '기각', evidence: '계측', cause: '원인', fix: '조치', result: '결과' },
+  en: { symptom: 'Symptom', rejected: 'Ruled out', evidence: 'Evidence', cause: 'Root cause', fix: 'Fix', result: 'Result' },
+}[lang];
+---
+
+<ol class="case-flow" role="list" aria-label={lang === 'ko' ? '문제 해결 흐름' : 'Problem-solving flow'} style={`--flow-steps: ${steps.length}`}>
+  {steps.map((step) => (
+    <li class={`case-flow-step is-${step.kind}`}>
+      <span class="case-flow-kind">{kindLabels[step.kind]}<span class="sr-only">: </span></span>
+      <span class="case-flow-text">{step.text[lang]}</span>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .case-flow {
+    --flow-accent: var(--dossier-blue);
+    display: grid;
+    gap: 0.5rem;
+    margin: 0.25rem 0 1.25rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .case-flow-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--dossier-line);
+    border-left: 3px solid var(--dossier-muted);
+    border-radius: 6px;
+    background: var(--dossier-surface);
+    line-height: 1.5;
+  }
+
+  .case-flow-kind {
+    font: 600 0.7rem/1.4 var(--dossier-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dossier-muted);
+  }
+
+  .case-flow-text {
+    font-size: 0.875rem;
+    color: var(--dossier-ink);
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .case-flow-step.is-rejected {
+    border-style: dashed;
+    border-left-style: dashed;
+    background: transparent;
+  }
+
+  .case-flow-step.is-rejected .case-flow-text {
+    color: var(--dossier-muted);
+    text-decoration: line-through;
+    text-decoration-color: color-mix(in srgb, var(--dossier-muted) 60%, transparent);
+  }
+
+  .case-flow-step.is-cause { border-left-color: var(--dossier-teal-text); }
+  .case-flow-step.is-cause .case-flow-kind { color: var(--dossier-teal-text); }
+
+  .case-flow-step.is-result {
+    border-color: color-mix(in srgb, var(--flow-accent) 45%, var(--dossier-line));
+    border-left-color: var(--flow-accent);
+    background: color-mix(in srgb, var(--flow-accent) 6%, var(--dossier-surface));
+  }
+
+  .case-flow-step.is-result .case-flow-kind { color: var(--flow-accent); }
+  .case-flow-step.is-result .case-flow-text { font-weight: 600; }
+
+  @media (min-width: 1280px) {
+    .case-flow {
+      grid-template-columns: repeat(var(--flow-steps), minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .case-flow-step {
+      grid-template-columns: 1fr;
+      align-content: start;
+      gap: 0.3rem;
+      padding: 0.7rem 0.75rem 0.8rem;
+      border-left-width: 1px;
+      border-top: 3px solid var(--dossier-muted);
+    }
+
+    .case-flow-step.is-rejected { border-top-style: dashed; }
+    .case-flow-step.is-cause { border-left-color: var(--dossier-line); border-top-color: var(--dossier-teal-text); }
+    .case-flow-step.is-result { border-left-color: color-mix(in srgb, var(--flow-accent) 45%, var(--dossier-line)); border-top-color: var(--flow-accent); }
+
+    .case-flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -0.95rem;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-top: 1.5px solid var(--dossier-muted);
+      border-right: 1.5px solid var(--dossier-muted);
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .case-flow-text { font-size: 0.8125rem; }
+  }
+
+  @media print {
+    .case-flow-step { break-inside: avoid; }
+  }
+</style>

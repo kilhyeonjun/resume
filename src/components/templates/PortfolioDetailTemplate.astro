@@ -82,7 +82,7 @@ addEvidence(!isDaesinCase && projectLessons?.length, 'lessons', labels.lessons);
 addEvidence(projectGlossary?.length, 'glossary', lang === 'ko' ? '용어 풀이' : 'Glossary');
 addEvidence(project.skills?.length, 'stack', labels.skills);
 addEvidence(project.blogPosts?.length, 'related-posts', labels.relatedPosts);
-addEvidence(!isEvidenceRegister && project.links && Object.keys(project.links).length, 'related-links', labels.relatedLinks);
+addEvidence(!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && project.links && Object.keys(project.links).length, 'related-links', labels.relatedLinks);
 addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-images', labels.projectImages);
 ---
 
@@ -631,21 +631,20 @@ addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-image
     )}
 
     <!-- Related Links -->
-    {!isEvidenceRegister && project.links && Object.keys(project.links).length > 0 && (
+    {!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && project.links && Object.keys(project.links).length > 0 && (
       <section id="related-links" class="mb-10">
         <h2 class="section-title mb-6">{labels.relatedLinks}</h2>
         <ul class="space-y-3">
           {Object.entries(project.links).map(([key, url]) => (
             typeof url === 'string' && (
               <li>
-                <span class="capitalize text-gray-700 dark:text-gray-300">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
                 <a
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex align-middle ml-1 text-gray-500 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                  aria-label={key.replace(/([A-Z])/g, ' $1').trim() + (lang === 'ko' ? ' 링크' : ' link')}
+                  class="inline-flex min-h-11 items-center gap-1 text-gray-700 underline-offset-4 hover:text-primary-600 hover:underline dark:text-gray-300 dark:hover:text-primary-400"
                 >
+                  {key}
                   <ExternalLinkIcon class="h-4 w-4" />
                 </a>
               </li>

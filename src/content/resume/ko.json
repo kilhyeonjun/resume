@@ -9,12 +9,12 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://blog.kilpenguin.com"
     },
-    "summary": "6개 라이브 게임 환경(12 브랜치 운영)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 실시간 게임 채팅·마케팅 데이터 파이프라인·공통 패키지 체계를 주도하는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery Storage Read API 전환으로 TB당 조회 단가 82% 절감(공시 가격 기준), 서버리스 이관으로 처리 범위 60→360일 확장, 실시간 채팅 서버를 dev 부하 시험 20,002 동시접속 900초 유지까지 검증하고 Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 레거시 현대화, 이벤트 기반 아키텍처를 일관되게 수행했습니다. 최근에는 AI 도구를 단순 코드 생성기가 아니라 TDD·통합 테스트·리뷰·근거 검색으로 산출물을 검증하는 개발 품질 체계에 통합하고 있습니다.",
+    "summary": "6개 라이브 게임(12 브랜치)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로 실시간 채팅·마케팅 데이터 파이프라인·공통 패키지 과제를 이끄는 백엔드 엔지니어입니다. 멀티테넌트 실시간 채팅 서버를 설계해 dev 부하 시험에서 20,002 동시접속을 900초 유지했고, 배치 파이프라인을 서버리스로 이관한 사례를 Games on AWS 2025 고객 세션에서 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화·동시성 제어·레거시 현대화를 맡아 왔고, 최근에는 AI 도구 산출물을 TDD·통합 테스트·리뷰로 검증하는 팀 품질 체계를 운영합니다.",
     "coreCompetencies": [
       {
         "category": "DB 최적화·동시성 제어·분산 시스템",
         "items": [
-          "100+ 컬럼 마케팅 테이블 정규화와 인덱스 튜닝으로 조회 지연 18초→0.5초 개선",
+          "RDS 포화 2건 원인 분석: N+1·비SARGable 조건 제거로 CPU 99.8%→5~7%, 누락 인덱스 보강으로 최장 36분 풀스캔 제거",
           "Deadlock 근본 원인 분석·분산 락 정립으로 데이터 계층 병목 해결",
           "Redis Streams 기반 WAL을 4-shard Valkey 클러스터와 serverless fanout 계측으로 고도화해 실시간 채팅 메시지 순서 보장·수평 확장 (수용률 99.39→99.99%, ack p95 767ms→6.6ms)"
         ]
@@ -22,15 +22,16 @@
       {
         "category": "서버리스 아키텍처 & 비용 최적화",
         "items": [
-          "배치→EDA 전환으로 시간당 병렬 처리 Job 수 270배 확장, Lambda 하이브리드 파이프라인 도입",
-          "BigQuery 과금 모델 분석 후 Storage Read API로 읽기 경로 전환, TB당 조회 단가 82% 절감(공시 가격 기준)"
+          "배치→EDA 전환, GCP Pub/Sub→AWS Lambda/SQS 하이브리드 파이프라인 설계",
+          "BigQuery 과금 모델 분석 후 Storage Read API로 읽기 경로 전환",
+          "소비자 없는 로그 파이프라인을 noop으로 돌려 처리 비용을 차단하고, Cloud Run 과금 방식 전환으로 남은 유휴비 월 13.8만 원 추가 절감(실측)"
         ]
       },
       {
         "category": "레거시 현대화 & 안정성",
         "items": [
           "Express 단일 파일→NestJS 3단계 점진적 전환, TDD 도입으로 주요 릴리스 무장애 배포",
-          "공통 패키지 체계 정립으로 7개 프로젝트 코드 일원화 (배포 3시간→15분)"
+          "공통 패키지·CI 정비: 외부 패키지와 2년+ 어긋난 데이터 모듈을 610개 파일 일괄 마이그레이션으로 정렬해 이후 업데이트를 npm 버전 bump로 통합, CI 61% 단축(15분47초→6분6초)"
         ]
       },
       {
@@ -231,7 +232,7 @@
                 "proofLabel": "업그레이드 자동화로"
               },
               {
-                "problem": "3개 광고 플랫폼 데이터 분산에 따른 마케팅 조회 지연(18초)",
+                "problem": "3개 광고 플랫폼 데이터 분산에 따른 마케팅 조회 지연",
                 "solution": "100개 컬럼 전체 스캔 회피를 위해 읽기 경로 정규화 + 인덱스 튜닝",
                 "result": "조회 성능 97% 개선(18초→0.5초)"
               },
@@ -308,7 +309,7 @@
             "period": "2025.02 ~ 현재",
             "featured": true,
             "description": "마케팅 전용 DB 분리 기반 위에 Google Ads/Meta/TikTok 캠페인·소재·지표를 단일 시스템에서 관리하는 통합 마케팅 플랫폼",
-            "techRationale": "BigQuery Storage Read API로 TB당 조회 단가 82% 절감(공시 가격 기준). GCP Pub/Sub → AWS Lambda/SQS 하이브리드 파이프라인으로 이벤트 기반 처리 전환, Outbox 패턴으로 API 비차단 비동기 발행 설계.",
+            "techRationale": "BigQuery Storage Read API로 읽기 경로 전환. GCP Pub/Sub → AWS Lambda/SQS 하이브리드 파이프라인으로 이벤트 기반 처리 전환, Outbox 패턴으로 API 비차단 비동기 발행 설계.",
             "details": [
               {
                 "problem": "3개 광고 플랫폼 캠페인 관리 분산",
@@ -326,9 +327,9 @@
                 "result": "TB당 조회 단가 82% 절감($6.25→$1.1, 공시 가격 기준)"
               },
               {
-                "problem": "100+ 컬럼 테이블 조회 성능 저하(18초)",
+                "problem": "100+ 컬럼 테이블 조회 성능 저하",
                 "solution": "테이블 3개(메인/시계열/예측) 정규화, 인덱스+커서 페이지네이션 적용",
-                "result": "조회 성능 97% 개선(18s→0.5s)"
+                "result": "조회 성능 97% 개선(18초→0.5초)"
               },
               {
                 "problem": "마케팅 지표 아카이브 대용량 백필 중 Lambda 실행 63초·RDS CPU 99.8% 포화로 처리 ETA 15시간",
@@ -336,24 +337,9 @@
                 "result": "처리량 26배 개선(9.3→247건/분), Lambda 실행 63s→1.36s, RDS CPU 99.8%→5~7%"
               },
               {
-                "problem": "마케팅 RCP 데이터 엑셀 전용 + BigQuery 통합 테이블이 복수 소스 조합 구조라 콘솔 통합 조회 불가",
-                "solution": "엑셀 수작업·복수 소스 통합 테이블의 값 불일치 문제로, 복수 소스 결합 대신 단일 정규화 소스 테이블로 전환 + Criteria-Result 패턴 metadata API 신설로 표시 형식 하드코딩 제거",
-                "result": "콘솔 내 RCP 통합 조회 내장, 하드코딩 currency/소수점 표시를 BE metadata 기반으로 대체"
-              },
-              {
-                "problem": "국가·스토어별 플랫폼 그룹 분리로 동일 캠페인 운영에서 광고계정 선택·검증 흐름이 복잡하고 QA 데이터 복호화 실패가 코드 회귀와 섞임",
-                "solution": "BNID/BNKR/BNTW를 단일 플랫폼 그룹으로 병합하고 계정 라벨링 API·계정 선택 UX·sandbox-safe 토큰 재암호화 검증을 분리 수행",
-                "result": "566개 캠페인 기준 Meta 3개·Google 2개·TikTok 2개 계정 매핑 검증, legacy 그룹 잔여 계정 0개 확인"
-              },
-              {
                 "problem": "TikTok 배포가 외부 API 부분 성공 후 내부 저장 전에 실패하면 재시도 시 고아 campaign/adgroup/ad가 누적되거나 배포 가드에 막힘",
                 "solution": "Smart+ V2는 campaign/adgroup/ad 레벨별 get-or-create와 즉시 영속화, v1은 campaign-level 재사용, regular는 ad-level 플래그로 경로별 멱등성 통일",
                 "result": "부분 실패 재시도 경로 단위 테스트 31건 통과, 기존 고아 campaign 2개·adgroup 2개 재발 방지 정책 적용"
-              },
-              {
-                "problem": "외부 광고 API 범위 확장 시 수동 타입과 런타임 검증 의존이 섞여 campaign/adgroup/ad/creative 호출 레이어의 타입 drift와 라이브 호출 실패 위험 증가",
-                "solution": "공식 Swagger 기반 Orval+Zod codegen을 기본 경로로 두고 spec 공백 API는 manual spec으로 보강해 Smart+·표준 배포·파일·OAuth·creative/playable 경로를 SDK 호출로 전환",
-                "result": "24개 endpoint group 전환 완료 및 preflight 방어선 정리로 외부 API 타입·검증 경로 표준화"
               },
               {
                 "problem": "2,637만 행/27GB audit log 테이블에서 parent_id 조건 인덱스 부재로 화면 조회가 대량 풀스캔과 장시간 IO 포화를 유발",

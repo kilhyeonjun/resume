@@ -9,12 +9,12 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://blog.kilpenguin.com"
     },
-    "summary": "Backend engineer designing and operating shared backend platforms across 6 live game environments (12 branches), currently leading the Platform Part across real-time game chat, marketing data pipelines, and common package systems. At GameDuo, cut BigQuery per-TB read pricing by 82% (list price) via Storage Read API migration, expanded pipeline coverage from 60 to 360 days through serverless migration, validated a real-time chat server holding 20,002 CCU for 900s in a dev load test, and presented the case study at Games on AWS 2025.\n\nOver {{CAREER_DURATION}} across education, healthcare, clinical trials, and gaming, I have consistently delivered DB optimization, concurrency control, legacy modernization, and event-driven architecture. Recently I have integrated AI tools into an engineering quality system that verifies outputs through TDD, integration tests, review gates, and evidence search rather than unchecked code generation.",
+    "summary": "Backend engineer who designs and runs a shared backend platform for 6 live games (12 branches) and leads the new Platform Part across real-time chat, marketing data pipelines, and shared packages. Designed a multi-tenant real-time chat server that held 20,002 CCU for 900s in a dev load test, and presented a batch-to-serverless pipeline migration at a Games on AWS 2025 customer session.\n\nOver {{CAREER_DURATION}} across education, healthcare, clinical trials, and gaming, I have owned DB optimization, concurrency control, and legacy modernization, and I now run a team quality system that verifies AI-assisted output through TDD, integration tests, and review.",
     "coreCompetencies": [
       {
         "category": "DB Optimization, Concurrency & Distributed Systems",
         "items": [
-          "Normalized and indexed a 100+ column marketing table, reducing query latency from 18s to 0.5s",
+          "Root-caused two RDS saturation cases: removing N+1 and non-SARGable filters cut CPU 99.8%→5~7%, and adding a missing index eliminated full scans of up to 36 minutes",
           "Deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks",
           "Advanced Redis Streams WAL with a 4-shard Valkey cluster and serverless fanout instrumentation to preserve real-time chat ordering and horizontal scale (accept rate 99.39→99.99%, ack p95 767ms→6.6ms)"
         ]
@@ -22,15 +22,16 @@
       {
         "category": "Serverless Architecture & Cost Optimization",
         "items": [
-          "Batch-to-EDA migration scaling hourly concurrent job throughput 270x, Lambda hybrid pipeline design",
-          "BigQuery pricing analysis and read-path switch to Storage Read API — 82% lower per-TB read price (list price)"
+          "Batch-to-EDA migration with a hybrid GCP Pub/Sub → AWS Lambda/SQS pipeline",
+          "BigQuery pricing analysis and read-path switch to the Storage Read API",
+          "Switched a log pipeline with no consumers to a no-op to stop processing costs, then changed Cloud Run billing mode to cut the remaining idle cost by a measured ₩138K per month"
         ]
       },
       {
         "category": "Legacy Modernization & Reliability",
         "items": [
           "Express monolith to NestJS via 3-stage progressive migration, TDD-driven incident-free deployments during major releases",
-          "Shared package system unifying 7 projects, cutting deployment from 3h to 15min"
+          "Shared packages and CI: realigned data modules that had drifted 2+ years from the external package through a 610-file migration, so later updates became one npm version bump; CI time dropped 61% (15m47s→6m06s)"
         ]
       },
       {
@@ -231,7 +232,7 @@
                 "proofLabel": "Automated upgrades"
               },
               {
-                "problem": "Marketing query latency (18s) from fragmented ad platform data (Google Ads/Meta/TikTok)",
+                "problem": "Slow marketing queries over fragmented ad platform data (Google Ads/Meta/TikTok)",
                 "solution": "Normalized read path + index tuning to avoid full-scan on 100-column table",
                 "result": "Performance improved 97% (18s→0.5s)"
               },
@@ -308,7 +309,7 @@
             "period": "2025.02 ~ Present",
             "featured": true,
             "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system, built on dedicated marketing DB separation",
-            "techRationale": "Cut per-TB read price 82% (list price) via Storage Read API migration. Designed hybrid GCP Pub/Sub → AWS Lambda/SQS pipeline for event-driven processing with Outbox pattern for non-blocking async event publishing.",
+            "techRationale": "Moved reads to the BigQuery Storage Read API. Designed hybrid GCP Pub/Sub → AWS Lambda/SQS pipeline for event-driven processing with Outbox pattern for non-blocking async event publishing.",
             "details": [
               {
                 "problem": "Fragmented ad platform management across Google Ads/Meta/TikTok",
@@ -326,7 +327,7 @@
                 "result": "Cut BigQuery per-TB read price 82% ($6.25→$1.1, list price)"
               },
               {
-                "problem": "Marketing query latency (18s) from 100+ column denormalized table",
+                "problem": "Slow marketing queries on a 100+ column denormalized table",
                 "solution": "Normalized table into main/time-series/prediction, tuned indexes + cursor pagination",
                 "result": "Performance improved 97% (18s→0.5s)"
               },
@@ -336,24 +337,9 @@
                 "result": "Improved throughput 26x (9.3→247/min), Lambda runtime 63s→1.36s, RDS CPU 99.8%→5~7%"
               },
               {
-                "problem": "Marketing RCP data was spreadsheet-only, and the BigQuery aggregation table combined multiple sources — blocking unified console queries",
-                "solution": "Switched to a single normalized BigQuery source table over combining multiple sources — which had produced value mismatches against the manual Excel flow — and added Criteria-Result metadata APIs to remove hardcoded display formatting",
-                "result": "Embedded unified RCP queries into the console and replaced hardcoded currency/decimal display with BE metadata-driven formatting"
-              },
-              {
-                "problem": "Country/store-level platform groups made account selection and validation complex for the same campaign workflow, while QA token decryption failures blurred data setup issues with code regressions",
-                "solution": "Merged BNID/BNKR/BNTW into one platform group and separated account-labeling APIs, account-selection UX, and sandbox-safe token re-encryption verification",
-                "result": "Validated mappings for 566 campaigns across 3 Meta, 2 Google, and 2 TikTok accounts, with 0 remaining legacy-group accounts"
-              },
-              {
                 "problem": "TikTok deployments created orphan campaign/adgroup/ad resources when an external API partially succeeded before internal persistence, or retries were blocked by deployment guards",
                 "solution": "Unified idempotency per deployment path: Smart+ V2 level-by-level get-or-create with immediate persistence, v1 campaign-level reuse, and regular ad-level flags",
                 "result": "Passed 31 unit tests for partial-failure retries and applied a policy to prevent recurrence of 2 orphan campaigns and 2 orphan ad groups"
-              },
-              {
-                "problem": "As external ad-API coverage expanded, manual types and runtime validation were mixed across campaign/adgroup/ad/creative callers, increasing type-drift and live-call failure risk",
-                "solution": "Standardized official Swagger-based Orval+Zod codegen as the default path, supplemented missing-spec APIs with manual specs, and migrated Smart+, standard deployment, file, OAuth, and creative/playable flows to SDK calls",
-                "result": "Completed conversion across 24 endpoint groups and standardized external-API typing, validation, and preflight guardrails"
               },
               {
                 "problem": "A 26.37M-row / 27GB audit-log table lacked an index for parent-based lookups, causing page queries to trigger large full scans and prolonged IO saturation",

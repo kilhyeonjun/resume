@@ -83,8 +83,8 @@
             {
               "kind": "cause",
               "text": {
-                "ko": "싱글스레드라 코어 증설로는 해소 불가",
-                "en": "Single-threaded: more cores would not help"
+                "ko": "모든 쓰기가 싱글스레드 단일 노드에 집중",
+                "en": "Every write lands on one single-threaded node"
               }
             },
             {
@@ -127,8 +127,8 @@
             {
               "kind": "rejected",
               "text": {
-                "ko": "batching window 조정",
-                "en": "Batching-window tuning"
+                "ko": "batching window 조정 · 효과 없음",
+                "en": "Batching-window tuning · no effect"
               }
             },
             {
@@ -178,8 +178,8 @@
             {
               "kind": "evidence",
               "text": {
-                "ko": "attribution 계측 후 500 CCU 단계 부하로 교차 검증",
-                "en": "Attribution metrics, then stepped 500-CCU load runs"
+                "ko": "attribution 계측 · 고정 채널 500 CCU와 단계 부하 교차 검증",
+                "en": "Attribution metrics · fixed 500-CCU channel and staged load, cross-checked"
               }
             },
             {
@@ -485,8 +485,8 @@
             {
               "kind": "rejected",
               "text": {
-                "ko": "540MB bulk insert 트랜잭션",
-                "en": "540MB bulk-insert transaction"
+                "ko": "가설: 540MB bulk insert 트랜잭션",
+                "en": "Hypothesis: 540MB bulk-insert transaction"
               }
             },
             {
@@ -499,8 +499,8 @@
             {
               "kind": "cause",
               "text": {
-                "ko": "30일 N+1 · DATE()로 인덱스 미사용",
-                "en": "30-day N+1 · DATE() bypasses the index"
+                "ko": "30일 N+1 · DATE()로 인덱스 미사용 · 전체 컬럼 select",
+                "en": "30-day N+1 · DATE() bypasses the index · full-column select"
               }
             },
             {
@@ -587,8 +587,8 @@
             {
               "kind": "symptom",
               "text": {
-                "ko": "Read IOPS 190~470/s · 약 60초 로그인 불가",
-                "en": "Read IOPS 190–470/s · ~60s of failed logins"
+                "ko": "Read IOPS 190~470/s · 일부 사용자 약 60초 로그인 불가",
+                "en": "Read IOPS 190–470/s · some users unable to log in for ~60s"
               }
             },
             {
@@ -615,8 +615,8 @@
             {
               "kind": "result",
               "text": {
-                "ko": "버전 1개 39ms(일괄 10.1초) · 실행 길이 상한",
-                "en": "39ms per version (10.1s batched) · bounded runs"
+                "ko": "실행당 길이 상한 · 총 쿼리 시간은 크게 줄지 않음",
+                "en": "Bounded run length · total query time barely drops"
               }
             }
           ]
@@ -901,8 +901,8 @@
             {
               "kind": "result",
               "text": {
-                "ko": "테스트 job 15분47초→6분6초(61%) · 978 tests 통과",
-                "en": "Test job 15m47s→6m06s (61%) · 978 tests pass"
+                "ko": "테스트 job 평균 15분47초→6분6초(61%) · 978 tests 통과",
+                "en": "Avg test job 15m47s→6m06s (61%) · 978 tests pass"
               }
             }
           ]

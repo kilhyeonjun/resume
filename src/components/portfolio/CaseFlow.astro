@@ -14,10 +14,10 @@ const kindLabels = {
 }[lang];
 ---
 
-<ol class="case-flow" aria-label={lang === 'ko' ? '조사 흐름' : 'Investigation flow'} style={`--flow-steps: ${steps.length}`}>
+<ol class="case-flow" role="list" aria-label={lang === 'ko' ? '문제 해결 흐름' : 'Problem-solving flow'} style={`--flow-steps: ${steps.length}`}>
   {steps.map((step) => (
     <li class={`case-flow-step is-${step.kind}`}>
-      <span class="case-flow-kind">{kindLabels[step.kind]}</span>
+      <span class="case-flow-kind">{kindLabels[step.kind]}<span class="sr-only">: </span></span>
       <span class="case-flow-text">{step.text[lang]}</span>
     </li>
   ))}
@@ -85,7 +85,7 @@ const kindLabels = {
   .case-flow-step.is-result .case-flow-kind { color: var(--flow-accent); }
   .case-flow-step.is-result .case-flow-text { font-weight: 600; }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1280px) {
     .case-flow {
       grid-template-columns: repeat(var(--flow-steps), minmax(0, 1fr));
       gap: 1.1rem;

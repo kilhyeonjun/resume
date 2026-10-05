@@ -354,15 +354,22 @@ test('built public routes exclude hidden projects and print derivatives from dis
 test('company case flows restate only figures from their own problem-solving entry', async () => {
   const data = JSON.parse(await read('src/data/portfolio.json'));
   const numbers = (text) => text.match(/\d+(?:[.,]\d+)*/g) ?? [];
+  // A before→after pair must appear as the same pair in the source, not as two loose numbers.
+  const compact = (text) => text.replace(/\s+/g, '');
+  const pairs = (text) => compact(text).match(/\d[\d.,]*[A-Za-z가-힣%]*→\d[\d.,]*[A-Za-z가-힣%]*/g) ?? [];
   for (const slug of ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform']) {
     const project = data.projects.find((candidate) => candidate.slug === slug);
     for (const [index, entry] of project.problemSolving.entries()) {
       assert.ok(entry.flow?.some((step) => step.kind === 'result'), `${slug}[${index}] needs a result step`);
       for (const lang of ['ko', 'en']) {
-        const source = new Set(numbers([entry.problem, entry.process, entry.result].map((part) => part[lang]).join(' ')));
+        const sourceText = [entry.problem, entry.process, entry.result].map((part) => part[lang]).join(' ');
+        const source = new Set(numbers(sourceText));
         for (const step of entry.flow) {
           for (const figure of numbers(step.text[lang])) {
             assert.ok(source.has(figure), `${slug}[${index}] ${lang} "${step.text[lang]}" cites ${figure} not in the entry`);
+          }
+          for (const pair of pairs(step.text[lang])) {
+            assert.ok(compact(sourceText).includes(pair), `${slug}[${index}] ${lang} pair ${pair} not in the entry`);
           }
         }
       }

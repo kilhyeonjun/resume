@@ -350,3 +350,22 @@ test('built public routes exclude hidden projects and print derivatives from dis
     assert.equal(robotsMetaCount(html), 1, path);
   }
 });
+
+test('company case flows restate only figures from their own problem-solving entry', async () => {
+  const data = JSON.parse(await read('src/data/portfolio.json'));
+  const numbers = (text) => text.match(/\d+(?:[.,]\d+)*/g) ?? [];
+  for (const slug of ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform']) {
+    const project = data.projects.find((candidate) => candidate.slug === slug);
+    for (const [index, entry] of project.problemSolving.entries()) {
+      assert.ok(entry.flow?.some((step) => step.kind === 'result'), `${slug}[${index}] needs a result step`);
+      for (const lang of ['ko', 'en']) {
+        const source = new Set(numbers([entry.problem, entry.process, entry.result].map((part) => part[lang]).join(' ')));
+        for (const step of entry.flow) {
+          for (const figure of numbers(step.text[lang])) {
+            assert.ok(source.has(figure), `${slug}[${index}] ${lang} "${step.text[lang]}" cites ${figure} not in the entry`);
+          }
+        }
+      }
+    }
+  }
+});

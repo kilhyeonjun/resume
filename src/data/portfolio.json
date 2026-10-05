@@ -64,7 +64,44 @@
           "result": {
             "ko": "ACK p95 767.6ms→6.6ms, 수용률 99.39%→99.994%(4,787→5,912 msg/s), WAL 적체 80,000→2,838건, 가장 바쁜 샤드 EngineCPU 74.7%",
             "en": "ACK p95 767.6ms → 6.6ms, accept rate 99.39% → 99.994% (4,787 → 5,912 msg/s), WAL backlog 80,000 → 2,838, hottest shard EngineCPU 74.7%"
-          }
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "6K msg/s에서 ACK p95 767.6ms · WAL 적체 80,000건",
+                "en": "ACK p95 767.6ms at 6K msg/s · 80,000-entry WAL backlog"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "Valkey 단일 노드 EngineCPU 99.9%",
+                "en": "Single Valkey node EngineCPU 99.9%"
+              }
+            },
+            {
+              "kind": "cause",
+              "text": {
+                "ko": "싱글스레드라 코어 증설로는 해소 불가",
+                "en": "Single-threaded: more cores would not help"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "채널 해시 4-shard · 같은 hash tag로 원자 append",
+                "en": "Channel-hash 4 shards · one hash tag keeps appends atomic"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "ACK p95 6.6ms · 수용률 99.994%",
+                "en": "ACK p95 6.6ms · 99.994% accepted"
+              }
+            }
+          ]
         },
         {
           "problem": {
@@ -78,7 +115,44 @@
           "result": {
             "ko": "sandbox 부하에서 IteratorAge 658s→35s(-95%), Lambda 동시 실행 2→8. 이후 4K CCU 부하에서 outbox 테이블 쓰기 throttle(37K건)이 확인되자 outbox를 없애고 메시지 테이블 Stream CDC로 전환했습니다.",
             "en": "In a sandbox load run: IteratorAge 658s → 35s (−95%) and Lambda concurrency 2 → 8. When a 4K CCU run later showed 37K outbox-table write throttles, the outbox was removed in favor of stream CDC from the messages table."
-          }
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "IteratorAge 11분 고착 · 동시 실행 2/100",
+                "en": "IteratorAge stuck at 11 min · 2 of 100 concurrent"
+              }
+            },
+            {
+              "kind": "rejected",
+              "text": {
+                "ko": "batching window 조정",
+                "en": "Batching-window tuning"
+              }
+            },
+            {
+              "kind": "cause",
+              "text": {
+                "ko": "파티션 키 tenant#날짜로 하루치 쓰기가 샤드 하나에 집중",
+                "en": "Partition key tenant#date put a whole day on one shard"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "0~9 suffix로 10개 파티션 분산",
+                "en": "0–9 suffix spreads writes over 10 partitions"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "IteratorAge 658s→35s · 동시 실행 2→8",
+                "en": "IteratorAge 658s→35s · concurrency 2→8"
+              }
+            }
+          ]
         },
         {
           "problem": {
@@ -92,7 +166,44 @@
           "result": {
             "ko": "pool 4개에서 command queue 5,940→716, 878,205건 처리 중 유실 0, sandbox 검증 19/0/0",
             "en": "With a pool of 4: command queue 5,940 → 716, zero loss across 878,205 messages, sandbox verification 19/0/0"
-          }
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "hot-channel에서 ordering accept 지연",
+                "en": "Ordering accept slowed on a hot channel"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "attribution 계측 후 500 CCU 단계 부하로 교차 검증",
+                "en": "Attribution metrics, then stepped 500-CCU load runs"
+              }
+            },
+            {
+              "kind": "cause",
+              "text": {
+                "ko": "단일 연결 · 0.5 vCPU event loop 포화",
+                "en": "One connection · saturated 0.5 vCPU event loop"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "연결 pool 4개로 분리",
+                "en": "Split into a 4-connection pool"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "command queue 5,940→716 · 878,205건 유실 0",
+                "en": "Command queue 5,940→716 · zero lost of 878,205"
+              }
+            }
+          ]
         },
         {
           "problem": {
@@ -106,7 +217,44 @@
           "result": {
             "ko": "수정 적용 후 OOM 0건",
             "en": "OOM events dropped to zero after the fix"
-          }
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "gateway task OOM kill 반복",
+                "en": "Gateway tasks kept getting OOM-killed"
+              }
+            },
+            {
+              "kind": "rejected",
+              "text": {
+                "ko": "outbound queue 누적 가설 · 검증 run 발동 0회",
+                "en": "Outbound-queue buildup · zero triggers in the validation run"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "heap snapshot · 진단 로그 · 비교 측정",
+                "en": "Heap snapshots · diagnostic logs · comparison runs"
+              }
+            },
+            {
+              "kind": "cause",
+              "text": {
+                "ko": "관측 스택 retained heap · V8 한도와 1GiB 불일치",
+                "en": "Observability retained heap · V8 limit vs 1GiB mismatch"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "수정 적용 후 OOM 0건",
+                "en": "No OOM kills after the fix"
+              }
+            }
+          ]
         },
         {
           "problem": {
@@ -120,7 +268,37 @@
           "result": {
             "ko": "20,002 CCU 900초 유지. 별도 확장 시험에서는 16분 39초 동안 연결 손실 0이었고, send 23건이 backpressure로 거부돼 클라이언트 재시도로 복구됐습니다.",
             "en": "Held 20,002 CCU for 900s. In the separate scale-up run, no connections were lost over 16m39s; 23 sends were rejected by backpressure and recovered through client retries."
-          }
+          },
+          "flow": [
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "dev 20K CCU 부하 시험",
+                "en": "20K CCU load test in dev"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "20,002 CCU 900초 유지",
+                "en": "20,002 CCU held for 900s"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "Valkey 노드 온라인 스케일업",
+                "en": "Online Valkey node scale-up"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "16분 39초 동안 연결 손실 0",
+                "en": "No connections lost over 16m39s"
+              }
+            }
+          ]
         }
       ],
       "metrics": [
@@ -295,7 +473,51 @@
           "result": {
             "ko": "Lambda 실행 p50 63.2s→1.36s(p99 67.0s→2.99s), 처리량 9.3→247건/분(26배). 백필은 15,333건 완료·대기 0건으로 끝났고, 작업이 끝난 뒤 RDS CPU는 유휴 5~7%였습니다.",
             "en": "Lambda p50 63.2s → 1.36s (p99 67.0s → 2.99s), throughput 9.3 → 247 items/min (26x). The backfill finished with 15,333 completed and 0 pending, and once the work was done RDS CPU sat idle at 5–7%."
-          }
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "CPU 99.8% · 9.3건/분 · ETA 15시간",
+                "en": "CPU 99.8% · 9.3 items/min · 15h ETA"
+              }
+            },
+            {
+              "kind": "rejected",
+              "text": {
+                "ko": "540MB bulk insert 트랜잭션",
+                "en": "540MB bulk-insert transaction"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "Performance Insights: 조회 쿼리 1개가 부하 99.5%",
+                "en": "Performance Insights: one read query, 99.5% of load"
+              }
+            },
+            {
+              "kind": "cause",
+              "text": {
+                "ko": "30일 N+1 · DATE()로 인덱스 미사용",
+                "en": "30-day N+1 · DATE() bypasses the index"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "IN() 단일 배치 · 날짜 직접 비교 · 필요 컬럼만",
+                "en": "One IN() batch · direct date compare · needed columns only"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "247건/분(26배) · p50 63.2s→1.36s",
+                "en": "247 items/min (26x) · p50 63.2s→1.36s"
+              }
+            }
+          ]
         },
         {
           "problem": {
@@ -309,7 +531,44 @@
           "result": {
             "ko": "live에 인덱스가 생성되고 마이그레이션 기록이 남은 것을 확인했고, EXPLAIN이 type=range, rows=3으로 바뀌어 풀스캔 장애가 해소됐습니다. 실제 DDL을 실행하는 통합 테스트도 추가했습니다.",
             "en": "Confirmed the index exists on live and the migration is recorded; EXPLAIN changed to type = range, rows = 3, ending the full-scan incident. An integration test that runs the real DDL was added."
-          }
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "2,637만 행 풀스캔 · 최장 36분 · IO 포화",
+                "en": "26.37M-row full scans · up to 36 min · IO saturated"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "복합 인덱스가 사라진 경위 추적",
+                "en": "Traced how the composite index vanished"
+              }
+            },
+            {
+              "kind": "cause",
+              "text": {
+                "ko": "자동 생성 마이그레이션이 미선언 인덱스를 drift로 DROP",
+                "en": "An auto-generated migration dropped the undeclared index as drift"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "엔티티에 선언 · 27GB DDL 저부하 시간 선생성",
+                "en": "Declared on the entity · 27GB DDL prebuilt off-peak"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "EXPLAIN type=range, rows=3",
+                "en": "EXPLAIN type=range, rows=3"
+              }
+            }
+          ]
         },
         {
           "problem": {
@@ -323,7 +582,44 @@
           "result": {
             "ko": "live EXPLAIN에서 버전별 쿼리는 버전 1개 기준 39ms, 기존 159개 버전 일괄 쿼리는 10.1초로 측정됐습니다. 버전을 모두 돌면 한 실행의 총 쿼리 시간은 크게 줄지 않으므로, 개선의 핵심은 페이지네이션과 실행당 상한으로 한 실행의 길이를 제한한 것입니다. 통합 테스트는 모두 통과했습니다.",
             "en": "On live EXPLAIN, the per-version query took 39ms for one version, while the old bundled query over 159 versions took 10.1s. Running every version does not shrink a run's total query time much, so the real fix is that pagination and a per-run cap bound the length of each run. All integration tests passed."
-          }
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "Read IOPS 190~470/s · 약 60초 로그인 불가",
+                "en": "Read IOPS 190–470/s · ~60s of failed logins"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "10초 주기에 쿼리 100~224초 · 실행 중첩",
+                "en": "10s interval, 100–224s queries · runs overlap"
+              }
+            },
+            {
+              "kind": "cause",
+              "text": {
+                "ko": "159개 버전을 IN 하나로 묶어 풀스캔",
+                "en": "One IN over 159 versions forced a full scan"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "버전별 쿼리 · 페이지네이션 · 실행당 500건 상한",
+                "en": "Per-version query · pagination · 500-per-run cap"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "버전 1개 39ms(일괄 10.1초) · 실행 길이 상한",
+                "en": "39ms per version (10.1s batched) · bounded runs"
+              }
+            }
+          ]
         }
       ],
       "metrics": [
@@ -498,7 +794,37 @@
           "result": {
             "ko": "내부 모듈 610개 파일과 로컬 마이그레이션 47개를 지웠고, 이후 신규 기능은 패키지 버전 bump로 들여올 수 있게 됐습니다. 이관 회귀로 live 관리자 기능에 500 오류가 났을 때는 보고 82분 만에 hotfix를 배포했고, 이관을 포함한 관련 작업 9건으로 나눠 추적했습니다.",
             "en": "Deleted the 610 internal-module files and 47 local migrations; new features can now come in with a package version bump. When the migration caused a regression that returned 500 errors in a live admin feature, a hotfix shipped 82 minutes after the report, and the work was tracked as 9 related tasks including the migration itself."
-          }
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "2년+ 어긋난 fork · 610개 파일 · import 310+",
+                "en": "Fork 2+ years behind · 610 files · 310+ imports"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "내부 모듈 → 패키지 → 최신 버전, 두 단계 이관",
+                "en": "Module → package → latest version, in two steps"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "게임 고유 기능은 wrapper 6개로 유지",
+                "en": "Game-specific features kept in six thin wrappers"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "610개 파일·마이그레이션 47개 삭제 · 버전 bump로 반영",
+                "en": "610 files and 47 migrations deleted · features via version bump"
+              }
+            }
+          ]
         },
         {
           "problem": {
@@ -512,7 +838,30 @@
           "result": {
             "ko": "업그레이드가 수동 약 3시간에서 자동 약 15분으로 줄었습니다.",
             "en": "Upgrades went from about 3 hours by hand to about 15 minutes automated."
-          }
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "7개 프로젝트 · 브랜치 최대 12개 수동 · 약 3시간",
+                "en": "7 projects · up to 12 branches by hand · ~3h"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "workflow_dispatch + matrix로 7개 병렬",
+                "en": "workflow_dispatch + a 7-project matrix in parallel"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "약 15분 · Job Summary에 skip/upgrade/downgrade",
+                "en": "~15 min · skip/upgrade/downgrade in the Job Summary"
+              }
+            }
+          ]
         },
         {
           "problem": {
@@ -526,7 +875,37 @@
           "result": {
             "ko": "파일당 컴파일 15초→1~3초, 4개 shard의 테스트 job 평균 15분47초→6분6초(61% 단축), 빌드·품질 검사를 포함한 CI 전체 약 16분→약 7분. 81 suites·978 tests 전체 통과.",
             "en": "Per-file compile 15s → 1–3s, average test job across 4 shards 15m47s → 6m06s (61% faster), whole CI including build and quality checks about 16 → about 7 minutes. All 81 suites / 978 tests passing."
-          }
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "순수 단위 테스트도 15~19초",
+                "en": "Even pure unit tests took 15–19s"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "ts-jest 컴파일이 테스트 시간의 53% · 파일당 약 15초",
+                "en": "ts-jest compile: 53% of test time · ~15s per file"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "isolatedModules · 타입 검사는 tsc --noEmit 단계로",
+                "en": "isolatedModules · type checks moved to tsc --noEmit"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "테스트 job 15분47초→6분6초(61%) · 978 tests 통과",
+                "en": "Test job 15m47s→6m06s (61%) · 978 tests pass"
+              }
+            }
+          ]
         }
       ],
       "metrics": [

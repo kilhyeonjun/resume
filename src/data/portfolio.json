@@ -232,10 +232,417 @@
       }
     },
     {
+      "slug": "rds-saturation-rca",
+      "name": {
+        "ko": "DB 포화 원인 분석 — 계측으로 좁히고 쿼리·인덱스로 푼 3건",
+        "en": "Database Saturation Root-Cause Analysis — Three Cases Fixed in Queries and Indexes"
+      },
+      "type": "team",
+      "featured": true,
+      "printOrder": 2,
+      "summary": {
+        "ko": "RDS CPU·IO 포화 3건을 Performance Insights·EXPLAIN으로 원인 쿼리까지 좁혀 해결: 백필 처리량 26배(9.3→247건/분), 2,637만 행 감사 로그의 최장 36분 풀스캔 제거(EXPLAIN rows=3)",
+        "en": "Traced three RDS CPU/IO saturation cases to the offending query with Performance Insights and EXPLAIN: backfill throughput up 26x (9.3 → 247 items/min), and full scans of up to 36 minutes on a 26.37M-row audit log removed (EXPLAIN rows = 3)."
+      },
+      "description": {
+        "ko": "마케팅 지표 서비스와 게임 서버의 MySQL(RDS)에서 생긴 포화 3건을 같은 순서로 다뤘습니다. 부하를 만든 쿼리를 계측으로 먼저 특정하고, 쿼리 형태·인덱스·실행 단위를 고친 뒤, 같은 문제가 다시 생기는 경로를 막았습니다. 한 건은 live 장애, 한 건은 sandbox 장애, 한 건은 대량 백필 중 병목이며 환경은 항목마다 표기했습니다. 테이블·메서드 이름 같은 회사 내부 식별자는 일반 명칭으로 바꿨습니다.",
+        "en": "Three saturation cases on MySQL (RDS), across a marketing-metrics service and a game server, handled in the same order: identify the query creating the load with instrumentation first, fix the query shape, index, or unit of work, then close the path that would bring the problem back. One was a live incident, one a sandbox incident, and one a bottleneck during a large backfill; each item names its environment. Internal identifiers such as table and method names are replaced with generic names."
+      },
+      "role": {
+        "ko": "Platform Part 리더 · 원인 분석·수정·재발 방지 직접 수행",
+        "en": "Platform Part lead · hands-on root-cause analysis, fixes, and recurrence guards"
+      },
+      "period": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "skills": [
+        "MySQL",
+        "AWS RDS",
+        "Performance Insights",
+        "TypeORM",
+        "AWS Lambda",
+        "TypeScript"
+      ],
+      "highlights": {
+        "ko": [
+          "백필 중 RDS CPU 99.8% 포화: Performance Insights로 부하의 99.5%를 낸 조회 쿼리를 특정하고 N+1·DATE() 인덱스 미스를 제거해 처리량 9.3→247건/분(26배), Lambda p50 63.2s→1.36s",
+          "live 장애: 자동 생성 마이그레이션이 drift로 지운 인덱스 때문에 2,637만 행 감사 로그에서 최장 36분 풀스캔 — 인덱스 복구 후 EXPLAIN rows=3",
+          "sandbox 장애: 10초 주기 스케줄러가 159개 버전을 한 쿼리로 묶어 100~224초씩 겹쳐 돌며 Read IOPS 190~470/s 포화 — 버전별 쿼리와 실행당 상한으로 실행 길이를 제한",
+          "재발 방지: 인덱스를 엔티티에 선언해 drift를 막고, 실제 DDL 통합 테스트와 실행당 생성 요청 상한(500건)을 추가"
+        ],
+        "en": [
+          "RDS CPU pinned at 99.8% during a backfill: Performance Insights put 99.5% of the load on one read query; removing its N+1 pattern and DATE() index miss raised throughput 9.3 → 247 items/min (26x) and cut Lambda p50 63.2s → 1.36s",
+          "Live incident: an index dropped as drift by an auto-generated migration left a 26.37M-row audit log open to full scans of up to 36 minutes; after restoring it, EXPLAIN shows rows = 3",
+          "Sandbox incident: a 10-second scheduler bundled 159 versions into one query that ran 100–224s, overlapped itself, and saturated Read IOPS at 190–470/s; per-version queries and a per-run cap now bound each run",
+          "Recurrence guards: declared the index on the entity so it cannot drift away, and added a real-DDL integration test and a 500-request cap per run"
+        ]
+      },
+      "problemSolving": [
+        {
+          "problem": {
+            "ko": "마케팅 지표 아카이브 백필 중 Lambda 실행이 63초, 처리량이 분당 9.3건에 머물러 남은 작업의 ETA가 15시간이었습니다. 처음 세운 가설은 대형 bulk insert 트랜잭션(540MB)이었지만 RDS CPU가 99.8%에 붙어 있었습니다.",
+            "en": "During a marketing-metrics archive backfill, Lambda runs took 63s and throughput sat at 9.3 items/min, putting the remaining work at a 15-hour ETA. The first hypothesis was a large (540MB) bulk-insert transaction, but RDS CPU was pinned at 99.8%."
+          },
+          "process": {
+            "ko": "Performance Insights에서 부하의 99.5%가 일자별 최신 결과를 찾는 조회 쿼리 하나에서 나오는 것을 확인했습니다. 30일을 하루씩 도는 N+1, 날짜 컬럼을 DATE()로 감싸 인덱스를 타지 못하는 조건, 압축된 대용량 결과 컬럼 전체 select가 겹쳐 있었습니다. 30일을 IN() 단일 배치로 조회하고 날짜는 직접 비교하며 필요한 컬럼만 select한 뒤, 일자별 최신 버전은 메모리에서 골랐습니다. bulk insert도 500건 단위로 나눴습니다.",
+            "en": "Performance Insights showed 99.5% of the load coming from one query that looked up the latest result per day. It combined an N+1 loop over 30 days, a DATE()-wrapped date condition that could not use the index, and a select of the full compressed result column. I replaced it with one IN() batch for the 30 days, direct date comparison, and a minimal column list, then picked the latest version per day in memory. Bulk inserts were also split into chunks of 500."
+          },
+          "result": {
+            "ko": "Lambda 실행 p50 63.2s→1.36s(p99 67.0s→2.99s), 처리량 9.3→247건/분(26배). 백필은 15,333건 완료·대기 0건으로 끝났고, 작업이 끝난 뒤 RDS CPU는 유휴 5~7%였습니다.",
+            "en": "Lambda p50 63.2s → 1.36s (p99 67.0s → 2.99s), throughput 9.3 → 247 items/min (26x). The backfill finished with 15,333 completed and 0 pending, and once the work was done RDS CPU sat idle at 5–7%."
+          }
+        },
+        {
+          "problem": {
+            "ko": "live 콘솔의 감사 로그 화면을 한 번 열 때마다 2,637만 행/27GB 테이블을 풀스캔했고, 동시 쿼리 4개가 최장 36분 쌓이면서 IO 포화와 INSERT commit 지연이 생겼습니다.",
+            "en": "Each open of the audit-log screen in the live console full-scanned a 26.37M-row, 27GB table; four concurrent queries piled up for as long as 36 minutes, saturating IO and delaying INSERT commits."
+          },
+          "process": {
+            "ko": "부모 ID 조건에 쓰던 복합 인덱스가 사라진 경위를 추적해, 이전 자동 생성 마이그레이션이 엔티티에 선언되지 않은 인덱스를 drift로 보고 DROP한 것을 찾았습니다. 복구 마이그레이션의 CREATE INDEX에도 ALGORITHM/LOCK 구문 오류가 있었습니다. 인덱스를 엔티티에 선언해 다시 지워지지 않게 하고, 27GB online DDL은 저부하 시간대에 먼저 수동 생성한 뒤 배포 마이그레이션이 이미 있는 인덱스를 no-op으로 넘기게 했습니다.",
+            "en": "Tracing why the composite index on the parent-ID condition had disappeared showed that an earlier auto-generated migration treated it as drift, because the entity never declared it, and dropped it. The recovery migration's CREATE INDEX also had an ALGORITHM/LOCK syntax error. I declared the index on the entity so it cannot be dropped again, built the 27GB index with online DDL in a low-traffic window first, and made the deploy migration a no-op when the index already exists."
+          },
+          "result": {
+            "ko": "live에 인덱스가 생성되고 마이그레이션 기록이 남은 것을 확인했고, EXPLAIN이 type=range, rows=3으로 바뀌어 풀스캔 장애가 해소됐습니다. 실제 DDL을 실행하는 통합 테스트도 추가했습니다.",
+            "en": "Confirmed the index exists on live and the migration is recorded; EXPLAIN changed to type = range, rows = 3, ending the full-scan incident. An integration test that runs the real DDL was added."
+          }
+        },
+        {
+          "problem": {
+            "ko": "sandbox에서 번역 변경 감지 스케줄러가 도는 동안 DB Read IOPS가 190~470/s(평소 10/s 미만)로 포화됐고, 로그인 처리가 10초를 넘겨 로드밸런서 타임아웃이 나면서 일부 사용자가 약 60초간 로그인하지 못했습니다.",
+            "en": "In sandbox, a translation-change detection scheduler saturated DB Read IOPS at 190–470/s (normally under 10/s); login handling exceeded 10 seconds, hit the load balancer timeout, and some users could not log in for about 60 seconds."
+          },
+          "process": {
+            "ko": "스케줄러가 159개 버전을 IN 조건 하나로 묶어 번역 단어 테이블(live 기준 327만 행)을 풀스캔했고, 주기는 10초인데 쿼리는 100~224초씩 걸려 실행이 겹쳐 쌓였습니다. AI 번역 감지에서 쓰던 버전별 패턴을 옮겨 와 버전마다 단일 쿼리를 돌리고, 페이지네이션과 실행당 생성 요청 상한(500건)으로 한 실행의 길이를 제한했습니다. 수정은 공통 패키지 릴리스로 배포했고, 게임 서버에 적용할 때 필드 1,073개를 byte 단위로 비교해 하위 호환을 확인했습니다.",
+            "en": "The scheduler bundled 159 versions into one IN condition and full-scanned the translation word table (3.27M rows on live); it ran every 10 seconds while each query took 100–224s, so runs overlapped and piled up. I ported the per-version pattern from the AI translation detector, running one query per version with pagination and a 500-request cap per run to bound each run. The fix shipped as a shared-package release, and applying it to the game server was checked for backward compatibility with a byte-level comparison of 1,073 fields."
+          },
+          "result": {
+            "ko": "live EXPLAIN에서 버전별 쿼리는 버전 1개 기준 39ms, 기존 159개 버전 일괄 쿼리는 10.1초로 측정됐습니다. 버전을 모두 돌면 한 실행의 총 쿼리 시간은 크게 줄지 않으므로, 개선의 핵심은 페이지네이션과 실행당 상한으로 한 실행의 길이를 제한한 것입니다. 통합 테스트는 모두 통과했습니다.",
+            "en": "On live EXPLAIN, the per-version query took 39ms for one version, while the old bundled query over 159 versions took 10.1s. Running every version does not shrink a run's total query time much, so the real fix is that pagination and a per-run cap bound the length of each run. All integration tests passed."
+          }
+        }
+      ],
+      "metrics": [
+        {
+          "label": {
+            "ko": "백필 처리량",
+            "en": "Backfill throughput"
+          },
+          "before": {
+            "ko": "9.3건/분",
+            "en": "9.3 items/min"
+          },
+          "after": {
+            "ko": "247건/분",
+            "en": "247 items/min"
+          },
+          "improvement": {
+            "ko": "26배 · 15,333건 완료, 대기 0건",
+            "en": "26x · 15,333 completed, 0 pending"
+          }
+        },
+        {
+          "label": {
+            "ko": "Lambda 실행 (p50)",
+            "en": "Lambda run (p50)"
+          },
+          "before": "63.2s",
+          "after": "1.36s",
+          "improvement": {
+            "ko": "p99 67.0s→2.99s",
+            "en": "p99 67.0s → 2.99s"
+          }
+        },
+        {
+          "label": {
+            "ko": "감사 로그 조회 (live)",
+            "en": "Audit-log query (live)"
+          },
+          "before": {
+            "ko": "최장 36분 풀스캔",
+            "en": "Full scans up to 36 min"
+          },
+          "after": "EXPLAIN rows=3",
+          "improvement": {
+            "ko": "인덱스 복구·엔티티 선언",
+            "en": "Index restored and declared on the entity"
+          }
+        },
+        {
+          "label": {
+            "ko": "번역 감지 실행 (sandbox)",
+            "en": "Translation detection run (sandbox)"
+          },
+          "before": {
+            "ko": "100~224초 · 10초 주기와 겹침",
+            "en": "100–224s · overlapped the 10s interval"
+          },
+          "after": {
+            "ko": "버전별 쿼리 · 실행당 상한 500건",
+            "en": "Per-version queries · 500 cap per run"
+          },
+          "improvement": {
+            "ko": "live EXPLAIN 버전 1개 39ms(일괄 10.1초)",
+            "en": "Live EXPLAIN: 39ms for one version (bundled 10.1s)"
+          }
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "가설보다 계측: 백필 병목은 대형 트랜잭션을 의심했지만 Performance Insights가 조회 쿼리 하나를 가리켜, 쓰기 경로가 아니라 읽기 쿼리의 형태를 고쳤습니다.",
+          "인덱스는 엔티티에 선언: 마이그레이션으로만 만든 인덱스는 다음 자동 생성 마이그레이션이 drift로 지울 수 있어, 스키마 기준을 엔티티에 두었습니다.",
+          "27GB online DDL은 배포와 분리: 저부하 시간대에 먼저 수동 생성하고, 배포 마이그레이션은 이미 있는 인덱스를 no-op으로 넘겨 배포 중 장시간 DDL을 피했습니다.",
+          "주기 작업은 작게 자르기: 감지 스케줄러를 버전별 쿼리·페이지네이션·실행당 상한으로 나눠 한 실행의 길이를 상한으로 제한했습니다."
+        ],
+        "en": [
+          "Measurement over hypothesis: the backfill was suspected of a large transaction, but Performance Insights pointed at one read query, so the fix went to the read query's shape, not the write path.",
+          "Declare indexes on the entity: an index that exists only in a migration can be dropped as drift by the next auto-generated migration, so the entity is the schema source of truth.",
+          "Keep the 27GB online DDL out of the deploy: build it manually in a low-traffic window, and let the deploy migration skip an existing index, so no long DDL runs during a deploy.",
+          "Cut periodic work small: per-version queries, pagination, and a per-run cap bound the length of each detection run."
+        ]
+      },
+      "operationalLimits": {
+        "ko": [
+          "백필 건의 RDS CPU는 수정 전 99.8%만 비교 기준으로 쓰며, 이후 관측한 5~7%는 작업이 끝난 유휴 상태 값입니다.",
+          "번역 감지 건은 sandbox 장애입니다. 39ms는 live EXPLAIN의 버전 1개 표본이며, 버전을 모두 도는 한 실행의 총 쿼리 시간은 크게 줄지 않습니다.",
+          "감사 로그 건은 인덱스 복구로 끝났고, 대용량 감사 로그의 보관·파티셔닝 정책은 다루지 않았습니다."
+        ],
+        "en": [
+          "For the backfill, only the 99.8% pre-fix RDS CPU is used as a baseline; the 5–7% seen afterwards was an idle reading after the work finished.",
+          "The translation-detection case was a sandbox incident. 39ms is a single-version sample on live EXPLAIN; a run that covers every version does not take much less total query time.",
+          "The audit-log case ended with restoring the index; retention and partitioning for the large audit log were out of scope."
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "첫 가설은 계측으로 확인하기 전까지 가설일 뿐이다. 부하의 99.5%를 낸 쿼리는 의심하던 곳에 있지 않았다.",
+          "마이그레이션에만 있는 인덱스는 언제든 drift로 사라질 수 있다. 스키마의 기준은 엔티티에 둔다.",
+          "주기 작업은 한 실행이 주기보다 길어지는 순간 겹쳐 쌓인다. 실행 단위를 잘게 나누고 상한을 둔다."
+        ],
+        "en": [
+          "A first hypothesis stays a hypothesis until measured; the query behind 99.5% of the load was not where I first looked.",
+          "An index that lives only in a migration can vanish as drift at any time; keep the schema source of truth on the entity.",
+          "Periodic jobs pile up the moment one run outlasts the interval; split the unit of work and cap it."
+        ]
+      },
+      "scale": {
+        "ko": "MySQL(RDS) · 2,637만 행/27GB 감사 로그 · 327만 행 번역 테이블 · 백필 15,333건",
+        "en": "MySQL (RDS) · 26.37M-row / 27GB audit log · 3.27M-row translation table · 15,333-item backfill"
+      }
+    },
+    {
+      "slug": "shared-package-ci-platform",
+      "name": {
+        "ko": "공통 패키지·CI 플랫폼 — fork 정렬, 7개 프로젝트 업그레이드 자동화, 테스트 CI 단축",
+        "en": "Shared Package & CI Platform — Fork Realignment, 7-Project Upgrade Automation, Faster Test CI"
+      },
+      "type": "team",
+      "featured": true,
+      "printOrder": 3,
+      "summary": {
+        "ko": "2년 넘게 어긋난 게임 서버의 데이터 모듈 fork를 공통 npm 패키지로 정렬(610개 파일·310+ import 마이그레이션)하고, 7개 프로젝트 업그레이드를 GitHub Actions로 자동화(수동 약 3시간→약 15분), 공통 서버 키트의 테스트 job 평균 시간을 61% 단축(15분47초→6분6초)",
+        "en": "Realigned a game server's data-module fork that had drifted for 2+ years onto the shared npm package (610 files, 310+ imports migrated), automated upgrades across 7 projects with GitHub Actions (about 3 hours by hand → about 15 minutes), and cut the shared server kit's average test job time 61% (15m47s → 6m06s)."
+      },
+      "description": {
+        "ko": "한 게임 서버가 공통 게임 데이터 모듈을 fork한 채 2년 넘게 정렬되지 않았고, 공통 패키지 업그레이드는 7개 프로젝트에 손으로 반복됐으며, 공통 서버 키트의 테스트는 ts-jest 컴파일에 시간을 쓰고 있었습니다. fork는 npm 패키지와 패키지가 관리하는 마이그레이션으로 정렬하고, 업그레이드는 workflow_dispatch + matrix로 자동화하고, 테스트 컴파일은 isolatedModules 전환으로 줄였습니다. 이관 중 생긴 live 회귀와 복구 과정도 함께 적었습니다. 내부 제품·게임 이름은 일반 명칭으로 바꿨습니다.",
+        "en": "One game server had forked the shared game data modules and gone 2+ years without realigning, shared-package upgrades were repeated by hand across 7 projects, and the shared server kit's tests spent their time in ts-jest compilation. I realigned the fork onto the npm package with package-managed migrations, automated upgrades with workflow_dispatch plus a matrix, and cut test compilation by switching to isolatedModules. The live regression during the migration and its recovery are included. Internal product and game names are replaced with generic names."
+      },
+      "role": {
+        "ko": "백엔드 개발자 → Platform Part 리더 · 패키지 이관·업그레이드 자동화·CI 개선 직접 수행",
+        "en": "Backend developer, then Platform Part lead · hands-on package migration, upgrade automation, and CI work"
+      },
+      "period": {
+        "start": "2026-02-01",
+        "end": "2026-04-30"
+      },
+      "skills": [
+        "TypeScript",
+        "NestJS",
+        "npm packages",
+        "GitHub Actions",
+        "Jest (ts-jest)",
+        "TypeORM"
+      ],
+      "highlights": {
+        "ko": [
+          "2년 넘게 upstream과 어긋난 게임 서버의 데이터 모듈 17개를 공통 npm 패키지로 교체: 610개 파일·로컬 마이그레이션 47개 삭제, import 310+곳 갱신",
+          "이후 데이터 모듈 기능은 패키지 버전 bump로 들여올 수 있고, 스키마는 패키지가 관리하는 마이그레이션 CLI로 맞춤",
+          "7개 프로젝트(브랜치 최대 12개) 업그레이드를 workflow_dispatch + matrix로 병렬화하고 Job Summary로 skip/upgrade/downgrade 보고: 수동 약 3시간→약 15분",
+          "ts-jest isolatedModules 전환으로 파일당 컴파일 약 15초→1~3초, 테스트 job 평균 15분47초→6분6초(61%), CI 전체 약 16분→약 7분"
+        ],
+        "en": [
+          "Replaced 17 data modules in a game server that had drifted from upstream for 2+ years with the shared npm package: deleted 610 files and 47 local migrations, updated 310+ imports",
+          "Data-module features can now come in with a package version bump, and the schema follows a package-managed migration CLI",
+          "Parallelized upgrades across 7 projects (up to 12 branches) with workflow_dispatch and a matrix, reporting skip/upgrade/downgrade in the Job Summary: about 3 hours by hand → about 15 minutes",
+          "Switched ts-jest to isolatedModules: per-file compile about 15s → 1–3s, average test job 15m47s → 6m06s (61%), whole CI about 16 → about 7 minutes"
+        ]
+      },
+      "problemSolving": [
+        {
+          "problem": {
+            "ko": "한 게임 서버가 공통 데이터 모듈을 fork한 뒤 2년 넘게 upstream과 정렬되지 않아, 내부 모듈 17개를 계속 발전하는 외부 npm 패키지로 바꾸려면 610개 파일과 import 310+곳을 옮겨야 했습니다.",
+            "en": "One game server had forked the shared data modules and gone 2+ years without realigning with upstream, so replacing its 17 internal modules with the evolving npm package meant moving 610 files and 310+ imports."
+          },
+          "process": {
+            "ko": "다른 게임에서 쓰던 정렬 방식을 기준으로 두 단계로 나눴습니다. 먼저 내부 모듈을 패키지로 바꾸고, 그다음 같은 패턴과 패키지 관리 마이그레이션으로 최신 버전까지 맞췄습니다. 게임 고유 기능(현지화, 금칙어, 동적 환경 등)은 얇은 wrapper 모듈 6개로 남겼습니다.",
+            "en": "Using the alignment approach other games already followed, I split the work into two stages: first switch the internal modules to the package, then bring it to the latest version with the same pattern and package-managed migrations. Game-specific features (localization, forbidden words, dynamic environments, and so on) stayed in six thin wrapper modules."
+          },
+          "result": {
+            "ko": "내부 모듈 610개 파일과 로컬 마이그레이션 47개를 지웠고, 이후 신규 기능은 패키지 버전 bump로 들여올 수 있게 됐습니다. 이관 회귀로 live 관리자 기능에 500 오류가 났을 때는 보고 82분 만에 hotfix를 배포했고, 이관을 포함한 관련 작업 9건으로 나눠 추적했습니다.",
+            "en": "Deleted the 610 internal-module files and 47 local migrations; new features can now come in with a package version bump. When the migration caused a regression that returned 500 errors in a live admin feature, a hotfix shipped 82 minutes after the report, and the work was tracked as 9 related tasks including the migration itself."
+          }
+        },
+        {
+          "problem": {
+            "ko": "공통 패키지를 올릴 때마다 7개 프로젝트의 main/develop 브랜치(최대 12개)를 손으로 업그레이드해 약 3시간이 걸렸고 작업 전환 비용도 컸습니다.",
+            "en": "Every shared-package release meant upgrading the main/develop branches of 7 projects (up to 12 branches) by hand, taking about 3 hours plus the cost of context switching."
+          },
+          "process": {
+            "ko": "workflow_dispatch로 실행하는 GitHub Actions 워크플로를 만들고 matrix로 7개 프로젝트를 병렬 처리했습니다. 프로젝트별 결과는 Job Summary에 skip/upgrade/downgrade로 남겼습니다.",
+            "en": "Built a GitHub Actions workflow triggered by workflow_dispatch that processes the 7 projects in parallel with a matrix, recording each project's outcome as skip/upgrade/downgrade in the Job Summary."
+          },
+          "result": {
+            "ko": "업그레이드가 수동 약 3시간에서 자동 약 15분으로 줄었습니다.",
+            "en": "Upgrades went from about 3 hours by hand to about 15 minutes automated."
+          }
+        },
+        {
+          "problem": {
+            "ko": "공통 서버 키트에서 ts-jest 컴파일이 파일당 약 15초로 테스트 시간의 53%를 차지해, 순수 단위 테스트도 15~19초씩 걸렸습니다.",
+            "en": "In the shared server kit, ts-jest compilation took about 15s per file, 53% of test time, so even pure unit tests took 15–19s."
+          },
+          "process": {
+            "ko": "ts-jest를 isolatedModules로 바꿔 파일 단위로만 변환하고, 타입 검사는 CI의 별도 tsc --noEmit 단계에 맡겼습니다. 이 모드에서는 데코레이터 메타데이터가 다른 파일의 타입을 참조하지 못해, 영향받는 엔티티 4개에 컬럼 타입을 명시했습니다.",
+            "en": "Switched ts-jest to isolatedModules so each file is transformed on its own, leaving type checking to a separate tsc --noEmit step in CI. In this mode decorator metadata cannot see types from other files, so I declared column types explicitly on the 4 affected entities."
+          },
+          "result": {
+            "ko": "파일당 컴파일 15초→1~3초, 4개 shard의 테스트 job 평균 15분47초→6분6초(61% 단축), 빌드·품질 검사를 포함한 CI 전체 약 16분→약 7분. 81 suites·978 tests 전체 통과.",
+            "en": "Per-file compile 15s → 1–3s, average test job across 4 shards 15m47s → 6m06s (61% faster), whole CI including build and quality checks about 16 → about 7 minutes. All 81 suites / 978 tests passing."
+          }
+        }
+      ],
+      "metrics": [
+        {
+          "label": {
+            "ko": "테스트 job 평균",
+            "en": "Average test job"
+          },
+          "before": {
+            "ko": "15분47초",
+            "en": "15m47s"
+          },
+          "after": {
+            "ko": "6분6초",
+            "en": "6m06s"
+          },
+          "improvement": {
+            "ko": "61% 단축 · CI 전체 약 16분→약 7분",
+            "en": "61% faster · whole CI about 16 → 7 min"
+          }
+        },
+        {
+          "label": {
+            "ko": "패키지 업그레이드",
+            "en": "Package upgrade"
+          },
+          "before": {
+            "ko": "수동 약 3시간",
+            "en": "About 3h by hand"
+          },
+          "after": {
+            "ko": "자동 약 15분",
+            "en": "About 15 min automated"
+          },
+          "improvement": {
+            "ko": "7개 프로젝트 matrix 병렬",
+            "en": "7-project matrix in parallel"
+          }
+        },
+        {
+          "label": {
+            "ko": "모듈 정렬",
+            "en": "Module alignment"
+          },
+          "before": {
+            "ko": "2년+ 어긋난 fork",
+            "en": "Fork drifted 2+ years"
+          },
+          "after": {
+            "ko": "npm 버전 bump",
+            "en": "npm version bump"
+          },
+          "improvement": {
+            "ko": "610개 파일·마이그레이션 47개 삭제",
+            "en": "610 files and 47 migrations deleted"
+          }
+        },
+        {
+          "label": {
+            "ko": "이관 회귀 복구",
+            "en": "Migration regression"
+          },
+          "before": {
+            "ko": "live 500 오류 보고",
+            "en": "Live 500 errors reported"
+          },
+          "after": {
+            "ko": "82분 만에 hotfix",
+            "en": "Hotfix in 82 min"
+          },
+          "improvement": {
+            "ko": "관련 작업 9건 추적",
+            "en": "9 related tasks tracked"
+          }
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "fork 유지 대신 upstream 정렬: 게임별 차이는 wrapper 모듈로 분리하고 나머지는 패키지에 맡겨, 이후 업데이트가 버전 bump로 끝나게 했습니다.",
+          "두 단계 이관: 먼저 내부 모듈을 패키지로 바꾸고, 그다음 패턴·마이그레이션을 최신 버전에 맞춰 한 번에 섞이는 변경 종류를 줄였습니다.",
+          "업그레이드는 matrix 자동화로: 프로젝트별 결과를 Job Summary에 남겨 건너뛴 곳과 실패한 곳을 한 화면에서 확인합니다.",
+          "테스트는 isolatedModules: 파일 단위 변환으로 컴파일 시간을 줄이고, 그 대가로 생긴 데코레이터 타입 공백은 컬럼 타입 명시로 메웠습니다."
+        ],
+        "en": [
+          "Realign with upstream instead of keeping the fork: game-specific differences live in wrapper modules and the rest belongs to the package, so later updates are just a version bump.",
+          "Two-stage migration: switch the internal modules to the package first, then align patterns and migrations with the latest version, so fewer kinds of change land at once.",
+          "Automate upgrades with a matrix: each project's result goes into the Job Summary, so skipped and failed projects show up on one screen.",
+          "isolatedModules for tests: per-file transforms cut compile time, and the decorator type gap it creates is filled by explicit column types."
+        ]
+      },
+      "operationalLimits": {
+        "ko": [
+          "isolatedModules에서는 테스트 단계가 타입 검사를 하지 않으므로, 타입 오류는 CI의 별도 tsc --noEmit 단계에서 잡습니다.",
+          "업그레이드 자동화가 적용되지 않은 프로젝트에는 수동 롤아웃이 남았고, 그중 한 번은 주석을 제외한 필드 1,073개를 byte 단위로 비교해 하위 호환을 확인했습니다.",
+          "이관 회귀는 배포 후 live에서 발견됐고, 사전 테스트로 잡지 못했습니다."
+        ],
+        "en": [
+          "Under isolatedModules the test step does no type checking, so type errors are caught by a separate tsc --noEmit step in CI.",
+          "Projects without the upgrade automation still needed manual rollouts; one of them was checked for backward compatibility by comparing 1,073 fields byte for byte, excluding comments.",
+          "The migration regression was found on live after deploy; pre-release tests did not catch it."
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "fork는 시간이 갈수록 정렬 비용이 커진다. 게임별 차이는 wrapper로 좁히고 나머지는 공통 패키지에 맡긴다.",
+          "프로젝트 수만큼 반복되는 작업은 자동화하고, 결과를 한 화면에 남겨야 빠진 곳이 보인다.",
+          "속도를 위해 끈 검사는 다른 곳이 맡아야 한다. 타입 검사는 별도 tsc 단계로 옮기고, 데코레이터 메타데이터 공백은 컬럼 타입 명시로 메웠다."
+        ],
+        "en": [
+          "A fork gets more expensive to realign the longer it lives; keep game-specific differences in wrappers and leave the rest to the shared package.",
+          "Automate work that repeats once per project, and keep the results on one screen so gaps are visible.",
+          "A check turned off for speed needs a new owner: type checking moved to a separate tsc step, and explicit column types filled the decorator-metadata gap."
+        ]
+      },
+      "scale": {
+        "ko": "7개 프로젝트·브랜치 최대 12개 · 데이터 모듈 17개 · 610개 파일 · 81 suites/978 tests",
+        "en": "7 projects, up to 12 branches · 17 data modules · 610 files · 81 suites / 978 tests"
+      }
+    },
+    {
       "slug": "flex-work-schedule",
       "name": {
-        "ko": "Flex — 제약을 숨기지 않는 근무 계획기",
-        "en": "Flex — Constraint-Explicit Work Planner"
+        "ko": "Work Schedule Planner — 제약을 숨기지 않는 근무 계획기",
+        "en": "Work Schedule Planner — Scheduling That Surfaces Its Constraints"
       },
       "type": "personal",
       "summary": {
@@ -376,7 +783,10 @@
             "ko": "강제 배정 위험",
             "en": "Risk of forced allocation"
           },
-          "after": "insufficient_slots + gap",
+          "after": {
+            "ko": "부족 시간·사유 표시",
+            "en": "Shortfall hours and reason shown"
+          },
           "improvement": {
             "ko": "hard limit 유지",
             "en": "hard limits preserved"
@@ -420,8 +830,7 @@
         "en": "A Public Launcher for Isolated, Verified AI CLI Runtimes"
       },
       "type": "personal",
-      "featured": true,
-      "printOrder": 2,
+      "listed": true,
       "summary": {
         "ko": "Claude Code·Codex·Kiro의 전역 상태를 프로젝트별 실행 경계로 분리하고, 잘못된 작업 경계와 설정 드리프트를 시작 전에 차단하는 공개 런처입니다.",
         "en": "A public launcher that isolates global Claude Code, Codex, and Kiro state into project-scoped boundaries and blocks invalid workspaces or configuration drift before startup."
@@ -574,8 +983,8 @@
             "en": "Evidence depended on a private environment"
           },
           "after": {
-            "ko": "공개 launcher + contract demo + CI",
-            "en": "Public launcher + contract demo + CI"
+            "ko": "CI 테스트 스크립트 65개 통과·9개 skip · 공개 릴리스 62개(2026-10 기준)",
+            "en": "65 test scripts passed, 9 skipped in CI · 62 public releases (as of 2026-10)"
           },
           "improvement": {
             "ko": "로그인 없이 핵심 계약과 실패 동작 재현",
@@ -698,7 +1107,6 @@
         "en": "Gamebang — Server-Authoritative Realtime Game Room"
       },
       "type": "personal",
-      "listed": true,
       "summary": {
         "ko": "모바일 클라이언트는 행동만 요청하고 방별 Durable Object가 phase·turn·숨은 정보·재접속을 판정하는 5종 실시간 미니게임 서비스",
         "en": "A five-game realtime service where mobile clients request actions and a room-scoped Durable Object owns phase, turn, hidden information, and reconnect behavior."
@@ -820,7 +1228,8 @@
           "Use a Durable Object as the room source of truth while keeping game rules in pure state machines",
           "Perform playerView projection on the server to preserve per-participant hidden-information boundaries"
         ]
-      }
+      },
+      "hidden": true
     },
     {
       "slug": "clinical-lab-jobs",
@@ -829,7 +1238,6 @@
         "en": "Clinical-Lab Job Decision Dashboard"
       },
       "type": "personal",
-      "listed": true,
       "summary": {
         "ko": "채용 플랫폼과 병원 채용 페이지 원천을 정규화해 탐색하고, 마감·지역·고용형태 추천 이유와 계정별 지원 상태를 함께 관리하는 모바일 우선 대시보드",
         "en": "A mobile-first dashboard that normalizes job-platform and hospital-career-page sources, explains deadline/region/employment recommendations, and keeps account-scoped application state."
@@ -951,7 +1359,8 @@
           "Separate public discovery from account-scoped application state",
           "Tie outbox completion and watermark advancement to delivery confirmation to make the loss boundary explicit"
         ]
-      }
+      },
+      "hidden": true
     },
     {
       "slug": "daesin-logistics-bot",
@@ -1024,44 +1433,44 @@
       "problemSolving": [
         {
           "problem": {
-            "ko": "Why — 오전에도 원천에 오늘 데이터가 있었지만 14시 이전에는 전일을 선택하는 규칙 때문에 누락됐다",
-            "en": "Why — current-day source data was already available in the morning, but a pre-14:00 previous-day rule skipped it"
+            "ko": "오전에도 원천에 오늘 데이터가 있었지만 14시 이전에는 전일을 선택하는 규칙 때문에 누락됐다",
+            "en": "Current-day source data was already available in the morning, but a pre-14:00 previous-day rule skipped it"
           },
           "process": {
-            "ko": "How — 기본 수집일을 오늘 날짜로 고정하고 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 재조회하도록 변경했다",
-            "en": "How — fixed the default collection date to the current date and made the singleton KST scheduler recheck it in 15 scheduled hourly slots from Mon–Sat 06:00–20:00"
+            "ko": "기본 수집일을 오늘 날짜로 고정하고 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 재조회하도록 변경했다",
+            "en": "Fixed the default collection date to the current date and made the singleton KST scheduler recheck it in 15 scheduled hourly slots from Mon–Sat 06:00–20:00"
           },
           "result": {
-            "ko": "Result — 오전 데이터와 늦게 공개된 변경분을 정적 날짜·건수 문구 없이 후속 실행에서 반영할 수 있도록 변경",
-            "en": "Result — subsequent runs can capture morning data and later source changes without maintaining static date or row-count claims"
+            "ko": "오전 데이터와 늦게 공개된 변경분을 정적 날짜·건수 문구 없이 후속 실행에서 반영할 수 있도록 변경",
+            "en": "Subsequent runs can capture morning data and later source changes without maintaining static date or row-count claims"
           }
         },
         {
           "problem": {
-            "ko": "Why — web replica마다 scheduler가 시작되어 동일 수집이 중복 실행됐다",
-            "en": "Why — each web replica started a scheduler, duplicating the same collection job"
+            "ko": "web replica마다 scheduler가 시작되어 동일 수집이 중복 실행됐다",
+            "en": "Each web replica started a scheduler, duplicating the same collection job"
           },
           "process": {
-            "ko": "How — 수집 책임을 web process 밖의 singleton KST scheduler 하나로 분리했다",
-            "en": "How — moved collection responsibility out of web processes into one singleton KST scheduler"
+            "ko": "수집 책임을 web process 밖의 singleton KST scheduler 하나로 분리했다",
+            "en": "Moved collection responsibility out of web processes into one singleton KST scheduler"
           },
           "result": {
-            "ko": "Result — replica별 15개 cron slot 구성에서 singleton의 15개 slot으로 축소(프로세스 시작 시 1회 동기화 제외)",
-            "en": "Result — reduced per-replica 15-slot schedules to one singleton's 15 slots, excluding the one startup sync"
+            "ko": "replica별 15개 cron slot 구성에서 singleton의 15개 slot으로 축소(프로세스 시작 시 1회 동기화 제외)",
+            "en": "Reduced per-replica 15-slot schedules to one singleton's 15 slots, excluding the one startup sync"
           }
         },
         {
           "problem": {
-            "ko": "Why — 운영 화면에 필요한 원천 필드는 제공하면서 내부·credential 필드는 차단해야 했다",
-            "en": "Why — source fields needed by the operational UI had to remain useful while internal and credential-bearing fields stayed blocked"
+            "ko": "운영 화면에 필요한 원천 필드는 제공하면서 내부·credential 필드는 차단해야 했다",
+            "en": "Source fields needed by the operational UI had to remain useful while internal and credential-bearing fields stayed blocked"
           },
           "process": {
-            "ko": "How — method/path allowlist, 필수 필드 검증, 고정 출력 projection과 원천 URL contract로 운영 화면 필드만 통과시키고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외했다",
-            "en": "How — used a method/path allowlist, required-field validation, a fixed output projection, and source-URL contracts to pass only operational UI fields while excluding internal IDs, unknown fields, and the credential-bearing tracking URL"
+            "ko": "method/path allowlist, 필수 필드 검증, 고정 출력 projection과 원천 URL contract로 운영 화면 필드만 통과시키고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외했다",
+            "en": "Used a method/path allowlist, required-field validation, a fixed output projection, and source-URL contracts to pass only operational UI fields while excluding internal IDs, unknown fields, and the credential-bearing tracking URL"
           },
           "result": {
-            "ko": "Result — 고정 출력 projection과 원천 URL allowlist를 redirect·payload·배포 회귀 경계와 함께 검증",
-            "en": "Result — verified the fixed output projection and source-URL allowlist together with redirect, payload, and deployment regression boundaries"
+            "ko": "고정 출력 projection과 원천 URL allowlist를 redirect·payload·배포 회귀 경계와 함께 검증",
+            "en": "Verified the fixed output projection and source-URL allowlist together with redirect, payload, and deployment regression boundaries"
           }
         }
       ],
@@ -1230,8 +1639,8 @@
             "en": "15 singleton slots"
           },
           "improvement": {
-            "ko": "singleton 복구",
-            "en": "Singleton restored"
+            "ko": "중복 실행 제거",
+            "en": "Duplicate runs removed"
           }
         },
         {
@@ -1272,7 +1681,6 @@
         "en": "NyamNyam WeDu — Cafeteria Menu Alert Bot"
       },
       "type": "personal",
-      "listed": true,
       "summary": {
         "ko": "판교 이노밸리 구내식당 주간 식단표를 카카오 채널에서 Playwright로 크롤링하여 Slack으로 자동 발송하는 봇 — Clean Architecture + TSyringe DI, Slack Bot API 슬래시 커맨드, 재시도 최대 6회, DeliveryHistory 중복 방지",
         "en": "Bot that crawls weekly cafeteria menus from Kakao Channel via Playwright and auto-delivers to Slack — Clean Architecture + TSyringe DI, Slack Bot API slash command, up to 6 retries, DeliveryHistory duplicate prevention"
@@ -1394,7 +1802,8 @@
           "Playwright over Cheerio: Kakao Channel requires JS rendering — static HTML parsing with Cheerio cannot capture dynamic content",
           "Result<T, E> pattern: explicit error types instead of exceptions force callers to handle errors, improving code predictability"
         ]
-      }
+      },
+      "hidden": true
     },
     {
       "slug": "concert-reservation",
@@ -1404,7 +1813,7 @@
       },
       "type": "personal",
       "featured": true,
-      "printOrder": 3,
+      "printOrder": 4,
       "summary": {
         "ko": "동일 좌석·사용자 지갑 동시성 테스트로 좌석에는 낙관적 락, 결제·충전에는 사용자 단위 Redisson 락을 적용하고, 공개 k6 보고서에서 캐시 스탬피드 p95를 5.74초에서 676ms로 낮춘 콘서트 예약 프로젝트",
         "en": "Concert reservation project that verifies same-seat booking and wallet payment with optimistic and Redisson locks, then reduces cache-stampede p95 from 5.74s to 676ms through cache warming and TTL changes in the public load-test report"
@@ -1412,6 +1821,10 @@
       "description": {
         "ko": "공개 저장소의 100-thread 통합 테스트는 동일 좌석 요청에서 예약 행 하나만 남는지, 사용자 단위 Redisson 락 아래 충전·결제 결과가 기대값과 일치하는지 검증한다. 결제 트랜잭션은 PENDING outbox 행을 만들고 scheduler가 Kafka 발행·실패 재시도를 맡는다. k6 예약 시나리오는 3,000 requests/s를 설정했지만 최대 VU는 2,400이므로 이를 달성 처리량이나 동시 사용자 수로 표현하지 않는다. 공개 보고서에 기록된 예약 오류율 0.64%와 p95 5.74s, 캐시 워밍·TTL 조정 후 p95 676ms만 관측 결과로 사용한다.",
         "en": "Public-repository 100-thread integration tests verify that same-seat requests leave one reservation row and that per-user Redisson locking produces the expected charge and payment state. The payment transaction creates a PENDING outbox row, while a scheduler handles Kafka publication and failed-event retries. The k6 reservation scenario configures 3,000 requests/s with a 2,400 max-VU ceiling, so it is not presented as achieved throughput or concurrent users. Only the public report's observed 0.64% reservation error rate, p95 5.74s, and post-cache-warming/TTL p95 676ms are reported as outcomes."
+      },
+      "role": {
+        "ko": "항해 플러스 백엔드 6기 개인 과제 · 공개 저장소 커밋 39건 모두 본인 작성",
+        "en": "Individual assignment in Hanghae Plus Backend 6th · all 39 commits in the public repo are mine"
       },
       "coverImage": "/images/portfolio/concert-reservation-cover.webp",
       "contentImages": [],
@@ -1536,15 +1949,13 @@
           "동일 좌석 100-thread 통합 테스트에서 예약 행 1개 확인",
           "사용자 지갑·결제를 Redisson 사용자 단위 락으로 직렬화",
           "캐시 워밍·TTL 조정 후 공개 보고서 p95 5.74s → 676ms",
-          "결제 TX의 PENDING outbox와 scheduler 발행·재시도 경로 구현",
-          "k6 설정값 3,000 requests/s와 최대 2,400 VU를 관측 성과와 분리"
+          "결제 TX의 PENDING outbox와 scheduler 발행·재시도 경로 구현"
         ],
         "en": [
           "One reservation row after a 100-thread same-seat integration test",
           "Per-user Redisson serialization for wallet and payment paths",
           "Public-report p95 5.74s → 676ms after cache warming and TTL changes",
-          "PENDING outbox in the payment transaction plus scheduler publication and retry paths",
-          "Configured 3,000 requests/s and 2,400 max VUs kept separate from observed outcomes"
+          "PENDING outbox in the payment transaction plus scheduler publication and retry paths"
         ]
       },
       "lessons": {
@@ -1629,7 +2040,6 @@
         "en": "StartupPool"
       },
       "type": "team",
-      "listed": true,
       "teamComposition": {
         "ko": "FE(2명) BE(2명) 기획(1명) 디자인(1명) 마케팅(2명) / 본인 BE 담당",
         "en": "FE(2) BE(2) PM(1) Design(1) Marketing(2) / Responsible for BE"
@@ -1686,7 +2096,7 @@
           "커뮤니티 핵심 API 전담 구현 (게시물·댓글·좋아요·북마크·팔로우)",
           "OpenGraph 스크래핑 기반 링크 프리뷰 기능 개발",
           "어드민 백엔드 시스템 독립 구축",
-          "8인 크로스펀셔널 팀에서 FE와 API 스펙 협의 및 스프린트 협업"
+          "8인 크로스펑셔널 팀에서 FE와 API 스펙 협의 및 스프린트 협업"
         ],
         "en": [
           "Integrated 4 social login providers (Google, Naver, Kakao, Facebook) with unified OAuth 2.0 flow",
@@ -1741,7 +2151,8 @@
         "en": [
           "NestJS + PostgreSQL: manages normalized relational data model for startup information, optimized category and search filter queries"
         ]
-      }
+      },
+      "hidden": true
     },
     {
       "slug": "slack-clone",
@@ -1836,7 +2247,7 @@
         "en": "Family Budget — A Shared Household Budget for Daily Entry and Month-End Close"
       },
       "type": "personal",
-      "printOrder": 4,
+      "listed": true,
       "summary": {
         "ko": "매일의 수입·지출을 빠르게 기록하고, 공동·개인 부담과 목적통장, 예상 수입·고정지출·저축을 한 달의 판단으로 연결하는 부부 공용 가계부입니다.",
         "en": "A shared household budget that turns daily income and expense entry, joint and individual ownership, purpose accounts, and recurring plans into one month-end decision."
@@ -2109,7 +2520,6 @@
           "url": "https://family-budget-demo-three.vercel.app"
         }
       ],
-      "featured": true,
       "printArchitectureDiagram": {
         "ko": "/images/portfolio/family-budget-boundary-print-ko.svg",
         "en": "/images/portfolio/family-budget-boundary-print-en.svg"

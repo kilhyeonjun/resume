@@ -18,7 +18,7 @@ const featuredProjects = selectFeaturedPortfolioProjects(rawProjects);
 const archiveProjects = selectListedPortfolioProjects(rawProjects);
 ---
 
-<Layout title={`${labels.portfolio} | Portfolio`} description={lang === 'ko' ? '개인 프로젝트 포트폴리오' : 'Personal Project Portfolio'} lang={lang}>
+<Layout title={`${labels.portfolio} | Portfolio`} description={lang === 'ko' ? '회사 실무 케이스와 개인·팀 프로젝트 포트폴리오' : 'Work case studies plus personal and team projects'} lang={lang}>
   <div class="portfolio-index">
     <header class="portfolio-hero">
       <span class="dossier-label">SELECTED ENGINEERING WORK</span>
@@ -26,7 +26,7 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
         {labels.portfolio}
       </h1>
       <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
-        {lang === 'ko' ? '개인 및 팀 프로젝트 모음' : 'Collection of personal and team projects'}
+        {lang === 'ko' ? '회사 실무 케이스와 개인·팀 프로젝트' : 'Work case studies plus personal and team projects'}
       </p>
       <nav class="portfolio-focus" aria-label={lang === 'ko' ? '지원 직무별 보기' : 'Role-focused view'}>
         <a class="active" data-focus="default" aria-current="page" href={`${localePrefix}/portfolio/`}>{lang === 'ko' ? '기본' : 'Default'}</a>
@@ -177,8 +177,8 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
   <script is:inline>
     const focus = new URLSearchParams(location.search).get('focus');
     const orders = {
-      'backend-platform': ['realtime-game-chat', 'concert-reservation', 'ai-coding-harness', 'family-budget-demo'],
-      'product-algorithm': ['family-budget-demo', 'concert-reservation', 'ai-coding-harness', 'realtime-game-chat'],
+      'backend-platform': ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform', 'concert-reservation'],
+      'product-algorithm': ['concert-reservation', 'realtime-game-chat', 'shared-package-ci-platform', 'rds-saturation-rca'],
     };
     if (focus && Object.hasOwn(orders, focus)) {
       const grid = document.querySelector('.portfolio-grid');

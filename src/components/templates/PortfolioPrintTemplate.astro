@@ -544,6 +544,7 @@ function formatPeriod(period: { start: string; end: string }): string {
       const isEvidenceRegister = project.slug === 'ai-coding-harness';
       const isDaesinCase = project.slug === 'daesin-logistics-bot';
       const isFamilyBudgetCase = project.slug === 'family-budget-demo';
+      const isCompanyCase = ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform'].includes(project.slug);
       const coverImage = project.printScenarioImage ? localize(project.printScenarioImage) : (project.coverImage ? localize(project.coverImage) : null);
       const architectureDiagram = project.printArchitectureDiagram ? localize(project.printArchitectureDiagram) : (project.architectureDiagram ? localize(project.architectureDiagram) : null);
       const operationalLimits = project.operationalLimits?.[lang];
@@ -682,6 +683,15 @@ function formatPeriod(period: { start: string; end: string }): string {
                   {project.techDecisions[lang].map((item) => (
                     <li><span class="bullet">&bull;</span>{item}</li>
                   ))}
+                </ul>
+              </>
+            )}
+
+            {isCompanyCase && operationalLimits && (
+              <>
+                <p class="bullet-section-heading">{lang === 'ko' ? '운영 한계' : 'Operating limits'}</p>
+                <ul class="bullet-list compact">
+                  {operationalLimits.map((item) => <li><span class="bullet">&bull;</span>{item}</li>)}
                 </ul>
               </>
             )}

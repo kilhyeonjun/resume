@@ -14,7 +14,7 @@
       {
         "category": "DB Optimization, Concurrency & Distributed Systems",
         "items": [
-          "Root-caused two RDS saturation cases: removing N+1 and non-SARGable filters cut CPU 99.8%→5~7%, and adding a missing index eliminated full scans of up to 36 minutes",
+          "Root-caused two RDS saturation cases: removing N+1 and non-SARGable filters raised backfill throughput 26x (9.3→247 items/min), and adding a missing index eliminated full scans of up to 36 minutes",
           "Deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks",
           "Advanced Redis Streams WAL with a 4-shard Valkey cluster and serverless fanout instrumentation to preserve real-time chat ordering and horizontal scale (accept rate 99.39→99.99%, ack p95 767ms→6.6ms)"
         ]
@@ -334,7 +334,7 @@
               {
                 "problem": "Large marketing-metrics archive backfill stalled at 63s Lambda runtime and 99.8% RDS CPU, ETA 15 hours",
                 "solution": "Diagnosed the root cause as N+1 queries and a non-SARGable DATE() predicate (index miss) and removed both — chose a single 30-day batch fetch with in-memory latest-version dedup over per-row reads that were saturating RDS",
-                "result": "Improved throughput 26x (9.3→247/min), Lambda runtime 63s→1.36s, RDS CPU 99.8%→5~7%"
+                "result": "Improved throughput 26x (9.3→247/min), Lambda runtime 63s→1.36s"
               },
               {
                 "problem": "TikTok deployments created orphan campaign/adgroup/ad resources when an external API partially succeeded before internal persistence, or retries were blocked by deployment guards",
@@ -539,7 +539,7 @@
               {
                 "problem": "In sandbox, the detect scheduler queried all 159 versions at once (full scan of a 3.27M-row table on live), saturating Read IOPS at 190–470/s and locking some users out for 60s",
                 "solution": "Ported the per-version loop from the AI detect module, added distributed-lock timeout/recovery, and replaced the NOT EXISTS full scan with an indexed staged lookup",
-                "result": "Split into per-version queries (39ms/version on Live EXPLAIN), removing the overlap between a 10s cron and 100–224s queries"
+                "result": "Split into per-version queries (39ms for one version on Live EXPLAIN) and bounded each run with pagination and a per-run cap"
               }
             ],
             "techStack": [

@@ -205,7 +205,7 @@
               {
                 "problem": "Coding standards, domain knowledge, and verification rules lived in individual setups, so AI usage varied",
                 "solution": "Managed rules, agents, hooks, and domain knowledge as one Git repo config, searchable through local RAG",
-                "result": "Every member shares the same AI working context via git pull, and pre-review checks became an automated checklist"
+                "result": "Built up 397 domain-knowledge files in about 2 weeks so every member shares the same AI working context via git pull, with pre-review checks turned into an automated checklist"
               },
               {
                 "problem": "During a marketing-metrics archive backfill, RDS CPU was pinned at 99.8% and throughput sat at 9.3 items/min",
@@ -392,9 +392,9 @@
                 "result": "Refactored 2000+ lines into shared Repository abstraction layer eliminating CRUD duplication"
               },
               {
-                "problem": "Concurrency conflicts in multi-instance environments",
-                "solution": "Abstracted ElastiCache (Redis) distributed locking into an AOP decorator, isolating lock logic from business code",
-                "result": "Applied distributed lock decorator consistently for multi-instance concurrency control"
+                "problem": "Each app injected its own static-data LRU cache, so boot-time data warming on live game servers took minutes",
+                "solution": "Moved static-data storage into the shared kit, removed per-app LRU injection, and added negative caching and preloadAll",
+                "result": "Live game-server boot warming 138.1–199.5s → 25.8–37.8s, then 0.82–1.08s after switching the app warmer to preloadAll"
               },
               {
                 "problem": "Manual library upgrades taking 3 hours across 7 projects",
@@ -495,7 +495,7 @@
               {
                 "problem": "Data consistency risk during event publishing",
                 "solution": "Adopted Transactional Outbox Pattern for scheduled and delayed event publishing",
-                "result": "Ensured data consistency across distributed event processing"
+                "result": "Kept data consistent across distributed event processing"
               },
               {
                 "problem": "After cache disk-full recovery in the CDK deploy workflow, Lambda handler webpack builds reproduced V8 OOM, combining slower deployments with no regression guard",
@@ -545,6 +545,11 @@
                 "problem": "In sandbox, the detect scheduler queried all 159 versions at once (full scan of a 3.27M-row table on live), saturating Read IOPS at 190–470/s and locking some users out for 60s",
                 "solution": "Ported the per-version loop from the AI detect module, added distributed-lock timeout/recovery, and replaced the NOT EXISTS full scan with an indexed staged lookup",
                 "result": "Split into per-version queries (39ms for one version on Live EXPLAIN) and bounded each run with pagination and a per-run cap"
+              },
+              {
+                "problem": "The AI translation scheduler stalled on Vertex AI 429 quota errors, leaving 83,796 requests unprocessed on live",
+                "solution": "Traced the retry path: in-batch and recovery retries compounded to 9 effective attempts, and 13 scheduler instances retried with no backoff or jitter",
+                "result": "Identified both causes (a retroactive backfill of 160 versions × 4 languages and a 13-instance retry storm), deleted the 83,796 stuck requests, and split out 4 follow-up tasks"
               }
             ],
             "techStack": [
@@ -565,7 +570,7 @@
               {
                 "problem": "Inability to track data change history across environments and projects",
                 "solution": "Designed Git-like version control system with UUID-based cross-environment/project entity tracking",
-                "result": "Ensured data consistency across 6 games"
+                "result": "Kept data consistent across 6 games"
               },
               {
                 "problem": "Manual entity change recording prone to omission",
@@ -575,7 +580,7 @@
               {
                 "problem": "Multi-environment version conflicts during data merge",
                 "solution": "Developed 3-Way Merge Engine with parent/child entity conflict detection and unique constraint handling",
-                "result": "Enabled reliable version merging across 6 games"
+                "result": "Automated version merging across 6 games' environments"
               },
               {
                 "problem": "Expensive full-snapshot comparison for every version diff",
@@ -585,7 +590,7 @@
               {
                 "problem": "Entity tracking failures due to PK dependency during migration and merge",
                 "solution": "Introduced shared identifier-based entity tracking decoupled from PK dependency",
-                "result": "Ensured accurate entity tracking during migration, comparison, and merge"
+                "result": "Tracked entities accurately through migration, comparison, and merge"
               }
             ],
             "techStack": [
@@ -772,8 +777,8 @@
           },
           {
             "problem": "VDR project schedule delay under MVP launch pressure",
-            "solution": "3-week emergency sprint (2 BE + 1 FE), Event-Driven PDF conversion + permission-based workflow",
-            "result": "MVP launched on schedule"
+            "solution": "Emergency sprint with 2 BE + 1 FE: Event-Driven PDF conversion + permission-based workflow",
+            "result": "Launched the MVP in 3 weeks and ended synchronous large-PDF conversion timeouts"
           },
           {
             "problem": "Delayed email failure detection (hours)",
@@ -798,7 +803,7 @@
               {
                 "problem": "Opaque event flow from batch + S3 event-based processing",
                 "solution": "Migrated to EDA + Outbox pattern",
-                "result": "Enabled event flow visualization and local test environment setup"
+                "result": "Made the event flow visible and set up a local test environment"
               }
             ],
             "techStack": [
@@ -871,7 +876,7 @@
               {
                 "problem": "1:1 user-organization structure limiting multi-organization management",
                 "solution": "Expanded user-organization relationship from 1:1 to 1:N structure",
-                "result": "Enabled multi-organization management per user"
+                "result": "Supported multiple organizations per user"
               },
               {
                 "problem": "API migration risking service downtime",
@@ -954,7 +959,7 @@
               {
                 "problem": "Non-renewable plans could be incorrectly renewed or re-subscribed",
                 "solution": "Added renewal/re-subscription blocking logic for non-renewable plans",
-                "result": "Ensured business policy consistency for subscription lifecycle"
+                "result": "Kept the subscription lifecycle consistent with business policy"
               }
             ],
             "techStack": [
@@ -1047,7 +1052,7 @@
               {
                 "problem": "Session-based auth causing subdomain transition failures",
                 "solution": "Migrated from session-based to token-based authentication",
-                "result": "Enabled reliable user transitions across subdomains"
+                "result": "Implemented seamless user transitions across subdomains"
               }
             ],
             "techStack": [
@@ -1095,7 +1100,7 @@
               {
                 "problem": "External service failures (delivery, payment) cascading to main application",
                 "solution": "Architected internal API gateway integrating delivery (Hoodadak) and payment services with Circuit Breaker pattern",
-                "result": "Achieved fault isolation preventing cascading failures"
+                "result": "Isolated external-service faults to stop cascading failures"
               }
             ],
             "techStack": [
@@ -1250,7 +1255,7 @@
               {
                 "problem": "Synchronous SMS sending blocking reservation confirmation flow",
                 "solution": "Implemented Bizppurio SMS API + @Async non-blocking notification",
-                "result": "Achieved non-blocking reservation confirmation notifications"
+                "result": "Moved reservation-confirmation SMS to asynchronous delivery"
               }
             ],
             "techStack": [
@@ -1296,7 +1301,7 @@
               {
                 "problem": "Separate logins required across 5 country-specific websites",
                 "solution": "Built unified auth server with Spring Security + JWT-based centralized authentication",
-                "result": "Enabled single sign-on across all 5 country sites"
+                "result": "Brought single sign-on to all 5 country sites"
               }
             ],
             "techStack": [

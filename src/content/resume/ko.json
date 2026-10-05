@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://blog.kilpenguin.com"
     },
-    "summary": "6개 라이브 게임 환경(12 브랜치 운영)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 실시간 게임 채팅·마케팅 데이터 파이프라인·공통 패키지 체계를 주도하는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery Storage Read API 전환으로 TB당 조회 비용 82% 절감, 서버리스 이관으로 처리 범위 60→360일 확장, 6,000 동시접속 목표의 실시간 채팅 서버 용량 검증을 수행하고 Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 레거시 현대화, 이벤트 기반 아키텍처를 일관되게 수행했습니다. 최근에는 AI 도구를 단순 코드 생성기가 아니라 TDD·통합 테스트·리뷰·근거 검색으로 산출물을 검증하는 개발 품질 체계에 통합하고 있습니다.",
+    "summary": "6개 라이브 게임 환경(12 브랜치 운영)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 실시간 게임 채팅·마케팅 데이터 파이프라인·공통 패키지 체계를 주도하는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery Storage Read API 전환으로 TB당 조회 단가 82% 절감(공시 가격 기준), 서버리스 이관으로 처리 범위 60→360일 확장, 6,000 동시접속 목표의 실시간 채팅 서버 용량 검증을 수행하고 Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 레거시 현대화, 이벤트 기반 아키텍처를 일관되게 수행했습니다. 최근에는 AI 도구를 단순 코드 생성기가 아니라 TDD·통합 테스트·리뷰·근거 검색으로 산출물을 검증하는 개발 품질 체계에 통합하고 있습니다.",
     "coreCompetencies": [
       {
         "category": "DB 최적화·동시성 제어·분산 시스템",
@@ -22,8 +22,8 @@
       {
         "category": "서버리스 아키텍처 & 비용 최적화",
         "items": [
-          "배치→EDA 전환으로 처리량 270배 확장, Lambda 하이브리드 파이프라인 도입",
-          "BigQuery 과금 모델 분석 후 읽기 방식 전환으로 82% 비용 절감"
+          "배치→EDA 전환으로 시간당 병렬 처리 Job 수 270배 확장, Lambda 하이브리드 파이프라인 도입",
+          "BigQuery 과금 모델 분석 후 Storage Read API로 읽기 경로 전환, TB당 조회 단가 82% 절감(공시 가격 기준)"
         ]
       },
       {
@@ -212,7 +212,7 @@
               {
                 "problem": "마케팅 데이터 조회 비용 급증(전체 스캔 과금 구조)",
                 "solution": "파티셔닝 튜닝 분석 후 Write IOPS 증가 문제로 기각, gRPC 기반 분산 읽기(Storage Read API) 전환",
-                "result": "BigQuery 조회 단가 기준 TB당 $6.25→$1.1로 82% 절감"
+                "result": "TB당 조회 단가 $6.25→$1.1로 82% 절감(BigQuery 공시 가격 기준)"
               },
               {
                 "problem": "배치 처리의 수집 기간 한계(60일)",
@@ -302,7 +302,7 @@
             "period": "2025.02 ~ 현재",
             "featured": true,
             "description": "마케팅 전용 DB 분리 기반 위에 Google Ads/Meta/TikTok 캠페인·소재·지표를 단일 시스템에서 관리하는 통합 마케팅 플랫폼",
-            "techRationale": "BigQuery Storage Read API로 비용 82% 절감. GCP Pub/Sub → AWS Lambda/SQS 하이브리드 파이프라인으로 이벤트 기반 처리 전환, Outbox 패턴으로 API 비차단 비동기 발행 설계.",
+            "techRationale": "BigQuery Storage Read API로 TB당 조회 단가 82% 절감(공시 가격 기준). GCP Pub/Sub → AWS Lambda/SQS 하이브리드 파이프라인으로 이벤트 기반 처리 전환, Outbox 패턴으로 API 비차단 비동기 발행 설계.",
             "details": [
               {
                 "problem": "3개 광고 플랫폼 캠페인 관리 분산",
@@ -317,7 +317,7 @@
               {
                 "problem": "마케팅 데이터 조회 비용 급증",
                 "solution": "BigQuery Storage Read API 도입으로 gRPC 스트리밍 기반 고성능 데이터 읽기 전환",
-                "result": "BigQuery 비용 82% 절감(TB당 $6.25→$1.1)"
+                "result": "TB당 조회 단가 82% 절감($6.25→$1.1, 공시 가격 기준)"
               },
               {
                 "problem": "100+ 컬럼 테이블 조회 성능 저하(18초)",
@@ -411,8 +411,8 @@
               },
               {
                 "problem": "게임서버 공통 코드가 5개 브랜치로 분산 + 한 게임은 게임 데이터 정의 모듈 17개가 외부 패키지와 2년+ diverged",
-                "solution": "게임 데이터 정의 모듈+5개 서브모듈을 독립 패키지로 추출 후, 한 게임에 610 파일/310+ import 일괄 마이그레이션 + config 주입·인터페이스 누락 등 9건 hotfix",
-                "result": "패키지 체계 확립 및 첫 게임 적용 — 9건 hotfix 무사고, 이후 데이터 모듈 업데이트는 npm 버전 bump 1건으로 자동 통합(수동 마이그레이션 610 파일→0)"
+                "solution": "게임 데이터 정의 모듈+5개 서브모듈을 독립 패키지로 추출 후, 한 게임에 610 파일/310+ import 일괄 마이그레이션, 이후 하드코딩 전수 감사·config 주입 전환·회귀 guard 추가",
+                "result": "데이터 모듈 업데이트를 npm 버전 bump 1건으로 통합(수동 마이그레이션 610 파일→0), 이관 회귀로 난 라이브 500 오류는 보고 82분 만에 hotfix 배포"
               },
               {
                 "problem": "게임 서버 공통 캐시 로직이 프로젝트마다 중복 구현되어 정합성·유지보수 부담",
@@ -545,9 +545,9 @@
                 "result": "최신 버전 변환 지연 해소, 진행률 UI와 총 건수 캐시로 사용자 가시성 확보"
               },
               {
-                "problem": "detect 스케줄러가 159개 버전을 한 번에 스캔(3.27M rows full scan) → RDS IOPS 포화로 사용자 로그인 60초 장애",
+                "problem": "sandbox에서 detect 스케줄러가 159개 버전을 한 번에 조회(live 기준 3.27M행 full scan)해 Read IOPS 190~470/s 포화, 일부 사용자 60초 로그인 불가",
                 "solution": "AI detect 모듈의 per-version loop 이식 + 분산락 timeout/recovery + NOT EXISTS full scan을 인덱스 staged lookup으로 대체",
-                "result": "쿼리 260× 단축(전체스캔→39ms 인덱스 lookup), driving filesort 제거, 사용자 로그인 latency 정상 복원"
+                "result": "버전별 단일 쿼리로 분할해 Live EXPLAIN 기준 39ms/버전, 10초 cron과 100~224초 쿼리의 중첩 구조 해소"
               }
             ],
             "techStack": [
@@ -1020,7 +1020,7 @@
           {
             "problem": "Express.js 단일 파일(app.js) 중심 구조로 인증·예약·알림 기능 변경 시 회귀 위험 증가",
             "solution": "3단계 점진적 전환(단일 파일→레이어드→NestJS) + JS→TS 마이그레이션",
-            "result": "TDD 80% 달성, 주요 릴리스 구간 장애 0건 유지"
+            "result": "테스트 커버리지 80% 달성, 주요 릴리스 구간 장애 0건 유지"
           },
           {
             "problem": "수동 처방전 입력 병목(약사 건당 3~5분)",

@@ -1,14 +1,243 @@
 {
   "projects": [
     {
+      "slug": "realtime-game-chat",
+      "name": {
+        "ko": "멀티테넌트 실시간 게임 채팅 서버 — 쓰기 병목을 키 설계로 푼 기록",
+        "en": "Multi-tenant Real-time Game Chat — Fixing Write Bottlenecks Through Key Design"
+      },
+      "type": "team",
+      "featured": true,
+      "printOrder": 1,
+      "summary": {
+        "ko": "여러 게임이 공유하도록 설계한 채팅 서버의 Valkey 쓰기 병목을 채널 단위 샤딩으로 풀어 ACK p95 767.6ms→6.6ms, dev 부하 시험에서 20,002 CCU 900초 유지",
+        "en": "A chat server designed to be shared by several games: channel-level Valkey sharding cut ACK p95 from 767.6ms to 6.6ms, and a dev load test held 20,002 CCU for 900s."
+      },
+      "description": {
+        "ko": "클라이언트는 TCP gateway에 접속하고, gateway는 메시지 순서·중복 제거·WAL append를 Valkey에서 원자적으로 끝낸 뒤에만 ACK합니다. DynamoDB 적재는 별도 WAL writer가 Valkey Stream consumer group으로 이어받습니다. 용량 목표는 상용 게임 채팅 솔루션의 공개 rate limit·PCU 기준으로 6,000 CCU sustained·18,000 RPS·버스트 90,000 RPS를 산정했고, 개선은 모두 변경 전 계측 → 가설 → 비교 측정 순서로 검증했습니다. 수치는 sandbox/dev 부하 시험 결과이며, 다이어그램은 공개용으로 다시 그렸고 회사 내부 코드·인프라 식별자는 포함하지 않습니다.",
+        "en": "Clients connect to a TCP gateway, which acknowledges a message only after ordering, dedupe, and the WAL append complete atomically in Valkey. A separate WAL writer persists messages to DynamoDB through a Valkey Stream consumer group. Capacity targets (6,000 CCU sustained, 18,000 RPS, 90,000 RPS burst) were derived from a commercial game-chat solution's public rate limits and PCU basis, and every change followed the same order: instrument first, state a hypothesis, then compare measurements. Figures come from sandbox/dev load tests; the diagram is a public redraw without internal code or infrastructure identifiers."
+      },
+      "role": {
+        "ko": "Platform Part 리더 · 서버 설계·구현·부하 검증 주도",
+        "en": "Platform Part lead · led server design, implementation, and load validation"
+      },
+      "period": {
+        "start": "2026-04-01",
+        "end": "present"
+      },
+      "skills": [
+        "TypeScript",
+        "Valkey Cluster",
+        "Redis Streams",
+        "DynamoDB",
+        "AWS ECS Fargate",
+        "AWS Lambda",
+        "Terraform",
+        "k6",
+        "Grafana"
+      ],
+      "architectureDiagram": "/images/portfolio/realtime-game-chat-architecture.svg",
+      "highlights": {
+        "ko": [
+          "6K msg/s 고정률 부하에서 단일 노드 WAL 병목을 4-shard cluster로 분산: ACK p95 767.6ms→6.6ms, 수용률 99.39%→99.994%",
+          "샤드 키는 논리 채널 ID의 안정 해시 — WAL 스트림과 채널 상태 키를 같은 hash tag로 묶어 원자적 append 유지",
+          "outbox 파티션 키가 하루 1개 파티션에 쓰기를 몰던 설계를 10-shard suffix로 분산: IteratorAge 658s→35s",
+          "dev 부하 시험 20,002 CCU 900초 유지, 별도 시험에서 캐시 노드 온라인 확장 중 연결 손실 0"
+        ],
+        "en": [
+          "Spread a single-node WAL bottleneck under a fixed 6K msg/s load across a 4-shard cluster: ACK p95 767.6ms → 6.6ms, accept rate 99.39% → 99.994%",
+          "Shard key is a stable hash of the logical channel ID; the WAL stream and channel-state keys share one hash tag so the append stays atomic",
+          "Replaced an outbox partition key that sent a whole day's writes to one partition with a 10-shard suffix: IteratorAge 658s → 35s",
+          "Held 20,002 CCU for 900s in a dev load test; a separate run kept zero lost connections during an online cache scale-up"
+        ]
+      },
+      "problemSolving": [
+        {
+          "problem": {
+            "ko": "6K msg/s 고정률 부하에서 Valkey 단일 노드 EngineCPU가 99.9%에 묶여 ACK p95 767.6ms, WAL 적체 80,000건 발생. 싱글스레드라 코어를 늘려도 쓰기 병목은 풀리지 않는 구조였습니다.",
+            "en": "Under a fixed 6K msg/s load, a single Valkey node pinned EngineCPU at 99.9%, pushing ACK p95 to 767.6ms with an 80,000-entry WAL backlog. Valkey runs commands on one thread, so more cores would not help."
+          },
+          "process": {
+            "ko": "논리 채널 ID의 안정 해시로 샤드를 고르고, WAL 스트림과 채널별 seq·dedupe 키에 같은 hash tag를 붙여 4-shard cluster에서도 한 채널의 multi-key append가 한 슬롯에서 원자적으로 끝나게 했습니다. 샤드 수 1은 기존 키 형태와 호환됩니다.",
+            "en": "Picked the shard from a stable hash of the logical channel ID and gave the WAL stream and the channel's seq and dedupe keys the same hash tag, so a channel's multi-key append still completes atomically on one slot in a 4-shard cluster. A shard count of 1 keeps the legacy key shape."
+          },
+          "result": {
+            "ko": "ACK p95 767.6ms→6.6ms, 수용률 99.39%→99.994%(4,787→5,912 msg/s), WAL 적체 80,000→2,838건, 가장 바쁜 샤드 EngineCPU 74.7%",
+            "en": "ACK p95 767.6ms → 6.6ms, accept rate 99.39% → 99.994% (4,787 → 5,912 msg/s), WAL backlog 80,000 → 2,838, hottest shard EngineCPU 74.7%"
+          }
+        },
+        {
+          "problem": {
+            "ko": "outbox 후속 처리 Lambda가 Throttle 0인데도 동시 실행 2(예약 100의 2%)에 머물고 IteratorAge가 11분에 고착됐습니다. batching window 조정으로는 풀리지 않았습니다.",
+            "en": "The outbox Lambda sat at 2 concurrent executions (2% of its reserved 100) with zero throttles while IteratorAge stayed flat at 11 minutes. Tuning the batching window did not help."
+          },
+          "process": {
+            "ko": "파티션 키가 tenant#날짜라 하루치 쓰기가 한 파티션, 곧 스트림 샤드 하나에 몰리는 설계를 원인으로 추적하고 키에 0~9 shard suffix를 붙여 10개 파티션으로 분산했습니다.",
+            "en": "Traced the cause to a tenant#date partition key that sent a whole day of writes to one partition and therefore one stream shard, then added a 0–9 shard suffix to spread writes across 10 partitions."
+          },
+          "result": {
+            "ko": "sandbox 부하에서 IteratorAge 658s→35s(-95%), Lambda 동시 실행 2→8. 이후 4K CCU 부하에서 outbox 테이블 쓰기 throttle(37K건)이 확인되자 outbox를 없애고 메시지 테이블 Stream CDC로 전환했습니다.",
+            "en": "In a sandbox load run: IteratorAge 658s → 35s (−95%) and Lambda concurrency 2 → 8. When a 4K CCU run later showed 37K outbox-table write throttles, the outbox was removed in favor of stream CDC from the messages table."
+          }
+        },
+        {
+          "problem": {
+            "ko": "hot-channel 부하에서 ordering accept가 느려졌지만 Valkey Lua, gateway event loop, command queue, topology 중 어디가 병목인지 분리되지 않았습니다.",
+            "en": "Ordering accept slowed under hot-channel load, but the bottleneck could not be separated among Valkey Lua, the gateway event loop, the command queue, and topology."
+          },
+          "process": {
+            "ko": "변경 전에 attribution 계측부터 넣고 고정 채널 500 CCU와 단계별 부하로 ECPU/msg·command queue·event-loop delay를 교차 검증해 단일 연결과 0.5 vCPU event loop 포화로 원인을 좁힌 뒤 연결 pool을 나눴습니다.",
+            "en": "Added attribution instrumentation before changing anything, cross-checked ECPU per message, command queue depth, and event-loop delay under a fixed 500 CCU channel and staged load, narrowed the cause to one connection plus a saturated 0.5 vCPU event loop, then split the connection pool."
+          },
+          "result": {
+            "ko": "pool 4개에서 command queue 5,940→716, 878,205건 처리 중 유실 0, sandbox 검증 19/0/0",
+            "en": "With a pool of 4: command queue 5,940 → 716, zero loss across 878,205 messages, sandbox verification 19/0/0"
+          }
+        },
+        {
+          "problem": {
+            "ko": "성능 개선 뒤 gateway task가 OOM kill을 반복했고, 처음 세운 outbound queue 누적 가설은 검증 run에서 발동 0회로 기각됐습니다.",
+            "en": "After the performance work, gateway tasks kept getting OOM-killed, and the first hypothesis (outbound queue buildup) was rejected when the validation run showed zero triggers."
+          },
+          "process": {
+            "ko": "가설을 먼저 등록하고 heap snapshot·진단 로그·비교 측정으로 관측 스택(statsd DNS lookup, hot-path 계측)의 retained heap 누적과 V8 heap 한도·컨테이너 메모리 1GiB 불일치를 분리했습니다.",
+            "en": "Registered hypotheses up front, then used heap snapshots, diagnostic logs, and A/B runs to separate retained-heap growth from the observability stack (statsd DNS lookups, hot-path instrumentation) and a mismatch between the V8 heap limit and the 1 GiB container memory."
+          },
+          "result": {
+            "ko": "수정 적용 후 OOM 0건",
+            "en": "OOM events dropped to zero after the fix"
+          }
+        },
+        {
+          "problem": {
+            "ko": "6,000 CCU 목표를 넘는 부하에서도 연결이 유지되는지, 캐시 노드를 확장하는 동안 연결이 끊기지 않는지 근거가 필요했습니다.",
+            "en": "We needed evidence that connections hold beyond the 6,000 CCU target and survive a cache node scale-up."
+          },
+          "process": {
+            "ko": "dev 환경에서 20K CCU 부하 시험과, 별도 시험으로 Valkey 노드 온라인 스케일업을 측정했습니다.",
+            "en": "Ran a 20K CCU load test in dev and, in a separate run, measured an online Valkey node scale-up."
+          },
+          "result": {
+            "ko": "20,002 CCU 900초 유지. 별도 확장 시험에서는 16분 39초 동안 연결 손실 0이었고, send 23건이 backpressure로 거부돼 클라이언트 재시도로 복구됐습니다.",
+            "en": "Held 20,002 CCU for 900s. In the separate scale-up run, no connections were lost over 16m39s; 23 sends were rejected by backpressure and recovered through client retries."
+          }
+        }
+      ],
+      "metrics": [
+        {
+          "label": {
+            "ko": "ACK p95 (6K msg/s)",
+            "en": "ACK p95 (6K msg/s)"
+          },
+          "before": "767.6ms",
+          "after": "6.6ms",
+          "improvement": {
+            "ko": "단일 노드 → 4-shard cluster",
+            "en": "Single node → 4-shard cluster"
+          }
+        },
+        {
+          "label": {
+            "ko": "dev 부하 유지",
+            "en": "Dev load held"
+          },
+          "before": {
+            "ko": "목표 6,000 CCU",
+            "en": "6,000 CCU target"
+          },
+          "after": {
+            "ko": "20,002 CCU · 900초",
+            "en": "20,002 CCU · 900s"
+          },
+          "improvement": {
+            "ko": "목표 대비 3.3배 동시접속 유지",
+            "en": "3.3x the target concurrency sustained"
+          }
+        },
+        {
+          "label": {
+            "ko": "수용률",
+            "en": "Accept rate"
+          },
+          "before": "99.39%",
+          "after": "99.994%",
+          "improvement": "4,787 → 5,912 msg/s"
+        },
+        {
+          "label": {
+            "ko": "outbox IteratorAge",
+            "en": "Outbox IteratorAge"
+          },
+          "before": "658s",
+          "after": "35s",
+          "improvement": {
+            "ko": "파티션 키 10-shard 분산",
+            "en": "10-shard partition key"
+          }
+        },
+        {
+          "label": {
+            "ko": "gateway command queue",
+            "en": "Gateway command queue"
+          },
+          "before": "5,940",
+          "after": "716",
+          "improvement": {
+            "ko": "연결 pool 분리 · 878,205건 유실 0",
+            "en": "Split connection pool · zero loss in 878,205 messages"
+          }
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "수직 확장 대신 샤딩: Valkey는 명령을 한 스레드로 처리해 코어 증설로 쓰기 병목이 풀리지 않습니다. 대가로 한 채널은 한 샤드에 고정됩니다.",
+          "샤드 키는 논리 채널 ID: 채널 안 순서 보장이 요구사항이라 채널 단위로 라우팅하고, WAL과 채널 상태를 같은 hash tag로 묶어 multi-key 원자 처리를 유지했습니다.",
+          "ACK 전에는 Valkey append만, DynamoDB 적재는 별도 writer: 클라이언트 지연을 DB 쓰기와 분리하고 consumer group으로 적재를 재처리할 수 있게 했습니다.",
+          "ARM64: 6,000 CCU 동일 부하 비교에서 CPU 15%·메모리 54% 감소를 확인하고 멀티플랫폼 이미지로 x86·ARM64를 모두 지원했습니다."
+        ],
+        "en": [
+          "Sharding over vertical scaling: Valkey executes commands on one thread, so more cores do not relieve a write bottleneck. The trade-off is that a channel is pinned to one shard.",
+          "Logical channel ID as the shard key: in-channel ordering is a requirement, so routing is per channel, and the WAL and channel state share one hash tag to keep multi-key operations atomic.",
+          "Only the Valkey append happens before ACK; a separate writer persists to DynamoDB, separating client latency from database writes and letting the consumer group replay persistence.",
+          "ARM64: a same-load comparison at 6,000 CCU showed 15% lower CPU and 54% lower memory, and multi-platform images support both x86 and ARM64."
+        ]
+      },
+      "operationalLimits": {
+        "ko": [
+          "모든 수치는 sandbox/dev 부하 시험 결과이며 라이브 트래픽 실측이나 라이브 전체 용량이 아닙니다.",
+          "한 채널은 한 샤드에 고정되므로, 단일 hot channel의 쓰기는 샤드를 늘려도 분산되지 않습니다.",
+          "k6 JS 클라이언트의 VU당 메모리 한계로 샤딩 이후 서버의 처리 한계점(cliff)은 측정하지 못했고, 결과는 목표 부하 유지 검증으로만 해석합니다."
+        ],
+        "en": [
+          "All figures come from sandbox/dev load tests, not live traffic or total live capacity.",
+          "A channel is pinned to one shard, so writes to a single hot channel do not spread when shards are added.",
+          "Per-VU memory limits in the k6 JS client prevented measuring the post-sharding server's throughput cliff; results only show that target loads were sustained."
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "싱글스레드 저장소의 쓰기 병목은 수직 확장이 아니라 키 설계(샤딩·hash tag)로 풀어야 한다.",
+          "파티션 키에 날짜만 두면 하루치 쓰기가 한 파티션에 몰린다. 처리량 문제는 설정보다 키 설계에서 먼저 찾는다.",
+          "병목 후보를 분리하는 계측 없이 바꾸면, 좋아져도 왜 좋아졌는지 설명할 수 없다."
+        ],
+        "en": [
+          "Write bottlenecks in a single-threaded store are solved with key design (sharding, hash tags), not vertical scaling.",
+          "A date-only partition key sends a whole day of writes to one partition; look at key design before tuning settings.",
+          "Changing things without instrumentation that separates the suspects leaves you unable to explain why it got better."
+        ]
+      },
+      "scale": {
+        "ko": "멀티테넌트 · 6,000 CCU sustained 목표 · dev 20,002 CCU 검증 · 4-shard Valkey",
+        "en": "Multi-tenant · 6,000 CCU sustained target · 20,002 CCU validated in dev · 4-shard Valkey"
+      }
+    },
+    {
       "slug": "flex-work-schedule",
       "name": {
         "ko": "Flex — 제약을 숨기지 않는 근무 계획기",
         "en": "Flex — Constraint-Explicit Work Planner"
       },
       "type": "personal",
-      "featured": true,
-      "printOrder": 1,
       "summary": {
         "ko": "인정시간·실제 근무·휴가·일/주 상한을 하나의 결정론적 배분 계약으로 묶고, 달성 불가능한 목표는 초과 배정 대신 부족분과 이유로 표시하는 로컬 우선 근무 계획기",
         "en": "A local-first work planner that combines recognized load, actual work, leave, and daily/weekly caps into one deterministic allocation contract, exposing infeasible targets as explicit gaps instead of forced over-allocation."
@@ -181,7 +410,8 @@
           "Restored the existing _minimum_activation flow so minimum work remains a selective activation floor rather than a mandatory seed",
           "Kept the decision surface reproducible through URL/local state without adding external-system integration"
         ]
-      }
+      },
+      "listed": true
     },
     {
       "slug": "ai-coding-harness",

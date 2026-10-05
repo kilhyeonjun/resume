@@ -28,8 +28,8 @@ const directionalHrefs = (html, label) => [...withoutComments(html).matchAll(new
   'g',
 ))].map((match) => match[1]);
 
-const expectedFeatured = ['flex-work-schedule', 'ai-coding-harness', 'concert-reservation', 'family-budget-demo'];
-const expectedListed = ['gamebang', 'clinical-lab-jobs', 'daesin-logistics-bot', 'innovalley-menu-bot', 'startuppool'];
+const expectedFeatured = ['realtime-game-chat', 'ai-coding-harness', 'concert-reservation', 'family-budget-demo'];
+const expectedListed = ['flex-work-schedule', 'gamebang', 'clinical-lab-jobs', 'daesin-logistics-bot', 'innovalley-menu-bot', 'startuppool'];
 const expectedHidden = ['slack-clone', 'react-nodebird', 'multichat', 'trollgg'];
 
 test('portfolio visibility has one shared public-route contract', async () => {
@@ -72,12 +72,52 @@ test('portfolio visibility has one shared public-route contract', async () => {
 
 test('portfolio supports explicit backend-platform and product-algorithm featured orders', async () => {
   const template = await read('src/components/templates/PortfolioTemplate.astro');
-  assert.match(template, /backend-platform.*ai-coding-harness.*concert-reservation.*flex-work-schedule/s);
-  assert.match(template, /product-algorithm.*flex-work-schedule.*concert-reservation.*ai-coding-harness/s);
+  assert.match(template, /backend-platform.*realtime-game-chat.*concert-reservation.*ai-coding-harness.*family-budget-demo/s);
+  assert.match(template, /product-algorithm.*family-budget-demo.*concert-reservation.*ai-coding-harness.*realtime-game-chat/s);
   assert.match(template, /new URLSearchParams\(location\.search\)/);
   assert.match(template, /data-slug=\{project\.slug\}/);
   assert.match(template, /focus=backend-platform/);
   assert.match(template, /focus=product-algorithm/);
+});
+
+test('every featured project appears in every role-focused order', async () => {
+  const [template, data] = await Promise.all([
+    read('src/components/templates/PortfolioTemplate.astro'),
+    read('src/data/portfolio.json').then(JSON.parse),
+  ]);
+  const featured = data.projects.filter((project) => project.featured && !project.hidden).map((project) => project.slug).sort();
+  for (const focus of ['backend-platform', 'product-algorithm']) {
+    const list = template.match(new RegExp(`'${focus}': \\[([^\\]]*)\\]`))?.[1] ?? '';
+    const slugs = [...list.matchAll(/'([^']+)'/g)].map((match) => match[1]).sort();
+    assert.deepEqual(slugs, featured, focus);
+  }
+});
+
+test('company chat case study stays sanitized and scoped to load-test evidence', async () => {
+  const data = JSON.parse(await read('src/data/portfolio.json'));
+  const project = data.projects.find((candidate) => candidate.slug === 'realtime-game-chat');
+  assert.ok(project);
+  assert.equal(project.type, 'team');
+  assert.equal(project.featured, true);
+  assert.equal(project.printOrder, 1);
+  assert.equal(project.github, undefined);
+  for (const lang of ['ko', 'en']) {
+    assert.match(project.operationalLimits[lang].join(' '), /sandbox/);
+    assert.match(project.operationalLimits[lang].join(' '), /dev/);
+  }
+  assert.ok(project.metrics.length >= 4);
+  for (const metric of project.metrics) assert.match(JSON.stringify(metric.after), /\d/);
+  assert.doesNotMatch(JSON.stringify(project), /glider|vivox|bane|DTP-|gameduo\/|amazonaws|PR #\d|hyperdx/i);
+  for (const lang of ['ko', 'en']) {
+    assert.doesNotMatch(await read(`src/content/resume/${lang}.json`), /glider|vivox|DTP-\d|amazonaws|hyperdx/i, lang);
+  }
+  const svg = await read(`public/${project.architectureDiagram.replace(/^\//, '')}`);
+  assert.match(svg, /role="img"/);
+  assert.match(svg, /<title>/);
+  assert.match(svg, /<desc>/);
+  assert.doesNotMatch(svg, /glider|vivox|bane|gameduo|amazonaws/i);
+  const detail = await read('src/components/templates/PortfolioDetailTemplate.astro');
+  assert.match(detail, /showsOperationalLimits = [^;]*'realtime-game-chat'/);
 });
 
 test('derivative sources declare active noindex and robots allows crawlers to read it', async () => {

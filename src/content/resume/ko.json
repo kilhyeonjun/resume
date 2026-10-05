@@ -9,7 +9,7 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://blog.kilpenguin.com"
     },
-    "summary": "6개 라이브 게임 환경(12 브랜치 운영)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 실시간 게임 채팅·마케팅 데이터 파이프라인·공통 패키지 체계를 주도하는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery Storage Read API 전환으로 TB당 조회 단가 82% 절감(공시 가격 기준), 서버리스 이관으로 처리 범위 60→360일 확장, 6,000 동시접속 목표의 실시간 채팅 서버 용량 검증을 수행하고 Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 레거시 현대화, 이벤트 기반 아키텍처를 일관되게 수행했습니다. 최근에는 AI 도구를 단순 코드 생성기가 아니라 TDD·통합 테스트·리뷰·근거 검색으로 산출물을 검증하는 개발 품질 체계에 통합하고 있습니다.",
+    "summary": "6개 라이브 게임 환경(12 브랜치 운영)의 공통 백엔드 플랫폼을 설계·운영하고, 신설 Platform Part 리더로서 실시간 게임 채팅·마케팅 데이터 파이프라인·공통 패키지 체계를 주도하는 백엔드 엔지니어입니다. 게임듀오에서 BigQuery Storage Read API 전환으로 TB당 조회 단가 82% 절감(공시 가격 기준), 서버리스 이관으로 처리 범위 60→360일 확장, 실시간 채팅 서버를 dev 부하 시험 20,002 동시접속 900초 유지까지 검증하고 Games on AWS 2025 고객 세션에서 사례를 발표했습니다.\n\n{{CAREER_DURATION}} 동안 교육·헬스케어·임상시험·게임 4개 도메인에서 DB 최적화, 동시성 제어, 레거시 현대화, 이벤트 기반 아키텍처를 일관되게 수행했습니다. 최근에는 AI 도구를 단순 코드 생성기가 아니라 TDD·통합 테스트·리뷰·근거 검색으로 산출물을 검증하는 개발 품질 체계에 통합하고 있습니다.",
     "coreCompetencies": [
       {
         "category": "DB 최적화·동시성 제어·분산 시스템",
@@ -249,13 +249,13 @@
             "name": "실시간 게임 채팅 서버 (멀티테넌트)",
             "period": "2026.04 ~ 현재",
             "featured": true,
-            "description": "여러 라이브 게임이 공유하는 멀티테넌트 실시간 채팅 서버를 설계하고, 6,000 동시접속·18,000 RPS 목표 용량과 Valkey fanout 병목을 부하 측정으로 검증",
+            "description": "여러 게임이 공유하도록 멀티테넌트 실시간 채팅 서버를 설계하고, 6,000 동시접속·18,000 RPS 목표를 산정해 dev 부하 시험 20,002 동시접속 900초 유지까지 검증",
             "techRationale": "메시지 순서 보장을 위해 Redis Streams Consumer Group 기반 WAL(Write-Ahead Log)을 채택하고, 단일 노드 수직 확장 대신 4-shard Valkey 클러스터로 분산 — 싱글스레드 Redis는 코어 증설로 쓰기 병목을 해소할 수 없기 때문. ECS Fargate ARM64 전환은 동일 부하 자원 효율 비교 측정으로 검증 후 채택.",
             "details": [
               {
                 "problem": "여러 게임이 공유하는 채팅 인프라의 용량 산정 기준이 없어 서버 사이징·SLO 목표를 정할 수 없음",
                 "solution": "추측 기반 산정 대신 상용 게임 채팅 솔루션의 공식 rate limit·PCU 기준을 채택해 멀티테넌트 통합 서버 1대 frame 용량 산정식 수립",
-                "result": "6,000 동시접속(sustained)·18,000 RPS·버스트 90,000 RPS 목표 확정 및 분기 OKR 반영"
+                "result": "6,000 동시접속·18,000 RPS·버스트 90,000 RPS 목표를 분기 OKR에 반영하고 dev 부하 시험에서 20,002 동시접속 900초 유지"
               },
               {
                 "problem": "Redis Streams 기반 WAL이 6K msg/s 부하에서 싱글스레드 쓰기 병목(EngineCPU 99.9%, ack p95 767ms)",
@@ -268,9 +268,9 @@
                 "result": "5분간 29.9만 메시지 sustained에서 ack p95 42ms(목표 <100ms)·에러율 0.04%(목표 <0.1%) 달성"
               },
               {
-                "problem": "x86 Fargate가 6,000 동시접속 부하에서 CPU·메모리 사용률이 높아 운영 비용 부담",
-                "solution": "아키텍처 가정 대신 6,000 동시접속 실부하에서 x86 대비 자원 효율을 실측 비교한 근거로 ARM64(Graviton) 전환 — 멀티플랫폼 이미지(x86/ARM64) 빌드로 양 플랫폼 동시 지원",
-                "result": "동일 부하에서 CPU 사용률 15%·메모리 54% 감소, 단가 동등 — 운영 비용 절감 근거 확보"
+                "problem": "outbox 후속 처리 Lambda가 Throttle 0인데도 동시 실행 2(예약 100의 2%)·IteratorAge 11분에 고착",
+                "solution": "batching 조정 대신 하루치 쓰기를 한 파티션에 몰던 tenant#날짜 파티션 키를 원인으로 추적해 0~9 shard suffix로 10개 파티션에 분산",
+                "result": "sandbox 부하에서 IteratorAge 658s→35s(-95%), Lambda 동시 실행 2→8"
               },
               {
                 "problem": "hot-channel fanout 전환 후 병목이 Redis 서버 Lua, gateway event-loop, 단일 command queue, topology 중 어디인지 분리되지 않음",

@@ -234,8 +234,8 @@
     {
       "slug": "flex-work-schedule",
       "name": {
-        "ko": "Flex — 제약을 숨기지 않는 근무 계획기",
-        "en": "Flex — Constraint-Explicit Work Planner"
+        "ko": "Work Schedule Planner — 제약을 숨기지 않는 근무 계획기",
+        "en": "Work Schedule Planner — Constraint-Explicit Scheduling"
       },
       "type": "personal",
       "summary": {
@@ -376,7 +376,10 @@
             "ko": "강제 배정 위험",
             "en": "Risk of forced allocation"
           },
-          "after": "insufficient_slots + gap",
+          "after": {
+            "ko": "부족 시간·사유 표시",
+            "en": "Shortfall hours and reason shown"
+          },
           "improvement": {
             "ko": "hard limit 유지",
             "en": "hard limits preserved"
@@ -574,8 +577,8 @@
             "en": "Evidence depended on a private environment"
           },
           "after": {
-            "ko": "공개 launcher + contract demo + CI",
-            "en": "Public launcher + contract demo + CI"
+            "ko": "CI 테스트 스크립트 65개 통과 · 공개 릴리스 62개(2026-10 기준)",
+            "en": "65 test scripts passing in CI · 62 public releases (as of 2026-10)"
           },
           "improvement": {
             "ko": "로그인 없이 핵심 계약과 실패 동작 재현",
@@ -698,7 +701,6 @@
         "en": "Gamebang — Server-Authoritative Realtime Game Room"
       },
       "type": "personal",
-      "listed": true,
       "summary": {
         "ko": "모바일 클라이언트는 행동만 요청하고 방별 Durable Object가 phase·turn·숨은 정보·재접속을 판정하는 5종 실시간 미니게임 서비스",
         "en": "A five-game realtime service where mobile clients request actions and a room-scoped Durable Object owns phase, turn, hidden information, and reconnect behavior."
@@ -820,7 +822,8 @@
           "Use a Durable Object as the room source of truth while keeping game rules in pure state machines",
           "Perform playerView projection on the server to preserve per-participant hidden-information boundaries"
         ]
-      }
+      },
+      "hidden": true
     },
     {
       "slug": "clinical-lab-jobs",
@@ -829,7 +832,6 @@
         "en": "Clinical-Lab Job Decision Dashboard"
       },
       "type": "personal",
-      "listed": true,
       "summary": {
         "ko": "채용 플랫폼과 병원 채용 페이지 원천을 정규화해 탐색하고, 마감·지역·고용형태 추천 이유와 계정별 지원 상태를 함께 관리하는 모바일 우선 대시보드",
         "en": "A mobile-first dashboard that normalizes job-platform and hospital-career-page sources, explains deadline/region/employment recommendations, and keeps account-scoped application state."
@@ -951,7 +953,8 @@
           "Separate public discovery from account-scoped application state",
           "Tie outbox completion and watermark advancement to delivery confirmation to make the loss boundary explicit"
         ]
-      }
+      },
+      "hidden": true
     },
     {
       "slug": "daesin-logistics-bot",
@@ -1024,44 +1027,44 @@
       "problemSolving": [
         {
           "problem": {
-            "ko": "Why — 오전에도 원천에 오늘 데이터가 있었지만 14시 이전에는 전일을 선택하는 규칙 때문에 누락됐다",
-            "en": "Why — current-day source data was already available in the morning, but a pre-14:00 previous-day rule skipped it"
+            "ko": "오전에도 원천에 오늘 데이터가 있었지만 14시 이전에는 전일을 선택하는 규칙 때문에 누락됐다",
+            "en": "current-day source data was already available in the morning, but a pre-14:00 previous-day rule skipped it"
           },
           "process": {
-            "ko": "How — 기본 수집일을 오늘 날짜로 고정하고 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 재조회하도록 변경했다",
-            "en": "How — fixed the default collection date to the current date and made the singleton KST scheduler recheck it in 15 scheduled hourly slots from Mon–Sat 06:00–20:00"
+            "ko": "기본 수집일을 오늘 날짜로 고정하고 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 재조회하도록 변경했다",
+            "en": "fixed the default collection date to the current date and made the singleton KST scheduler recheck it in 15 scheduled hourly slots from Mon–Sat 06:00–20:00"
           },
           "result": {
-            "ko": "Result — 오전 데이터와 늦게 공개된 변경분을 정적 날짜·건수 문구 없이 후속 실행에서 반영할 수 있도록 변경",
-            "en": "Result — subsequent runs can capture morning data and later source changes without maintaining static date or row-count claims"
+            "ko": "오전 데이터와 늦게 공개된 변경분을 정적 날짜·건수 문구 없이 후속 실행에서 반영할 수 있도록 변경",
+            "en": "subsequent runs can capture morning data and later source changes without maintaining static date or row-count claims"
           }
         },
         {
           "problem": {
-            "ko": "Why — web replica마다 scheduler가 시작되어 동일 수집이 중복 실행됐다",
-            "en": "Why — each web replica started a scheduler, duplicating the same collection job"
+            "ko": "web replica마다 scheduler가 시작되어 동일 수집이 중복 실행됐다",
+            "en": "each web replica started a scheduler, duplicating the same collection job"
           },
           "process": {
-            "ko": "How — 수집 책임을 web process 밖의 singleton KST scheduler 하나로 분리했다",
-            "en": "How — moved collection responsibility out of web processes into one singleton KST scheduler"
+            "ko": "수집 책임을 web process 밖의 singleton KST scheduler 하나로 분리했다",
+            "en": "moved collection responsibility out of web processes into one singleton KST scheduler"
           },
           "result": {
-            "ko": "Result — replica별 15개 cron slot 구성에서 singleton의 15개 slot으로 축소(프로세스 시작 시 1회 동기화 제외)",
-            "en": "Result — reduced per-replica 15-slot schedules to one singleton's 15 slots, excluding the one startup sync"
+            "ko": "replica별 15개 cron slot 구성에서 singleton의 15개 slot으로 축소(프로세스 시작 시 1회 동기화 제외)",
+            "en": "reduced per-replica 15-slot schedules to one singleton's 15 slots, excluding the one startup sync"
           }
         },
         {
           "problem": {
-            "ko": "Why — 운영 화면에 필요한 원천 필드는 제공하면서 내부·credential 필드는 차단해야 했다",
-            "en": "Why — source fields needed by the operational UI had to remain useful while internal and credential-bearing fields stayed blocked"
+            "ko": "운영 화면에 필요한 원천 필드는 제공하면서 내부·credential 필드는 차단해야 했다",
+            "en": "source fields needed by the operational UI had to remain useful while internal and credential-bearing fields stayed blocked"
           },
           "process": {
-            "ko": "How — method/path allowlist, 필수 필드 검증, 고정 출력 projection과 원천 URL contract로 운영 화면 필드만 통과시키고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외했다",
-            "en": "How — used a method/path allowlist, required-field validation, a fixed output projection, and source-URL contracts to pass only operational UI fields while excluding internal IDs, unknown fields, and the credential-bearing tracking URL"
+            "ko": "method/path allowlist, 필수 필드 검증, 고정 출력 projection과 원천 URL contract로 운영 화면 필드만 통과시키고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외했다",
+            "en": "used a method/path allowlist, required-field validation, a fixed output projection, and source-URL contracts to pass only operational UI fields while excluding internal IDs, unknown fields, and the credential-bearing tracking URL"
           },
           "result": {
-            "ko": "Result — 고정 출력 projection과 원천 URL allowlist를 redirect·payload·배포 회귀 경계와 함께 검증",
-            "en": "Result — verified the fixed output projection and source-URL allowlist together with redirect, payload, and deployment regression boundaries"
+            "ko": "고정 출력 projection과 원천 URL allowlist를 redirect·payload·배포 회귀 경계와 함께 검증",
+            "en": "verified the fixed output projection and source-URL allowlist together with redirect, payload, and deployment regression boundaries"
           }
         }
       ],
@@ -1230,8 +1233,8 @@
             "en": "15 singleton slots"
           },
           "improvement": {
-            "ko": "singleton 복구",
-            "en": "Singleton restored"
+            "ko": "중복 실행 제거",
+            "en": "Duplicate runs removed"
           }
         },
         {
@@ -1272,7 +1275,6 @@
         "en": "NyamNyam WeDu — Cafeteria Menu Alert Bot"
       },
       "type": "personal",
-      "listed": true,
       "summary": {
         "ko": "판교 이노밸리 구내식당 주간 식단표를 카카오 채널에서 Playwright로 크롤링하여 Slack으로 자동 발송하는 봇 — Clean Architecture + TSyringe DI, Slack Bot API 슬래시 커맨드, 재시도 최대 6회, DeliveryHistory 중복 방지",
         "en": "Bot that crawls weekly cafeteria menus from Kakao Channel via Playwright and auto-delivers to Slack — Clean Architecture + TSyringe DI, Slack Bot API slash command, up to 6 retries, DeliveryHistory duplicate prevention"
@@ -1394,7 +1396,8 @@
           "Playwright over Cheerio: Kakao Channel requires JS rendering — static HTML parsing with Cheerio cannot capture dynamic content",
           "Result<T, E> pattern: explicit error types instead of exceptions force callers to handle errors, improving code predictability"
         ]
-      }
+      },
+      "hidden": true
     },
     {
       "slug": "concert-reservation",
@@ -1412,6 +1415,10 @@
       "description": {
         "ko": "공개 저장소의 100-thread 통합 테스트는 동일 좌석 요청에서 예약 행 하나만 남는지, 사용자 단위 Redisson 락 아래 충전·결제 결과가 기대값과 일치하는지 검증한다. 결제 트랜잭션은 PENDING outbox 행을 만들고 scheduler가 Kafka 발행·실패 재시도를 맡는다. k6 예약 시나리오는 3,000 requests/s를 설정했지만 최대 VU는 2,400이므로 이를 달성 처리량이나 동시 사용자 수로 표현하지 않는다. 공개 보고서에 기록된 예약 오류율 0.64%와 p95 5.74s, 캐시 워밍·TTL 조정 후 p95 676ms만 관측 결과로 사용한다.",
         "en": "Public-repository 100-thread integration tests verify that same-seat requests leave one reservation row and that per-user Redisson locking produces the expected charge and payment state. The payment transaction creates a PENDING outbox row, while a scheduler handles Kafka publication and failed-event retries. The k6 reservation scenario configures 3,000 requests/s with a 2,400 max-VU ceiling, so it is not presented as achieved throughput or concurrent users. Only the public report's observed 0.64% reservation error rate, p95 5.74s, and post-cache-warming/TTL p95 676ms are reported as outcomes."
+      },
+      "role": {
+        "ko": "항해 플러스 백엔드 6기 개인 과제 · 공개 저장소 커밋 39건 모두 본인 작성",
+        "en": "Individual assignment in Hanghae Plus Backend (6th cohort) · all 39 commits in the public repo are mine"
       },
       "coverImage": "/images/portfolio/concert-reservation-cover.webp",
       "contentImages": [],
@@ -1536,15 +1543,13 @@
           "동일 좌석 100-thread 통합 테스트에서 예약 행 1개 확인",
           "사용자 지갑·결제를 Redisson 사용자 단위 락으로 직렬화",
           "캐시 워밍·TTL 조정 후 공개 보고서 p95 5.74s → 676ms",
-          "결제 TX의 PENDING outbox와 scheduler 발행·재시도 경로 구현",
-          "k6 설정값 3,000 requests/s와 최대 2,400 VU를 관측 성과와 분리"
+          "결제 TX의 PENDING outbox와 scheduler 발행·재시도 경로 구현"
         ],
         "en": [
           "One reservation row after a 100-thread same-seat integration test",
           "Per-user Redisson serialization for wallet and payment paths",
           "Public-report p95 5.74s → 676ms after cache warming and TTL changes",
-          "PENDING outbox in the payment transaction plus scheduler publication and retry paths",
-          "Configured 3,000 requests/s and 2,400 max VUs kept separate from observed outcomes"
+          "PENDING outbox in the payment transaction plus scheduler publication and retry paths"
         ]
       },
       "lessons": {
@@ -1629,7 +1634,6 @@
         "en": "StartupPool"
       },
       "type": "team",
-      "listed": true,
       "teamComposition": {
         "ko": "FE(2명) BE(2명) 기획(1명) 디자인(1명) 마케팅(2명) / 본인 BE 담당",
         "en": "FE(2) BE(2) PM(1) Design(1) Marketing(2) / Responsible for BE"
@@ -1686,7 +1690,7 @@
           "커뮤니티 핵심 API 전담 구현 (게시물·댓글·좋아요·북마크·팔로우)",
           "OpenGraph 스크래핑 기반 링크 프리뷰 기능 개발",
           "어드민 백엔드 시스템 독립 구축",
-          "8인 크로스펀셔널 팀에서 FE와 API 스펙 협의 및 스프린트 협업"
+          "8인 크로스펑셔널 팀에서 FE와 API 스펙 협의 및 스프린트 협업"
         ],
         "en": [
           "Integrated 4 social login providers (Google, Naver, Kakao, Facebook) with unified OAuth 2.0 flow",
@@ -1741,7 +1745,8 @@
         "en": [
           "NestJS + PostgreSQL: manages normalized relational data model for startup information, optimized category and search filter queries"
         ]
-      }
+      },
+      "hidden": true
     },
     {
       "slug": "slack-clone",

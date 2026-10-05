@@ -29,8 +29,8 @@ const directionalHrefs = (html, label) => [...withoutComments(html).matchAll(new
 ))].map((match) => match[1]);
 
 const expectedFeatured = ['realtime-game-chat', 'ai-coding-harness', 'concert-reservation', 'family-budget-demo'];
-const expectedListed = ['flex-work-schedule', 'gamebang', 'clinical-lab-jobs', 'daesin-logistics-bot', 'innovalley-menu-bot', 'startuppool'];
-const expectedHidden = ['slack-clone', 'react-nodebird', 'multichat', 'trollgg'];
+const expectedListed = ['flex-work-schedule', 'daesin-logistics-bot'];
+const expectedHidden = ['gamebang', 'clinical-lab-jobs', 'innovalley-menu-bot', 'startuppool', 'slack-clone', 'react-nodebird', 'multichat', 'trollgg'];
 
 test('portfolio visibility has one shared public-route contract', async () => {
   const data = JSON.parse(await read('src/data/portfolio.json'));

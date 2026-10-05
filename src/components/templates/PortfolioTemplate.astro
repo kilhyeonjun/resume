@@ -177,13 +177,14 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
   <script is:inline>
     const focus = new URLSearchParams(location.search).get('focus');
     const orders = {
-      'backend-platform': ['ai-coding-harness', 'concert-reservation', 'flex-work-schedule'],
-      'product-algorithm': ['flex-work-schedule', 'concert-reservation', 'ai-coding-harness'],
+      'backend-platform': ['realtime-game-chat', 'concert-reservation', 'ai-coding-harness', 'family-budget-demo'],
+      'product-algorithm': ['family-budget-demo', 'concert-reservation', 'ai-coding-harness', 'realtime-game-chat'],
     };
-    if (focus in orders) {
+    if (focus && Object.hasOwn(orders, focus)) {
       const grid = document.querySelector('.portfolio-grid');
       const cards = new Map([...grid.children].map((card) => [card.dataset.slug, card]));
-      for (const slug of orders[focus]) grid.append(cards.get(slug));
+      const order = [...orders[focus].filter((slug) => cards.has(slug)), ...[...cards.keys()].filter((slug) => !orders[focus].includes(slug))];
+      for (const slug of order) grid.append(cards.get(slug));
       for (const card of grid.children) card.classList.remove('portfolio-case-featured');
       grid.firstElementChild?.classList.add('portfolio-case-featured');
       for (const link of document.querySelectorAll('.portfolio-focus a')) {

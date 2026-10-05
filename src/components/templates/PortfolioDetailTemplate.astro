@@ -49,6 +49,7 @@ const projectSequenceDiagram = project.sequenceDiagram ? localize(project.sequen
 const isEvidenceRegister = project.slug === 'ai-coding-harness';
 const isDaesinCase = project.slug === 'daesin-logistics-bot';
 const isFamilyBudgetCase = project.slug === 'family-budget-demo';
+const showsOperationalLimits = isDaesinCase || isFamilyBudgetCase || project.slug === 'realtime-game-chat';
 const evidenceIndex: Array<{ id: string; label: string }> = [];
 const evidenceIds = new Set<string>();
 const addEvidence = (condition: unknown, id: string, label: string) => {
@@ -69,7 +70,7 @@ addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase &
 addEvidence(!isDaesinCase && projectScenarioEvidence?.length, 'scenarios', lang === 'ko' ? '합성 시나리오' : 'Synthetic scenarios');
 addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && !projectScenarioEvidence?.length, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
 addEvidence(isDaesinCase && projectArchitectureDiagram, 'architecture', lang === 'ko' ? '운영 경계' : 'Operating boundary');
-addEvidence((isDaesinCase || isFamilyBudgetCase) && projectOperationalLimits?.length, 'limits', lang === 'ko' ? '운영 한계' : 'Operating limits');
+addEvidence(showsOperationalLimits && projectOperationalLimits?.length, 'limits', lang === 'ko' ? '운영 한계' : 'Operating limits');
 addEvidence(projectPublicEvidence?.length, 'public-evidence', lang === 'ko' ? '공개 근거' : 'Public evidence');
 addEvidence(projectDescription && !isDaesinCase, 'description', labels.description);
 addEvidence(teamComposition, 'team', labels.teamComposition);
@@ -403,7 +404,7 @@ addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-image
       </section>
     )}
 
-    {(isDaesinCase || isFamilyBudgetCase) && projectOperationalLimits && projectOperationalLimits.length > 0 && (
+    {showsOperationalLimits && projectOperationalLimits && projectOperationalLimits.length > 0 && (
       <section id="limits" class="mb-10" aria-labelledby="limits-title">
         <h2 id="limits-title" class="section-title mb-6">{lang === 'ko' ? '운영 한계' : 'Operating limits'}</h2>
         <div class="grid gap-3 md:grid-cols-3">

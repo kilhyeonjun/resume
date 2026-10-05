@@ -28,8 +28,8 @@ const directionalHrefs = (html, label) => [...withoutComments(html).matchAll(new
   'g',
 ))].map((match) => match[1]);
 
-const expectedFeatured = ['realtime-game-chat', 'ai-coding-harness', 'concert-reservation', 'family-budget-demo'];
-const expectedListed = ['flex-work-schedule', 'daesin-logistics-bot'];
+const expectedFeatured = ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform', 'concert-reservation'];
+const expectedListed = ['family-budget-demo', 'flex-work-schedule', 'ai-coding-harness', 'daesin-logistics-bot'];
 const expectedHidden = ['gamebang', 'clinical-lab-jobs', 'innovalley-menu-bot', 'startuppool', 'slack-clone', 'react-nodebird', 'multichat', 'trollgg'];
 
 test('portfolio visibility has one shared public-route contract', async () => {
@@ -72,8 +72,8 @@ test('portfolio visibility has one shared public-route contract', async () => {
 
 test('portfolio supports explicit backend-platform and product-algorithm featured orders', async () => {
   const template = await read('src/components/templates/PortfolioTemplate.astro');
-  assert.match(template, /backend-platform.*realtime-game-chat.*concert-reservation.*ai-coding-harness.*family-budget-demo/s);
-  assert.match(template, /product-algorithm.*family-budget-demo.*concert-reservation.*ai-coding-harness.*realtime-game-chat/s);
+  assert.match(template, /backend-platform.*realtime-game-chat.*rds-saturation-rca.*shared-package-ci-platform.*concert-reservation/s);
+  assert.match(template, /product-algorithm.*concert-reservation.*realtime-game-chat.*shared-package-ci-platform.*rds-saturation-rca/s);
   assert.match(template, /new URLSearchParams\(location\.search\)/);
   assert.match(template, /data-slug=\{project\.slug\}/);
   assert.match(template, /focus=backend-platform/);
@@ -212,12 +212,31 @@ test('new portfolio candidates stay synthetic, scoped, and visually evidenced', 
   assert.doesNotMatch(JSON.stringify(candidates), /\/Users\/|CLINICAL_JOBS_|room code \w{4,}/);
 });
 
+test('company RCA and shared-package cases stay sanitized and name their environments', async () => {
+  const data = JSON.parse(await read('src/data/portfolio.json'));
+  for (const slug of ['rds-saturation-rca', 'shared-package-ci-platform']) {
+    const project = data.projects.find((candidate) => candidate.slug === slug);
+    assert.equal(project?.type, 'team', slug);
+    assert.equal(project.github, undefined, slug);
+    assert.ok(project.metrics.length >= 4, slug);
+    assert.ok(project.operationalLimits.ko.length >= 3 && project.operationalLimits.en.length === project.operationalLimits.ko.length, slug);
+    assert.equal(project.highlights.en.length, project.highlights.ko.length, slug);
+    assert.doesNotMatch(JSON.stringify(project), /glider|vivox|bane|\bBN\b|\bHB\b|DTP-|gameduo|amazonaws|PR #\d|findLatest|sheet_localized|marketing_metric_daily/i, slug);
+  }
+  const rds = data.projects.find((candidate) => candidate.slug === 'rds-saturation-rca');
+  for (const lang of ['ko', 'en']) {
+    const copy = JSON.stringify(rds.problemSolving.map((item) => item.problem[lang]));
+    assert.match(copy, /live/, lang);
+    assert.match(copy, /sandbox/, lang);
+  }
+});
+
 test('family budget case study centers the operational product and keeps the demo as public evidence', async () => {
   const { projects } = JSON.parse(await read('src/data/portfolio.json'));
   const project = projects.find((candidate) => candidate.slug === 'family-budget-demo');
   assert.equal(project?.hidden, undefined);
-  assert.equal(project?.featured, true);
-  assert.equal(project?.listed, undefined);
+  assert.equal(project?.featured, undefined);
+  assert.equal(project?.listed, true);
   assert.match(project?.name?.ko ?? '', /^Family Budget.*부부 가계부/);
   assert.match(project?.name?.en ?? '', /^Family Budget.*Household Budget/i);
   assert.match(project?.summary?.ko ?? '', /부부 공용 가계부/);

@@ -177,8 +177,8 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
   <script is:inline>
     const focus = new URLSearchParams(location.search).get('focus');
     const orders = {
-      'backend-platform': ['realtime-game-chat', 'concert-reservation', 'ai-coding-harness', 'family-budget-demo'],
-      'product-algorithm': ['family-budget-demo', 'concert-reservation', 'ai-coding-harness', 'realtime-game-chat'],
+      'backend-platform': ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform', 'concert-reservation'],
+      'product-algorithm': ['concert-reservation', 'realtime-game-chat', 'shared-package-ci-platform', 'rds-saturation-rca'],
     };
     if (focus && Object.hasOwn(orders, focus)) {
       const grid = document.querySelector('.portfolio-grid');

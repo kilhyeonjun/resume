@@ -49,7 +49,7 @@ const projectSequenceDiagram = project.sequenceDiagram ? localize(project.sequen
 const isEvidenceRegister = project.slug === 'ai-coding-harness';
 const isDaesinCase = project.slug === 'daesin-logistics-bot';
 const isFamilyBudgetCase = project.slug === 'family-budget-demo';
-const showsOperationalLimits = isDaesinCase || isFamilyBudgetCase || project.slug === 'realtime-game-chat';
+const showsOperationalLimits = isDaesinCase || isFamilyBudgetCase || ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform'].includes(project.slug);
 const evidenceIndex: Array<{ id: string; label: string }> = [];
 const evidenceIds = new Set<string>();
 const addEvidence = (condition: unknown, id: string, label: string) => {

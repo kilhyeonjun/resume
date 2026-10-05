@@ -539,7 +539,7 @@
               {
                 "problem": "In sandbox, the detect scheduler queried all 159 versions at once (full scan of a 3.27M-row table on live), saturating Read IOPS at 190–470/s and locking some users out for 60s",
                 "solution": "Ported the per-version loop from the AI detect module, added distributed-lock timeout/recovery, and replaced the NOT EXISTS full scan with an indexed staged lookup",
-                "result": "Split into per-version queries (39ms/version on Live EXPLAIN), removing the overlap between a 10s cron and 100–224s queries"
+                "result": "Split into per-version queries (39ms for one version on Live EXPLAIN) and bounded each run with pagination and a per-run cap"
               }
             ],
             "techStack": [

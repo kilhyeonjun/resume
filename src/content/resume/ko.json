@@ -539,7 +539,7 @@
               {
                 "problem": "sandbox에서 detect 스케줄러가 159개 버전을 한 번에 조회(live 기준 3.27M행 full scan)해 Read IOPS 190~470/s 포화, 일부 사용자 60초 로그인 불가",
                 "solution": "AI detect 모듈의 per-version loop 이식 + 분산락 timeout/recovery + NOT EXISTS full scan을 인덱스 staged lookup으로 대체",
-                "result": "버전별 단일 쿼리로 분할해 Live EXPLAIN 기준 39ms/버전, 10초 cron과 100~224초 쿼리의 중첩 구조 해소"
+                "result": "버전별 단일 쿼리로 분할(Live EXPLAIN 버전 1개 기준 39ms)하고 페이지네이션·실행당 상한으로 한 실행의 길이를 제한"
               }
             ],
             "techStack": [

@@ -289,8 +289,8 @@
             "en": "Performance Insights showed 99.5% of the load coming from one query that looked up the latest result per day. It combined an N+1 loop over 30 days, a DATE()-wrapped date condition that could not use the index, and a select of the full compressed result column. I replaced it with one IN() batch for the 30 days, direct date comparison, and a minimal column list, then picked the latest version per day in memory. Bulk inserts were also split into chunks of 500."
           },
           "result": {
-            "ko": "Lambda 실행 p50 63.2s→1.36s(p99 67.0s→2.99s), 처리량 9.3→247건/분(26배). 남은 8,285건의 ETA가 약 15분으로 줄었고, 15,333건이 완료돼 대기 0건이 됐습니다. 작업이 끝난 뒤 RDS CPU는 유휴 5~7%였습니다.",
-            "en": "Lambda p50 63.2s → 1.36s (p99 67.0s → 2.99s), throughput 9.3 → 247 items/min (26x). The ETA for the remaining 8,285 items dropped to about 15 minutes, and the run finished with 15,333 completed and 0 pending. Once the work finished, RDS CPU sat idle at 5–7%."
+            "ko": "Lambda 실행 p50 63.2s→1.36s(p99 67.0s→2.99s), 처리량 9.3→247건/분(26배). 백필은 15,333건 완료·대기 0건으로 끝났고, 작업이 끝난 뒤 RDS CPU는 유휴 5~7%였습니다.",
+            "en": "Lambda p50 63.2s → 1.36s (p99 67.0s → 2.99s), throughput 9.3 → 247 items/min (26x). The backfill finished with 15,333 completed and 0 pending, and once the work was done RDS CPU sat idle at 5–7%."
           }
         },
         {
@@ -317,8 +317,8 @@
             "en": "The scheduler bundled 159 versions into one IN condition and full-scanned the translation word table (3.27M rows on live); it ran every 10 seconds while each query took 100–224s, so runs overlapped and piled up. I ported the per-version pattern from the AI translation detector, running one query per version with pagination and a 500-request cap per run to bound each run. The fix shipped as a shared-package release, and applying it to the game server was checked for backward compatibility with a byte-level comparison of 1,073 fields."
           },
           "result": {
-            "ko": "live EXPLAIN에서 버전별 쿼리는 버전 1개 기준 39ms, 기존 159개 버전 일괄 쿼리는 10.1초로 측정됐습니다. 버전을 모두 돌면 한 실행의 총 쿼리 시간은 크게 줄지 않으므로, 개선의 핵심은 페이지네이션과 실행당 상한으로 한 실행이 주기보다 길어지지 않게 묶은 것입니다. 통합 테스트는 모두 통과했습니다.",
-            "en": "On live EXPLAIN, the per-version query took 39ms for one version, while the old bundled query over 159 versions took 10.1s. Running every version does not shrink a run's total query time much, so the real fix is that pagination and a per-run cap keep each run shorter than its interval. All integration tests passed."
+            "ko": "live EXPLAIN에서 버전별 쿼리는 버전 1개 기준 39ms, 기존 159개 버전 일괄 쿼리는 10.1초로 측정됐습니다. 버전을 모두 돌면 한 실행의 총 쿼리 시간은 크게 줄지 않으므로, 개선의 핵심은 페이지네이션과 실행당 상한으로 한 실행의 길이를 제한한 것입니다. 통합 테스트는 모두 통과했습니다.",
+            "en": "On live EXPLAIN, the per-version query took 39ms for one version, while the old bundled query over 159 versions took 10.1s. Running every version does not shrink a run's total query time much, so the real fix is that pagination and a per-run cap bound the length of each run. All integration tests passed."
           }
         }
       ],
@@ -337,26 +337,20 @@
             "en": "247 items/min"
           },
           "improvement": {
-            "ko": "26배 · Lambda p50 63.2s→1.36s",
-            "en": "26x · Lambda p50 63.2s → 1.36s"
+            "ko": "26배 · 15,333건 완료, 대기 0건",
+            "en": "26x · 15,333 completed, 0 pending"
           }
         },
         {
           "label": {
-            "ko": "백필 ETA",
-            "en": "Backfill ETA"
+            "ko": "Lambda 실행 (p50)",
+            "en": "Lambda run (p50)"
           },
-          "before": {
-            "ko": "ETA 15시간 (수정 전)",
-            "en": "15-hour ETA (before the fix)"
-          },
-          "after": {
-            "ko": "ETA 약 15분 (남은 8,285건)",
-            "en": "About 15-minute ETA (8,285 items left)"
-          },
+          "before": "63.2s",
+          "after": "1.36s",
           "improvement": {
-            "ko": "대기 0건 · 15,333건 완료",
-            "en": "0 pending · 15,333 completed"
+            "ko": "p99 67.0s→2.99s",
+            "en": "p99 67.0s → 2.99s"
           }
         },
         {
@@ -398,13 +392,13 @@
           "가설보다 계측: 백필 병목은 대형 트랜잭션을 의심했지만 Performance Insights가 조회 쿼리 하나를 가리켜, 쓰기 경로가 아니라 읽기 쿼리의 형태를 고쳤습니다.",
           "인덱스는 엔티티에 선언: 마이그레이션으로만 만든 인덱스는 다음 자동 생성 마이그레이션이 drift로 지울 수 있어, 스키마 기준을 엔티티에 두었습니다.",
           "27GB online DDL은 배포와 분리: 저부하 시간대에 먼저 수동 생성하고, 배포 마이그레이션은 이미 있는 인덱스를 no-op으로 넘겨 배포 중 장시간 DDL을 피했습니다.",
-          "주기 작업은 작게 자르기: 감지 스케줄러를 버전별 쿼리·페이지네이션·실행당 상한으로 나눠 한 실행이 주기보다 길어지지 않게 했습니다."
+          "주기 작업은 작게 자르기: 감지 스케줄러를 버전별 쿼리·페이지네이션·실행당 상한으로 나눠 한 실행의 길이를 상한으로 제한했습니다."
         ],
         "en": [
           "Measurement over hypothesis: the backfill was suspected of a large transaction, but Performance Insights pointed at one read query, so the fix went to the read query's shape, not the write path.",
           "Declare indexes on the entity: an index that exists only in a migration can be dropped as drift by the next auto-generated migration, so the entity is the schema source of truth.",
           "Keep the 27GB online DDL out of the deploy: build it manually in a low-traffic window, and let the deploy migration skip an existing index, so no long DDL runs during a deploy.",
-          "Cut periodic work small: per-version queries, pagination, and a per-run cap keep a detection run shorter than its interval."
+          "Cut periodic work small: per-version queries, pagination, and a per-run cap bound the length of each detection run."
         ]
       },
       "operationalLimits": {

@@ -70,29 +70,6 @@ test('portfolio visibility has one shared public-route contract', async () => {
   assert.match(selector, /\.\.\.selectListedPortfolioProjects\(projects\)/);
 });
 
-test('portfolio supports explicit backend-platform and product-algorithm featured orders', async () => {
-  const template = await read('src/components/templates/PortfolioTemplate.astro');
-  assert.match(template, /backend-platform.*realtime-game-chat.*rds-saturation-rca.*shared-package-ci-platform.*concert-reservation/s);
-  assert.match(template, /product-algorithm.*concert-reservation.*realtime-game-chat.*shared-package-ci-platform.*rds-saturation-rca/s);
-  assert.match(template, /new URLSearchParams\(location\.search\)/);
-  assert.match(template, /data-slug=\{project\.slug\}/);
-  assert.match(template, /focus=backend-platform/);
-  assert.match(template, /focus=product-algorithm/);
-});
-
-test('every featured project appears in every role-focused order', async () => {
-  const [template, data] = await Promise.all([
-    read('src/components/templates/PortfolioTemplate.astro'),
-    read('src/data/portfolio.json').then(JSON.parse),
-  ]);
-  const featured = data.projects.filter((project) => project.featured && !project.hidden).map((project) => project.slug).sort();
-  for (const focus of ['backend-platform', 'product-algorithm']) {
-    const list = template.match(new RegExp(`'${focus}': \\[([^\\]]*)\\]`))?.[1] ?? '';
-    const slugs = [...list.matchAll(/'([^']+)'/g)].map((match) => match[1]).sort();
-    assert.deepEqual(slugs, featured, focus);
-  }
-});
-
 test('company chat case study stays sanitized and scoped to load-test evidence', async () => {
   const data = JSON.parse(await read('src/data/portfolio.json'));
   const project = data.projects.find((candidate) => candidate.slug === 'realtime-game-chat');

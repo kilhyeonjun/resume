@@ -28,11 +28,6 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
       <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
         {lang === 'ko' ? '회사 실무 케이스와 개인·팀 프로젝트' : 'Work case studies plus personal and team projects'}
       </p>
-      <nav class="portfolio-focus" aria-label={lang === 'ko' ? '지원 직무별 보기' : 'Role-focused view'}>
-        <a class="active" data-focus="default" aria-current="page" href={`${localePrefix}/portfolio/`}>{lang === 'ko' ? '기본' : 'Default'}</a>
-        <a data-focus="backend-platform" href={`${localePrefix}/portfolio/?focus=backend-platform`}>{lang === 'ko' ? '백엔드 플랫폼' : 'Backend platform'}</a>
-        <a data-focus="product-algorithm" href={`${localePrefix}/portfolio/?focus=product-algorithm`}>{lang === 'ko' ? '제품·알고리즘' : 'Product · algorithm'}</a>
-      </nav>
       <div class="mt-4 text-sm">
         <a href={`${localePrefix}/portfolio-print`} class="touch-target inline-flex items-center rounded-lg border border-gray-300 px-4 font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-primary-300">{lang === 'ko' ? 'PDF 다운로드' : 'Download PDF'}</a>
       </div>
@@ -46,7 +41,7 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
         const period = `${project.period.start} — ${project.period.end}`;
         
         return (
-          <article data-slug={project.slug} class:list={["portfolio-case group", index === 0 && "portfolio-case-featured"]}>
+          <article class:list={["portfolio-case group", index === 0 && "portfolio-case-featured"]}>
             {/* Cover Image */}
             {coverImage ? (
               <a href={`${localePrefix}/portfolio/${project.slug}`} class="block aspect-video overflow-hidden">
@@ -174,25 +169,4 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
       </section>
     )}
   </div>
-  <script is:inline>
-    const focus = new URLSearchParams(location.search).get('focus');
-    const orders = {
-      'backend-platform': ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform', 'concert-reservation'],
-      'product-algorithm': ['concert-reservation', 'realtime-game-chat', 'shared-package-ci-platform', 'rds-saturation-rca'],
-    };
-    if (focus && Object.hasOwn(orders, focus)) {
-      const grid = document.querySelector('.portfolio-grid');
-      const cards = new Map([...grid.children].map((card) => [card.dataset.slug, card]));
-      const order = [...orders[focus].filter((slug) => cards.has(slug)), ...[...cards.keys()].filter((slug) => !orders[focus].includes(slug))];
-      for (const slug of order) grid.append(cards.get(slug));
-      for (const card of grid.children) card.classList.remove('portfolio-case-featured');
-      grid.firstElementChild?.classList.add('portfolio-case-featured');
-      for (const link of document.querySelectorAll('.portfolio-focus a')) {
-        const active = link.dataset.focus === focus;
-        link.classList.toggle('active', active);
-        if (active) link.setAttribute('aria-current', 'page');
-        else link.removeAttribute('aria-current');
-      }
-    }
-  </script>
 </Layout>

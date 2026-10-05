@@ -79,7 +79,7 @@ test('interactive route families expose their shared design hooks', async () => 
   assert.match(await read('src/components/templates/PortfolioTemplate.astro'), /portfolio-archive/);
   assert.match(await read('src/components/templates/PortfolioTemplate.astro'), /selectFeaturedPortfolioProjects/);
   assert.match(await read('src/utils/portfolio-visibility.ts'), /printOrder/);
-  assert.match(await read('src/components/resume/ResumeHeader.astro'), /\{data\.title\}<\/span>/);
+  assert.match(await read('src/components/resume/ResumeHeader.astro'), /class="dossier-label">Resume<\/span>/);
   for (const path of ['src/components/templates/PortfolioDetailTemplate.astro', 'src/components/templates/ExperienceDetailTemplate.astro']) {
     const source = await read(path);
     assert.match(source, /class="evidence-index"/, path);

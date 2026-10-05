@@ -189,6 +189,26 @@ test('new portfolio candidates stay synthetic, scoped, and visually evidenced', 
   assert.doesNotMatch(JSON.stringify(candidates), /\/Users\/|CLINICAL_JOBS_|room code \w{4,}/);
 });
 
+test('featured portfolio cards always show a cover or case diagram', async () => {
+  const data = JSON.parse(await read('src/data/portfolio.json'));
+  for (const slug of expectedFeatured) {
+    const project = data.projects.find((item) => item.slug === slug);
+    const image = project.coverImage ?? project.architectureDiagram;
+    assert.ok(image, `${slug} card image`);
+    for (const path of typeof image === 'string' ? [image] : Object.values(image)) {
+      assert.match(path, /\.svg$/, `${slug} card image is a drawn diagram`);
+      await stat(join(root, 'public', path));
+    }
+  }
+  for (const page of ['portfolio/index.html', 'en/portfolio/index.html']) {
+    const html = await read(`dist/${page}`);
+    assert.doesNotMatch(html, /portfolio-cover|concert-reservation-cover/, page);
+    const cards = html.split('<article').slice(1).map((card) => card.split('</article>')[0]).filter((card) => card.includes('portfolio-case'));
+    assert.equal(cards.length, expectedFeatured.length, page);
+    for (const card of cards) assert.match(card, /<img\b/, page);
+  }
+});
+
 test('company RCA and shared-package cases stay sanitized and name their environments', async () => {
   const data = JSON.parse(await read('src/data/portfolio.json'));
   for (const slug of ['rds-saturation-rca', 'shared-package-ci-platform']) {
@@ -198,7 +218,8 @@ test('company RCA and shared-package cases stay sanitized and name their environ
     assert.ok(project.metrics.length >= 4, slug);
     assert.ok(project.operationalLimits.ko.length >= 3 && project.operationalLimits.en.length === project.operationalLimits.ko.length, slug);
     assert.equal(project.highlights.en.length, project.highlights.ko.length, slug);
-    const copy = JSON.stringify(project);
+    const covers = await Promise.all(Object.values(project.coverImage).map((path) => read(join('public', path))));
+    const copy = JSON.stringify(project) + covers.map((svg) => svg.replace(/<style>[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ')).join(' ');
     assert.doesNotMatch(copy, /glider|vivox|bane|\bBN\b|\bHB\b|\bNB2\b|\bBBC\b|\bDFD\b|\blmk\b|IDX_|gameduo|amazonaws|PR #\d|#\d{3,}|findLatest|sheet_localized|marketing_metric_daily/i, slug);
     assert.doesNotMatch(copy, /\b[A-Z][A-Z0-9]+-\d+\b/, `${slug} ticket keys`);
   }

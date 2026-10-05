@@ -78,10 +78,29 @@ test('evidence board pairs each kicker with the metric from its own highlight', 
   }
 });
 
+test('evidence board leads with the company case metrics, not list-price savings', async () => {
+  for (const [lang, expected] of [
+    ['ko', ['ack p95 767ms→6.6ms', '26배', '3시간→15분']],
+    ['en', ['ack p95 767ms→6.6ms', '26x', '3hrs→15min']],
+  ]) {
+    const resume = await readJson(`src/content/resume/${lang}.json`);
+    const proofs = resume.main.experience
+      .flatMap((exp) => exp.positions?.flatMap((position) => position.highlights) ?? exp.highlights ?? [])
+      .filter((item) => item.proofLabel);
+    expected.forEach((metric, index) => assert.ok(proofs[index].result.includes(metric), `${lang} proof ${index}`));
+    assert.ok(proofs.every((item) => !item.result.includes('82%')), lang);
+  }
+  for (const page of ['index.html', 'en/index.html']) {
+    const html = await readDist(page);
+    const [, kicker] = html.match(/<header class="resume-header"[^>]*>\s*<span class="dossier-label"[^>]*>([^<]*)<\/span>/) ?? [];
+    assert.equal(kicker, 'Resume', page);
+  }
+});
+
 test('HR resume surfaces state each flagship metric once and keep the summary to three sentences', async () => {
   for (const [lang, metrics, sentenceEnd] of [
-    ['ko', ['82%', '18초', '270배', '3시간→15분'], /다\.(?:\s|$)/g],
-    ['en', ['82%', '18s', '270x', '3hrs→15min'], /\.(?:\s|$)/g],
+    ['ko', ['82%', '18초', '270배', '3시간→15분', '26배', '767ms→6.6ms'], /다\.(?:\s|$)/g],
+    ['en', ['82%', '18s', '270x', '3hrs→15min', '26x', '767ms→6.6ms'], /\.(?:\s|$)/g],
   ]) {
     const { main } = await readJson(`src/content/resume/${lang}.json`);
     const visible = [

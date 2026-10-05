@@ -211,29 +211,12 @@ test('dark print keeps every visible direct-text sample at WCAG AA', { timeout: 
   assert.ok(sampleCount > 1000, `expected a broad non-vacuous scan, got ${sampleCount} samples`);
 });
 
-test('print collapses redundant fallback covers instead of overlapping card content', { timeout: 30000 }, async () => {
-  const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
-  try {
-    const page = await browser.newPage();
-    await page.emulateMediaType('print');
-    await page.goto(`${origin}/portfolio/`, { waitUntil: 'networkidle0' });
-    const fallbackCovers = await page.$$eval('.portfolio-case > .portfolio-cover', (elements) => elements.map((element) => getComputedStyle(element).display));
-    assert.ok(fallbackCovers.length > 0);
-    assert.ok(fallbackCovers.every((display) => display === 'none'));
-  } finally {
-    await browser.close();
-    server.close();
-  }
-});
-
 test('screen semantic text meets WCAG AA on local light and dark surfaces', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
   try {
     for (const [path, theme, selectors] of [
       ['/portfolio/', 'light', ['.portfolio-case-featured .touch-target[href*="/portfolio/"]', '.portfolio-case-featured .text-gray-500', '.portfolio-case:not(.portfolio-case-featured) .rounded-md.bg-gray-100']],
-      ['/portfolio/', 'dark', ['.portfolio-cover span']],
       ['/portfolio-print/', 'light', ['.listed-project-type']],
       ['/portfolio/daesin-logistics-bot/', 'dark', ['.project-role', '.outcome-register-impact']],
       ['/portfolio/ai-coding-harness/', 'dark', ['.project-role', '.outcome-register-impact']],
@@ -336,13 +319,34 @@ test('featured portfolio card stays contained at the tablet breakpoint', { timeo
         };
         return {
           card: bounds(card),
-          cover: bounds(card.querySelector('.portfolio-cover')),
+          cover: bounds(card.firstElementChild),
           content: bounds(card.lastElementChild),
         };
       });
       assert.ok(boxes.cover.right <= boxes.card.right + 1, `${path} cover must stay inside featured card`);
       assert.ok(boxes.content.right <= boxes.card.right + 1, `${path} content must stay inside featured card`);
       assert.ok(boxes.content.top >= boxes.cover.bottom - 1, `${path} tablet layout must stack cover before content`);
+      await page.close();
+    }
+  } finally {
+    await browser.close();
+    server.close();
+  }
+});
+
+test('desktop featured portfolio cover stays beside its content without overlap', { timeout: 30000 }, async () => {
+  const { server, origin } = await serveDist();
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  try {
+    for (const path of ['/portfolio/', '/en/portfolio/']) {
+      const page = await browser.newPage();
+      await page.setViewport({ width: 1440, height: 900 });
+      await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
+      const [coverRight, contentLeft] = await page.$eval('.portfolio-case-featured', (card) => [
+        card.firstElementChild.getBoundingClientRect().right,
+        card.lastElementChild.getBoundingClientRect().left,
+      ]);
+      assert.ok(coverRight <= contentLeft + 1, `${path} cover ${coverRight} overlaps content ${contentLeft}`);
       await page.close();
     }
   } finally {

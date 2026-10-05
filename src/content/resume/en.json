@@ -117,6 +117,9 @@
             "name": "Valkey"
           },
           {
+            "name": "DynamoDB"
+          },
+          {
             "name": "ClickHouse"
           }
         ]
@@ -149,26 +152,26 @@
         ]
       },
       {
-        "category": "Quality & AI Verification",
-        "description": "AI-assisted outputs verified through TDD, integration tests, review gates, Git hooks, and evidence search",
+        "category": "Quality, Observability & AI Tooling",
+        "description": "Validates performance with k6 load tests and observability metrics, and verifies AI-assisted output through TDD, integration tests, and review",
         "items": [
           {
-            "name": "TDD Governance"
+            "name": "k6"
           },
           {
-            "name": "Integration Test"
+            "name": "Grafana"
           },
           {
-            "name": "Code Review"
+            "name": "Datadog"
           },
           {
-            "name": "Git Hooks"
+            "name": "LocalStack"
           },
           {
-            "name": "Evidence Search"
+            "name": "Claude Code"
           },
           {
-            "name": "AI Output Verification"
+            "name": "MCP"
           }
         ]
       }
@@ -188,19 +191,19 @@
             "current": true,
             "highlights": [
               {
-                "problem": "After the Platform Part was formed, prioritization and verification criteria for shared backend work were fragmented across games",
-                "solution": "Standardized platform work from backlog to verification to completion with task-type criteria, review gates, and templates",
-                "result": "Established an initial operating system for tracking shared infrastructure, package, and chat-server work under the same criteria"
+                "problem": "The new 3-person Platform Part (BE, FE, AI) took on shared backend, chat, and marketing data work with different done criteria per task",
+                "solution": "Standardized the flow with per-work-type done criteria, review checklists, and verification templates, while personally leading server design and load validation",
+                "result": "Sized the chat server target (6,000 CCU, 18,000 RPS, 90,000 RPS burst) into quarterly OKRs and tracked all part work against the same criteria"
               },
               {
-                "problem": "After AI-assisted development adoption, output quality and verification responsibility depended on each engineer's usage style",
-                "solution": "Defined a five-dimension sizing framework with TDD/review-based verification principles across scope, complexity, uncertainty, collaboration, and validation",
-                "result": "Established the basis for evaluating deliverables by tests and reviews regardless of AI-tool usage"
+                "problem": "Company-wide AI coding agent adoption needed one place to apply per-person policy, identify devices, and collect usage",
+                "solution": "Built an agent management tool with device registration, policy sets, remote control, and usage collection, then handed it over to operations",
+                "result": "Assigned policy to 92 people; all 87 reporting devices showed enforcement, and 525 automated security tests passed"
               },
               {
-                "problem": "Development-automation productivity varied significantly by team member, while individually discovered context and practices did not propagate, causing repeated trial-and-error",
-                "solution": "Chose Git-based config-as-code over individual documentation — docs must be re-read by humans, but codified config integrates directly into the runtime and applies automatically. Built a shared team development-context platform unifying principles, coding standards, domain knowledge, specialist agents, and hooks in one git repo",
-                "result": "Enabled all team members to start with the same AI session context via git pull — converting shared rules, domain knowledge, and specialist agents into searchable team assets"
+                "problem": "Coding standards, domain knowledge, and verification rules lived in individual setups, so AI usage varied",
+                "solution": "Managed rules, agents, hooks, and domain knowledge as one Git repo config, searchable through local RAG",
+                "result": "Every member shares the same AI working context via git pull, and pre-review checks became an automated checklist"
               }
             ]
           },
@@ -212,17 +215,20 @@
               {
                 "problem": "Marketing data query cost surge (full-scan billing model)",
                 "solution": "Evaluated partitioning but rejected due to Write IOPS increase; adopted gRPC distributed reads (Storage Read API)",
-                "result": "Cut per-TB read price 82% ($6.25→$1.1, BigQuery list price)"
+                "result": "Cut per-TB read price 82% ($6.25→$1.1, BigQuery list price)",
+                "proofLabel": "Cut per-TB read price"
               },
               {
                 "problem": "Batch processing collection limits (60 days)",
                 "solution": "Migrated from batch processing to EDA-based on-demand pipeline — distributing peak load and enabling throughput scaling",
-                "result": "Expanded metrics range 6x (60→360 days), processing time 2h→5min"
+                "result": "Expanded metrics range 6x (60→360 days), processing time 2h→5min",
+                "proofLabel": "Expanded metrics range"
               },
               {
                 "problem": "Code duplication and convention inconsistency across 7 projects",
                 "solution": "Replaced manual code sync with shared NestJS package system (10 utility modules + Game Server Kit, auto-deploy)",
-                "result": "Automated upgrades cutting deployment time 3hrs→15min"
+                "result": "Automated upgrades cutting deployment time 3hrs→15min",
+                "proofLabel": "Automated upgrades"
               },
               {
                 "problem": "Marketing query latency (18s) from fragmented ad platform data (Google Ads/Meta/TikTok)",
@@ -1349,6 +1355,7 @@
       },
       {
         "slug": "personal",
+        "side": true,
         "company": "Personal Projects (Side)",
         "companyUrl": "https://github.com/kilhyeonjun",
         "position": "Platform / Tooling Engineering",
@@ -1381,6 +1388,7 @@
               }
             ],
             "techStack": [
+              "Claude Code",
               "Zsh",
               "Bash",
               "Python",
@@ -1410,6 +1418,7 @@
           }
         ],
         "techStack": [
+          "Claude Code",
           "Zsh",
           "Bash",
           "Python",
@@ -1540,6 +1549,7 @@
       "summary": "Professional Summary",
       "coreCompetencies": "Core Competencies",
       "experience": "Experience",
+      "sideProjects": "Side Projects",
       "skills": "Technical Skills",
       "education": "Education",
       "continuousLearning": "Professional Development",

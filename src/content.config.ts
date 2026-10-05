@@ -58,6 +58,8 @@ const highlightSchema = z.object({
   problem: z.string(),
   solution: z.string(),
   result: z.string(),
+  // Marks a highlight for the resume EVIDENCE BOARD; the value is its kicker.
+  proofLabel: z.string().optional(),
 });
 
 const positionEntrySchema = z.object({
@@ -77,6 +79,7 @@ const experienceSchema = z.object({
   startDate: dateString,
   endDate: dateString.optional(),
   current: z.boolean().optional(),
+  side: z.boolean().optional(),
   description: z.string().optional(),
   highlights: z.array(highlightSchema).default([]),
   projects: z.array(projectSchema).default([]),
@@ -168,6 +171,7 @@ const labelsSchema = z.object({
   summary: z.string(),
   coreCompetencies: z.string(),
   experience: z.string(),
+  sideProjects: z.string(),
   skills: z.string(),
   education: z.string(),
   continuousLearning: z.string(),

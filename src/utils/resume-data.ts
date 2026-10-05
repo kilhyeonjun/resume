@@ -15,6 +15,7 @@ interface PreparedResumeData {
   coreCompetencies: ResumeData['coreCompetencies'];
   skills: ResumeData['skills'];
   experience: ResumeData['experience'];
+  sideProjects: ResumeData['experience'];
   education: ResumeData['education'];
   certifications: ResumeData['certifications'];
   continuousLearning: ResumeData['continuousLearning'];
@@ -96,7 +97,9 @@ export function prepareResumeData(
     summary: replaceDurationPlaceholder(resumeData.summary, resumeData.experience, lang),
     coreCompetencies: filterCoreCompetenciesForSurface(resumeData.coreCompetencies),
     skills: resumeData.skills,
-    experience: filterExperienceForSurface(resumeData.experience, surface),
+    // Side projects get their own section on resume surfaces; career-detail pages keep every entry.
+    experience: filterExperienceForSurface(resumeData.experience.filter((item) => surface === 'experience' || !item.side), surface),
+    sideProjects: surface === 'experience' ? [] : filterExperienceForSurface(resumeData.experience.filter((item) => item.side), surface),
     education: sortByDateDesc(resumeData.education, (item) => item.endDate),
     certifications: sortByDateDesc(resumeData.certifications, (item) => item.date),
     continuousLearning: filterContinuousLearningForSurface(resumeData.continuousLearning, surface),

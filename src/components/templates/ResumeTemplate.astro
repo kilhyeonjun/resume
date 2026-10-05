@@ -47,11 +47,7 @@ const jsonLd = {
 };
 const outcomeProofs = data.experience
   .flatMap((exp) => exp.positions?.flatMap((position) => position.highlights ?? []) ?? exp.highlights ?? [])
-  .filter((proof) => /\d/.test(proof.result))
-  .slice(0, 3);
-const outcomeKickers = lang === 'ko'
-  ? ['BigQuery 조회 단가 기준', '수집 범위', '업그레이드 자동화로']
-  : ['BigQuery unit cost', 'Collection range', 'Upgrade automation'];
+  .filter((proof) => proof.proofLabel);
 ---
 
 <Layout title={`${data.name} — ${data.title}`} description="Professional resume and work experience" lang={lang}>
@@ -62,9 +58,10 @@ const outcomeKickers = lang === 'ko'
 
     <aside class="outcome-board" aria-labelledby="evidence-board-heading">
       <h2 id="evidence-board-heading" class="dossier-label board-heading">EVIDENCE BOARD</h2>
-      {outcomeProofs.map((proof, index) => {
-        const kicker = outcomeKickers[index];
-        const [metricText, ...tailParts] = proof.result.split(/,\s*/);
+      {outcomeProofs.map((proof) => {
+        const kicker = proof.proofLabel;
+        // Thousands separators and decimals like "6,000" or "$1.1," are not clause breaks.
+        const [metricText, ...tailParts] = proof.result.split(/(?<!\d),\s*/);
         const metric = metricText.startsWith(kicker)
           ? metricText.slice(kicker.length).trim()
           : metricText;
@@ -72,7 +69,7 @@ const outcomeKickers = lang === 'ko'
         return (
           <section class="outcome-row">
             <p class="outcome-result">
-              <span class="result-kicker">{outcomeKickers[index]}</span>
+              <span class="result-kicker">{kicker}</span>
               <strong class="result-metric">{metric}</strong>
               {tail && <span class="result-tail">{tail}</span>}
             </p>
@@ -104,6 +101,7 @@ const outcomeKickers = lang === 'ko'
 
     <!-- Experience -->
     <ResumeExperience experience={data.experience} labels={labels} basePath={localePrefix} />
+    <ResumeExperience experience={data.sideProjects} labels={labels} basePath={localePrefix} title={labels.sideProjects} />
 
     <!-- Social Proof: Technical Writing + Open Source (after experience for visibility) -->
     <div class="mb-10 grid gap-10 md:grid-cols-2">

@@ -388,10 +388,10 @@ function processSummary(text: string): string {
     )}
 
     <!-- Experience -->
-    {data.experience && data.experience.length > 0 && (
+    {[{ sectionTitle: labels.experience, items: data.experience }, { sectionTitle: labels.sideProjects, items: data.sideProjects }].map(({ sectionTitle, items }) => items.length > 0 && (
       <section>
-        <h2 class="section-title">{labels.experience}</h2>
-        {data.experience.map((exp) => {
+        <h2 class="section-title">{sectionTitle}</h2>
+        {items.map((exp) => {
           const currentTitle = exp.positions ? exp.positions[0].title : exp.position;
           return (
             <div class="experience-item">
@@ -434,7 +434,7 @@ function processSummary(text: string): string {
           );
         })}
       </section>
-    )}
+    ))}
 
 
     <!-- Social Proof: Technical Writing + Open Source (after experience for visibility) -->

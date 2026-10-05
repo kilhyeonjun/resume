@@ -402,3 +402,21 @@ test('portfolio PDF action has a 44px standalone target', { timeout: 30000 }, as
     server.close();
   }
 });
+
+test('related links are named text links without split acronyms or duplicates', async () => {
+  const relatedLinks = async (path) => {
+    const html = await readFile(join(dist, path, 'index.html'), 'utf8');
+    const section = html.match(/<section id="related-links"[\s\S]*?<\/section>/)?.[0];
+    return section && [...section.matchAll(/<a\b[^>]*>([\s\S]*?)<\/a>/g)]
+      .map(([, inner]) => inner.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim());
+  };
+  for (const prefix of ['', 'en/']) {
+    const concert = await relatedLinks(`${prefix}portfolio/concert-reservation`);
+    assert.ok(concert.includes('ERD') && concert.includes('API Spec'), JSON.stringify(concert));
+    assert.deepEqual(await relatedLinks(`${prefix}portfolio/flex-work-schedule`), ['CI']);
+    for (const slug of ['daesin-logistics-bot', 'family-budget-demo']) {
+      assert.equal(await relatedLinks(`${prefix}portfolio/${slug}`), undefined, `${slug} repeats header links`);
+    }
+    for (const label of concert) assert.ok(label && !/\b[A-Z] [A-Z]\b/.test(label), `bad label "${label}"`);
+  }
+});

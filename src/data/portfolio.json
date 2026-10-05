@@ -1909,17 +1909,17 @@
       ],
       "github": "https://github.com/hhpb-code/hhplus-concert",
       "links": {
-        "erd": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/ERD.md",
-        "apiSpec": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/API_SPEC.md",
-        "sequenceDiagram": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/SEQUENCE_DIAGRAM.md",
-        "requirements": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/REQUIREMENT.md",
-        "projectStructure": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/PROJECT_STRUCTURE.md",
-        "seatAndPaymentConcurrencyTests": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/src/test/java/com/example/hhplus/concert/application/ConcertFacadeConcurrencyTest.java",
-        "walletConcurrencyTests": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/src/test/java/com/example/hhplus/concert/application/UserFacadeConcurrencyTest.java",
-        "cacheAndQueueDesign": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/CACHE_REDIS_QUEUE.md",
-        "loadTestResult": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/LOAD_TEST_RESULT.md",
-        "loadConfiguration": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/k6/concert-reservation-script.js",
-        "indexOptimization": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/INDEXING.md"
+        "ERD": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/ERD.md",
+        "API Spec": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/API_SPEC.md",
+        "Sequence Diagram": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/SEQUENCE_DIAGRAM.md",
+        "Requirements": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/REQUIREMENT.md",
+        "Project Structure": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/PROJECT_STRUCTURE.md",
+        "Seat & Payment Concurrency Tests": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/src/test/java/com/example/hhplus/concert/application/ConcertFacadeConcurrencyTest.java",
+        "Wallet Concurrency Tests": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/src/test/java/com/example/hhplus/concert/application/UserFacadeConcurrencyTest.java",
+        "Cache & Queue Design": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/CACHE_REDIS_QUEUE.md",
+        "Load Test Result": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/LOAD_TEST_RESULT.md",
+        "k6 Load Script": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/k6/concert-reservation-script.js",
+        "Index Optimization": "https://github.com/hhpb-code/hhplus-concert/blob/6eb289b019354f8eb710c6bedbfd2d5d567d583e/docs/INDEXING.md"
       },
       "blogPosts": [
         {
@@ -2268,7 +2268,7 @@
         "en": "Personal product · owned product design, backend, data model, automation, and responsive UX end to end"
       },
       "period": {
-        "start": "2026-08-14",
+        "start": "2026-07-07",
         "end": "present"
       },
       "skills": [

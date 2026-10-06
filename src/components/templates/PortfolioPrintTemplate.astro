@@ -544,7 +544,7 @@ function formatPeriod(period: { start: string; end: string }): string {
       const isEvidenceRegister = project.slug === 'ai-coding-harness';
       const isDaesinCase = project.slug === 'daesin-logistics-bot';
       const isFamilyBudgetCase = project.slug === 'family-budget-demo';
-      const isCompanyCase = ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform'].includes(project.slug);
+      const isCompanyCase = project.type === 'team' && project.featured === true;
       const coverImage = project.printScenarioImage ? localize(project.printScenarioImage) : (project.coverImage ? localize(project.coverImage) : null);
       const architectureDiagram = project.printArchitectureDiagram ? localize(project.printArchitectureDiagram) : (project.architectureDiagram ? localize(project.architectureDiagram) : null);
       const operationalLimits = project.operationalLimits?.[lang];

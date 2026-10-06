@@ -422,7 +422,7 @@ test('related links are named text links without split acronyms or duplicates', 
 });
 
 test('company case pages render investigation flows and metric deltas instead of a table', async () => {
-  for (const [slug, flows] of [['realtime-game-chat', 5], ['rds-saturation-rca', 3], ['shared-package-ci-platform', 3]]) {
+  for (const [slug, flows] of [['realtime-game-chat', 5], ['rds-saturation-rca', 3], ['shared-package-ci-platform', 3], ['ai-agent-control-platform', 4]]) {
     for (const prefix of ['', 'en/']) {
       const html = await readFile(join(dist, `${prefix}portfolio/${slug}`, 'index.html'), 'utf8');
       assert.equal(html.match(/<ol class="case-flow"[^>]*role="list"[^>]*aria-label="(?:문제 해결 흐름|Problem-solving flow)"/g)?.length, flows, `${prefix}${slug} flows`);

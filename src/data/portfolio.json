@@ -1026,6 +1026,391 @@
       }
     },
     {
+      "slug": "ai-agent-control-platform",
+      "name": {
+        "ko": "사내 AI 코딩 에이전트 관리 플랫폼 — 기기 정책 가드와 사용량 수집 서버",
+        "en": "In-house AI Coding Agent Platform — Device Policy Guard and Usage Collection Server"
+      },
+      "type": "team",
+      "featured": true,
+      "printOrder": 4,
+      "summary": {
+        "ko": "전사 AI 코딩 에이전트의 기기 정책 가드와 사용량 수집 서버를 설계·구현·운영: 정책 대상 92명 배정 후 보고 중인 기기 87대 전부에서 정책 집행을 확인했고, 수집 서버의 2일 18시간·17시간 무응답 장애는 메모리 상한을 \"앱 < 컨테이너 < 호스트\" 순서로 다시 잡아 최대 파일 파싱 피크를 640MiB 한도의 67%로 낮췄습니다.",
+        "en": "Designed, built, and ran a device policy guard and a usage collection server for AI coding agents across the company: after assigning the policy to 92 people, all 87 reporting devices enforced it, and two collection-server outages (2 days 18 hours, then 17 hours unresponsive) ended by reordering memory limits as app < container < host, bringing the largest file's parse peak to 67% of a 640MiB limit."
+      },
+      "description": {
+        "ko": "직원들이 Claude Code·Codex·claude.ai를 쓰기 시작하면서 두 가지가 필요했습니다. 회사 자료가 에이전트를 통해 외부에 공개되는 요청을 기기에서 막고 기록하는 가드, 그리고 전원이 개인 구독이라 공식 대시보드가 없는 사용량·스킬 지표를 모으는 수집 서버입니다. 가드는 macOS·Windows 상주 데몬과 가드 서버·콘솔로, 수집은 트랜스크립트 원본 동기화와 ClickHouse 집계로 만들었고, 사내 NAS에서 AWS로 옮긴 뒤 생긴 장애를 원인별로 정리했습니다. 내부 서비스명·호스트·티켓 번호는 일반 명칭으로 바꿨고, 보안 정책의 세부 규칙과 차단 방식은 공개 범위에서 뺐습니다.",
+        "en": "Once employees started using Claude Code, Codex, and claude.ai, two things were needed: a guard that blocks and records requests that would publish company material through an agent, and a collection server for usage and skill metrics, because everyone was on a personal subscription with no official dashboard. The guard is a resident macOS/Windows daemon with a guard server and console; collection syncs the raw transcripts and aggregates them in ClickHouse. After the move from an office NAS to AWS, the outages that followed were worked through one cause at a time. Internal service names, hosts, and ticket numbers are generalized, and policy rule details and blocking mechanics are left out of this public page."
+      },
+      "role": {
+        "ko": "Platform Part 리더 · 설계·구현·운영 직접 수행",
+        "en": "Platform Part lead · hands-on design, build, and operations"
+      },
+      "coverImage": {
+        "ko": "/images/portfolio/ai-agent-control-platform-cover-ko.svg",
+        "en": "/images/portfolio/ai-agent-control-platform-cover-en.svg"
+      },
+      "period": {
+        "start": "2026-08-01",
+        "end": "present"
+      },
+      "skills": [
+        "Go",
+        "NestJS",
+        "TypeScript",
+        "ClickHouse",
+        "Docker Compose",
+        "AWS EC2",
+        "OpenTelemetry",
+        "Grafana"
+      ],
+      "highlights": {
+        "ko": [
+          "기기 정책 가드: 정책 대상 92명 배정 후 보고 중인 macOS·Windows 기기 87대 전부에서 정책 집행 확인",
+          "규칙 배포: 서버는 규칙의 위치와 버전만 내려주고 데몬은 Ed25519 서명 검증을 통과한 규칙만 적용, 등록·전송이 실패해도 로컬 차단은 유지",
+          "2일 18시간 무응답: OOM kill이 아니라 페이지 캐시 스래싱 — ClickHouse 기본 메모리 예산(RAM 90%)이 1,913MiB 호스트를 독점한 것을 sar로 특정하고 예산·컨테이너 한도 명시",
+          "17시간 호스트 정지: 파일 상한 512MB·워커 힙 2,048MB·컨테이너 768m가 모두 머신보다 커 어떤 가드도 발화하지 못함 — 64MB·256MB·640m으로 낮추고 스트리밍 파싱으로 최대 파일 피크 427.8MiB(한도의 67%)",
+          "알람 47회 발화·사람 메시지 0건: 멘션 없는 채널이라 푸시가 가지 않아, 공유 라우팅은 그대로 두고 직접 관리하는 알람 문구에 멘션을 추가"
+        ],
+        "en": [
+          "Device policy guard: after assigning the policy to 92 people, all 87 reporting macOS/Windows devices enforced it",
+          "Rule delivery: the server sends only where a rule lives and its version; the daemon applies only rules that pass Ed25519 signature checks, and local blocking keeps running when registration or reporting fails",
+          "2 days 18 hours unresponsive: page-cache thrashing, not an OOM kill. sar pinned it on ClickHouse's default memory budget (90% of RAM) taking over a 1,913MiB host; the budget and container limits are now explicit",
+          "17-hour host stall: the 512MB file cap, 2,048MB worker heap, and 768m container limit were all larger than the machine, so no guard could fire. Lowered to 64MB, 256MB, and 640m, plus streaming parsing: largest-file peak 427.8MiB (67% of the limit)",
+          "47 alert firings, zero human messages: a mention-free channel sent no push, so mentions were added to the team-managed alert text, leaving shared routing as is"
+        ]
+      },
+      "problemSolving": [
+        {
+          "problem": {
+            "ko": "AI 에이전트 사용이 늘면서 회사 자료가 에이전트를 통해 외부에 공개되는 요청을 실행 시점에 막고 기록해야 했고, macOS·Windows와 섞여 있는 구독 플랜 모두에서 동작해야 했습니다.",
+            "en": "As AI agent use grew, requests that would publish company material through an agent had to be blocked and recorded at the moment they ran, on both macOS and Windows and across a mix of subscription plans."
+          },
+          "process": {
+            "ko": "기기 상주 데몬이 대상 서비스의 요청만 선택적으로 검사해 외부 공개·공유 요청을 차단하고, 사용자에게 안내 창을 띄우며 시도를 감사 기록으로 남기게 했습니다. 이어 가드 서버를 붙여 회사 계정 OAuth(PKCE)로 기기를 등록하고 하트비트와 차단 이벤트를 모았습니다. 서버는 규칙의 위치와 버전만 내려주고 데몬은 Ed25519 서명 검증을 통과한 규칙만 적용하며, 등록이나 전송이 실패해도 로컬 차단은 멈추지 않습니다.",
+            "en": "A resident daemon inspects only the target service's requests, blocks publish and share requests, shows the user a notice, and records each attempt for audit. A guard server then registers devices through company-account OAuth (PKCE) and collects heartbeats and block events. The server sends only where a rule lives and its version; the daemon applies only rules that pass Ed25519 signature checks, and local blocking keeps running when registration or reporting fails."
+          },
+          "result": {
+            "ko": "정책 대상 92명을 배정한 뒤 보고 중인 온라인 기기 87대 전부에서 정책 집행을 확인했습니다. 설치 안내·운영 가이드·복구 절차를 인계했고, 전사 순차 설치는 다른 팀이 맡습니다.",
+            "en": "After assigning the policy to 92 people, all 87 reporting online devices enforced it. Install guides, an operations guide, and recovery steps were handed over; the company-wide staged rollout belongs to another team."
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "에이전트를 통한 외부 공개 요청을 막을 수단 없음",
+                "en": "No way to stop agent requests that publish company material"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "대상 요청만 선택 검사 · 차단 안내 · 감사 기록",
+                "en": "Inspect only target requests · block notice · audit record"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "OAuth 기기 등록 · 하트비트 · 서명 검증된 규칙만 적용",
+                "en": "OAuth device registration · heartbeats · signed rules only"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "보고 중인 기기 87대 전부 정책 집행(대상 92명)",
+                "en": "All 87 reporting devices enforce the policy (92 people assigned)"
+              }
+            }
+          ]
+        },
+        {
+          "problem": {
+            "ko": "사내 NAS에서 AWS로 옮긴 수집 서버가 2일 18시간 31분 동안 완전히 무응답이었고 그동안 수집은 0건이었습니다. 인스턴스는 running이었고 오류 로그도, OOM kill도 없었습니다.",
+            "en": "The collection server, newly moved from an office NAS to AWS, was completely unresponsive for 2 days 18 hours 31 minutes and collected 0 records. The instance was running, with no error logs and no OOM kill."
+          },
+          "process": {
+            "ko": "끊기기 직전 sar 표본에서 메모리 사용률 62.90%→81.66%, 페이지 회수 153.77→332.58/s를 확인하고, 디스크·하이퍼바이저 경합·CPU 크레딧(장애 38시간 뒤 소진된 결과)을 근거와 함께 배제했습니다. ClickHouse는 기본값으로 RAM의 90%(약 1.68GiB)를 자기 예산으로 잡는데, 이 호스트는 1,913MiB를 다른 컨테이너와 나눠 쓰고 swap이 없어 OOM kill 대신 페이지 캐시를 뜯고 다시 읽는 스래싱에 갇혀 있었습니다. ClickHouse 메모리 예산을 호스트에 맞게 명시하고, 큰 두 컨테이너에 mem_limit을 걸어 한도를 넘으면 호스트가 아니라 컨테이너가 죽고 재시작되게 했습니다.",
+            "en": "The last sar samples before the gap showed memory use going 62.90%→81.66% and page reclaim 153.77→332.58/s. Disk, hypervisor contention, and CPU credits (exhausted 38 hours after the outage began, so a result) were ruled out with evidence. By default ClickHouse claims 90% of RAM (about 1.68GiB) as its own budget, but this 1,913MiB host was shared with other containers and had no swap, so instead of an OOM kill it was stuck thrashing, evicting and rereading page cache. The ClickHouse memory budget is now set explicitly for the host, and the two large containers got mem_limit so that crossing a limit restarts a container instead of stalling the host."
+          },
+          "result": {
+            "ko": "기본 메모리 예산이라는 근본 원인을 제거하고 컨테이너 한도를 2차 방어로 두었습니다. 인스턴스 상향은 관측 데이터가 나오기 전에는 잘못된 설정을 비용으로 덮는 일이라 보류했습니다.",
+            "en": "The root cause, the default memory budget, is gone, with container limits as a second line of defense. Upsizing the instance was deferred: before observing the fix, it would only have paid to cover a wrong setting."
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "2일 18시간 31분 무응답 · 수집 0건",
+                "en": "Unresponsive 2 days 18 hours 31 minutes · 0 records"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "sar: 메모리 62.90% → 81.66% · 페이지 회수 153.77 → 332.58/s",
+                "en": "sar: memory 62.90% → 81.66% · page reclaim 153.77 → 332.58/s"
+              }
+            },
+            {
+              "kind": "rejected",
+              "text": {
+                "ko": "디스크 · 하이퍼바이저 경합 · CPU 크레딧",
+                "en": "Disk · hypervisor contention · CPU credits"
+              }
+            },
+            {
+              "kind": "cause",
+              "text": {
+                "ko": "ClickHouse 기본 예산 RAM 90% · 1,913MiB 호스트 공유 · swap 없음",
+                "en": "ClickHouse default budget 90% of RAM · shared 1,913MiB host · no swap"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "메모리 예산 명시 · 큰 두 컨테이너에 mem_limit",
+                "en": "Explicit memory budget · mem_limit on the two large containers"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "근본 원인 제거 · 한도 초과 시 컨테이너만 재시작",
+                "en": "Root cause removed · a breach now restarts only the container"
+              }
+            }
+          ]
+        },
+        {
+          "problem": {
+            "ko": "메모리 한도를 건 뒤 수집 앱이 512m 한도에서 OOM 재시작을 19회 반복했고, 한도를 768m로 올린 뒤에는 호스트가 약 17시간 응답하지 않았습니다.",
+            "en": "Once memory limits were in place, the collection app hit 19 OOM restarts under a 512m limit; after the limit went up to 768m, the host stopped responding for about 17 hours."
+          },
+          "process": {
+            "ko": "재시작 루프는 16MB 요청 본문을 동시에 받는데 Node가 컨테이너 한도를 모른 채 호스트 RAM 기준으로 힙을 키운 것이 원인이었고, 한도의 근거로 쓴 241MiB는 유휴 상태 값이었습니다. 17시간 정지는 176MB 세션 파일의 미처리 청크 9개 때문에 매 사이클 45청크 254.3MB를 문자열 배열로 다시 올리는 무한 재파싱이었고, 파일 상한 512MB·워커 힙 2,048MB·컨테이너 768m가 모두 머신(1,913MiB)보다 커 어떤 가드도 발화하지 못했습니다. 768m 상향이 컨테이너 재시작을 호스트 정지로 키웠다는 것도 확인했습니다. 파일 상한 64MB·워커 힙 256MB·컨테이너 640m으로 낮춰 루프를 끊고, 파싱을 청크 단위 스트리밍으로 바꾼 뒤 파일 상한은 256MB로 다시 올렸습니다.",
+            "en": "The restart loop came from concurrent 16MB request bodies while Node, unaware of the container limit, sized its heap from host RAM; the 241MiB figure behind the limit had been measured at idle. The 17-hour stall was an endless reparse: 9 pending chunks in a 176MB session file pulled 45 chunks, 254.3MB, back into a string array every cycle, and the 512MB file cap, 2,048MB worker heap, and 768m container limit were all larger than the 1,913MiB machine, so no guard could fire. Raising the limit to 768m had also turned container restarts into a host stall. Lowering the caps to a 64MB file cap, a 256MB worker heap, and a 640m container broke the loop; once parsing streamed chunk by chunk, the file cap went back up to 256MB."
+          },
+          "result": {
+            "ko": "최대 세션 파일의 파싱 피크가 427.8MiB로 640MiB 한도의 67% 안에 머뭅니다. 미처리 청크 하나가 파일 전체를 다시 읽는 O(n²) 구조는 후속 과제로 분리했습니다.",
+            "en": "Parsing the largest session file now peaks at 427.8MiB, 67% of the 640MiB limit. The O(n²) pattern, where one pending chunk rereads the whole file, is split out as follow-up work."
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "OOM 재시작 19회 · 768m 상향 뒤 호스트 약 17시간 정지",
+                "en": "19 OOM restarts · ~17-hour host stall after raising to 768m"
+              }
+            },
+            {
+              "kind": "rejected",
+              "text": {
+                "ko": "근거로 쓴 241MiB(유휴 상태 값)",
+                "en": "The 241MiB baseline (measured at idle)"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "미처리 청크 9개로 매 사이클 254.3MB 재파싱",
+                "en": "9 pending chunks reparse 254.3MB every cycle"
+              }
+            },
+            {
+              "kind": "cause",
+              "text": {
+                "ko": "512MB·2,048MB·768m 세 상한이 모두 머신보다 큼",
+                "en": "All three caps (512MB, 2,048MB, 768m) exceed the machine"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "64MB·256MB·640m으로 하향 · 스트리밍 파싱",
+                "en": "Lowered to 64MB, 256MB, 640m · streaming parse"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "최대 파일 피크 427.8MiB(640MiB의 67%)",
+                "en": "Largest-file peak 427.8MiB (67% of 640MiB)"
+              }
+            }
+          ]
+        },
+        {
+          "problem": {
+            "ko": "17시간 장애 동안 알람은 정상적으로 발화해 채널에 도달했지만 아무도 보지 않았고, 직전 2일 18시간 장애에서도 같은 일이 있었습니다.",
+            "en": "Throughout the 17-hour outage the alerts fired and reached their channel, but nobody saw them, and the same had happened in the 2-day-18-hour outage before it."
+          },
+          "process": {
+            "ko": "알람 채널의 최근 3일 메시지 104건 중 98건이 봇이고 사람이 쓴 메시지는 0건이었으며, 47회 발화한 알람에 멘션이 하나도 없어 모바일 푸시가 가지 않았습니다. 라우팅과 연락처는 전사 공유 설정이라 건드리지 않고, 직접 관리하는 알람 규칙 5종의 요약 문구 앞에 멘션을 붙였습니다.",
+            "en": "Of the alert channel's 104 messages over 3 days, 98 came from the bot and 0 from people, and none of the 47 alert firings carried a mention, so no mobile push went out. Routing and contact points are shared company settings, so they stayed untouched; mentions were added to the summary text of the 5 alert rules this team manages."
+          },
+          "result": {
+            "ko": "공유 설정을 바꾸지 않고 알람 5종이 멘션과 함께 발송되도록 바꿨습니다.",
+            "en": "Without changing shared settings, the 5 alerts now go out with mentions."
+          },
+          "flow": [
+            {
+              "kind": "symptom",
+              "text": {
+                "ko": "알람 47회 발화 · 사람 메시지 0건",
+                "en": "47 alert firings · 0 human messages"
+              }
+            },
+            {
+              "kind": "evidence",
+              "text": {
+                "ko": "최근 3일 104건 중 봇 98건 · 멘션 없음",
+                "en": "98 of 104 messages in 3 days from the bot · no mentions"
+              }
+            },
+            {
+              "kind": "cause",
+              "text": {
+                "ko": "멘션 없는 채널 메시지는 모바일 푸시 없음",
+                "en": "Mention-free channel messages send no mobile push"
+              }
+            },
+            {
+              "kind": "fix",
+              "text": {
+                "ko": "직접 관리하는 알람 5종 요약에 멘션 추가",
+                "en": "Mentions added to the 5 team-managed alert summaries"
+              }
+            },
+            {
+              "kind": "result",
+              "text": {
+                "ko": "알람 5종 멘션 발송 · 공유 라우팅 무변경",
+                "en": "5 alerts sent with mentions · shared routing unchanged"
+              }
+            }
+          ]
+        }
+      ],
+      "metrics": [
+        {
+          "label": {
+            "ko": "정책 집행 기기",
+            "en": "Devices enforcing policy"
+          },
+          "before": "-",
+          "after": {
+            "ko": "87대 전부",
+            "en": "All 87"
+          },
+          "improvement": {
+            "ko": "정책 대상 92명 배정 · 보고 중인 온라인 기기 기준",
+            "en": "92 people assigned · counts reporting online devices"
+          }
+        },
+        {
+          "label": {
+            "ko": "수집 서버 무응답 (live)",
+            "en": "Collection server outage (live)"
+          },
+          "before": {
+            "ko": "2일 18시간 31분",
+            "en": "2 days 18 hours 31 minutes"
+          },
+          "after": {
+            "ko": "예산·한도 명시",
+            "en": "Budget and limits explicit"
+          },
+          "improvement": {
+            "ko": "ClickHouse 기본 예산 RAM 90% 제거",
+            "en": "ClickHouse default 90%-of-RAM budget removed"
+          }
+        },
+        {
+          "label": {
+            "ko": "최대 파일 파싱 피크",
+            "en": "Largest-file parse peak"
+          },
+          "before": {
+            "ko": "워커 힙 2,048MB > 호스트 1,913MiB",
+            "en": "Worker heap 2,048MB > host 1,913MiB"
+          },
+          "after": "427.8MiB",
+          "improvement": {
+            "ko": "640MiB 한도의 67% · 스트리밍 파싱",
+            "en": "67% of the 640MiB limit · streaming parse"
+          }
+        },
+        {
+          "label": {
+            "ko": "알람 도달",
+            "en": "Alert reach"
+          },
+          "before": {
+            "ko": "47회 발화 · 사람 메시지 0건",
+            "en": "47 firings · 0 human messages"
+          },
+          "after": {
+            "ko": "알람 5종 멘션",
+            "en": "Mentions on 5 alerts"
+          },
+          "improvement": {
+            "ko": "공유 라우팅 무변경",
+            "en": "Shared routing unchanged"
+          }
+        }
+      ],
+      "techDecisions": {
+        "ko": [
+          "원본이 기준: 트랜스크립트 원본을 그대로 동기화해 서버 장애 뒤에는 자연스럽게 백필되고 재파싱으로 지표를 소급할 수 있게 했습니다. 이후 OpenTelemetry로 프롬프트·응답을 받게 됐지만 도구 결과와 thinking은 원본이 유일한 출처라 원본을 정본으로 유지했습니다.",
+          "상한의 순서: 앱 자신의 힙 상한 < 컨테이너 한도 < 호스트 RAM. 뒤집히면 앱의 자기 제한이 한 번도 동작하지 못하고, 한도가 머신보다 크면 컨테이너 대신 호스트가 멈춥니다.",
+          "로컬 차단은 서버와 독립: 등록·하트비트 전송이 실패해도 기기의 차단은 멈추지 않고, 서버는 규칙의 위치와 버전만 내려주며 서명 검증은 데몬이 합니다.",
+          "역할별 열람 분리: 설치 현황을 챙기는 IT 역할은 차단 이벤트를 볼 수 없게 해 기록의 열람 범위를 좁혔습니다.",
+          "증설보다 설정: 인스턴스 상향은 관측 데이터가 나오기 전에는 잘못된 설정을 비용으로 덮는 일이라 보류했습니다."
+        ],
+        "en": [
+          "Raw data as the source of truth: syncing the raw transcripts means data backfills naturally after a server outage and metrics can be recomputed by reparsing. OpenTelemetry later carried prompts and responses, but tool results and thinking exist only in the raw transcripts, so they stay canonical.",
+          "Order the limits: the app's own heap cap < the container limit < host RAM. Invert the first pair and the app's own limit never gets a chance to act; set a limit above the machine and the host stalls instead of the container.",
+          "Local blocking does not depend on the server: failed registration or heartbeats never stop blocking on the device, and the server only sends where a rule lives and its version, while the daemon checks signatures.",
+          "Separate who can read what: the IT role that follows up on installs cannot see block events, which narrows who can read those records.",
+          "Configuration before capacity: upsizing the instance was deferred, because before observing the fix it would only have paid to cover a wrong setting."
+        ]
+      },
+      "operationalLimits": {
+        "ko": [
+          "87대는 사람 수가 아니라 보고 중인 온라인 기기 수이며, 정책 대상 92명 전원이 정상 수집 중이라는 뜻이 아닙니다.",
+          "전사 순차 설치는 다른 팀 소관이고, 화면 육안 QA·Windows 다른 계정 실기 검사 등 일부 검증 항목은 남아 있습니다.",
+          "미처리 청크 하나가 파일 전체를 다시 읽는 O(n²) 재파싱 구조는 별도 과제로 남았습니다.",
+          "보안 정책의 세부 규칙, 차단 대상 요청의 형식, 우회 방지 방식은 공개 범위에서 뺐습니다."
+        ],
+        "en": [
+          "87 is a count of reporting online devices, not people, and does not mean all 92 assigned people are collecting normally.",
+          "The company-wide staged rollout belongs to another team, and some checks remain, such as visual QA of screens and hands-on testing under other Windows accounts.",
+          "The O(n²) reparse pattern, where one pending chunk rereads the whole file, remains a separate follow-up.",
+          "Policy rule details, the format of blocked requests, and anti-bypass mechanics are left out of this public page."
+        ]
+      },
+      "lessons": {
+        "ko": [
+          "상한은 \"얼마나 쓸 수 있나\"와 함께 \"죽을 때 호스트가 얼마를 잃나\"로도 본다. 한도를 올린 내 변경이 컨테이너 재시작을 호스트 정지로 키웠다.",
+          "기본값에는 그 기본값을 정한 머신의 가정이 들어 있다. 서버를 옮기면 상한을 다시 계산한다.",
+          "한도의 근거가 되는 실측은 부하 상태에서 잰다. 유휴 상태 값으로 고른 한도는 금방 깨진다.",
+          "알람은 울리는 것보다 사람에게 닿는 것이 중요하다."
+        ],
+        "en": [
+          "Judge a limit not only by how much it allows but by how much the host loses when it trips; my own increase turned container restarts into a host stall.",
+          "Defaults carry the assumptions of the machine they were set for; when a server moves, recompute its limits.",
+          "Measure a limit's baseline under load; a limit chosen from an idle reading breaks quickly.",
+          "An alert matters only if it reaches a person, not just because it fires."
+        ]
+      },
+      "scale": {
+        "ko": "macOS·Windows 기기 87대(정책 대상 92명) · 1,913MiB 수집 호스트 · ClickHouse·SQLite",
+        "en": "87 macOS/Windows devices (92 people assigned) · 1,913MiB collection host · ClickHouse and SQLite"
+      }
+    },
+    {
       "slug": "flex-work-schedule",
       "name": {
         "ko": "Work Schedule Planner — 제약을 숨기지 않는 근무 계획기",
@@ -2199,8 +2584,7 @@
         "en": "Concert Reservation Service"
       },
       "type": "personal",
-      "featured": true,
-      "printOrder": 4,
+      "listed": true,
       "summary": {
         "ko": "동일 좌석·사용자 지갑 동시성 테스트로 좌석에는 낙관적 락, 결제·충전에는 사용자 단위 Redisson 락을 적용하고, 공개 k6 보고서에서 캐시 스탬피드 p95를 5.74초에서 676ms로 낮춘 콘서트 예약 프로젝트",
         "en": "Concert reservation project that verifies same-seat booking and wallet payment with optimistic and Redisson locks, then reduces cache-stampede p95 from 5.74s to 676ms through cache warming and TTL changes in the public load-test report"

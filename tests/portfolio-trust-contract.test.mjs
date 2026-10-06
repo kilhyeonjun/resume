@@ -28,8 +28,8 @@ const directionalHrefs = (html, label) => [...withoutComments(html).matchAll(new
   'g',
 ))].map((match) => match[1]);
 
-const expectedFeatured = ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform', 'concert-reservation'];
-const expectedListed = ['family-budget-demo', 'flex-work-schedule', 'ai-coding-harness', 'daesin-logistics-bot'];
+const expectedFeatured = ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform', 'ai-agent-control-platform'];
+const expectedListed = ['family-budget-demo', 'flex-work-schedule', 'ai-coding-harness', 'daesin-logistics-bot', 'concert-reservation'];
 const expectedHidden = ['gamebang', 'clinical-lab-jobs', 'innovalley-menu-bot', 'startuppool', 'slack-clone', 'react-nodebird', 'multichat', 'trollgg'];
 
 test('portfolio visibility has one shared public-route contract', async () => {
@@ -94,7 +94,9 @@ test('company chat case study stays sanitized and scoped to load-test evidence',
   assert.match(svg, /<desc>/);
   assert.doesNotMatch(svg, /glider|vivox|bane|gameduo|amazonaws/i);
   const detail = await read('src/components/templates/PortfolioDetailTemplate.astro');
-  assert.match(detail, /showsOperationalLimits = [^;]*'realtime-game-chat'/);
+  assert.equal(project.type, 'team');
+  assert.match(detail, /isCompanyCase = project\.type === 'team' && project\.featured === true/);
+  assert.match(detail, /showsOperationalLimits = [^;]*isCompanyCase/);
 });
 
 test('derivative sources declare active noindex and robots allows crawlers to read it', async () => {
@@ -211,7 +213,7 @@ test('featured portfolio cards always show a cover or case diagram', async () =>
 
 test('company RCA and shared-package cases stay sanitized and name their environments', async () => {
   const data = JSON.parse(await read('src/data/portfolio.json'));
-  for (const slug of ['rds-saturation-rca', 'shared-package-ci-platform']) {
+  for (const slug of ['rds-saturation-rca', 'shared-package-ci-platform', 'ai-agent-control-platform']) {
     const project = data.projects.find((candidate) => candidate.slug === slug);
     assert.equal(project?.type, 'team', slug);
     assert.equal(project.github, undefined, slug);
@@ -357,7 +359,7 @@ test('company case flows restate only figures from their own problem-solving ent
   // A before→after pair must appear as the same pair in the source, not as two loose numbers.
   const compact = (text) => text.replace(/\s+/g, '');
   const pairs = (text) => compact(text).match(/\d[\d.,]*[A-Za-z가-힣%]*→\d[\d.,]*[A-Za-z가-힣%]*/g) ?? [];
-  for (const slug of ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform']) {
+  for (const slug of ['realtime-game-chat', 'rds-saturation-rca', 'shared-package-ci-platform', 'ai-agent-control-platform']) {
     const project = data.projects.find((candidate) => candidate.slug === slug);
     for (const [index, entry] of project.problemSolving.entries()) {
       assert.ok(entry.flow?.some((step) => step.kind === 'result'), `${slug}[${index}] needs a result step`);
@@ -374,5 +376,16 @@ test('company case flows restate only figures from their own problem-solving ent
         }
       }
     }
+  }
+});
+
+test('AI agent platform case keeps policy-enforcement mechanics off the public page', async () => {
+  const data = JSON.parse(await read('src/data/portfolio.json'));
+  const project = data.projects.find((candidate) => candidate.slug === 'ai-agent-control-platform');
+  const covers = await Promise.all(Object.values(project.coverImage).map((path) => read(join('public', path))));
+  const copy = JSON.stringify(project) + covers.join(' ');
+  assert.doesNotMatch(copy, /MITM|netlock|중간자|인증서|certificate|\bCA\b|PATCH|POST |\/api\/|\b403\b|\b10\.\d+\.\d+\.\d+\b|i-[0-9a-f]{8,}|t3\.small/i);
+  for (const lang of ['ko', 'en']) {
+    assert.ok(project.operationalLimits[lang].some((line) => /87/.test(line) && /92/.test(line)), `${lang} states 87 counts devices, not the 92 people`);
   }
 });

@@ -1256,8 +1256,8 @@
             {
               "kind": "symptom",
               "text": {
-                "ko": "알람 47회 발화 · 사람 메시지 0건",
-                "en": "47 alert firings · 0 human messages"
+                "ko": "최근 3일 알람 47회 발화 · 사람 메시지 0건",
+                "en": "47 alert firings in 3 days · 0 human messages"
               }
             },
             {
@@ -1346,8 +1346,8 @@
             "en": "Alert reach"
           },
           "before": {
-            "ko": "47회 발화 · 사람 메시지 0건",
-            "en": "47 firings · 0 human messages"
+            "ko": "3일간 47회 발화 · 사람 메시지 0건",
+            "en": "47 firings in 3 days · 0 human messages"
           },
           "after": {
             "ko": "알람 5종 멘션",

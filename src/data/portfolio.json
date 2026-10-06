@@ -1256,8 +1256,8 @@
             {
               "kind": "symptom",
               "text": {
-                "ko": "알람 47회 발화 · 사람 메시지 0건",
-                "en": "47 alert firings · 0 human messages"
+                "ko": "최근 3일 알람 47회 발화 · 사람 메시지 0건",
+                "en": "47 alert firings in 3 days · 0 human messages"
               }
             },
             {
@@ -1346,8 +1346,8 @@
             "en": "Alert reach"
           },
           "before": {
-            "ko": "47회 발화 · 사람 메시지 0건",
-            "en": "47 firings · 0 human messages"
+            "ko": "3일간 47회 발화 · 사람 메시지 0건",
+            "en": "47 firings in 3 days · 0 human messages"
           },
           "after": {
             "ko": "알람 5종 멘션",
@@ -1410,8 +1410,8 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "인정시간·실제 근무·휴가·일/주 상한을 하나의 결정론적 배분 계약으로 묶고, 달성 불가능한 목표는 초과 배정 대신 부족분과 이유로 표시하는 로컬 우선 근무 계획기",
-        "en": "A local-first work planner that combines recognized load, actual work, leave, and daily/weekly caps into one deterministic allocation contract, exposing infeasible targets as explicit gaps instead of forced over-allocation."
+        "ko": "인정시간·실제 근무·휴가·일/주 상한을 하나의 결정론적 배분 계약으로 묶고, 달성 불가능한 목표는 초과 배정 대신 부족분과 이유로 표시하는 로컬 우선 근무 계획기. CI에서 pytest 62개·E2E 9개 통과",
+        "en": "A local-first work planner that combines recognized load, actual work, leave, and daily/weekly caps into one deterministic allocation contract, exposing infeasible targets as explicit gaps instead of forced over-allocation. CI runs 62 pytest and 9 Playwright end-to-end tests."
       },
       "description": {
         "ko": "월 목표와 날짜별 제약을 정규화한 뒤 고정 계획을 먼저 적용하고, 필요한 날짜만 선택적으로 활성화해 남은 시간을 배분합니다. 목표를 채울 수 없으면 hard limit을 깨지 않고 부족 시간과 상태를 반환합니다. 날짜 override 화면은 충돌과 초과를 preview하고 나머지 날짜의 재배분 결과를 계산하며, 공개 구현은 synthetic fixture 기반 미리보기 경계까지만 다룹니다.",
@@ -1596,8 +1596,8 @@
       "type": "personal",
       "listed": true,
       "summary": {
-        "ko": "Claude Code·Codex·Kiro의 전역 상태를 프로젝트별 실행 경계로 분리하고, 잘못된 작업 경계와 설정 드리프트를 시작 전에 차단하는 공개 런처입니다.",
-        "en": "A public launcher that isolates global Claude Code, Codex, and Kiro state into project-scoped boundaries and blocks invalid workspaces or configuration drift before startup."
+        "ko": "Claude Code·Codex·Kiro의 전역 상태를 프로젝트별 실행 경계로 분리하고, 잘못된 작업 경계와 설정 드리프트를 시작 전에 차단하는 공개 런처입니다. 공개 릴리스 62개, CI에서 테스트 스크립트 65개 통과.",
+        "en": "A public launcher that isolates global Claude Code, Codex, and Kiro state into project-scoped boundaries and blocks invalid workspaces or configuration drift before startup. 62 public releases; 65 test scripts pass in CI."
       },
       "description": {
         "ko": "harness-launcher는 등록한 프로젝트 디렉터리를 신뢰 경계로 사용해 런타임 홈·스킬·MCP·정책을 분리합니다. harness-auto는 현재 작업 경로를 정규화해 하나의 경계만 선택하고, 경계 밖·심볼릭 링크 이탈·모호한 중복 등록에서는 실행하지 않습니다. 별도 공개 contract demo는 프로필 등록과 후보→원문 경로→SHA-256 재검증 흐름을 재현하며, 비공개 문서·회사 데이터·운영 인덱스는 포함하지 않습니다.",
@@ -2134,8 +2134,8 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "외부 배차 정보를 오늘 날짜로 수집해 노선·차량 검색과 통계를 제공하고, 수집 중복과 브라우저 데이터 경계를 분리한 운영 원장",
-        "en": "A current-day dispatch ledger for route, vehicle, and statistics views, with singleton collection ownership and a fixed browser data boundary"
+        "ko": "외부 배차 정보를 월~토 정각 15개 slot에서 오늘 날짜로 재수집해 노선·차량 검색과 통계를 제공하고, 수집 중복과 브라우저 데이터 경계를 분리한 운영 원장. CI에서 백엔드 Vitest 58개 통과",
+        "en": "A current-day dispatch ledger, re-collected in 15 on-the-hour slots Mon–Sat, for route, vehicle, and statistics views, with singleton collection ownership and a fixed browser data boundary. 58 backend Vitest tests pass in CI."
       },
       "description": {
         "ko": "외부 배차 사이트의 EUC-KR 데이터를 Cheerio와 Axios로 수집해 Prisma SQLite에 저장하고 Next.js 웹에서 조회한다. 웹 replica와 분리한 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 오늘 날짜를 재조회하므로 오전 데이터와 늦게 공개된 변경분을 이후 실행에서 반영할 수 있다. Next.js proxy의 public route DTO branch는 필수 핵심 필드와 허용된 원천 URL을 검증해 운영 화면에 필요한 필드만 projection하고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외하며, 인증·migration 경로는 allowlist된 method/path만 별도로 forward한다. 배포는 비활성 slot의 health check 후 Traefik active slot을 전환하며 이상 시 운영자가 수동 롤백한다.",
@@ -3011,8 +3011,8 @@
       "type": "personal",
       "listed": true,
       "summary": {
-        "ko": "매일의 수입·지출을 빠르게 기록하고, 공동·개인 부담과 목적통장, 예상 수입·고정지출·저축을 한 달의 판단으로 연결하는 부부 공용 가계부입니다.",
-        "en": "A shared household budget that turns daily income and expense entry, joint and individual ownership, purpose accounts, and recurring plans into one month-end decision."
+        "ko": "매일의 수입·지출을 빠르게 기록하고, 공동·개인 부담과 목적통장, 예상 수입·고정지출·저축을 한 달의 판단으로 연결하는 부부 공용 가계부입니다. CI에서 Vitest 33개 통과.",
+        "en": "A shared household budget that turns daily income and expense entry, joint and individual ownership, purpose accounts, and recurring plans into one month-end decision. 33 Vitest tests pass in CI."
       },
       "description": {
         "ko": "Family Budget은 “거래를 적는 도구”에서 끝나지 않습니다. 비개발 가족 구성원은 모바일에서 일상 지출을 빠르게 입력하고, 함께 쓰는 데스크톱 화면에서는 거래 원장·목적통장·자산·예상 항목을 한 달 단위로 검토합니다. 대시보드는 예상 수입·지출·저축과 실제 기록, 누락된 확인 항목을 모아 이번 달을 마감할 수 있는지 보여줍니다. 이를 위해 반복 규칙(계획), 월별 확인 항목(occurrence), 실제 거래를 분리하고 기존 실제 내역 연결을 새 생성보다 우선했습니다. 아래 화면은 운영 UI와 동일한 canonical UI package를 합성 데이터 어댑터에 연결한 공개 제품 증거이며, 실제 가족 금융값과 운영 백엔드는 공개하지 않습니다.",

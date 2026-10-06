@@ -14,7 +14,7 @@
       {
         "category": "DB Optimization, Concurrency & Distributed Systems",
         "items": [
-          "Root-caused two RDS saturation cases: removed the N+1 and non-SARGable filters behind a backfill bottleneck, and added a missing index to eliminate full scans of up to 36 minutes",
+          "Root-caused three RDS saturation cases: removed the N+1 and non-SARGable filters behind a backfill bottleneck, added a missing index to eliminate full scans of up to 36 minutes, and split a scheduler's all-version scan into per-version queries",
           "Deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks",
           "Advanced Redis Streams WAL with a 4-shard Valkey cluster and serverless fanout instrumentation to preserve real-time chat ordering and horizontal scale (WAL backlog 80,000→2,838)"
         ]

@@ -1074,7 +1074,7 @@
         "en": [
           "Usage-reporting switch sent through the guard policy path after two canaries: 92 people assigned, all 87 reporting devices apply it",
           "Guard server sends only rule location and version; daemon applies only signed rules, keeps blocking if registration or reporting fails",
-          "2 days 18 hours unresponsive: thrashing with no OOM kill. ClickHouse's default budget (90% of RAM) on a shared host was found and the budget and container limits set explicitly; analyzing the next outage showed the actual trigger was likely a reparse loop",
+          "2 days 18 hours unresponsive: thrashing with no OOM kill. ClickHouse's default budget (90% of RAM) on a shared host was found and the budget and container limits set explicitly; analysis of the next outage points to a reparse loop as the likely trigger",
           "Roughly 17-hour stall: the file cap missed a 176MB file, the 2,048MB worker heap exceeded the host, and the 768m limit thrashed the host each time it tripped. Lowered to 64MB, 256MB, and 640m, plus streaming parsing: largest-file peak 427.8MiB (67% of the limit)"
         ]
       },
@@ -1129,12 +1129,12 @@
             "en": "The collection server, newly moved from an office NAS to AWS, was completely unresponsive for 2 days 18 hours 31 minutes and collected 0 records. The instance was running, with no error logs and no OOM kill."
           },
           "process": {
-            "ko": "끊기기 직전 sar 표본에서 메모리 사용률 62.90%→81.66%, 페이지 스캔 153.77→332.58/s로 메모리 압박을 확인하고, 디스크·하이퍼바이저 경합·CPU 크레딧(장애 38시간 뒤 소진된 결과)을 근거와 함께 배제했습니다. 인스턴스 설정에서 ClickHouse가 기본값으로 RAM의 90%(약 1.68GiB)를 자기 예산으로 잡는 것을 찾았는데, 이 호스트는 1,913MiB를 다른 컨테이너와 나눠 쓰고 swap이 없어 OOM kill 대신 스래싱에 갇힐 수 있는 구조였습니다. ClickHouse 예산을 호스트에 맞게 명시하고 큰 두 컨테이너에 mem_limit을 걸었습니다.",
-            "en": "The last sar samples before the gap showed memory pressure (memory use 62.90%→81.66%, page scan 153.77→332.58/s); disk, hypervisor contention, and CPU credits (exhausted 38 hours in, a result) were ruled out with evidence. ClickHouse claimed 90% of RAM (about 1.68GiB) by default on a 1,913MiB host shared with other containers and without swap, so it could thrash instead of OOM-killing. The budget is now explicit, and the two large containers got mem_limit."
+            "ko": "끊기기 직전 sar 표본에서 메모리 사용률 62.90%→81.66%, 페이지 스캔 153.77→332.58/s로 메모리 압박을 확인하고, 디스크·하이퍼바이저 경합·CPU 크레딧(장애 38시간 뒤 소진된 결과)을 근거와 함께 배제했습니다. 인스턴스 설정에서 ClickHouse가 기본값으로 RAM의 90%를 자기 예산으로 잡는 것을 찾았는데, 이 호스트는 RAM을 다른 컨테이너와 나눠 쓰고 swap이 없어 OOM kill 대신 스래싱에 갇힐 수 있는 구조였습니다. ClickHouse 예산을 호스트에 맞게 명시하고 큰 두 컨테이너에 mem_limit을 걸었습니다.",
+            "en": "The last sar samples before the gap showed memory pressure (memory use 62.90%→81.66%, page scan 153.77→332.58/s); disk, hypervisor contention, and CPU credits (exhausted 38 hours in, a result) were ruled out with evidence. ClickHouse claimed 90% of RAM by default on a host shared with other containers and without swap, so it could thrash instead of OOM-killing. The budget is now explicit, and the two large containers got mem_limit."
           },
           "result": {
             "ko": "공유 호스트에서 기본 예산이 메모리를 독점하는 축을 막았습니다. 같은 증상의 다음 장애를 분석하며 이 장애의 실제 방아쇠도 재파싱 루프였을 가능성이 높다고 판단했고, 인스턴스 상향은 관측 전에는 잘못된 설정을 비용으로 덮는 일이라 보류했습니다.",
-            "en": "That closed one path, a default budget taking over a shared host; analyzing the next outage with the same signature showed this one's actual trigger was likely a reparse loop too. Upsizing waited: before observing the fix, it would only have paid to cover a wrong setting."
+            "en": "That closed one path, a default budget taking over a shared host; analysis of the next outage with the same signature points to a reparse loop as this one's likely trigger too. Upsizing waited: before observing the fix, it would only have paid to cover a wrong setting."
           },
           "flow": [
             {
@@ -1161,8 +1161,8 @@
             {
               "kind": "cause",
               "text": {
-                "ko": "ClickHouse 기본 예산 RAM 90% · 1,913MiB 공유 호스트 · swap 없음",
-                "en": "ClickHouse default budget 90% of RAM · shared 1,913MiB host · no swap"
+                "ko": "ClickHouse 기본 예산 RAM 90% · 공유 호스트 · swap 없음",
+                "en": "ClickHouse default budget 90% of RAM · shared host · no swap"
               }
             },
             {
@@ -1187,8 +1187,8 @@
             "en": "Once memory limits were in place, the collection app hit 19 OOM restarts under a 512m limit; after the limit went up to 768m, the host stopped responding for about 17 hours."
           },
           "process": {
-            "ko": "재시작 루프는 16MB 요청 본문을 동시에 받는데 Node가 컨테이너 한도를 모른 채 호스트 RAM 기준으로 힙을 키운 것이 원인이었고, 한도의 근거로 쓴 241MiB는 유휴 상태 값이었습니다. 약 17시간 정지는 미처리 청크가 하나라도 있는 파일을 통째로 다시 읽는 무한 재파싱이었습니다. 176MB 파일에 미처리 청크 9개가 생긴 뒤로 이 파일을 포함해 매 사이클 45청크 254.3MB를 문자열 배열로 다시 올렸습니다. 512MB 파일 상한은 176MB 파일에 걸리지 않았고, 워커 힙 2,048MB는 호스트(1,913MiB)보다 커 의미가 없었으며, 유일하게 발화한 768m 컨테이너 한도는 죽을 때마다 페이지 캐시를 밀어내 호스트를 스래싱으로 끌고 갔습니다. 512m에서 768m으로 올린 제 변경이 컨테이너 재시작을 호스트 정지로 키운 것입니다. 파일 상한 64MB·워커 힙 256MB·컨테이너 640m으로 낮춰 루프를 끊고, 파싱을 청크 단위 스트리밍으로 바꾼 뒤 파일 상한을 256MB로 다시 올렸습니다.",
-            "en": "Restarts: concurrent 16MB request bodies while Node, unaware of the container limit, sized its heap from host RAM; the 241MiB baseline had been measured at idle. The ~17-hour stall: any file with a pending chunk was reread whole; once a 176MB file had 9 pending chunks, every cycle pulled 45 chunks, 254.3MB including that file, into a string array. The 512MB file cap never applied to a 176MB file, the 2,048MB worker heap exceeded the 1,913MiB host, and the 768m limit, the only one that fired, pushed out page cache each time and thrashed the host; my own raise from 512m to 768m turned restarts into a host stall. A 64MB file cap, 256MB heap, and 640m container broke the loop; with chunk-by-chunk streaming in place, the file cap went back to 256MB."
+            "ko": "재시작 루프는 16MB 요청 본문을 동시에 받는데 Node가 컨테이너 한도를 모른 채 호스트 RAM 기준으로 힙을 키운 것이 원인이었고, 한도의 근거로 쓴 241MiB는 유휴 상태 값이었습니다. 약 17시간 정지는 미처리 청크가 하나라도 있는 파일을 통째로 다시 읽는 무한 재파싱이었습니다. 176MB 파일에 미처리 청크 9개가 생긴 뒤로 이 파일을 포함해 매 사이클 45청크 254.3MB를 문자열 배열로 다시 올렸습니다. 512MB 파일 상한은 176MB 파일에 걸리지 않았고, 워커 힙 2,048MB는 호스트 RAM보다 커 의미가 없었으며, 유일하게 발화한 768m 컨테이너 한도는 죽을 때마다 페이지 캐시를 밀어내 호스트를 스래싱으로 끌고 갔습니다. 512m에서 768m으로 올린 제 변경이 컨테이너 재시작을 호스트 정지로 키운 것입니다. 파일 상한 64MB·워커 힙 256MB·컨테이너 640m으로 낮춰 루프를 끊고, 파싱을 청크 단위 스트리밍으로 바꾼 뒤 파일 상한을 256MB로 다시 올렸습니다.",
+            "en": "Restarts: concurrent 16MB request bodies while Node, unaware of the container limit, sized its heap from host RAM; the 241MiB baseline had been measured at idle. The ~17-hour stall: any file with a pending chunk was reread whole; once a 176MB file had 9 pending chunks, every cycle pulled 45 chunks, 254.3MB including that file, into a string array. The 512MB file cap never applied to a 176MB file, the 2,048MB worker heap exceeded host RAM, and the 768m limit, the only one that fired, pushed out page cache each time and thrashed the host; my own raise from 512m to 768m turned restarts into a host stall. A 64MB file cap, 256MB heap, and 640m container broke the loop; with chunk-by-chunk streaming in place, the file cap went back to 256MB."
           },
           "result": {
             "ko": "최대 파일의 파싱 피크가 427.8MiB로 640MiB 한도의 67% 안에 머뭅니다. 미처리 청크 하나가 파일 전체를 다시 읽는 O(n²) 구조는 후속 과제로 분리했습니다.",
@@ -1321,8 +1321,8 @@
             "en": "Budget and limits explicit"
           },
           "improvement": {
-            "ko": "ClickHouse 기본 예산 RAM 90%를 호스트 기준으로",
-            "en": "ClickHouse default: 90% of RAM"
+            "ko": "한 축 차단 · 방아쇠는 재파싱 루프였을 가능성",
+            "en": "One path closed; trigger likely a reparse loop"
           }
         },
         {
@@ -1398,8 +1398,8 @@
         ]
       },
       "scale": {
-        "ko": "macOS·Windows 기기 87대(활성 명단 92명) · 1,913MiB 수집 호스트 · ClickHouse·SQLite",
-        "en": "87 macOS/Windows devices (92 people on the roster) · 1,913MiB collection host · ClickHouse and SQLite"
+        "ko": "macOS·Windows 기기 87대(활성 명단 92명) · 공유 수집 호스트 1대 · ClickHouse·SQLite",
+        "en": "87 macOS/Windows devices (92 people on the roster) · one shared collection host · ClickHouse and SQLite"
       }
     },
     {

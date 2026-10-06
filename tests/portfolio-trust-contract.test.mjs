@@ -384,7 +384,7 @@ test('AI agent platform case keeps policy-enforcement mechanics off the public p
   const project = data.projects.find((candidate) => candidate.slug === 'ai-agent-control-platform');
   const covers = await Promise.all(Object.values(project.coverImage).map((path) => read(join('public', path))));
   const copy = JSON.stringify(project) + covers.join(' ');
-  assert.doesNotMatch(copy, /MITM|netlock|중간자|인증서|certificate|\bCA\b|PATCH|POST |\/api\/|\b403\b|\b10\.\d+\.\d+\.\d+\b|i-[0-9a-f]{8,}|\bt[34]g?\.[a-z0-9]+\b|claude\.ai|selective|선택(?:적)?\s*검사|Ed25519|프롬프트|prompt|thinking|세션 로그|원본 동기화|session[- ]log|raw session|jsonl/i);
+  assert.doesNotMatch(copy, /MITM|netlock|중간자|인증서|certificate|\bCA\b|PATCH|POST |\/api\/|\b403\b|\b10\.\d+\.\d+\.\d+\b|i-[0-9a-f]{8,}|\bt[34]g?\.[a-z0-9]+\b|claude\.ai|selective|선택(?:적)?\s*검사|Ed25519|프롬프트|prompt|thinking|세션 로그|원본 동기화|session[- ]log|raw session|jsonl|1,913|1\.68GiB/i);
   for (const lang of ['ko', 'en']) {
     assert.ok(project.operationalLimits[lang].some((line) => /87/.test(line) && /92/.test(line)), `${lang} states 87 counts devices, not the 92 people`);
   }

@@ -1035,8 +1035,8 @@
       "featured": true,
       "printOrder": 4,
       "summary": {
-        "ko": "전사 AI 코딩 에이전트의 기기 정책 가드와 사용량 수집 서버를 설계·구현·운영: 가드의 정책 배포로 사용량 보고 스위치를 92명에게 켜 보고 중인 기기 87대 모두에서 집행을 확인했고, 수집 서버의 2일 18시간·약 17시간 무응답 장애 뒤 메모리 상한을 \"앱 < 컨테이너 < 호스트\" 순서로 다시 잡고 파싱을 스트리밍으로 바꿔 최대 파일 파싱 피크를 640MiB 한도의 67%로 낮췄습니다.",
-        "en": "Designed, built, and ran a device policy guard and a usage collection server for AI coding agents across the company: the guard's policy path switched usage reporting on for 92 people, and all 87 reporting devices applied it. After two collection-server outages (2 days 18 hours, then about 17 hours), memory limits were reordered as app < container < host and parsing moved to streaming, bringing the largest file's parse peak to 67% of a 640MiB limit."
+        "ko": "전사 AI 코딩 에이전트의 기기 정책 가드와 사용량 수집 서버를 설계·구현·운영: 가드의 정책 배포로 사용량 보고 스위치를 92명에게 켜 보고 중인 기기 87대 모두에서 집행을 확인했고, 수집 서버의 2일 18시간·17시간 40분 무응답 장애 뒤 메모리 상한을 \"앱 < 컨테이너 < 호스트\" 순서로 다시 잡고 파싱을 스트리밍으로 바꿔 최대 파일 파싱 피크를 640MiB 한도의 67%로 낮췄습니다.",
+        "en": "Designed, built, and ran a device policy guard and a usage collection server for AI coding agents across the company: the guard's policy path switched usage reporting on for 92 people, and all 87 reporting devices applied it. After two collection-server outages (2 days 18 hours, then 17 hours 40 minutes), memory limits were reordered as app < container < host and parsing moved to streaming, bringing the largest file's parse peak to 67% of a 640MiB limit."
       },
       "description": {
         "ko": "직원들이 AI 코딩 에이전트와 AI 서비스를 쓰기 시작하면서 두 가지가 필요했습니다. 회사 자료가 외부에 공개·공유되는 요청을 기기에서 막고 기록하는 가드, 그리고 개인 구독으로는 회사가 공식 대시보드를 볼 수 없는 Claude·Codex 사용량·스킬 지표를 모으는 수집 서버입니다. 가드는 macOS·Windows 상주 데몬과 가드 서버·콘솔로, 수집은 기기 사용 기록 동기화와 ClickHouse 집계로 만들었고, 사내 NAS에서 AWS로 옮긴 뒤 생긴 장애를 원인별로 정리했습니다. 내부 서비스명·호스트·티켓 번호는 일반 명칭으로 바꿨고, 보안 정책의 대상·규칙·차단 방식은 공개 범위에서 뺐습니다.",
@@ -1069,13 +1069,13 @@
           "가드의 정책 배포로 사용량 보고 스위치를 카나리 두 대 확인 뒤 전역 적용 — 활성 명단 92명 배정, 보고 중인 기기 87대 모두 집행",
           "가드 서버는 규칙의 위치와 버전만 내려주고 데몬은 서명을 검증한 규칙만 적용, 등록·전송이 실패해도 로컬 차단 유지",
           "2일 18시간 무응답: OOM kill 없는 스래싱 — 공유 호스트에서 RAM의 90%를 잡는 ClickHouse 기본 예산을 찾아 예산·컨테이너 한도를 명시, 실제 방아쇠는 다음 장애 분석에서 재파싱 루프였을 가능성이 높다고 판단",
-          "약 17시간 정지: 파일 상한은 176MB 파일에 걸리지 않고 워커 힙 2,048MB는 호스트보다 컸으며 768m 한도는 죽을 때마다 호스트를 스래싱 — 64MB·256MB·640m으로 낮추고 스트리밍 파싱으로 최대 파일 피크 427.8MiB(한도의 67%)"
+          "17시간 40분 정지: 파일 상한은 176MB 파일에 걸리지 않고 워커 힙 2,048MB는 호스트보다 컸으며 768m 한도는 죽을 때마다 호스트를 스래싱 — 64MB·256MB·640m으로 낮추고 스트리밍 파싱으로 최대 파일 피크 427.8MiB(한도의 67%)"
         ],
         "en": [
           "Usage-reporting switch sent through the guard policy path after two canaries: 92 people assigned, all 87 reporting devices apply it",
           "Guard server sends only rule location and version; daemon applies only signed rules, keeps blocking if registration or reporting fails",
           "2 days 18 hours unresponsive: thrashing with no OOM kill. ClickHouse's default budget (90% of RAM) on a shared host was found and the budget and container limits set explicitly; analysis of the next outage points to a reparse loop as the likely trigger",
-          "Roughly 17-hour stall: the file cap missed a 176MB file, the 2,048MB worker heap exceeded the host, and the 768m limit thrashed the host each time it tripped. Lowered to 64MB, 256MB, and 640m, plus streaming parsing: largest-file peak 427.8MiB (67% of the limit)"
+          "17h 40m stall: the file cap missed a 176MB file, the 2,048MB worker heap exceeded the host, and the 768m limit thrashed the host each time it tripped. Lowered to 64MB, 256MB, and 640m, plus streaming parsing: largest-file peak 427.8MiB (67% of the limit)"
         ]
       },
       "problemSolving": [
@@ -1183,12 +1183,12 @@
         },
         {
           "problem": {
-            "ko": "메모리 한도를 건 뒤 수집 앱이 512m 한도에서 OOM 재시작을 19회 반복했고, 한도를 768m로 올린 뒤에는 호스트가 약 17시간 응답하지 않았습니다.",
-            "en": "Once memory limits were in place, the collection app hit 19 OOM restarts under a 512m limit; after the limit went up to 768m, the host stopped responding for about 17 hours."
+            "ko": "메모리 한도를 건 뒤 수집 앱이 512m 한도에서 OOM 재시작을 19회 반복했고, 한도를 768m로 올린 뒤에는 호스트가 17시간 40분 동안 응답하지 않았습니다.",
+            "en": "Once memory limits were in place, the collection app hit 19 OOM restarts under a 512m limit; after the limit went up to 768m, the host stopped responding for 17 hours 40 minutes."
           },
           "process": {
-            "ko": "재시작 루프는 16MB 요청 본문을 동시에 받는데 Node가 컨테이너 한도를 모른 채 호스트 RAM 기준으로 힙을 키운 것이 원인이었고, 한도의 근거로 쓴 241MiB는 유휴 상태 값이었습니다. 약 17시간 정지는 미처리 청크가 하나라도 있는 파일을 통째로 다시 읽는 무한 재파싱이었습니다. 176MB 파일에 미처리 청크 9개가 생긴 뒤로 이 파일을 포함해 매 사이클 45청크 254.3MB를 문자열 배열로 다시 올렸습니다. 512MB 파일 상한은 176MB 파일에 걸리지 않았고, 워커 힙 2,048MB는 호스트 RAM보다 커 의미가 없었으며, 유일하게 발화한 768m 컨테이너 한도는 죽을 때마다 페이지 캐시를 밀어내 호스트를 스래싱으로 끌고 갔습니다. 512m에서 768m으로 올린 제 변경이 컨테이너 재시작을 호스트 정지로 키운 것입니다. 파일 상한 64MB·워커 힙 256MB·컨테이너 640m으로 낮춰 루프를 끊고, 파싱을 청크 단위 스트리밍으로 바꾼 뒤 파일 상한을 256MB로 다시 올렸습니다.",
-            "en": "Restarts: concurrent 16MB request bodies while Node, unaware of the container limit, sized its heap from host RAM; the 241MiB baseline had been measured at idle. The ~17-hour stall: any file with a pending chunk was reread whole; once a 176MB file had 9 pending chunks, every cycle pulled 45 chunks, 254.3MB including that file, into a string array. The 512MB file cap never applied to a 176MB file, the 2,048MB worker heap exceeded host RAM, and the 768m limit, the only one that fired, pushed out page cache each time and thrashed the host; my own raise from 512m to 768m turned restarts into a host stall. A 64MB file cap, 256MB heap, and 640m container broke the loop; with chunk-by-chunk streaming in place, the file cap went back to 256MB."
+            "ko": "처음엔 재시작을 Node 힙 설정 문제로 보고 힙 상한을 명시하려 했지만, 넣기 전에 실측해 보니 Node 22는 cgroup 한도의 약 51%로 힙을 스스로 잡고 있어 그 안을 버렸습니다. 한도의 근거로 쓴 241MiB도 유휴 상태 값이었습니다. 재시작과 17시간 40분 정지는 같은 원인, 미처리 청크가 하나라도 있는 파일을 통째로 다시 읽는 무한 재파싱이었고, 512m에서는 이 루프에 컨테이너만 죽고 호스트가 버텼습니다. 176MB 파일에 미처리 청크 9개가 생긴 뒤로 이 파일을 포함해 매 사이클 45청크 254.3MB를 문자열 배열로 다시 올렸습니다. 512MB 파일 상한은 176MB 파일에 걸리지 않았고, 워커 힙 2,048MB는 호스트 RAM보다 커 의미가 없었으며, 유일하게 발화한 768m 컨테이너 한도는 죽을 때마다 페이지 캐시를 밀어내 호스트를 스래싱으로 끌고 갔습니다. 512m에서 768m으로 올린 제 변경이 컨테이너 재시작을 호스트 정지로 키운 것입니다. 파일 상한 64MB·워커 힙 256MB·컨테이너 640m으로 낮춰 루프를 끊고, 파싱을 청크 단위 스트리밍으로 바꾼 뒤 파일 상한을 256MB로 다시 올렸습니다.",
+            "en": "The first fix for the restarts, an explicit Node heap cap, was dropped before it shipped: measurement showed Node 22 already sized its heap at about 51% of the cgroup limit. The 241MiB baseline the limit was based on had also been measured at idle. The restarts and the 17h 40m stall shared one cause, an endless reparse where any file with a pending chunk was reread whole; at 512m the loop killed only the container and the host held. Once a 176MB file had 9 pending chunks, every cycle pulled 45 chunks, 254.3MB including that file, into a string array. The 512MB file cap never applied to a 176MB file, the 2,048MB worker heap exceeded host RAM, and the 768m limit, the only one that fired, pushed out page cache each time and thrashed the host; my own raise from 512m to 768m turned restarts into a host stall. A 64MB file cap, 256MB heap, and 640m container broke the loop; with chunk-by-chunk streaming in place, the file cap went back to 256MB."
           },
           "result": {
             "ko": "최대 파일의 파싱 피크가 427.8MiB로 640MiB 한도의 67% 안에 머뭅니다. 미처리 청크 하나가 파일 전체를 다시 읽는 O(n²) 구조는 후속 과제로 분리했습니다.",
@@ -1198,15 +1198,15 @@
             {
               "kind": "symptom",
               "text": {
-                "ko": "OOM 재시작 19회 · 768m 상향 뒤 호스트 약 17시간 정지",
-                "en": "19 OOM restarts · ~17-hour host stall after raising to 768m"
+                "ko": "OOM 재시작 19회 · 768m 상향 뒤 호스트 17시간 40분 정지",
+                "en": "19 OOM restarts · 17h 40m host stall after raising to 768m"
               }
             },
             {
               "kind": "rejected",
               "text": {
-                "ko": "근거로 쓴 241MiB(유휴 상태 값)",
-                "en": "The 241MiB baseline (measured at idle)"
+                "ko": "힙 상한 명시안 · 유휴 상태 241MiB 기준",
+                "en": "Explicit heap cap · the idle 241MiB baseline"
               }
             },
             {
@@ -1241,8 +1241,8 @@
         },
         {
           "problem": {
-            "ko": "약 17시간 장애 동안 알람은 정상적으로 발화해 채널에 도달했지만 아무도 보지 않았고, 직전 2일 18시간 장애에서도 같은 일이 있었습니다.",
-            "en": "Throughout the roughly 17-hour outage the alerts fired and reached their channel, but nobody saw them, and the same had happened in the outage of 2 days 18 hours before it."
+            "ko": "17시간 40분 장애 동안 알람은 정상적으로 발화해 채널에 도달했지만 아무도 보지 않았고, 직전 2일 18시간 장애에서도 같은 일이 있었습니다.",
+            "en": "Throughout the 17h 40m outage the alerts fired and reached their channel, but nobody saw them, and the same had happened in the outage of 2 days 18 hours before it."
           },
           "process": {
             "ko": "알람 채널의 최근 3일 메시지 104건 중 98건이 봇이고 사람이 쓴 메시지는 0건이었으며, 47회 발화한 알람에 멘션이 하나도 없어 모바일 푸시가 가지 않았습니다. 라우팅과 연락처는 전사 공유 설정이라 건드리지 않고, 직접 관리하는 알람 규칙 5종의 요약 문구 앞에 멘션을 붙였습니다.",

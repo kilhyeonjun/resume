@@ -3024,16 +3024,16 @@
       "type": "personal",
       "listed": true,
       "summary": {
-        "ko": "매일의 수입·지출을 빠르게 기록하고, 공동·개인 부담과 목적통장, 예상 수입·고정지출·저축을 한 달의 판단으로 연결하는 부부 공용 가계부입니다. CI에서 Vitest 33개 통과.",
-        "en": "A shared household budget that turns daily income and expense entry, joint and individual ownership, purpose accounts, and recurring plans into one month-end decision. 33 Vitest tests pass in CI."
+        "ko": "매일의 수입·지출, 공동·개인 부담, 목적통장과 반복 계획을 월말 판단으로 연결하는 부부 가계부입니다. 공개 데모에서는 합성 데이터로 기존 내역 연결·실제 반영·재확인과 월말 경고를 브라우저 안에서 재현합니다.",
+        "en": "A household budget connecting daily entries, joint and individual ownership, purpose accounts, and recurring plans to month-end review. The public demo exercises existing-record linking, realization, reopen, and month-end warnings with synthetic browser-local data."
       },
       "description": {
         "ko": "Family Budget은 “거래를 적는 도구”에서 끝나지 않습니다. 비개발 가족 구성원은 모바일에서 일상 지출을 빠르게 입력하고, 함께 쓰는 데스크톱 화면에서는 거래 원장·목적통장·자산·예상 항목을 한 달 단위로 검토합니다. 대시보드는 예상 수입·지출·저축과 실제 기록, 누락된 확인 항목을 모아 이번 달을 마감할 수 있는지 보여줍니다. 이를 위해 반복 규칙(계획), 월별 확인 항목(occurrence), 실제 거래를 분리하고 기존 실제 내역 연결을 새 생성보다 우선했습니다. 아래 화면은 운영 UI와 동일한 canonical UI package를 합성 데이터 어댑터에 연결한 공개 제품 증거이며, 실제 가족 금융값과 운영 백엔드는 공개하지 않습니다.",
         "en": "Family Budget goes beyond recording transactions. A non-developer household member can capture daily spending on mobile, while the shared desktop workspace reviews the ledger, purpose accounts, assets, and expected items month by month. The dashboard combines expected income, spending, savings, actual activity, and incomplete checks into one month-end decision. Underneath, recurring rules (plans), monthly occurrences, and actual ledger events stay separate, and linking an existing actual is preferred over creating a duplicate. The screens below use the same canonical UI package as the operational product with a synthetic public adapter; real household finance values and the operational backend remain private."
       },
       "role": {
-        "ko": "개인 제품 · 기획·백엔드·데이터 모델·운영 자동화·반응형 UX 전 범위 담당",
-        "en": "Personal product · owned product design, backend, data model, automation, and responsive UX end to end"
+        "ko": "개인 제품 · 기획·백엔드·데이터 모델·운영 자동화·반응형 UX 담당 (백엔드·운영 자동화는 비공개 운영 제품 범위)",
+        "en": "Personal product · owned product design, backend, data model, automation, and responsive UX (backend and operational automation belong to the private operating product)"
       },
       "period": {
         "start": "2026-07-07",
@@ -3049,37 +3049,37 @@
       "github": "https://github.com/kilhyeonjun/family-budget-demo",
       "links": {
         "Demo": "https://family-budget-demo-three.vercel.app",
-        "CI": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648"
+        "CI": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/40040545877"
       },
       "highlights": {
         "ko": [
           "모바일 빠른 입력 → 거래 원장 → 목적통장·자산 → 월말 판단으로 이어지는 Family Budget 사용자 여정",
           "공동·개인 부담과 계획·실제를 분리해 부부가 같은 한 달을 서로 다른 관점에서 검토",
-          "기존 실제 내역 우선 연결, 사용자 승인, read-back, 부분 성공 공개, reopen으로 금융 쓰기 안전성 확보"
+          "합성 데모에서 기존 급여·저축 내역 연결, 지출 실제 반영, 원장을 보존하는 reopen과 목적통장 부족 경고 재현"
         ],
         "en": [
           "Family Budget journey from mobile quick entry to ledger, purpose accounts, assets, and month-end decision",
           "Separate joint and individual ownership plus plan and actual so both household members can review the same month from different views",
-          "Protect financial writes through existing-actual-first linking, confirmation, read-back, partial-success disclosure, and reopen"
+          "Exercise existing salary and savings links, expense realization, ledger-preserving reopen, and insufficient purpose-balance warnings in the synthetic demo"
         ]
       },
       "operationalLimits": {
         "ko": [
           "공개 사례는 실제 금융값·계좌명·실명·운영 URL·인증 정보·인프라 식별자를 포함하지 않습니다. 화면의 구성원 표기는 합성 fixture입니다.",
-          "공개 데모는 합성 데이터와 브라우저 로컬 저장만 사용하며 운영 백엔드·실제 데이터 규모·다중 사용자 협업을 증명하지 않습니다.",
+          "공개 데모는 단일 브라우저의 합성 데이터·로컬 저장만 사용합니다. 운영 백엔드·실제 데이터 규모·다중 사용자 협업·동시 서버 쓰기·기기 간 동기화를 증명하거나 보장하지 않습니다.",
           "사용자 수·절감 시간·재무 효과·완전 자동화·실시간·무결점 운영을 공개 근거 없이 주장하지 않습니다."
         ],
         "en": [
           "The public case excludes real financial values, account names, legal names, operating URLs, credentials, and infrastructure identifiers. Household labels shown in the UI are synthetic fixtures.",
-          "The public demo uses synthetic data and browser-local storage; it does not prove the operational backend, real data scale, or multi-user collaboration.",
+          "The public demo uses synthetic data and local storage in a single browser. It neither proves nor guarantees the operational backend, real data scale, multi-user collaboration, concurrent-server writes, or cross-device synchronization.",
           "This case study does not claim user count, time saved, financial impact, full automation, real-time behavior, or perfect operation without public evidence."
         ]
       },
       "metrics": [
         {
           "label": {
-            "ko": "운영 정본 전환",
-            "en": "Operational source of truth"
+            "ko": "비공개 운영 제품의 정본 전환",
+            "en": "Private operating-product source of truth"
           },
           "before": {
             "ko": "스프레드시트 중심 입력과 해석",
@@ -3122,12 +3122,12 @@
             "en": "Risk of creating a new actual despite an existing candidate"
           },
           "after": {
-            "ko": "연결 우선 · 승인 · read-back",
-            "en": "Link first · confirm · read back"
+            "ko": "기존 내역 연결 · 월별 상태 분리",
+            "en": "Link existing records · separate monthly state"
           },
           "improvement": {
-            "ko": "부분 성공과 reopen까지 명시적으로 처리",
-            "en": "Partial success and reopen remain explicit"
+            "ko": "공개 합성 데모에서 reopen 후에도 원장 기록 보존",
+            "en": "The public synthetic demo preserves ledger records after reopen"
           }
         }
       ],
@@ -3204,8 +3204,8 @@
             "en": "If automation collapsed a successful write and failed refresh into one error, retrying could duplicate a record that already succeeded."
           },
           "process": {
-            "ko": "변경 전 요청 본문을 보여 승인받고, 쓰기 후 원장과 대시보드를 read-back하며 부분 성공·검증 실패를 별도 상태로 보고합니다.",
-            "en": "Preview the request for approval, then read back the ledger and dashboard after writing while reporting partial success and verification failure as distinct states."
+            "ko": "비공개 운영 자동화에서는 변경 전 요청 본문을 승인받고 쓰기 후 원장·대시보드를 read-back하며 부분 성공·검증 실패를 구분합니다. 공개 데모는 이 서버·자동화 경로의 증거가 아니라 브라우저 로컬 조정 흐름의 증거입니다.",
+            "en": "Private operational automation previews requests for approval, reads back the ledger and dashboard, and distinguishes partial success from verification failure. The public demo evidences browser-local reconciliation, not this server or automation path."
           },
           "result": {
             "ko": "확인되지 않은 재시도 대신 현재 사실을 다시 조회하고, 필요한 경우 occurrence를 reopen해 안전하게 복구합니다.",
@@ -3236,23 +3236,23 @@
             "en": "How are the UI source of truth and allowed seams pinned?"
           },
           "label": "Manifest",
-          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/ssot/exact-source-manifest.json",
+          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/a84c8f4083d2838534b917e9610c2d474945c6db/ssot/exact-source-manifest.json",
           "testLabel": "Verifier",
-          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/verify-ssot.mjs"
+          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/a84c8f4083d2838534b917e9610c2d474945c6db/scripts/verify-ssot.mjs"
         },
         {
           "claim": {
-            "ko": "브라우저 로컬 read/write",
-            "en": "Browser-local read/write"
+            "ko": "로컬 조정·원장 보존·월말 경고",
+            "en": "Local reconciliation, ledger preservation, and month-end warnings"
           },
           "question": {
-            "ko": "합성 데이터의 저장·조회·초기화는 어디서 동작하는가?",
-            "en": "Where do synthetic storage, reads, and reset run?"
+            "ko": "급여·저축 연결, 지출 반영, 원장을 지우지 않는 reopen, 목적통장 부족 경고와 초기화는 어디서 구현·회귀 검사하는가?",
+            "en": "Where are salary and savings links, expense realization, ledger-preserving reopen, insufficient purpose-balance warnings, and reset implemented and regression-tested?"
           },
           "label": "Adapter",
-          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.ts",
+          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/a84c8f4083d2838534b917e9610c2d474945c6db/lib/synthetic-budget.ts",
           "testLabel": "Test",
-          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/lib/synthetic-budget.test.ts"
+          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/a84c8f4083d2838534b917e9610c2d474945c6db/lib/synthetic-budget.test.ts"
         },
         {
           "claim": {
@@ -3264,9 +3264,9 @@
             "en": "How is the public adapter injected into shared UI?"
           },
           "label": "Runtime",
-          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/packages/budget-ui/src/runtime.tsx",
+          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/a84c8f4083d2838534b917e9610c2d474945c6db/packages/budget-ui/src/runtime.tsx",
           "testLabel": "DemoShell",
-          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/components/DemoShell.tsx"
+          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/blob/a84c8f4083d2838534b917e9610c2d474945c6db/components/DemoShell.tsx"
         },
         {
           "claim": {
@@ -3278,9 +3278,9 @@
             "en": "Which executable checks block drift and forbidden patterns?"
           },
           "label": "Boundary scan",
-          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/b822842ea84d7e63401d2288a8944afd9f4fe5cd/scripts/scan-public-boundary.mjs",
+          "url": "https://github.com/kilhyeonjun/family-budget-demo/blob/a84c8f4083d2838534b917e9610c2d474945c6db/scripts/scan-public-boundary.mjs",
           "testLabel": "CI",
-          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/31672345648"
+          "testUrl": "https://github.com/kilhyeonjun/family-budget-demo/actions/runs/40040545877"
         },
         {
           "claim": {

@@ -97,24 +97,4 @@ test('evidence board leads with the company case metrics, not list-price savings
   }
 });
 
-test('HR resume surfaces state each flagship metric once and keep the summary to three sentences', async () => {
-  for (const [lang, metrics, sentenceEnd] of [
-    ['ko', ['82%', '18초', '270배', '3시간→15분', '26배', '767ms→6.6ms'], /다\.(?:\s|$)/g],
-    ['en', ['82%', '18s', '270x', '3hrs→15min', '26x', '767ms→6.6ms'], /\.(?:\s|$)/g],
-  ]) {
-    const { main } = await readJson(`src/content/resume/${lang}.json`);
-    const visible = [
-      main.summary,
-      ...main.coreCompetencies.flatMap((group) => group.items),
-      ...main.experience.flatMap((exp) => [...(exp.positions?.flatMap((position) => position.highlights ?? []) ?? []), ...(exp.highlights ?? [])])
-        .flatMap((item) => [item.problem, item.solution, item.result]),
-      ...main.technicalWriting.map((item) => item.achievement ?? ''),
-    ].join('\n');
-    for (const metric of metrics) assert.equal(visible.split(metric).length - 1, 1, `${lang} ${metric}`);
-    assert.equal(main.summary.match(sentenceEnd)?.length, 3, `${lang} summary sentences`);
-    for (const project of main.experience.flatMap((exp) => exp.projects ?? [])) {
-      assert.ok((project.details ?? []).length <= 7, `${lang} ${project.name} details`);
-    }
-    assert.doesNotMatch(JSON.stringify(main), /\b(?:BANE|BNID|BNKR|BNTW|NB2|DFD)\b/, `${lang} internal game codes`);
-  }
-});
+

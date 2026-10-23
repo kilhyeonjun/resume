@@ -70,6 +70,21 @@ test('portfolio visibility has one shared public-route contract', async () => {
   assert.match(selector, /\.\.\.selectListedPortfolioProjects\(projects\)/);
 });
 
+test('every public case with operating limits exposes a linked limits section', async () => {
+  const { projects } = JSON.parse(await read('src/data/portfolio.json'));
+  for (const project of projects.filter((item) => !item.hidden && (item.featured || item.listed))) {
+    for (const [lang, prefix] of [['ko', ''], ['en', 'en/']]) {
+      const html = withoutComments(await read(`dist/${prefix}portfolio/${project.slug}/index.html`));
+      if (project.operationalLimits?.[lang]?.length) {
+        assert.match(html, /<section\b[^>]*id="limits"/, `${lang}/${project.slug} discloses limits`);
+        assert.match(html, /href="#limits"/, `${lang}/${project.slug} links to limits`);
+      } else {
+        assert.doesNotMatch(html, /<section\b[^>]*id="limits"/, `${lang}/${project.slug} has no empty limits section`);
+      }
+    }
+  }
+});
+
 test('company chat case study stays sanitized and scoped to load-test evidence', async () => {
   const data = JSON.parse(await read('src/data/portfolio.json'));
   const project = data.projects.find((candidate) => candidate.slug === 'realtime-game-chat');
@@ -93,10 +108,6 @@ test('company chat case study stays sanitized and scoped to load-test evidence',
   assert.match(svg, /<title>/);
   assert.match(svg, /<desc>/);
   assert.doesNotMatch(svg, /glider|vivox|bane|gameduo|amazonaws/i);
-  const detail = await read('src/components/templates/PortfolioDetailTemplate.astro');
-  assert.equal(project.type, 'team');
-  assert.match(detail, /isCompanyCase = project\.type === 'team' && project\.featured === true/);
-  assert.match(detail, /showsOperationalLimits = [^;]*isCompanyCase/);
 });
 
 test('derivative sources declare active noindex and robots allows crawlers to read it', async () => {

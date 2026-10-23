@@ -49,6 +49,13 @@ scripts/
 └── generate-pdf.ts         # PDF 생성 (Puppeteer)
 ```
 
+## Content curation
+
+- `ko.json`과 `en.json`은 프로젝트·상세 순서와 공개 범위를 함께 맞춥니다.
+- 웹 이력서·HR·ATS에는 대표 프로젝트 이름만 표시합니다. 경력 상세 페이지와 경력기술서는 모든 프로젝트와 상세 근거를 표시하며, 강한 성과를 앞에 배치합니다. 프로젝트의 `featured: false`는 메인의 프로젝트 목록에서만 제외합니다.
+- 포트폴리오의 `operationalLimits`는 대표/목록 분류와 관계없이 해당 상세 페이지에 표시합니다.
+- PDF 검증은 HR 2쪽·ATS 3쪽 이내인지 확인하고, HR은 `pageRanges` 없이 출력한 결과도 대조해 잘린 페이지가 없는지 확인합니다.
+
 ## Commands
 
 | Command | Action |

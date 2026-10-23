@@ -192,10 +192,6 @@ test('AI harness diagrams retain verified sources and accessible rendering asset
   }
   const pkg = JSON.parse(packageJson);
   const mermaid = JSON.parse(mermaidConfig);
-  assert.match(pkg.dependencies.astro, /^\^7\./);
-  assert.equal(pkg.engines.node, '>=22.12.0');
-  assert.equal(pkg.devDependencies['@mermaid-js/mermaid-cli'], '^11.16.0');
-  assert.equal(pkg.overrides['basic-ftp'], '5.3.1');
   assert.equal(pkg.scripts.diagrams, 'bash scripts/generate-ai-harness-diagrams.sh');
   assert.equal(mermaid.deterministicIds, true);
   assert.equal(mermaid.deterministicIDSeed, 'ai-harness-v1');

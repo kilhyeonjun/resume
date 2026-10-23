@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import PrintFonts from '../PrintFonts.astro';
 import { prepareResumeData } from '../../utils/resume-data';
 import { getLocalePrefix, withBasePath } from '../../utils/paths';
 import rawPortfolioData from '../../data/portfolio.json';
@@ -49,6 +50,7 @@ function formatPeriod(period: { start: string; end: string }): string {
   <link rel="icon" type="image/svg+xml" href={withBasePath('favicon.svg')}>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{data.name} - {pageTitle}</title>
+  <PrintFonts />
 
   <style>
     @page { margin: 10mm; size: A4; }
@@ -66,10 +68,10 @@ function formatPeriod(period: { start: string; end: string }): string {
     }
 
     body {
-      font-family: 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+      font-family: 'Resume Print', sans-serif;
       font-size: 9pt;
       color: #111827;
-      line-height: 1.4;
+      line-height: 1.35;
       background: #fff;
       word-break: keep-all;
       overflow-wrap: break-word;
@@ -80,7 +82,7 @@ function formatPeriod(period: { start: string; end: string }): string {
 
     .document {
       width: 210mm;
-      max-width: none;
+      max-width: 100%;
       margin: 0 auto;
       padding: 0;
     }
@@ -130,11 +132,9 @@ function formatPeriod(period: { start: string; end: string }): string {
 
     /* Featured project */
     .project-item {
-      margin-bottom: 4mm;
-    }
-
-    .project-item:first-of-type {
-      /* Allow first project to break across page 1-2 so header isn't isolated */
+      margin-bottom: 3mm;
+      /* Flow long cards; keep diagrams, tables and problem-solving entries intact. */
+      break-inside: auto;
     }
 
     .project-separator {
@@ -144,10 +144,10 @@ function formatPeriod(period: { start: string; end: string }): string {
     }
 
     .project-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      display: block;
       margin-bottom: 1mm;
+      page-break-inside: avoid;
+      break-inside: avoid;
       break-after: avoid-page;
     }
 
@@ -162,11 +162,10 @@ function formatPeriod(period: { start: string; end: string }): string {
     }
 
     .project-meta {
+      display: block;
       font-size: 8.5pt;
       color: #6b7280;
-      white-space: nowrap;
-      flex-shrink: 0;
-      margin-left: 3mm;
+      margin-top: 0.5mm;
     }
 
     .project-links {
@@ -271,10 +270,6 @@ function formatPeriod(period: { start: string; end: string }): string {
       max-width: 100%;
     }
 
-    .family-budget-print {
-      break-before: page;
-    }
-
     .family-budget-print .project-header {
       display: block;
     }
@@ -330,10 +325,6 @@ function formatPeriod(period: { start: string; end: string }): string {
       margin-bottom: 1mm;
     }
 
-    .evidence-register-print {
-      break-after: page;
-    }
-
     /* Scale badge */
     .scale-badge {
       display: inline-block;
@@ -386,7 +377,7 @@ function formatPeriod(period: { start: string; end: string }): string {
 
     /* Problem Solving */
     .ps-entry {
-      margin-bottom: 1.5mm;
+      margin-bottom: 1mm;
       break-inside: avoid;
     }
 
@@ -433,8 +424,9 @@ function formatPeriod(period: { start: string; end: string }): string {
     .bullet-list li {
       font-size: 9pt;
       color: #374151;
-      margin-bottom: 0.8mm;
-      line-height: 1.4;
+      margin-bottom: 0.5mm;
+      line-height: 1.35;
+      break-inside: avoid;
       padding-left: 3mm;
       text-indent: -3mm;
     }
@@ -501,6 +493,19 @@ function formatPeriod(period: { start: string; end: string }): string {
 
     @media print {
       html { font-size: 100%; }
+
+      .section-heading,
+      .listed-box-title {
+        page-break-after: avoid;
+        break-after: avoid-page;
+      }
+
+      p,
+      li {
+        orphans: 2;
+        widows: 2;
+      }
+
       .back-link, .no-print { display: none !important; }
     }
   </style>

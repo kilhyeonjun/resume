@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import PrintFonts from '../PrintFonts.astro';
 import { getHomePath, withBasePath } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
 
@@ -24,6 +25,7 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
   <link rel="icon" type="image/svg+xml" href={withBasePath('favicon.svg')}>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{data.name} - {pageTitle}</title>
+  <PrintFonts />
 
   <style>
     @page { margin: 10mm; size: A4; }
@@ -41,7 +43,7 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
     }
 
     body {
-      font-family: 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+      font-family: 'Resume Print', sans-serif;
       font-size: 9pt;
       color: #111827;
       line-height: 1.4;

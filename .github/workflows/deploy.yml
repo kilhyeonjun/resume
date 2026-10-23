@@ -39,6 +39,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install pinned fonts for diagrams
+        run: |
+          echo '3090ccde0442bb347aa7685d9ba8b17436a60682df6e8f92a9a670de14056e22  scripts/fonts/PretendardVariable.ttf' | sha256sum --check
+          echo '9599f12fd42fc0bce1cd50b47a0c022e108d7aa64dd0d1bb0ed44f3282d900b4  public/fonts/PretendardVariable.woff2' | sha256sum --check
+          install -Dm644 scripts/fonts/PretendardVariable.ttf "$HOME/.local/share/fonts/PretendardVariable.ttf"
+          fc-cache -f "$HOME/.local/share/fonts"
+          test "$(fc-match -f '%{family}' 'Pretendard Variable:lang=ko')" = 'Pretendard Variable'
+
       - name: Type Check
         run: npm run check
 
@@ -57,11 +65,6 @@ jobs:
 
       - name: Test generated release contracts
         run: npm test
-
-      - name: Install Korean fonts for PDF generation
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk > /dev/null 2>&1
 
       - name: Generate release PDFs and OG
         run: |

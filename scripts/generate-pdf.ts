@@ -1,23 +1,11 @@
-/**
- * PDF Generation Script for Resume
- * 
- * Usage:
- *   npm run pdf                    # All versions (KO+EN, HR+ATS)
- *   npm run pdf -- --hr            # HR versions only
- *   npm run pdf -- --ats           # ATS versions only
- *   npm run pdf -- --ko            # Korean only
- *   npm run pdf -- --en            # English only
- *   npm run pdf -- --ko --hr       # Korean HR only
- * 
- * Prerequisites:
- *   - Astro dev server running (npm run dev)
- *   - Or specify custom base URL with --base-url
- */
-
-import puppeteer, { type Browser, type Page } from 'puppeteer';
-import { existsSync, mkdirSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
+/** Generate complete, font-pinned resume PDFs; reject overflow instead of cropping. */
+import puppeteer, { type Browser } from 'puppeteer';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { setTimeout as delay } from 'node:timers/promises';
+import { requireReleaseFonts } from './release-fonts';
+import { validatePDF } from './pdf-contract';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -25,135 +13,46 @@ interface PDFConfig {
   name: string;
   path: string;
   filename: string;
-  format?: 'A4' | 'Letter';
   printBackground: boolean;
-  pageRanges?: string;
+  maxPages?: number;
 }
 
-interface PDFConfigSet {
-  ko: PDFConfig[];
-  en: PDFConfig[];
-}
-
-const PDF_CONFIGS: PDFConfigSet = {
+const PDF_CONFIGS: Record<'ko' | 'en', PDFConfig[]> = {
   ko: [
-    {
-      name: 'HR Version (Korean)',
-      path: '/resume-print',
-      filename: 'resume-hr-ko.pdf',
-      format: 'A4',
-      printBackground: true,
-      pageRanges: '1-2',
-    },
-    {
-      name: 'ATS Version (Korean)',
-      path: '/resume-ats',
-      filename: 'resume-ats-ko.pdf',
-      format: 'A4',
-      printBackground: false,
-    },
-    {
-      name: 'Career Description (Korean)',
-      path: '/experience-print',
-      filename: 'career-detail-ko.pdf',
-      format: 'A4',
-      printBackground: true,
-    },
-    {
-      name: 'Portfolio (Korean)',
-      path: '/portfolio-print',
-      filename: 'portfolio-ko.pdf',
-      format: 'A4',
-      printBackground: true,
-    },
+    { name: 'HR Version (Korean)', path: '/resume-print', filename: 'resume-hr-ko.pdf', printBackground: true, maxPages: 2 },
+    { name: 'ATS Version (Korean)', path: '/resume-ats', filename: 'resume-ats-ko.pdf', printBackground: false, maxPages: 3 },
+    { name: 'Career Description (Korean)', path: '/experience-print', filename: 'career-detail-ko.pdf', printBackground: true },
+    { name: 'Portfolio (Korean)', path: '/portfolio-print', filename: 'portfolio-ko.pdf', printBackground: true },
   ],
   en: [
-    {
-      name: 'HR Version (English)',
-      path: '/en/resume-print',
-      filename: 'resume-hr-en.pdf',
-      format: 'A4',
-      printBackground: true,
-      pageRanges: '1-2',
-    },
-    {
-      name: 'ATS Version (English)',
-      path: '/en/resume-ats',
-      filename: 'resume-ats-en.pdf',
-      format: 'A4',
-      printBackground: false,
-    },
-    {
-      name: 'Career Description (English)',
-      path: '/en/experience-print',
-      filename: 'career-detail-en.pdf',
-      format: 'A4',
-      printBackground: true,
-    },
-    {
-      name: 'Portfolio (English)',
-      path: '/en/portfolio-print',
-      filename: 'portfolio-en.pdf',
-      format: 'A4',
-      printBackground: true,
-    },
+    { name: 'HR Version (English)', path: '/en/resume-print', filename: 'resume-hr-en.pdf', printBackground: true, maxPages: 2 },
+    { name: 'ATS Version (English)', path: '/en/resume-ats', filename: 'resume-ats-en.pdf', printBackground: false, maxPages: 3 },
+    { name: 'Career Description (English)', path: '/en/experience-print', filename: 'career-detail-en.pdf', printBackground: true },
+    { name: 'Portfolio (English)', path: '/en/portfolio-print', filename: 'portfolio-en.pdf', printBackground: true },
   ],
 };
 
-async function waitForPageLoad(page: Page): Promise<void> {
-  await page.waitForFunction(
-    () => document.readyState === 'complete' && document.fonts.ready.then(() => true),
-    { timeout: 15000 },
-  );
-  // Additional wait for rendering stabilization
-  await new Promise((resolve) => setTimeout(resolve, 500));
-}
-
-async function generatePDF(
-  browser: Browser,
-  baseUrl: string,
-  config: PDFConfig,
-  outputDir: string
-): Promise<void> {
+async function generatePDF(browser: Browser, baseUrl: string, config: PDFConfig, outputDir: string): Promise<void> {
   const page = await browser.newPage();
-  
   try {
     const url = `${baseUrl}${config.path}`;
-    console.log(`  📄 Generating ${config.name}...`);
-    console.log(`     URL: ${url}`);
+    console.log(`Generating ${config.name}: ${url}`);
+    await page.setViewport({ width: 1200, height: 1697, deviceScaleFactor: 2 });
+    await page.emulateMediaType('print');
 
-    // Set viewport for consistent rendering
-    await page.setViewport({
-      width: 1200,
-      height: 1697,
-      deviceScaleFactor: 2,
-    });
-
-    // Navigate to page with retry
-    const maxRetries = 3;
     let response;
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    for (let attempt = 1; attempt <= 3; attempt++) {
       try {
-        response = await page.goto(url, {
-          waitUntil: 'networkidle0',
-          timeout: 30000,
-        });
+        response = await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
         break;
-      } catch (navError) {
-        if (attempt === maxRetries) throw navError;
-        const delay = 1000 * Math.pow(2, attempt - 1);
-        console.log(`     ⚠️ Attempt ${attempt}/${maxRetries} failed, retrying in ${delay}ms...`);
-        await new Promise((resolve) => setTimeout(resolve, delay));
+      } catch (error) {
+        if (attempt === 3) throw error;
+        await delay(1000 * 2 ** (attempt - 1));
       }
     }
-
     if (!response?.ok()) {
       throw new Error(`Refusing to generate PDF from HTTP ${response?.status() ?? 'no response'}: ${url}`);
     }
-
-    // Wait for full page load
-    await waitForPageLoad(page);
-
     const contract = await page.evaluate(() => ({
       h1: document.querySelector('main h1')?.textContent?.trim(),
       download: Boolean(document.querySelector('a[download][href*="/pdf/"]')),
@@ -161,26 +60,23 @@ async function generatePDF(
     if (!contract.h1 || !contract.download) {
       throw new Error(`Refusing to generate PDF from a non-Resume page: ${url}`);
     }
-
-    // Ensure output directory exists
-    if (!existsSync(outputDir)) {
-      mkdirSync(outputDir, { recursive: true });
-    }
-
-    const outputPath = resolve(outputDir, config.filename);
-
-    // Generate PDF
-    await page.pdf({
-      path: outputPath,
-      format: config.format || 'A4',
-      printBackground: config.printBackground,
-      pageRanges: config.pageRanges,
+    await requireReleaseFonts(page);
+    const expectedText = await page.evaluate(() => {
+      const walker = document.createTreeWalker(document.querySelector('main')!, NodeFilter.SHOW_TEXT);
+      const units: string[] = [];
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        // Explicit surface exclusions only: accidental display:none must still fail completeness.
+        if (node.parentElement?.closest('script, style, svg, .no-print, .back-link, .listed-project-summary')) continue;
+        const text = node.textContent?.trim();
+        if (text) units.push(text);
+      }
+      return units;
     });
-
-    console.log(`     ✅ Saved to: ${outputPath}`);
-  } catch (error) {
-    console.error(`     ❌ Error generating ${config.name}:`, error);
-    throw error;
+    const bytes = await page.pdf({ format: 'A4', preferCSSPageSize: true, printBackground: config.printBackground });
+    const pages = await validatePDF(bytes, expectedText, config.maxPages);
+    await mkdir(outputDir, { recursive: true });
+    await writeFile(resolve(outputDir, config.filename), bytes);
+    console.log(`Saved ${config.filename}: ${pages} pages, complete text verified`);
   } finally {
     await page.close();
   }
@@ -188,73 +84,33 @@ async function generatePDF(
 
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
-  
-  const generateHR = args.includes('--hr') || (!args.includes('--ats'));
-  const generateATS = args.includes('--ats') || (!args.includes('--hr'));
-  const generateKo = args.includes('--ko') || (!args.includes('--en'));
-  const generateEn = args.includes('--en') || (!args.includes('--ko'));
-  
+  const generateHR = args.includes('--hr') || !args.includes('--ats');
+  const generateATS = args.includes('--ats') || !args.includes('--hr');
+  const generateKo = args.includes('--ko') || !args.includes('--en');
+  const generateEn = args.includes('--en') || !args.includes('--ko');
   const baseUrlIndex = args.indexOf('--base-url');
-  const baseUrl = baseUrlIndex !== -1 ? args[baseUrlIndex + 1] : 'http://127.0.0.1:4321';
-
-  try { new URL(baseUrl); } catch { throw new Error(`Invalid base URL: ${baseUrl}`); }
-  
+  const baseUrl = (baseUrlIndex !== -1 ? args[baseUrlIndex + 1] : 'http://127.0.0.1:4321').replace(/\/+$/, '');
+  new URL(baseUrl);
   const outputDirIndex = args.indexOf('--output');
-  const outputDir = outputDirIndex !== -1 
-    ? resolve(args[outputDirIndex + 1])
-    : resolve(__dirname, '..', 'dist', 'pdf');
-
-  console.log('\n🚀 Resume PDF Generator\n');
-  console.log(`   Base URL: ${baseUrl}`);
-  console.log(`   Output: ${outputDir}`);
-  console.log(`   Languages: ${generateKo ? 'KO' : ''} ${generateEn ? 'EN' : ''}`);
-  console.log(`   Types: ${generateHR ? 'HR' : ''} ${generateATS ? 'ATS' : ''}\n`);
-
+  const outputDir = outputDirIndex !== -1 ? resolve(args[outputDirIndex + 1]) : resolve(__dirname, '..', 'dist', 'pdf');
   let browser: Browser | null = null;
-
   try {
-    console.log('📦 Launching browser...\n');
     browser = await puppeteer.launch({
       headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--font-render-hinting=none',
-      ],
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--font-render-hinting=none'],
     });
-
-    const configs: PDFConfig[] = [];
-    
-    if (generateKo) {
-      configs.push(...PDF_CONFIGS.ko.filter((c) => {
-        if (c.path.includes('print') && !generateHR) return false;
-        if (c.path.includes('ats') && !generateATS) return false;
-        return true;
-      }));
-    }
-    
-    if (generateEn) {
-      configs.push(...PDF_CONFIGS.en.filter((c) => {
-        if (c.path.includes('print') && !generateHR) return false;
-        if (c.path.includes('ats') && !generateATS) return false;
-        return true;
-      }));
-    }
-
+    const configs = [ ...(generateKo ? PDF_CONFIGS.ko : []), ...(generateEn ? PDF_CONFIGS.en : []) ];
     for (const config of configs) {
+      if (config.path.includes('print') && !generateHR) continue;
+      if (config.path.includes('ats') && !generateATS) continue;
       await generatePDF(browser, baseUrl, config, outputDir);
     }
-
-    console.log('\n✨ PDF generation complete!\n');
-  } catch (error) {
-    console.error('\n❌ PDF generation failed:', error);
-    process.exit(1);
   } finally {
-    if (browser) {
-      await browser.close();
-    }
+    if (browser) await browser.close();
   }
 }
 
-main();
+main().catch(error => {
+  console.error('PDF generation failed:', error);
+  process.exitCode = 1;
+});

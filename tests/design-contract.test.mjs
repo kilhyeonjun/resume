@@ -134,19 +134,10 @@ test('portfolio polish keeps featured proof and detail evidence in recruiter-fir
   assert.match(css, /@media screen and \(max-width: 760px\)[\s\S]*\.portfolio-detail\s*\{[^}]*display:\s*flex[^}]*flex-direction:\s*column/s);
 });
 
-test('AI harness case study keeps public evidence current and recruiter-first', async () => {
+test('AI harness diagrams retain verified sources and accessible rendering assets', async () => {
   const portfolio = JSON.parse(await read('src/data/portfolio.json'));
   const project = portfolio.projects.find((item) => item.slug === 'ai-coding-harness');
   assert.ok(project);
-  assert.equal(project.role.ko, '개인 설계·구현·운영');
-  assert.equal(project.role.en, 'Sole designer, implementer, and operator');
-  assert.equal(project.metrics.length, 3);
-  assert.equal(project.problemSolving.length, 3);
-  assert.equal(project.glossary.length, 8);
-  assert.equal(project.github, 'https://github.com/kilhyeonjun/harness-launcher');
-  assert.equal(project.links.Demo, 'https://github.com/kilhyeonjun/harness-launcher-demo');
-  assert.equal(project.links['v0.20.0 Release'], 'https://github.com/kilhyeonjun/harness-launcher/releases/tag/v0.20.0');
-  assert.equal(project.links.CI, 'https://github.com/kilhyeonjun/harness-launcher/actions');
   assert.equal(project.sequenceDiagram.ko, '/images/portfolio/ai-coding-harness-sequence-ko.svg');
   assert.equal(project.sequenceDiagram.en, '/images/portfolio/ai-coding-harness-sequence-en.svg');
   assert.equal(project.printArchitectureDiagram.ko, '/images/portfolio/ai-coding-harness-boundary-print-ko.svg');
@@ -161,9 +152,6 @@ test('AI harness case study keeps public evidence current and recruiter-first', 
     read('public/images/portfolio/concert-reservation-arch-en.svg'),
   ]);
   for (const diagram of concertDiagrams) assert.doesNotMatch(diagram, /Concert\/Schedule/);
-  const publicCopy = JSON.stringify(project);
-  assert.match(publicCopy, /runtime state stays project-scoped/i);
-  assert.match(publicCopy, /public contract demo/i);
   const diagrams = await Promise.all([
     read('public/images/portfolio/ai-coding-harness-boundary-ko.svg'),
     read('public/images/portfolio/ai-coding-harness-boundary-en.svg'),

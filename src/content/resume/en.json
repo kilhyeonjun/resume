@@ -199,8 +199,8 @@
               },
               {
                 "problem": "Company-wide AI coding agent adoption needed one place to apply per-person policy, identify devices, and collect usage",
-                "solution": "Built an agent management tool with device registration, policy sets, remote control, and usage collection, then handed it over to operations",
-                "result": "Assigned policy to 92 people; all 87 reporting devices showed enforcement, and 525 automated security tests passed"
+                "solution": "Personally owned design, operations, and merge approval for a management tool covering device registration, policy sets, remote control, and usage collection; AI coding agents handled implementation before operational handover",
+                "result": "Assigned the usage-reporting switch to 92 people on the active roster; all 87 reporting online devices applied it, and 525 automated security tests passed"
               },
               {
                 "problem": "Coding standards, domain knowledge, and verification rules lived in individual setups, so AI usage varied",
@@ -285,7 +285,7 @@
               },
               {
                 "problem": "Offline DMs, unread counts, joined-room lists, and group fanout lacked durable per-user state, risking mixed ownership between chat and game domains",
-                "solution": "Converged R2/R3/R4 requirements onto a per-user room index, keeping the chat server responsible only for mechanics/characterId while game servers owned profile hydration and group-domain actions",
+                "solution": "Converged requirements onto a per-user room index, keeping the chat server responsible only for mechanics/characterId while game servers owned profile hydration and group-domain actions",
                 "result": "Completed server-side DM, unread-count, joined-room, and group-fanout capabilities under one index model, with server/sandbox QA completed before Unity handoff"
               },
               {
@@ -317,9 +317,9 @@
             "techRationale": "Moved reads to the BigQuery Storage Read API. Designed hybrid GCP Pub/Sub → AWS Lambda/SQS pipeline for event-driven processing with Outbox pattern for non-blocking async event publishing.",
             "details": [
               {
-                "problem": "Meta asset sync performance bottleneck",
-                "solution": "Replaced per-row ORM saves — which incurred heavy transaction overhead — with bulk INSERT and batch deletes",
-                "result": "Image sync reduced 72% (25.7s→7.1s), DB transactions reduced 95% (10~16s→0.3~0.5s)"
+                "problem": "Large marketing-metrics archive backfill stalled at 63s Lambda runtime and 99.8% RDS CPU, ETA 15 hours",
+                "solution": "Diagnosed the root cause as N+1 queries and a non-SARGable DATE() predicate (index miss) and removed both — chose a single 30-day batch fetch with in-memory latest-version dedup over per-row reads that were saturating RDS",
+                "result": "Improved throughput 26x (9.3→247/min), Lambda runtime 63s→1.36s"
               },
               {
                 "problem": "High BigQuery query costs for marketing data reads",
@@ -332,9 +332,9 @@
                 "result": "Performance improved 97% (18s→0.5s)"
               },
               {
-                "problem": "Large marketing-metrics archive backfill stalled at 63s Lambda runtime and 99.8% RDS CPU, ETA 15 hours",
-                "solution": "Diagnosed the root cause as N+1 queries and a non-SARGable DATE() predicate (index miss) and removed both — chose a single 30-day batch fetch with in-memory latest-version dedup over per-row reads that were saturating RDS",
-                "result": "Improved throughput 26x (9.3→247/min), Lambda runtime 63s→1.36s"
+                "problem": "Meta asset sync performance bottleneck",
+                "solution": "Replaced per-row ORM saves — which incurred heavy transaction overhead — with bulk INSERT and batch deletes",
+                "result": "Image sync reduced 72% (25.7s→7.1s), DB transactions reduced 95% (10~16s→0.3~0.5s)"
               },
               {
                 "problem": "TikTok deployments created orphan campaign/adgroup/ad resources when an external API partially succeeded before internal persistence, or retries were blocked by deployment guards",
@@ -350,6 +350,11 @@
                 "problem": "Lambda handler build waits and quarantined test suites delayed marketing-platform CI feedback and left gaps in regression checks",
                 "solution": "Sharded handler builds, checked for missing expected artifacts, and restored quarantined suites with validation through FULL 8-shard CI",
                 "result": "Reduced build wall time from 1,041 to 451 seconds in a manually triggered 1-vs-6-shard workflow experiment with 58 expected handlers and 0 missing; aggregate build work increased from 1,006 to 1,801 seconds. Separately restored all 83 quarantined suites and passed FULL CI"
+              },
+              {
+                "problem": "Missing links between Meta ads and local assets left 2,235 ads with unlinked assets under the same UI filter",
+                "solution": "Backfilled asset links across 15 Meta accounts and 292 campaigns, comparing before and after under identical UI filters",
+                "result": "Ads with unlinked assets 2,235→430: 1,805 fewer (80.8%); the remaining 430 had no asset matching the local ad ID in the current Meta response"
               }
             ],
             "techStack": [
@@ -382,14 +387,14 @@
             "techRationale": "Implemented ElastiCache (Redis) distributed lock as AOP decorator to separate lock logic from business code. Evaluated 5 options for Jest 30 VM isolation and adopted poolSize=2.",
             "details": [
               {
-                "problem": "Common code duplication across services increasing maintenance cost",
-                "solution": "Designed 10-module library system: core, repository, cache, lock, slack, crypto, smb, hash, type, iac",
-                "result": "Unified shared code across 7 projects with standardized dependency management"
+                "problem": "Slow CI pipeline (15m47s) due to test infrastructure inefficiency",
+                "solution": "Chose tsc-native ts-jest isolatedModules with explicit Entity types over @swc/jest, which had weaker decorator-metadata compatibility",
+                "result": "Cut CI time 61% (15m47s→6m06s); passed 81 suites/978 tests"
               },
               {
-                "problem": "Repository module lacking bulk operations and audit logging capabilities",
-                "solution": "Replaced a read-then-write pattern that caused write-race duplicate-key conflicts with an atomic upsert plus automatic audit-log branching; added type narrowing via overloading and generics, and split the oversized Repository into purpose-scoped modules per SRP",
-                "result": "Refactored 2000+ lines into shared Repository abstraction layer eliminating CRUD duplication"
+                "problem": "Game-server shared code split across 5 branches + one game's 17 game-data definition modules were 2+ years diverged from the published package",
+                "solution": "Extracted the game-data definition modules + 5 submodules into a standalone package, then migrated 610 files / 310+ imports in one game, and later audited hardcoded names, moved them to config injection, and added a regression guard",
+                "result": "Game-data module updates now ship as a single npm version bump (manual migration of 610 files → 0); a live 500 caused by the migration was hotfixed 82 minutes after report"
               },
               {
                 "problem": "Each app injected its own static-data LRU cache, so boot-time data warming on live game servers took minutes",
@@ -402,18 +407,18 @@
                 "result": "Reduced 7-project upgrade runtime 3h→15min"
               },
               {
-                "problem": "Slow CI pipeline (15m47s) due to test infrastructure inefficiency",
-                "solution": "Chose tsc-native ts-jest isolatedModules with explicit Entity types over @swc/jest, which had weaker decorator-metadata compatibility",
-                "result": "Cut CI time 61% (15m47s→6m06s); passed 81 suites/978 tests"
+                "problem": "Common code duplication across services increasing maintenance cost",
+                "solution": "Designed 10-module library system: core, repository, cache, lock, slack, crypto, smb, hash, type, iac",
+                "result": "Unified shared code across 7 projects with standardized dependency management"
               },
               {
-                "problem": "Game-server shared code split across 5 branches + one game's 17 game-data definition modules were 2+ years diverged from the published package",
-                "solution": "Extracted the game-data definition modules + 5 submodules into a standalone package, then migrated 610 files / 310+ imports in one game, and later audited hardcoded names, moved them to config injection, and added a regression guard",
-                "result": "Game-data module updates now ship as a single npm version bump (manual migration of 610 files → 0); a live 500 caused by the migration was hotfixed 82 minutes after report"
+                "problem": "Repository layer had grown beyond 2000 lines and lacked type safety",
+                "solution": "Replaced read-then-write duplicate-key races with atomic upsert and automatic audit-log branching; narrowed types with overloads/generics and split the Repository into purpose-specific modules per SRP",
+                "result": "Refactored 2000+ lines into shared Repository abstraction layer eliminating CRUD duplication"
               },
               {
                 "problem": "Game-server cache logic was duplicated per project, increasing consistency and maintenance burden",
-                "solution": "Packaged a hybrid strategy combining local LRU (hot-path latency) and distributed cache (cross-instance consistency) as a decorator-based AOP library — chose hybrid over pure-distributed (network round-trips) and pure-local (cross-instance inconsistency), splitting tag index and single-flight into separate modules per SRP",
+                "solution": "Combined local LRU and distributed cache in a decorator-based hybrid AOP library to reduce network round-trips without the cross-instance inconsistency of local-only caching; separated tag indexing and single-flight per SRP",
                 "result": "Released cache library v0.5.0 — 262 tests across 28 suites passing, 100% code-standard compliance"
               }
             ],
@@ -657,12 +662,12 @@
               {
                 "problem": "No reusable probability calculation module across 6 live game environments (12 branches)",
                 "solution": "Packaged NestJS DynamicModule with 5 probability functions + Kinesis logging as shared probability package",
-                "result": "Deployed across 6 live game titles (12 branches) — end-to-end audit log pipeline for probability verification"
+                "result": "Integrated the probability package across 6 live game environments (12 branches), cherry-picking main plus 11 branches"
               },
               {
                 "problem": "No audit log analytics infrastructure for probability verification",
                 "solution": "Codified CDK analytics pipeline: Kinesis→Firehose (Dynamic Partitioning+Parquet)→S3→Glue→Athena",
-                "result": "Deployed across 6 live titles (12 branches) — CDK-based analytics unlocking end-to-end probability verification"
+                "result": "Integrated the probability-disclosure audit-log pipeline across 6 live game environments (12 branches)"
               },
               {
                 "problem": "Mock-based tests lacking regression confidence for infrastructure code",
@@ -783,7 +788,7 @@
           {
             "problem": "Delayed email failure detection (hours)",
             "solution": "Constructed SES+SNS event pipeline",
-            "result": "Bounce/complaint detection cut to seconds, Slack instant alerting (published tech blog)"
+            "result": "Bounce detection cut to seconds, Slack instant alerting (published tech blog)"
           }
         ],
         "projects": [
@@ -849,13 +854,13 @@
             "period": "2023.12 ~ 2024.02",
             "featured": false,
             "description": "Resolved lack of delivery status tracking and data consistency issues in email system",
-            "techRationale": "AWS SES cannot synchronously confirm delivery status due to its async nature. Added SNS event destination to SES Configuration Set for async delivery/bounce/complaint event subscription.",
+            "techRationale": "AWS SES cannot synchronously confirm delivery status due to its async nature. Added SNS event destination to SES Configuration Set for async delivery/bounce event subscription.",
             "contribution": "Designed and implemented SES Configuration Set → SNS → event processing pipeline. Led tech blog publication and internal seminar presentation.",
             "details": [
               {
                 "problem": "No email delivery status tracking — failures detected hours later",
                 "solution": "Configured SES Configuration Set → SNS → event processing pipeline with Datadog logging + Slack real-time alerts",
-                "result": "Bounce/complaint detection cut to seconds with instant Slack alerting"
+                "result": "Bounce detection cut to seconds with instant Slack alerting"
               }
             ],
             "techStack": [
@@ -1212,17 +1217,17 @@
             "featured": true,
             "description": "Resolved manual learning management (attendance, completion, progress) causing low operational efficiency and frequent errors at educational institutions",
             "techRationale": "Selected Java/Spring Boot as enterprise standard for educational institution delivery. Enforced QR attendance dedup via DB composite unique key (date+userID). Used JasperReports for template-based bulk PDF certificate generation.",
-            "contribution": "Directly implemented core features over 10 months: QR attendance, Excel batch registration, PDF certificates, progress tracking. Backend lead in 6-person full-stack team.",
+            "contribution": "Directly implemented core features over 10 months: QR attendance, Excel batch registration, PDF certificates, progress tracking. Responsible for backend development in a 6-person full-stack team.",
             "details": [
               {
                 "problem": "Manual attendance tracking prone to duplicates and errors",
                 "solution": "Built QR attendance API with date+userID composite unique key preventing duplicate check-ins",
-                "result": "Digitized real-time attendance for 300+ students per semester"
+                "result": "Automated attendance tracking and prevented duplicate check-ins"
               },
               {
-                "problem": "Manual member registration causing data inconsistency",
-                "solution": "Built Apache POI-based Excel bulk registration with row-by-row sequential processing",
-                "result": "Ensured data consistency for batch member registration"
+                "problem": "Inefficient individual student registration",
+                "solution": "Built Apache POI-based Excel bulk registration with row-by-row sequential processing to preserve data consistency",
+                "result": "Supported bulk registration for 300+ students per semester"
               },
               {
                 "problem": "Manual certificate generation workflow",
@@ -1245,7 +1250,7 @@
             "featured": false,
             "description": "Resolved fragmented reservation, monitoring, and SMS systems preventing unified management at industrial complex control center",
             "techRationale": "Enforced meeting room booking conflict prevention via DB composite unique key (time+location). Used @Async for SMS to resolve API response delay — separate message queue deemed over-engineering for the traffic scale.",
-            "contribution": "Backend lead over 4 months. Directly implemented reservation API, dashboard monitoring API, and async SMS integration.",
+            "contribution": "Responsible for backend development over 4 months. Directly implemented reservation API, dashboard monitoring API, and async SMS integration.",
             "details": [
               {
                 "problem": "Scheduling conflicts from concurrent facility reservations",
@@ -1271,7 +1276,7 @@
             "featured": false,
             "description": "Resolved legacy PHP system's extensibility limitations and lack of structured scoring and counseling management",
             "techRationale": "Embedded independent Spring Boot app via iframe for non-invasive legacy PHP system extension. Used postMessage API for cross-frame communication. Implemented weighted average algorithm for multi-dimensional evaluation scoring.",
-            "contribution": "Backend lead over 10 months. Designed iframe integration, implemented weighted scoring algorithm, postMessage state sync, and counselor back-office.",
+            "contribution": "Responsible for backend development over 10 months. Designed iframe integration, implemented weighted scoring algorithm, postMessage state sync, and counselor back-office.",
             "details": [
               {
                 "problem": "Legacy PHP system could not be extended for new features",
@@ -1364,23 +1369,23 @@
             "name": "Public AI CLI Runtime Launcher",
             "period": "2026.04 ~ Present",
             "featured": true,
-            "description": "A public launcher that isolates global Claude Code, Codex, and Kiro state into registered project runtimes and blocks invalid workspaces or configuration drift before startup",
-            "techRationale": "Uses canonical path ownership rather than repository-name inference as the trust boundary, and treats runtime homes as reproducible outputs of project configuration. A public contract demo and CI verify boundaries, source digests, and failure behavior without login.",
+            "description": "A public launcher managing project-scoped execution boundaries for Claude Code, Codex, Kiro, and OMP, with a durable queue for ordered delivery of parallel work",
+            "techRationale": "Uses canonical path ownership for execution boundaries and separates durable submission from completion with per-destination FIFO instead of long-held shared locks. Integrates OMP through upstream trusted extensions, configuration overlays, and a thin adapter rather than local fork patches.",
             "details": [
               {
-                "problem": "Projects sharing one global AI CLI home could mix sessions, tools, and rules across boundaries",
-                "solution": "Generated Codex and Kiro runtime homes per registered project and routed profile commands and harness-exec through one policy path",
-                "result": "Public tests verify project-scoped runtime state plus installation, profile, and runtime behavior"
+                "problem": "Shared global AI CLI state and profile inference from names or remotes risked mixing sessions and rules or starting in the wrong workspace",
+                "solution": "Generated project-scoped runtime homes and implemented harness-auto to select only the single most-specific registered boundary from the canonical current path",
+                "result": "Blocked outside paths, symlink escapes, and ambiguous registrations before startup; public contract demo and CI reproduce boundary, source SHA-256, and relationship-integrity checks"
               },
               {
-                "problem": "A workspace manager inferring profiles from names or remotes could start in the wrong boundary",
-                "solution": "Implemented harness-auto to select only the single most-specific registered boundary from the canonical current path",
-                "result": "Outside paths, symlink escapes, and ambiguous duplicate registrations stop before AI CLI startup"
+                "problem": "Holding a shared lock through validation, push, and readback left parallel integration waits failing even after 600 and 3,600 seconds",
+                "solution": "Separated durable enqueue/wait and implemented cross-pool per-destination FIFO, idempotent submission, worker/test budgets, frozen snapshots, and crash-after-push reconciliation",
+                "result": "Both real jobs from two pools reached DELIVERED on attempt 1 with exit 0; duplicate submissions returned the same ID and wait timeout left jobs queued; public PR #146 preserves implementation evidence"
               },
               {
-                "problem": "A private operating environment alone did not let visitors independently verify the core contracts",
-                "solution": "Linked the public launcher repository, v0.20.0 release, CI, and a separate public contract demo",
-                "result": "Profile uniqueness, path escape, source SHA-256 drift, and relationship integrity reproduce without login"
+                "problem": "OMP's local fork and mismatched HOME, authentication, and resume metadata interrupted shared execution or bypassed tool policy",
+                "solution": "Replaced the local fork with upstream extensions and configuration overlays; unified runtime, auth/resume, URL-read, pre-model-call, terminal-process, and termination-signal policies",
+                "result": "On v0.77.7, confirmed 0 GETs to denied native URL targets, 0 provider calls on print denial, and Ctrl-C exit 130 with 0 remaining native processes; upstream MCP/LSP activation and full global DB SSOT remain outside this scope"
               }
             ],
             "techStack": [

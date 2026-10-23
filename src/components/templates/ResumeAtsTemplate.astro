@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import PrintFonts from '../PrintFonts.astro';
 import { getHomePath, withBasePath } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
 
@@ -29,6 +30,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
   <title>{pageTitle}</title>
+  <PrintFonts />
   <style>
     * {
       margin: 0;
@@ -41,7 +43,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Resume Print', sans-serif;
       color: #000;
       background: #fff;
       line-height: 1.25;
@@ -160,6 +162,29 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     }
 
     @media print {
+      /* Keep each heading with the next block without pinning whole sections. */
+      h2,
+      h3,
+      .item-header,
+      .competency-group > p {
+        page-break-after: avoid;
+        break-after: avoid-page;
+      }
+
+      h2 + *,
+      h3 + *,
+      .item-header + *,
+      .competency-group > p + ul {
+        page-break-before: avoid;
+        break-before: avoid-page;
+      }
+
+      p,
+      li {
+        orphans: 2;
+        widows: 2;
+      }
+
       body {
         padding: 0;
       }

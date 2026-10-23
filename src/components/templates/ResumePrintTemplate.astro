@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import PrintFonts from '../PrintFonts.astro';
 import { getHomePath, withBasePath } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
 import { groupOpenSourceByRepo, parseOpenSourceName } from '../../utils/open-source';
@@ -83,6 +84,7 @@ function processSummary(text: string): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
   <title>{data.name} - {pageTitle}</title>
+  <PrintFonts />
 
   <style>
     @page { margin: 8mm 0 6mm 0; size: A4; }
@@ -100,7 +102,7 @@ function processSummary(text: string): string {
     }
 
     body {
-      font-family: 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+      font-family: 'Resume Print', sans-serif;
       font-size: 9.5pt;
       color: #111827;
       line-height: 1.45;

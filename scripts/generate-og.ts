@@ -12,6 +12,7 @@
  */
 
 import puppeteer from 'puppeteer';
+import { requireReleaseFonts } from './release-fonts';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -62,12 +63,7 @@ async function main(): Promise<void> {
       throw new Error(`Refusing to generate OG image from an unexpected page: ${ogUrl}`);
     }
 
-    // Wait for fonts and rendering
-    await page.waitForFunction(
-      () => document.readyState === 'complete' && document.fonts.ready.then(() => true),
-      { timeout: 15000 },
-    );
-    await new Promise((r) => setTimeout(r, 500));
+    await requireReleaseFonts(page);
     await page.evaluate(() => document.querySelector('astro-dev-toolbar')?.remove());
 
     await page.screenshot({
@@ -78,7 +74,7 @@ async function main(): Promise<void> {
     console.log('   ✅ OG image generated successfully!\n');
   } catch (error) {
     console.error('\n❌ OG image generation failed:', error);
-    process.exit(1);
+    process.exitCode = 1;
   } finally {
     if (browser) {
       await browser.close();

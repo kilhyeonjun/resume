@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import PrintFonts from '../components/PrintFonts.astro';
 
 const entry = await getEntry('resume-ko', 'main');
 const data = entry!.data;
@@ -11,6 +12,7 @@ const categories = data.coreCompetencies.map((c: { category: string }) => c.cate
 <head>
   <meta charset="UTF-8" />
   <meta name="robots" content="noindex, follow" />
+  <PrintFonts />
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,7 +20,7 @@ const categories = data.coreCompetencies.map((c: { category: string }) => c.cate
       width: 1200px;
       height: 630px;
       overflow: hidden;
-      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-family: 'Resume Print', sans-serif;
     }
     .container {
       width: 1200px;

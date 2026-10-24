@@ -2147,8 +2147,8 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "외부 배차 정보를 월~토 정각 15개 slot에서 오늘 날짜로 재수집해 노선·차량 검색과 통계를 제공하고, 수집 중복과 브라우저 데이터 경계를 분리한 운영 원장. CI에서 백엔드 Vitest 58개 통과",
-        "en": "A current-day dispatch ledger, re-collected in 15 on-the-hour slots Mon–Sat, for route, vehicle, and statistics views, with singleton collection ownership and a fixed browser data boundary. 58 backend Vitest tests pass in CI."
+        "ko": "오늘 배차를 월~토 정각 15개 slot에서 재수집하는 검색·통계 원장. 작은 표 누락·숫자 파싱·프로세스별 캐시 문제를 수정하고, 별도 SQLite 연결을 쓰는 합성 8개 시나리오로 저장·조회 동작을 검증했다.",
+        "en": "A dispatch search and statistics ledger with 15 current-date collection slots Mon–Sat. Fixed sparse-table loss, grouped-number parsing, and stale process-local reads; verified storage and reader behavior with eight synthetic scenarios using separate SQLite connections."
       },
       "description": {
         "ko": "외부 배차 사이트의 EUC-KR 데이터를 Cheerio와 Axios로 수집해 Prisma SQLite에 저장하고 Next.js 웹에서 조회한다. 웹 replica와 분리한 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 오늘 날짜를 재조회하므로 오전 데이터와 늦게 공개된 변경분을 이후 실행에서 반영할 수 있다. Next.js proxy의 public route DTO branch는 필수 핵심 필드와 허용된 원천 URL을 검증해 운영 화면에 필요한 필드만 projection하고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외하며, 인증·migration 경로는 allowlist된 method/path만 별도로 forward한다. 배포는 비활성 slot의 health check 후 Traefik active slot을 전환하며 이상 시 운영자가 수동 롤백한다.",
@@ -2249,6 +2249,34 @@
             "ko": "고정 출력 projection과 원천 URL allowlist를 redirect·payload·배포 회귀 경계와 함께 검증",
             "en": "Verified the fixed output projection and source-URL allowlist together with redirect, payload, and deployment regression boundaries"
           }
+        },
+        {
+          "problem": {
+            "ko": "합성 원천에서 정상 노선 1개가 빈 결과가 되고, 건수 1,234·수량 2,345가 1·2로 축소됐다",
+            "en": "A synthetic source with one valid route returned no rows, while grouped counts 1,234 and 2,345 became 1 and 2"
+          },
+          "process": {
+            "ko": "5행 미만 표를 버리던 조건을 제거하고 정수 파싱 전에 쉼표를 제거했다. 실제 EUC-KR 크롤러와 임시 SQLite를 loopback HTTP로 연결해 확인했다",
+            "en": "Removed the minimum-five-row rejection and stripped grouping commas before integer parsing. Exercised the real EUC-KR crawler and temporary SQLite through loopback HTTP"
+          },
+          "result": {
+            "ko": "노선 1개와 1234·2345를 보존하고, 중복·재수집에도 날짜·노선코드별 한 행과 최초 저장 시각을 유지하는 동작을 재현했다",
+            "en": "Preserved the single route and values 1234 and 2345; duplicate rows and replayed collection retained one row per date/code and the original creation time"
+          }
+        },
+        {
+          "problem": {
+            "ko": "별도 writer가 DB 값을 10→20으로 정정해도 같은 reader는 프로세스 내부 1시간 캐시에서 10을 반환했다",
+            "en": "After a separate writer corrected a stored value from 10 to 20, the same reader still returned 10 from its one-hour process-local cache"
+          },
+          "process": {
+            "ko": "다른 검색 경로와 같은 DB 직접 조회로 전환하고 캐시·DI 의존성을 제거했다. 독립된 Prisma 연결 두 개로 지연 추가·당일 및 과거 정정을 재현했다",
+            "en": "Switched code search to direct database reads, matching other search paths, and removed the cache and its DI dependencies. Used two independent Prisma connections to reproduce delayed additions and current/historical corrections"
+          },
+          "result": {
+            "ko": "공개 합성 재현에서 같은 reader가 1234→1250 정정을 다음 요청에서 확인했다. 8개 시나리오에 HTTP 503 시 저장 상태 보존과 다음 명시적 실행의 복구도 포함했다",
+            "en": "In the public synthetic reproduction, the same reader observed the correction from 1234 to 1250 on its next request. Eight scenarios also covered unchanged storage after HTTP 503 and recovery on the next explicit collection run"
+          }
         }
       ],
       "period": {
@@ -2313,13 +2341,15 @@
       },
       "operationalLimits": {
         "ko": [
-          "수집 실패는 기록하고 다음 정각 실행에서 다시 확인한다. 즉시 retry/backoff는 없다.",
-          "SQLite는 현재 read-heavy 운영에 맞지만 수평 쓰기 확장에는 한계가 있다.",
+          "이번 수집 품질·의존성 수정은 공개 소스·CI 검증 범위다. 운영 서버 배포나 실제 원천의 최신성 SLA를 증명하지 않는다.",
+          "upsert-only라 후속 원천에서 빠진 행은 남고 createdAt은 최초 저장 시각이다. 실패는 다음 정각에 다시 확인하며 즉시 retry/backoff는 없다.",
+          "노선코드 검색은 요청마다 SQLite를 조회한다. 운영 부하·지연은 측정하지 않았으며 수평 쓰기 확장에는 한계가 있다.",
           "비활성 slot health check 후 전환하며 문제 발생 시 운영자가 이전 slot으로 되돌린다."
         ],
         "en": [
-          "Collection failures are logged and checked again on the next scheduled run; there is no immediate retry or backoff.",
-          "SQLite fits the current read-heavy operation but has a ceiling on horizontal write scaling.",
+          "These ingestion and dependency changes are verified in public source and CI, not through production rollout or a live-source freshness SLA.",
+          "Upsert-only storage retains rows omitted by later source responses; createdAt is first insertion. Failures are checked on the next scheduled run, without immediate retry or backoff.",
+          "Code search reads SQLite on every request. Production load and latency were not measured; horizontal write scaling remains limited.",
           "The inactive slot must pass health checks before switching; an operator restores the previous slot on failure."
         ]
       },
@@ -2334,9 +2364,9 @@
             "en": "Does morning collection select the current date?"
           },
           "label": "SearchDate.ts",
-          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/src/domain/value-objects/SearchDate.ts",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/52293dce04a65c1ef7fbfebcb8e3785ff427a23f/src/domain/value-objects/SearchDate.ts",
           "testLabel": "search-date.test.ts",
-          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/tests/search-date.test.ts"
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/52293dce04a65c1ef7fbfebcb8e3785ff427a23f/tests/search-date.test.ts"
         },
         {
           "claim": {
@@ -2348,9 +2378,9 @@
             "en": "When and in which timezone does it run?"
           },
           "label": "scheduleRouteSync.ts",
-          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/src/scheduling/scheduleRouteSync.ts",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/52293dce04a65c1ef7fbfebcb8e3785ff427a23f/src/scheduling/scheduleRouteSync.ts",
           "testLabel": "scheduler.test.ts",
-          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/f47c40dc4d1678ef18af8f32ed17c701143e4c57/tests/scheduler.test.ts"
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/52293dce04a65c1ef7fbfebcb8e3785ff427a23f/tests/scheduler.test.ts"
         },
         {
           "claim": {
@@ -2368,15 +2398,43 @@
         },
         {
           "claim": {
-            "ko": "BE clean CI run",
-            "en": "BE clean CI run"
+            "ko": "작은 표·구분자 숫자 파싱",
+            "en": "Sparse tables and grouped numbers"
           },
           "question": {
-            "ko": "BE 저장소의 clean CI가 성공했는가?",
-            "en": "Did the backend repository pass a clean CI run?"
+            "ko": "노선 1개와 1,234 같은 수량을 보존하는가?",
+            "en": "Are a single route and grouped values such as 1,234 preserved?"
+          },
+          "label": "CheerioHttpCrawler.ts",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/52293dce04a65c1ef7fbfebcb8e3785ff427a23f/src/infrastructure/crawling/CheerioHttpCrawler.ts",
+          "testLabel": "crawler.test.ts",
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/52293dce04a65c1ef7fbfebcb8e3785ff427a23f/tests/crawler.test.ts"
+        },
+        {
+          "claim": {
+            "ko": "중복·지연·정정 합성 재현",
+            "en": "Synthetic duplicate and delayed-update scenarios"
+          },
+          "question": {
+            "ko": "별도 writer의 정정을 같은 reader가 다음 조회에서 확인하는가?",
+            "en": "Does the same reader observe a separate writer’s correction on its next query?"
+          },
+          "label": "verify-ingestion-quality.mjs",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/52293dce04a65c1ef7fbfebcb8e3785ff427a23f/scripts/verify-ingestion-quality.mjs",
+          "testLabel": "ingestion-freshness.test.ts",
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/52293dce04a65c1ef7fbfebcb8e3785ff427a23f/tests/ingestion-freshness.test.ts"
+        },
+        {
+          "claim": {
+            "ko": "수집 품질·운영 의존성 CI",
+            "en": "Ingestion and production-dependency CI"
+          },
+          "question": {
+            "ko": "전체 회귀·합성 수집·운영 의존성 감사·최종 이미지 실행을 통과했는가?",
+            "en": "Did regressions, synthetic ingestion, the production-dependency audit, and final-image execution pass?"
           },
           "label": "GitHub Actions",
-          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/actions/runs/30065170941"
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/actions/runs/40049300283"
         }
       ],
       "scale": {

@@ -3,6 +3,7 @@ import { getEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { getLocalePrefix } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
+import { getCareerDuration } from '../../utils/career-duration';
 import rawPortfolioData from '../../data/portfolio.json';
 import { portfolioDataSchema } from '../../types/portfolio';
 import { selectPublicPortfolioProjects } from '../../utils/portfolio-visibility';
@@ -31,6 +32,7 @@ if (!entry) {
 const resumeData = entry.data;
 
 const { data, labels } = prepareResumeData(resumeData, lang, 'web');
+const [introduction, ...background] = data.summary.split(/\n\s*\n/);
 
 const localePrefix = getLocalePrefix(lang);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -66,7 +68,9 @@ const outcomeProofs = data.experience
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <article class="resume-dossier resume-container">
     <!-- Header Section -->
-    <ResumeHeader data={data} />
+    <ResumeHeader data={data} careerLabel={`${getCareerDuration(resumeData.experience, lang)} ${lang === 'ko' ? '경력' : 'experience'}`}>
+      <ResumeSummary summary={introduction} label={labels.summary} lead />
+    </ResumeHeader>
 
     <!-- Quick Actions (top): document previews and web portfolio -->
     <div class="resume-actions no-print mb-4 flex gap-3 text-sm">
@@ -113,7 +117,7 @@ const outcomeProofs = data.experience
     <div class="resume-divider" aria-hidden="true"></div>
 
     <!-- Summary -->
-    <ResumeSummary summary={data.summary} label={labels.summary} />
+    <ResumeSummary summary={background.join('\n\n')} label={labels.summary} />
 
     <!-- Core Competencies -->
     <ResumeCoreCompetencies coreCompetencies={data.coreCompetencies} label={labels.coreCompetencies} />

@@ -27,7 +27,7 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
         {labels.portfolio}
       </h1>
       <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
-        {lang === 'ko' ? '회사 실무 케이스와 개인·팀 프로젝트' : 'Work case studies plus personal and team projects'}
+        {lang === 'ko' ? '병목을 좁힌 과정, 설계를 선택한 이유, 검증한 결과로 읽는 백엔드 사례' : 'Backend case studies: the bottleneck, the design decision, and the verified result'}
       </p>
       <div class="mt-4 text-sm">
         <a href={`${localePrefix}/portfolio-print`} class="touch-target inline-flex items-center rounded-lg border border-gray-300 px-4 font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-primary-300">{lang === 'ko' ? 'PDF 미리보기' : 'PDF preview'}</a>
@@ -53,7 +53,7 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
                   alt={coverImage ? `${projectName} ${labels.portfolio} ${lang === 'ko' ? '표지' : 'cover'}` : `${projectName} ${lang === 'ko' ? '아키텍처 다이어그램' : 'architecture diagram'}`}
                   width={800}
                   height={450}
-                  class:list={['h-full w-full transition-transform duration-300 group-hover:scale-105', coverImage ? 'object-cover' : 'bg-[#f7f5ef] object-contain p-3']}
+                  class:list={['h-full w-full transition-transform duration-300 group-hover:scale-105', coverImage && !cardImage.endsWith('.svg') ? 'object-cover' : 'bg-[#f7f5ef] object-contain p-3']}
                   sizes="(max-width: 640px) 100vw, 50vw"
                   loading={index < 2 ? "eager" : "lazy"}
                 />
@@ -83,20 +83,30 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
               {projectSummary}
             </p>
 
-            {index === 0 && project.metrics && project.metrics.length > 0 && (
-              <div class="portfolio-proof-strip" aria-label={lang === 'ko' ? '대표 성과' : 'Key outcomes'}>
+            {project.metrics && project.metrics.length > 0 && (
+              <dl class="portfolio-proof-strip" aria-label={lang === 'ko' ? '대표 성과' : 'Key outcomes'}>
                 {project.metrics.slice(0, 2).map((metric) => {
+                  const before = typeof metric.before === 'string'
+                    ? metric.before
+                    : (metric.before[lang] || metric.before.ko);
                   const after = typeof metric.after === 'string'
                     ? metric.after
                     : (metric.after[lang] || metric.after.ko);
+                  const qualification = typeof metric.improvement === 'string'
+                    ? metric.improvement
+                    : (metric.improvement[lang] || metric.improvement.ko);
                   return (
                     <div>
-                      <span>{metric.label[lang] || metric.label.ko}</span>
-                      <strong>{after}</strong>
+                      <dt>{metric.label[lang] || metric.label.ko}</dt>
+                      <dd>
+                        {before !== '-' && <span class="portfolio-proof-before">{before} <span aria-hidden="true">→</span></span>}
+                        <strong>{after}</strong>
+                        <p class="portfolio-proof-note">{qualification}</p>
+                      </dd>
                     </div>
                   );
                 })}
-              </div>
+              </dl>
             )}
 
             {/* Skills */}

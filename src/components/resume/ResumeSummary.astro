@@ -2,14 +2,15 @@
 interface Props {
   summary?: string;
   label: string;
+  lead?: boolean;
 }
 
-const { summary, label } = Astro.props;
+const { summary, label, lead = false } = Astro.props;
 ---
 
 {summary && (
-  <section class="mb-10">
-    <h2 class="section-title">{label}</h2>
+  <section class:list={[lead ? 'resume-lead' : 'mb-10']} aria-label={lead ? label : undefined}>
+    {!lead && <h2 class="section-title">{label}</h2>}
     <p class="mt-4 max-w-3xl text-lg leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line"
        set:html={summary.replace('Games on AWS 2025', '<a href="https://www.youtube.com/watch?v=2jRicD15jXk" class="text-primary-600 dark:text-primary-400 underline underline-offset-2 hover:text-primary-500" target="_blank" rel="noopener noreferrer">Games on AWS 2025</a>')} />
 

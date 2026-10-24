@@ -358,6 +358,39 @@ test('desktop featured portfolio cover stays beside its content without overlap'
   }
 });
 
+test('resume controls stay separate from evidence across the single-column breakpoint', { timeout: 30000 }, async () => {
+  const { server, origin } = await serveDist();
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  try {
+    const page = await browser.newPage();
+    for (const path of ['/', '/en/']) {
+      await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
+      for (const width of [760, 780, 800, 801]) {
+        await page.setViewport({ width, height: 1000 });
+        const layout = await page.evaluate(() => {
+          const bounds = (selector) => document.querySelector(selector).getBoundingClientRect();
+          const board = bounds('.outcome-board');
+          const overlaps = (box) => box.left < board.right && box.right > board.left
+            && box.top < board.bottom && box.bottom > board.top;
+          return {
+            headerOverlaps: overlaps(bounds('.resume-header')),
+            controlsOverlap: overlaps(bounds('.resume-actions')),
+            horizontalOverflow: document.documentElement.scrollWidth > innerWidth,
+          };
+        });
+        assert.deepEqual(layout, {
+          headerOverlaps: false,
+          controlsOverlap: false,
+          horizontalOverflow: false,
+        }, `${path} at ${width}px must keep the introduction and controls unobstructed`);
+      }
+    }
+  } finally {
+    await browser.close();
+    server.close();
+  }
+});
+
 test('tablet portfolio navigation keeps visible SVG geometry inside the viewport', { timeout: 60000 }, async () => {
   const slugs = (await readdir(join(dist, 'portfolio'), { withFileTypes: true }))
     .filter((entry) => entry.isDirectory())

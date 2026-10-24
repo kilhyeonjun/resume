@@ -15,20 +15,23 @@ interface Props {
     linkedin?: string;
     blog?: string;
   };
+  careerLabel: string;
 }
 
-const { data } = Astro.props;
+const { data, careerLabel } = Astro.props;
 ---
 
 <header class="resume-header">
-  <span class="dossier-label">Resume</span>
+  <span class="dossier-label">Resume · {careerLabel}</span>
   <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-3xl md:text-4xl lg:text-5xl">
     {data.name}
   </h1>
   <p class="mt-3 text-2xl font-medium text-primary-600 dark:text-primary-400">
     {data.title}
   </p>
-  
+
+  <slot />
+
   <!-- Contact Info -->
   <div class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-600 dark:text-gray-300">
     {data.email && (

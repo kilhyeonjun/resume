@@ -69,8 +69,17 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
       text-align: center;
       margin-bottom: 6mm;
       padding-bottom: 2mm;
-      border-bottom: 1.5pt solid #111827;
+      border-bottom: 1pt solid #1d4ed8;
     }
+
+    .doc-label {
+      font-size: 11pt;
+      font-weight: 500;
+      color: #1d4ed8;
+    }
+
+    .doc-separator { font-weight: 400; color: #6b7280; }
+    .doc-name { font-size: 16pt; font-weight: 700; color: #111827; }
 
     /* Company Section */
     .company-section {
@@ -118,7 +127,7 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
     .section-heading {
       font-size: 11pt;
       font-weight: 700;
-      color: #111827;
+      color: #1d4ed8;
       margin: 4mm 0 2mm;
       padding-bottom: 1mm;
       border-bottom: 0.5pt solid #e5e7eb;
@@ -142,8 +151,19 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
     }
 
     .highlight-bullet {
-      color: #374151;
+      color: #1d4ed8;
       margin-right: 1mm;
+    }
+
+    /* Technical context stays in normal weight; outcomes anchor the scan. */
+    .detail-problem, .detail-solution {
+      font-weight: 400;
+      color: #374151;
+    }
+
+    .detail-result {
+      font-weight: 700;
+      color: #111827;
     }
 
     /* Projects */
@@ -324,7 +344,7 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
   </div>
 
   <div class="document">
-    <h1 class="doc-title">{pageTitle} — {data.name}</h1>
+    <h1 class="doc-title"><span class="doc-label">{pageTitle}</span><span class="doc-separator"> — </span><span class="doc-name">{data.name}</span></h1>
 
     {data.experience.map((exp) => {
       const period = exp.current
@@ -348,7 +368,7 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
               <h3 class="section-heading">{labels.highlights}</h3>
               <ul class="highlights">
                 {exp.highlights.map((highlight) => (
-                  <li><span class="highlight-bullet">&bull;</span>{highlight.problem}. {highlight.solution}. {highlight.result}.</li>
+                  <li><span class="highlight-bullet">&bull;</span><span class="detail-problem">{highlight.problem}</span>. <span class="detail-solution">{highlight.solution}</span>. <strong class="detail-result">{highlight.result}</strong>.</li>
                 ))}
               </ul>
             </>
@@ -367,7 +387,7 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
                   {project.details && project.details.length > 0 && (
                     <ul class="project-details">
                       {project.details.map((detail) => (
-                        <li><span class="highlight-bullet">&bull;</span><b>{detail.problem}</b> — {detail.solution}, {detail.result}</li>
+                        <li><span class="highlight-bullet">&bull;</span><span class="detail-problem">{detail.problem}</span> — <span class="detail-solution">{detail.solution}</span>, <strong class="detail-result">{detail.result}</strong></li>
                       ))}
                     </ul>
                   )}

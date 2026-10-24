@@ -90,11 +90,6 @@ test('evidence board leads with the company case metrics, not list-price savings
     expected.forEach((metric, index) => assert.ok(proofs[index].result.includes(metric), `${lang} proof ${index}`));
     assert.ok(proofs.every((item) => !item.result.includes('82%')), lang);
   }
-  for (const page of ['index.html', 'en/index.html']) {
-    const html = await readDist(page);
-    const [, kicker] = html.match(/<header class="resume-header"[^>]*>\s*<span class="dossier-label"[^>]*>([^<]*)<\/span>/) ?? [];
-    assert.equal(kicker, 'Resume', page);
-  }
 });
 
 

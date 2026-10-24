@@ -138,7 +138,7 @@ function processSummary(text: string): string {
 
     .title {
       font-size: 10pt;
-      font-weight: 600;
+      font-weight: 500;
       color: #1d4ed8;
       margin-top: 1mm;
     }
@@ -168,7 +168,7 @@ function processSummary(text: string): string {
       font-size: 11pt;
       font-weight: 700;
       text-transform: none;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.02em;
       color: #1d4ed8;
       margin: 0 0 1.5mm;
       padding: 0 0 1mm;
@@ -213,11 +213,19 @@ function processSummary(text: string): string {
       line-height: 1.4;
     }
 
-    .highlights li em {
+    /* Keep context readable; reserve the strongest scan weight for outcomes. */
+    .highlight-problem, .highlight-solution {
+      font-weight: 400;
+      color: #374151;
+    }
+
+    .highlight-result {
       font-style: normal;
       font-weight: 600;
-      color: #1f2937;
+      color: #111827;
     }
+
+    .highlight-result :global(strong) { font-weight: 700; }
 
     .highlight-bullet { color: #1d4ed8; margin-right: 4px; }
 
@@ -416,7 +424,7 @@ function processSummary(text: string): string {
                   {pos.highlights && pos.highlights.length > 0 && (
                     <ul class="highlights">
                       {pos.highlights.map((highlight) => (
-                        <li><span class="highlight-bullet">•</span><b>{highlight.problem}</b> — {highlight.solution}, <em set:html={enhance(highlight.result)} /></li>
+                        <li><span class="highlight-bullet">•</span><span class="highlight-problem">{highlight.problem}</span> — <span class="highlight-solution">{highlight.solution}</span>, <strong class="highlight-result" set:html={enhance(highlight.result)} /></li>
                       ))}
                     </ul>
                   )}
@@ -425,7 +433,7 @@ function processSummary(text: string): string {
               {!exp.positions && exp.highlights && exp.highlights.length > 0 && (
                 <ul class="highlights">
                   {exp.highlights.map((highlight) => (
-                    <li><span class="highlight-bullet">•</span><b>{highlight.problem}</b> — {highlight.solution}, <em set:html={enhance(highlight.result)} /></li>
+                    <li><span class="highlight-bullet">•</span><span class="highlight-problem">{highlight.problem}</span> — <span class="highlight-solution">{highlight.solution}</span>, <strong class="highlight-result" set:html={enhance(highlight.result)} /></li>
                   ))}
                 </ul>
               )}

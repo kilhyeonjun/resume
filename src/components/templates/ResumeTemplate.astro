@@ -1,7 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { getLocalePrefix } from '../../utils/paths';
+import { getLocalePrefix, withBasePath } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
 import { getCareerDuration } from '../../utils/career-duration';
 import rawPortfolioData from '../../data/portfolio.json';
@@ -64,7 +64,7 @@ const outcomeProofs = data.experience
   });
 ---
 
-<Layout title={`${data.name} — ${data.title}`} description="Professional resume and work experience" lang={lang}>
+<Layout title={`${data.name} — ${data.title}`} description={lang === 'ko' ? `${data.name} — 라이브 게임 공통 백엔드 플랫폼을 설계·운영하는 Backend Engineer / Platform Part Leader. 실시간 채팅, 데이터 파이프라인, 공통 패키지의 성과와 검증 조건을 확인하세요.` : `${data.name} — Backend Engineer / Platform Part Leader designing and operating shared backend platforms for live games. Explore real-time chat, data pipelines, shared packages, and qualified engineering results.`} lang={lang}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <article class="resume-dossier resume-container">
     <!-- Header Section -->
@@ -72,18 +72,10 @@ const outcomeProofs = data.experience
       <ResumeSummary summary={introduction} label={labels.summary} lead />
     </ResumeHeader>
 
-    <!-- Quick Actions (top): document previews and web portfolio -->
-    <div class="resume-actions no-print mb-4 flex gap-3 text-sm">
-      <a href={`${localePrefix}/resume-print`} class="primary touch-target">{lang === 'ko' ? '이력서 PDF 미리보기' : 'Resume PDF preview'}</a>
-      <span aria-hidden="true">·</span>
-      <a href={`${localePrefix}/resume-ats`} class="touch-target">{labels.atsOptimized}</a>
-      <span aria-hidden="true">·</span>
-      <a href={`${localePrefix}/experience-print`} class="touch-target">{lang === 'ko' ? '경력기술서' : 'Career Detail'}</a>
-      <span aria-hidden="true">·</span>
-      <a href={`${localePrefix}/portfolio`} class="touch-target">{lang === 'ko' ? '웹 포트폴리오' : 'Web portfolio'}</a>
-      <span aria-hidden="true">·</span>
-      <a href={`${localePrefix}/portfolio-print`} class="touch-target">{lang === 'ko' ? '포트폴리오 PDF 미리보기' : 'Portfolio PDF preview'}</a>
-    </div>
+    <nav class="resume-actions no-print flex gap-3 text-sm" aria-label={lang === 'ko' ? '채용 검토 자료' : 'Hiring materials'}>
+      <a href={withBasePath(`pdf/resume-hr-${lang}.pdf`)} download type="application/pdf" class="primary touch-target">{lang === 'ko' ? '이력서 PDF 다운로드' : 'Download resume PDF'}</a>
+      <a href={`${localePrefix}/portfolio`} class="touch-target">{lang === 'ko' ? '대표 사례 보기' : 'Explore case studies'}</a>
+    </nav>
 
     <aside class="outcome-board" aria-labelledby="evidence-board-heading">
       <h2 id="evidence-board-heading" class="dossier-label board-heading">EVIDENCE BOARD</h2>
@@ -116,14 +108,21 @@ const outcomeProofs = data.experience
     <!-- Divider -->
     <div class="resume-divider" aria-hidden="true"></div>
 
-    <!-- Summary -->
-    <ResumeSummary summary={background.join('\n\n')} label={labels.summary} />
+    <details class="resume-documents no-print">
+      <summary>{lang === 'ko' ? '다른 형식의 채용 자료 · PDF 미리보기 / ATS / 경력기술서' : 'Other hiring formats · PDF previews / ATS / career detail'}</summary>
+      <nav aria-label={lang === 'ko' ? '문서 형식 선택' : 'Document formats'}>
+        <a href={`${localePrefix}/resume-print`}>{lang === 'ko' ? '이력서 PDF 미리보기' : 'Resume PDF preview'}</a>
+        <a href={`${localePrefix}/resume-ats`}>{labels.atsOptimized}</a>
+        <a href={`${localePrefix}/experience-print`}>{lang === 'ko' ? '경력기술서' : 'Career detail'}</a>
+        <a href={`${localePrefix}/portfolio-print`}>{lang === 'ko' ? '포트폴리오 PDF 미리보기' : 'Portfolio PDF preview'}</a>
+      </nav>
+    </details>
 
-    <!-- Core Competencies -->
-    <ResumeCoreCompetencies coreCompetencies={data.coreCompetencies} label={labels.coreCompetencies} />
-
-    <!-- Experience -->
+    <!-- Experience precedes the supporting competency inventory. -->
     <ResumeExperience experience={data.experience} labels={labels} basePath={localePrefix} />
+
+    <ResumeSummary summary={background.join('\n\n')} label={labels.summary} />
+    <ResumeCoreCompetencies coreCompetencies={data.coreCompetencies} label={labels.coreCompetencies} />
     <ResumeExperience experience={data.sideProjects} labels={labels} basePath={localePrefix} title={labels.sideProjects} />
 
     <!-- Social Proof: Technical Writing + Open Source (after experience for visibility) -->

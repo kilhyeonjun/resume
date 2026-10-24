@@ -437,7 +437,11 @@ body {
 .outcome-row strong { color: var(--dossier-blue); font-size: 1.35rem; line-height: 1.25; }
 .outcome-row span { color: var(--dossier-muted); }
 .resume-actions { grid-column: 1; flex-wrap: wrap; margin-top: 1.5rem; color: var(--dossier-muted); }
-.resume-actions > span { display: none; }
+.resume-documents { grid-column: 1 / -1; min-width: 0; margin-bottom: 2rem; color: var(--dossier-muted); border-block: 1px solid var(--dossier-line); }
+.resume-documents summary { padding-block: .75rem; min-height: 44px; cursor: pointer; font-size: .875rem; }
+.resume-documents nav { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; padding-bottom: .75rem; }
+.resume-documents a { display: inline-flex; align-items: center; min-height: 44px; color: var(--dossier-blue); font-size: .875rem; }
+.resume-documents summary:focus-visible { outline: 2px solid var(--dossier-blue); outline-offset: 4px; }
 .resume-actions a { display: inline-flex; align-items: center; padding: 0 .75rem; border: 1px solid var(--dossier-line); border-radius: 8px; }
 .resume-actions a.primary { background: #1d4ed8; border-color: #1d4ed8; color: white; }
 .resume-divider { grid-column: 1 / -1; height: 4.5rem; }
@@ -448,6 +452,13 @@ body {
 .resume-dossier .experience-item::before { display: none; }
 
 .portfolio-index { padding-top: 4.5rem; }
+.portfolio-section-label { margin-bottom: 1rem; }
+.portfolio-shortcuts a { color: var(--dossier-blue); font-weight: 600; }
+#selected-cases, #public-code { scroll-margin-top: 6rem; }
+.diagram-original { display: block !important; min-width: 0 !important; }
+.diagram-original:focus-visible { outline: 3px solid #2563eb; outline-offset: -3px; }
+.diagram-original img { height: auto; }
+.detail-dossier > section { min-width: 0; }
 .portfolio-hero { margin-bottom: 3.25rem; }
 .portfolio-hero h1 { margin-top: .9rem; font-size: clamp(2.75rem, 7vw, 4.5rem); line-height: 1; letter-spacing: -.055em; }
 .portfolio-hero p { max-width: 44rem; color: var(--dossier-muted); }
@@ -480,13 +491,6 @@ body {
 .evidence-index a:hover, .evidence-index a:focus-visible { color: var(--dossier-blue); }
 .evidence-index span { color: var(--dossier-blue); font: 700 .6875rem var(--dossier-mono); }
 .detail-dossier section[id] { scroll-margin-top: 6rem; }
-.portfolio-detail > nav:first-child { order: -4; }
-.portfolio-detail > header { order: -3; }
-.portfolio-detail > #product { order: -2; }
-.portfolio-detail > #outcomes { order: -1; }
-.portfolio-detail > #problems { order: 0; }
-.portfolio-detail > section { order: 0; }
-.portfolio-detail > nav:last-child { order: 1; }
 .detail-dossier > section, .detail-dossier > nav:last-child { grid-column: 2; padding: 3.5rem 0; margin: 0; border-top: 1px solid var(--dossier-line); }
 .detail-dossier .section-title { display: block; font-size: 1.9rem; letter-spacing: -.035em; }
 .detail-dossier .section-title::after { display: none; }
@@ -963,14 +967,6 @@ body {
     grid-row: 2 / span 20;
   }
 
-  .portfolio-detail > #outcomes {
-    grid-row: 2;
-  }
-
-  .portfolio-detail > #problems {
-    grid-row: 3;
-  }
-
   .detail-dossier > header h1 {
     line-height: 1.08;
     overflow-wrap: normal;
@@ -1108,8 +1104,17 @@ body {
   }
 
   .resume-dossier {
-    gap: 1.5rem;
-    padding-top: 2.5rem;
+    gap: 1rem;
+    padding-top: 1.5rem;
+  }
+
+  .resume-header .resume-lead {
+    margin-top: .875rem;
+  }
+
+  .resume-header .resume-lead p {
+    font-size: .9375rem;
+    line-height: 1.55;
   }
 
   .resume-header h1 {
@@ -1204,7 +1209,18 @@ body {
   }
 
   .portfolio-index {
-    padding-top: 2.65rem;
+    padding-top: 1.75rem;
+  }
+
+  .portfolio-hero p {
+    margin-top: .875rem;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .portfolio-shortcuts {
+    gap: .25rem 1rem;
+    margin-top: .75rem;
   }
 
   .portfolio-hero {
@@ -1228,8 +1244,14 @@ body {
   }
 
   .portfolio-proof-strip {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .75rem;
     padding-block: 0.85rem;
+  }
+
+  .portfolio-proof-strip strong,
+  .portfolio-proof-strip .portfolio-proof-note {
+    overflow-wrap: anywhere;
   }
 
   .portfolio-archive {
@@ -1516,7 +1538,9 @@ body {
   .case-study-evidence-register > header { display: block; padding: 1rem 0 1.25rem; }
 
   .case-study-evidence-register > header .evidence-index {
-    display: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 1rem;
   }
 
   .case-study-evidence-register > header .project-heading {

@@ -444,22 +444,25 @@ function formatPeriod(period: { start: string; end: string }): string {
       margin-top: 1mm;
     }
 
-    .listed-box-title {
-      font-size: 8.5pt;
-      font-weight: 700;
+    .listed-project-row {
+      font-size: 9pt;
       color: #374151;
+      margin-top: 3mm;
+      break-inside: auto;
     }
 
-    .listed-project-row {
-      font-size: 7.5pt;
-      color: #4b5563;
-      display: grid;
-      grid-template-columns: auto auto 1fr auto;
-      gap: .7mm;
+    .listed-project-header {
+      display: flex;
+      flex-wrap: wrap;
       align-items: baseline;
+      gap: 1mm 2mm;
       break-inside: avoid;
-      margin-top: .35mm;
+      break-after: avoid-page;
+      margin-bottom: 1mm;
     }
+
+    .listed-project-header h3 { font-size: 10pt; }
+    .listed-project-proof { margin-top: 1mm; break-before: avoid-page; }
 
     .listed-project-name {
       font-weight: 600;
@@ -470,12 +473,12 @@ function formatPeriod(period: { start: string; end: string }): string {
       color: #475569;
     }
 
-    .listed-project-skills {
-      color: #4b5563;
-    }
-
     .listed-project-summary {
-      display: none;
+      font-size: 9pt;
+      line-height: 1.4;
+      break-before: avoid-page;
+      orphans: 2;
+      widows: 2;
     }
 
     /* Back button (web only) */
@@ -494,8 +497,7 @@ function formatPeriod(period: { start: string; end: string }): string {
     @media print {
       html { font-size: 100%; }
 
-      .section-heading,
-      .listed-box-title {
+      .section-heading {
         page-break-after: avoid;
         break-after: avoid-page;
       }
@@ -535,6 +537,7 @@ function formatPeriod(period: { start: string; end: string }): string {
       </div>
     </header>
 
+    <h2 class="section-heading">{lang === 'ko' ? `대표 심층 사례 ${featuredProjects.length}건` : `${featuredProjects.length} Featured Case Studies`}</h2>
     <!-- Featured Projects -->
     {featuredProjects.map((project, idx) => {
       const name = project.name[lang] || project.name.ko;
@@ -561,7 +564,7 @@ function formatPeriod(period: { start: string; end: string }): string {
           {idx > 0 && <hr class="project-separator" />}
           <div class:list={['project-item', isEvidenceRegister && 'evidence-register-print', isDaesinCase && 'daesin-case-print', isFamilyBudgetCase && 'family-budget-print']}>
             <div class="project-header">
-              <span class="project-name">{name}</span>
+              <h3 class="project-name">{name}</h3>
               <span class="project-meta">{`${period} · ${role ? `${role} · ` : ''}${typeLabel}`}</span>
             </div>
 
@@ -771,23 +774,27 @@ function formatPeriod(period: { start: string; end: string }): string {
     <!-- Listed Projects Box -->
     {listedProjects.length > 0 && (
       <div class="listed-box">
-        <div class="listed-box-title">{lang === 'ko' ? '추가 백엔드 프로젝트' : 'Additional Backend Projects'}</div>
+        <h2 class="section-heading">{lang === 'ko' ? `추가 공개 프로젝트 ${listedProjects.length}건` : `${listedProjects.length} Additional Public Projects`}</h2>
         {listedProjects.map((project) => {
           const name = project.name[lang] || project.name.ko;
           const typeLabel = project.type === 'personal'
             ? (lang === 'ko' ? '개인' : 'Personal')
             : (lang === 'ko' ? '팀' : 'Team');
-          const topSkills = project.skills.slice(0, 4).join(', ');
           const detailUrl = new URL(`${localePrefix}/portfolio/${project.slug}`, Astro.site).toString();
+          const evidence = project.publicEvidence?.[0];
+          const proofUrl = evidence?.url || project.github || detailUrl;
+          const proofLabel = evidence?.label || (project.github ? 'GitHub' : (lang === 'ko' ? '상세 근거' : 'Case evidence'));
 
           return (
-            <div class="listed-project-row">
-              <span class="listed-project-name">{name}</span>
-              <span class="listed-project-type">({typeLabel})</span>
-              <span class="listed-project-skills">— {topSkills}</span>
-              <a href={detailUrl} target="_blank" rel="noopener noreferrer">{lang === 'ko' ? '상세 ↗' : 'Detail ↗'}</a>
+            <article class="listed-project-row">
+              <header class="listed-project-header">
+                <h3 class="listed-project-name">{name}</h3>
+                <span class="listed-project-type">{typeLabel} · {formatPeriod(project.period)}</span>
+              </header>
               <p class="listed-project-summary">{project.summary[lang] || project.summary.ko}</p>
-            </div>
+              <p class="listed-project-skills">{project.skills.join(', ')}</p>
+              <p class="listed-project-proof"><a href={proofUrl} target="_blank" rel="noopener noreferrer">{proofLabel} ↗</a></p>
+            </article>
           );
         })}
       </div>

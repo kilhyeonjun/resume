@@ -1,0 +1,63 @@
+{
+  "project": "daesin-logistics-bot",
+  "evidence_type": "owner_recorded_single_deployment_observation",
+  "independent_attestation": false,
+  "provenance": {
+    "source_revision": "696a41bc0768261cf6cd02e2743da3bdc3325cc6",
+    "source_url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/tree/696a41bc0768261cf6cd02e2743da3bdc3325cc6",
+    "source_scope": "Pinned source provenance, not proof of production execution.",
+    "execution_scope": "Sanitized owner-recorded rollout, measurement, recovery, backup, and finalization receipts. Private execution artifacts and production access are not published.",
+    "synthetic_evidence_scope": "The existing public eight-scenario ingestion reproduction is separate from this real-deployment observation."
+  },
+  "rollout": {
+    "native_arm64_web_and_collector_deployed": true,
+    "inactive_slot_health_gate_passed": true,
+    "ingress_health_gate_passed": true,
+    "all_gates_passed": true,
+    "old_slot_stopped_and_retained_after_all_gates": true,
+    "post_stop_ingress_healthy": true,
+    "database_restored": false
+  },
+  "backup": {
+    "fresh_backup_completed": true,
+    "source_readonly": true,
+    "performed_in_writers_linux_vm": true,
+    "integrity_verified": true,
+    "isolated_copy_read_verified": true
+  },
+  "first_attempt_recovery": {
+    "failure_class": "OperationalError",
+    "exact_original_sqlite_subcode": "unrecorded",
+    "previous_collector_and_route_recovered": true,
+    "database_restored": false,
+    "correction": "Moved live SQL observation and backup into the same Linux VM as the writers; the host opens only completed backup copies.",
+    "causal_limit": "Synthetic cross-runtime reproduction supports the transport correction; it does not prove the exact original failure cause or SQLite subcode."
+  },
+  "measurement": {
+    "scope": "Bounded smoke observation from one deployment, not a capacity benchmark.",
+    "real_changed_row_matches_api": true,
+    "db_detection_to_api_equal_ms": 115.405583,
+    "observed_db_poll_interval_s": 1.286545166,
+    "db_commit_time_observed": false,
+    "propagation_limit": "The interval begins at DB-change detection, not source change or DB commit. Polling leaves the earlier change time unobserved.",
+    "data_reads": {
+      "count": 10,
+      "execution": "sequential",
+      "request_spacing_s_at_least": 1,
+      "latency_ms": [32.27698, 26.109201, 23.487034, 28.957124, 34.199374, 27.905632, 25.339552, 29.850986, 25.379094, 26.450129],
+      "median_ms": 27.1778805,
+      "range_ms": [23.487034, 34.199374]
+    },
+    "separate_phase_health_requests": 1,
+    "health_request_included_in_data_read_statistics": false
+  },
+  "limitations": [
+    "Owner-recorded single-deployment observation, not independent attestation or publicly reproducible production access.",
+    "Does not establish capacity, throughput, p95, SLA, uptime, before/after improvement, or source-change/commit-to-API latency.",
+    "SQLite code search reads the database on each request; horizontal write scaling remains limited.",
+    "Upsert-only ingestion retains rows omitted by later source responses; createdAt records first insertion, not source freshness.",
+    "Collection has no immediate retry or backoff; failures are checked on the next scheduled run.",
+    "The exact original OperationalError subcode and cause remain unproven."
+  ],
+  "publication_boundary": "Excludes business row counts and contents, credentials, live service addresses, hostnames, host paths, private logs, image/container identifiers, and backup checksums. No execution date is asserted."
+}

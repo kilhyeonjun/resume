@@ -43,13 +43,18 @@ function contrast(foreground, background = [255, 255, 255]) {
 
 async function elementContrast(page, selector) {
   const sample = await page.$eval(selector, (element) => {
+    // Cache only identical conversions; fresh default contexts preserve pixel rounding.
+    const colors = new Map();
     const rgba = (color) => {
+      if (colors.has(color)) return colors.get(color);
       const canvas = document.createElement('canvas');
       canvas.width = canvas.height = 1;
       const context = canvas.getContext('2d');
       context.fillStyle = color;
       context.fillRect(0, 0, 1, 1);
-      return [...context.getImageData(0, 0, 1, 1).data];
+      const channels = [...context.getImageData(0, 0, 1, 1).data];
+      colors.set(color, channels);
+      return channels;
     };
     const over = (foreground, background) => {
       const foregroundAlpha = foreground[3] / 255;
@@ -133,13 +138,18 @@ test('dark print keeps every visible direct-text sample at WCAG AA', { timeout: 
       assert.equal(response?.status(), 200, `${path} must return HTTP 200`);
       assert.ok(await page.title(), `${path} must expose a document title`);
       const result = await page.$eval('body', (body) => {
+        // Cache only identical conversions; fresh default contexts preserve pixel rounding.
+        const colors = new Map();
         const rgba = (color) => {
+          if (colors.has(color)) return colors.get(color);
           const canvas = document.createElement('canvas');
           canvas.width = canvas.height = 1;
           const context = canvas.getContext('2d');
           context.fillStyle = color;
           context.fillRect(0, 0, 1, 1);
-          return [...context.getImageData(0, 0, 1, 1).data];
+          const channels = [...context.getImageData(0, 0, 1, 1).data];
+          colors.set(color, channels);
+          return channels;
         };
         const over = (foreground, background) => {
           const foregroundAlpha = foreground[3] / 255;

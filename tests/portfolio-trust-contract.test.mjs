@@ -12,7 +12,19 @@ const order = (a, b) => (a.printOrder ?? Number.MAX_SAFE_INTEGER) - (b.printOrde
 const featured = data.projects.filter(p => p.featured && !p.hidden).sort(order);
 const listed = data.projects.filter(p => p.listed && !p.hidden).sort(order);
 const hidden = data.projects.filter(p => p.hidden);
-const withoutComments = html => html.replace(/<!--[\s\S]*?-->/g, '');
+const withoutComments = html => {
+  let output = '';
+  let cursor = 0;
+  while (cursor < html.length) {
+    const start = html.indexOf('<!--', cursor);
+    if (start < 0) return output + html.slice(cursor);
+    output += html.slice(cursor, start);
+    const end = html.indexOf('-->', start + 4);
+    if (end < 0) return output;
+    cursor = end + 3;
+  }
+  return output;
+};
 const escapeRegExp = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const directionalHrefs = (html, label) => [...withoutComments(html).matchAll(new RegExp(
   `<a\\b(?=[^>]*aria-label="${escapeRegExp(label)}:[^"]+")[^>]*href="([^"]+)"[^>]*>`, 'g',

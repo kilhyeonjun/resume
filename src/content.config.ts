@@ -1,6 +1,11 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { file } from 'astro/loaders';
+import rawPortfolioData from './data/portfolio.json';
+import { portfolioDataSchema } from './types/portfolio';
+import { selectPublicPortfolioProjects } from './utils/portfolio-visibility';
+
+const publicEvidenceProjects = selectPublicPortfolioProjects(portfolioDataSchema.parse(rawPortfolioData).projects);
 
 const dateString = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Date must be YYYY-MM format');
 const dateStringLoose = z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, 'Date must be YYYY or YYYY-MM format');
@@ -60,7 +65,15 @@ const highlightSchema = z.object({
   result: z.string(),
   // Marks a highlight for the resume EVIDENCE BOARD; the value is its kicker.
   proofLabel: z.string().optional(),
-});
+  evidenceProject: z.string().optional(),
+}).refine(
+  (highlight) => !highlight.proofLabel || Boolean(highlight.evidenceProject),
+  { message: 'Evidence Board highlights require an evidenceProject slug', path: ['evidenceProject'] },
+).refine(
+  (highlight) => !highlight.proofLabel || !highlight.evidenceProject
+    || publicEvidenceProjects.some((project) => project.slug === highlight.evidenceProject),
+  { message: 'Invalid Evidence Board target: evidenceProject must reference a public portfolio case', path: ['evidenceProject'] },
+);
 
 const positionEntrySchema = z.object({
   title: z.string(),

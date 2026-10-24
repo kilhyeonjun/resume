@@ -195,7 +195,8 @@
                 "problem": "신설 Platform Part(BE·FE·AI 3인)가 맡은 실시간 채팅 서버가 6,000 msg/s 부하에서 단일 샤드 ack p95 767ms·수용률 99.39%에 머묾",
                 "solution": "작업 유형별 완료 기준·검증 템플릿으로 파트 과제를 표준화하고, 용량 목표(6,000 동시접속·18,000 RPS·버스트 90,000 RPS)를 분기 OKR로 확정한 뒤 샤드 설계·부하 검증을 직접 주도",
                 "result": "부하 시험 ack p95 767ms→6.6ms, 1→4 샤드 확장 후 파트 과제를 같은 용량 기준으로 추적",
-                "proofLabel": "부하 시험"
+                "proofLabel": "부하 시험",
+                "evidenceProject": "realtime-game-chat"
               },
               {
                 "problem": "전사 AI 코딩 에이전트 확산으로 사람별 정책 적용·기기 식별·사용량 수집을 한곳에서 관리해야 함",
@@ -211,7 +212,8 @@
                 "problem": "마케팅 지표 아카이브 백필 중 RDS CPU가 99.8%에 붙어 처리량이 분당 9.3건에 머묾",
                 "solution": "Performance Insights로 부하 99.5%를 만든 조회 쿼리를 특정하고, N+1·DATE()로 감싼 비SARGable 조건·전체 컬럼 select를 단일 IN() 배치·직접 비교·필요 컬럼 조회로 교체",
                 "result": "백필 처리량 26배(9.3→247건/분), Lambda p50 63.2s→1.36s, 15,333건 완료·대기 0건",
-                "proofLabel": "백필 처리량"
+                "proofLabel": "백필 처리량",
+                "evidenceProject": "rds-saturation-rca"
               }
             ]
           },
@@ -234,7 +236,8 @@
                 "problem": "7개 프로젝트 간 코드 중복과 컨벤션 불일치",
                 "solution": "수동 코드 동기화 대신 공통 NestJS 패키지 체계 도입 (유틸 10모듈 + 게임서버 Kit 자동 배포)",
                 "result": "업그레이드 자동화로 7개 프로젝트 반영 시간 3시간→15분 단축, 공통 코드 수정 지점을 단일 패키지로 일원화",
-                "proofLabel": "업그레이드 자동화로"
+                "proofLabel": "업그레이드 자동화로",
+                "evidenceProject": "shared-package-ci-platform"
               },
               {
                 "problem": "3개 광고 플랫폼 데이터 분산에 따른 마케팅 조회 지연",

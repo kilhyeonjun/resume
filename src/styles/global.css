@@ -465,6 +465,9 @@ body {
 .portfolio-archive-row { min-height: 72px; display: grid; grid-template-columns: 7rem 1fr 2fr 2rem; gap: 1rem; align-items: center; border-top: 1px solid var(--dossier-line); color: var(--dossier-muted); }
 .portfolio-archive-row strong { color: var(--dossier-ink); }
 .portfolio-archive-row:hover strong { color: var(--dossier-blue); }
+.portfolio-artifact-actions { display: flex; flex-wrap: wrap; gap: .5rem; padding: 0 0 1rem 8rem; }
+.portfolio-artifact-actions a { min-height: 44px; max-width: 100%; padding: .5rem .75rem; border: 1px solid var(--dossier-line); border-radius: 8px; color: var(--dossier-blue); font-size: .8125rem; line-height: 1.5; }
+.portfolio-artifact-actions svg { flex-shrink: 0; }
 
 .detail-dossier { display: grid; grid-template-columns: 285px minmax(0, 1fr); column-gap: clamp(2rem, 5vw, 4.5rem); }
 .detail-dossier > nav:first-child { grid-column: 1 / -1; margin: 1rem 0; }
@@ -510,6 +513,7 @@ body {
   .portfolio-archive { margin-top: 3rem; }
   .portfolio-archive-row { grid-template-columns: 4.5rem 1fr 1.5rem; gap: .75rem; padding: .75rem 0; }
   .portfolio-archive-row > span:nth-child(3) { display: none; }
+  .portfolio-artifact-actions { padding-left: 0; }
   .detail-dossier { display: block; }
   .detail-dossier > header { position: static; padding: 1.75rem 0 2.5rem; border-right: 0; }
   .evidence-index { grid-template-columns: 1fr 1fr; }
@@ -702,10 +706,24 @@ body {
     letter-spacing: -0.01em;
   }
 
-  .resume-dossier .outcome-problem {
-    margin: 0;
+  .resume-dossier .outcome-copy {
     padding-left: 1.25rem;
     border-left: 1px solid var(--dossier-line);
+  }
+
+  .outcome-case-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--dossier-blue);
+    font-size: 0.8125rem;
+    font-weight: 650;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .resume-dossier .outcome-problem {
+    margin: 0;
     color: var(--dossier-muted);
     font-size: 0.875rem;
     line-height: 1.62;
@@ -1097,9 +1115,12 @@ body {
     font-size: 0.86rem;
   }
 
-  .resume-dossier .outcome-problem {
+  .resume-dossier .outcome-copy {
     padding-left: 0;
     border-left: 0;
+  }
+
+  .resume-dossier .outcome-problem {
     font-size: 0.79rem;
     line-height: 1.55;
   }

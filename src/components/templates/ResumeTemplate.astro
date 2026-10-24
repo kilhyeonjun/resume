@@ -3,6 +3,9 @@ import { getEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { getLocalePrefix } from '../../utils/paths';
 import { prepareResumeData } from '../../utils/resume-data';
+import rawPortfolioData from '../../data/portfolio.json';
+import { portfolioDataSchema } from '../../types/portfolio';
+import { selectPublicPortfolioProjects } from '../../utils/portfolio-visibility';
 
 import ResumeHeader from '../resume/ResumeHeader.astro';
 import ResumeSummary from '../resume/ResumeSummary.astro';
@@ -45,9 +48,18 @@ const jsonLd = {
     ...(data.github && { sameAs: [data.github, data.linkedin].filter(Boolean) }),
   },
 };
+const portfolioData = portfolioDataSchema.parse(rawPortfolioData);
+const publicProjects = selectPublicPortfolioProjects(portfolioData.projects);
 const outcomeProofs = data.experience
   .flatMap((exp) => exp.positions?.flatMap((position) => position.highlights ?? []) ?? exp.highlights ?? [])
-  .filter((proof) => proof.proofLabel);
+  .filter((proof) => proof.proofLabel)
+  .map((proof) => {
+    const project = publicProjects.find((project) => project.slug === proof.evidenceProject);
+    if (!project) {
+      throw new Error(`Invalid Evidence Board target for ${lang}: "${proof.evidenceProject ?? '(missing)'}" must reference a public portfolio case`);
+    }
+    return { ...proof, project };
+  });
 ---
 
 <Layout title={`${data.name} — ${data.title}`} description="Professional resume and work experience" lang={lang}>
@@ -55,6 +67,19 @@ const outcomeProofs = data.experience
   <article class="resume-dossier resume-container">
     <!-- Header Section -->
     <ResumeHeader data={data} />
+
+    <!-- Quick Actions (top): document previews and web portfolio -->
+    <div class="resume-actions no-print mb-4 flex gap-3 text-sm">
+      <a href={`${localePrefix}/resume-print`} class="primary touch-target">{lang === 'ko' ? '이력서 PDF 미리보기' : 'Resume PDF preview'}</a>
+      <span aria-hidden="true">·</span>
+      <a href={`${localePrefix}/resume-ats`} class="touch-target">{labels.atsOptimized}</a>
+      <span aria-hidden="true">·</span>
+      <a href={`${localePrefix}/experience-print`} class="touch-target">{lang === 'ko' ? '경력기술서' : 'Career Detail'}</a>
+      <span aria-hidden="true">·</span>
+      <a href={`${localePrefix}/portfolio`} class="touch-target">{lang === 'ko' ? '웹 포트폴리오' : 'Web portfolio'}</a>
+      <span aria-hidden="true">·</span>
+      <a href={`${localePrefix}/portfolio-print`} class="touch-target">{lang === 'ko' ? '포트폴리오 PDF 미리보기' : 'Portfolio PDF preview'}</a>
+    </div>
 
     <aside class="outcome-board" aria-labelledby="evidence-board-heading">
       <h2 id="evidence-board-heading" class="dossier-label board-heading">EVIDENCE BOARD</h2>
@@ -73,22 +98,16 @@ const outcomeProofs = data.experience
               <strong class="result-metric">{metric}</strong>
               {tail && <span class="result-tail">{tail}</span>}
             </p>
-            <p class="outcome-problem">{proof.problem}</p>
+            <div class="outcome-copy">
+              <p class="outcome-problem">{proof.problem}</p>
+              <a href={`${localePrefix}/portfolio/${proof.project.slug}`} class="outcome-case-link touch-target" aria-label={`${lang === 'ko' ? '근거 사례 보기' : 'View case study'}: ${proof.project.name[lang]}`}>
+                {lang === 'ko' ? '근거 사례 보기' : 'View case study'}
+              </a>
+            </div>
           </section>
         );
       })}
     </aside>
-
-    <!-- Quick Actions (top): preview links + PDF download -->
-    <div class="resume-actions no-print mb-4 flex gap-3 text-sm">
-      <a href={`${localePrefix}/resume-print`} class="primary touch-target">{labels.pdfVersion}</a>
-      <span aria-hidden="true">·</span>
-      <a href={`${localePrefix}/resume-ats`} class="touch-target">{labels.atsOptimized}</a>
-      <span aria-hidden="true">·</span>
-      <a href={`${localePrefix}/experience-print`} class="touch-target">{lang === 'ko' ? '경력기술서' : 'Career Detail'}</a>
-      <span aria-hidden="true">·</span>
-      <a href={`${localePrefix}/portfolio-print`} class="touch-target">{lang === 'ko' ? '포트폴리오' : 'Portfolio'}</a>
-    </div>
 
     <!-- Divider -->
     <div class="resume-divider" aria-hidden="true"></div>

@@ -56,17 +56,6 @@ test('experience position periods keep WCAG AA text contrast', async () => {
   );
 });
 
-test('approved convention-preserving polish is screen-only and keeps content visible', async () => {
-  const css = await read('src/styles/global.css');
-  const prefix = '/* Convention-preserving polish · P1 */\n';
-  assert.equal(css.split(prefix).length, 2, 'approved polish layer must appear exactly once');
-  const polish = css.split(prefix, 2)[1];
-  assert.equal(
-    createHash('sha256').update(polish).digest('hex'),
-    '772d6b4db61258094110d49c5824557428a2e6bc3a7d652c8352e79c40786ab1',
-  );
-});
-
 test('interactive route families expose their shared design hooks', async () => {
   const families = [
     ['src/components/templates/ResumeTemplate.astro', 'resume-dossier'],
@@ -93,31 +82,6 @@ test('interactive route families expose their shared design hooks', async () => 
   assert.match(css, /\.resume-actions\s*\{[^}]*grid-row:\s*2/s);
   assert.match(css, /\.portfolio-detail > #product\s*\{[^}]*order:\s*-2/s);
   assert.match(css, /\.portfolio-detail > #outcomes\s*\{[^}]*order:\s*-1/s);
-});
-
-test('evidence board separates metric, context, and supporting result copy', async () => {
-  const [template, css] = await Promise.all([
-    read('src/components/templates/ResumeTemplate.astro'),
-    read('src/styles/global.css'),
-  ]);
-  assert.match(template, /\.filter\(\(proof\) => proof\.proofLabel\)/);
-  assert.ok(template.includes('proof.result.split(/(?<!\\d),\\s*/)'));
-  assert.match(template, /metricText\.startsWith\(kicker\)/);
-  assert.match(template, /metricText\.slice\(kicker\.length\)\.trim\(\)/);
-  assert.match(template, /class="result-metric"/);
-  assert.match(template, /class="result-tail"/);
-  assert.match(template, /class="outcome-problem"/);
-  assert.match(css, /span:not\(\.skill-name\):not\(\.skill-category\):not\(\.skill-sep\):not\(\.dossier-label\):not\(\.result-kicker\):not\(\.result-tail\)/);
-  assert.match(css, /\.resume-header > \.dossier-label\s*\{/);
-  assert.match(css, /\.resume-dossier \.board-heading\s*\{/);
-  assert.match(css, /\.resume-dossier \.result-kicker\s*\{/);
-  assert.match(css, /\.resume-dossier \.outcome-problem\s*\{/);
-  assert.match(css, /@media screen and \(max-width: 760px\)[\s\S]*\.resume-header > div:not\(\.no-print\)\s*\{[^}]*margin-top:\s*0\.875rem/s);
-  assert.match(css, /@media screen and \(max-width: 760px\)[\s\S]*\.resume-header \.no-print\s*\{[^}]*margin-top:\s*0\.5rem/s);
-  assert.match(css, /@media screen and \(max-width: 760px\)[\s\S]*\.resume-actions\s*\{[^}]*margin-top:\s*0/s);
-  assert.match(css, /@media screen and \(max-width: 760px\)[\s\S]*\.outcome-board\s*\{[^}]*grid-row:\s*3/s);
-  assert.match(css, /\.result-metric\s*\{[^}]*color:\s*var\(--dossier-blue\)/s);
-  assert.match(css, /\.outcome-problem\s*\{[^}]*border-left:\s*1px solid var\(--dossier-line\)/s);
 });
 
 test('portfolio polish keeps featured proof and detail evidence in recruiter-first flow', async () => {

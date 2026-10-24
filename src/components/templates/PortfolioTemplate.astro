@@ -5,6 +5,7 @@ import ExternalLinkIcon from '../icons/ExternalLinkIcon.astro';
 import type { PortfolioProject, PortfolioLabels } from '../../types/portfolio';
 import { getLocalePrefix, withBasePath } from '../../utils/paths';
 import { selectFeaturedPortfolioProjects, selectListedPortfolioProjects } from '../../utils/portfolio-visibility';
+import { getPortfolioDemoLink } from '../../utils/portfolio-links';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -29,7 +30,7 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
         {lang === 'ko' ? '회사 실무 케이스와 개인·팀 프로젝트' : 'Work case studies plus personal and team projects'}
       </p>
       <div class="mt-4 text-sm">
-        <a href={`${localePrefix}/portfolio-print`} class="touch-target inline-flex items-center rounded-lg border border-gray-300 px-4 font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-primary-300">{lang === 'ko' ? 'PDF 다운로드' : 'Download PDF'}</a>
+        <a href={`${localePrefix}/portfolio-print`} class="touch-target inline-flex items-center rounded-lg border border-gray-300 px-4 font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-primary-300">{lang === 'ko' ? 'PDF 미리보기' : 'PDF preview'}</a>
       </div>
     </header>
 
@@ -143,19 +144,38 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
 
     {archiveProjects.length > 0 && (
       <section class="portfolio-archive" aria-labelledby="archive-title">
-        <span class="dossier-label">PROJECT ARCHIVE</span>
-        <h2 id="archive-title">{lang === 'ko' ? '프로젝트 아카이브' : 'Project archive'}</h2>
+        <span class="dossier-label">{lang === 'ko' ? '공개 코드와 데모' : 'PUBLIC CODE & DEMOS'}</span>
+        <h2 id="archive-title">{lang === 'ko' ? '공개 프로젝트 · 코드와 데모' : 'Public projects · code and demos'}</h2>
         <div>
           {archiveProjects.map((project) => {
             const projectName = project.name[lang] || project.name.ko;
             const projectSummary = project.summary[lang] || project.summary.ko;
+            const demoLink = getPortfolioDemoLink(project, lang);
             return (
-              <a class="portfolio-archive-row" href={`${localePrefix}/portfolio/${project.slug}`}>
-                <span>{project.period.start}</span>
-                <strong>{projectName}</strong>
-                <span>{projectSummary}</span>
-                <span aria-hidden="true">↗</span>
-              </a>
+              <div>
+                <a class="portfolio-archive-row" href={`${localePrefix}/portfolio/${project.slug}`}>
+                  <span>{project.period.start}</span>
+                  <strong>{projectName}</strong>
+                  <span>{projectSummary}</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                {(project.github || demoLink) && (
+                  <div class="portfolio-artifact-actions">
+                    {project.github && (
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" class="touch-target inline-flex items-center gap-2" aria-label={`${projectName} — ${lang === 'ko' ? '소스 저장소' : 'Source repository'}`}>
+                        <GitHubIcon class="h-4 w-4" />
+                        {lang === 'ko' ? '소스 저장소' : 'Source repository'}
+                      </a>
+                    )}
+                    {demoLink && (
+                      <a href={demoLink.url} target="_blank" rel="noopener noreferrer" class="touch-target inline-flex items-center gap-2" aria-label={`${projectName} — ${demoLink.label}`}>
+                        {demoLink.label}
+                        <ExternalLinkIcon class="h-4 w-4" />
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>

@@ -216,7 +216,10 @@ test('screen semantic text meets WCAG AA on local light and dark surfaces', { ti
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
   try {
     for (const [path, theme, selectors] of [
-      ['/portfolio/', 'light', ['.portfolio-case-featured .touch-target[href*="/portfolio/"]', '.portfolio-case-featured .text-gray-500', '.portfolio-case:not(.portfolio-case-featured) .rounded-md.bg-gray-100']],
+      ['/', 'light', ['.outcome-case-link']],
+      ['/', 'dark', ['.outcome-case-link']],
+      ['/portfolio/', 'light', ['.portfolio-case-featured .touch-target[href*="/portfolio/"]', '.portfolio-case-featured .text-gray-500', '.portfolio-case:not(.portfolio-case-featured) .rounded-md.bg-gray-100', '.portfolio-artifact-actions a']],
+      ['/portfolio/', 'dark', ['.portfolio-artifact-actions a']],
       ['/portfolio-print/', 'light', ['.listed-project-type']],
       ['/portfolio/daesin-logistics-bot/', 'dark', ['.project-role', '.outcome-register-impact']],
       ['/portfolio/ai-coding-harness/', 'dark', ['.project-role', '.outcome-register-impact']],

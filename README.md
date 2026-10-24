@@ -78,9 +78,11 @@ scripts/
 
 GitHub Actions로 자동 배포합니다(main push). 코드·PDF 검증을 통과한 산출물만 게시합니다. CI는 저장소의 TTF를 Fontconfig에 설치해 SVG의 한국어 글리프를 제공하며 `apt-get` 네트워크 설치를 하지 않습니다.
 
-### Contrast regression checks
+### Browser regression checks
 
 색 대비 검사는 공개 화면 경로와 텍스트 표본을 줄이지 않고, 한 페이지 평가 안에서 같은 색상의 RGBA 변환 결과만 재사용합니다. 서로 다른 색상은 기존처럼 새 기본 Canvas context에서 변환합니다. Context 재사용이나 `willReadFrequently` 옵션은 광색역·반투명 색상의 반올림을 바꿀 수 있어 사용하지 않습니다. 합성 순서·WCAG 임계값·테마·대기 조건·실패 판정은 유지합니다.
+
+목차 순회 검사는 서버가 렌더링한 section ID와 목차 href의 대응을 비교하므로 `DOMContentLoaded` 뒤에 실행합니다. 전체 국·영문 상세 경로·선택자·실패 판정은 유지하되, 무관한 이미지·폰트 요청의 종료나 네트워크 유휴 구간은 기다리지 않습니다. 이 검사는 픽셀·글꼴·이미지의 시각적 준비 상태를 판정하지 않습니다. 목차나 섹션을 비동기 클라이언트 렌더링으로 옮길 때는 준비 조건을 함께 변경해야 합니다.
 
 ### Pinned font provenance
 

@@ -195,7 +195,8 @@
                 "problem": "The real-time chat server owned by the new 3-person Platform Part (BE, FE, AI) stalled at ack p95 767ms and 99.39% acceptance on a single shard under 6,000 msg/s",
                 "solution": "Standardized part work with per-type done criteria and verification templates, set the capacity target (6,000 CCU, 18,000 RPS, 90,000 RPS burst) as a quarterly OKR, and personally led shard design and load validation",
                 "result": "Load-test ack p95 767ms→6.6ms, scaling 1→4 shards, with all part work tracked against the same capacity target",
-                "proofLabel": "Load-test"
+                "proofLabel": "Load-test",
+                "evidenceProject": "realtime-game-chat"
               },
               {
                 "problem": "Company-wide AI coding agent adoption needed one place to apply per-person policy, identify devices, and collect usage",
@@ -211,7 +212,8 @@
                 "problem": "During a marketing-metrics archive backfill, RDS CPU was pinned at 99.8% and throughput sat at 9.3 items/min",
                 "solution": "Used Performance Insights to pin 99.5% of the load on one lookup query, then replaced its N+1 loop, DATE()-wrapped non-SARGable filter, and full-column select with one IN() batch, direct date comparison, and a minimal column list",
                 "result": "Backfill throughput up 26x (9.3→247 items/min), Lambda p50 63.2s→1.36s, 15,333 completed with 0 pending",
-                "proofLabel": "Backfill throughput up"
+                "proofLabel": "Backfill throughput up",
+                "evidenceProject": "rds-saturation-rca"
               }
             ]
           },
@@ -234,7 +236,8 @@
                 "problem": "Code duplication and convention inconsistency across 7 projects",
                 "solution": "Replaced manual code sync with shared NestJS package system (10 utility modules + Game Server Kit, auto-deploy)",
                 "result": "Upgrade rollout across 7 projects 3hrs→15min via automation, with shared-code changes consolidated into one package",
-                "proofLabel": "Upgrade rollout across 7 projects"
+                "proofLabel": "Upgrade rollout across 7 projects",
+                "evidenceProject": "shared-package-ci-platform"
               },
               {
                 "problem": "Slow marketing queries over fragmented ad platform data (Google Ads/Meta/TikTok)",

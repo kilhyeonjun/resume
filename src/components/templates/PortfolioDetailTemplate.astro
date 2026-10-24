@@ -11,6 +11,7 @@ import CaseFlow from '../portfolio/CaseFlow.astro';
 import MetricDeltas from '../portfolio/MetricDeltas.astro';
 import type { PortfolioProject, PortfolioLabels, BlogPost } from '../../types/portfolio';
 import { getLocalePrefix, withBasePath } from '../../utils/paths';
+import { getPortfolioDemoLink } from '../../utils/portfolio-links';
 
 interface Props {
   lang: 'ko' | 'en';
@@ -51,6 +52,7 @@ const projectSequenceDiagram = project.sequenceDiagram ? localize(project.sequen
 const isEvidenceRegister = project.slug === 'ai-coding-harness';
 const isDaesinCase = project.slug === 'daesin-logistics-bot';
 const isFamilyBudgetCase = project.slug === 'family-budget-demo';
+const demoLink = getPortfolioDemoLink(project, lang);
 const evidenceIndex: Array<{ id: string; label: string }> = [];
 const evidenceIds = new Set<string>();
 const addEvidence = (condition: unknown, id: string, label: string) => {
@@ -142,20 +144,20 @@ addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-image
             {isFamilyBudgetCase ? (lang === 'ko' ? '공개 증거 저장소' : 'Public evidence repository') : labels.github}
           </a>
         )}
-        {isFamilyBudgetCase && project.links?.Demo && (
-          <a href={project.links.Demo} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:border-primary-400 hover:bg-primary-50 dark:border-gray-600 dark:bg-gray-900 dark:text-primary-300 dark:hover:border-primary-500">
-            {lang === 'ko' ? '합성 공개 데모 · 운영 미연결' : 'Synthetic public demo · not connected to operations'}<ExternalLinkIcon class="h-4 w-4" />
+        {isFamilyBudgetCase && demoLink && (
+          <a href={demoLink.url} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:border-primary-400 hover:bg-primary-50 dark:border-gray-600 dark:bg-gray-900 dark:text-primary-300 dark:hover:border-primary-500">
+            {demoLink.label}<ExternalLinkIcon class="h-4 w-4" />
           </a>
         )}
         {(isEvidenceRegister || isDaesinCase) && project.links && Object.entries(project.links).map(([key, url]) => (
-          typeof url === 'string' && (
+          typeof url === 'string' && (key !== 'Demo' || demoLink) && (
             <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex min-h-11 items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:border-primary-400 hover:bg-primary-50 dark:border-gray-600 dark:bg-gray-900 dark:text-primary-300 dark:hover:border-primary-500"
             >
-              {key}
+              {key === 'Demo' ? demoLink?.label : key}
               <ExternalLinkIcon class="h-4 w-4" />
             </a>
           )
@@ -617,7 +619,7 @@ addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-image
         <h2 class="section-title mb-6">{labels.relatedLinks}</h2>
         <ul class="space-y-3">
           {Object.entries(project.links).map(([key, url]) => (
-            typeof url === 'string' && (
+            typeof url === 'string' && (key !== 'Demo' || demoLink) && (
               <li>
                 <a
                   href={url}
@@ -625,7 +627,7 @@ addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-image
                   rel="noopener noreferrer"
                   class="inline-flex min-h-11 items-center gap-1 text-gray-700 underline-offset-4 hover:text-primary-600 hover:underline dark:text-gray-300 dark:hover:text-primary-400"
                 >
-                  {key}
+                  {key === 'Demo' ? demoLink?.label : key}
                   <ExternalLinkIcon class="h-4 w-4" />
                 </a>
               </li>

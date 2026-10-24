@@ -2147,8 +2147,8 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "오늘 배차를 월~토 정각 15개 slot에서 재수집하는 검색·통계 원장. 작은 표 누락·숫자 파싱·프로세스별 캐시 문제를 수정하고, 별도 SQLite 연결을 쓰는 합성 8개 시나리오로 저장·조회 동작을 검증했다.",
-        "en": "A dispatch search and statistics ledger with 15 current-date collection slots Mon–Sat. Fixed sparse-table loss, grouped-number parsing, and stale process-local reads; verified storage and reader behavior with eight synthetic scenarios using separate SQLite connections."
+        "ko": "배차 검색·통계 원장의 수집을 singleton으로 분리하고 ARM64 웹·수집기를 운영 배포했다. 첫 시도 실패 후 기존 수집기를 복구하고, 재배포에서 백업 무결성·실제 변경 행의 API 일치를 확인했다. 운영자가 기록한 단일 배포 관측과 합성 8개 시나리오를 구분해 공개했다.",
+        "en": "Separated collection into a singleton and deployed the dispatch ledger’s web and collector on ARM64. Recovered the previous collector after a failed first attempt, then verified backup integrity and real changed-row API parity on redeployment. Published the owner-recorded single-deployment observation separately from eight synthetic scenarios."
       },
       "description": {
         "ko": "외부 배차 사이트의 EUC-KR 데이터를 Cheerio와 Axios로 수집해 Prisma SQLite에 저장하고 Next.js 웹에서 조회한다. 웹 replica와 분리한 singleton KST scheduler가 월~토 06:00–20:00의 정각 15개 cron slot에서 오늘 날짜를 재조회하므로 오전 데이터와 늦게 공개된 변경분을 이후 실행에서 반영할 수 있다. Next.js proxy의 public route DTO branch는 필수 핵심 필드와 허용된 원천 URL을 검증해 운영 화면에 필요한 필드만 projection하고 내부 ID·알 수 없는 필드·credential-bearing tracking URL을 제외하며, 인증·migration 경로는 allowlist된 method/path만 별도로 forward한다. 배포는 비활성 slot의 health check 후 Traefik active slot을 전환하며 이상 시 운영자가 수동 롤백한다.",
@@ -2277,6 +2277,20 @@
             "ko": "공개 합성 재현에서 같은 reader가 1234→1250 정정을 다음 요청에서 확인했다. 8개 시나리오에 HTTP 503 시 저장 상태 보존과 다음 명시적 실행의 복구도 포함했다",
             "en": "In the public synthetic reproduction, the same reader observed the correction from 1234 to 1250 on its next request. Eight scenarios also covered unchanged storage after HTTP 503 and recovery on the next explicit collection run"
           }
+        },
+        {
+          "problem": {
+            "ko": "ARM64 운영 배포 첫 시도가 OperationalError로 실패해 기존 수집기와 route를 복구했다. 원래 SQLite 세부 오류 코드는 기록되지 않았다",
+            "en": "The first ARM64 production rollout failed with OperationalError; the previous collector and route were recovered. The original SQLite subcode was not recorded"
+          },
+          "process": {
+            "ko": "합성 교차 런타임 재현을 근거로 실시간 SQL 관측·백업을 writer와 같은 Linux VM으로 옮기고 호스트는 완료된 백업 사본만 열도록 수정했다. 원래 장애의 정확한 원인이 입증된 것은 아니다. 읽기 전용 원천 백업의 무결성·격리 조회를 확인한 뒤 재배포했다",
+            "en": "A synthetic cross-runtime reproduction supported moving live SQL observation and backup into the writers’ Linux VM, with the host opening only completed backup copies; it did not prove the exact original cause. Redeployed after verifying a read-only source backup’s integrity and isolated readability"
+          },
+          "result": {
+            "ko": "운영자가 기록한 단일 배포에서 native ARM64 웹·수집기, health gate와 실제 변경 행의 API 일치를 확인했다. DB 변경 감지→API 일치 115.4ms(관측 poll 간격 1.287초), 1초 이상 간격의 순차 데이터 조회 10회 중앙값 27.178ms·범위 23.487–34.199ms. 모든 gate 통과 후 이전 slot을 중지·보존했으며 DB 복원은 없었다",
+            "en": "The owner-recorded single deployment verified native ARM64 web and collector, health gates, and real changed-row API parity. DB-change detection→API equality took 115.4ms (observed poll interval 1.287s); 10 sequential data reads at least 1s apart had a 27.178ms median and 23.487–34.199ms range. After all gates passed, the previous slot was stopped and retained; no database restore occurred"
+          }
         }
       ],
       "period": {
@@ -2305,14 +2319,14 @@
       },
       "highlights": {
         "ko": [
-          "오늘 날짜를 운영 시간대 정각 15개 cron slot에서 재조회해 오전·지연 공개 데이터를 반영",
-          "수집 작업을 singleton KST scheduler로 분리해 replica 중복을 제거",
-          "public route DTO의 고정 projection과 원천 URL allowlist로 내부 ID·credential tracking URL 차단"
+          "ARM64 웹·singleton 수집기 운영 배포: 첫 실패 복구 후 백업 무결성·health gate·실제 변경 행의 API 일치 확인(운영자의 단일 배포 관측)",
+          "오늘 날짜를 정각 15개 cron slot에서 재조회하고 수집 책임을 singleton KST scheduler로 분리",
+          "public route DTO projection으로 내부·credential 필드를 차단하고, 합성 8개 시나리오로 저장·조회 정합성 별도 검증"
         ],
         "en": [
-          "Rechecks the current date in 15 scheduled hourly slots to capture morning and later source updates",
-          "Separates collection into a singleton KST scheduler to remove per-replica duplication",
-          "Uses a fixed public route DTO projection and source-URL allowlist while blocking internal IDs and the credential-bearing tracking URL"
+          "Deployed ARM64 web and singleton collector: recovered the first failure, then verified backup integrity, health gates, and real changed-row API parity (owner-recorded single deployment)",
+          "Rechecks the current date in 15 scheduled hourly slots with collection owned by a singleton KST scheduler",
+          "Blocks internal and credential fields through public route DTO projection; separately verifies storage and reader consistency with eight synthetic scenarios"
         ]
       },
       "lessons": {
@@ -2341,19 +2355,45 @@
       },
       "operationalLimits": {
         "ko": [
-          "이번 수집 품질·의존성 수정은 공개 소스·CI 검증 범위다. 운영 서버 배포나 실제 원천의 최신성 SLA를 증명하지 않는다.",
+          "운영 증거는 운영자가 기록한 단일 배포의 제한된 smoke 관측이며 독립 검증이 아니다. 공개 소스·CI 및 합성 8개 시나리오와 구분하며 최신성 SLA·가동률을 증명하지 않는다.",
           "upsert-only라 후속 원천에서 빠진 행은 남고 createdAt은 최초 저장 시각이다. 실패는 다음 정각에 다시 확인하며 즉시 retry/backoff는 없다.",
-          "노선코드 검색은 요청마다 SQLite를 조회한다. 운영 부하·지연은 측정하지 않았으며 수평 쓰기 확장에는 한계가 있다.",
-          "비활성 slot health check 후 전환하며 문제 발생 시 운영자가 이전 slot으로 되돌린다."
+          "노선코드 검색은 요청마다 SQLite를 조회한다. 10회 순차 조회는 용량·처리량·p95·전후 개선율의 근거가 아니며 수평 쓰기 확장에는 한계가 있다.",
+          "115.4ms는 DB 변경 감지→API 일치 구간이다. 관측 poll 간격은 1.287초이며 DB commit 시각은 관측하지 않아 원천 변경·commit→API 지연으로 해석할 수 없다.",
+          "비활성 slot health check 후 전환하며 문제 발생 시 이전 slot을 복구한다. 첫 OperationalError의 정확한 SQLite 세부 코드는 미기록이며 합성 재현은 같은 VM에서 관측·백업하는 수정의 근거이지 원래 원인의 확증이 아니다."
         ],
         "en": [
-          "These ingestion and dependency changes are verified in public source and CI, not through production rollout or a live-source freshness SLA.",
+          "Production evidence is a bounded, owner-recorded single-deployment smoke observation, not independent attestation. It is separate from public source, CI, and eight synthetic scenarios, and proves neither freshness SLA nor uptime.",
           "Upsert-only storage retains rows omitted by later source responses; createdAt is first insertion. Failures are checked on the next scheduled run, without immediate retry or backoff.",
-          "Code search reads SQLite on every request. Production load and latency were not measured; horizontal write scaling remains limited.",
-          "The inactive slot must pass health checks before switching; an operator restores the previous slot on failure."
+          "Code search reads SQLite on every request. Ten sequential reads establish neither capacity, throughput, p95, nor before/after improvement; horizontal write scaling remains limited.",
+          "The 115.4ms interval runs from DB-change detection to API equality. The observed poll interval was 1.287s; DB commit time was unobserved, so this is not source-change/commit-to-API latency.",
+          "The inactive slot must pass health checks before switching; the previous slot is recovered on failure. The first OperationalError’s exact SQLite subcode was unrecorded; synthetic reproduction supports same-VM observation and backup, not proof of the original cause."
         ]
       },
       "publicEvidence": [
+        {
+          "claim": {
+            "ko": "ARM64 배포·실패 복구·실제 변경 행 일치",
+            "en": "ARM64 rollout, failure recovery, and real changed-row parity"
+          },
+          "question": {
+            "ko": "운영자의 단일 배포 기록에서 무엇을 관측했고 무엇은 입증하지 못했는가?",
+            "en": "What did the owner’s single-deployment record observe, and what does it not establish?"
+          },
+          "label": "Owner-recorded execution receipt · not independent attestation",
+          "url": "https://career.kilpenguin.com/evidence/daesin-production-verification.json"
+        },
+        {
+          "claim": {
+            "ko": "배포 소스 revision — 실행 기록과 별개",
+            "en": "Rollout source revision — separate from execution evidence"
+          },
+          "question": {
+            "ko": "어느 소스를 배포 근거로 고정했는가? (소스 자체는 운영 실행 증거가 아님)",
+            "en": "Which source revision is pinned? (Source alone is not proof of production execution)"
+          },
+          "label": "696a41bc · source provenance only",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/tree/696a41bc0768261cf6cd02e2743da3bdc3325cc6"
+        },
         {
           "claim": {
             "ko": "오늘 날짜 기본값",

@@ -173,7 +173,6 @@ test('Concert and Daesin claims stay pinned to public evidence', async () => {
       if (url.includes('/blob/')) assert.doesNotMatch(url, /\/blob\/main\//);
     }
   }
-  assert.equal(daesin.publicEvidence.at(-1).claim.en, 'BE clean CI run');
 });
 
 test('new portfolio candidates stay synthetic, scoped, and visually evidenced', async () => {

@@ -57,7 +57,7 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
 
     .document {
       width: 210mm;
-      max-width: none;
+      max-width: 100%;
       margin: 0 auto;
       padding: 0;
     }
@@ -133,6 +133,11 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
       border-bottom: 0.5pt solid #e5e7eb;
       break-after: avoid-page;
     }
+
+    .role-section { margin-top: 3mm; }
+    .role-header { margin-bottom: 1.5mm; break-inside: avoid; break-after: avoid-page; }
+    .role-header + .highlights { break-before: avoid-page; }
+    .highlights li { break-inside: avoid; }
 
     /* Highlights */
     .highlights {
@@ -355,12 +360,34 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
         <div class="company-section">
           <header class="company-header">
             <h2 class="company-name">{exp.company}</h2>
-            <p class="company-position">{exp.position}</p>
+            {(!exp.positions || exp.positions.length === 0) && exp.position && (
+              <p class="company-position">{exp.position}</p>
+            )}
             <p class="company-period">{period}</p>
           </header>
 
           {exp.description && (
             <p class="company-description">{exp.description}</p>
+          )}
+
+          {exp.positions && exp.positions.length > 0 && (
+            <section aria-label={labels.highlights}>
+              {exp.positions.map((pos) => (
+                <section class="role-section">
+                  <header class="role-header">
+                    <h3 class="company-position">{pos.title}</h3>
+                    <p class="company-period">{pos.startDate.replace('-', '.')} — {pos.current ? labels.current : pos.endDate?.replace('-', '.')}</p>
+                  </header>
+                  {pos.highlights && pos.highlights.length > 0 && (
+                    <ul class="highlights">
+                      {pos.highlights.map((highlight) => (
+                        <li><span class="highlight-bullet">&bull;</span><span class="detail-problem">{highlight.problem}</span>. <span class="detail-solution">{highlight.solution}</span>. <strong class="detail-result">{highlight.result}</strong>.</li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+              ))}
+            </section>
           )}
 
           {exp.highlights && exp.highlights.length > 0 && (

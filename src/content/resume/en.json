@@ -9,37 +9,30 @@
       "github": "https://github.com/kilhyeonjun",
       "blog": "https://blog.kilpenguin.com"
     },
-    "summary": "Backend engineer who designs and runs a shared backend platform for 6 live games (12 branches) and leads the new Platform Part across real-time chat, marketing data pipelines, and shared packages. Designed a multi-tenant real-time chat server that held 20,002 CCU for 900s in a dev load test, and presented a batch-to-serverless pipeline migration at a Games on AWS 2025 customer session.\n\nOver {{CAREER_DURATION}} across education, healthcare, clinical trials, and gaming, I have owned DB optimization, concurrency control, and legacy modernization, and I now run a team quality system that verifies AI-assisted output through TDD, integration tests, and review.",
+    "summary": "Backend engineer with {{CAREER_DURATION}} of experience building a shared platform for 6 live games (12 branches), including multi-tenant chat that held 20,002 CCU for 900s in a dev load test.\n\nMy background spans DB optimization, concurrency, and legacy migration across education, healthcare, clinical trials, and gaming. As hands-on lead of a 3-person BE/FE/AI Platform Part, I manage shared done criteria and quarterly OKRs, and verify AI-assisted output with TDD, integration tests, and review.",
     "coreCompetencies": [
       {
         "category": "DB Optimization, Concurrency & Distributed Systems",
         "items": [
-          "Root-caused three RDS saturation cases: removed the N+1 and non-SARGable filters behind a backfill bottleneck, added a missing index to eliminate full scans of up to 36 minutes, and split a scheduler's all-version scan into per-version queries",
-          "Deadlock root cause analysis and distributed locking — diagnosing and resolving data-layer bottlenecks",
-          "Advanced Redis Streams WAL with a 4-shard Valkey cluster and serverless fanout instrumentation to preserve real-time chat ordering and horizontal scale (WAL backlog 80,000→2,838)"
+          "Query-plan and lock-contention analysis; Redis distributed locks, Streams WAL, and sharding"
         ]
       },
       {
         "category": "Serverless Architecture & Cost Optimization",
         "items": [
-          "Batch-to-EDA migration with a hybrid GCP Pub/Sub → AWS Lambda/SQS pipeline",
-          "BigQuery pricing analysis and read-path switch to the Storage Read API",
-          "Switched a log pipeline with no consumers to a no-op to stop processing costs, then changed Cloud Run billing mode to cut the remaining idle cost by a measured ₩138K per month"
+          "AWS serverless and event pipelines; BigQuery read-path and billing optimization"
         ]
       },
       {
         "category": "Legacy Modernization & Reliability",
         "items": [
-          "Express monolith to NestJS via 3-stage progressive migration, TDD-driven incident-free deployments during major releases",
-          "Shared packages and CI: realigned data modules that had drifted 2+ years from the external package through a 610-file migration, so later updates became one npm version bump; CI time dropped 61% (15m47s→6m06s)"
+          "Incremental Express-to-NestJS migration, TypeScript, shared packages, and test-backed changes"
         ]
       },
       {
         "category": "Engineering Productivity & Quality Verification",
         "items": [
-          "Established team quality gates that verify AI-assisted development through TDD, integration tests, review checklists, and Git hooks",
-          "Automated pre-review domain-knowledge and rule checks through Git-based shared context plus local RAG/MCP search",
-          "Presented an Amazon Q Developer-based data pipeline scaling case at Games on AWS 2025"
+          "Shared team context, review checklists, and Git hooks for AI-assisted output"
         ]
       }
     ],
@@ -192,25 +185,25 @@
             "current": true,
             "highlights": [
               {
-                "problem": "The real-time chat server owned by the new 3-person Platform Part (BE, FE, AI) stalled at ack p95 767ms and 99.39% acceptance on a single shard under 6,000 msg/s",
-                "solution": "Standardized part work with per-type done criteria and verification templates, set the capacity target (6,000 CCU, 18,000 RPS, 90,000 RPS burst) as a quarterly OKR, and personally led shard design and load validation",
-                "result": "Load-test ack p95 767ms→6.6ms, scaling 1→4 shards, with all part work tracked against the same capacity target",
+                "problem": "Single-shard chat bottleneck at 6,000 msg/s: ack p95 767ms, 99.39% acceptance",
+                "solution": "Personally led sharding and load validation. Separately established shared done criteria and verification templates for the 3-person BE/FE/AI part, with capacity targets (6,000 CCU, 18,000 RPS, 90,000 RPS burst) in quarterly OKRs",
+                "result": "Load-test ack p95 767ms→6.6ms, scaling 1→4 shards; part work tracked through shared done criteria and OKRs",
                 "proofLabel": "Load-test",
                 "evidenceProject": "realtime-game-chat"
               },
               {
-                "problem": "Company-wide AI coding agent adoption needed one place to apply per-person policy, identify devices, and collect usage",
-                "solution": "Personally owned design, operations, and merge approval for a management tool covering device registration, policy sets, remote control, and usage collection; AI coding agents handled implementation before operational handover",
+                "problem": "Company-wide AI agents needed centralized per-user policies, device identity, and usage tracking",
+                "solution": "Owned design, operations, and merge approval for device registration, policy, remote-control, and usage tooling; AI agents implemented it before operational handover",
                 "result": "Assigned the usage-reporting switch to 92 people on the active roster; all 87 reporting online devices applied it, and 525 automated security tests passed"
               },
               {
-                "problem": "Coding standards, domain knowledge, and verification rules lived in individual setups, so AI usage varied",
-                "solution": "Managed rules, agents, hooks, and domain knowledge as one Git repo config, searchable through local RAG",
-                "result": "Built up 397 domain-knowledge files in about 2 weeks so every member shares the same AI working context via git pull, with pre-review checks turned into an automated checklist"
+                "problem": "Coding standards, domain knowledge, and verification rules were scattered across individual setups",
+                "solution": "Unified rules, agents, hooks, and domain knowledge in Git with local RAG search",
+                "result": "Every member shares the same AI working context via git pull, with pre-review criteria captured in an automated checklist"
               },
               {
-                "problem": "During a marketing-metrics archive backfill, RDS CPU was pinned at 99.8% and throughput sat at 9.3 items/min",
-                "solution": "Used Performance Insights to pin 99.5% of the load on one lookup query, then replaced its N+1 loop, DATE()-wrapped non-SARGable filter, and full-column select with one IN() batch, direct date comparison, and a minimal column list",
+                "problem": "Archive backfill saturated RDS CPU at 99.8%, throughput 9.3 items/min",
+                "solution": "Performance Insights isolated a query causing 99.5% of load; replaced N+1, non-SARGable DATE(), and full-column reads with IN() batching, direct date comparison, and selected columns",
                 "result": "Backfill throughput up 26x (9.3→247 items/min), Lambda p50 63.2s→1.36s, 15,333 completed with 0 pending",
                 "proofLabel": "Backfill throughput up",
                 "evidenceProject": "rds-saturation-rca"
@@ -224,29 +217,29 @@
             "highlights": [
               {
                 "problem": "Marketing data query cost surge (full-scan billing model)",
-                "solution": "Evaluated partitioning but rejected due to Write IOPS increase; adopted gRPC distributed reads (Storage Read API)",
+                "solution": "Rejected partitioning due to higher Write IOPS; switched to gRPC-based Storage Read API",
                 "result": "Cut per-TB read price 82% ($6.25→$1.1, BigQuery list price)"
               },
               {
                 "problem": "Batch processing collection limits (60 days)",
-                "solution": "Migrated from batch processing to EDA-based on-demand pipeline — distributing peak load and enabling throughput scaling",
+                "solution": "Replaced batch runs with EDA on-demand processing to distribute peak load",
                 "result": "Expanded metrics range 6x (60→360 days), processing time 2h→5min"
               },
               {
                 "problem": "Code duplication and convention inconsistency across 7 projects",
-                "solution": "Replaced manual code sync with shared NestJS package system (10 utility modules + Game Server Kit, auto-deploy)",
+                "solution": "Introduced shared NestJS packages and auto-deploy (10 utility modules + Game Server Kit)",
                 "result": "Upgrade rollout across 7 projects 3hrs→15min via automation, with shared-code changes consolidated into one package",
                 "proofLabel": "Upgrade rollout across 7 projects",
                 "evidenceProject": "shared-package-ci-platform"
               },
               {
-                "problem": "Slow marketing queries over fragmented ad platform data (Google Ads/Meta/TikTok)",
+                "problem": "Slow marketing queries across Google Ads/Meta/TikTok data",
                 "solution": "Normalized read path + index tuning to avoid full-scan on 100-column table",
                 "result": "Performance improved 97% (18s→0.5s)"
               },
               {
                 "problem": "Regulatory risk from game probability disclosure requirements",
-                "solution": "Integrated DynamicModule-based probability package across multi-game projects + CDK-based audit log pipeline",
+                "solution": "Integrated a DynamicModule probability package across games and built a CDK audit-log pipeline",
                 "result": "Achieved 94%+ integration test coverage (12 suites, 115 tests)"
               }
             ]
@@ -390,9 +383,9 @@
             "techRationale": "Implemented ElastiCache (Redis) distributed lock as AOP decorator to separate lock logic from business code. Evaluated 5 options for Jest 30 VM isolation and adopted poolSize=2.",
             "details": [
               {
-                "problem": "Slow CI pipeline (15m47s) due to test infrastructure inefficiency",
+                "problem": "CI TEST job averaged 15m47s, delaying feedback",
                 "solution": "Chose tsc-native ts-jest isolatedModules with explicit Entity types over @swc/jest, which had weaker decorator-metadata compatibility",
-                "result": "Cut CI time 61% (15m47s→6m06s); passed 81 suites/978 tests"
+                "result": "Cut average CI TEST job time 61% (15m47s→6m06s); passed 81 suites/978 tests"
               },
               {
                 "problem": "Game-server shared code split across 5 branches + one game's 17 game-data definition modules were 2+ years diverged from the published package",
@@ -422,7 +415,7 @@
               {
                 "problem": "Game-server cache logic was duplicated per project, increasing consistency and maintenance burden",
                 "solution": "Combined local LRU and distributed cache in a decorator-based hybrid AOP library to reduce network round-trips without the cross-instance inconsistency of local-only caching; separated tag indexing and single-flight per SRP",
-                "result": "Released cache library v0.5.0 — 262 tests across 28 suites passing, 100% code-standard compliance"
+                "result": "Released cache library v0.5.0 — 262 tests across 28 suites passing"
               }
             ],
             "techStack": [
@@ -779,8 +772,8 @@
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment (MSA-based)",
         "highlights": [
           {
-            "problem": "5+ monthly e-signature failures and clinical data-integrity risk caused by deadlock patterns",
-            "solution": "Reproduced and diagnosed FK shared-lock deadlocks, then adjusted transaction boundaries to prevent recurrence",
+            "problem": "5+ monthly e-signature failures and clinical data-integrity risk",
+            "solution": "Reproduced FK shared-lock deadlocks and adjusted transaction boundaries",
             "result": "Eliminated 5+ monthly e-signature processing failures"
           },
           {
@@ -833,7 +826,7 @@
               {
                 "problem": "5+ monthly Deadlock incidents causing e-signature notification loss in production",
                 "solution": "Reproduced shared-to-exclusive lock escalation via INNODB lock tables, applied SELECT FOR UPDATE preemption",
-                "result": "Reduced e-signature failures from 5+/month to zero, eliminating the lock contention root cause"
+                "result": "Resolved e-signature failures occurring 5+ times per month by eliminating the deadlock root cause"
               },
               {
                 "problem": "Synchronous notification processing causing cascading failures",
@@ -1028,14 +1021,14 @@
         "description": "Telemedicine and medication delivery platform startup with 300K cumulative downloads",
         "highlights": [
           {
-            "problem": "Regression risk increased as auth, appointment, and notification changes accumulated around an Express.js single-file app.js structure",
+            "problem": "Auth, appointment, and notification changes risked regressions in a single Express app.js",
             "solution": "3-stage progressive migration (single-file→layered→NestJS) + JS→TS",
             "result": "Reached 80% test coverage, zero incidents during major releases"
           },
           {
             "problem": "Manual prescription entry bottleneck (3-5min per case)",
             "solution": "Naver Clova OCR + MFDS (Korea FDA) API integration for full workflow automation",
-            "result": "Pharmacist processing time cut 90% (3-5min→30sec)"
+            "result": "Pharmacist processing time 3–5min→30sec per prescription"
           },
           {
             "problem": "Status reflection delay in consultation/dispensing/delivery (tens of seconds)",
@@ -1137,7 +1130,7 @@
               {
                 "problem": "Manual medication guide creation inefficiency",
                 "solution": "Developed automated medication guide generation using MFDS (Korea FDA) drug information API",
-                "result": "Reduced pharmacist processing time 90% (3-5min→30sec per prescription)"
+                "result": "Pharmacist processing time 3–5min→30sec per prescription"
               }
             ],
             "techStack": [
@@ -1161,14 +1154,14 @@
                 "result": "Migrated 10,000-line monolith to NestJS modules with zero production incidents during major releases"
               },
               {
-                "problem": "JavaScript lacking type safety causing runtime errors",
-                "solution": "Migrated JavaScript → TypeScript across the codebase",
-                "result": "Established type safety and improved developer experience"
+                "problem": "JavaScript code lacked type safety",
+                "solution": "Migrated JavaScript → TypeScript",
+                "result": "Improved type safety"
               },
               {
-                "problem": "No automated testing culture or regression safety net",
-                "solution": "Introduced TDD practices with comprehensive unit tests",
-                "result": "Achieved 80% unit test coverage, zero incidents during major releases"
+                "problem": "Regression risk without tests",
+                "solution": "Introduced TDD and unit tests",
+                "result": "Achieved 80% test coverage"
               }
             ],
             "techStack": [
@@ -1208,8 +1201,8 @@
             "result": "Digitized operations for 300+ students per semester"
           },
           {
-            "problem": "New matching and counseling features had to be added to a legacy PHP system, while direct changes carried high regression risk",
-            "solution": "Integrated an independent Spring Boot app through a constrained iframe/postMessage boundary and implemented a weighted-average matching algorithm",
+            "problem": "Adding matching and counseling to legacy PHP risked regressions",
+            "solution": "Integrated an independent Spring Boot app via an iframe/postMessage boundary with weighted-average matching",
             "result": "Launched the JOB Agent service while isolating the legacy-system impact surface"
           }
         ],
@@ -1220,7 +1213,7 @@
             "featured": true,
             "description": "Resolved manual learning management (attendance, completion, progress) causing low operational efficiency and frequent errors at educational institutions",
             "techRationale": "Selected Java/Spring Boot as enterprise standard for educational institution delivery. Enforced QR attendance dedup via DB composite unique key (date+userID). Used JasperReports for template-based bulk PDF certificate generation.",
-            "contribution": "Directly implemented core features over 10 months: QR attendance, Excel batch registration, PDF certificates, progress tracking. Responsible for backend development in a 6-person full-stack team.",
+            "contribution": "Directly implemented core features: QR attendance, Excel batch registration, PDF certificates, progress tracking. Responsible for backend development in a 6-person full-stack team.",
             "details": [
               {
                 "problem": "Manual attendance tracking prone to duplicates and errors",
@@ -1253,7 +1246,7 @@
             "featured": false,
             "description": "Resolved fragmented reservation, monitoring, and SMS systems preventing unified management at industrial complex control center",
             "techRationale": "Enforced meeting room booking conflict prevention via DB composite unique key (time+location). Used @Async for SMS to resolve API response delay — separate message queue deemed over-engineering for the traffic scale.",
-            "contribution": "Responsible for backend development over 4 months. Directly implemented reservation API, dashboard monitoring API, and async SMS integration.",
+            "contribution": "Responsible for backend development. Directly implemented reservation API, dashboard monitoring API, and async SMS integration.",
             "details": [
               {
                 "problem": "Scheduling conflicts from concurrent facility reservations",
@@ -1279,7 +1272,7 @@
             "featured": false,
             "description": "Resolved legacy PHP system's extensibility limitations and lack of structured scoring and counseling management",
             "techRationale": "Embedded independent Spring Boot app via iframe for non-invasive legacy PHP system extension. Used postMessage API for cross-frame communication. Implemented weighted average algorithm for multi-dimensional evaluation scoring.",
-            "contribution": "Responsible for backend development over 10 months. Designed iframe integration, implemented weighted scoring algorithm, postMessage state sync, and counselor back-office.",
+            "contribution": "Responsible for backend development. Designed iframe integration, implemented weighted scoring algorithm, postMessage state sync, and counselor back-office.",
             "details": [
               {
                 "problem": "Legacy PHP system could not be extended for new features",

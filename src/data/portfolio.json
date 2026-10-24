@@ -1404,6 +1404,7 @@
     },
     {
       "slug": "flex-work-schedule",
+      "printOrder": 14,
       "name": {
         "ko": "Work Schedule Planner — 제약을 숨기지 않는 근무 계획기",
         "en": "Work Schedule Planner — Scheduling That Surfaces Its Constraints"
@@ -1589,6 +1590,7 @@
     },
     {
       "slug": "ai-coding-harness",
+      "printOrder": 11,
       "name": {
         "ko": "AI CLI 런타임 격리와 영속 FIFO 전달을 구현한 공개 런처",
         "en": "A Public Launcher for AI CLI Isolation and Durable FIFO Delivery"
@@ -2141,6 +2143,7 @@
     },
     {
       "slug": "daesin-logistics-bot",
+      "printOrder": 12,
       "name": {
         "ko": "대신물류 배차 운영 원장",
         "en": "Daesin Logistics Dispatch Operations Ledger"
@@ -2682,6 +2685,7 @@
     },
     {
       "slug": "concert-reservation",
+      "printOrder": 13,
       "name": {
         "ko": "콘서트 예약 서비스",
         "en": "Concert Reservation Service"
@@ -2693,8 +2697,12 @@
         "en": "Concert reservation project that verifies same-seat booking and wallet payment with optimistic and Redisson locks, then reduces cache-stampede p95 from 5.74s to 676ms through cache warming and TTL changes in the public load-test report"
       },
       "description": {
-        "ko": "공개 저장소의 100-thread 통합 테스트는 동일 좌석 요청에서 예약 행 하나만 남는지, 사용자 단위 Redisson 락 아래 충전·결제 결과가 기대값과 일치하는지 검증한다. 결제 트랜잭션은 PENDING outbox 행을 만들고 scheduler가 Kafka 발행·실패 재시도를 맡는다. k6 예약 시나리오는 3,000 requests/s를 설정했지만 최대 VU는 2,400이므로 이를 달성 처리량이나 동시 사용자 수로 표현하지 않는다. 공개 보고서에 기록된 예약 오류율 0.64%와 p95 5.74s, 캐시 워밍·TTL 조정 후 p95 676ms만 관측 결과로 사용한다.",
-        "en": "Public-repository 100-thread integration tests verify that same-seat requests leave one reservation row and that per-user Redisson locking produces the expected charge and payment state. The payment transaction creates a PENDING outbox row, while a scheduler handles Kafka publication and failed-event retries. The k6 reservation scenario configures 3,000 requests/s with a 2,400 max-VU ceiling, so it is not presented as achieved throughput or concurrent users. Only the public report's observed 0.64% reservation error rate, p95 5.74s, and post-cache-warming/TTL p95 676ms are reported as outcomes."
+        "ko": "공개 저장소의 100-task 통합 테스트는 동일 좌석 요청에서 예약 행 하나만 남는지, 사용자 단위 Redisson 락 아래 충전·결제 결과가 기대값과 일치하는지 검증한다. 결제 트랜잭션은 PENDING outbox 행을 만들고 scheduler가 Kafka 발행·실패 재시도를 맡는다. k6 예약 시나리오는 3,000 requests/s를 설정했지만 최대 VU는 2,400이므로 이를 달성 처리량이나 동시 사용자 수로 표현하지 않는다. 공개 보고서에 기록된 예약 오류율 0.64%와 p95 5.74s, 캐시 워밍·TTL 조정 후 p95 676ms만 관측 결과로 사용한다.",
+        "en": "Public-repository 100-task integration tests verify that same-seat requests leave one reservation row and that per-user Redisson locking produces the expected charge and payment state. The payment transaction creates a PENDING outbox row, while a scheduler handles Kafka publication and failed-event retries. The k6 reservation scenario configures 3,000 requests/s with a 2,400 max-VU ceiling, so it is not presented as achieved throughput or concurrent users. Only the public report's observed 0.64% reservation error rate, p95 5.74s, and post-cache-warming/TTL p95 676ms are reported as outcomes."
+      },
+      "operationalLimits": {
+        "ko": ["통합 테스트는 CompletableFuture.runAsync로 비동기 작업 100개를 제출합니다. 전용 executor와 동시 출발 barrier가 없으므로 100개 스레드의 동시 진입을 보장하거나 입증하지 않습니다."],
+        "en": ["The integration tests submit 100 asynchronous tasks through CompletableFuture.runAsync. Without a dedicated executor or a start barrier, they do not guarantee or establish simultaneous entry by 100 threads."]
       },
       "role": {
         "ko": "항해 플러스 백엔드 6기 개인 과제 · 공개 저장소 커밋 39건 모두 본인 작성",
@@ -2704,12 +2712,12 @@
       "problemSolving": [
         {
           "problem": {
-            "ko": "동일 좌석에 100개 thread가 동시에 예약을 시도할 때 중복 예약 위험",
-            "en": "Duplicate-reservation risk when 100 threads target the same seat"
+            "ko": "동일 좌석을 대상으로 비동기 예약 작업 100개를 제출할 때 중복 예약 위험",
+            "en": "Duplicate-reservation risk when 100 asynchronous booking tasks target the same seat"
           },
           "process": {
-            "ko": "ConcertSeat @Version 낙관적 락과 100-thread Spring 통합 테스트로 충돌 경로 검증",
-            "en": "Exercised the conflict path with ConcertSeat @Version optimistic locking and a 100-thread Spring integration test"
+            "ko": "ConcertSeat @Version 낙관적 락과 100-task Spring 통합 테스트로 충돌 경로 검증",
+            "en": "Exercised the conflict path with ConcertSeat @Version optimistic locking and a 100-task Spring integration test"
           },
           "result": {
             "ko": "테스트 종료 후 예약 행 1개와 reserved 상태를 assertion으로 확인",
@@ -2726,8 +2734,8 @@
             "en": "Serialized per-user charge and payment paths with a Redisson distributed lock (userWalletLock:{userId})"
           },
           "result": {
-            "ko": "100-thread 충전 테스트에서 최종 잔액을 기대 합계와 비교하고 결제 테스트에서 단일 결제 상태를 확인",
-            "en": "A 100-thread charge test compares the final balance with the expected sum, while the payment test checks a single payment state"
+            "ko": "100-task 충전 테스트에서 최종 잔액을 기대 합계와 비교하고 결제 테스트에서 단일 결제 상태를 확인",
+            "en": "A 100-task charge test compares the final balance with the expected sum, while the payment test checks a single payment state"
           }
         },
         {
@@ -2819,13 +2827,13 @@
       ],
       "highlights": {
         "ko": [
-          "동일 좌석 100-thread 통합 테스트에서 예약 행 1개 확인",
+          "동일 좌석 100-task 통합 테스트에서 예약 행 1개 확인",
           "사용자 지갑·결제를 Redisson 사용자 단위 락으로 직렬화",
           "캐시 워밍·TTL 조정 후 공개 보고서 p95 5.74s → 676ms",
           "결제 TX의 PENDING outbox와 scheduler 발행·재시도 경로 구현"
         ],
         "en": [
-          "One reservation row after a 100-thread same-seat integration test",
+          "One reservation row after a 100-task same-seat integration test",
           "Per-user Redisson serialization for wallet and payment paths",
           "Public-report p95 5.74s → 676ms after cache warming and TTL changes",
           "PENDING outbox in the payment transaction plus scheduler publication and retry paths"
@@ -2893,14 +2901,14 @@
       ],
       "techDecisions": {
         "ko": [
-          "좌석 선점에 @Version 낙관적 락: 100-thread 동일 좌석 통합 테스트가 예약 행 1개를 assertion",
-          "결제·충전에 Redisson 사용자 단위 락: 100-thread 테스트가 결제 상태와 최종 잔액을 기대값과 비교",
+          "좌석 선점에 @Version 낙관적 락: 100-task 동일 좌석 통합 테스트가 예약 행 1개를 assertion",
+          "결제·충전에 Redisson 사용자 단위 락: 100-task 테스트가 결제 상태와 최종 잔액을 기대값과 비교",
           "Redis Sorted Set 대기열: 입장 순서와 만료 상태를 score로 관리",
           "결제 TX에서 PENDING outbox 생성 후 scheduler가 발행 실패 상태와 재시도 경로를 관리"
         ],
         "en": [
-          "@Version optimistic locking for seats: a 100-thread same-seat integration test asserts one reservation row",
-          "Per-user Redisson locking for payment and charging: 100-thread tests compare payment state and final balance with expected values",
+          "@Version optimistic locking for seats: a 100-task same-seat integration test asserts one reservation row",
+          "Per-user Redisson locking for payment and charging: 100-task tests compare payment state and final balance with expected values",
           "Redis Sorted Set queue: scores track entry order and expiry state",
           "Create a PENDING outbox record in the payment transaction, then let the scheduler manage publication-failure and retry paths"
         ]
@@ -3115,6 +3123,7 @@
     },
     {
       "slug": "family-budget-demo",
+      "printOrder": 15,
       "name": {
         "ko": "Family Budget — 함께 기록하고 월말을 닫는 부부 가계부",
         "en": "Family Budget — A Shared Household Budget for Daily Entry and Month-End Close"

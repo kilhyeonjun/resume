@@ -29,12 +29,15 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
       <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
         {lang === 'ko' ? '병목을 좁힌 과정, 설계를 선택한 이유, 검증한 결과로 읽는 백엔드 사례' : 'Backend case studies: the bottleneck, the design decision, and the verified result'}
       </p>
-      <div class="mt-4 text-sm">
+      <nav class="portfolio-shortcuts mt-4 flex flex-wrap items-center gap-3 text-sm" aria-label={lang === 'ko' ? '포트폴리오 탐색' : 'Portfolio navigation'}>
+        <a href="#selected-cases" class="touch-target">{lang === 'ko' ? '대표 사례' : 'Selected cases'}</a>
+        {archiveProjects.length > 0 && <a href="#public-code" class="touch-target">{lang === 'ko' ? '공개 코드·데모 바로가기' : 'Jump to public code & demos'}</a>}
         <a href={`${localePrefix}/portfolio-print`} class="touch-target inline-flex items-center rounded-lg border border-gray-300 px-4 font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-primary-300">{lang === 'ko' ? 'PDF 미리보기' : 'PDF preview'}</a>
-      </div>
+      </nav>
     </header>
 
-    <div class="portfolio-grid">
+    <p id="selected-cases" class="dossier-label portfolio-section-label">{lang === 'ko' ? '대표 엔지니어링 사례' : 'SELECTED ENGINEERING CASES'}</p>
+    <div class="portfolio-grid" aria-labelledby="selected-cases">
       {featuredProjects.map((project, index) => {
         const projectName = project.name[lang] || project.name.ko;
         const projectSummary = project.summary[lang] || project.summary.ko;
@@ -153,7 +156,7 @@ const archiveProjects = selectListedPortfolioProjects(rawProjects);
     </div>
 
     {archiveProjects.length > 0 && (
-      <section class="portfolio-archive" aria-labelledby="archive-title">
+      <section id="public-code" class="portfolio-archive" aria-labelledby="archive-title">
         <span class="dossier-label">{lang === 'ko' ? '공개 코드와 데모' : 'PUBLIC CODE & DEMOS'}</span>
         <h2 id="archive-title">{lang === 'ko' ? '공개 프로젝트 · 코드와 데모' : 'Public projects · code and demos'}</h2>
         <div>

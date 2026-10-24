@@ -39,7 +39,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     }
 
     html {
-      font-size: 8.5pt;
+      font-size: 9pt;
     }
 
     body {
@@ -105,9 +105,11 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
 
     .item {
       margin-bottom: 6px;
-      page-break-inside: avoid;
-      break-inside: avoid;
     }
+
+    .item-header, li { break-inside: avoid; }
+    .role-heading { break-after: avoid-page; }
+    .role-heading + ul { break-before: avoid-page; }
 
     .item-header {
       margin-bottom: 4px;
@@ -152,12 +154,12 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     }
 
     body[data-lang='en'] {
-      font-size: 8pt;
+      font-size: 9pt;
       line-height: 1.2;
       padding: 6mm;
     }
     body[data-lang='en'] li {
-      font-size: 8pt;
+      font-size: 9pt;
       margin-bottom: 2px;
     }
 
@@ -185,7 +187,8 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
         widows: 2;
       }
 
-      body {
+      body,
+      body[data-lang='en'] {
         padding: 0;
       }
 
@@ -241,22 +244,6 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     </section>
   )}
 
-  {data.coreCompetencies && data.coreCompetencies.length > 0 && (
-    <section>
-      <h2>{labels.coreCompetencies.toUpperCase()}</h2>
-      {data.coreCompetencies.map((comp) => (
-        <div class="competency-group">
-          <p><strong>{comp.category}</strong></p>
-          <ul>
-            {comp.items.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </section>
-  )}
-
   {[{ sectionTitle: labels.experience, items: data.experience }, { sectionTitle: labels.sideProjects, items: data.sideProjects }].map(({ sectionTitle, items }) => items.length > 0 && (
     <section>
       <h2>{sectionTitle.toUpperCase()}</h2>
@@ -264,14 +251,14 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
         <div class="item">
           <div class="item-header">
             <h3>
-              <span class="company">{exp.company}</span> — <span class="position">{exp.positions ? exp.positions[0].title : exp.position}</span>
+              <span class="company">{exp.company}</span>{!exp.positions?.length && exp.position && <> — <span class="position">{exp.position}</span></>}
             </h3>
             <p class="date">{exp.startDate.replace('-', '.')} - {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</p>
           </div>
           {exp.description && <p>{exp.description}</p>}
-          {exp.positions && exp.positions.length > 1 && exp.positions.map((pos) => (
+          {exp.positions && exp.positions.length > 0 && exp.positions.map((pos) => (
             <div>
-              <p><strong>{pos.title}</strong> ({pos.startDate.replace('-', '.')} - {pos.current ? labels.current : pos.endDate?.replace('-', '.')})</p>
+              <p class="role-heading"><strong>{pos.title}</strong> ({pos.startDate.replace('-', '.')} - {pos.current ? labels.current : pos.endDate?.replace('-', '.')})</p>
               {pos.highlights && pos.highlights.length > 0 && (
                 <ul>
                   {pos.highlights.map((highlight) => (
@@ -281,7 +268,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
               )}
             </div>
           ))}
-          {!exp.positions && exp.highlights && exp.highlights.length > 0 && (
+          {exp.highlights && exp.highlights.length > 0 && (
             <ul>
               {exp.highlights.map((highlight) => (
                 <li>{highlight.problem}. {highlight.solution}. {highlight.result}.</li>
@@ -295,6 +282,20 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       ))}
     </section>
   ))}
+
+  {data.coreCompetencies && data.coreCompetencies.length > 0 && (
+    <section>
+      <h2>{labels.coreCompetencies.toUpperCase()}</h2>
+      {data.coreCompetencies.map((comp) => (
+        <div class="competency-group">
+          <h3>{comp.category}</h3>
+          <ul>
+            {comp.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      ))}
+    </section>
+  )}
 
   {data.skills && data.skills.length > 0 && (
     <section>

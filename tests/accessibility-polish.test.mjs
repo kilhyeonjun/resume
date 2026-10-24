@@ -283,17 +283,20 @@ test('portfolio detail index follows every visually rendered H2 section in KO an
       .map((entry) => entry.name);
     for (const path of slugs.flatMap((slug) => [`/portfolio/${slug}/`, `/en/portfolio/${slug}/`])) {
       const page = await browser.newPage();
-      await page.setViewport({ width: 1440, height: 900 });
-      // Index links and section IDs are server-rendered; asset/network idle is not needed.
       await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' });
-      const result = await page.$eval('.portfolio-detail', (article) => ({
-        sections: [...article.querySelectorAll(':scope > section')]
-          .filter((section) => section.querySelector(':scope > h2'))
-          .map((section) => section.id),
-        links: [...article.querySelectorAll('.evidence-index a')].map((link) => link.getAttribute('href').slice(1)),
-      }));
-      assert.ok(result.sections.every(Boolean), `${path} has H2 sections without ids`);
-      assert.deepEqual([...result.links].sort(), [...result.sections].sort(), `${path} index must cover rendered H2 sections`);
+      await page.evaluate(() => document.fonts.ready);
+      for (const width of [390, 780, 1440]) {
+        await page.setViewport({ width, height: 900 });
+        const result = await page.$eval('.portfolio-detail', (article) => ({
+          sections: [...article.querySelectorAll(':scope > section')]
+            .filter((section) => section.querySelector(':scope > h2'))
+            .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)
+            .map((section) => section.id),
+          links: [...article.querySelectorAll('.evidence-index a')].map((link) => link.getAttribute('href').slice(1)),
+        }));
+        assert.ok(result.sections.every(Boolean), `${path} has H2 sections without ids`);
+        assert.deepEqual(result.links, result.sections, `${path} at ${width}px index must match visual reading order`);
+      }
       await page.close();
     }
   } finally {

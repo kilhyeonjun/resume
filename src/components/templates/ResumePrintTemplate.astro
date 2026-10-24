@@ -149,7 +149,7 @@ function processSummary(text: string): string {
       align-items: center;
       gap: 1mm;
       margin-top: 2mm;
-      font-size: 8pt;
+      font-size: 9pt;
       line-height: 1.35;
     }
     .contact-row {
@@ -186,8 +186,7 @@ function processSummary(text: string): string {
     /* Experience */
     .experience-item {
       margin-bottom: 2mm;
-      break-inside: avoid;
-      page-break-inside: avoid;
+      break-inside: auto;
     }
 
     .experience-header {
@@ -198,11 +197,11 @@ function processSummary(text: string): string {
     }
 
     .position { font-size: 10pt; font-weight: 700; color: #111827; min-width: 0; }
-    .date { font-size: 8pt; color: #6b7280; white-space: nowrap; flex-shrink: 0; }
+    .date { font-size: 9pt; color: #6b7280; white-space: nowrap; flex-shrink: 0; }
     .company { font-size: 9pt; font-weight: 600; color: #1d4ed8; margin-bottom: 1mm; }
     .company a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 2px; }
-    .description { font-size: 8pt; color: #374151; margin-bottom: 1mm; }
-    .project-line { font-size: 7.5pt; line-height: 1.25; margin-bottom: 0.5mm; }
+    .description { font-size: 9pt; color: #374151; margin-bottom: 1mm; }
+    .project-line { font-size: 9pt; line-height: 1.25; margin-bottom: 0.5mm; }
 
     .highlights { list-style: none; padding-left: 0; margin-bottom: 1mm; }
 
@@ -242,18 +241,18 @@ function processSummary(text: string): string {
     .skill-group { margin-bottom: 2mm; font-size: 9pt; line-height: 1.4; break-inside: avoid; }
     .skill-category { font-weight: 700; color: #1f2937; }
     .skill-inline { color: #374151; }
-    .skill-desc { display: block; font-size: 8pt; color: #6b7280; margin-top: 0.3mm; line-height: 1.35; }
+    .skill-desc { display: block; font-size: 9pt; color: #6b7280; margin-top: 0.3mm; line-height: 1.35; }
 
     /* Education */
     .education-item { margin-bottom: 1.5mm; break-inside: avoid; }
     .institution { font-size: 9pt; font-weight: 600; color: #111827; }
-    .degree { font-size: 8pt; color: #1d4ed8; }
-    .edu-date { font-size: 8pt; color: #6b7280; }
+    .degree { font-size: 9pt; color: #1d4ed8; }
+    .edu-date { font-size: 9pt; color: #6b7280; }
 
     /* Certifications & Learning */
     .cert-item { margin-bottom: 1.5mm; break-inside: avoid; }
     .cert-name { font-size: 9pt; font-weight: 600; color: #111827; }
-    .cert-issuer { font-size: 8pt; color: #6b7280; }
+    .cert-issuer { font-size: 9pt; color: #6b7280; }
 
 
     /* Core Competencies */
@@ -265,22 +264,22 @@ function processSummary(text: string): string {
     .training-item { margin-bottom: 1.5mm; break-inside: avoid; page-break-inside: avoid; }
     .training-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5mm; }
     .training-name { font-size: 9pt; font-weight: 600; color: #111827; }
-    .training-org { font-size: 8pt; color: #1d4ed8; margin-bottom: 0.5mm; }
-    .training-desc { font-size: 8pt; color: #374151; }
-    .training-achievement { font-size: 8pt; color: #374151; font-style: italic; }
+    .training-org { font-size: 9pt; color: #1d4ed8; margin-bottom: 0.5mm; }
+    .training-desc { font-size: 9pt; color: #374151; }
+    .training-achievement { font-size: 9pt; color: #374151; font-style: italic; }
     /* Open Source */
     .os-repo { margin-bottom: 1mm; }
     .os-repo-name { font-size: 9pt; font-weight: 600; color: #111827; margin-bottom: 0.3mm; }
     .os-list { margin: 0; padding-left: 0; list-style: none; }
-    .os-list li { font-size: 8pt; color: #374151; line-height: 1.4; margin-bottom: 0.2mm; }
+    .os-list li { font-size: 9pt; color: #374151; line-height: 1.4; margin-bottom: 0.2mm; }
     .os-date { color: #6b7280; white-space: nowrap; }
 
     /* Technical Writing */
     .tw-item { margin-bottom: 1mm; }
     .tw-title { font-size: 9pt; font-weight: 600; color: #111827; }
     .tw-title a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 2px; }
-    .tw-meta { font-size: 8pt; color: #6b7280; }
-    .tw-desc { font-size: 8pt; color: #374151; margin-top: 1pt; }
+    .tw-meta { font-size: 9pt; color: #6b7280; }
+    .tw-desc { font-size: 9pt; color: #374151; margin-top: 1pt; }
     .tw-desc a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 2px; }
 
     /* Back button (web only) */
@@ -307,22 +306,26 @@ function processSummary(text: string): string {
     body.lang-ko .experience-item { margin-bottom: 1.4mm; }
     body.lang-ko .competency-group { margin-bottom: 0.7mm; }
     body.lang-ko section { margin-bottom: 1.2mm; }
-    body.lang-ko .description { font-size: 8.5pt; }
+    body.lang-ko .description { font-size: 9pt; }
 
     /* English: optimized for readability within 2 pages */
-    body.lang-en { font-size: 8.5pt; line-height: 1.27; }
-    body.lang-en .highlights li { font-size: 8pt; line-height: 1.22; }
-    body.lang-en .summary-text { font-size: 8pt; line-height: 1.3; }
-    body.lang-en .skill-group { font-size: 8pt; line-height: 1.25; }
+    body.lang-en { font-size: 9pt; line-height: 1.27; }
+    body.lang-en .highlights li { font-size: 9pt; line-height: 1.22; }
+    body.lang-en .summary-text { font-size: 9pt; line-height: 1.3; }
+    body.lang-en .skill-group { font-size: 9pt; line-height: 1.25; }
     body.lang-en .resume { padding: 0 9mm; }
     body.lang-en .section-title { font-size: 10.5pt; margin: 0 0 1mm; }
     body.lang-en .header { margin-bottom: 1mm; padding-bottom: 0.5mm; }
     body.lang-en section { margin-bottom: 1mm; }
     body.lang-en .experience-item { margin-bottom: 1mm; }
     body.lang-en .competency-group { margin-bottom: 0.3mm; }
-    body.lang-en .description { font-size: 7.5pt; }
+    body.lang-en .description { font-size: 9pt; }
     body.lang-en .name { font-size: 18pt; }
     body.lang-en .title { font-size: 9.5pt; }
+
+    .section-title, .experience-header, .company, .description { break-after: avoid-page; }
+    .experience-header { break-inside: avoid; }
+    .highlights li { break-inside: avoid; orphans: 2; widows: 2; }
 
     @media print {
       html { font-size: 100%; }
@@ -375,47 +378,26 @@ function processSummary(text: string): string {
       </section>
     )}
 
-    <!-- Core Competencies -->
-    {data.coreCompetencies && data.coreCompetencies.length > 0 && (
-      <section>
-        <h2 class="section-title">{labels.coreCompetencies}</h2>
-        <div class="competency-grid">
-          {data.coreCompetencies.map((comp) => (
-            <div class="competency-group">
-              <p class="competency-category">{comp.category}</p>
-              <ul class="highlights">
-                {comp.items.map((item) => {
-                  const parts = item.split(' — ');
-                  return parts.length > 1
-                    ? <li><span class="highlight-bullet">•</span><span set:html={`<b>${parts[0]}</b> — ${enhance(parts.slice(1).join(' — '), 3)}`} /></li>
-                    : <li><span class="highlight-bullet">•</span><span set:html={enhance(item, 3)} /></li>;
-                })}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
-
     <!-- Experience -->
     {[{ sectionTitle: labels.experience, items: data.experience }, { sectionTitle: labels.sideProjects, items: data.sideProjects }].map(({ sectionTitle, items }) => items.length > 0 && (
       <section>
         <h2 class="section-title">{sectionTitle}</h2>
         {items.map((exp) => {
-          const currentTitle = exp.positions ? exp.positions[0].title : exp.position;
+          const hasPositions = Boolean(exp.positions?.length);
+          const currentTitle = hasPositions ? exp.company : exp.position;
           return (
             <div class="experience-item">
               <div class="experience-header">
-                <span class="position">{currentTitle}</span>
+                <h3 class="position">{currentTitle}</h3>
                 <span class="date">{exp.startDate.replace('-', '.')} — {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</span>
               </div>
               <p class="company">
-                {exp.company} <a href={`${resumeUrl}/experience/${exp.slug}`}>[{lang === 'ko' ? '상세' : 'Detail'}]</a>
+                {!hasPositions && exp.company} <a href={`${resumeUrl}/experience/${exp.slug}`}>[{lang === 'ko' ? '상세' : 'Detail'}]</a>
               </p>
               {exp.description && (
                 <p class="description">{exp.description}</p>
               )}
-              {exp.positions && exp.positions.length > 1 && exp.positions.map((pos) => (
+              {exp.positions && exp.positions.length > 0 && exp.positions.map((pos) => (
                 <div>
                   <div class="experience-header" style="margin-top:2mm; margin-bottom:1mm;">
                     <span class="position" style="font-size:9pt; font-weight:600; color:#374151;">{pos.title}</span>
@@ -430,7 +412,7 @@ function processSummary(text: string): string {
                   )}
                 </div>
               ))}
-              {!exp.positions && exp.highlights && exp.highlights.length > 0 && (
+              {exp.highlights && exp.highlights.length > 0 && (
                 <ul class="highlights">
                   {exp.highlights.map((highlight) => (
                     <li><span class="highlight-bullet">•</span><span class="highlight-problem">{highlight.problem}</span> — <span class="highlight-solution">{highlight.solution}</span>, <strong class="highlight-result" set:html={enhance(highlight.result)} /></li>
@@ -446,6 +428,24 @@ function processSummary(text: string): string {
       </section>
     ))}
 
+
+    {data.coreCompetencies && data.coreCompetencies.length > 0 && (
+      <section>
+        <h2 class="section-title">{labels.coreCompetencies}</h2>
+        <div class="competency-grid">
+          {data.coreCompetencies.map((comp) => (
+            <div class="competency-group">
+              <h3 class="competency-category">{comp.category}</h3>
+              <ul class="highlights">
+                {comp.items.map((item) => (
+                  <li><span class="highlight-bullet">•</span><span set:html={enhance(item, 3)} /></li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
 
     <!-- Social Proof: Technical Writing + Open Source (after experience for visibility) -->
     <div class="two-col-grid">

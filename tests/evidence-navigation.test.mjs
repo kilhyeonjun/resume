@@ -65,7 +65,15 @@ test('localized evidence links navigate by keyboard to their public case and doc
         assert.ok((await page.$eval('h1', (element) => element.textContent)).includes(project.name[lang]));
       }
       await page.goto(`${origin}${prefix}/`);
-      const actions = await page.$$eval('.resume-actions a', (links) => links.map((link) => ({
+      const download = await page.$eval('.resume-actions a[download]', (link) => ({
+        href: link.getAttribute('href'), type: link.getAttribute('type'),
+      }));
+      assert.equal(download.href, `/pdf/resume-hr-${lang}.pdf`);
+      assert.equal(download.type, 'application/pdf');
+      await page.focus('.resume-documents summary');
+      await page.keyboard.press('Enter');
+      assert.equal(await page.$eval('.resume-documents', (details) => details.open), true);
+      const actions = await page.$$eval('.resume-documents nav a, .resume-actions a:not([download])', (links) => links.map((link) => ({
         href: link.getAttribute('href'), text: link.textContent.trim(),
       })));
       assert.deepEqual(new Set(actions.map((link) => link.href)), new Set([

@@ -1,6 +1,7 @@
 /** Generate complete, font-pinned resume PDFs; reject overflow instead of cropping. */
 import puppeteer, { type Browser } from 'puppeteer';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import type { ResumeData } from '../src/content.config';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -66,12 +67,28 @@ async function generatePDF(browser: Browser, baseUrl: string, config: PDFConfig,
       const units: string[] = [];
       for (let node = walker.nextNode(); node; node = walker.nextNode()) {
         // Explicit surface exclusions only: accidental display:none must still fail completeness.
-        if (node.parentElement?.closest('script, style, svg, .no-print, .back-link, .listed-project-summary')) continue;
+        if (node.parentElement?.closest('script, style, svg, .no-print, .back-link')) continue;
         const text = node.textContent?.trim();
         if (text) units.push(text);
       }
       return units;
     });
+    if (config.filename.startsWith('career-detail-')) {
+      const lang = config.filename.endsWith('-ko.pdf') ? 'ko' : 'en';
+      const { main } = JSON.parse(await readFile(resolve(__dirname, `../src/content/resume/${lang}.json`), 'utf8')) as { main: ResumeData };
+      const normalize = (text: string) => text.normalize('NFKC').replace(/[\s\u200b\u00ad]+/gu, '');
+      const rendered = normalize(expectedText.join(''));
+      for (const experience of main.experience) {
+        for (const position of experience.positions ?? []) {
+          const required = [position.title, ...position.highlights.flatMap(highlight => [highlight.problem, highlight.solution, highlight.result])];
+          for (const text of required) {
+            if (!rendered.includes(normalize(text))) {
+              throw new Error(`Missing career source content for ${experience.company}: ${text}`);
+            }
+          }
+        }
+      }
+    }
     const bytes = await page.pdf({ format: 'A4', preferCSSPageSize: true, printBackground: config.printBackground });
     const pages = await validatePDF(bytes, expectedText, config.maxPages);
     await mkdir(outputDir, { recursive: true });

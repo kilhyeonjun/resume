@@ -10,9 +10,9 @@ import test from 'node:test';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const font = await readFile(new URL('../public/fonts/PretendardVariable.woff2', import.meta.url));
 
-async function rejectedPDF(body, { fontAvailable = true } = {}) {
+async function rejectedPDF(body, { fontAvailable = true, filename = 'resume-hr-ko.pdf' } = {}) {
   const output = await mkdtemp(join(tmpdir(), 'resume-release-reject-'));
-  const destination = join(output, 'resume-hr-ko.pdf');
+  const destination = join(output, filename);
   await writeFile(destination, 'previous valid release');
   const server = createServer((request, response) => {
     if (request.url === '/font.woff2') {
@@ -64,6 +64,11 @@ test('HR overflow fails instead of silently publishing its first two pages', { t
 test('missing bundled font cannot pass through a system fallback', { timeout: 30000 }, async () => {
   const text = await rejectedPDF('<p>길현준 Backend Engineer</p>', { fontAvailable: false });
   assert.match(text, /Required bundled Resume Print font is unavailable/);
+});
+
+test('a career PDF cannot omit source positions even when its rendered text is complete', { timeout: 30000 }, async () => {
+  const text = await rejectedPDF('<p>Projects without the source role history</p>', { filename: 'career-detail-ko.pdf' });
+  assert.match(text, /Missing career source content/);
 });
 
 test('hidden required content cannot redefine PDF completeness', { timeout: 30000 }, async () => {

@@ -284,7 +284,8 @@ test('portfolio detail index follows every visually rendered H2 section in KO an
     for (const path of slugs.flatMap((slug) => [`/portfolio/${slug}/`, `/en/portfolio/${slug}/`])) {
       const page = await browser.newPage();
       await page.setViewport({ width: 1440, height: 900 });
-      await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
+      // Index links and section IDs are server-rendered; asset/network idle is not needed.
+      await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' });
       const result = await page.$eval('.portfolio-detail', (article) => ({
         sections: [...article.querySelectorAll(':scope > section')]
           .filter((section) => section.querySelector(':scope > h2'))

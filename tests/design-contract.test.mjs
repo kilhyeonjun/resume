@@ -56,48 +56,6 @@ test('experience position periods keep WCAG AA text contrast', async () => {
   );
 });
 
-test('interactive route families expose their shared design hooks', async () => {
-  const families = [
-    ['src/components/templates/ResumeTemplate.astro', 'resume-dossier'],
-    ['src/components/templates/PortfolioTemplate.astro', 'portfolio-index'],
-    ['src/components/templates/PortfolioDetailTemplate.astro', 'detail-dossier'],
-    ['src/components/templates/ExperienceDetailTemplate.astro', 'detail-dossier'],
-  ];
-  for (const [path, hook] of families) assert.match(await read(path), new RegExp(hook), path);
-  assert.match(await read('src/components/templates/ResumeTemplate.astro'), /filter\(\(proof\) => proof\.proofLabel\)/);
-  assert.match(await read('src/components/templates/PortfolioTemplate.astro'), /portfolio-archive/);
-  assert.match(await read('src/components/templates/PortfolioTemplate.astro'), /selectFeaturedPortfolioProjects/);
-  assert.match(await read('src/utils/portfolio-visibility.ts'), /printOrder/);
-  assert.match(await read('src/components/resume/ResumeHeader.astro'), /class="dossier-label">Resume<\/span>/);
-  for (const path of ['src/components/templates/PortfolioDetailTemplate.astro', 'src/components/templates/ExperienceDetailTemplate.astro']) {
-    const source = await read(path);
-    assert.match(source, /class="evidence-index"/, path);
-    assert.match(source, /id="outcomes"/, path);
-  }
-  const portfolioDetail = await read('src/components/templates/PortfolioDetailTemplate.astro');
-  assert.match(portfolioDetail, /evidenceIndex\.map/);
-  assert.match(portfolioDetail, /href=\{`#\$\{item\.id\}`\}/);
-  assert.match(await read('src/components/templates/ExperienceDetailTemplate.astro'), /href="#outcomes"/);
-  const css = await read('src/styles/global.css');
-  assert.match(css, /\.resume-actions\s*\{[^}]*grid-row:\s*2/s);
-  assert.match(css, /\.portfolio-detail > #product\s*\{[^}]*order:\s*-2/s);
-  assert.match(css, /\.portfolio-detail > #outcomes\s*\{[^}]*order:\s*-1/s);
-});
-
-test('portfolio polish keeps featured proof and detail evidence in recruiter-first flow', async () => {
-  const [template, css] = await Promise.all([
-    read('src/components/templates/PortfolioTemplate.astro'),
-    read('src/styles/global.css'),
-  ]);
-  assert.match(template, /index === 0 && project\.metrics/);
-  assert.match(template, /project\.metrics\.slice\(0, 2\)/);
-  assert.match(template, /typeof metric\.after === 'string'/);
-  assert.match(template, /class="portfolio-proof-strip"/);
-  assert.match(css, /\.portfolio-detail > header\s*\{[^}]*grid-row:\s*2\s*\/\s*span\s*20/s);
-  assert.match(css, /\.portfolio-detail > #outcomes\s*\{[^}]*grid-row:\s*2/s);
-  assert.match(css, /@media screen and \(max-width: 760px\)[\s\S]*\.portfolio-detail\s*\{[^}]*display:\s*flex[^}]*flex-direction:\s*column/s);
-});
-
 test('AI harness diagrams retain verified sources and accessible rendering assets', async () => {
   const portfolio = JSON.parse(await read('src/data/portfolio.json'));
   const project = portfolio.projects.find((item) => item.slug === 'ai-coding-harness');

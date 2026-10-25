@@ -432,6 +432,11 @@ function formatPeriod(period: { start: string; end: string }): string {
       margin-right: 1mm;
     }
 
+    /* Keep the short lesson recap together instead of orphaning its last bullet. */
+    .project-lessons {
+      break-inside: avoid;
+    }
+
     /* Listed projects box */
     .listed-box {
       display: block;
@@ -769,14 +774,14 @@ function formatPeriod(period: { start: string; end: string }): string {
             )}
 
             {!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && lessons && lessons.length > 0 && (
-              <>
+              <section class="project-lessons">
                 <p class="bullet-section-heading">{currentLabels.lessons}</p>
                 <ul class="bullet-list">
                   {lessons.slice(0, 2).map((item) => (
                     <li><span class="bullet">&bull;</span>{item}</li>
                   ))}
                 </ul>
-              </>
+              </section>
             )}
             {project.slug === 'realtime-game-chat' && architectureDiagram && (
               <figure class="arch-diagram arch-diagram-wide">

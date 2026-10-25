@@ -186,8 +186,8 @@
             "highlights": [
               {
                 "problem": "Single-shard chat bottleneck at 6,000 msg/s: ack p95 767ms, 99.39% acceptance",
-                "solution": "Personally led sharding and load validation. Separately established shared done criteria and verification templates for the 3-person BE/FE/AI part, with capacity targets (6,000 CCU, 18,000 RPS, 90,000 RPS burst) in quarterly OKRs",
-                "result": "Load-test ack p95 767ms→6.6ms, scaling 1→4 shards; part work tracked through shared done criteria and OKRs",
+                "solution": "Personally led sharding and load validation. Separately set shared done criteria and verification templates for the 3-person BE/FE/AI part, tracking work in quarterly OKRs with capacity targets (6,000 CCU, 18,000 RPS, 90,000 RPS burst)",
+                "result": "Load-test ack p95 767ms→6.6ms, scaling 1→4 shards",
                 "proofLabel": "Load-test",
                 "evidenceProject": "realtime-game-chat"
               },

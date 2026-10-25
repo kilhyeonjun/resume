@@ -168,6 +168,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       h2,
       h3,
       .item-header,
+      .experience-description,
       .competency-group > p {
         page-break-after: avoid;
         break-after: avoid-page;
@@ -255,7 +256,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
             </h3>
             <p class="date">{exp.startDate.replace('-', '.')} - {exp.current ? labels.current : exp.endDate?.replace('-', '.')}</p>
           </div>
-          {exp.description && <p>{exp.description}</p>}
+          {exp.description && <p class="experience-description">{exp.description}</p>}
           {exp.positions && exp.positions.length > 0 && exp.positions.map((pos) => (
             <div>
               <p class="role-heading"><strong>{pos.title}</strong> ({pos.startDate.replace('-', '.')} - {pos.current ? labels.current : pos.endDate?.replace('-', '.')})</p>

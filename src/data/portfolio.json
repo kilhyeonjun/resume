@@ -1062,7 +1062,7 @@
         "image": { "ko": "/images/portfolio/ai-agent-control-platform-boundary-ko.svg", "en": "/images/portfolio/ai-agent-control-platform-boundary-en.svg" },
         "title": { "ko": "정책 집행과 수집 장애의 경계", "en": "Policy enforcement and collection fail separately" },
         "alt": { "ko": "가드 서버, 기기 로컬 가드와 사용량 동기화, AWS 수집 호스트의 수집 서버와 ClickHouse를 구분한 논리 배치도", "en": "Logical view separating the guard server, device-local enforcement and usage sync from the collection server and ClickHouse on a shared AWS host" },
-        "caption": { "ko": "2026년 사례의 논리적 배치입니다. 등록·보고 실패가 로컬 정책 집행을 중단하지 않도록 책임을 나눴고, 수집 호스트에서는 앱·컨테이너 상한과 DB 예산을 함께 관리했습니다. 설계·코드상 장애 경계를 설명하며, 새로운 실기기 장애 시험 결과나 정확한 네트워크·보안 구성을 뜻하지 않습니다.", "en": "Logical deployment of the 2026 case. Registration and reporting are separated from local enforcement; the collection host has application/container caps and a database budget. This describes the design/code failure boundary, not a new physical-device outage test or an exact network/security topology." }
+        "caption": { "ko": "2026년 사례의 논리적 배치입니다. 등록·보고 실패가 로컬 정책 집행을 중단하지 않도록 책임을 나눴고, 수집 호스트에서는 앱·컨테이너 상한과 DB 예산을 함께 관리했습니다. 설계 문서에 명시된 장애 경계를 설명하며, 새로운 실기기 장애 시험 결과나 정확한 네트워크·보안 구성을 뜻하지 않습니다.", "en": "Logical deployment of the 2026 case. Registration and reporting are separated from local enforcement; the collection host has application/container caps and a database budget. This describes the documented failure boundary, not a new physical-device outage test or an exact network/security topology." }
       }],
       "coverImage": {
         "ko": "/images/portfolio/ai-agent-control-platform-cover-ko.svg",

@@ -44,7 +44,7 @@ async function generatePDF(browser: Browser, baseUrl: string, config: PDFConfig,
     let response;
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
-        response = await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
+        response = await page.goto(url, { waitUntil: 'load', timeout: 30000 });
         break;
       } catch (error) {
         if (attempt === 3) throw error;

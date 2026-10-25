@@ -20,7 +20,7 @@
       {
         "category": "Serverless Architecture & Cost Optimization",
         "items": [
-          "AWS serverless and event pipelines; BigQuery read-path and billing optimization"
+          "AWS serverless and event pipelines; BigQuery Storage Read API migration"
         ]
       },
       {
@@ -39,7 +39,7 @@
     "skills": [
       {
         "category": "Backend",
-        "description": "Legacy-to-NestJS progressive migration, shared package system establishment, TDD-driven development, REST API / gRPC design",
+        "description": "Incremental NestJS migration, shared packages, TDD, REST API design, and consumption of gRPC-based APIs",
         "items": [
           {
             "name": "Node.js"
@@ -120,7 +120,7 @@
       },
       {
         "category": "Cloud & Infra",
-        "description": "Batch-to-serverless migration, EventBridge/Kinesis event pipeline design, BigQuery cost optimization, CDK-based infrastructure as code, CI/CD pipeline",
+        "description": "Batch-to-serverless migration, EventBridge/Kinesis event pipeline design, BigQuery read-path migration, CDK-based infrastructure as code, CI/CD pipeline",
         "items": [
           {
             "name": "AWS (Lambda, ECS/Fargate, S3, SQS/SNS, CDK, EventBridge, Kinesis, Athena)"
@@ -192,6 +192,13 @@
                 "evidenceProject": "realtime-game-chat"
               },
               {
+                "problem": "Archive backfill saturated RDS CPU at 99.8%, throughput 9.3 items/min",
+                "solution": "Performance Insights isolated a query causing 99.5% of load; replaced N+1, DATE() predicates that prevented index use, and full-column reads with IN() batching, direct date comparison, and selected columns",
+                "result": "Backfill throughput up 26x (9.3→247 items/min), Lambda p50 63.2s→1.36s, 15,333 completed with 0 pending",
+                "proofLabel": "Backfill throughput up",
+                "evidenceProject": "rds-saturation-rca"
+              },
+              {
                 "problem": "Company-wide AI agents needed centralized per-user policies, device identity, and usage tracking",
                 "solution": "Owned design, operations, and merge approval for device registration, policy, remote-control, and usage tooling; AI agents implemented it before operational handover",
                 "result": "Assigned the usage-reporting switch to 92 people on the active roster; all 87 reporting online devices applied it, and 525 automated security tests passed"
@@ -200,13 +207,6 @@
                 "problem": "Coding standards, domain knowledge, and verification rules were scattered across individual setups",
                 "solution": "Unified rules, agents, hooks, and domain knowledge in Git with local RAG search",
                 "result": "Every member shares the same AI working context via git pull, with pre-review criteria captured in an automated checklist"
-              },
-              {
-                "problem": "Archive backfill saturated RDS CPU at 99.8%, throughput 9.3 items/min",
-                "solution": "Performance Insights isolated a query causing 99.5% of load; replaced N+1, non-SARGable DATE(), and full-column reads with IN() batching, direct date comparison, and selected columns",
-                "result": "Backfill throughput up 26x (9.3→247 items/min), Lambda p50 63.2s→1.36s, 15,333 completed with 0 pending",
-                "proofLabel": "Backfill throughput up",
-                "evidenceProject": "rds-saturation-rca"
               }
             ]
           },
@@ -216,9 +216,9 @@
             "endDate": "2026-03",
             "highlights": [
               {
-                "problem": "Marketing data query cost surge (full-scan billing model)",
-                "solution": "Rejected partitioning due to higher Write IOPS; switched to gRPC-based Storage Read API",
-                "result": "Cut per-TB read price 82% ($6.25→$1.1, BigQuery list price)"
+                "problem": "Marketing metrics needed a different BigQuery read path",
+                "solution": "Migrated reads to the BigQuery Storage Read API",
+                "result": "Enabled Storage Read API access for marketing metrics"
               },
               {
                 "problem": "Batch processing collection limits (60 days)",
@@ -277,7 +277,7 @@
               {
                 "problem": "After hot-channel fanout migration, the bottleneck was not isolated between Redis server Lua, gateway event loop, a single command queue, and topology",
                 "solution": "Added attribution instrumentation before changing architecture, then validated Valkey serverless SSUBSCRIBE, per-channel subscriptions, and logicalChannelId-sticky connection pools step by step",
-                "result": "Passed sandbox verify 19/0/0, reduced command queue 5,940→716, and processed 878,205 messages with zero loss"
+                "result": "Passed sandbox validation; a standalone measurement with connection pool size 4 reduced the command queue from 5,940 to 716 and processed 878,205 messages with zero loss"
               },
               {
                 "problem": "Offline DMs, unread counts, joined-room lists, and group fanout lacked durable per-user state, risking mixed ownership between chat and game domains",
@@ -287,7 +287,7 @@
               {
                 "problem": "Gateway tasks were repeatedly OOM-killed after performance changes, while outbound queues, observability retention, and heap caps remained competing root-cause hypotheses",
                 "solution": "Pre-registered and rejected the egress-budget hypothesis, then isolated retained-heap growth and heap-cap alignment through heap snapshots, diagnostic logs, and A/B measurements",
-                "result": "Reduced post-fix OOM events to zero and confirmed zero targeted-plan drift after removing observability-stack retained-heap accumulation"
+                "result": "Observed zero OOM events in post-fix validation and zero configuration drift in the targeted infrastructure rollback plan"
               }
             ],
             "techStack": [
@@ -310,7 +310,7 @@
             "period": "2025.02 ~ Present",
             "featured": true,
             "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system, built on dedicated marketing DB separation",
-            "techRationale": "Moved reads to the BigQuery Storage Read API. Designed hybrid GCP Pub/Sub → AWS Lambda/SQS pipeline for event-driven processing with Outbox pattern for non-blocking async event publishing.",
+            "techRationale": "Moved reads to the BigQuery Storage Read API. In a separate metrics-sync DB load evaluation, partitioning reduced write IOPS but increased read IOPS while CPU load remained; chose lower Lambda concurrency over a structural change. Designed a hybrid GCP Pub/Sub → AWS Lambda/SQS pipeline for event-driven processing with the Outbox pattern for non-blocking async event publishing.",
             "details": [
               {
                 "problem": "Large marketing-metrics archive backfill stalled at 63s Lambda runtime and 99.8% RDS CPU, ETA 15 hours",
@@ -318,9 +318,9 @@
                 "result": "Improved throughput 26x (9.3→247/min), Lambda runtime 63s→1.36s"
               },
               {
-                "problem": "High BigQuery query costs for marketing data reads",
-                "solution": "Adopted BigQuery Storage Read API with gRPC streaming-based high-performance data reading",
-                "result": "Cut BigQuery per-TB read price 82% ($6.25→$1.1, list price)"
+                "problem": "Marketing metrics needed a different BigQuery read path",
+                "solution": "Migrated reads to the BigQuery Storage Read API",
+                "result": "Enabled Storage Read API access for marketing metrics"
               },
               {
                 "problem": "Slow marketing queries on a 100+ column denormalized table",
@@ -772,9 +772,9 @@
         "description": "Clinical trial data management solution startup with KRW 16B cumulative investment (MSA-based)",
         "highlights": [
           {
-            "problem": "5+ monthly e-signature failures and clinical data-integrity risk",
-            "solution": "Reproduced FK shared-lock deadlocks and adjusted transaction boundaries",
-            "result": "Eliminated 5+ monthly e-signature processing failures"
+            "problem": "Intermittent automatic e-signature failures caused by database deadlocks",
+            "solution": "Reproduced foreign-key (FK) shared/exclusive-lock deadlocks using SQL and lock tables",
+            "result": "Derived two remedies: transaction ordering and SELECT FOR UPDATE pre-acquisition"
           },
           {
             "problem": "VDR project schedule delay under MVP launch pressure",
@@ -782,9 +782,9 @@
             "result": "Launched the MVP in 3 weeks and ended synchronous large-PDF conversion timeouts"
           },
           {
-            "problem": "Delayed email failure detection (hours)",
-            "solution": "Constructed SES+SNS event pipeline",
-            "result": "Bounce detection cut to seconds, Slack instant alerting (published tech blog)"
+            "problem": "Missing delivery/bounce tracking left email failures visible only after the fact",
+            "solution": "Received SES Configuration Set events through SNS and logged results in Datadog",
+            "result": "Built Slack alerts for delivery failures and shared the implementation through a tech blog and internal seminar"
           }
         ],
         "projects": [
@@ -820,13 +820,13 @@
             "period": "2023.08 ~ 2023.12",
             "featured": true,
             "description": "Resolved critical notification failures due to database Deadlocks in clinical trial e-signature notifications",
-            "techRationale": "Identified FK child INSERT S-Lock → X-Lock escalation as deadlock root cause. Applied SELECT FOR UPDATE to pre-acquire X-Lock before INSERT, eliminating the deadlock ordering entirely.",
-            "contribution": "Independently performed deadlock reproduction, analysis, and resolution. Reproduced deadlock scenario with SQL in DBeaver and verified via INNODB lock tables.",
+            "techRationale": "Identified deadlocks between shared locks acquired by foreign-key (FK) checks on child INSERTs and exclusive locks on parent UPDATEs. Derived transaction ordering and exclusive-lock pre-acquisition with SELECT FOR UPDATE as remedies.",
+            "contribution": "Independently reproduced and analyzed the deadlock and derived remedies. Reproduced the scenario with SQL in DBeaver and verified it via INNODB lock tables.",
             "details": [
               {
-                "problem": "5+ monthly Deadlock incidents causing e-signature notification loss in production",
-                "solution": "Reproduced shared-to-exclusive lock escalation via INNODB lock tables, applied SELECT FOR UPDATE preemption",
-                "result": "Resolved e-signature failures occurring 5+ times per month by eliminating the deadlock root cause"
+                "problem": "Production database deadlocks intermittently failed automatic e-signature processing",
+                "solution": "Reproduced child-INSERT/parent-UPDATE lock ordering in SQL and confirmed it through INNODB lock tables",
+                "result": "Identified the FK shared/exclusive-lock deadlock mechanism and derived transaction-ordering and SELECT FOR UPDATE remedies"
               },
               {
                 "problem": "Synchronous notification processing causing cascading failures",
@@ -854,9 +854,9 @@
             "contribution": "Designed and implemented SES Configuration Set → SNS → event processing pipeline. Led tech blog publication and internal seminar presentation.",
             "details": [
               {
-                "problem": "No email delivery status tracking — failures detected hours later",
+                "problem": "Missing delivery/bounce tracking left email failures visible only after the fact",
                 "solution": "Configured SES Configuration Set → SNS → event processing pipeline with Datadog logging + Slack real-time alerts",
-                "result": "Bounce detection cut to seconds with instant Slack alerting"
+                "result": "Established email monitoring with delivery-event logs and Slack alerts for failures"
               }
             ],
             "techStack": [
@@ -1023,7 +1023,7 @@
           {
             "problem": "Auth, appointment, and notification changes risked regressions in a single Express app.js",
             "solution": "3-stage progressive migration (single-file→layered→NestJS) + JS→TS",
-            "result": "Reached 80% test coverage, zero incidents during major releases"
+            "result": "Reached 80% test coverage and established module/layer boundaries and team coding conventions"
           },
           {
             "problem": "Manual prescription entry bottleneck (3-5min per case)",
@@ -1151,7 +1151,7 @@
               {
                 "problem": "Express.js single-file (app.js) 10,000-line codebase unmaintainable",
                 "solution": "Executed 3-phase incremental migration: app.js single file → Layered Architecture (Controller/Service/Repository) → NestJS framework adoption",
-                "result": "Migrated 10,000-line monolith to NestJS modules with zero production incidents during major releases"
+                "result": "Migrated a 10,000-line single file to NestJS modules and established team coding conventions"
               },
               {
                 "problem": "JavaScript code lacked type safety",

@@ -4,6 +4,7 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { join, normalize } from 'node:path';
 import test from 'node:test';
 import puppeteer from 'puppeteer';
+import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 
 const root = new URL('../', import.meta.url);
 const dist = join(new URL(root).pathname, 'dist');
@@ -88,6 +89,54 @@ async function elementContrast(page, selector) {
   });
   return { text: sample.text, visible: sample.visible, ratio: contrast(composite, sample.background.slice(0, 3)) };
 }
+
+test('mixed-orientation portfolio PDFs preserve readable text without page clipping', { timeout: 60000 }, async () => {
+  const { server, origin } = await serveDist();
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  try {
+    const page = await browser.newPage();
+    await page.emulateMediaType('print');
+    for (const prefix of ['', '/en']) {
+      await page.goto(`${origin}${prefix}/portfolio-print/`, { waitUntil: 'networkidle0' });
+      await page.evaluate(() => document.fonts.ready);
+      const loading = getDocument({ data: await page.pdf({ format: 'A4', preferCSSPageSize: true }), useSystemFonts: false });
+      try {
+        const pdf = await loading.promise;
+        let landscape = false;
+        for (let number = 1; number <= pdf.numPages; number++) {
+          const sheet = await pdf.getPage(number);
+          const viewport = sheet.getViewport({ scale: 1 });
+          landscape ||= viewport.width > viewport.height;
+          const content = await sheet.getTextContent();
+          for (const item of content.items) {
+            if (!('str' in item) || !item.str.trim()) continue;
+            const fontSize = Math.hypot(item.transform[2], item.transform[3]);
+            assert.ok(fontSize >= 7, `${prefix} page ${number}: unreadable ${fontSize}pt text`);
+            assert.ok(item.transform[4] >= -1 && item.transform[4] + item.width <= viewport.width + 1,
+              `${prefix} page ${number}: text outside page: ${item.str}`);
+          }
+        }
+        assert.equal(landscape, true, 'wide architecture retains its own landscape page');
+      } finally { await loading.destroy(); }
+    }
+  } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }
+});
+
+test('career details wrap long technical terms within narrow viewports', { timeout: 30000 }, async () => {
+  const { server, origin } = await serveDist();
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  try {
+    const page = await browser.newPage();
+    for (const prefix of ['', '/en']) {
+      for (const width of [320, 430]) {
+        await page.setViewport({ width, height: 900 });
+        await page.goto(`${origin}${prefix}/experience/gameduo/`, { waitUntil: 'networkidle0' });
+        const bounds = await page.evaluate(() => ({ viewport: innerWidth, content: document.documentElement.scrollWidth }));
+        assert.ok(bounds.content <= bounds.viewport + 1, `${prefix} ${width}px career detail overflows`);
+      }
+    }
+  } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }
+});
 
 test('dark theme browser print keeps detail text readable on white paper', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();

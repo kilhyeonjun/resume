@@ -37,7 +37,7 @@ const after = lang === 'ko' ? '이후' : 'After';
 <style>
   .metric-deltas {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
     gap: 0.75rem;
     margin: 0;
   }
@@ -60,7 +60,17 @@ const after = lang === 'ko' ? '이후' : 'After';
     color: var(--dossier-muted);
   }
 
-  .metric-delta dd { margin: 0; }
+  .metric-delta dd {
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .metric-delta-values > * {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
 
   .metric-delta-values {
     display: flex;

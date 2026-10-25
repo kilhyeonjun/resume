@@ -210,9 +210,19 @@ function formatPeriod(period: { start: string; end: string }): string {
     }
 
     .arch-diagram img {
+      display: block;
       width: 100%;
+      height: auto;
       border: 0.5pt solid #e5e7eb;
       border-radius: 2mm;
+    }
+
+    .arch-diagram figcaption {
+      margin-bottom: 2mm;
+      font-size: 10pt;
+      font-weight: 600;
+      color: #111827;
+      break-after: avoid-page;
     }
 
     .scenario-strip {
@@ -261,15 +271,6 @@ function formatPeriod(period: { start: string; end: string }): string {
       font-weight: 600;
     }
 
-    .evidence-register-print .arch-diagram {
-      text-align: center;
-    }
-
-    .evidence-register-print .arch-diagram img {
-      width: 130mm;
-      max-width: 100%;
-    }
-
     .family-budget-print .project-header {
       display: block;
     }
@@ -293,11 +294,6 @@ function formatPeriod(period: { start: string; end: string }): string {
       max-height: 54mm;
       object-fit: cover;
       object-position: top;
-    }
-
-    .family-budget-print .arch-diagram img {
-      max-height: 58mm;
-      object-fit: contain;
     }
 
     .family-budget-print .metric-table {
@@ -494,8 +490,24 @@ function formatPeriod(period: { start: string; end: string }): string {
 
     .back-link:hover { background: #e5e7eb; }
 
+    @page portfolio-diagram {
+      size: A4 landscape;
+      margin: 10mm;
+    }
+
     @media print {
       html { font-size: 100%; }
+
+      /* 11px labels in a 1200px SVG need the landscape page's full width. */
+      .arch-diagram-wide {
+        page: portfolio-diagram;
+        width: 277mm;
+        max-width: none;
+        /* Center the landscape figure on the page, not the 210mm document. */
+        margin: 0 calc((210mm - 277mm) / 2);
+        break-before: page;
+        break-after: page;
+      }
 
       .section-heading {
         page-break-after: avoid;
@@ -618,10 +630,10 @@ function formatPeriod(period: { start: string; end: string }): string {
               </div>
             )}
 
-            {architectureDiagram && !isFamilyBudgetCase && (
-              <div class="arch-diagram">
+            {architectureDiagram && !isFamilyBudgetCase && project.slug !== 'realtime-game-chat' && (
+              <figure class="arch-diagram">
                 <img src={withBasePath(architectureDiagram)} alt={isDaesinCase ? (lang === 'ko' ? '오늘 날짜 독립 재조회와 Next.js proxy의 public route DTO branch를 포함한 수집·조회·배포 경계' : 'Collection, query, and deployment boundary with current-date independent rechecks and the public route DTO branch inside the Next.js proxy') : `${name} architecture`} />
-              </div>
+              </figure>
             )}
 
             {!isFamilyBudgetCase && project.scenarioEvidence?.[0] && (
@@ -765,6 +777,12 @@ function formatPeriod(period: { start: string; end: string }): string {
                   ))}
                 </ul>
               </>
+            )}
+            {project.slug === 'realtime-game-chat' && architectureDiagram && (
+              <figure class="arch-diagram arch-diagram-wide">
+                <figcaption>{name} — {lang === 'ko' ? '시스템 아키텍처' : 'System architecture'}</figcaption>
+                <img src={withBasePath(architectureDiagram)} alt={`${name} architecture`} />
+              </figure>
             )}
           </div>
         </>

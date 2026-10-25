@@ -416,8 +416,10 @@ test('tablet portfolio navigation keeps visible SVG geometry inside the viewport
     const page = await browser.newPage();
     await page.setViewport({ width: 768, height: 900 });
     for (const path of paths) {
-      const response = await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
+      const response = await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' });
       assert.equal(response?.status(), 200, `${path} must return HTTP 200`);
+      // Inline SVG bounds need parsed markup, applied CSS and final font metrics, not network idleness.
+      await page.evaluate(() => document.fonts.ready);
       const outside = await page.$$eval('svg path', (elements) => elements.flatMap((element) => {
         const box = element.getBoundingClientRect();
         if (box.width <= 0 || box.height <= 0) return [];

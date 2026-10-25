@@ -408,7 +408,7 @@ body {
 }
 .site-width, .site-nav, .site-main { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
 .site-header { border-color: var(--dossier-line); background: color-mix(in srgb, var(--dossier-surface) 96%, transparent); }
-.site-nav { min-height: 64px; }
+.site-nav { min-height: 64px; flex-wrap: wrap; }
 .site-main { padding-block: 0 4.5rem; }
 .site-brand { display: inline-flex; align-items: center; color: var(--dossier-ink); font: 700 .8125rem var(--dossier-mono); letter-spacing: .08em; }
 .touch-target { min-height: 44px; }

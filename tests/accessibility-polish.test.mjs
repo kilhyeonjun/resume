@@ -122,7 +122,7 @@ test('mixed-orientation portfolio PDFs preserve readable text without page clipp
   } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }
 });
 
-test('career details wrap long technical terms within narrow viewports', { timeout: 30000 }, async () => {
+test('career details and navigation stay contained across font fallbacks', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
   try {
@@ -131,8 +131,13 @@ test('career details wrap long technical terms within narrow viewports', { timeo
       for (const width of [320, 430]) {
         await page.setViewport({ width, height: 900 });
         await page.goto(`${origin}${prefix}/experience/gameduo/`, { waitUntil: 'networkidle0' });
-        const bounds = await page.evaluate(() => ({ viewport: innerWidth, content: document.documentElement.scrollWidth }));
-        assert.ok(bounds.content <= bounds.viewport + 1, `${prefix} ${width}px career detail overflows`);
+        await page.evaluate(() => document.fonts.ready);
+        for (const fallback of [null, 'monospace']) {
+          if (fallback) await page.addStyleTag({ content: `.site-shell { font-family: ${fallback}; }` });
+          const bounds = await page.evaluate(() => ({ viewport: innerWidth, content: document.documentElement.scrollWidth }));
+          assert.ok(bounds.content <= bounds.viewport + 1,
+            `${prefix} ${width}px career detail or navigation overflows with ${fallback ?? 'system'} font: ${bounds.content}px`);
+        }
       }
     }
   } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }

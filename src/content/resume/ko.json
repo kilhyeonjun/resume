@@ -186,8 +186,8 @@
             "highlights": [
               {
                 "problem": "채팅 단일 샤드가 6,000 msg/s에서 ack p95 767ms·수용률 99.39%로 병목",
-                "solution": "샤드 설계·부하 검증을 직접 주도. 별도로 BE·FE·AI 3인 파트의 공통 완료 기준·검증 템플릿을 정립하고 용량 목표(6,000 동시접속·18,000 RPS·버스트 90,000 RPS)를 분기 OKR로 관리",
-                "result": "부하 시험 ack p95 767ms→6.6ms, 1→4 샤드 확장; 파트 공통 완료 기준·OKR로 과제 추적",
+                "solution": "샤드 설계·부하 검증을 직접 주도. 별도로 BE·FE·AI 3인 파트의 공통 완료 기준·검증 템플릿을 정립하고 용량 목표(6,000 동시접속·18,000 RPS·버스트 90,000 RPS)를 포함한 분기 OKR로 과제 추적",
+                "result": "부하 시험 ack p95 767ms→6.6ms, 1→4 샤드 확장",
                 "proofLabel": "부하 시험",
                 "evidenceProject": "realtime-game-chat"
               },

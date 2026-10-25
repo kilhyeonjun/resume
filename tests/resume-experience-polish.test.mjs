@@ -6,6 +6,24 @@ const root = new URL('../', import.meta.url);
 const readJson = async (path) => JSON.parse(await readFile(new URL(path, root), 'utf8'));
 const readDist = (path) => readFile(new URL(`dist/${path}`, root), 'utf8');
 
+test('company tenure is not attributed to a later promoted role', async () => {
+  for (const [lang, prefix] of [['ko', ''], ['en', 'en/']]) {
+    const { main } = await readJson(`src/content/resume/${lang}.json`);
+    const html = await readDist(`${prefix}index.html`);
+    const entries = html.split(/<div class="experience-item\b/).slice(1);
+    const period = (item) => `${item.startDate.replace('-', '.')} — ${item.current ? main.labels.current : item.endDate.replace('-', '.')}`;
+    for (const experience of main.experience.filter((item) => item.positions?.length > 1)) {
+      const entry = entries.find((item) => item.includes(`href="/${prefix}experience/${experience.slug}"`));
+      assert.ok(entry, `${lang} company history is visible`);
+      const heading = entry.match(/<h3\b[^>]*>\s*([^<]+?)\s*<\/h3>/)?.[1];
+      const companyPeriod = entry.match(/<p\b[^>]*>\s*(20\d{2}\.\d{2}\s*—[^<]+?)\s*<\/p>/)?.[1];
+      assert.deepEqual([heading, companyPeriod], [experience.company, period(experience)], `${lang} full employment tenure belongs to the company, not the latest role`);
+      const roles = [...entry.matchAll(/<h4\b[^>]*>\s*([^<]+?)\s*<\/h4>\s*<span\b[^>]*>\s*([^<]+?)\s*<\/span>/g)];
+      assert.deepEqual(roles.map(([, role, dates]) => [role, dates]), experience.positions.map((position) => [position.title, period(position)]), `${lang} each role retains its own promotion dates`);
+    }
+  }
+});
+
 test('side projects render in their own section, not inside work experience', async () => {
   for (const [lang, prefix] of [['ko', ''], ['en', 'en/']]) {
     const { main } = await readJson(`src/content/resume/${lang}.json`);

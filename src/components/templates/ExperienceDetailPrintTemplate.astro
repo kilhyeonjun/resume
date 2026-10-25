@@ -242,6 +242,13 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
       text-indent: -3mm;
     }
 
+    /* Keep the evidence tail with its preceding fragment, not the whole project.
+       Otherwise a rationale or contribution can start a page without context. */
+    .tech-rationale,
+    .contribution {
+      break-before: avoid-page;
+    }
+
     /* Tech Rationale */
     .tech-rationale {
       background: #f8f9fa;

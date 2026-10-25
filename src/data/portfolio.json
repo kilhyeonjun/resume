@@ -1035,8 +1035,8 @@
       "featured": true,
       "printOrder": 4,
       "summary": {
-        "ko": "전사 AI 코딩 에이전트의 기기 정책 가드와 사용량 수집 서버를 설계·구현·운영: 가드의 정책 배포로 사용량 보고 스위치를 92명에게 켜 보고 중인 기기 87대 모두에서 집행을 확인했고, 수집 서버의 2일 18시간·17시간 40분 무응답 장애 뒤 메모리 상한을 \"앱 < 컨테이너 < 호스트\" 순서로 다시 잡고 파싱을 스트리밍으로 바꿔 최대 파일 파싱 피크를 640MiB 한도의 67%로 낮췄습니다.",
-        "en": "Designed, built, and ran a device policy guard and a usage collection server for AI coding agents across the company: the guard's policy path switched usage reporting on for 92 people, and all 87 reporting devices applied it. After two collection-server outages (2 days 18 hours, then 17 hours 40 minutes), memory limits were reordered as app < container < host and parsing moved to streaming, bringing the largest file's parse peak to 67% of a 640MiB limit."
+        "ko": "전사 AI 코딩 에이전트의 기기 정책 가드·사용량 수집 서버 설계·운영·머지 승인을 맡고 AI 에이전트로 구현: 가드의 정책 배포로 사용량 보고 스위치를 92명에게 켜 보고 중인 기기 87대 모두에서 집행을 확인했고, 수집 서버의 2일 18시간·17시간 40분 무응답 장애 뒤 메모리 상한을 \"앱 < 컨테이너 < 호스트\" 순서로 다시 잡고 파싱을 스트리밍으로 바꿔 최대 파일 파싱 피크를 640MiB 한도의 67%로 낮췄습니다.",
+        "en": "Owned design, operations, and merge approval for the company-wide device policy guard and usage collection server; AI coding agents handled implementation. The guard's policy path switched usage reporting on for 92 people, and all 87 reporting devices applied it. After two collection-server outages (2 days 18 hours, then 17 hours 40 minutes), memory limits were reordered as app < container < host and parsing moved to streaming, bringing the largest file's parse peak to 67% of a 640MiB limit."
       },
       "description": {
         "ko": "직원들이 AI 코딩 에이전트와 AI 서비스를 쓰기 시작하면서 두 가지가 필요했습니다. 회사 자료가 외부에 공개·공유되는 요청을 기기에서 막고 기록하는 가드, 그리고 개인 구독으로는 회사가 공식 대시보드를 볼 수 없는 Claude·Codex 사용량·스킬 지표를 모으는 수집 서버입니다. 가드는 macOS·Windows 상주 데몬과 가드 서버·콘솔로, 수집은 기기 사용 기록 동기화와 ClickHouse 집계로 만들었고, 사내 NAS에서 AWS로 옮긴 뒤 생긴 장애를 원인별로 정리했습니다. 구현은 Claude Code·Codex 같은 AI 코딩 에이전트로 진행했고, 설계와 운영 판단, 실기기 QA, 머지 승인은 직접 맡았습니다. 내부 서비스명·호스트·티켓 번호는 일반 명칭으로 바꿨고, 보안 정책의 대상·규칙·차단 방식은 공개 범위에서 뺐습니다.",
@@ -1405,8 +1405,8 @@
       },
       "type": "personal",
       "summary": {
-        "ko": "인정시간·실제 근무·휴가·일/주 상한을 하나의 결정론적 배분 계약으로 묶고, 달성 불가능한 목표는 초과 배정 대신 부족분과 이유로 표시하는 로컬 우선 근무 계획기. CI에서 pytest 62개·E2E 9개 통과",
-        "en": "A local-first work planner that combines recognized load, actual work, leave, and daily/weekly caps into one deterministic allocation contract, exposing infeasible targets as explicit gaps instead of forced over-allocation. CI runs 62 pytest and 9 Playwright end-to-end tests."
+        "ko": "인정시간·실제 근무·휴가·일/주 상한을 하나의 결정론적 배분 계약으로 묶고, 달성 불가능한 목표는 초과 배정 대신 부족분과 이유로 표시하는 로컬 우선 근무 계획기. CI에서 pytest 62개·E2E 9개 통과. 공개 구현은 합성 데이터 미리보기이며 공식 근태 시스템을 수정하지 않습니다.",
+        "en": "A local-first work planner that combines recognized load, actual work, leave, and daily/weekly caps into one deterministic allocation contract, exposing infeasible targets as explicit gaps instead of forced over-allocation. CI runs 62 pytest and 9 Playwright end-to-end tests. The public implementation is a synthetic preview and does not modify an official attendance system."
       },
       "description": {
         "ko": "월 목표와 날짜별 제약을 정규화한 뒤 고정 계획을 먼저 적용하고, 필요한 날짜만 선택적으로 활성화해 남은 시간을 배분합니다. 목표를 채울 수 없으면 hard limit을 깨지 않고 부족 시간과 상태를 반환합니다. 날짜 override 화면은 충돌과 초과를 preview하고 나머지 날짜의 재배분 결과를 계산하며, 공개 구현은 synthetic fixture 기반 미리보기 경계까지만 다룹니다.",

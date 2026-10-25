@@ -2277,16 +2277,16 @@
         },
         {
           "problem": {
-            "ko": "기능 시나리오만으로는 행 수 증가와 writer 경합 중의 저장·조회 정합성을 확인할 수 없었다",
-            "en": "Functional scenarios alone did not exercise storage and reader consistency under larger batches or writer contention"
+            "ko": "writer lock 때문에 수집이 거절돼도 기존 데이터가 보존되고 같은 작업을 재실행할 수 있는지 확인해야 했다",
+            "en": "Needed to verify that a writer-lock rejection preserves existing data and allows the same work to be replayed"
           },
           "process": {
-            "ko": "새 임시 DB에서 100·1,000행을 크기별 warmup 1회·측정 3회씩 수집하며 독립 reader로 원자적 가시성을 확인했다. 별도 writer가 획득한 lock을 150ms 목표로 유지한 뒤 해제하는 경합도 반복했다. 전체 실험을 두 번 실행하고 환경·원자료·측정 구간을 공개했다",
-            "en": "In a fresh temporary DB, ingested 100 and 1,000 rows with one warmup and three measured runs per size, checking atomic visibility through an independent reader. Repeated contention against a separate writer holding an acquired lock for a target of 150ms. Ran the whole experiment twice and published the environment, raw samples, and measurement intervals"
+            "ko": "100·1,000행 부하와 150ms 목표 lock 경합에 거절 실험을 추가했다. 별도 fixture 클라이언트에만 SQLite 대기 한도 1초를 설정하고 실제 UPDATE lock을 유지했다. 독립 reader로 상태를 검사한 뒤 lock을 해제하고 같은 응답으로 명시적 재실행 1회를 수행했다. 새 임시 DB에서 전체 실험을 두 번 실행했다",
+            "en": "Extended the 100/1,000-row loads and 150ms-target lock contention with a rejection experiment. Set a one-second SQLite wait budget only on a separate fixture client while holding a real UPDATE lock. Checked state with an independent reader, released the lock, and explicitly replayed the same response once. Ran the whole experiment twice with fresh temporary databases"
           },
           "result": {
-            "ko": "Node 24·macOS arm64 합성 관측: 1,000행 수집 6회 285.9–545.0ms, 경합 측정 6회 모두 lock 해제 뒤 저장·독립 readback 성공. 해당 조회 표본에서 부분 저장은 관측되지 않았다. 운영 처리량·SLA나 장애 복구 보장이 아니다",
-            "en": "Synthetic Node 24/macOS arm64 observation: six 1,000-row ingestions took 285.9–545.0ms; all six measured contenders committed and passed independent readback after lock release. No partial state was observed in the sampled reads. This establishes neither production throughput/SLA nor failure-recovery guarantees"
+            "ko": "Node 24·macOS arm64 합성 관측: 짧은 경합 6회는 해제 후 저장에 성공했다. 별도 거절 6회 모두 P1008을 확인했고 DB 전체 행·ID·시각이 보존됐다. 해제 후 재실행 6회도 수정·추가와 기존 ID·시각 보존을 통과했다. 운영 처리량·SLA나 장애 복구 보장은 아니다",
+            "en": "Synthetic Node 24/macOS arm64 observation: all six short-lock contenders committed after release. All six separate rejection samples returned P1008 and preserved every existing row, ID, and timestamp. Each explicit replay then applied the correction and addition while preserving prior IDs and timestamps. This is not a production throughput, SLA, or failure-recovery guarantee"
           }
         },
         {
@@ -2367,7 +2367,7 @@
       "operationalLimits": {
         "ko": [
           "운영 증거는 운영자가 기록한 단일 배포의 제한된 smoke 관측이며 독립 검증이 아니다. 공개 소스·CI 및 합성 10개 시나리오와 구분하며 최신성 SLA·가동률을 증명하지 않는다.",
-          "별도 합성 부하·경합 실험은 단일 macOS arm64 호스트의 작은 표본이다. 실행별·크기별 n=3이므로 원자료의 p95는 최댓값이며 운영 tail latency가 아니다. 경합 표본은 모두 성공해 거절 후 재실행 경로의 실행 증거는 포함하지 않는다.",
+          "합성 실험은 단일 macOS arm64 호스트의 작은 표본이며 실행별·크기별 n=3의 p95는 최댓값이다. 거절 실험의 1초 대기 한도는 fixture 전용으로 운영 설정과 다르다. BEGIN IMMEDIATE에서 쓰기 전 거절될 수 있어 중간 쓰기 rollback 증거는 기존 trigger 시나리오와 구분한다.",
           "upsert-only라 후속 원천에서 빠진 행은 남고 createdAt은 최초 저장 시각이다. 실패는 다음 정각에 다시 확인하며 즉시 retry/backoff는 없다.",
           "노선코드 검색은 요청마다 SQLite를 조회한다. 10회 순차 조회는 용량·처리량·p95·전후 개선율의 근거가 아니며 수평 쓰기 확장에는 한계가 있다.",
           "115.4ms는 DB 변경 감지→API 일치 구간이다. 관측 poll 간격은 1.287초이며 DB commit 시각은 관측하지 않아 원천 변경·commit→API 지연으로 해석할 수 없다.",
@@ -2375,7 +2375,7 @@
         ],
         "en": [
           "Production evidence is a bounded, owner-recorded single-deployment smoke observation, not independent attestation. It is separate from public source, CI, and ten synthetic scenarios, and proves neither freshness SLA nor uptime.",
-          "The separate synthetic load/contention experiment is a small sample on one macOS arm64 host. With n=3 per invocation and size, its p95 is the observed maximum, not production tail latency. Every sampled contender succeeded, so these runs did not exercise rejection followed by explicit replay.",
+          "These synthetic experiments use small samples on one macOS arm64 host; with n=3 per invocation and size, p95 is the observed maximum. The one-second rejection budget is fixture-only, not the production configuration. BEGIN IMMEDIATE may reject before any write, so the existing trigger scenario remains the separate evidence for mid-batch rollback.",
           "Upsert-only storage retains rows omitted by later source responses; createdAt is first insertion. Failures are checked on the next scheduled run, without immediate retry or backoff.",
           "Code search reads SQLite on every request. Ten sequential reads establish neither capacity, throughput, p95, nor before/after improvement; horizontal write scaling remains limited.",
           "The 115.4ms interval runs from DB-change detection to API equality. The observed poll interval was 1.287s; DB commit time was unobserved, so this is not source-change/commit-to-API latency.",
@@ -2385,17 +2385,17 @@
       "publicEvidence": [
         {
           "claim": {
-            "ko": "합성 부하·writer 경합 반복 측정",
-            "en": "Repeated synthetic load and writer-contention observations"
+            "ko": "합성 부하·writer 경합과 거절 후 명시적 재실행",
+            "en": "Synthetic load, writer contention, and explicit replay after rejection"
           },
           "question": {
-            "ko": "100·1,000행과 독립 writer lock에서 무엇을 측정했고 어떤 환경·표본 한계가 있는가?",
-            "en": "What was measured at 100/1,000 rows and under an independent writer lock, and what are the environment and sample limits?"
+            "ko": "실제 lock 거절 중 어떤 상태가 보존됐고, 해제 후 재실행은 무엇을 검증했는가? fixture 설정과 표본 한계는 무엇인가?",
+            "en": "What state survived a real lock rejection, and what did replay after release verify? What are the fixture settings and sample limits?"
           },
           "label": "Raw synthetic receipt · two invocations · not production performance",
           "url": "https://career.kilpenguin.com/evidence/daesin-synthetic-benchmark.json",
           "testLabel": "Reproduce · --benchmark",
-          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/7ce02a69c8cff21b07eec7c6a6cfb76e4ca7ced7/scripts/verify-ingestion-quality.mjs"
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/d46f381d3b004ea4628c19eb6f2019d3a9aaa311/scripts/verify-ingestion-quality.mjs"
         },
         {
           "claim": {
@@ -2487,7 +2487,7 @@
             "en": "Does an independent reader see corrections and retain the prior state without partial writes after a mid-batch failure?"
           },
           "label": "verify-ingestion-quality.mjs · synthetic SQLite",
-          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/7ce02a69c8cff21b07eec7c6a6cfb76e4ca7ced7/scripts/verify-ingestion-quality.mjs",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/d46f381d3b004ea4628c19eb6f2019d3a9aaa311/scripts/verify-ingestion-quality.mjs",
           "testLabel": "ingestion-freshness.test.ts",
           "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/52293dce04a65c1ef7fbfebcb8e3785ff427a23f/tests/ingestion-freshness.test.ts"
         },

@@ -364,9 +364,12 @@ addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-image
     {!isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase && projectArchitectureDiagram && (
       <section id="architecture" class="mb-10">
         <h2 class="section-title mb-6">{lang === 'ko' ? '시스템 아키텍처' : 'System architecture'}</h2>
-        <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white dark:border-gray-700">
+        {project.slug === 'realtime-game-chat' && (
+          <p class="mb-2 text-sm text-gray-600 dark:text-gray-300">{lang === 'ko' ? '좌우로 스크롤해 전체 구조를 볼 수 있습니다. 다이어그램을 선택하면 원본이 새 탭에서 열립니다.' : 'Scroll horizontally to view the full architecture. Select the diagram to open the original in a new tab.'}</p>
+        )}
+        <div class="diagram-scroll overflow-x-auto rounded-xl border border-gray-200 bg-white dark:border-gray-700" tabindex="0" role="region" aria-label={lang === 'ko' ? '시스템 아키텍처 다이어그램, 좌우 스크롤 가능' : 'System architecture diagram, horizontally scrollable'}>
           <a class="diagram-original" href={withBasePath(projectArchitectureDiagram)} target="_blank" rel="noopener noreferrer" aria-label={`${projectName} — ${lang === 'ko' ? '아키텍처 원본 SVG 열기 (새 탭)' : 'Open original architecture SVG (new tab)'}`}>
-            <img src={withBasePath(projectArchitectureDiagram)} alt={`${projectName} ${lang === 'ko' ? '아키텍처 다이어그램' : 'architecture diagram'}`} class="min-w-[760px] w-full lg:min-w-0" loading="lazy" />
+            <img src={withBasePath(projectArchitectureDiagram)} alt={`${projectName} ${lang === 'ko' ? '아키텍처 다이어그램' : 'architecture diagram'}`} width={project.slug === 'realtime-game-chat' ? 1200 : undefined} height={project.slug === 'realtime-game-chat' ? 600 : undefined} class:list={['w-full', project.slug === 'realtime-game-chat' ? 'min-w-[1200px]' : 'min-w-[760px] lg:min-w-0']} loading="lazy" />
           </a>
         </div>
       </section>

@@ -107,7 +107,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
       margin-bottom: 6px;
     }
 
-    .item-header, li { break-inside: avoid; }
+    .item-header, .writing-item, li { break-inside: avoid; }
     .role-heading { break-after: avoid-page; }
     .role-heading + ul { break-before: avoid-page; }
 
@@ -357,7 +357,7 @@ const pageTitle = lang === 'ko' ? `${data.name} - 이력서 (ATS 최적화)` : `
     <section>
       <h2>{labels.technicalWriting.toUpperCase()}</h2>
       {data.technicalWriting.map((item) => (
-        <div class="item">
+        <div class="item writing-item">
           <h3>{item.title}</h3>
           <p class="date">{item.type} — {item.date.replace('-', '.')}</p>
           {item.description && <p>{item.description}</p>}

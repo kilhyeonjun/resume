@@ -14,7 +14,7 @@ const kindLabels = {
 }[lang];
 ---
 
-<ol class="case-flow" role="list" aria-label={lang === 'ko' ? '문제 해결 흐름' : 'Problem-solving flow'} style={`--flow-steps: ${steps.length}`}>
+<ol class="case-flow" role="list" aria-label={lang === 'ko' ? '문제 해결 흐름' : 'Problem-solving flow'}>
   {steps.map((step) => (
     <li class={`case-flow-step is-${step.kind}`}>
       <span class="case-flow-kind">{kindLabels[step.kind]}<span class="sr-only">: </span></span>
@@ -34,9 +34,8 @@ const kindLabels = {
   }
 
   .case-flow-step {
-    position: relative;
     display: grid;
-    grid-template-columns: 5.5rem 1fr;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
     gap: 0.75rem;
     align-items: baseline;
     padding: 0.6rem 0.85rem;
@@ -69,8 +68,6 @@ const kindLabels = {
 
   .case-flow-step.is-rejected .case-flow-text {
     color: var(--dossier-muted);
-    text-decoration: line-through;
-    text-decoration-color: color-mix(in srgb, var(--dossier-muted) 60%, transparent);
   }
 
   .case-flow-step.is-cause { border-left-color: var(--dossier-teal-text); }
@@ -85,38 +82,11 @@ const kindLabels = {
   .case-flow-step.is-result .case-flow-kind { color: var(--flow-accent); }
   .case-flow-step.is-result .case-flow-text { font-weight: 600; }
 
-  @media (min-width: 1280px) {
-    .case-flow {
-      grid-template-columns: repeat(var(--flow-steps), minmax(0, 1fr));
-      gap: 1.1rem;
-    }
-
+  @media (max-width: 430px) {
     .case-flow-step {
-      grid-template-columns: 1fr;
-      align-content: start;
+      grid-template-columns: minmax(0, 1fr);
       gap: 0.3rem;
-      padding: 0.7rem 0.75rem 0.8rem;
-      border-left-width: 1px;
-      border-top: 3px solid var(--dossier-muted);
     }
-
-    .case-flow-step.is-rejected { border-top-style: dashed; }
-    .case-flow-step.is-cause { border-left-color: var(--dossier-line); border-top-color: var(--dossier-teal-text); }
-    .case-flow-step.is-result { border-left-color: color-mix(in srgb, var(--flow-accent) 45%, var(--dossier-line)); border-top-color: var(--flow-accent); }
-
-    .case-flow-step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      right: -0.95rem;
-      width: 0.5rem;
-      height: 0.5rem;
-      border-top: 1.5px solid var(--dossier-muted);
-      border-right: 1.5px solid var(--dossier-muted);
-      transform: translateY(-50%) rotate(45deg);
-    }
-
-    .case-flow-text { font-size: 0.8125rem; }
   }
 
   @media print {

@@ -94,6 +94,7 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
       margin-bottom: 3mm;
       padding-bottom: 2mm;
       border-bottom: 1pt solid #d1d5db;
+      break-inside: avoid;
       break-after: avoid-page;
     }
 
@@ -174,15 +175,18 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
     /* Projects */
     .project-item {
       margin-bottom: 4mm;
-      page-break-inside: avoid;
-      break-inside: avoid;
+      break-inside: auto;
     }
 
     .project-header {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: baseline;
+      gap: 0.5mm 3mm;
       margin-bottom: 1mm;
+      break-inside: avoid;
+      break-after: avoid-page;
     }
 
     .project-name {
@@ -208,6 +212,25 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
       list-style: none;
       padding-left: 0;
       margin-bottom: 1.5mm;
+    }
+
+    .project-description,
+    .project-details li,
+    .tech-rationale,
+    .contribution,
+    .tech-stack {
+      break-inside: avoid;
+      orphans: 2;
+      widows: 2;
+    }
+
+    .project-description {
+      break-before: avoid-page;
+      break-after: avoid-page;
+    }
+
+    .tech-rationale-label {
+      break-after: avoid-page;
     }
 
     .project-details li {

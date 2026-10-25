@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": { "title": "ACK, WAL recording and database durability are separate", "locale": "en", "quality_profile": "showcase", "column_fit": "spread", "viewBox": [1320, 650] },
+  "participants": [
+    { "id": "client", "type": "external", "label": "Client" },
+    { "id": "gateway", "type": "backend", "label": "Gateway" },
+    { "id": "wal", "type": "messagebus", "label": "Valkey / WAL" },
+    { "id": "writer", "type": "backend", "label": "WAL writer" },
+    { "id": "db", "type": "database", "label": "DynamoDB" }
+  ],
+  "segments": [
+    { "from": 145, "to": 280, "label": "Default acceptance path · WAL recording runs asynchronously after ACK" },
+    { "from": 310, "to": 415, "label": "After WAL recording succeeds · separate loop for valid entries" },
+    { "from": 445, "to": 550, "label": "Alternative · database write errors or unprocessed items" }
+  ],
+  "messages": [
+    { "id": "send", "from": "client", "to": "gateway", "y": 170, "label": "Send message" },
+    { "id": "accept", "from": "gateway", "to": "wal", "y": 200, "label": "Complete ordering + dedupe" },
+    { "id": "ack", "from": "gateway", "to": "client", "y": 230, "label": "ACK ≠ durable storage", "variant": "return" },
+    { "id": "append", "from": "gateway", "to": "wal", "y": 260, "label": "Async WAL recording", "variant": "dashed" },
+    { "id": "read", "from": "writer", "to": "wal", "y": 335, "label": "XREADGROUP · read entries" },
+    { "id": "persist", "from": "writer", "to": "db", "y": 365, "label": "Batch-write segments" },
+    { "id": "xack", "from": "writer", "to": "wal", "y": 395, "label": "XACK successfully stored items", "variant": "return" },
+    { "id": "failed", "from": "db", "to": "writer", "y": 470, "label": "Error / UnprocessedItems", "variant": "return" },
+    { "id": "retry", "from": "writer", "to": "db", "y": 500, "label": "Bounded retries", "variant": "dashed" },
+    { "id": "pending", "from": "writer", "to": "wal", "y": 530, "label": "Keep unfinished entries pending", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "amber", "title": "The post-ACK gap", "items": ["Async WAL failures are recorded in metrics and logs", "They do not revoke ACK or guarantee storage"] },
+    { "dot": "emerald", "title": "Recovery after WAL", "items": ["Reclaim pending entries and process again", "Separate quarantine paths for aged or invalid entries"] },
+    { "dot": "slate", "title": "Scope", "items": ["Default Valkey wiring in main as of 2026-10-21", "Distinct from optional atomic-WAL paths and deployed configuration"] }
+  ]
+}

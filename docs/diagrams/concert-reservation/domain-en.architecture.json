@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Separate boundaries for seat contention and payment consistency", "locale": "en", "quality_profile": "showcase", "viewBox": [1390, 650], "repository": { "url": "https://github.com/hhpb-code/hhplus-concert", "revision": "6eb289b019354f8eb710c6bedbfd2d5d567d583e" } },
+  "components": [
+    { "id": "seat", "sources": [{ "path": "src/main/java/com/example/hhplus/concert/domain/concert/model/ConcertSeat.java", "line": 42, "end_line": 43, "label": "Optimistic seat version" }], "type": "database", "label": "ConcertSeat", "sublabel": "@Version · claim the seat", "pos": [80, 80], "size": [240, 100] },
+    { "id": "reservation", "type": "database", "label": "Reservation", "sublabel": "Links seat and user · WAITING", "pos": [530, 80], "size": [280, 100] },
+    { "id": "wallet", "type": "database", "label": "Wallet", "sublabel": "Debit user balance", "pos": [80, 280], "size": [230, 100] },
+    { "id": "payment", "type": "database", "label": "Payment", "sublabel": "Record payment for reservation", "pos": [420, 280], "size": [230, 100] },
+    { "id": "confirm", "type": "database", "label": "Reservation", "sublabel": "WAITING → CONFIRMED", "pos": [760, 280], "size": [230, 100] },
+    { "id": "outbox", "type": "database", "label": "OutboxEvent", "sublabel": "Payment event · PENDING", "pos": [1100, 280], "size": [230, 100] },
+    { "id": "publisher", "type": "backend", "label": "Scheduler", "sublabel": "Publish PENDING · retry FAILED", "pos": [1075, 480], "size": [280, 100] },
+    { "id": "kafka", "type": "messagebus", "label": "Kafka", "sublabel": "Outside the payment DB transaction", "pos": [530, 480], "size": [280, 100] }
+  ],
+  "boundaries": [ { "kind": "region", "label": "Payment DB transaction · userWalletLock:{userId} serializes charges and payments", "wraps": ["wallet", "payment", "confirm", "outbox"], "pad": 30 } ],
+  "connections": [
+    { "id": "reserve", "from": "seat", "to": "reservation", "label": "Claim, then create reservation" },
+    { "id": "pay", "from": "wallet", "to": "payment", "label": "Pay" },
+    { "id": "confirm-payment", "from": "payment", "to": "confirm", "label": "Confirm" },
+    { "id": "event", "from": "confirm", "to": "outbox", "label": "Record event" },
+    { "id": "pending", "from": "publisher", "to": "outbox", "label": "Read PENDING", "fromSide": "top", "toSide": "bottom", "labelAt": [1260, 435] },
+    { "id": "publish", "from": "publisher", "to": "kafka", "label": "Attempt publication after commit", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "amber", "title": "Reservation boundary", "items": ["Seat claim and reservation creation use separate service transactions", "No claim that the whole reservation is one transaction"] },
+    { "dot": "emerald", "title": "Payment boundary", "items": ["Balance, payment, confirmation and outbox share a DB transaction", "Redis active-token removal is outside DB rollback"] },
+    { "dot": "slate", "title": "Publication boundary", "items": ["Scheduler handles pending and failed events", "No DB–Kafka atomicity or exactly-once guarantee"] }
+  ]
+}

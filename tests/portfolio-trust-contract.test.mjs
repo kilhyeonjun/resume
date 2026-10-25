@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
@@ -7,6 +7,13 @@ import test from 'node:test';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = (path) => readFile(join(root, path), 'utf8');
 const data = JSON.parse(await read('src/data/portfolio.json'));
+const diagramEvidence = async project => {
+  if (!project.designDiagrams?.length) return '';
+  const assets = await Promise.all(project.designDiagrams.flatMap(diagram => Object.values(diagram.image)).map(path => read(join('public', path))));
+  const directory = `docs/diagrams/${project.slug}`;
+  const sources = await Promise.all((await readdir(join(root, directory))).filter(name => name.endsWith('.json')).map(name => read(join(directory, name))));
+  return sources.join('\n') + assets.map(svg => svg.replace(/<style>[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ')).join('\n');
+};
 const order = (a, b) => (a.printOrder ?? Number.MAX_SAFE_INTEGER) - (b.printOrder ?? Number.MAX_SAFE_INTEGER)
   || new Date(b.period.start) - new Date(a.period.start);
 const featured = data.projects.filter(p => p.featured && !p.hidden).sort(order);
@@ -96,7 +103,7 @@ test('company case flow figures retain their own before-after attribution', () =
 
 test('company chat and resume surfaces do not publish internal infrastructure identifiers', async () => {
   const project = data.projects.find(p => p.slug === 'realtime-game-chat');
-  assert.doesNotMatch(JSON.stringify(project), /glider|vivox|bane|DTP-|gameduo\/|amazonaws|PR #\d|hyperdx/i);
+  assert.doesNotMatch(JSON.stringify(project) + await diagramEvidence(project), /glider|vivox|bane|DTP-|gameduo\/|amazonaws|PR #\d|hyperdx/i);
   for (const lang of ['ko', 'en']) {
     assert.doesNotMatch(await read(`src/content/resume/${lang}.json`), /glider|vivox|DTP-\d|amazonaws|hyperdx/i, lang);
   }
@@ -108,7 +115,7 @@ test('company case data and covers exclude private identifiers and ticket refere
   for (const slug of ['rds-saturation-rca', 'shared-package-ci-platform', 'ai-agent-control-platform']) {
     const project = data.projects.find(p => p.slug === slug);
     const covers = await Promise.all(Object.values(project.coverImage).map(path => read(join('public', path))));
-    const copy = JSON.stringify(project) + covers.map(svg => svg.replace(/<style>[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ')).join(' ');
+    const copy = JSON.stringify(project) + await diagramEvidence(project) + covers.map(svg => svg.replace(/<style>[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ')).join(' ');
     assert.doesNotMatch(copy, /glider|vivox|bane|\bBN\b|\bHB\b|\bNB2\b|\bBBC\b|\bDFD\b|\blmk\b|IDX_|gameduo|amazonaws|PR #\d|#\d{3,}|findLatest|sheet_localized|marketing_metric_daily/i, slug);
     assert.doesNotMatch(copy, /\b[A-Z][A-Z0-9]+-\d+\b/, `${slug} ticket keys`);
   }
@@ -122,6 +129,6 @@ test('personal demos exclude local paths, private configuration and room credent
 test('AI agent platform case keeps policy-enforcement mechanics off the public page', async () => {
   const project = data.projects.find(p => p.slug === 'ai-agent-control-platform');
   const covers = await Promise.all(Object.values(project.coverImage).map(path => read(join('public', path))));
-  const copy = JSON.stringify(project) + covers.join(' ');
+  const copy = JSON.stringify(project) + covers.join(' ') + await diagramEvidence(project);
   assert.doesNotMatch(copy, /MITM|netlock|중간자|인증서|certificate|\bCA\b|PATCH|POST |\/api\/|\b403\b|\b10\.\d+\.\d+\.\d+\b|i-[0-9a-f]{8,}|\bt[34]g?\.[a-z0-9]+\b|claude\.ai|selective|선택(?:적)?\s*검사|Ed25519|프롬프트|prompt|thinking|세션 로그|원본 동기화|session[- ]log|raw session|jsonl|1,913|1\.68GiB/i);
 });

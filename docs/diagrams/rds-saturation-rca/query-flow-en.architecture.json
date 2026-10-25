@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Backfill bottleneck: fix the read path, not the first hypothesis", "locale": "en", "quality_profile": "showcase", "viewBox": [1380, 730] },
+  "components": [
+    { "id": "before-job", "type": "backend", "label": "Before · backfill", "sublabel": "Loop over 30 individual dates", "pos": [60, 150], "size": [270, 110] },
+    { "id": "before-query", "type": "database", "label": "One read per date", "sublabel": "DATE() predicate · select all columns", "pos": [540, 150], "size": [300, 110] },
+    { "id": "before-result", "type": "backend", "label": "Decode wide results", "sublabel": "Process unused large columns too", "pos": [1030, 150], "size": [290, 110] },
+    { "id": "after-job", "type": "backend", "label": "After · backfill", "sublabel": "Pass the date set together", "pos": [60, 490], "size": [270, 110] },
+    { "id": "after-query", "type": "database", "label": "Single IN batch read", "sublabel": "Direct date match · needed columns", "pos": [540, 490], "size": [300, 110] },
+    { "id": "after-result", "type": "backend", "label": "Select version in memory", "sublabel": "Keep the latest result per date", "pos": [1030, 490], "size": [290, 110] }
+  ],
+  "connections": [
+    { "id": "many-reads", "from": "before-job", "to": "before-query", "label": "30 round trips" },
+    { "id": "wide-rows", "from": "before-query", "to": "before-result", "label": "Wide results" },
+    { "id": "batch-read", "from": "after-job", "to": "after-query", "label": "Batch query", "variant": "emphasis" },
+    { "id": "narrow-rows", "from": "after-query", "to": "after-result", "label": "Needed fields", "variant": "emphasis" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Measure the cause", "items": ["Performance Insights identifies the loaded query", "Separate it from the large-write hypothesis"] },
+    { "dot": "emerald", "title": "Remove wasted work", "items": ["N+1 round trips, date-function predicate, excess decoding", "Preserve the as-of cutoff and latest-version selection"] },
+    { "dot": "slate", "title": "Interpretation", "items": ["Read path of one marketing backfill, not all three incidents", "Post-completion idle CPU is not a loaded improvement rate"] }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Policy enforcement and collection fail separately", "locale": "en", "quality_profile": "showcase", "viewBox": [1320, 640] },
+  "components": [
+    { "id": "control", "type": "backend", "label": "Guard server", "sublabel": "Registration, heartbeats, policy", "pos": [60, 70], "size": [280, 100] },
+    { "id": "guard", "type": "security", "label": "Device-local guard", "sublabel": "macOS / Windows · signed rules", "pos": [560, 70], "size": [320, 100] },
+    { "id": "sync", "type": "backend", "label": "Device usage sync", "sublabel": "Separate from local enforcement", "pos": [560, 280], "size": [280, 100] },
+    { "id": "ingest", "type": "backend", "label": "Collection server", "sublabel": "App < container < host memory limits", "pos": [960, 280], "size": [300, 100] },
+    { "id": "store", "type": "database", "label": "ClickHouse", "sublabel": "Explicit budget on the shared host", "pos": [960, 460], "size": [300, 100] }
+  ],
+  "boundaries": [ { "kind": "region", "label": "AWS collection host · resources shared with other containers", "wraps": ["ingest", "store"], "pad": 30 } ],
+  "connections": [
+    { "id": "policy", "from": "control", "to": "guard", "label": "Rule location + version", "variant": "security" },
+    { "id": "switch", "from": "guard", "to": "sync", "label": "Apply reporting switch", "fromSide": "bottom", "toSide": "top" },
+    { "id": "upload", "from": "sync", "to": "ingest", "label": "Usage sync" },
+    { "id": "aggregate", "from": "ingest", "to": "store", "label": "Aggregate + store", "labelAt": [1150, 420] }
+  ],
+  "cards": [
+    { "dot": "emerald", "title": "Failure isolation", "items": ["Registration/reporting failure does not stop local blocking by design", "Server status is not device enforcement status"] },
+    { "dot": "amber", "title": "Resource boundaries", "items": ["App and container caps leave headroom on the host", "Collection-host failure is not a local-blocking shutdown"] },
+    { "dot": "slate", "title": "Public scope", "items": ["Logical and operational view of the 2026 case", "Guard placement, network and security details omitted"] }
+  ]
+}

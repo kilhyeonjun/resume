@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": { "title": "ACK와 WAL 기록·DB 영속화의 경계", "quality_profile": "showcase", "column_fit": "spread", "viewBox": [1320, 650] },
+  "participants": [
+    { "id": "client", "type": "external", "label": "클라이언트" },
+    { "id": "gateway", "type": "backend", "label": "게이트웨이" },
+    { "id": "wal", "type": "messagebus", "label": "Valkey / WAL" },
+    { "id": "writer", "type": "backend", "label": "WAL writer" },
+    { "id": "db", "type": "database", "label": "DynamoDB" }
+  ],
+  "segments": [
+    { "from": 145, "to": 280, "label": "기본 수락 경로 · ACK 이후 WAL 기록은 비동기" },
+    { "from": 310, "to": 415, "label": "WAL 기록 성공 이후 · 유효 항목의 별도 적재 루프" },
+    { "from": 445, "to": 550, "label": "대체 경로 · DB 저장 실패 또는 미처리 항목" }
+  ],
+  "messages": [
+    { "id": "send", "from": "client", "to": "gateway", "y": 170, "label": "메시지 전송" },
+    { "id": "accept", "from": "gateway", "to": "wal", "y": 200, "label": "순서·중복 처리 완료" },
+    { "id": "ack", "from": "gateway", "to": "client", "y": 230, "label": "ACK ≠ 영속화 완료", "variant": "return" },
+    { "id": "append", "from": "gateway", "to": "wal", "y": 260, "label": "비동기 WAL 기록", "variant": "dashed" },
+    { "id": "read", "from": "writer", "to": "wal", "y": 335, "label": "XREADGROUP · 항목 읽기" },
+    { "id": "persist", "from": "writer", "to": "db", "y": 365, "label": "세그먼트 배치 저장" },
+    { "id": "xack", "from": "writer", "to": "wal", "y": 395, "label": "저장 성공 항목만 XACK", "variant": "return" },
+    { "id": "failed", "from": "db", "to": "writer", "y": 470, "label": "오류 / UnprocessedItems", "variant": "return" },
+    { "id": "retry", "from": "writer", "to": "db", "y": 500, "label": "제한 횟수 내 재시도", "variant": "dashed" },
+    { "id": "pending", "from": "writer", "to": "wal", "y": 530, "label": "미완료는 pending 유지", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "amber", "title": "ACK 이후의 빈틈", "items": ["비동기 WAL 실패는 지표·로그로 기록", "이미 보낸 ACK를 회수하거나 저장을 보장하지 않음"] },
+    { "dot": "emerald", "title": "WAL 이후 복구", "items": ["pending 회수 후 재처리", "오래되거나 잘못된 항목은 별도 격리 경로"] },
+    { "dot": "slate", "title": "설명 범위", "items": ["2026-10-21 main의 기본 Valkey 경로", "원자 WAL 옵션 경로·실제 배포 설정과 구분"] }
+  ]
+}

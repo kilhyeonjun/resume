@@ -463,11 +463,17 @@ test('resume controls stay separate from evidence across the single-column break
             horizontalOverflow: document.documentElement.scrollWidth > innerWidth,
           };
         });
+        const overflow = layout.horizontalOverflow ? await page.$$eval('body *', (elements) => elements.flatMap(element => {
+          const box = element.getBoundingClientRect();
+          if (box.width <= 0 || (box.left >= 0 && box.right <= innerWidth)) return [];
+          const style = getComputedStyle(element);
+          return [{ tag: element.tagName, class: element.className, text: element.textContent.trim().slice(0, 80), left: box.left, right: box.right, font: style.font, minWidth: style.minWidth }];
+        }).slice(0, 12)) : [];
         assert.deepEqual(layout, {
           headerOverlaps: false,
           controlsOverlap: false,
           horizontalOverflow: false,
-        }, `${path} at ${width}px must keep the introduction and controls unobstructed`);
+        }, `${path} at ${width}px must keep the introduction and controls unobstructed: ${JSON.stringify(overflow)}`);
         if (width === 320) {
           const label = await page.$eval('.resume-actions a.primary', (link) => {
             const box = link.getBoundingClientRect();
@@ -485,6 +491,16 @@ test('resume controls stay separate from evidence across the single-column break
           });
           assert.ok(label.width >= 44 && label.height >= 44, `${path} mobile PDF target must remain at least 44px`);
           assert.deepEqual(label.splitWords, [], `${path} mobile PDF label must wrap between words, not isolate a final character`);
+          const fallback = await page.addStyleTag({ content: '.resume-dossier, .resume-dossier * { font-family: monospace !important; }' });
+          try {
+            await page.evaluate(() => document.fonts.ready);
+            const bounds = await page.evaluate(() => ({ content: document.documentElement.scrollWidth, viewport: innerWidth }));
+            assert.ok(bounds.content <= bounds.viewport,
+              `${path} mobile resume prose must stay contained with fallback metrics: ${bounds.content}px`);
+          } finally {
+            await fallback.evaluate(element => element.remove());
+            await fallback.dispose();
+          }
         }
       }
     }

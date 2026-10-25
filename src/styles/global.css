@@ -448,7 +448,7 @@ body {
 .resume-dossier > section, .resume-dossier > div:not(.resume-actions):not(.resume-divider) { grid-column: 1 / -1; }
 .resume-dossier .section-title { display: block; letter-spacing: -.02em; }
 .resume-dossier .section-title::after { display: none; }
-.resume-dossier .experience-item { border-radius: 0; box-shadow: none; border-width: 1px 0 0; background: transparent; }
+.resume-dossier .experience-item { overflow-wrap: anywhere; border-radius: 0; box-shadow: none; border-width: 1px 0 0; background: transparent; }
 .resume-dossier .experience-item::before { display: none; }
 
 .portfolio-index { padding-top: 4.5rem; }

@@ -60,10 +60,7 @@ jobs:
           test "$first_hashes" = "$second_hashes"
           git restore -- public/images/portfolio/ai-coding-harness-*.svg
 
-      - name: Build with Astro
-        run: npm run build
-
-      - name: Test generated release contracts
+      - name: Build and test generated release contracts
         run: npm test
 
       - name: Generate release PDFs and OG

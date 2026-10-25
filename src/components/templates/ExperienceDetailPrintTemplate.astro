@@ -279,6 +279,8 @@ const pageTitle = lang === 'ko' ? '경력기술서' : 'Career Description';
 
     /* Tech Stack */
     .tech-stack {
+      /* Keep badges with the preceding text fragment, not the entire project. */
+      break-before: avoid-page;
       display: flex;
       flex-wrap: wrap;
       gap: 1mm;

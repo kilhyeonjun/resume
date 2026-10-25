@@ -216,9 +216,9 @@
             "endDate": "2026-03",
             "highlights": [
               {
-                "problem": "Marketing metrics needed a different BigQuery read path",
-                "solution": "Migrated reads to the BigQuery Storage Read API",
-                "result": "Enabled Storage Read API access for marketing metrics"
+                "problem": "High DB and CPU load during metrics sync",
+                "solution": "Evaluated partitioning: write IOPS fell, but read IOPS rose and CPU load persisted",
+                "result": "Chose lower Lambda concurrency over a structural change with little benefit for its code complexity"
               },
               {
                 "problem": "Batch processing collection limits (60 days)",
@@ -310,7 +310,7 @@
             "period": "2025.02 ~ Present",
             "featured": true,
             "description": "Unified marketing platform managing Google Ads/Meta/TikTok campaigns, creatives, and metrics in a single system, built on dedicated marketing DB separation",
-            "techRationale": "Moved reads to the BigQuery Storage Read API. In a separate metrics-sync DB load evaluation, partitioning reduced write IOPS but increased read IOPS while CPU load remained; chose lower Lambda concurrency over a structural change. Designed a hybrid GCP Pub/Sub → AWS Lambda/SQS pipeline for event-driven processing with the Outbox pattern for non-blocking async event publishing.",
+            "techRationale": "For metrics-sync DB load, chose lower Lambda concurrency over partitioning: write IOPS fell, but read IOPS rose and CPU load persisted, offering little benefit for the added code complexity. Designed a hybrid GCP Pub/Sub → AWS Lambda/SQS pipeline for event-driven processing with the Outbox pattern for non-blocking async event publishing.",
             "details": [
               {
                 "problem": "Large marketing-metrics archive backfill stalled at 63s Lambda runtime and 99.8% RDS CPU, ETA 15 hours",
@@ -318,9 +318,9 @@
                 "result": "Improved throughput 26x (9.3→247/min), Lambda runtime 63s→1.36s"
               },
               {
-                "problem": "Marketing metrics needed a different BigQuery read path",
-                "solution": "Migrated reads to the BigQuery Storage Read API",
-                "result": "Enabled Storage Read API access for marketing metrics"
+                "problem": "MKT Sheet BigQuery reads",
+                "solution": "Migrated to the Storage Read API",
+                "result": "Migration completed"
               },
               {
                 "problem": "Slow marketing queries on a 100+ column denormalized table",

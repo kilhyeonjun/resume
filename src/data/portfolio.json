@@ -14,8 +14,8 @@
         "en": "A chat server designed to be shared by several games: channel-level Valkey sharding cut ACK p95 from 767.6ms to 6.6ms, and a dev load test held 20,002 CCU for 900s."
       },
       "description": {
-        "ko": "클라이언트는 TCP gateway에 접속하고, gateway는 메시지 순서·중복 제거·WAL append를 Valkey에서 원자적으로 끝낸 뒤에만 ACK합니다. DynamoDB 적재는 별도 WAL writer가 Valkey Stream consumer group으로 이어받습니다. 용량 목표는 상용 게임 채팅 솔루션의 공개 rate limit·PCU 기준으로 6,000 CCU sustained·18,000 RPS·버스트 90,000 RPS를 산정했고, 개선은 모두 변경 전 계측 → 가설 → 비교 측정 순서로 검증했습니다. 수치는 sandbox/dev 부하 시험 결과이며, 다이어그램은 공개용으로 다시 그렸고 회사 내부 코드·인프라 식별자는 포함하지 않습니다.",
-        "en": "Clients connect to a TCP gateway, which acknowledges a message only after ordering, dedupe, and the WAL append complete atomically in Valkey. A separate WAL writer persists messages to DynamoDB through a Valkey Stream consumer group. Capacity targets (6,000 CCU sustained, 18,000 RPS, 90,000 RPS burst) were derived from a commercial game-chat solution's public rate limits and PCU basis, and every change followed the same order: instrument first, state a hypothesis, then compare measurements. Figures come from sandbox/dev load tests; the diagram is a public redraw without internal code or infrastructure identifiers."
+        "ko": "클라이언트는 TCP gateway에 접속하고, gateway는 Valkey에서 메시지 순서·중복을 처리합니다. 확인한 기본 경로는 수락 ACK 이후 WAL 기록을 비동기로 진행하며, 별도 WAL writer가 DynamoDB에 적재합니다. ACK는 WAL 기록이나 DB 영속화 완료를 뜻하지 않습니다. 용량 목표는 상용 게임 채팅 솔루션의 공개 rate limit·PCU 기준으로 6,000 CCU sustained·18,000 RPS·버스트 90,000 RPS를 산정했고, 개선은 모두 변경 전 계측 → 가설 → 비교 측정 순서로 검증했습니다. 수치는 sandbox/dev 부하 시험 결과이며, 다이어그램은 공개용으로 다시 그렸고 회사 내부 코드·인프라 식별자는 포함하지 않습니다.",
+        "en": "Clients connect to a TCP gateway, which handles ordering and dedupe in Valkey. The verified default path acknowledges acceptance before asynchronously recording the WAL; a separate WAL writer persists it to DynamoDB. ACK does not mean WAL recording or database durability has completed. Capacity targets (6,000 CCU sustained, 18,000 RPS, 90,000 RPS burst) were derived from a commercial game-chat solution's public rate limits and PCU basis, and every change followed the same order: instrument first, state a hypothesis, then compare measurements. Figures come from sandbox/dev load tests; the diagram is a public redraw without internal code or infrastructure identifiers."
       },
       "role": {
         "ko": "Platform Part 리더 · 서버 설계·구현·부하 검증 주도",
@@ -37,6 +37,12 @@
         "Grafana"
       ],
       "architectureDiagram": "/images/portfolio/realtime-game-chat-architecture.svg",
+      "designDiagrams": [{
+        "image": { "ko": "/images/portfolio/realtime-game-chat-delivery-ko.svg", "en": "/images/portfolio/realtime-game-chat-delivery-en.svg" },
+        "title": { "ko": "ACK와 WAL 기록·DB 영속화의 경계", "en": "ACK, WAL recording and database durability are separate" },
+        "alt": { "ko": "기본 경로에서 순서·중복 처리 후 ACK하고 WAL을 비동기로 기록한다. WAL writer는 DB 저장 성공 항목만 XACK하고 실패 항목은 제한 재시도 후 pending으로 남긴다", "en": "The default path acknowledges ordering and dedupe before asynchronous WAL recording. The writer XACKs successfully stored entries and leaves failures pending after bounded retries" },
+        "caption": { "ko": "2026-10-21 main의 기본 Valkey 경로를 확인한 그림이며 실제 배포 설정을 단정하지 않습니다. 원자 WAL 옵션 구현과 기본 배선을 구분했습니다. ACK 이후 WAL 기록이 실패하면 지표·로그로 남지만 이미 보낸 ACK가 회수되지는 않습니다. WAL 기록에 성공한 유효 항목부터 저장·재처리가 가능하며, 오래되거나 잘못된 항목은 별도 격리 경로를 따릅니다. 부하 성능 수치는 영속성 보장의 증거가 아닙니다.", "en": "Verified against the default Valkey wiring in main as of 2026-10-21, not a claim about deployed configuration. Optional atomic-WAL code is distinct from default wiring. A post-ACK WAL failure is logged and metered but does not revoke ACK. Storage/replay applies to valid entries successfully recorded in WAL; aged or invalid entries have separate quarantine paths. Load-test figures are not evidence of durability guarantees." }
+      }],
       "highlights": {
         "ko": [
           "6K msg/s 고정률 부하에서 단일 노드 WAL 병목을 4-shard cluster로 분산: ACK p95 767.6ms→6.6ms, 수용률 99.39%→99.994%",
@@ -370,13 +376,13 @@
         "ko": [
           "수직 확장 대신 샤딩: Valkey는 명령을 한 스레드로 처리해 코어 증설로 쓰기 병목이 풀리지 않습니다. 대가로 한 채널은 한 샤드에 고정됩니다.",
           "샤드 키는 논리 채널 ID: 채널 안 순서 보장이 요구사항이라 채널 단위로 라우팅하고, WAL과 채널 상태를 같은 hash tag로 묶어 multi-key 원자 처리를 유지했습니다.",
-          "ACK 전에는 Valkey append만, DynamoDB 적재는 별도 writer: 클라이언트 지연을 DB 쓰기와 분리하고 consumer group으로 적재를 재처리할 수 있게 했습니다.",
+          "기본 경로는 ACK 후 비동기 WAL 기록, DynamoDB 적재는 별도 writer: 지연을 DB 쓰기와 분리하지만 ACK만으로 영속화를 보장하지 않습니다. 재처리는 WAL 기록에 성공한 항목부터 가능합니다.",
           "ARM64: 6,000 CCU 동일 부하 비교에서 CPU 15%·메모리 54% 감소를 확인하고 멀티플랫폼 이미지로 x86·ARM64를 모두 지원했습니다."
         ],
         "en": [
           "Sharding over vertical scaling: Valkey executes commands on one thread, so more cores do not relieve a write bottleneck. The trade-off is that a channel is pinned to one shard.",
           "Logical channel ID as the shard key: in-channel ordering is a requirement, so routing is per channel, and the WAL and channel state share one hash tag to keep multi-key operations atomic.",
-          "Only the Valkey append happens before ACK; a separate writer persists to DynamoDB, separating client latency from database writes and letting the consumer group replay persistence.",
+          "The default path records the WAL asynchronously after ACK, then a separate writer persists to DynamoDB. This separates latency from database writes but ACK alone does not guarantee durability; replay starts only after WAL recording succeeds.",
           "ARM64: a same-load comparison at 6,000 CCU showed 15% lower CPU and 54% lower memory, and multi-platform images support both x86 and ARM64."
         ]
       },
@@ -430,6 +436,12 @@
         "ko": "Platform Part 리더 · 원인 분석·수정·재발 방지 직접 수행",
         "en": "Platform Part lead · hands-on root-cause analysis, fixes, and recurrence guards"
       },
+      "designDiagrams": [{
+        "image": { "ko": "/images/portfolio/rds-saturation-rca-query-flow-ko.svg", "en": "/images/portfolio/rds-saturation-rca-query-flow-en.svg" },
+        "title": { "ko": "백필 조회 경로: 반복 조회에서 단일 배치로", "en": "Backfill reads: from per-date queries to one batch" },
+        "alt": { "ko": "변경 전에는 30개 날짜를 반복 조회하며 DATE 조건과 전체 컬럼을 사용하고, 변경 후에는 IN 배치 조회와 필요한 컬럼만 가져와 메모리에서 날짜별 최신 버전을 고르는 비교도", "en": "Before: 30 per-date reads with a DATE predicate and all columns. After: one IN query selecting needed fields, followed by latest-version selection per date in memory" },
+        "caption": { "ko": "3건 중 마케팅 백필 1건의 조회 경로입니다. 대량 쓰기라는 초기 추측 대신 Performance Insights로 부하 쿼리를 좁혀 N+1 왕복·인덱스 활용을 막는 날짜 함수·불필요한 결과 디코딩을 줄였습니다. 기준 시각과 날짜별 최신 버전 선택은 유지했습니다. 작업 종료 뒤의 idle CPU를 부하 중 개선율로 비교하지 않습니다.", "en": "The read path of one marketing backfill, not all three incidents. Performance Insights narrowed the loaded query instead of accepting the large-write hypothesis: remove N+1 round trips, the date-function predicate and unnecessary decoding while retaining the as-of cutoff and latest version per date. Post-completion idle CPU is not a loaded improvement rate." }
+      }],
       "coverImage": {
         "ko": "/images/portfolio/rds-saturation-rca-cover-ko.svg",
         "en": "/images/portfolio/rds-saturation-rca-cover-en.svg"
@@ -1046,6 +1058,12 @@
         "ko": "Platform Part 리더 · 설계·운영·머지 승인 직접, 구현은 AI 코딩 에이전트",
         "en": "Platform Part lead · design, operations, and merge approval; built with AI coding agents"
       },
+      "designDiagrams": [{
+        "image": { "ko": "/images/portfolio/ai-agent-control-platform-boundary-ko.svg", "en": "/images/portfolio/ai-agent-control-platform-boundary-en.svg" },
+        "title": { "ko": "정책 집행과 수집 장애의 경계", "en": "Policy enforcement and collection fail separately" },
+        "alt": { "ko": "가드 서버, 기기 로컬 가드와 사용량 동기화, AWS 수집 호스트의 수집 서버와 ClickHouse를 구분한 논리 배치도", "en": "Logical view separating the guard server, device-local enforcement and usage sync from the collection server and ClickHouse on a shared AWS host" },
+        "caption": { "ko": "2026년 사례의 논리적 배치입니다. 등록·보고 실패가 로컬 정책 집행을 중단하지 않도록 책임을 나눴고, 수집 호스트에서는 앱·컨테이너 상한과 DB 예산을 함께 관리했습니다. 설계·코드상 장애 경계를 설명하며, 새로운 실기기 장애 시험 결과나 정확한 네트워크·보안 구성을 뜻하지 않습니다.", "en": "Logical deployment of the 2026 case. Registration and reporting are separated from local enforcement; the collection host has application/container caps and a database budget. This describes the design/code failure boundary, not a new physical-device outage test or an exact network/security topology." }
+      }],
       "coverImage": {
         "ko": "/images/portfolio/ai-agent-control-platform-cover-ko.svg",
         "en": "/images/portfolio/ai-agent-control-platform-cover-en.svg"
@@ -2877,6 +2895,12 @@
           "Made the asynchronous boundary explicit through separate PENDING, publication-failure, and retry states in the payment outbox"
         ]
       },
+      "designDiagrams": [{
+        "image": { "ko": "/images/portfolio/concert-reservation-domain-ko.svg", "en": "/images/portfolio/concert-reservation-domain-en.svg" },
+        "title": { "ko": "좌석 경합과 결제 정합성을 보호하는 경계", "en": "Boundaries for seat contention and payment consistency" },
+        "alt": { "ko": "낙관적 락으로 좌석을 선점한 뒤 예약을 생성하고, 결제 DB 트랜잭션에 잔액 차감·결제·예약 확정·Outbox를 묶으며, 스케줄러의 Kafka 발행은 밖에 두는 흐름", "en": "An optimistic seat claim precedes reservation creation. Balance debit, payment, confirmation and outbox share a payment DB transaction; the scheduler publishes to Kafka outside it" },
+        "caption": { "ko": "공개 저장소 6eb289b 기준입니다. 좌석 선점과 예약 생성은 별도 서비스 트랜잭션이고, 충전·결제는 사용자 지갑 락을 공유합니다. 결제 DB 트랜잭션은 잔액·결제·예약 확정·Outbox를 묶지만 Redis 활성 토큰 제거는 DB 롤백 범위 밖입니다. 스케줄러의 발행·재시도도 DB–Kafka 원자성이나 exactly-once를 보장하지 않습니다.", "en": "Based on public revision 6eb289b. Seat claim and reservation creation are separate service transactions; balance top-ups and payments share a user-wallet lock. The payment DB transaction includes balance, payment, confirmation and outbox, but Redis active-token removal is outside DB rollback. Scheduler publication and retries do not guarantee DB–Kafka atomicity or exactly-once delivery." }
+      }],
       "architectureDiagram": {
         "ko": "/images/portfolio/concert-reservation-arch.svg",
         "en": "/images/portfolio/concert-reservation-arch-en.svg"

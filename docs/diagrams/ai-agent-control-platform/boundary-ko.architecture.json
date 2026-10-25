@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "정책 집행과 수집 장애의 경계", "quality_profile": "showcase", "viewBox": [1320, 640] },
+  "components": [
+    { "id": "control", "type": "backend", "label": "가드 서버", "sublabel": "기기 등록 · 하트비트 · 정책 관리", "pos": [60, 70], "size": [280, 100] },
+    { "id": "guard", "type": "security", "label": "기기 로컬 가드", "sublabel": "macOS / Windows · 서명 규칙 검증", "pos": [560, 70], "size": [320, 100] },
+    { "id": "sync", "type": "backend", "label": "기기 사용량 동기화", "sublabel": "로컬 정책 집행과 별도 책임", "pos": [560, 280], "size": [280, 100] },
+    { "id": "ingest", "type": "backend", "label": "사용량 수집 서버", "sublabel": "앱 < 컨테이너 < 호스트 메모리 상한", "pos": [960, 280], "size": [300, 100] },
+    { "id": "store", "type": "database", "label": "ClickHouse", "sublabel": "공유 호스트 내 별도 메모리 예산", "pos": [960, 460], "size": [300, 100] }
+  ],
+  "boundaries": [ { "kind": "region", "label": "AWS 수집 호스트 · 다른 컨테이너와 자원 공유", "wraps": ["ingest", "store"], "pad": 30 } ],
+  "connections": [
+    { "id": "policy", "from": "control", "to": "guard", "label": "규칙 위치·버전", "variant": "security" },
+    { "id": "switch", "from": "guard", "to": "sync", "label": "보고 스위치 집행", "fromSide": "bottom", "toSide": "top" },
+    { "id": "upload", "from": "sync", "to": "ingest", "label": "사용 기록 동기화" },
+    { "id": "aggregate", "from": "ingest", "to": "store", "label": "집계·저장", "labelAt": [1150, 420] }
+  ],
+  "cards": [
+    { "dot": "emerald", "title": "실패를 분리", "items": ["등록·보고 실패가 로컬 차단을 멈추지 않는 설계", "서버 상태와 기기 집행 상태를 구분"] },
+    { "dot": "amber", "title": "자원 경계를 다시 설정", "items": ["앱·컨테이너 상한을 호스트 여유 안에 배치", "수집 호스트 장애가 곧 기기 차단 중단은 아님"] },
+    { "dot": "slate", "title": "공개 범위", "items": ["2026년 사례의 논리·운영 경계", "가드 서버 배치·네트워크·보안 세부는 생략"] }
+  ]
+}

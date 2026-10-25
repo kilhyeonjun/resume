@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "좌석 경합과 결제 정합성을 다른 경계로 보호", "quality_profile": "showcase", "viewBox": [1390, 650], "repository": { "url": "https://github.com/hhpb-code/hhplus-concert", "revision": "6eb289b019354f8eb710c6bedbfd2d5d567d583e" } },
+  "components": [
+    { "id": "seat", "sources": [{ "path": "src/main/java/com/example/hhplus/concert/domain/concert/model/ConcertSeat.java", "line": 42, "end_line": 43, "label": "Optimistic seat version" }], "type": "database", "label": "ConcertSeat", "sublabel": "@Version · 좌석 선점", "pos": [80, 80], "size": [240, 100] },
+    { "id": "reservation", "type": "database", "label": "Reservation", "sublabel": "좌석·사용자 연결 · WAITING", "pos": [530, 80], "size": [280, 100] },
+    { "id": "wallet", "type": "database", "label": "Wallet", "sublabel": "사용자 잔액 차감", "pos": [80, 280], "size": [230, 100] },
+    { "id": "payment", "type": "database", "label": "Payment", "sublabel": "예약에 대한 결제 기록", "pos": [420, 280], "size": [230, 100] },
+    { "id": "confirm", "type": "database", "label": "Reservation", "sublabel": "WAITING → CONFIRMED", "pos": [760, 280], "size": [230, 100] },
+    { "id": "outbox", "type": "database", "label": "OutboxEvent", "sublabel": "결제 이벤트 · PENDING", "pos": [1100, 280], "size": [230, 100] },
+    { "id": "publisher", "type": "backend", "label": "스케줄러", "sublabel": "PENDING 발행 · FAILED 재시도", "pos": [1075, 480], "size": [280, 100] },
+    { "id": "kafka", "type": "messagebus", "label": "Kafka", "sublabel": "결제 DB 트랜잭션과 별도", "pos": [530, 480], "size": [280, 100] }
+  ],
+  "boundaries": [ { "kind": "region", "label": "결제 DB 트랜잭션 · userWalletLock:{userId}로 충전·결제 경합 직렬화", "wraps": ["wallet", "payment", "confirm", "outbox"], "pad": 30 } ],
+  "connections": [
+    { "id": "reserve", "from": "seat", "to": "reservation", "label": "선점 후 예약 생성" },
+    { "id": "pay", "from": "wallet", "to": "payment", "label": "결제" },
+    { "id": "confirm-payment", "from": "payment", "to": "confirm", "label": "확정" },
+    { "id": "event", "from": "confirm", "to": "outbox", "label": "이벤트 기록" },
+    { "id": "pending", "from": "publisher", "to": "outbox", "label": "미발행 조회", "fromSide": "top", "toSide": "bottom", "labelAt": [1260, 435] },
+    { "id": "publish", "from": "publisher", "to": "kafka", "label": "커밋 이후 발행 시도", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "amber", "title": "예약 경계", "items": ["좌석 선점과 예약 생성은 별도 서비스 트랜잭션", "예약 전체가 한 트랜잭션이라고 주장하지 않음"] },
+    { "dot": "emerald", "title": "결제 경계", "items": ["잔액·결제·예약 확정·Outbox는 같은 DB 트랜잭션", "Redis 활성 토큰 제거는 DB 롤백 범위 밖"] },
+    { "dot": "slate", "title": "발행 경계", "items": ["스케줄러가 미발행·실패 이벤트 처리", "DB–Kafka 원자성·exactly-once 보장 아님"] }
+  ]
+}

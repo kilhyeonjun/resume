@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "백필 병목: 쓰기 추측에서 조회 경로 수정으로", "quality_profile": "showcase", "viewBox": [1380, 730] },
+  "components": [
+    { "id": "before-job", "type": "backend", "label": "변경 전 · 백필", "sublabel": "30일을 하루씩 순회", "pos": [60, 150], "size": [270, 110] },
+    { "id": "before-query", "type": "database", "label": "일자별 반복 조회", "sublabel": "DATE() 조건 · 전체 컬럼 select", "pos": [540, 150], "size": [300, 110] },
+    { "id": "before-result", "type": "backend", "label": "넓은 결과 디코딩", "sublabel": "필요 없는 대용량 컬럼까지 처리", "pos": [1030, 150], "size": [290, 110] },
+    { "id": "after-job", "type": "backend", "label": "변경 후 · 백필", "sublabel": "일자 목록을 한 번에 전달", "pos": [60, 490], "size": [270, 110] },
+    { "id": "after-query", "type": "database", "label": "IN 단일 배치 조회", "sublabel": "날짜 직접 비교 · 필요 컬럼 select", "pos": [540, 490], "size": [300, 110] },
+    { "id": "after-result", "type": "backend", "label": "메모리에서 버전 선택", "sublabel": "일자별 최신 결과만 사용", "pos": [1030, 490], "size": [290, 110] }
+  ],
+  "connections": [
+    { "id": "many-reads", "from": "before-job", "to": "before-query", "label": "30회 왕복" },
+    { "id": "wide-rows", "from": "before-query", "to": "before-result", "label": "전체 결과" },
+    { "id": "batch-read", "from": "after-job", "to": "after-query", "label": "일괄 조회", "variant": "emphasis" },
+    { "id": "narrow-rows", "from": "after-query", "to": "after-result", "label": "필요 필드", "variant": "emphasis" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "원인 계측", "items": ["Performance Insights로 부하 쿼리 특정", "대형 쓰기 트랜잭션 가설과 구분"] },
+    { "dot": "emerald", "title": "줄인 작업", "items": ["N+1 왕복·날짜 함수 조건·불필요 디코딩", "보관 시점 조건과 최신 버전 선택은 유지"] },
+    { "dot": "slate", "title": "해석 범위", "items": ["세 장애 중 마케팅 백필 한 건의 조회 경로", "작업 종료 후 유휴 CPU를 개선율로 쓰지 않음"] }
+  ]
+}

@@ -44,6 +44,7 @@ const projectGlossary = project.glossary ?? null;
 const projectProductScreens = project.productScreens ?? null;
 const projectProblemSolving = project.problemSolving ?? null;
 const projectScenarioEvidence = project.scenarioEvidence ?? null;
+const projectDesignDiagrams = project.designDiagrams ?? null;
 const projectPublicEvidence = project.publicEvidence ?? null;
 const projectOperationalLimits = project.operationalLimits ? project.operationalLimits[lang] : null;
 const projectCoverImage = project.coverImage ? localize(project.coverImage) : null;
@@ -70,6 +71,7 @@ addEvidence(isFamilyBudgetCase && projectArchitectureDiagram, 'boundary', lang =
 addEvidence(isFamilyBudgetCase && projectSequenceDiagram, 'sequence', lang === 'ko' ? '조정 흐름' : 'Reconciliation flow');
 addEvidence(projectProblemSolving?.length, 'problems', labels.problemSolving);
 addEvidence(projectArchitectureDiagram && !isEvidenceRegister && !isDaesinCase && !isFamilyBudgetCase, 'architecture', lang === 'ko' ? '시스템 아키텍처' : 'System architecture');
+addEvidence(projectDesignDiagrams?.length, 'design', lang === 'ko' ? '설계 판단과 경계' : 'Design decisions and boundaries');
 addEvidence(!isDaesinCase && projectScenarioEvidence?.length, 'scenarios', lang === 'ko' ? '합성 시나리오' : 'Synthetic scenarios');
 addEvidence(isDaesinCase && projectArchitectureDiagram, 'architecture', lang === 'ko' ? '운영 경계' : 'Operating boundary');
 addEvidence(projectOperationalLimits?.length, 'limits', lang === 'ko' ? '운영 한계' : 'Operating limits');
@@ -371,6 +373,26 @@ addEvidence(!isFamilyBudgetCase && project.contentImages?.length, 'project-image
           <a class="diagram-original" href={withBasePath(projectArchitectureDiagram)} target="_blank" rel="noopener noreferrer" aria-label={`${projectName} — ${lang === 'ko' ? '아키텍처 원본 SVG 열기 (새 탭)' : 'Open original architecture SVG (new tab)'}`}>
             <img src={withBasePath(projectArchitectureDiagram)} alt={`${projectName} ${lang === 'ko' ? '아키텍처 다이어그램' : 'architecture diagram'}`} width={project.slug === 'realtime-game-chat' ? 1200 : undefined} height={project.slug === 'realtime-game-chat' ? 600 : undefined} class:list={['w-full', project.slug === 'realtime-game-chat' ? 'min-w-[1200px]' : 'min-w-[760px] lg:min-w-0']} loading="lazy" />
           </a>
+        </div>
+      </section>
+    )}
+
+    {projectDesignDiagrams && projectDesignDiagrams.length > 0 && (
+      <section id="design" class="mb-10" aria-labelledby="design-title">
+        <h2 id="design-title" class="section-title mb-3">{lang === 'ko' ? '설계 판단과 경계' : 'Design decisions and boundaries'}</h2>
+        <p class="mb-4 text-sm text-gray-600 dark:text-gray-300">{lang === 'ko' ? '좌우로 스크롤해 흐름을 따라가거나 원본 SVG를 열어 확대할 수 있습니다.' : 'Scroll horizontally to follow the flow, or open the original SVG to zoom in.'}</p>
+        <div class="space-y-6">
+          {projectDesignDiagrams.map((diagram, index) => (
+            <figure aria-labelledby={`design-diagram-${index}`}>
+              <h3 id={`design-diagram-${index}`} class="mb-3 text-lg font-semibold text-gray-900 dark:text-white">{diagram.title[lang]}</h3>
+              <div class="diagram-scroll overflow-x-auto rounded-xl border border-gray-200 bg-white dark:border-gray-700" tabindex="0" role="region" aria-label={diagram.title[lang]}>
+                <a class="diagram-original" href={withBasePath(diagram.image[lang])} target="_blank" rel="noopener noreferrer" aria-label={`${diagram.title[lang]} — ${lang === 'ko' ? '원본 SVG 열기 (새 탭)' : 'Open original SVG (new tab)'}`}>
+                  <img src={withBasePath(diagram.image[lang])} alt={diagram.alt[lang]} class="min-w-[1200px] w-full" loading="lazy" />
+                </a>
+              </div>
+              <figcaption class="case-diagram-caption mt-3 text-gray-600 dark:text-gray-300">{diagram.caption[lang]}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
     )}

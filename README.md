@@ -83,7 +83,9 @@ GitHub Actions로 자동 배포합니다(main push). 코드·PDF 검증을 통�
 
 색 대비 검사는 공개 화면 경로와 텍스트 표본을 줄이지 않고, 한 페이지 평가 안에서 같은 색상의 RGBA 변환 결과만 재사용합니다. 서로 다른 색상은 기존처럼 새 기본 Canvas context에서 변환합니다. Context 재사용이나 `willReadFrequently` 옵션은 광색역·반투명 색상의 반올림을 바꿀 수 있어 사용하지 않습니다. 합성 순서·WCAG 임계값·테마·대기 조건·실패 판정은 유지합니다.
 
-목차 순회 검사는 전체 국·영문 상세 경로에서 section ID와 목차 href뿐 아니라 실제 화면의 H2 배치 순서까지 비교합니다. `DOMContentLoaded`와 `document.fonts.ready` 뒤에 390·780·1440px 너비를 검사하므로 CSS 재배치로 생긴 목차 불일치도 실패합니다. 무관한 이미지 요청이나 네트워크 유휴 구간을 기다리지는 않습니다. 도식 가독성과 페이지 경계는 별도 시각 검증 대상이며, 목차·섹션을 비동기 렌더링으로 옮길 때는 준비 조건도 함께 변경해야 합니다.
+목차 순회 검사는 전체 국·영문 상세 경로에서 section ID와 목차 href뿐 아니라 실제 화면의 H2 배치 순서까지 비교합니다. `DOMContentLoaded`와 `document.fonts.ready` 뒤에 390·780·1440px 너비를 검사하므로 CSS 재배치로 생긴 목차 불일치도 실패합니다. 별도의 네트워크 유휴 구간은 기다리지 않습니다. 다만 `document.fonts.ready`는 문서의 로드·레이아웃 준비와 연동되므로, 미완료 이미지 요청과 완전히 독립적인 대기는 아닙니다. 도식 가독성과 페이지 경계는 별도 시각 검증 대상이며, 목차·섹션을 비동기 렌더링으로 옮길 때는 준비 조건도 함께 변경해야 합니다.
+
+태블릿 SVG 경계 검사도 `networkidle0` 대신 `DOMContentLoaded`와 `document.fonts.ready`를 기다립니다. 768×900px, 공개 상세 18개 국·영문 경로, HTTP 200, 보이는 모든 `svg path`의 좌우 ±1px 경계 판정은 유지합니다. 지연된 CSS·defer 스크립트로 만든 실제 이탈을 이전·변경 검사 모두 탐지했고, 지연 폰트 완료 뒤 측정도 확인했습니다. 같은 Node 24·브라우저에서 두 차례 비교한 검사 시간은 20.086→4.179초, 19.168→3.613초였습니다. 비동기 스타일·DOM·애니메이션으로 SVG 배치를 바꾸면 준비 조건을 다시 검증해야 합니다.
 
 ### Pinned font provenance
 
@@ -98,4 +100,6 @@ GitHub Actions로 자동 배포합니다(main push). 코드·PDF 검증을 통�
 - Typography 0.5.20이 고정한 selector parser 6.0.10은 [CPU 고갈 취약점](https://github.com/advisories/GHSA-rj75-hqrm-r3gf)이 있어 해당 하위 트리만 7.1.6으로 override합니다.
 - Mermaid CLI 11.16.0 하위 KaTeX는 [신뢰 제한 우회](https://github.com/advisories/GHSA-238p-pmpm-9mq7) 수정판 0.18.2로 override합니다. 업스트림 범위가 수정되면 override를 제거합니다.
 - DOMPurify·source-map-js·Vite는 호환 범위 안에서 패치된 버전으로 lockfile을 갱신했습니다. 다이어그램 렌더링과 사이트 빌드를 함께 검증합니다.
+- Puppeteer는 25.16.0과 해당 버전이 요구하는 browser/protocol 의존성을 함께 고정합니다. Chromium BiDi가 Zod 4를 지원하는 버전으로 전환한 뒤 Zod 4.6.7, Undici 8.12.3, fast-uri 3.1.9를 기존 선언 범위 안에서 해석했습니다. Zod 3 소비자에 Zod 4를 강제 override하지 않습니다. 개발 의존성 포함 `npm audit`는 0건입니다.
+- 보안 패치 검증 런타임은 CI와 같은 Node 24입니다. Undici가 요구하는 Node ≥22.19.0은 패치 전부터 존재한 제약이며, 저장소의 포괄적인 ≥22.13.0 표기만으로 하위 의존성 전체의 호환성을 보장하지 않습니다. PDF·OG 생성기의 외부 URL 렌더링은 신뢰할 수 있는 릴리스 입력에 한정합니다.
 - `npm audit`의 0건은 Mermaid 내부에 미리 번들된 코드까지 패치됐다는 뜻이 아닙니다. 현재 CLI가 로드하는 Mermaid 번들에는 DOMPurify 3.4.12·KaTeX 0.16.47이 남아 있습니다. 조사한 최신 Mermaid 12.2.0 배포 파일도 DOMPurify 3.4.12를 포함하므로 메이저 업그레이드만으로 해결되지 않습니다. 검토한 입력은 저장소의 신뢰된 다이어그램이며 관련 공격 전제는 확인되지 않았습니다. 이 렌더러는 공개 사이트에 배포하지 않으며, 임의 외부 다이어그램을 처리하는 용도로 확대하기 전에는 번들 수정판을 재평가해야 합니다.

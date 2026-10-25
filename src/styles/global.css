@@ -443,12 +443,12 @@ body {
 .resume-documents a { display: inline-flex; align-items: center; min-height: 44px; color: var(--dossier-blue); font-size: .875rem; }
 .resume-documents summary:focus-visible { outline: 2px solid var(--dossier-blue); outline-offset: 4px; }
 .resume-actions a { display: inline-flex; align-items: center; padding: 0 .75rem; border: 1px solid var(--dossier-line); border-radius: 8px; }
-.resume-actions a.primary { background: #1d4ed8; border-color: #1d4ed8; color: white; }
+.resume-actions a.primary { background: #1d4ed8; border-color: #1d4ed8; color: white; word-break: keep-all; overflow-wrap: normal; }
 .resume-divider { grid-column: 1 / -1; height: 4.5rem; }
 .resume-dossier > section, .resume-dossier > div:not(.resume-actions):not(.resume-divider) { grid-column: 1 / -1; }
 .resume-dossier .section-title { display: block; letter-spacing: -.02em; }
 .resume-dossier .section-title::after { display: none; }
-.resume-dossier .experience-item { border-radius: 0; box-shadow: none; border-width: 1px 0 0; background: transparent; }
+.resume-dossier .experience-item { overflow-wrap: anywhere; border-radius: 0; box-shadow: none; border-width: 1px 0 0; background: transparent; }
 .resume-dossier .experience-item::before { display: none; }
 
 .portfolio-index { padding-top: 4.5rem; }

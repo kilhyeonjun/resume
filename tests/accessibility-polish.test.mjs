@@ -2,12 +2,32 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { join, normalize } from 'node:path';
-import test from 'node:test';
+import test, { after, before } from 'node:test';
 import puppeteer from 'puppeteer';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 
 const root = new URL('../', import.meta.url);
 const dist = join(new URL(root).pathname, 'dist');
+
+// Share only the Chromium process; each browser test owns a fresh context so
+// storage, HTTP cache, pages and emulation never leak between tests.
+let browser;
+before(async () => {
+  browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+});
+after(async () => { await browser?.close(); });
+
+async function visitStaticPage(page, url) {
+  // These generated pages apply their theme synchronously and have no async hydration.
+  // load waits for stylesheets, module scripts and eager images; font readiness and a
+  // render frame replace the unrelated 500ms network-idle window before sampling.
+  const response = await page.goto(url, { waitUntil: 'load' });
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+  });
+  return response;
+}
 
 async function serveDist() {
   const server = createServer(async (request, response) => {
@@ -92,13 +112,12 @@ async function elementContrast(page, selector) {
 
 test('mixed-orientation portfolio PDFs preserve readable text without page clipping', { timeout: 60000 }, async () => {
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
-    const page = await browser.newPage();
+    const page = await context.newPage();
     await page.emulateMediaType('print');
     for (const prefix of ['', '/en']) {
-      await page.goto(`${origin}${prefix}/portfolio-print/`, { waitUntil: 'networkidle0' });
-      await page.evaluate(() => document.fonts.ready);
+      await visitStaticPage(page, `${origin}${prefix}/portfolio-print/`);
       const loading = getDocument({ data: await page.pdf({ format: 'A4', preferCSSPageSize: true }), useSystemFonts: false });
       try {
         const pdf = await loading.promise;
@@ -119,19 +138,18 @@ test('mixed-orientation portfolio PDFs preserve readable text without page clipp
         assert.equal(landscape, true, 'wide architecture retains its own landscape page');
       } finally { await loading.destroy(); }
     }
-  } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }
+  } finally { await context.close(); await new Promise(resolve => server.close(resolve)); }
 });
 
 test('career details and navigation stay contained across font fallbacks', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
-    const page = await browser.newPage();
+    const page = await context.newPage();
     for (const prefix of ['', '/en']) {
       for (const width of [320, 430]) {
         await page.setViewport({ width, height: 900 });
-        await page.goto(`${origin}${prefix}/experience/gameduo/`, { waitUntil: 'networkidle0' });
-        await page.evaluate(() => document.fonts.ready);
+        await visitStaticPage(page, `${origin}${prefix}/experience/gameduo/`);
         for (const fallback of [null, 'monospace']) {
           if (fallback) await page.addStyleTag({ content: `.site-shell { font-family: ${fallback}; }` });
           const bounds = await page.evaluate(() => ({ viewport: innerWidth, content: document.documentElement.scrollWidth }));
@@ -140,12 +158,12 @@ test('career details and navigation stay contained across font fallbacks', { tim
         }
       }
     }
-  } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }
+  } finally { await context.close(); await new Promise(resolve => server.close(resolve)); }
 });
 
 test('dark theme browser print keeps detail text readable on white paper', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
     for (const [path, selectors] of [
       ['/', ['.board-heading', '.outcome-board strong', 'p[class*="dark:bg-gray-800"]']],
@@ -155,10 +173,10 @@ test('dark theme browser print keeps detail text readable on white paper', { tim
       ['/experience/gameduo/', ['h1', '#outcomes h3', '#projects h3', '#projects p']],
       ['/404.html', ['a.bg-primary-600']],
     ]) {
-      const page = await browser.newPage();
+      const page = await context.newPage();
       await page.evaluateOnNewDocument(() => localStorage.setItem('theme', 'dark'));
       await page.emulateMediaType('print');
-      await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
+      await visitStaticPage(page, `${origin}${path}`);
       for (const selector of selectors) {
         const sample = await elementContrast(page, selector);
         assert.ok(sample.text, `${path} ${selector} must have text`);
@@ -168,7 +186,7 @@ test('dark theme browser print keeps detail text readable on white paper', { tim
       await page.close();
     }
   } finally {
-    await browser.close();
+    await context.close();
     server.close();
   }
 });
@@ -181,14 +199,14 @@ test('dark print keeps every visible direct-text sample at WCAG AA', { timeout: 
   paths.push('/404.html');
   assert.equal(paths.length, 33, 'dark-print route scan must cover every public screen route');
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   let sampleCount = 0;
   try {
-    const page = await browser.newPage();
+    const page = await context.newPage();
     await page.evaluateOnNewDocument(() => localStorage.setItem('theme', 'dark'));
     await page.emulateMediaType('print');
     for (const path of paths) {
-      const response = await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' });
+      const response = await visitStaticPage(page, `${origin}${path}`);
       assert.equal(response?.status(), 200, `${path} must return HTTP 200`);
       assert.ok(await page.title(), `${path} must expose a document title`);
       const result = await page.$eval('body', (body) => {
@@ -269,7 +287,7 @@ test('dark print keeps every visible direct-text sample at WCAG AA', { timeout: 
       assert.deepEqual(result.failures, [], `${path} visible print contrast failures: ${JSON.stringify(result.failures)}`);
     }
   } finally {
-    await browser.close();
+    await context.close();
     server.close();
   }
   assert.ok(sampleCount > 1000, `expected a broad non-vacuous scan, got ${sampleCount} samples`);
@@ -277,7 +295,7 @@ test('dark print keeps every visible direct-text sample at WCAG AA', { timeout: 
 
 test('screen semantic text meets WCAG AA on local light and dark surfaces', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
     for (const [path, theme, selectors] of [
       ['/', 'light', ['.outcome-case-link']],
@@ -288,9 +306,9 @@ test('screen semantic text meets WCAG AA on local light and dark surfaces', { ti
       ['/portfolio/daesin-logistics-bot/', 'dark', ['.project-role', '.outcome-register-impact']],
       ['/portfolio/ai-coding-harness/', 'dark', ['.project-role', '.outcome-register-impact']],
     ]) {
-      const page = await browser.newPage();
+      const page = await context.newPage();
       await page.evaluateOnNewDocument((value) => localStorage.setItem('theme', value), theme);
-      await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
+      await visitStaticPage(page, `${origin}${path}`);
       for (const selector of selectors) {
         const sample = await elementContrast(page, selector);
         assert.ok(sample.text, `${path} ${selector} must have text`);
@@ -299,18 +317,18 @@ test('screen semantic text meets WCAG AA on local light and dark surfaces', { ti
       await page.close();
     }
   } finally {
-    await browser.close();
+    await context.close();
     server.close();
   }
 });
 
 test('resume achievement emphasis exposes non-empty text in KO and EN', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
     for (const path of ['/', '/en/']) {
-      const page = await browser.newPage();
-      await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
+      const page = await context.newPage();
+      await visitStaticPage(page, `${origin}${path}`);
       const values = await page.$$eval('.experience-item strong, .experience-item em', (elements) => {
         const textNodes = (node) => [...node.childNodes].flatMap((child) => child.nodeType === Node.TEXT_NODE ? [child.textContent.trim()] : textNodes(child));
         return elements.flatMap(textNodes).filter((value) => value.length > 1);
@@ -323,22 +341,21 @@ test('resume achievement emphasis exposes non-empty text in KO and EN', { timeou
       await page.close();
     }
   } finally {
-    await browser.close();
+    await context.close();
     server.close();
   }
 });
 
 test('portfolio detail index follows every visually rendered H2 section in KO and EN', { timeout: 60000 }, async () => {
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
     const slugs = (await readdir(join(dist, 'portfolio'), { withFileTypes: true }))
       .filter((entry) => entry.isDirectory())
       .map((entry) => entry.name);
     for (const path of slugs.flatMap((slug) => [`/portfolio/${slug}/`, `/en/portfolio/${slug}/`])) {
-      const page = await browser.newPage();
-      await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' });
-      await page.evaluate(() => document.fonts.ready);
+      const page = await context.newPage();
+      await visitStaticPage(page, `${origin}${path}`);
       for (const width of [390, 780, 1440]) {
         await page.setViewport({ width, height: 900 });
         const result = await page.$eval('.portfolio-detail', (article) => ({
@@ -354,7 +371,7 @@ test('portfolio detail index follows every visually rendered H2 section in KO an
       await page.close();
     }
   } finally {
-    await browser.close();
+    await context.close();
     server.close();
   }
 });
@@ -377,12 +394,12 @@ test('custom 404 keeps site navigation and recovery links', async () => {
 
 test('featured portfolio card stays contained at the tablet breakpoint', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
     for (const path of ['/portfolio/', '/en/portfolio/']) {
-      const page = await browser.newPage();
+      const page = await context.newPage();
       await page.setViewport({ width: 768, height: 900 });
-      await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
+      await visitStaticPage(page, `${origin}${path}`);
       const boxes = await page.$eval('.portfolio-case-featured', (card) => {
         const bounds = (element) => {
           const box = element.getBoundingClientRect();
@@ -400,19 +417,19 @@ test('featured portfolio card stays contained at the tablet breakpoint', { timeo
       await page.close();
     }
   } finally {
-    await browser.close();
+    await context.close();
     server.close();
   }
 });
 
 test('desktop featured portfolio cover stays beside its content without overlap', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
     for (const path of ['/portfolio/', '/en/portfolio/']) {
-      const page = await browser.newPage();
+      const page = await context.newPage();
       await page.setViewport({ width: 1440, height: 900 });
-      await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
+      await visitStaticPage(page, `${origin}${path}`);
       const [coverRight, contentLeft] = await page.$eval('.portfolio-case-featured', (card) => [
         card.firstElementChild.getBoundingClientRect().right,
         card.lastElementChild.getBoundingClientRect().left,
@@ -421,19 +438,19 @@ test('desktop featured portfolio cover stays beside its content without overlap'
       await page.close();
     }
   } finally {
-    await browser.close();
+    await context.close();
     server.close();
   }
 });
 
 test('resume controls stay separate from evidence across the single-column breakpoint', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
-    const page = await browser.newPage();
+    const page = await context.newPage();
     for (const path of ['/', '/en/']) {
-      await page.goto(`${origin}${path}`, { waitUntil: 'networkidle0' });
-      for (const width of [760, 780, 800, 801]) {
+      await visitStaticPage(page, `${origin}${path}`);
+      for (const width of [320, 760, 780, 800, 801]) {
         await page.setViewport({ width, height: 1000 });
         const layout = await page.evaluate(() => {
           const bounds = (selector) => document.querySelector(selector).getBoundingClientRect();
@@ -446,15 +463,49 @@ test('resume controls stay separate from evidence across the single-column break
             horizontalOverflow: document.documentElement.scrollWidth > innerWidth,
           };
         });
+        const overflow = layout.horizontalOverflow ? await page.$$eval('body *', (elements) => elements.flatMap(element => {
+          const box = element.getBoundingClientRect();
+          if (box.width <= 0 || (box.left >= 0 && box.right <= innerWidth)) return [];
+          const style = getComputedStyle(element);
+          return [{ tag: element.tagName, class: element.className, text: element.textContent.trim().slice(0, 80), left: box.left, right: box.right, font: style.font, minWidth: style.minWidth }];
+        }).slice(0, 12)) : [];
         assert.deepEqual(layout, {
           headerOverlaps: false,
           controlsOverlap: false,
           horizontalOverflow: false,
-        }, `${path} at ${width}px must keep the introduction and controls unobstructed`);
+        }, `${path} at ${width}px must keep the introduction and controls unobstructed: ${JSON.stringify(overflow)}`);
+        if (width === 320) {
+          const label = await page.$eval('.resume-actions a.primary', (link) => {
+            const box = link.getBoundingClientRect();
+            const walker = document.createTreeWalker(link, NodeFilter.SHOW_TEXT);
+            const splitWords = [];
+            for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+              for (const word of node.textContent.matchAll(/\S+/gu)) {
+                const range = document.createRange();
+                range.setStart(node, word.index);
+                range.setEnd(node, word.index + word[0].length);
+                if (range.getClientRects().length > 1) splitWords.push(word[0]);
+              }
+            }
+            return { width: box.width, height: box.height, splitWords };
+          });
+          assert.ok(label.width >= 44 && label.height >= 44, `${path} mobile PDF target must remain at least 44px`);
+          assert.deepEqual(label.splitWords, [], `${path} mobile PDF label must wrap between words, not isolate a final character`);
+          const fallback = await page.addStyleTag({ content: '.resume-dossier, .resume-dossier * { font-family: monospace !important; }' });
+          try {
+            await page.evaluate(() => document.fonts.ready);
+            const bounds = await page.evaluate(() => ({ content: document.documentElement.scrollWidth, viewport: innerWidth }));
+            assert.ok(bounds.content <= bounds.viewport,
+              `${path} mobile resume prose must stay contained with fallback metrics: ${bounds.content}px`);
+          } finally {
+            await fallback.evaluate(element => element.remove());
+            await fallback.dispose();
+          }
+        }
       }
     }
   } finally {
-    await browser.close();
+    await context.close();
     server.close();
   }
 });
@@ -465,15 +516,14 @@ test('tablet portfolio navigation keeps visible SVG geometry inside the viewport
     .map((entry) => entry.name);
   const paths = slugs.flatMap((slug) => [`/portfolio/${slug}/`, `/en/portfolio/${slug}/`]);
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
-    const page = await browser.newPage();
+    const page = await context.newPage();
     await page.setViewport({ width: 768, height: 900 });
     for (const path of paths) {
-      const response = await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' });
+      const response = await visitStaticPage(page, `${origin}${path}`);
       assert.equal(response?.status(), 200, `${path} must return HTTP 200`);
       // Inline SVG bounds need parsed markup, applied CSS and final font metrics, not network idleness.
-      await page.evaluate(() => document.fonts.ready);
       const outside = await page.$$eval('svg path', (elements) => elements.flatMap((element) => {
         const box = element.getBoundingClientRect();
         if (box.width <= 0 || box.height <= 0) return [];
@@ -484,17 +534,17 @@ test('tablet portfolio navigation keeps visible SVG geometry inside the viewport
       assert.deepEqual(outside, [], `${path} has clipped SVG geometry: ${JSON.stringify(outside)}`);
     }
   } finally {
-    await browser.close();
+    await context.close();
     server.close();
   }
 });
 
 test('portfolio PDF action has a 44px standalone target', { timeout: 30000 }, async () => {
   const { server, origin } = await serveDist();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const context = await browser.createBrowserContext();
   try {
-    const page = await browser.newPage();
-    await page.goto(`${origin}/portfolio/`, { waitUntil: 'networkidle0' });
+    const page = await context.newPage();
+    await visitStaticPage(page, `${origin}/portfolio/`);
     const box = await page.$eval('.portfolio-hero a[href="/portfolio-print"]', (element) => {
       const rect = element.getBoundingClientRect();
       const style = getComputedStyle(element);
@@ -504,7 +554,7 @@ test('portfolio PDF action has a 44px standalone target', { timeout: 30000 }, as
     assert.equal(box.border, 'solid');
     assert.ok(box.weight >= 600);
   } finally {
-    await browser.close();
+    await context.close();
     server.close();
   }
 });

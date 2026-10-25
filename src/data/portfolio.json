@@ -2277,6 +2277,20 @@
         },
         {
           "problem": {
+            "ko": "기능 시나리오만으로는 행 수 증가와 writer 경합 중의 저장·조회 정합성을 확인할 수 없었다",
+            "en": "Functional scenarios alone did not exercise storage and reader consistency under larger batches or writer contention"
+          },
+          "process": {
+            "ko": "새 임시 DB에서 100·1,000행을 크기별 warmup 1회·측정 3회씩 수집하며 독립 reader로 원자적 가시성을 확인했다. 별도 writer가 획득한 lock을 150ms 목표로 유지한 뒤 해제하는 경합도 반복했다. 전체 실험을 두 번 실행하고 환경·원자료·측정 구간을 공개했다",
+            "en": "In a fresh temporary DB, ingested 100 and 1,000 rows with one warmup and three measured runs per size, checking atomic visibility through an independent reader. Repeated contention against a separate writer holding an acquired lock for a target of 150ms. Ran the whole experiment twice and published the environment, raw samples, and measurement intervals"
+          },
+          "result": {
+            "ko": "Node 24·macOS arm64 합성 관측: 1,000행 수집 6회 285.9–545.0ms, 경합 측정 6회 모두 lock 해제 뒤 저장·독립 readback 성공. 해당 조회 표본에서 부분 저장은 관측되지 않았다. 운영 처리량·SLA나 장애 복구 보장이 아니다",
+            "en": "Synthetic Node 24/macOS arm64 observation: six 1,000-row ingestions took 285.9–545.0ms; all six measured contenders committed and passed independent readback after lock release. No partial state was observed in the sampled reads. This establishes neither production throughput/SLA nor failure-recovery guarantees"
+          }
+        },
+        {
+          "problem": {
             "ko": "ARM64 운영 배포 첫 시도가 OperationalError로 실패해 기존 수집기와 route를 복구했다. 원래 SQLite 세부 오류 코드는 기록되지 않았다",
             "en": "The first ARM64 production rollout failed with OperationalError; the previous collector and route were recovered. The original SQLite subcode was not recorded"
           },
@@ -2353,6 +2367,7 @@
       "operationalLimits": {
         "ko": [
           "운영 증거는 운영자가 기록한 단일 배포의 제한된 smoke 관측이며 독립 검증이 아니다. 공개 소스·CI 및 합성 10개 시나리오와 구분하며 최신성 SLA·가동률을 증명하지 않는다.",
+          "별도 합성 부하·경합 실험은 단일 macOS arm64 호스트의 작은 표본이다. 실행별·크기별 n=3이므로 원자료의 p95는 최댓값이며 운영 tail latency가 아니다. 경합 표본은 모두 성공해 거절 후 재실행 경로의 실행 증거는 포함하지 않는다.",
           "upsert-only라 후속 원천에서 빠진 행은 남고 createdAt은 최초 저장 시각이다. 실패는 다음 정각에 다시 확인하며 즉시 retry/backoff는 없다.",
           "노선코드 검색은 요청마다 SQLite를 조회한다. 10회 순차 조회는 용량·처리량·p95·전후 개선율의 근거가 아니며 수평 쓰기 확장에는 한계가 있다.",
           "115.4ms는 DB 변경 감지→API 일치 구간이다. 관측 poll 간격은 1.287초이며 DB commit 시각은 관측하지 않아 원천 변경·commit→API 지연으로 해석할 수 없다.",
@@ -2360,6 +2375,7 @@
         ],
         "en": [
           "Production evidence is a bounded, owner-recorded single-deployment smoke observation, not independent attestation. It is separate from public source, CI, and ten synthetic scenarios, and proves neither freshness SLA nor uptime.",
+          "The separate synthetic load/contention experiment is a small sample on one macOS arm64 host. With n=3 per invocation and size, its p95 is the observed maximum, not production tail latency. Every sampled contender succeeded, so these runs did not exercise rejection followed by explicit replay.",
           "Upsert-only storage retains rows omitted by later source responses; createdAt is first insertion. Failures are checked on the next scheduled run, without immediate retry or backoff.",
           "Code search reads SQLite on every request. Ten sequential reads establish neither capacity, throughput, p95, nor before/after improvement; horizontal write scaling remains limited.",
           "The 115.4ms interval runs from DB-change detection to API equality. The observed poll interval was 1.287s; DB commit time was unobserved, so this is not source-change/commit-to-API latency.",
@@ -2367,6 +2383,20 @@
         ]
       },
       "publicEvidence": [
+        {
+          "claim": {
+            "ko": "합성 부하·writer 경합 반복 측정",
+            "en": "Repeated synthetic load and writer-contention observations"
+          },
+          "question": {
+            "ko": "100·1,000행과 독립 writer lock에서 무엇을 측정했고 어떤 환경·표본 한계가 있는가?",
+            "en": "What was measured at 100/1,000 rows and under an independent writer lock, and what are the environment and sample limits?"
+          },
+          "label": "Raw synthetic receipt · two invocations · not production performance",
+          "url": "https://career.kilpenguin.com/evidence/daesin-synthetic-benchmark.json",
+          "testLabel": "Reproduce · --benchmark",
+          "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/7ce02a69c8cff21b07eec7c6a6cfb76e4ca7ced7/scripts/verify-ingestion-quality.mjs"
+        },
         {
           "claim": {
             "ko": "ARM64 배포·실패 복구·실제 변경 행 일치",
@@ -2457,7 +2487,7 @@
             "en": "Does an independent reader see corrections and retain the prior state without partial writes after a mid-batch failure?"
           },
           "label": "verify-ingestion-quality.mjs · synthetic SQLite",
-          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/90351bc2cc3964b6d192fad7568cb4d8bb48abb4/scripts/verify-ingestion-quality.mjs",
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/7ce02a69c8cff21b07eec7c6a6cfb76e4ca7ced7/scripts/verify-ingestion-quality.mjs",
           "testLabel": "ingestion-freshness.test.ts",
           "testUrl": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/blob/52293dce04a65c1ef7fbfebcb8e3785ff427a23f/tests/ingestion-freshness.test.ts"
         },
@@ -2471,7 +2501,7 @@
             "en": "Did regressions, synthetic ingestion, the production-dependency audit, and final-image execution pass?"
           },
           "label": "GitHub Actions",
-          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/actions/runs/40159619177"
+          "url": "https://github.com/kilhyeonjun/daesin-logistics-bot-be/actions/runs/40164840380"
         }
       ],
       "scale": {

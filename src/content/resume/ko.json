@@ -216,9 +216,9 @@
             "endDate": "2026-03",
             "highlights": [
               {
-                "problem": "마케팅 지표의 BigQuery 조회 경로 변경 필요",
-                "solution": "BigQuery Storage Read API를 사용하는 읽기 경로로 전환",
-                "result": "마케팅 지표 조회에 Storage Read API 적용"
+                "problem": "지표 동기화의 DB·CPU 고부하",
+                "solution": "파티셔닝 검토에서 쓰기 IOPS는 줄었지만 읽기 IOPS가 늘고 CPU 부하는 지속",
+                "result": "코드 복잡도 대비 개선이 작아 구조 변경 대신 Lambda 동시성 축소 선택"
               },
               {
                 "problem": "배치 처리의 수집 기간 한계(60일)",
@@ -310,7 +310,7 @@
             "period": "2025.02 ~ 현재",
             "featured": true,
             "description": "마케팅 전용 DB 분리 기반 위에 Google Ads/Meta/TikTok 캠페인·소재·지표를 단일 시스템에서 관리하는 통합 마케팅 플랫폼",
-            "techRationale": "BigQuery Storage Read API로 읽기 경로 전환. 별도의 지표 동기화 DB 부하 검토에서는 파티셔닝의 쓰기 IOPS 감소만큼 읽기 IOPS가 증가하고 CPU 부하가 남아 구조 변경 대신 Lambda 동시성 축소를 선택. GCP Pub/Sub → AWS Lambda/SQS 하이브리드 파이프라인으로 이벤트 기반 처리 전환, Outbox 패턴으로 API 비차단 비동기 발행 설계.",
+            "techRationale": "지표 동기화는 파티셔닝의 쓰기 IOPS 개선에도 읽기 IOPS 증가·CPU 부하가 남아, 코드 복잡도 대비 이점이 작은 구조 변경 대신 Lambda 동시성 축소를 선택. GCP Pub/Sub → AWS Lambda/SQS 하이브리드 파이프라인으로 이벤트 기반 처리 전환, Outbox 패턴으로 API 비차단 비동기 발행 설계.",
             "details": [
               {
                 "problem": "마케팅 지표 아카이브 대용량 백필 중 Lambda 실행 63초·RDS CPU 99.8% 포화로 처리 ETA 15시간",
@@ -318,9 +318,9 @@
                 "result": "처리량 26배 개선(9.3→247건/분), Lambda 실행 63s→1.36s"
               },
               {
-                "problem": "마케팅 지표의 기존 BigQuery 조회 경로 변경 필요",
-                "solution": "BigQuery Storage Read API를 사용하는 읽기 경로로 전환",
-                "result": "마케팅 지표 조회에 Storage Read API 적용"
+                "problem": "MKT Sheet의 BigQuery 조회",
+                "solution": "Storage Read API로 전환",
+                "result": "적용 완료"
               },
               {
                 "problem": "100+ 컬럼 테이블 조회 성능 저하",
